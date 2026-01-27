@@ -16,7 +16,7 @@
     "type": "Legislation_OData",
     "base_url": "https://api.prod.legislation.gov.au/v1/documents",
     "title_id": "C2004A04969",
-    "format": "Epub",
+    "format": ".docx",
     "priority": "High"
   },
   {
@@ -24,7 +24,7 @@
     "type": "Legislation_OData",
     "base_url": "https://api.prod.legislation.gov.au/v1/documents",
     "title_id": "F1996B02697",
-    "format": "Epub",
+    "format": ".docx",
     "priority": "High"
   }
 ]
