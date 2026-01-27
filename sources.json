@@ -1,0 +1,30 @@
+[
+  {
+    "name": "WIPO Arbitration and Mediation Center",
+    "type": "RSS",
+    "url": "https://www.wipo.int/amc/en/rss.xml",
+    "priority": "Medium"
+  },
+  {
+    "name": "WIPO Press Room",
+    "type": "RSS",
+    "url": "https://www.wipo.int/pressroom/en/rss.xml",
+    "priority": "Low"
+  },
+  {
+    "name": "Trade Marks Act 1995 (Latest EPUB)",
+    "type": "Legislation_OData",
+    "base_url": "https://api.prod.legislation.gov.au/v1/documents",
+    "title_id": "C2004A04969",
+    "format": "Epub",
+    "priority": "High"
+  },
+  {
+    "name": "Patents Regulations 1991 (Latest EPUB)",
+    "type": "Legislation_OData",
+    "base_url": "https://api.prod.legislation.gov.au/v1/documents",
+    "title_id": "F1996B02697",
+    "format": "Epub",
+    "priority": "High"
+  }
+]
