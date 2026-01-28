@@ -8,7 +8,7 @@ on:
   # Allow manual trigger from the "Actions" tab
   workflow_dispatch:
 
-# Permission to write to the repository is required to save the SQLite DB
+# Permission to write to the repository is required
 permissions:
   contents: write
 
@@ -35,18 +35,21 @@ jobs:
       - name: Run Tripwire Script
         run: python tripwire.py
 
-      # 5. Commit changes IF the database was updated
+      # 5. Commit changes IF history or content was updated
       - name: Commit and Push Changes
         run: |
           git config --global user.name "Tripwire Bot"
           git config --global user.email "actions@github.com"
           
-          # Check if tripwire_history.json has been modified or created
-          if [[ -n $(git status --porcelain tripwire_history.json) ]]; then
-            echo "Changes detected in history file. Committing..."
-            git add tripwire_history.json
-            git commit -m "Tripwire: Update source history [skip ci]"
+          # Check for changes in JSON or the archive folder
+          if [[ -n $(git status --porcelain tripwire_history.json) ]] || [[ -n $(git status --porcelain content_archive/) ]]; then
+            echo "Changes detected. Committing..."
+            
+            # Add the history file AND the new content folder
+            git add tripwire_history.json content_archive/
+            
+            git commit -m "Tripwire: Detected changes & archived documents [skip ci]"
             git push
           else
-            echo "No changes to history."
+            echo "No changes detected."
           fi
