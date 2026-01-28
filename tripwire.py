@@ -58,7 +58,7 @@ def save_history(history: List[Dict]):
         logger.error(f"Failed to save history: {e}")
 
 def prune_history(history: List[Dict]) -> List[Dict]:
-    """Keeps only the last N entries per source to prevent JSON bloat."""
+    """Keeps only the last N entries per source."""
     new_history = []
     source_names = set(entry['source_name'] for entry in history)
     for name in source_names:
@@ -116,39 +116,22 @@ def clean_html_content(html):
     if not page_body:
         return ""
 
-    # Semantic Tagging for LLM Clarity
-    for tag in page_body.find_all(['em', 'i']):
-        tag.insert_before(' __SEMANTIC_ITALIC_START__ ')
-        tag.insert_after(' __SEMANTIC_ITALIC_END__ ')
-        tag.unwrap()
-    for tag in page_body.find_all(['strong', 'b']):
-        tag.insert_before(' __SEMANTIC_BOLD_START__ ')
-        tag.insert_after(' __SEMANTIC_BOLD_END__ ')
-        tag.unwrap()
-    for i in range(1, 7):
-        for tag in page_body.find_all(f'h{i}'):
-            tag.insert_before(f' __SEMANTIC_H{i}_START__ ')
-            tag.insert_after(f' __SEMANTIC_H{i}_END__ ')
-            tag.unwrap()
-            
-    # Cleanup DOM
+    # Cleanup DOM (Remove nav, footer, scripts, etc.)
     for tag_selector in TAGS_TO_EXCLUDE:
         for tag in page_body.select(tag_selector):
             tag.decompose()
     
     text_content = str(page_body)
 
-    # --- NEW: Noise Reduction Regex ---
-    # Removes dynamic timestamps that trigger false positives
+    # Noise Reduction: Remove dynamic timestamps
     text_content = re.sub(r'Generated on:? \d{1,2}/\d{1,2}/\d{4}.*', '', text_content, flags=re.IGNORECASE)
     text_content = re.sub(r'Last updated:? \d{1,2}:\d{2}.*', '', text_content, flags=re.IGNORECASE)
-    text_content = re.sub(r'\d{1,2}:\d{2}:\d{2} [AP]M', '', text_content) # Simple time masking
-
+    
     return text_content
 
 def fetch_webpage_content(driver, url, max_retries=2):
     if url.lower().endswith('.pdf'):
-        logger.warning(f"  [!] Skipping PDF link in scraper: {url}")
+        logger.warning(f"  [!] Skipping PDF link: {url}")
         return None
 
     for attempt in range(max_retries + 1):
@@ -156,7 +139,6 @@ def fetch_webpage_content(driver, url, max_retries=2):
             driver.get(url)
             WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
             
-            # Human-like scroll
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             time.sleep(random.uniform(1.0, 2.0))
 
@@ -169,8 +151,8 @@ def fetch_webpage_content(driver, url, max_retries=2):
             if not cleaned_html:
                 return None
 
+            # Convert to Markdown (standard syntax will be preserved)
             return md(cleaned_html, heading_style="ATX")
-
         except Exception as e:
             logger.warning(f"  [x] Attempt {attempt+1} failed for {url}: {e}")
             time.sleep(2)
@@ -181,21 +163,22 @@ def fetch_webpage_content(driver, url, max_retries=2):
 def fetch_legislation_metadata(source):
     base_url = source['base_url']
     title_id = source['title_id']
-    doc_format = source.get('format', 'Word') # Default to Word if unspecified
+    doc_format = source.get('format', 'Word') 
     
+    # Query only the single latest record ($top=1)
     params = {
         "$filter": f"titleid eq '{title_id}' and format eq '{doc_format}'",
         "$orderby": "start desc",
         "$top": "1"
     }
     headers = {'User-Agent': 'TripwireBot/1.0', 'Accept': 'application/json'}
+    
     try:
-        resp = requests.get(base_url, params=params, headers=headers, timeout=20)
+        resp = requests.get(base_url, params=params, headers=headers, timeout=45)
         resp.raise_for_status()
         data = resp.json()
         if not data.get('value'): return None, None
         latest_meta = data['value'][0]
-        # Use registerId as version_id to avoid downloading duplicate content
         return latest_meta.get('registerId'), latest_meta
     except Exception as e:
         logger.error(f"  [x] Legislation API error: {e}")
@@ -207,7 +190,7 @@ def download_legislation_content(base_url, meta):
         path_segment = f"titleid='{keys['titleId']}',start='{keys['start']}',retrospectivestart='{keys['retrospectiveStart']}',rectificationversionnumber={keys['rectificationVersionNumber']},type='{keys['type']}',uniqueTypeNumber={keys['uniqueTypeNumber']},volumeNumber={keys['volumeNumber']},format='{keys['format']}'"
         download_url = f"{base_url}({path_segment})/$value"
         
-        file_resp = requests.get(download_url, headers={'User-Agent': 'TripwireBot/1.0'}, timeout=60)
+        file_resp = requests.get(download_url, headers={'User-Agent': 'TripwireBot/1.0'}, timeout=90)
         file_resp.raise_for_status()
         return file_resp.content
     except Exception as e:
@@ -245,12 +228,10 @@ def main():
         is_new = False
         
         try:
-            # 1. Handle Legislation
             if stype == "Legislation_OData":
                 ver_id, meta = fetch_legislation_metadata(source)
                 if not ver_id: continue
                 
-                # Check history by Version ID (more efficient than hash for APIs)
                 if not any(h['source_name'] == name and h['version_id'] == ver_id for h in history):
                     logger.info(f"  [!] NEW LEGISLATION VERSION ({ver_id}).")
                     content_to_save = download_legislation_content(source['base_url'], meta)
@@ -259,14 +240,14 @@ def main():
                         details_str = f"Legislation Update ({source.get('format')})"
                         is_new = True
 
-            # 2. Handle Web Pages
             elif stype == "WebPage":
-                if not driver: continue
-                markdown_content = fetch_webpage_content(driver, source['url'])
+                if not driver: 
+                    logger.warning("  [!] Web driver required but not initialized.")
+                    continue
                 
+                markdown_content = fetch_webpage_content(driver, source['url'])
                 if markdown_content:
                     current_hash = get_hash(markdown_content)
-                    # For webpages, Version ID is the Hash
                     if not any(h['source_name'] == name and h['version_id'] == current_hash for h in history):
                         logger.info(f"  [!] WEBPAGE CHANGE DETECTED.")
                         content_to_save = markdown_content
@@ -274,7 +255,6 @@ def main():
                         details_str = "Web Scrape Update"
                         is_new = True
 
-            # 3. Handle RSS/API
             elif stype in ["RSS", "API"]:
                 resp = requests.get(source['url'], timeout=15)
                 if resp.status_code == 200:
@@ -286,10 +266,8 @@ def main():
                         details_str = "RSS/API Update"
                         is_new = True
 
-            # --- Save & Update History ---
             if is_new and content_to_save:
                 saved_file = save_to_archive(output_filename, content_to_save)
-                
                 new_entry = {
                     "source_name": name,
                     "version_id": version_id,
