@@ -240,4 +240,65 @@ def main():
                     fmt_lower = meta.get('format', '').lower()
                     if 'word' in fmt_lower: ext = '.docx'
                     elif 'pdf' in fmt_lower: ext = '.pdf'
-                    elif 'epub' in fmt_lower: ext =
+                    elif 'epub' in fmt_lower: ext = '.epub'
+                    else: ext = '.bin'
+                
+                filename = f"{found_ver_id}{ext}"
+                save_raw_file(filename, content_bytes)
+                saved_filename = filename
+
+                version_id = db_ver_key
+                current_hash = get_hash(content_bytes)
+                details_str = f"Legislation Update. Format: {meta.get('format')}"
+
+            # --- RSS / GENERIC CHECK ---
+            elif stype == "RSS" or stype == "API":
+                resp = session.get(source['url'], timeout=15)
+                resp.raise_for_status()
+                content_bytes = resp.content
+                
+                current_hash = get_hash(content_bytes)
+                version_id = current_hash 
+                
+                if any(h['source_name'] == name and h['version_id'] == version_id for h in history):
+                     logger.info("  No change.")
+                     continue
+                
+                logger.info(f"  [!] CHANGE DETECTED.")
+                
+                # Save RSS content too
+                safe_name = name.replace(' ', '_').replace('/', '')
+                filename = f"RSS_{safe_name}_{version_id[:8]}.xml"
+                save_raw_file(filename, content_bytes)
+                saved_filename = filename
+
+                details_str = "RSS/API Update"
+
+            # --- SAVE UPDATE ---
+            timestamp = datetime.datetime.now().isoformat()
+            
+            new_entry = {
+                "source_name": name,
+                "version_id": version_id,
+                "content_hash": current_hash,
+                "timestamp": timestamp,
+                "priority": priority,
+                "details": details_str,
+                "file": saved_filename
+            }
+            
+            history.append(new_entry)
+            updates_found = True
+
+        except Exception as e:
+            logger.error(f"  [x] Error checking {name}: {e}")
+
+    if updates_found:
+        history = prune_history(history)
+        save_history(history)
+        logger.info("--- Updates completed and saved ---")
+    else:
+        logger.info("--- No updates found ---")
+
+if __name__ == "__main__":
+    main()
