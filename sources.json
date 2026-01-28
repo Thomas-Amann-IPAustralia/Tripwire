@@ -32,17 +32,10 @@
     "output_filename": "PatentsRegulations1991.docx"
   },
   {
-    "name": "IP First Response Homepage",
+    "name": "Thomas Amann Website",
     "type": "WebPage",
-    "url": "https://ipfirstresponse.ipaustralia.gov.au/",
+    "url": "https://www.tomamann.com/about",
     "priority": "Medium",
-    "output_filename": "IPFirstResponseHomepage.md"
+    "output_filename": "TomAmannSite.md"
   },
-  {
-    "name": "Navigator Tool - Suspected Infringement",
-    "type": "WebPage",
-    "url": "https://ipfirstresponse.ipaustralia.gov.au/navigator-tool-suspected-infringement",
-    "priority": "Medium",
-    "output_filename": "NavigatorToolSuspectedInfringement.md"
-  }
 ]
