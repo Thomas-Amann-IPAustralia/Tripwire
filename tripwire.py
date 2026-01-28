@@ -75,12 +75,12 @@ def fetch_legislation_metadata(session, source):
     """
     Fetches metadata from FRL API. 
     1. Searches for documents by TitleID (Series ID).
-    2. Filters results to find a usable format (Word, PDF, RTF).
+    2. Filters results to find a usable format.
     """
     base_url = source['base_url']
     target_title_id = source['title_id'] 
     
-    # Query for the TitleID (Series ID). Fetch top 20.
+    # Query for the TitleID (Series ID).
     params = {
         "$filter": f"titleid eq '{target_title_id}'", 
         "$orderby": "start desc",
@@ -104,20 +104,23 @@ def fetch_legislation_metadata(session, source):
         logger.warning(f"  [!] No documents found for {target_title_id}")
         return None, None
 
-    # Filter for a usable format, prioritizing Word/DOCX but accepting PDF
+    # Filter for a usable format
     selected_doc = None
     
-    # Priority list
-    for keyword in ['word', '.docx', '.doc', 'pdf', 'rtf']:
+    # Priority: Word -> PDF -> RTF -> Any
+    priority_keywords = ['word', '.docx', '.doc', 'pdf', 'rtf']
+    
+    for keyword in priority_keywords:
         for doc in documents:
             fmt = doc.get('format', '').lower()
-            if keyword in fmt or keyword in doc.get('type', '').lower():
+            dtype = doc.get('type', '').lower()
+            if keyword in fmt or keyword in dtype:
                 selected_doc = doc
                 break
         if selected_doc:
             break
     
-    # Fallback: Just take the first one if no specific format matches
+    # Fallback: Just take the latest one if no specific format matches
     if not selected_doc:
         logger.warning("  [!] No preferred format found. Falling back to latest available entry.")
         selected_doc = documents[0]
@@ -129,30 +132,26 @@ def fetch_legislation_metadata(session, source):
 
 def construct_download_url(doc_meta):
     """
-    Determines the correct download URL.
+    Determines the correct download URL using the complex composite key.
     """
-    # 1. Look for direct media links in standard OData fields
-    if '__metadata' in doc_meta and 'media_src' in doc_meta['__metadata']:
-        return doc_meta['__metadata']['media_src']
+    # 1. Try to get the self-link directly from OData metadata if available
     if '__metadata' in doc_meta and 'uri' in doc_meta['__metadata']:
         return doc_meta['__metadata']['uri'] + "/$value"
-    if '@odata.mediaReadLink' in doc_meta:
-        return doc_meta['@odata.mediaReadLink']
-
+    
     # [cite_start]2. Fallback: Manually construct the composite key URL [cite: 134]
-    logger.info("  -> Constructing manual OData URL (Fallback)...")
+    logger.info("  -> Constructing manual OData URL...")
     
     try:
         # Helper to safely quote strings
         def q(val): return f"'{val}'"
         
-        # Helper to format dates. OData typically accepts raw ISO strings if the server is V3/V4.
-        # But if we need 'datetime' prefix:
+        # Helper to format dates. 
+        # API requires: start=datetime'2024-10-14T00:00:00'
         def d(val): return f"datetime'{val}'" 
 
-        # Extract keys
+        # Extract keys safely from the doc_meta dictionary
         title_id = doc_meta.get('titleId')
-        start = doc_meta.get('start')
+        start = doc_meta.get('start')  # This was the source of the previous error
         retro_start = doc_meta.get('retrospectiveStart')
         rect_ver = doc_meta.get('rectificationVersionNumber')
         d_type = doc_meta.get('type')
@@ -160,9 +159,14 @@ def construct_download_url(doc_meta):
         vol_num = doc_meta.get('volumeNumber')
         fmt = doc_meta.get('format')
 
-        # Build the segment string carefully
-        [cite_start]# [cite: 134]
-        # /v1/documents(titleid='...',start=datetime'...', ...)
+        # Check for missing critical keys
+        if not title_id or not start:
+            logger.error("  [x] Missing critical metadata (titleId or start) for URL construction.")
+            return None
+
+        # Build the segment string
+        # Syntax from Source 134:
+        # /documents(titleid='...',start=datetime'...',retrospectivestart=datetime'...',rectificationversionnumber=...,type='...',uniqueTypeNumber=...,volumeNumber=...,format='...')
         
         segment = (
             f"titleid={q(title_id)},"
@@ -188,17 +192,18 @@ def download_legislation_content(session, doc_metadata):
     download_url = construct_download_url(doc_metadata)
     
     if not download_url:
-        logger.error("  [x] Could not determine download URL.")
         return None
 
-    logger.info(f"  -> Downloading content from: {download_url}")
+    logger.info(f"  -> Downloading from generated URL...")
     
     try:
-        # [cite_start]Accept */* to prevent 406 Not Acceptable errors [cite: 125, 126]
+        # Accept */* to prevent 406 Not Acceptable errors
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
         
         if response.status_code == 404:
-             logger.error(f"  [x] 404 Not Found. URL: {download_url}")
+             logger.error(f"  [x] 404 Not Found. The generated URL was incorrect.")
+             # Debug log to see what we tried
+             logger.info(f"  [Debug] Failed URL: {download_url}")
              return None
              
         response.raise_for_status()
