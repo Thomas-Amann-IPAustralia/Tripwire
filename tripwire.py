@@ -109,7 +109,7 @@ def fetch_legislation_metadata(session, source):
     
     for doc in documents:
         fmt = doc.get('format', '').lower()
-        # [Fix] Added 'word' to catch cases where API returns "Word" instead of ".docx"
+        # Check for 'word', '.docx', or 'officedocument'
         if 'word' in fmt or '.docx' in fmt or '.doc' in fmt or 'officedocument' in fmt:
              selected_doc = doc
              break
@@ -124,29 +124,88 @@ def fetch_legislation_metadata(session, source):
     logger.info(f"  -> Found version: {version_identifier} ({selected_doc.get('format')}) dated {selected_doc.get('start')}")
     return version_identifier, selected_doc
 
+def construct_download_url(doc_meta):
+    """
+    Determines the correct download URL.
+    1. Tries to find the canonical OData 'uri' or 'readLink' in metadata.
+    2. [cite_start]Falls back to manual construction of the composite key[cite: 134].
+    """
+    # 1. Try to get the self-link directly from OData metadata
+    # OData v2/v3 often puts it in __metadata['uri']
+    if '__metadata' in doc_meta and 'uri' in doc_meta['__metadata']:
+        return doc_meta['__metadata']['uri'] + "/$value"
+    
+    # OData v4 often puts it in @odata.readLink or @odata.id
+    if '@odata.readLink' in doc_meta:
+        return doc_meta['@odata.readLink'] + "/$value"
+    if '@odata.id' in doc_meta:
+        return doc_meta['@odata.id'] + "/$value"
+
+    # [cite_start]2. Fallback: Manually construct the composite key URL [cite: 134]
+    # GET /v1/documents(titleid='...',start=..., ...)
+    # Note quoting: strings need quotes, numbers/dates usually don't or need specific formatting
+    logger.info("  -> Constructing manual OData URL (Fallback)...")
+    
+    try:
+        # Helper to safely quote strings
+        def q(val): return f"'{val}'"
+        
+        # Helper to format dates - checks if 'datetime' prefix is needed 
+        # (Assuming raw ISO string from JSON is sufficient based on APIInfo source 134)
+        def d(val): return f"datetime'{val}'" 
+
+        # Extract keys
+        title_id = doc_meta.get('titleId')
+        start = doc_meta.get('start')
+        retro_start = doc_meta.get('retrospectiveStart')
+        rect_ver = doc_meta.get('rectificationVersionNumber')
+        d_type = doc_meta.get('type')
+        unique_num = doc_meta.get('uniqueTypeNumber')
+        vol_num = doc_meta.get('volumeNumber')
+        fmt = doc_meta.get('format')
+
+        # Build the segment string
+        [cite_start]# [cite: 134] syntax: 
+        # titleid='...',start=...,retrospectivestart=...,rectificationversionnumber=...,type='...',uniqueTypeNumber=...,volumeNumber=...,format='...'
+        
+        segment = (
+            f"titleid={q(title_id)},"
+            f"start={d(start)},"
+            f"retrospectivestart={d(retro_start)},"
+            f"rectificationversionnumber={rect_ver},"
+            f"type={q(d_type)},"
+            f"uniqueTypeNumber={unique_num},"
+            f"volumeNumber={vol_num},"
+            f"format={q(fmt)}"
+        )
+        
+        return f"https://api.prod.legislation.gov.au/v1/documents({segment})/$value"
+        
+    except Exception as e:
+        logger.error(f"  [x] Failed to construct manual URL: {e}")
+        return None
+
 def download_legislation_content(session, doc_metadata):
     """
-    Downloads the binary content using the Content endpoint.
-    Uses the internal GUID ('id') if available, falling back to RegisterId.
-    GET /v1/Content({guid})
+    Downloads the binary content.
     """
-    api_root = "https://api.prod.legislation.gov.au/v1"
+    download_url = construct_download_url(doc_metadata)
     
-    # [cite_start][Fix] Prefer the internal GUID 'id' for the Content endpoint key [cite: 10]
-    content_key = doc_metadata.get('id')
-    
-    # If no GUID, fallback to registerId (though this previously 404'd)
-    if not content_key:
-        content_key = doc_metadata.get('registerId')
-        logger.warning("  [!] GUID not found in metadata. Attempting download with RegisterId.")
+    if not download_url:
+        logger.error("  [x] Could not determine download URL.")
+        return None
 
-    download_url = f"{api_root}/Content('{content_key}')"
-    
-    logger.info(f"  -> Downloading content for {doc_metadata.get('registerId')} (Key: {content_key})...")
+    logger.info(f"  -> Downloading content from: {download_url}")
     
     try:
         # Accept */* to prevent 406 Not Acceptable errors
+        # Stream=True is good practice for file downloads
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
+        
+        if response.status_code == 404:
+             logger.error(f"  [x] 404 Not Found. URL: {download_url}")
+             return None
+             
         response.raise_for_status()
         return response.content
     except Exception as e:
