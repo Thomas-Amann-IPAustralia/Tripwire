@@ -12,19 +12,17 @@
     "priority": "Low"
   },
   {
-    "name": "Trade Marks Act 1995 (Latest EPUB)",
+    "name": "Trade Marks Act 1995",
     "type": "Legislation_OData",
     "base_url": "https://api.prod.legislation.gov.au/v1/documents",
     "title_id": "C2004A04969",
-    "format": ".docx",
     "priority": "High"
   },
   {
-    "name": "Patents Regulations 1991 (Latest EPUB)",
+    "name": "Patents Regulations 1991",
     "type": "Legislation_OData",
     "base_url": "https://api.prod.legislation.gov.au/v1/documents",
     "title_id": "F1996B02697",
-    "format": ".docx",
     "priority": "High"
   }
 ]
