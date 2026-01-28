@@ -158,14 +158,14 @@ def fetch_webpage_content(driver, url, max_retries=2):
             time.sleep(2)
     return None
 
-# --- Legislation API Logic ---
+# --- Legislation API Logic (CORRECTED) ---
 
 def fetch_legislation_metadata(source):
     base_url = source['base_url']
     title_id = source['title_id']
     doc_format = source.get('format', 'Word') 
     
-    # Query only the single latest record ($top=1)
+    # "The Scout": Find the metadata for the latest version in the desired format
     params = {
         "$filter": f"titleid eq '{title_id}' and format eq '{doc_format}'",
         "$orderby": "start desc",
@@ -179,20 +179,50 @@ def fetch_legislation_metadata(source):
         data = resp.json()
         if not data.get('value'): return None, None
         latest_meta = data['value'][0]
+        # Return registerId as the unique version identifier
         return latest_meta.get('registerId'), latest_meta
     except Exception as e:
         logger.error(f"  [x] Legislation API error: {e}")
         return None, None
 
 def download_legislation_content(base_url, meta):
+    """
+    Constructs the specific OData 'find()' URL using the composite key ingredients.
+    Ingredients: registerId (str), type (str), format (str), 
+    uniqueTypeNumber (int), volumeNumber (int), rectificationVersionNumber (int).
+    """
     try:
-        keys = {k: meta[k] for k in ['titleId', 'start', 'retrospectiveStart', 'rectificationVersionNumber', 'type', 'uniqueTypeNumber', 'volumeNumber', 'format']}
-        path_segment = f"titleid='{keys['titleId']}',start='{keys['start']}',retrospectivestart='{keys['retrospectiveStart']}',rectificationversionnumber={keys['rectificationVersionNumber']},type='{keys['type']}',uniqueTypeNumber={keys['uniqueTypeNumber']},volumeNumber={keys['volumeNumber']},format='{keys['format']}'"
-        download_url = f"{base_url}({path_segment})/$value"
+        # Extract ingredients (Strings need quotes, Ints do not)
+        reg_id = meta.get('registerId')
+        doc_type = meta.get('type')
+        doc_fmt = meta.get('format')
+        
+        # Enforce integers, defaulting to 0 if null/None to prevent 400 errors
+        uniq_num = int(meta.get('uniqueTypeNumber') or 0)
+        vol_num = int(meta.get('volumeNumber') or 0)
+        rect_ver = int(meta.get('rectificationVersionNumber') or 0)
+
+        # "The Final Assembly": Constructing the call arguments
+        # Note: Strings are wrapped in '', Integers are raw.
+        find_arguments = (
+            f"registerId='{reg_id}',"
+            f"type='{doc_type}',"
+            f"format='{doc_fmt}',"
+            f"uniqueTypeNumber={uniq_num},"
+            f"volumeNumber={vol_num},"
+            f"rectificationVersionNumber={rect_ver}"
+        )
+        
+        # Assemble the full URL: .../v1/documents/find(...)
+        clean_base = base_url.rstrip('/')
+        download_url = f"{clean_base}/find({find_arguments})/$value"
+        
+        logger.info(f"  -> Downloading from composite key: {download_url}")
         
         file_resp = requests.get(download_url, headers={'User-Agent': 'TripwireBot/1.0'}, timeout=90)
         file_resp.raise_for_status()
         return file_resp.content
+
     except Exception as e:
         logger.error(f"  [x] Legislation download error: {e}")
         return None
