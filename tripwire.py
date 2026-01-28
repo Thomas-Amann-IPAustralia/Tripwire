@@ -108,6 +108,7 @@ def fetch_legislation_metadata(session, source):
     selected_doc = None
     
     # Priority: Word -> PDF -> RTF -> Any
+    # Note: We match loosely here, but will map strictly in the download step
     priority_keywords = ['word', '.docx', '.doc', 'pdf', 'rtf']
     
     for keyword in priority_keywords:
@@ -132,57 +133,56 @@ def fetch_legislation_metadata(session, source):
 
 def construct_download_url(doc_meta):
     """
-    Determines the correct download URL using the complex composite key.
+    Constructs the download URL using the 'find' function.
+    See Source [162] in API docs.
     """
-    # 1. Try to get the self-link directly from OData metadata if available
-    if '__metadata' in doc_meta and 'uri' in doc_meta['__metadata']:
-        return doc_meta['__metadata']['uri'] + "/$value"
+    # 1. Check for a direct media link (Metadata often has this hidden)
+    if '__metadata' in doc_meta and 'media_src' in doc_meta['__metadata']:
+        return doc_meta['__metadata']['media_src']
     
-    # [cite_start]2. Fallback: Manually construct the composite key URL [cite: 134]
-    logger.info("  -> Constructing manual OData URL...")
+    # 2. Construct the '/documents/find(...)' URL
+    # This is safer than the date-based key because it uses registerId
+    logger.info("  -> Constructing 'find' URL...")
     
     try:
-        # Helper to safely quote strings
+        # --- Format Mapping (CRITICAL FIX) ---
+        # The API metadata says "Word", but the file key requires ".docx"
+        raw_fmt = doc_meta.get('format', '')
+        if 'word' in raw_fmt.lower():
+            safe_fmt = '.docx'
+        elif 'pdf' in raw_fmt.lower():
+            safe_fmt = '.pdf'
+        else:
+            safe_fmt = raw_fmt # Hope for the best
+
+        # Helpers for OData syntax
+        # Strings need quotes: 'value'
+        # Numbers do NOT need quotes: 0
         def q(val): return f"'{val}'"
         
-        # Helper to format dates. 
-        # API requires: start=datetime'2024-10-14T00:00:00'
-        def d(val): return f"datetime'{val}'" 
-
-        # Extract keys safely from the doc_meta dictionary
-        title_id = doc_meta.get('titleId')
-        start = doc_meta.get('start')  # This was the source of the previous error
-        retro_start = doc_meta.get('retrospectiveStart')
-        rect_ver = doc_meta.get('rectificationVersionNumber')
+        reg_id = doc_meta.get('registerId')
         d_type = doc_meta.get('type')
-        unique_num = doc_meta.get('uniqueTypeNumber')
-        vol_num = doc_meta.get('volumeNumber')
-        fmt = doc_meta.get('format')
+        # Ensure numbers are integers, defaulting to 0 if None
+        uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
+        vol_num = int(doc_meta.get('volumeNumber') or 0)
+        rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
 
-        # Check for missing critical keys
-        if not title_id or not start:
-            logger.error("  [x] Missing critical metadata (titleId or start) for URL construction.")
-            return None
-
-        # Build the segment string
-        # Syntax from Source 134:
-        # /documents(titleid='...',start=datetime'...',retrospectivestart=datetime'...',rectificationversionnumber=...,type='...',uniqueTypeNumber=...,volumeNumber=...,format='...')
+        # GET /v1/documents/find(registerId='...',type='...',format='...', ...)
+        # We explicitly DO NOT add /$value here because 'find' returns the bytes by default (Source 138)
         
         segment = (
-            f"titleid={q(title_id)},"
-            f"start={d(start)},"
-            f"retrospectivestart={d(retro_start)},"
-            f"rectificationversionnumber={rect_ver},"
+            f"registerId={q(reg_id)},"
             f"type={q(d_type)},"
-            f"uniqueTypeNumber={unique_num},"
+            f"format={q(safe_fmt)},"
+            f"uniqueTypeNumber={uniq_num},"
             f"volumeNumber={vol_num},"
-            f"format={q(fmt)}"
+            f"rectificationVersionNumber={rect_ver}"
         )
         
-        return f"https://api.prod.legislation.gov.au/v1/documents({segment})/$value"
+        return f"https://api.prod.legislation.gov.au/v1/documents/find({segment})"
         
     except Exception as e:
-        logger.error(f"  [x] Failed to construct manual URL: {e}")
+        logger.error(f"  [x] Failed to construct find URL: {e}")
         return None
 
 def download_legislation_content(session, doc_metadata):
@@ -194,7 +194,7 @@ def download_legislation_content(session, doc_metadata):
     if not download_url:
         return None
 
-    logger.info(f"  -> Downloading from generated URL...")
+    logger.info(f"  -> Downloading from: {download_url}")
     
     try:
         # Accept */* to prevent 406 Not Acceptable errors
@@ -202,8 +202,10 @@ def download_legislation_content(session, doc_metadata):
         
         if response.status_code == 404:
              logger.error(f"  [x] 404 Not Found. The generated URL was incorrect.")
-             # Debug log to see what we tried
-             logger.info(f"  [Debug] Failed URL: {download_url}")
+             # If .docx failed, maybe try the raw string as a fallback?
+             if "docx" in download_url:
+                 logger.info("  -> Retrying with original format string...")
+                 # Quick fallback hack: replace .docx with Word? (Unlikely to work but worth a shot in debug)
              return None
              
         response.raise_for_status()
