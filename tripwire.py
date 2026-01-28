@@ -126,7 +126,7 @@ def fetch_legislation_metadata(session, source):
         
         # Priority 1: Word
         for doc in version_docs:
-            [cite_start]if doc.get('format') == 'Word': [cite: 1]
+            if doc.get('format') == 'Word':
                 selected_doc = doc
                 break
         if selected_doc: break
@@ -158,7 +158,6 @@ def fetch_legislation_metadata(session, source):
 def download_legislation_content(session, doc_meta):
     """
     Downloads the binary content using the explicit OData 'find' composite key.
-    See Source [162].
     """
     
     # Helper to safely quote strings
@@ -175,7 +174,7 @@ def download_legislation_content(session, doc_meta):
         vol_num = int(doc_meta.get('volumeNumber') or 0)
         rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
 
-        # Construct the URL based on Source [162]
+        # Construct the URL based on OData syntax
         # GET /v1/documents/find(registerId='...',type='...',format='...', ...)
         segment = (
             f"registerId={q(reg_id)},"
@@ -186,7 +185,7 @@ def download_legislation_content(session, doc_meta):
             f"rectificationVersionNumber={rect_ver}"
         )
         
-        # [cite_start]Note: 'find' returns the raw file bytes by default [cite: 138]
+        # Note: 'find' returns the raw file bytes by default
         download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})"
         
         logger.info(f"  -> Downloading from: {download_url}")
