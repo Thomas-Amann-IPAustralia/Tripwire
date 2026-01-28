@@ -74,14 +74,13 @@ def prune_history(cursor, source_name):
 def fetch_legislation_metadata(session, source):
     """
     Fetches metadata from FRL API. 
-    1. Searches for documents by Register ID (title_id).
-    2. Filters the results in Python to find the .docx version (or falls back).
-    [cite_start][cite: 8] GET /v1/documents
+    1. Searches for documents by TitleID (Series ID).
+    2. Filters results to find the .docx/Word version.
     """
     base_url = source['base_url']
     target_title_id = source['title_id'] 
     
-    # Query for the TitleID (Series ID). We fetch the top 20 to ensure we catch the format we want.
+    # Query for the TitleID (Series ID). Fetch top 20 to ensure we see the Word version.
     params = {
         "$filter": f"titleid eq '{target_title_id}'", 
         "$orderby": "start desc",
@@ -105,12 +104,13 @@ def fetch_legislation_metadata(session, source):
         logger.warning(f"  [!] No documents found for {target_title_id}")
         return None, None
 
-    # Filter for the desired format. We want the latest version that has a Word doc.
+    # Filter for the desired format (Word/docx).
     selected_doc = None
     
     for doc in documents:
         fmt = doc.get('format', '').lower()
-        if '.docx' in fmt or '.doc' in fmt or 'officedocument' in fmt:
+        # [Fix] Added 'word' to catch cases where API returns "Word" instead of ".docx"
+        if 'word' in fmt or '.docx' in fmt or '.doc' in fmt or 'officedocument' in fmt:
              selected_doc = doc
              break
     
@@ -124,18 +124,28 @@ def fetch_legislation_metadata(session, source):
     logger.info(f"  -> Found version: {version_identifier} ({selected_doc.get('format')}) dated {selected_doc.get('start')}")
     return version_identifier, selected_doc
 
-def download_legislation_content(session, version_register_id):
+def download_legislation_content(session, doc_metadata):
     """
-    Downloads the binary content using the simple Content endpoint.
-    [cite_start][cite: 10] GET /v1/Content({key})
+    Downloads the binary content using the Content endpoint.
+    Uses the internal GUID ('id') if available, falling back to RegisterId.
+    GET /v1/Content({guid})
     """
-    api_root = "https://api.prod.legislation.gov.au/v1" 
-    download_url = f"{api_root}/Content('{version_register_id}')"
+    api_root = "https://api.prod.legislation.gov.au/v1"
     
-    logger.info(f"  -> Downloading content for {version_register_id}...")
+    # [cite_start][Fix] Prefer the internal GUID 'id' for the Content endpoint key [cite: 10]
+    content_key = doc_metadata.get('id')
+    
+    # If no GUID, fallback to registerId (though this previously 404'd)
+    if not content_key:
+        content_key = doc_metadata.get('registerId')
+        logger.warning("  [!] GUID not found in metadata. Attempting download with RegisterId.")
+
+    download_url = f"{api_root}/Content('{content_key}')"
+    
+    logger.info(f"  -> Downloading content for {doc_metadata.get('registerId')} (Key: {content_key})...")
     
     try:
-        # Accept */* to prevent 406 Not Acceptable errors on binary files
+        # Accept */* to prevent 406 Not Acceptable errors
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
         response.raise_for_status()
         return response.content
@@ -185,7 +195,7 @@ def main():
                     continue 
                 
                 logger.info(f"  [!] NEW VERSION DETECTED ({found_ver_id}). Downloading...")
-                content_bytes = download_legislation_content(session, found_ver_id)
+                content_bytes = download_legislation_content(session, meta)
                 
                 if content_bytes is None:
                     logger.error("  [x] Skipping update due to download failure.")
