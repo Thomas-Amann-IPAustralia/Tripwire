@@ -1,4 +1,3 @@
-import sqlite3
 import json
 import hashlib
 import requests
@@ -10,7 +9,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 # --- Configuration ---
-DB_FILE = 'tripwire.sqlite'
+HISTORY_FILE = 'tripwire_history.json'
 SOURCES_FILE = 'sources.json'
 HISTORY_LIMIT = 10 
 
@@ -35,23 +34,44 @@ def get_robust_session():
     session.mount("https://", adapter)
     return session
 
-def init_db():
-    """Initializes the SQLite database."""
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS history (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            source_name TEXT,
-            version_id TEXT,
-            content_hash TEXT,
-            timestamp DATETIME,
-            priority TEXT,
-            details TEXT
-        )
-    ''')
-    conn.commit()
-    return conn
+def load_history():
+    """Loads history from JSON file."""
+    if not os.path.exists(HISTORY_FILE):
+        return []
+    try:
+        with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except (json.JSONDecodeError, ValueError):
+        logger.warning("History file is corrupt or empty. Starting fresh.")
+        return []
+
+def save_history(history):
+    """Saves history to JSON file."""
+    try:
+        with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
+            json.dump(history, f, indent=2)
+    except Exception as e:
+        logger.error(f"Failed to save history: {e}")
+
+def prune_history(history):
+    """
+    Keeps only the last N entries per source.
+    Assumes the list is roughly chronological (appended).
+    """
+    new_history = []
+    # Get unique source names
+    source_names = set(entry['source_name'] for entry in history)
+    
+    for name in source_names:
+        # Filter entries for this source
+        source_entries = [e for e in history if e['source_name'] == name]
+        # Sort by timestamp just in case (descending)
+        source_entries.sort(key=lambda x: x['timestamp'])
+        # Keep only the last N
+        kept_entries = source_entries[-HISTORY_LIMIT:]
+        new_history.extend(kept_entries)
+    
+    return new_history
 
 def get_hash(content_bytes):
     """Generates SHA256 hash of content."""
@@ -59,29 +79,15 @@ def get_hash(content_bytes):
         return "NO_CONTENT"
     return hashlib.sha256(content_bytes).hexdigest()
 
-def prune_history(cursor, source_name):
-    """Keeps only the last N entries for a source."""
-    cursor.execute('''
-        DELETE FROM history
-        WHERE source_name = ? AND id NOT IN (
-            SELECT id FROM history
-            WHERE source_name = ?
-            ORDER BY timestamp DESC
-            LIMIT ?
-        )
-    ''', (source_name, source_name, HISTORY_LIMIT))
-
 def fetch_legislation_metadata(session, source):
     """
-    Fetches metadata from FRL API. 
-    1. Searches for all documents matching the TitleID.
-    2. Selects the specific METADATA ENTRY for the desired format (Word > Pdf).
+    Fetches metadata from FRL API using the logic that successfully finds
+    Word/PDF formats and their specific metadata.
     """
     base_url = source['base_url']
     target_title_id = source['title_id'] 
     
     # Query for the TitleID (Series ID).
-    # We fetch more results (top 40) to ensure we get all formats for the latest versions.
     params = {
         "$filter": f"titleid eq '{target_title_id}'", 
         "$orderby": "start desc",
@@ -106,7 +112,6 @@ def fetch_legislation_metadata(session, source):
         return None, None
 
     # --- INTELLIGENT SELECTION ---
-    # We are looking for the latest "start" date, and within that date, the best format.
     # Group docs by 'start' date first
     docs_by_date = {}
     for doc in documents:
@@ -138,7 +143,7 @@ def fetch_legislation_metadata(session, source):
                 break
         if selected_doc: break
         
-        # Priority 3: Epub (if nothing else)
+        # Priority 3: Epub
         for doc in version_docs:
             if doc.get('format') == 'Epub':
                 selected_doc = doc
@@ -149,7 +154,6 @@ def fetch_legislation_metadata(session, source):
         logger.warning("  [!] No usable format found. Defaulting to first record.")
         selected_doc = documents[0]
 
-    # Use registerId from the selected specific format entry
     version_identifier = selected_doc.get('registerId') 
     
     logger.info(f"  -> Found version: {version_identifier} | Format: {selected_doc.get('format')} | Date: {selected_doc.get('start')}")
@@ -157,9 +161,8 @@ def fetch_legislation_metadata(session, source):
 
 def download_legislation_content(session, doc_meta):
     """
-    Downloads the binary content using the explicit OData 'find' composite key.
+    Downloads the binary content using the OData 'find' composite key.
     """
-    
     # Helper to safely quote strings
     def q(val): return f"'{val}'"
     
@@ -167,15 +170,14 @@ def download_legislation_content(session, doc_meta):
         # Extract keys EXACTLY as they appear in the metadata object
         reg_id = doc_meta.get('registerId')
         d_type = doc_meta.get('type')
-        fmt = doc_meta.get('format') # This will be "Word", "Pdf", etc.
+        fmt = doc_meta.get('format') 
         
         # Numbers must be unquoted integers
         uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
         vol_num = int(doc_meta.get('volumeNumber') or 0)
         rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
 
-        # Construct the URL based on OData syntax
-        # GET /v1/documents/find(registerId='...',type='...',format='...', ...)
+        # Construct the URL based on Source [162]
         segment = (
             f"registerId={q(reg_id)},"
             f"type={q(d_type)},"
@@ -185,7 +187,6 @@ def download_legislation_content(session, doc_meta):
             f"rectificationVersionNumber={rect_ver}"
         )
         
-        # Note: 'find' returns the raw file bytes by default
         download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})"
         
         logger.info(f"  -> Downloading from: {download_url}")
@@ -207,8 +208,8 @@ def main():
     with open(SOURCES_FILE, 'r') as f:
         sources = json.load(f)
 
-    conn = init_db()
-    cursor = conn.cursor()
+    # Load existing history (JSON)
+    history = load_history()
     session = get_robust_session()
     
     updates_found = False
@@ -226,6 +227,7 @@ def main():
             content_bytes = None
             version_id = None
             details_str = ""
+            current_hash = None
 
             # --- LEGISLATION (API) CHECK ---
             if stype == "Legislation_OData":
@@ -234,12 +236,12 @@ def main():
                 if not found_ver_id:
                     continue 
                 
-                # Check DB for existing RegisterID (and ensure we have the hash for it)
-                # We use the RegisterID + Format as the unique key logic
+                # Create a unique key for history checking
+                # We combine RegisterID + Format
                 db_ver_key = f"{found_ver_id}_{meta.get('format')}"
                 
-                cursor.execute('SELECT id FROM history WHERE source_name = ? AND version_id = ?', (name, db_ver_key))
-                if cursor.fetchone():
+                # Check if this specific version key exists in history
+                if any(h['source_name'] == name and h['version_id'] == db_ver_key for h in history):
                     logger.info("  No change (Version Match).")
                     continue 
                 
@@ -251,6 +253,7 @@ def main():
                     continue
 
                 version_id = db_ver_key
+                current_hash = get_hash(content_bytes)
                 details_str = f"Legislation Update. Format: {meta.get('format')}. Date: {meta.get('start')}"
 
             # --- RSS / GENERIC CHECK ---
@@ -259,12 +262,11 @@ def main():
                 resp.raise_for_status()
                 content_bytes = resp.content
                 
-                # Use hash as version ID for RSS
                 current_hash = get_hash(content_bytes)
                 version_id = current_hash 
                 
-                cursor.execute('SELECT id FROM history WHERE source_name = ? AND version_id = ?', (name, version_id))
-                if cursor.fetchone():
+                # Check if this hash exists in history
+                if any(h['source_name'] == name and h['version_id'] == version_id for h in history):
                      logger.info("  No change.")
                      continue
                 
@@ -272,25 +274,28 @@ def main():
                 details_str = "RSS/API Update"
 
             # --- SAVE UPDATE ---
-            new_hash = get_hash(content_bytes)
             timestamp = datetime.datetime.now().isoformat()
             
-            cursor.execute('''
-                INSERT INTO history (source_name, version_id, content_hash, timestamp, priority, details)
-                VALUES (?, ?, ?, ?, ?, ?)
-            ''', (name, version_id, new_hash, timestamp, priority, details_str))
+            new_entry = {
+                "source_name": name,
+                "version_id": version_id,
+                "content_hash": current_hash,
+                "timestamp": timestamp,
+                "priority": priority,
+                "details": details_str
+            }
             
-            prune_history(cursor, name)
+            history.append(new_entry)
             updates_found = True
 
         except Exception as e:
             logger.error(f"  [x] Error checking {name}: {e}")
 
-    conn.commit()
-    conn.close()
-
+    # Prune and Save
     if updates_found:
-        logger.info("--- Updates completed ---")
+        history = prune_history(history)
+        save_history(history)
+        logger.info("--- Updates completed and saved to JSON ---")
     else:
         logger.info("--- No updates found ---")
 
