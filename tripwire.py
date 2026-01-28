@@ -9,6 +9,8 @@ import random
 import logging
 import re
 from typing import List, Dict, Optional
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 # --- Web Scrape Imports ---
 from selenium import webdriver
@@ -35,8 +37,26 @@ BLOCK_PAGE_SIGNATURES = [
 ]
 
 # --- Logging ---
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[logging.StreamHandler(sys.stdout)]
+)
 logger = logging.getLogger("Tripwire")
+
+# --- Robust Session Factory ---
+def get_robust_session():
+    """Creates a requests session with retry logic for stability."""
+    session = requests.Session()
+    retry_strategy = Retry(
+        total=5,
+        backoff_factor=2,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["GET"]
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("https://", adapter)
+    return session
 
 # --- JSON History Management ---
 
@@ -58,7 +78,6 @@ def save_history(history: List[Dict]):
         logger.error(f"Failed to save history: {e}")
 
 def prune_history(history: List[Dict]) -> List[Dict]:
-    """Keeps only the last N entries per source."""
     new_history = []
     source_names = set(entry['source_name'] for entry in history)
     for name in source_names:
@@ -116,17 +135,14 @@ def clean_html_content(html):
     if not page_body:
         return ""
 
-    # Cleanup DOM (Remove nav, footer, scripts, etc.)
     for tag_selector in TAGS_TO_EXCLUDE:
         for tag in page_body.select(tag_selector):
             tag.decompose()
     
     text_content = str(page_body)
-
-    # Noise Reduction: Remove dynamic timestamps
+    # Noise Reduction
     text_content = re.sub(r'Generated on:? \d{1,2}/\d{1,2}/\d{4}.*', '', text_content, flags=re.IGNORECASE)
     text_content = re.sub(r'Last updated:? \d{1,2}:\d{2}.*', '', text_content, flags=re.IGNORECASE)
-    
     return text_content
 
 def fetch_webpage_content(driver, url, max_retries=2):
@@ -151,80 +167,104 @@ def fetch_webpage_content(driver, url, max_retries=2):
             if not cleaned_html:
                 return None
 
-            # Convert to Markdown (standard syntax will be preserved)
             return md(cleaned_html, heading_style="ATX")
         except Exception as e:
             logger.warning(f"  [x] Attempt {attempt+1} failed for {url}: {e}")
             time.sleep(2)
     return None
 
-# --- Legislation API Logic (CORRECTED) ---
+# --- Legislation API Logic (Restored from your working script) ---
 
-def fetch_legislation_metadata(source):
+def fetch_legislation_metadata(session, source):
+    """Fetches metadata using Intelligent Selection (Word > Pdf > Epub)."""
     base_url = source['base_url']
-    title_id = source['title_id']
-    doc_format = source.get('format', 'Word') 
+    target_title_id = source['title_id'] 
     
-    # "The Scout": Find the metadata for the latest version in the desired format
+    # Use the broader query ($top=40) which proved more stable
     params = {
-        "$filter": f"titleid eq '{title_id}' and format eq '{doc_format}'",
+        "$filter": f"titleid eq '{target_title_id}'", 
         "$orderby": "start desc",
-        "$top": "1"
+        "$top": "40"
     }
-    headers = {'User-Agent': 'TripwireBot/1.0', 'Accept': 'application/json'}
+    headers = {'Accept': 'application/json'}
     
     try:
-        resp = requests.get(base_url, params=params, headers=headers, timeout=45)
+        resp = session.get(base_url, params=params, headers=headers, timeout=30)
         resp.raise_for_status()
         data = resp.json()
-        if not data.get('value'): return None, None
-        latest_meta = data['value'][0]
-        # Return registerId as the unique version identifier
-        return latest_meta.get('registerId'), latest_meta
     except Exception as e:
-        logger.error(f"  [x] Legislation API error: {e}")
+        logger.error(f"  [x] Metadata request failed: {e}")
+        return None, None
+    
+    documents = data.get('value', [])
+    if not documents:
         return None, None
 
-def download_legislation_content(base_url, meta):
-    """
-    Constructs the specific OData 'find()' URL using the composite key ingredients.
-    Ingredients: registerId (str), type (str), format (str), 
-    uniqueTypeNumber (int), volumeNumber (int), rectificationVersionNumber (int).
-    """
-    try:
-        # Extract ingredients (Strings need quotes, Ints do not)
-        reg_id = meta.get('registerId')
-        doc_type = meta.get('type')
-        doc_fmt = meta.get('format')
+    # Sort docs by date to find the absolute latest
+    docs_by_date = {}
+    for doc in documents:
+        start_date = doc.get('start')
+        if start_date not in docs_by_date:
+            docs_by_date[start_date] = []
+        docs_by_date[start_date].append(doc)
+    
+    sorted_dates = sorted(docs_by_date.keys(), reverse=True)
+    selected_doc = None
+    
+    # Priority: Word > Pdf > Epub
+    for date in sorted_dates:
+        version_docs = docs_by_date[date]
+        for doc in version_docs:
+            if doc.get('format') == 'Word':
+                selected_doc = doc; break
+        if selected_doc: break
         
-        # Enforce integers, defaulting to 0 if null/None to prevent 400 errors
-        uniq_num = int(meta.get('uniqueTypeNumber') or 0)
-        vol_num = int(meta.get('volumeNumber') or 0)
-        rect_ver = int(meta.get('rectificationVersionNumber') or 0)
+        for doc in version_docs:
+            if doc.get('format') == 'Pdf':
+                selected_doc = doc; break
+        if selected_doc: break
+        
+        for doc in version_docs:
+            if doc.get('format') == 'Epub':
+                selected_doc = doc; break
+        if selected_doc: break
 
-        # "The Final Assembly": Constructing the call arguments
-        # Note: Strings are wrapped in '', Integers are raw.
-        find_arguments = (
-            f"registerId='{reg_id}',"
-            f"type='{doc_type}',"
-            f"format='{doc_fmt}',"
+    if not selected_doc:
+        selected_doc = documents[0]
+
+    return selected_doc.get('registerId'), selected_doc
+
+def download_legislation_content(session, doc_meta):
+    """Downloads binary content using the OData composite key."""
+    def q(val): return f"'{val}'"
+    
+    try:
+        reg_id = doc_meta.get('registerId')
+        d_type = doc_meta.get('type')
+        fmt = doc_meta.get('format')
+        uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
+        vol_num = int(doc_meta.get('volumeNumber') or 0)
+        rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
+
+        segment = (
+            f"registerId={q(reg_id)},"
+            f"type={q(d_type)},"
+            f"format={q(fmt)},"
             f"uniqueTypeNumber={uniq_num},"
             f"volumeNumber={vol_num},"
             f"rectificationVersionNumber={rect_ver}"
         )
         
-        # Assemble the full URL: .../v1/documents/find(...)
-        clean_base = base_url.rstrip('/')
-        download_url = f"{clean_base}/find({find_arguments})/$value"
+        # Explicit find() URL construction
+        download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})/$value"
+        logger.info(f"  -> Downloading from: {download_url}")
         
-        logger.info(f"  -> Downloading from composite key: {download_url}")
-        
-        file_resp = requests.get(download_url, headers={'User-Agent': 'TripwireBot/1.0'}, timeout=90)
-        file_resp.raise_for_status()
-        return file_resp.content
+        response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
+        response.raise_for_status()
+        return response.content
 
     except Exception as e:
-        logger.error(f"  [x] Legislation download error: {e}")
+        logger.error(f"  [x] Download failed: {e}")
         return None
 
 # --- Main Execution ---
@@ -238,6 +278,9 @@ def main():
         sources = json.load(f)
 
     history = load_history()
+    session = get_robust_session() # Use the robust session!
+    
+    # Check if we need the browser
     has_web_sources = any(s.get('type') == 'WebPage' for s in sources)
     driver = initialize_driver() if has_web_sources else None
 
@@ -258,18 +301,21 @@ def main():
         is_new = False
         
         try:
+            # 1. LEGISLATION
             if stype == "Legislation_OData":
-                ver_id, meta = fetch_legislation_metadata(source)
+                ver_id, meta = fetch_legislation_metadata(session, source)
                 if not ver_id: continue
                 
+                # Check history using version ID (efficient)
                 if not any(h['source_name'] == name and h['version_id'] == ver_id for h in history):
                     logger.info(f"  [!] NEW LEGISLATION VERSION ({ver_id}).")
-                    content_to_save = download_legislation_content(source['base_url'], meta)
+                    content_to_save = download_legislation_content(session, meta)
                     if content_to_save:
                         version_id = ver_id
-                        details_str = f"Legislation Update ({source.get('format')})"
+                        details_str = f"Legislation Update ({meta.get('format')})"
                         is_new = True
 
+            # 2. WEB PAGE
             elif stype == "WebPage":
                 if not driver: 
                     logger.warning("  [!] Web driver required but not initialized.")
@@ -285,8 +331,10 @@ def main():
                         details_str = "Web Scrape Update"
                         is_new = True
 
+            # 3. RSS / API
             elif stype in ["RSS", "API"]:
-                resp = requests.get(source['url'], timeout=15)
+                # Use robust session here too
+                resp = session.get(source['url'], timeout=15)
                 if resp.status_code == 200:
                     current_hash = get_hash(resp.content)
                     if not any(h['source_name'] == name and h['version_id'] == current_hash for h in history):
@@ -296,6 +344,7 @@ def main():
                         details_str = "RSS/API Update"
                         is_new = True
 
+            # --- SAVE & UPDATE ---
             if is_new and content_to_save:
                 saved_file = save_to_archive(output_filename, content_to_save)
                 new_entry = {
