@@ -74,17 +74,18 @@ def prune_history(cursor, source_name):
 def fetch_legislation_metadata(session, source):
     """
     Fetches metadata from FRL API. 
-    1. Searches for documents by TitleID (Series ID).
-    2. Filters results to find a usable format.
+    1. Searches for all documents matching the TitleID.
+    2. Selects the specific METADATA ENTRY for the desired format (Word > Pdf).
     """
     base_url = source['base_url']
     target_title_id = source['title_id'] 
     
     # Query for the TitleID (Series ID).
+    # We fetch more results (top 40) to ensure we get all formats for the latest versions.
     params = {
         "$filter": f"titleid eq '{target_title_id}'", 
         "$orderby": "start desc",
-        "$top": "20"
+        "$top": "40"
     }
     
     headers = {'Accept': 'application/json'}
@@ -104,112 +105,97 @@ def fetch_legislation_metadata(session, source):
         logger.warning(f"  [!] No documents found for {target_title_id}")
         return None, None
 
-    # Filter for a usable format
+    # --- INTELLIGENT SELECTION ---
+    # We are looking for the latest "start" date, and within that date, the best format.
+    # Group docs by 'start' date first
+    docs_by_date = {}
+    for doc in documents:
+        start_date = doc.get('start')
+        if start_date not in docs_by_date:
+            docs_by_date[start_date] = []
+        docs_by_date[start_date].append(doc)
+    
+    # Sort dates descending (latest first)
+    sorted_dates = sorted(docs_by_date.keys(), reverse=True)
+    
     selected_doc = None
     
-    # Priority: Word -> PDF -> RTF -> Any
-    # Note: We match loosely here, but will map strictly in the download step
-    priority_keywords = ['word', '.docx', '.doc', 'pdf', 'rtf']
-    
-    for keyword in priority_keywords:
-        for doc in documents:
-            fmt = doc.get('format', '').lower()
-            dtype = doc.get('type', '').lower()
-            if keyword in fmt or keyword in dtype:
+    # Try to find Word or PDF in the latest version(s)
+    for date in sorted_dates:
+        version_docs = docs_by_date[date]
+        
+        # Priority 1: Word
+        for doc in version_docs:
+            [cite_start]if doc.get('format') == 'Word': [cite: 1]
                 selected_doc = doc
                 break
-        if selected_doc:
-            break
-    
-    # Fallback: Just take the latest one if no specific format matches
+        if selected_doc: break
+        
+        # Priority 2: Pdf
+        for doc in version_docs:
+            if doc.get('format') == 'Pdf':
+                selected_doc = doc
+                break
+        if selected_doc: break
+        
+        # Priority 3: Epub (if nothing else)
+        for doc in version_docs:
+            if doc.get('format') == 'Epub':
+                selected_doc = doc
+                break
+        if selected_doc: break
+
     if not selected_doc:
-        logger.warning("  [!] No preferred format found. Falling back to latest available entry.")
+        logger.warning("  [!] No usable format found. Defaulting to first record.")
         selected_doc = documents[0]
 
+    # Use registerId from the selected specific format entry
     version_identifier = selected_doc.get('registerId') 
     
-    logger.info(f"  -> Found version: {version_identifier} ({selected_doc.get('format')}) dated {selected_doc.get('start')}")
+    logger.info(f"  -> Found version: {version_identifier} | Format: {selected_doc.get('format')} | Date: {selected_doc.get('start')}")
     return version_identifier, selected_doc
 
-def construct_download_url(doc_meta):
+def download_legislation_content(session, doc_meta):
     """
-    Constructs the download URL using the 'find' function.
-    See Source [162] in API docs.
+    Downloads the binary content using the explicit OData 'find' composite key.
+    See Source [162].
     """
-    # 1. Check for a direct media link (Metadata often has this hidden)
-    if '__metadata' in doc_meta and 'media_src' in doc_meta['__metadata']:
-        return doc_meta['__metadata']['media_src']
     
-    # 2. Construct the '/documents/find(...)' URL
-    # This is safer than the date-based key because it uses registerId
-    logger.info("  -> Constructing 'find' URL...")
+    # Helper to safely quote strings
+    def q(val): return f"'{val}'"
     
     try:
-        # --- Format Mapping (CRITICAL FIX) ---
-        # The API metadata says "Word", but the file key requires ".docx"
-        raw_fmt = doc_meta.get('format', '')
-        if 'word' in raw_fmt.lower():
-            safe_fmt = '.docx'
-        elif 'pdf' in raw_fmt.lower():
-            safe_fmt = '.pdf'
-        else:
-            safe_fmt = raw_fmt # Hope for the best
-
-        # Helpers for OData syntax
-        # Strings need quotes: 'value'
-        # Numbers do NOT need quotes: 0
-        def q(val): return f"'{val}'"
-        
+        # Extract keys EXACTLY as they appear in the metadata object
         reg_id = doc_meta.get('registerId')
         d_type = doc_meta.get('type')
-        # Ensure numbers are integers, defaulting to 0 if None
+        fmt = doc_meta.get('format') # This will be "Word", "Pdf", etc.
+        
+        # Numbers must be unquoted integers
         uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
         vol_num = int(doc_meta.get('volumeNumber') or 0)
         rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
 
+        # Construct the URL based on Source [162]
         # GET /v1/documents/find(registerId='...',type='...',format='...', ...)
-        # We explicitly DO NOT add /$value here because 'find' returns the bytes by default (Source 138)
-        
         segment = (
             f"registerId={q(reg_id)},"
             f"type={q(d_type)},"
-            f"format={q(safe_fmt)},"
+            f"format={q(fmt)},"
             f"uniqueTypeNumber={uniq_num},"
             f"volumeNumber={vol_num},"
             f"rectificationVersionNumber={rect_ver}"
         )
         
-        return f"https://api.prod.legislation.gov.au/v1/documents/find({segment})"
+        # [cite_start]Note: 'find' returns the raw file bytes by default [cite: 138]
+        download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})"
         
-    except Exception as e:
-        logger.error(f"  [x] Failed to construct find URL: {e}")
-        return None
-
-def download_legislation_content(session, doc_metadata):
-    """
-    Downloads the binary content.
-    """
-    download_url = construct_download_url(doc_metadata)
-    
-    if not download_url:
-        return None
-
-    logger.info(f"  -> Downloading from: {download_url}")
-    
-    try:
-        # Accept */* to prevent 406 Not Acceptable errors
+        logger.info(f"  -> Downloading from: {download_url}")
+        
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
-        
-        if response.status_code == 404:
-             logger.error(f"  [x] 404 Not Found. The generated URL was incorrect.")
-             # If .docx failed, maybe try the raw string as a fallback?
-             if "docx" in download_url:
-                 logger.info("  -> Retrying with original format string...")
-                 # Quick fallback hack: replace .docx with Word? (Unlikely to work but worth a shot in debug)
-             return None
-             
         response.raise_for_status()
+        
         return response.content
+
     except Exception as e:
         logger.error(f"  [x] Download failed: {e}")
         return None
@@ -249,10 +235,13 @@ def main():
                 if not found_ver_id:
                     continue 
                 
-                # Check DB for existing RegisterID
-                cursor.execute('SELECT id FROM history WHERE source_name = ? AND version_id = ?', (name, found_ver_id))
+                # Check DB for existing RegisterID (and ensure we have the hash for it)
+                # We use the RegisterID + Format as the unique key logic
+                db_ver_key = f"{found_ver_id}_{meta.get('format')}"
+                
+                cursor.execute('SELECT id FROM history WHERE source_name = ? AND version_id = ?', (name, db_ver_key))
                 if cursor.fetchone():
-                    logger.info("  No change (Version ID match).")
+                    logger.info("  No change (Version Match).")
                     continue 
                 
                 logger.info(f"  [!] NEW VERSION DETECTED ({found_ver_id}). Downloading...")
@@ -262,7 +251,7 @@ def main():
                     logger.error("  [x] Skipping update due to download failure.")
                     continue
 
-                version_id = found_ver_id
+                version_id = db_ver_key
                 details_str = f"Legislation Update. Format: {meta.get('format')}. Date: {meta.get('start')}"
 
             # --- RSS / GENERIC CHECK ---
