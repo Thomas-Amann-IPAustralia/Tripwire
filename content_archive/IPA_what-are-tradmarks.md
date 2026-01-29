@@ -163,6 +163,8 @@ Accept
 
 Opt Out
 
+Skip embedded contentReturn to page content
+
 Feedback
 
 ![Close](https://siteintercept.qualtrics.com/WRQualtricsShared/Graphics/siteintercept/wr-dialog-close-btn-black.png)
