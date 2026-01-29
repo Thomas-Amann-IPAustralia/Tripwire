@@ -173,18 +173,25 @@ def fetch_webpage_content(driver, url, max_retries=2):
             time.sleep(2)
     return None
 
-# --- Legislation API Logic (Restored from your working script) ---
+# --- Legislation API Logic (FIXED) ---
 
 def fetch_legislation_metadata(session, source):
-    """Fetches metadata using Intelligent Selection (Word > Pdf > Epub)."""
+    """
+    Fetches the metadata for the specific TitleID.
+    CRITICAL FIX: We MUST filter by 'format' server-side.
+    Querying the entire history of a TitleID without format creates a result set 
+    too large for the API to handle, resulting in 400 Bad Request or Timeouts.
+    """
     base_url = source['base_url']
-    target_title_id = source['title_id'] 
+    target_title_id = source['title_id']
+    target_format = source.get('format', 'Word') # Default to Word
     
-    # Use the broader query ($top=40) which proved more stable
+    # 1. Filter strictly by TitleId AND Format to ensure a lightweight query
+    # 2. Capitalize TitleId just to be OData compliant (though API varies)
     params = {
-        "$filter": f"titleid eq '{target_title_id}'", 
+        "$filter": f"TitleId eq '{target_title_id}' and format eq '{target_format}'",
         "$orderby": "start desc",
-        "$top": "40"
+        "$top": "1" # We only need the latest one since we pre-filtered the format
     }
     headers = {'Accept': 'application/json'}
     
@@ -200,39 +207,9 @@ def fetch_legislation_metadata(session, source):
     if not documents:
         return None, None
 
-    # Sort docs by date to find the absolute latest
-    docs_by_date = {}
-    for doc in documents:
-        start_date = doc.get('start')
-        if start_date not in docs_by_date:
-            docs_by_date[start_date] = []
-        docs_by_date[start_date].append(doc)
-    
-    sorted_dates = sorted(docs_by_date.keys(), reverse=True)
-    selected_doc = None
-    
-    # Priority: Word > Pdf > Epub
-    for date in sorted_dates:
-        version_docs = docs_by_date[date]
-        for doc in version_docs:
-            if doc.get('format') == 'Word':
-                selected_doc = doc; break
-        if selected_doc: break
-        
-        for doc in version_docs:
-            if doc.get('format') == 'Pdf':
-                selected_doc = doc; break
-        if selected_doc: break
-        
-        for doc in version_docs:
-            if doc.get('format') == 'Epub':
-                selected_doc = doc; break
-        if selected_doc: break
-
-    if not selected_doc:
-        selected_doc = documents[0]
-
-    return selected_doc.get('registerId'), selected_doc
+    # Since we asked for Top 1 + Sort Descending, the first result is the latest
+    latest_doc = documents[0]
+    return latest_doc.get('registerId'), latest_doc
 
 def download_legislation_content(session, doc_meta):
     """Downloads binary content using the OData composite key."""
@@ -246,6 +223,7 @@ def download_legislation_content(session, doc_meta):
         vol_num = int(doc_meta.get('volumeNumber') or 0)
         rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
 
+        # Composite Key Construction
         segment = (
             f"registerId={q(reg_id)},"
             f"type={q(d_type)},"
@@ -255,8 +233,10 @@ def download_legislation_content(session, doc_meta):
             f"rectificationVersionNumber={rect_ver}"
         )
         
-        # Explicit find() URL construction
-        download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})/$value"
+        # We must use the 'find' function endpoint
+        clean_base = "https://api.prod.legislation.gov.au/v1/documents"
+        download_url = f"{clean_base}/find({segment})/$value"
+        
         logger.info(f"  -> Downloading from: {download_url}")
         
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
@@ -278,7 +258,7 @@ def main():
         sources = json.load(f)
 
     history = load_history()
-    session = get_robust_session() # Use the robust session!
+    session = get_robust_session()
     
     # Check if we need the browser
     has_web_sources = any(s.get('type') == 'WebPage' for s in sources)
@@ -306,7 +286,7 @@ def main():
                 ver_id, meta = fetch_legislation_metadata(session, source)
                 if not ver_id: continue
                 
-                # Check history using version ID (efficient)
+                # Check history
                 if not any(h['source_name'] == name and h['version_id'] == ver_id for h in history):
                     logger.info(f"  [!] NEW LEGISLATION VERSION ({ver_id}).")
                     content_to_save = download_legislation_content(session, meta)
@@ -314,6 +294,8 @@ def main():
                         version_id = ver_id
                         details_str = f"Legislation Update ({meta.get('format')})"
                         is_new = True
+                else:
+                    logger.info("  No change (Version Match).")
 
             # 2. WEB PAGE
             elif stype == "WebPage":
@@ -330,10 +312,11 @@ def main():
                         version_id = current_hash
                         details_str = "Web Scrape Update"
                         is_new = True
+                    else:
+                        logger.info("  No change.")
 
             # 3. RSS / API
             elif stype in ["RSS", "API"]:
-                # Use robust session here too
                 resp = session.get(source['url'], timeout=15)
                 if resp.status_code == 200:
                     current_hash = get_hash(resp.content)
@@ -343,6 +326,8 @@ def main():
                         version_id = current_hash
                         details_str = "RSS/API Update"
                         is_new = True
+                    else:
+                        logger.info("  No change.")
 
             # --- SAVE & UPDATE ---
             if is_new and content_to_save:
@@ -358,8 +343,6 @@ def main():
                 }
                 history.append(new_entry)
                 updates_found = True
-            else:
-                logger.info("  No change.")
 
         except Exception as e:
             logger.error(f"  [x] Unexpected error for {name}: {e}")
