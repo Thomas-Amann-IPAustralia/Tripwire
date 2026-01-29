@@ -1,7 +1,3 @@
-Here is a user-friendly `README.md` tailored for your repository, incorporating the specific logic, configuration, and automation details found in your uploaded files.
-
----
-
 # IP First Response: Tripwire
 
 **Tripwire** is a Python-based monitoring and change-detection engine designed to support the **IP First Response (IPFR)** platform.
