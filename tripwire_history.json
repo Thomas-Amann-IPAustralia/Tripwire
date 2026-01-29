@@ -1,1 +1,47 @@
-
+[
+  {
+    "source_name": "Thomas Amann Website",
+    "version_id": "5fecc747c3cc117cca6cbbece691d8c7c1b994b3a7d799ab24aef8b884dbd875",
+    "content_hash": "5fecc747c3cc117cca6cbbece691d8c7c1b994b3a7d799ab24aef8b884dbd875",
+    "timestamp": "2026-01-29T02:54:50.440987",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "TomAmannSite.md"
+  },
+  {
+    "source_name": "WIPO Arbitration and Mediation Center",
+    "version_id": "2bba436b4e4445ee80adc890ce2ca1d1d501dd7483a621cd6aca158f96675e35",
+    "content_hash": "2bba436b4e4445ee80adc890ce2ca1d1d501dd7483a621cd6aca158f96675e35",
+    "timestamp": "2026-01-29T02:54:45.704338",
+    "priority": "Medium",
+    "details": "RSS/API Update",
+    "file": "WIPO_AMC.xml"
+  },
+  {
+    "source_name": "WIPO Press Room",
+    "version_id": "6e67fa044cc9c67b784aed9dcfd38b38eeaf7b92588fd26cd469a326fee78e89",
+    "content_hash": "6e67fa044cc9c67b784aed9dcfd38b38eeaf7b92588fd26cd469a326fee78e89",
+    "timestamp": "2026-01-29T02:54:45.925226",
+    "priority": "Low",
+    "details": "RSS/API Update",
+    "file": "WIPO_Press.xml"
+  },
+  {
+    "source_name": "Trade Marks Act 1995",
+    "version_id": "C2024C00545_Word",
+    "content_hash": "747bd638490b8f7bfecbcd8631da918fc6288f88ea68ea155f4ba5198018d69d",
+    "timestamp": "2026-01-29T02:54:46.725583",
+    "priority": "High",
+    "details": "Legislation Update (Word)",
+    "file": "TradeMarksAct1995.docx"
+  },
+  {
+    "source_name": "Patents Regulations 1991",
+    "version_id": "F2024C00944_Word",
+    "content_hash": "a13c5e0212dd7d4a9f23d31166c7abe58d44bb94bd311749f8787e6be28d4795",
+    "timestamp": "2026-01-29T02:54:47.514125",
+    "priority": "High",
+    "details": "Legislation Update (Word)",
+    "file": "PatentsRegulations1991.docx"
+  }
+]
