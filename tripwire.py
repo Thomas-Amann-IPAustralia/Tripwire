@@ -173,28 +173,30 @@ def fetch_webpage_content(driver, url, max_retries=2):
             time.sleep(2)
     return None
 
-# --- Legislation API Logic (Hybrid Stability) ---
+# --- Legislation API Logic (Optimized) ---
 
 def fetch_legislation_metadata(session, source):
     """
-    Fetches metadata using 'Client-Side Filtering'.
-    We request the top 40 versions by TitleID ONLY. 
-    This avoids the complex '$filter=... and format=Word' which causes server timeouts.
+    Fetches metadata with PERFORMANCE OPTIMIZATION.
+    - Reverts to 'titleid' (lowercase) to fix 400 Bad Request.
+    - Adds '$select' to fetch ONLY essential columns, preventing timeouts.
     """
     base_url = source['base_url']
     target_title_id = source['title_id']
     target_format = source.get('format', 'Word') 
     
-    # 1. Broad, fast query (No format filter)
+    # PERFORMANCE KEY: '$select' restricts the query to light metadata fields only.
+    # This prevents the server from loading heavy blobs for every row.
     params = {
-        "$filter": f"TitleId eq '{target_title_id}'", 
+        "$filter": f"titleid eq '{target_title_id}'", 
         "$orderby": "start desc",
-        "$top": "40"
+        "$top": "20",
+        "$select": "registerId,format,start,type,uniqueTypeNumber,volumeNumber,rectificationVersionNumber"
     }
     headers = {'Accept': 'application/json'}
     
     try:
-        resp = session.get(base_url, params=params, headers=headers, timeout=30)
+        resp = session.get(base_url, params=params, headers=headers, timeout=45)
         resp.raise_for_status()
         data = resp.json()
     except Exception as e:
@@ -205,12 +207,8 @@ def fetch_legislation_metadata(session, source):
     if not documents:
         return None, None
 
-    # 2. Precise Client-Side Selection
-    # Look for the absolute latest version that matches our target format (Word)
+    # Client-Side Selection: Find latest Word doc
     selected_doc = None
-    
-    # Sort just in case the API didn't perfectly sort them
-    # Note: 'start' is ISO8601 string, so string sort works for dates
     documents.sort(key=lambda x: x.get('start', ''), reverse=True)
     
     for doc in documents:
@@ -218,7 +216,6 @@ def fetch_legislation_metadata(session, source):
             selected_doc = doc
             break
             
-    # Fallback: If no Word doc found, take the very first record (latest)
     if not selected_doc:
         selected_doc = documents[0]
         logger.warning(f"  [!] Desired format '{target_format}' not found. Falling back to '{selected_doc.get('format')}'.")
@@ -228,18 +225,16 @@ def fetch_legislation_metadata(session, source):
 def download_legislation_content(session, doc_meta):
     """
     Downloads content using the 'Canonical URI' from __metadata.
-    This bypasses the need to manually construct the brittle 'find(...)' key.
     """
     try:
-        # 1. The Silver Bullet: Use the API's own self-link
-        # Structure is typically: doc_meta['__metadata']['uri']
+        # Use the API's own self-link if available (Most reliable method)
         if '__metadata' in doc_meta and 'uri' in doc_meta['__metadata']:
             base_uri = doc_meta['__metadata']['uri']
             download_url = f"{base_uri}/$value"
             logger.info(f"  -> Downloading from Canonical URI: {download_url}")
         else:
-            # Fallback (Manual construction) - Only used if __metadata is missing
-            logger.warning("  [!] '__metadata' missing. Attempting manual key construction (risky).")
+            # Fallback for when __metadata is excluded by $select or missing
+            # Reconstruct the URI manually using the proven fields
             def q(val): return f"'{val}'"
             reg_id = doc_meta.get('registerId')
             d_type = doc_meta.get('type')
@@ -250,6 +245,7 @@ def download_legislation_content(session, doc_meta):
             
             segment = f"registerId={q(reg_id)},type={q(d_type)},format={q(fmt)},uniqueTypeNumber={uniq_num},volumeNumber={vol_num},rectificationVersionNumber={rect_ver}"
             download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})/$value"
+            logger.info(f"  -> Downloading from Constructed URI: {download_url}")
 
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
         response.raise_for_status()
