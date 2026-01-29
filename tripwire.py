@@ -173,14 +173,13 @@ def fetch_webpage_content(driver, url, max_retries=2):
             time.sleep(2)
     return None
 
-# --- Legislation API Logic (From your robust version) ---
+# --- Legislation API Logic ---
 
 def fetch_legislation_metadata(session, source):
     """Fetches metadata using Intelligent Selection (Word > Pdf > Epub)."""
     base_url = source['base_url']
     target_title_id = source['title_id'] 
     
-    # Use standard $filter without format, as requested in your script
     params = {
         "$filter": f"titleid eq '{target_title_id}'", 
         "$orderby": "start desc",
@@ -256,8 +255,9 @@ def download_legislation_content(session, doc_meta):
             f"rectificationVersionNumber={rect_ver}"
         )
         
-        # Explicit find() URL construction (Added /$value for binary safety)
-        download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})/$value"
+        # CORRECTED: Use standard find() URL without /$value appended
+        # The API automatically returns bytes for find()
+        download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})"
         logger.info(f"  -> Downloading from: {download_url}")
         
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
@@ -279,9 +279,9 @@ def main():
         sources = json.load(f)
 
     history = load_history()
-    session = get_robust_session() # Use the robust session
+    session = get_robust_session()
     
-    # Check if we need the browser
+    # Check if we need the browser for any source
     has_web_sources = any(s.get('type') == 'WebPage' for s in sources)
     driver = initialize_driver() if has_web_sources else None
 
@@ -307,12 +307,14 @@ def main():
                 ver_id, meta = fetch_legislation_metadata(session, source)
                 if not ver_id: continue
                 
-                # Check history
-                if not any(h['source_name'] == name and h['version_id'] == ver_id for h in history):
+                # Composite Version ID to detect format changes even if RegisterID is same
+                db_ver_key = f"{ver_id}_{meta.get('format')}"
+                
+                if not any(h['source_name'] == name and h['version_id'] == db_ver_key for h in history):
                     logger.info(f"  [!] NEW LEGISLATION VERSION ({ver_id}).")
                     content_to_save = download_legislation_content(session, meta)
                     if content_to_save:
-                        version_id = ver_id
+                        version_id = db_ver_key
                         details_str = f"Legislation Update ({meta.get('format')})"
                         is_new = True
                 else:
@@ -338,7 +340,6 @@ def main():
 
             # 3. RSS / API
             elif stype in ["RSS", "API"]:
-                # Use robust session here too
                 resp = session.get(source['url'], timeout=15)
                 if resp.status_code == 200:
                     current_hash = get_hash(resp.content)
