@@ -37,5 +37,12 @@
     "url": "https://www.tomamann.com/about",
     "priority": "Medium",
     "output_filename": "TomAmannSite.md"
+  },
+  {
+    "name": "IP Australia - What are trade marks?",
+    "type": "WebPage",
+    "url": "https://www.ipaustralia.gov.au/trade-marks/what-are-trade-marks",
+    "priority": "Medium",
+    "output_filename": "IPA_what-are-tradmarks.md"
   }
 ]
