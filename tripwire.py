@@ -173,25 +173,23 @@ def fetch_webpage_content(driver, url, max_retries=2):
             time.sleep(2)
     return None
 
-# --- Legislation API Logic (FIXED) ---
+# --- Legislation API Logic (Hybrid Stability) ---
 
 def fetch_legislation_metadata(session, source):
     """
-    Fetches the metadata for the specific TitleID.
-    CRITICAL FIX: We MUST filter by 'format' server-side.
-    Querying the entire history of a TitleID without format creates a result set 
-    too large for the API to handle, resulting in 400 Bad Request or Timeouts.
+    Fetches metadata using 'Client-Side Filtering'.
+    We request the top 40 versions by TitleID ONLY. 
+    This avoids the complex '$filter=... and format=Word' which causes server timeouts.
     """
     base_url = source['base_url']
     target_title_id = source['title_id']
-    target_format = source.get('format', 'Word') # Default to Word
+    target_format = source.get('format', 'Word') 
     
-    # 1. Filter strictly by TitleId AND Format to ensure a lightweight query
-    # 2. Capitalize TitleId just to be OData compliant (though API varies)
+    # 1. Broad, fast query (No format filter)
     params = {
-        "$filter": f"TitleId eq '{target_title_id}' and format eq '{target_format}'",
+        "$filter": f"TitleId eq '{target_title_id}'", 
         "$orderby": "start desc",
-        "$top": "1" # We only need the latest one since we pre-filtered the format
+        "$top": "40"
     }
     headers = {'Accept': 'application/json'}
     
@@ -207,38 +205,52 @@ def fetch_legislation_metadata(session, source):
     if not documents:
         return None, None
 
-    # Since we asked for Top 1 + Sort Descending, the first result is the latest
-    latest_doc = documents[0]
-    return latest_doc.get('registerId'), latest_doc
+    # 2. Precise Client-Side Selection
+    # Look for the absolute latest version that matches our target format (Word)
+    selected_doc = None
+    
+    # Sort just in case the API didn't perfectly sort them
+    # Note: 'start' is ISO8601 string, so string sort works for dates
+    documents.sort(key=lambda x: x.get('start', ''), reverse=True)
+    
+    for doc in documents:
+        if doc.get('format') == target_format:
+            selected_doc = doc
+            break
+            
+    # Fallback: If no Word doc found, take the very first record (latest)
+    if not selected_doc:
+        selected_doc = documents[0]
+        logger.warning(f"  [!] Desired format '{target_format}' not found. Falling back to '{selected_doc.get('format')}'.")
+
+    return selected_doc.get('registerId'), selected_doc
 
 def download_legislation_content(session, doc_meta):
-    """Downloads binary content using the OData composite key."""
-    def q(val): return f"'{val}'"
-    
+    """
+    Downloads content using the 'Canonical URI' from __metadata.
+    This bypasses the need to manually construct the brittle 'find(...)' key.
+    """
     try:
-        reg_id = doc_meta.get('registerId')
-        d_type = doc_meta.get('type')
-        fmt = doc_meta.get('format')
-        uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
-        vol_num = int(doc_meta.get('volumeNumber') or 0)
-        rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
+        # 1. The Silver Bullet: Use the API's own self-link
+        # Structure is typically: doc_meta['__metadata']['uri']
+        if '__metadata' in doc_meta and 'uri' in doc_meta['__metadata']:
+            base_uri = doc_meta['__metadata']['uri']
+            download_url = f"{base_uri}/$value"
+            logger.info(f"  -> Downloading from Canonical URI: {download_url}")
+        else:
+            # Fallback (Manual construction) - Only used if __metadata is missing
+            logger.warning("  [!] '__metadata' missing. Attempting manual key construction (risky).")
+            def q(val): return f"'{val}'"
+            reg_id = doc_meta.get('registerId')
+            d_type = doc_meta.get('type')
+            fmt = doc_meta.get('format')
+            uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
+            vol_num = int(doc_meta.get('volumeNumber') or 0)
+            rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
+            
+            segment = f"registerId={q(reg_id)},type={q(d_type)},format={q(fmt)},uniqueTypeNumber={uniq_num},volumeNumber={vol_num},rectificationVersionNumber={rect_ver}"
+            download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})/$value"
 
-        # Composite Key Construction
-        segment = (
-            f"registerId={q(reg_id)},"
-            f"type={q(d_type)},"
-            f"format={q(fmt)},"
-            f"uniqueTypeNumber={uniq_num},"
-            f"volumeNumber={vol_num},"
-            f"rectificationVersionNumber={rect_ver}"
-        )
-        
-        # We must use the 'find' function endpoint
-        clean_base = "https://api.prod.legislation.gov.au/v1/documents"
-        download_url = f"{clean_base}/find({segment})/$value"
-        
-        logger.info(f"  -> Downloading from: {download_url}")
-        
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
         response.raise_for_status()
         return response.content
