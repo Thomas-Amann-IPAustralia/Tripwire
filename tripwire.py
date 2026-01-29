@@ -173,30 +173,24 @@ def fetch_webpage_content(driver, url, max_retries=2):
             time.sleep(2)
     return None
 
-# --- Legislation API Logic (Optimized) ---
+# --- Legislation API Logic (From your robust version) ---
 
 def fetch_legislation_metadata(session, source):
-    """
-    Fetches metadata with PERFORMANCE OPTIMIZATION.
-    - Reverts to 'titleid' (lowercase) to fix 400 Bad Request.
-    - Adds '$select' to fetch ONLY essential columns, preventing timeouts.
-    """
+    """Fetches metadata using Intelligent Selection (Word > Pdf > Epub)."""
     base_url = source['base_url']
-    target_title_id = source['title_id']
-    target_format = source.get('format', 'Word') 
+    target_title_id = source['title_id'] 
     
-    # PERFORMANCE KEY: '$select' restricts the query to light metadata fields only.
-    # This prevents the server from loading heavy blobs for every row.
+    # Use standard $filter without format, as requested in your script
     params = {
         "$filter": f"titleid eq '{target_title_id}'", 
         "$orderby": "start desc",
-        "$top": "20",
-        "$select": "registerId,format,start,type,uniqueTypeNumber,volumeNumber,rectificationVersionNumber"
+        "$top": "40"
     }
+    
     headers = {'Accept': 'application/json'}
     
     try:
-        resp = session.get(base_url, params=params, headers=headers, timeout=45)
+        resp = session.get(base_url, params=params, headers=headers, timeout=30)
         resp.raise_for_status()
         data = resp.json()
     except Exception as e:
@@ -207,46 +201,65 @@ def fetch_legislation_metadata(session, source):
     if not documents:
         return None, None
 
-    # Client-Side Selection: Find latest Word doc
-    selected_doc = None
-    documents.sort(key=lambda x: x.get('start', ''), reverse=True)
-    
+    # Sort docs by date to find the absolute latest
+    docs_by_date = {}
     for doc in documents:
-        if doc.get('format') == target_format:
-            selected_doc = doc
-            break
-            
+        start_date = doc.get('start')
+        if start_date not in docs_by_date:
+            docs_by_date[start_date] = []
+        docs_by_date[start_date].append(doc)
+    
+    sorted_dates = sorted(docs_by_date.keys(), reverse=True)
+    selected_doc = None
+    
+    # Priority: Word > Pdf > Epub
+    for date in sorted_dates:
+        version_docs = docs_by_date[date]
+        for doc in version_docs:
+            if doc.get('format') == 'Word':
+                selected_doc = doc; break
+        if selected_doc: break
+        
+        for doc in version_docs:
+            if doc.get('format') == 'Pdf':
+                selected_doc = doc; break
+        if selected_doc: break
+        
+        for doc in version_docs:
+            if doc.get('format') == 'Epub':
+                selected_doc = doc; break
+        if selected_doc: break
+
     if not selected_doc:
         selected_doc = documents[0]
-        logger.warning(f"  [!] Desired format '{target_format}' not found. Falling back to '{selected_doc.get('format')}'.")
 
     return selected_doc.get('registerId'), selected_doc
 
 def download_legislation_content(session, doc_meta):
-    """
-    Downloads content using the 'Canonical URI' from __metadata.
-    """
+    """Downloads binary content using the OData composite key."""
+    def q(val): return f"'{val}'"
+    
     try:
-        # Use the API's own self-link if available (Most reliable method)
-        if '__metadata' in doc_meta and 'uri' in doc_meta['__metadata']:
-            base_uri = doc_meta['__metadata']['uri']
-            download_url = f"{base_uri}/$value"
-            logger.info(f"  -> Downloading from Canonical URI: {download_url}")
-        else:
-            # Fallback for when __metadata is excluded by $select or missing
-            # Reconstruct the URI manually using the proven fields
-            def q(val): return f"'{val}'"
-            reg_id = doc_meta.get('registerId')
-            d_type = doc_meta.get('type')
-            fmt = doc_meta.get('format')
-            uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
-            vol_num = int(doc_meta.get('volumeNumber') or 0)
-            rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
-            
-            segment = f"registerId={q(reg_id)},type={q(d_type)},format={q(fmt)},uniqueTypeNumber={uniq_num},volumeNumber={vol_num},rectificationVersionNumber={rect_ver}"
-            download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})/$value"
-            logger.info(f"  -> Downloading from Constructed URI: {download_url}")
+        reg_id = doc_meta.get('registerId')
+        d_type = doc_meta.get('type')
+        fmt = doc_meta.get('format')
+        uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
+        vol_num = int(doc_meta.get('volumeNumber') or 0)
+        rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
 
+        segment = (
+            f"registerId={q(reg_id)},"
+            f"type={q(d_type)},"
+            f"format={q(fmt)},"
+            f"uniqueTypeNumber={uniq_num},"
+            f"volumeNumber={vol_num},"
+            f"rectificationVersionNumber={rect_ver}"
+        )
+        
+        # Explicit find() URL construction (Added /$value for binary safety)
+        download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})/$value"
+        logger.info(f"  -> Downloading from: {download_url}")
+        
         response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
         response.raise_for_status()
         return response.content
@@ -266,7 +279,7 @@ def main():
         sources = json.load(f)
 
     history = load_history()
-    session = get_robust_session()
+    session = get_robust_session() # Use the robust session
     
     # Check if we need the browser
     has_web_sources = any(s.get('type') == 'WebPage' for s in sources)
@@ -305,7 +318,7 @@ def main():
                 else:
                     logger.info("  No change (Version Match).")
 
-            # 2. WEB PAGE
+            # 2. WEB PAGE (Selenium Logic)
             elif stype == "WebPage":
                 if not driver: 
                     logger.warning("  [!] Web driver required but not initialized.")
@@ -325,6 +338,7 @@ def main():
 
             # 3. RSS / API
             elif stype in ["RSS", "API"]:
+                # Use robust session here too
                 resp = session.get(source['url'], timeout=15)
                 if resp.status_code == 200:
                     current_hash = get_hash(resp.content)
