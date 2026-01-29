@@ -18,15 +18,6 @@
     "file": "WIPO_AMC.xml"
   },
   {
-    "source_name": "WIPO Press Room",
-    "version_id": "6e67fa044cc9c67b784aed9dcfd38b38eeaf7b92588fd26cd469a326fee78e89",
-    "content_hash": "6e67fa044cc9c67b784aed9dcfd38b38eeaf7b92588fd26cd469a326fee78e89",
-    "timestamp": "2026-01-29T02:54:45.925226",
-    "priority": "Low",
-    "details": "RSS/API Update",
-    "file": "WIPO_Press.xml"
-  },
-  {
     "source_name": "Trade Marks Act 1995",
     "version_id": "C2024C00545_Word",
     "content_hash": "747bd638490b8f7bfecbcd8631da918fc6288f88ea68ea155f4ba5198018d69d",
@@ -43,5 +34,23 @@
     "priority": "High",
     "details": "Legislation Update (Word)",
     "file": "PatentsRegulations1991.docx"
+  },
+  {
+    "source_name": "IP Australia - What are trade marks?",
+    "version_id": "72bce073ce7d8c6ded229e53a9b83f158b8f9a1864016b0d7e26fd7c4a977574",
+    "content_hash": "72bce073ce7d8c6ded229e53a9b83f158b8f9a1864016b0d7e26fd7c4a977574",
+    "timestamp": "2026-01-29T03:03:08.530611",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "IPA_what-are-tradmarks.md"
+  },
+  {
+    "source_name": "WIPO Press Room",
+    "version_id": "6e67fa044cc9c67b784aed9dcfd38b38eeaf7b92588fd26cd469a326fee78e89",
+    "content_hash": "6e67fa044cc9c67b784aed9dcfd38b38eeaf7b92588fd26cd469a326fee78e89",
+    "timestamp": "2026-01-29T02:54:45.925226",
+    "priority": "Low",
+    "details": "RSS/API Update",
+    "file": "WIPO_Press.xml"
   }
 ]
