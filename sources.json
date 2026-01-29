@@ -3,26 +3,46 @@
     "name": "WIPO Arbitration and Mediation Center",
     "type": "RSS",
     "url": "https://www.wipo.int/amc/en/rss.xml",
-    "priority": "Medium"
+    "priority": "Medium",
+    "output_filename": "WIPO_AMC.xml"
   },
   {
     "name": "WIPO Press Room",
     "type": "RSS",
     "url": "https://www.wipo.int/pressroom/en/rss.xml",
-    "priority": "Low"
+    "priority": "Low",
+    "output_filename": "WIPO_Press.xml"
   },
   {
     "name": "Trade Marks Act 1995",
     "type": "Legislation_OData",
     "base_url": "https://api.prod.legislation.gov.au/v1/documents",
     "title_id": "C2004A04969",
-    "priority": "High"
+    "priority": "High",
+    "format": "Word",
+    "output_filename": "TradeMarksAct1995.docx"
   },
   {
     "name": "Patents Regulations 1991",
     "type": "Legislation_OData",
     "base_url": "https://api.prod.legislation.gov.au/v1/documents",
     "title_id": "F1996B02697",
-    "priority": "High"
+    "priority": "High",
+    "format": "Word",
+    "output_filename": "PatentsRegulations1991.docx"
+  },
+  {
+    "name": "Thomas Amann Website",
+    "type": "WebPage",
+    "url": "https://www.tomamann.com/about",
+    "priority": "Medium",
+    "output_filename": "TomAmannSite.md"
+  },
+  {
+    "name": "IP Australia - What are trade marks?",
+    "type": "WebPage",
+    "url": "https://www.ipaustralia.gov.au/trade-marks/what-are-trade-marks",
+    "priority": "Medium",
+    "output_filename": "IPA_what-are-tradmarks.md"
   }
 ]

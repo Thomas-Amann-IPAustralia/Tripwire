@@ -2,13 +2,9 @@ name: Tripwire Check
 
 on:
   schedule:
-    # Run every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
     - cron: '0 */6 * * *'
-  
-  # Allow manual trigger from the "Actions" tab
   workflow_dispatch:
 
-# Permission to write to the repository is required
 permissions:
   contents: write
 
@@ -17,37 +13,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Get the repository code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Prepare Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      # 3. Install requirements
+      # Standard GitHub runners have Chrome, but this action guarantees specific versions if needed
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@latest
+
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      # 4. Execute the Tripwire Logic
       - name: Run Tripwire Script
         run: python tripwire.py
 
-      # 5. Commit changes IF history or content was updated
       - name: Commit and Push Changes
         run: |
           git config --global user.name "Tripwire Bot"
           git config --global user.email "actions@github.com"
           
-          # Check for changes in JSON or the archive folder
+          # Check for changes in the JSON history or the content folder
           if [[ -n $(git status --porcelain tripwire_history.json) ]] || [[ -n $(git status --porcelain content_archive/) ]]; then
             echo "Changes detected. Committing..."
             
-            # Add the history file AND the new content folder
             git add tripwire_history.json content_archive/
-            
             git commit -m "Tripwire: Detected changes & archived documents [skip ci]"
             git push
           else
