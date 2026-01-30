@@ -13,6 +13,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 # --- Web Scrape Imports ---
+import trafilatura
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.support.ui import WebDriverWait
@@ -20,8 +21,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium_stealth import stealth
-from bs4 import BeautifulSoup
-from markdownify import markdownify as md
 
 # --- Configuration ---
 HISTORY_FILE = 'tripwire_history.json'
@@ -30,7 +29,7 @@ OUTPUT_DIR = 'content_archive'
 HISTORY_LIMIT = 10 
 
 # --- Scrape Config ---
-TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
+# Signatures that indicate our Selenium Stealth failed and we are looking at a captcha/block
 BLOCK_PAGE_SIGNATURES = [
     "access denied", "enable javascript", "checking if the site connection is secure",
     "just a moment...", "verifying you are human", "ddos protection by", "site can’t be reached"
@@ -129,22 +128,6 @@ def initialize_driver():
         logger.error(f"  [x] Failed to initialize WebDriver: {e}")
         return None
 
-def clean_html_content(html):
-    soup = BeautifulSoup(html, 'html.parser')
-    page_body = soup.body
-    if not page_body:
-        return ""
-
-    for tag_selector in TAGS_TO_EXCLUDE:
-        for tag in page_body.select(tag_selector):
-            tag.decompose()
-    
-    text_content = str(page_body)
-    # Noise Reduction
-    text_content = re.sub(r'Generated on:? \d{1,2}/\d{1,2}/\d{4}.*', '', text_content, flags=re.IGNORECASE)
-    text_content = re.sub(r'Last updated:? \d{1,2}:\d{2}.*', '', text_content, flags=re.IGNORECASE)
-    return text_content
-
 def fetch_webpage_content(driver, url, max_retries=2):
     if url.lower().endswith('.pdf'):
         logger.warning(f"  [!] Skipping PDF link: {url}")
@@ -153,21 +136,37 @@ def fetch_webpage_content(driver, url, max_retries=2):
     for attempt in range(max_retries + 1):
         try:
             driver.get(url)
+            # Wait for body to ensure basic load
             WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
             
+            # Gentle scroll to trigger lazy loading
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             time.sleep(random.uniform(1.0, 2.0))
 
             html_content = driver.page_source
+            
+            # Check for block page signatures before processing
             if any(sig in html_content.lower() for sig in BLOCK_PAGE_SIGNATURES):
                 logger.warning(f"  [x] Block page detected at {url}.")
                 return None
 
-            cleaned_html = clean_html_content(html_content)
-            if not cleaned_html:
+            # Use Trafilatura for algorithmic content extraction
+            # include_tables=True is vital for legislative/fee schedules
+            extracted_text = trafilatura.extract(
+                html_content,
+                output_format='markdown',
+                include_tables=True,
+                include_links=True,
+                include_images=False, # Focus on text for LLM processing
+                include_comments=False
+            )
+
+            if not extracted_text:
+                logger.warning(f"  [x] Trafilatura returned empty content for {url}")
                 return None
 
-            return md(cleaned_html, heading_style="ATX")
+            return extracted_text
+
         except Exception as e:
             logger.warning(f"  [x] Attempt {attempt+1} failed for {url}: {e}")
             time.sleep(2)
@@ -255,8 +254,6 @@ def download_legislation_content(session, doc_meta):
             f"rectificationVersionNumber={rect_ver}"
         )
         
-        # CORRECTED: Use standard find() URL without /$value appended
-        # The API automatically returns bytes for find()
         download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})"
         logger.info(f"  -> Downloading from: {download_url}")
         
