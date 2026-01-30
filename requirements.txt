@@ -1,7 +1,6 @@
 requests
 selenium
 selenium-stealth
-beautifulsoup4
-markdownify
 webdriver-manager
 lxml
+trafilatura
