@@ -136,34 +136,35 @@ def fetch_webpage_content(driver, url, max_retries=2):
     for attempt in range(max_retries + 1):
         try:
             driver.get(url)
-            # Wait for body to ensure basic load
             WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
             
-            # Gentle scroll to trigger lazy loading
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
             time.sleep(random.uniform(1.0, 2.0))
 
             html_content = driver.page_source
             
-            # Check for block page signatures before processing
             if any(sig in html_content.lower() for sig in BLOCK_PAGE_SIGNATURES):
                 logger.warning(f"  [x] Block page detected at {url}.")
                 return None
 
-            # Use Trafilatura for algorithmic content extraction
-            # include_tables=True is vital for legislative/fee schedules
             extracted_text = trafilatura.extract(
                 html_content,
                 output_format='markdown',
                 include_tables=True,
                 include_links=True,
-                include_images=False, # Focus on text for LLM processing
+                include_images=True,
                 include_comments=False
             )
 
             if not extracted_text:
                 logger.warning(f"  [x] Trafilatura returned empty content for {url}")
                 return None
+            
+            # --- NEW: Cleanup Logic ---
+            # Fixes "dangling" bold closers. 
+            # Finds: "**Some Text" followed by a newline and "**"
+            # Replaces with: "**Some Text**" (all on one line)
+            extracted_text = re.sub(r'(\*\*[^\n]+)\n\s*(\*\*)', r'\1\2', extracted_text)
 
             return extracted_text
 
