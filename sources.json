@@ -1,19 +1,5 @@
 [
   {
-    "name": "WIPO Arbitration and Mediation Center",
-    "type": "RSS",
-    "url": "https://www.wipo.int/amc/en/rss.xml",
-    "priority": "Medium",
-    "output_filename": "WIPO_AMC.xml"
-  },
-  {
-    "name": "WIPO Press Room",
-    "type": "RSS",
-    "url": "https://www.wipo.int/pressroom/en/rss.xml",
-    "priority": "Low",
-    "output_filename": "WIPO_Press.xml"
-  },
-  {
     "name": "Trade Marks Act 1995",
     "type": "Legislation_OData",
     "base_url": "https://api.prod.legislation.gov.au/v1/documents",
@@ -39,10 +25,234 @@
     "output_filename": "TomAmannSite.md"
   },
   {
+    "name": "WIPO Arbitration and Mediation Center",
+    "type": "RSS",
+    "url": "https://www.wipo.int/amc/en/rss.xml",
+    "priority": "Medium",
+    "output_filename": "WIPO_AMC.xml"
+  },
+  {
+    "name": "Arts Law - Copyright Infringement",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.artslaw.com.au/information-sheet/copyright/",
+    "output_filename": "artslaw_copyright.md"
+  },
+  {
+    "name": "Arts Law - Protecting Designs",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.artslaw.com.au/information-sheet/protecting-your-designs/",
+    "output_filename": "artslaw_designs.md"
+  },
+  {
+    "name": "Arts Law - Legal Help: Who Can You Go To?",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.artslaw.com.au/legal/raw-law/legal-help-who-can-you-go-to/",
+    "output_filename": "artslaw_legalhelp.md"
+  },
+  {
+    "name": "ICANN - UDRP Policy",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.icann.org/resources/pages/help/dndr/udrp-en",
+    "output_filename": "icann_udrp.md"
+  },
+  {
+    "name": "WIPO AMC - Arbitration Fees",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.wipo.int/amc/en/arbitration/fees/",
+    "output_filename": "wipo_arb_fees.md"
+  },
+  {
+    "name": "WIPO ADR - Domain Name Dispute Resolution",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.wipo.int/amc/en/domains",
+    "output_filename": "wipo_adr_domains.md"
+  },
+  {
+    "name": "WIPO Guide - UDRP",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.wipo.int/amc/en/domains/guide/",
+    "output_filename": "wipo_guide_udrp.md"
+  },
+  {
+    "name": "WIPO - Assignment and Licensing",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.wipo.int/en/web/business/assignment-licensing",
+    "output_filename": "wipo_licensing.md"
+  },
+  {
+    "name": "Business.gov.au - Dispute Resolution",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://business.gov.au/people/disputes/prevent-manage-and-resolve-disputes",
+    "output_filename": "business_disputes.md"
+  },
+  {
+    "name": "ABF - Intellectual Property Imports",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property",
+    "output_filename": "abf_ip_imports.md"
+  },
+  {
+    "name": "AGD - Guide to Dispute Resolution",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.ag.gov.au/legal-system/publications/your-guide-dispute-resolution",
+    "output_filename": "agd_dispute_guide.md"
+  },
+  {
+    "name": "AGD - Copyright Basics",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.ag.gov.au/rights-and-protections/copyright/copyright-basics",
+    "output_filename": "agd_copyright_basics.md"
+  },
+  {
+    "name": "ASBFEO - Five Steps to Resolve Disputes",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.asbfeo.gov.au/disputes-assistance/five-steps-resolve-your-dispute",
+    "output_filename": "asbfeo_dispute_steps.md"
+  },
+  {
+    "name": "Federal Court - Annual Reports",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fedcourt.gov.au/about/corporate-information/annual-reports",
+    "output_filename": "fedcourt_reports.md"
+  },
+  {
+    "name": "Federal Court - Mediation Services",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fedcourt.gov.au/services/ADR/mediation",
+    "output_filename": "fedcourt_mediation.md"
+  },
+  {
+    "name": "TTIP Attorney - Engaging an Attorney",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.ttipattorney.gov.au/for-clients/how-to-engage-an-attorney",
+    "output_filename": "ttip_engage_attorney.md"
+  },
+  {
+    "name": "Austrade - Australian Business Regulations",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://international.austrade.gov.au/en/do-business-with-australia/invest-in-australia/investor-guide/running-a-business/understanding-australian-business-regulations",
+    "output_filename": "austrade_regs.md"
+  },
+  {
+    "name": "FCFCOA - Administrative ADJR",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fcfcoa.gov.au/gfl/administrative-adjr",
+    "output_filename": "fcfcoa_adjr.md"
+  },
+  {
+    "name": "AFP - Cybercrime",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.afp.gov.au/crimes/cybercrime",
+    "output_filename": "afp_cybercrime.md"
+  },
+  {
+    "name": "AFP - Fraud and Corruption",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.afp.gov.au/crimes/fraud-and-corruption",
+    "output_filename": "afp_fraud.md"
+  },
+  {
+    "name": "AFP - Intellectual Property Crime",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.afp.gov.au/crimes/fraud-and-corruption/intellectual-property-crime",
+    "output_filename": "afp_ip_crime.md"
+  },
+  {
+    "name": "AGD - Copyright Owners",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.ag.gov.au/rights-and-protections/copyright/copyright-owners",
+    "output_filename": "agd_copyright_owners.md"
+  },
+  {
+    "name": "ASIC - Register a Business Name",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.asic.gov.au/for-business-and-companies/business-names/register-a-business-name/",
+    "output_filename": "asic_business_name.md"
+  },
+  {
+    "name": "ASIC - Register a Company",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.asic.gov.au/for-business-and-companies/companies/register-a-company/",
+    "output_filename": "asic_company_reg.md"
+  },
+  {
+    "name": "FCFCOA - Court Fees",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fcfcoa.gov.au/gfl/gfl-fees",
+    "output_filename": "fcfcoa_fees.md"
+  },
+  {
+    "name": "FCFCOA - Intellectual Property Jurisdiction",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fcfcoa.gov.au/gfl/intellectual-property",
+    "output_filename": "fcfcoa_ip_info.md"
+  },
+  {
+    "name": "Federal Court - Court Fees",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fedcourt.gov.au/forms-and-fees/court-fees",
+    "output_filename": "fedcourt_fees.md"
+  },
+  {
+    "name": "Federal Court - IP National Practice Area",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fedcourt.gov.au/law-and-practice/national-practice-areas/ip",
+    "output_filename": "fedcourt_ip_npa.md"
+  },
+  {
+    "name": "Federal Court - Arbitration Services",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fedcourt.gov.au/services/ADR/arbitration",
+    "output_filename": "fedcourt_arbitration.md"
+  },
+  {
     "name": "IP Australia - What are trade marks?",
     "type": "WebPage",
     "url": "https://www.ipaustralia.gov.au/trade-marks/what-are-trade-marks",
     "priority": "Medium",
     "output_filename": "IPA_what-are-tradmarks.md"
+  },
+  {
+    "name": "Federal Court - IP National Practice Area",
+    "type": "WebPage",
+    "priority": "Medium",
+    "url": "https://www.fedcourt.gov.au/law-and-practice/national-practice-areas/ip",
+    "output_filename": "fedcourt_ip_npa.md"
+  },
+  {
+    "name": "WIPO Press Room",
+    "type": "RSS",
+    "url": "https://www.wipo.int/pressroom/en/rss.xml",
+    "priority": "Low",
+    "output_filename": "WIPO_Press.xml"
   }
 ]
