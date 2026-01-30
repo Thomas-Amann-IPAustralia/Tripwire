@@ -16,6 +16,7 @@ Trade marks can be used to protect a logo, phrase, word, letter, colour, sound, 
 
 Here's a quick video that explains what trade marks are and how they can protect your brand, products or services.
 
+
 A trade mark legally protects your company’s unique brand, name of a product, or your services. It can help customers distinguish you from your competitors.
 
 Trade marks can protect a logo, phrase, word, letter, colour, sound, smell, picture, movement, aspect of packaging, or any combination of these.
@@ -29,6 +30,33 @@ One thing to keep in mind is that an Australian trade mark only gives you protec
 Want to learn more, including how to apply? Check out our trade marks page.
 
 Examples of trade marks
+
+![](/-/media/Project/IPA/IPAustralia/Logos/trade-marks/Nike-logo-from-TM-search-database.jpg?h=300&w=300&rev=74067890b9fa4acd94062f624105245f&hash=DE25552F0290385F4ED4175CD6AD3292)
+
+
+Logo
+
+Logo
+
+Nike swoosh
+
+![](/-/media/Project/IPA/IPAustralia/Logos/trade-marks/Cadbury-Logo.jpg?h=100&w=241&rev=d9d9b88f6a7843c6b199cff1a905addc&hash=28703174EE916E62870E81593F1D9D1C)
+
+
+Colour
+
+Colour
+
+Cadbury purple
+
+![](/-/media/Project/IPA/IPAustralia/images/trade-marks/coca-cola-bottle-with-background.jpg?h=300&w=300&rev=aae03c6c94524ca78baf708b9ce5b0a7&hash=85E367D32A95AAA4670378FEC67CDB11)
+
+
+Shape
+
+Shape
+
+Coca-Cola bottle
 
 ## Benefits of registering a trade mark
 
@@ -61,8 +89,7 @@ If your business name uses commonly used words or phrases, it might not qualify 
 
 ## How to use the trade mark and registered symbols
 
-**What does it mean?
-**
+**What does it mean?**
 The ™️ symbol stands for trade mark. While it symbolises that you're claiming trade mark rights, it
 
 **doesn't necessarily mean that the rights exist, or are registrable or enforceable.**
@@ -92,8 +119,7 @@ It's a way of:
 - Indicating you have strong rights that prevent others from using the same or similar trade mark
 - Deterring someone from infringing your IP.
 
-**Do I have to use the symbol?
-** No, you don't have to use it. You'll maintain your exclusive rights either way.
+**Do I have to use the symbol?** No, you don't have to use it. You'll maintain your exclusive rights either way.
 
 **Where to place the symbol**
 
