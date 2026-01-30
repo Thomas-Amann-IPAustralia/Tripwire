@@ -1,5 +1,32 @@
 [
   {
+    "source_name": "AFP - Fraud and Corruption",
+    "version_id": "67d8a49b7eb0870640e27231667d9db75b8a4f2a78044c21e5f656b491e2706f",
+    "content_hash": "67d8a49b7eb0870640e27231667d9db75b8a4f2a78044c21e5f656b491e2706f",
+    "timestamp": "2026-01-30T09:27:58.602344",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "afp_fraud.md"
+  },
+  {
+    "source_name": "ASIC - Register a Business Name",
+    "version_id": "081a11cf96f2823daf9bae9c217c834321fe98e56fa778864485f408f03eb637",
+    "content_hash": "081a11cf96f2823daf9bae9c217c834321fe98e56fa778864485f408f03eb637",
+    "timestamp": "2026-01-30T09:28:08.407705",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "asic_business_name.md"
+  },
+  {
+    "source_name": "AGD - Guide to Dispute Resolution",
+    "version_id": "8331eab752d7f1d8166659ac8ad24c736cd85c60d52badfe432527a7b5e153d0",
+    "content_hash": "8331eab752d7f1d8166659ac8ad24c736cd85c60d52badfe432527a7b5e153d0",
+    "timestamp": "2026-01-30T09:27:21.909507",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "agd_dispute_guide.md"
+  },
+  {
     "source_name": "Thomas Amann Website",
     "version_id": "5fecc747c3cc117cca6cbbece691d8c7c1b994b3a7d799ab24aef8b884dbd875",
     "content_hash": "5fecc747c3cc117cca6cbbece691d8c7c1b994b3a7d799ab24aef8b884dbd875",
@@ -9,13 +36,22 @@
     "file": "TomAmannSite.md"
   },
   {
-    "source_name": "WIPO Arbitration and Mediation Center",
-    "version_id": "2bba436b4e4445ee80adc890ce2ca1d1d501dd7483a621cd6aca158f96675e35",
-    "content_hash": "2bba436b4e4445ee80adc890ce2ca1d1d501dd7483a621cd6aca158f96675e35",
-    "timestamp": "2026-01-29T02:54:45.704338",
+    "source_name": "AFP - Cybercrime",
+    "version_id": "ea366993bc7d9d962be45ee93cb09af1d7635f2cf819a8d97f04195bce8650b1",
+    "content_hash": "ea366993bc7d9d962be45ee93cb09af1d7635f2cf819a8d97f04195bce8650b1",
+    "timestamp": "2026-01-30T09:27:55.506845",
     "priority": "Medium",
-    "details": "RSS/API Update",
-    "file": "WIPO_AMC.xml"
+    "details": "Web Scrape Update",
+    "file": "afp_cybercrime.md"
+  },
+  {
+    "source_name": "AGD - Copyright Owners",
+    "version_id": "0a1c1c36950beb852eeebb93e9dec12b98e7d883f4c10f1c15ddee6027708c61",
+    "content_hash": "0a1c1c36950beb852eeebb93e9dec12b98e7d883f4c10f1c15ddee6027708c61",
+    "timestamp": "2026-01-30T09:28:04.233338",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "agd_copyright_owners.md"
   },
   {
     "source_name": "Trade Marks Act 1995",
@@ -36,13 +72,193 @@
     "file": "PatentsRegulations1991.docx"
   },
   {
-    "source_name": "IP Australia - What are trade marks?",
-    "version_id": "72bce073ce7d8c6ded229e53a9b83f158b8f9a1864016b0d7e26fd7c4a977574",
-    "content_hash": "72bce073ce7d8c6ded229e53a9b83f158b8f9a1864016b0d7e26fd7c4a977574",
-    "timestamp": "2026-01-29T03:03:08.530611",
+    "source_name": "FCFCOA - Court Fees",
+    "version_id": "9b021ebd1624bf0c4810cb597d89ba50af24c9463a34b87ca1f0eb65b857ceaa",
+    "content_hash": "9b021ebd1624bf0c4810cb597d89ba50af24c9463a34b87ca1f0eb65b857ceaa",
+    "timestamp": "2026-01-30T09:28:13.672142",
     "priority": "Medium",
     "details": "Web Scrape Update",
-    "file": "IPA_what-are-tradmarks.md"
+    "file": "fcfcoa_fees.md"
+  },
+  {
+    "source_name": "Federal Court - Arbitration Services",
+    "version_id": "664132fc2d5a950a403f4acfbc873d70f5a173a4de98a150e3a8907e2318e6f2",
+    "content_hash": "664132fc2d5a950a403f4acfbc873d70f5a173a4de98a150e3a8907e2318e6f2",
+    "timestamp": "2026-01-30T09:28:24.501698",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "fedcourt_arbitration.md"
+  },
+  {
+    "source_name": "Federal Court - Court Fees",
+    "version_id": "a4aa83bd35d8e45c3f31319d147bbc6cbbe96e8771d921a65a4c513c24d34c86",
+    "content_hash": "a4aa83bd35d8e45c3f31319d147bbc6cbbe96e8771d921a65a4c513c24d34c86",
+    "timestamp": "2026-01-30T09:28:19.913720",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "fedcourt_fees.md"
+  },
+  {
+    "source_name": "AGD - Copyright Basics",
+    "version_id": "8c3f98e7367dcf798d9ca331714229c9b5c0df01acc1c96e73dcdd750c000df5",
+    "content_hash": "8c3f98e7367dcf798d9ca331714229c9b5c0df01acc1c96e73dcdd750c000df5",
+    "timestamp": "2026-01-30T09:27:23.674435",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "agd_copyright_basics.md"
+  },
+  {
+    "source_name": "WIPO ADR - Domain Name Dispute Resolution",
+    "version_id": "a80baec2868a42794cdfa8d890e9c7aa0ccfca7d51c076ebc7aa788ad65fb4ab",
+    "content_hash": "a80baec2868a42794cdfa8d890e9c7aa0ccfca7d51c076ebc7aa788ad65fb4ab",
+    "timestamp": "2026-01-30T09:27:02.088024",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "wipo_adr_domains.md"
+  },
+  {
+    "source_name": "ASBFEO - Five Steps to Resolve Disputes",
+    "version_id": "b88801dff72722146f4547ca70b5e0b4557160f3d522cc9e69606d80aa2f1785",
+    "content_hash": "b88801dff72722146f4547ca70b5e0b4557160f3d522cc9e69606d80aa2f1785",
+    "timestamp": "2026-01-30T09:27:29.731784",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "asbfeo_dispute_steps.md"
+  },
+  {
+    "source_name": "ABF - Intellectual Property Imports",
+    "version_id": "f860b9f9573c72127bab19598a0379ce85de356bf73c41343ffd695a3e5f98b2",
+    "content_hash": "f860b9f9573c72127bab19598a0379ce85de356bf73c41343ffd695a3e5f98b2",
+    "timestamp": "2026-01-30T09:27:17.933131",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "abf_ip_imports.md"
+  },
+  {
+    "source_name": "WIPO - Assignment and Licensing",
+    "version_id": "c41e4d9475408bbbc7fa18c9de17b2d1a6b88b5961eec513daa86c990165fd99",
+    "content_hash": "c41e4d9475408bbbc7fa18c9de17b2d1a6b88b5961eec513daa86c990165fd99",
+    "timestamp": "2026-01-30T09:27:09.009344",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "wipo_licensing.md"
+  },
+  {
+    "source_name": "FCFCOA - Administrative ADJR",
+    "version_id": "2870470416578fcf4603372fe4f36d1e34c9dc7b0745905e49209a419f9673a9",
+    "content_hash": "2870470416578fcf4603372fe4f36d1e34c9dc7b0745905e49209a419f9673a9",
+    "timestamp": "2026-01-30T09:27:48.841710",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "fcfcoa_adjr.md"
+  },
+  {
+    "source_name": "WIPO AMC - Arbitration Fees",
+    "version_id": "784660bc44080b77aadabe7311a9e1563ed352da70e154b82964ad5b227d1f79",
+    "content_hash": "784660bc44080b77aadabe7311a9e1563ed352da70e154b82964ad5b227d1f79",
+    "timestamp": "2026-01-30T09:26:58.917817",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "wipo_arb_fees.md"
+  },
+  {
+    "source_name": "Federal Court - IP National Practice Area",
+    "version_id": "78ad116c493228a7c4584d0afd598497ffd9b86dda3f00458169b0e3dc5af4dc",
+    "content_hash": "78ad116c493228a7c4584d0afd598497ffd9b86dda3f00458169b0e3dc5af4dc",
+    "timestamp": "2026-01-30T09:28:22.769640",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "fedcourt_ip_npa.md"
+  },
+  {
+    "source_name": "Arts Law - Copyright Infringement",
+    "version_id": "23e65f191a586716e27918a69b56e6bbbd06eb3d7bc1d91bfd8d2b7bdb67e633",
+    "content_hash": "23e65f191a586716e27918a69b56e6bbbd06eb3d7bc1d91bfd8d2b7bdb67e633",
+    "timestamp": "2026-01-30T09:26:44.278347",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "artslaw_copyright.md"
+  },
+  {
+    "source_name": "Federal Court - Mediation Services",
+    "version_id": "7b69b965eaae9f38a96e5056f4462d25630f3b2deafd5f6f0c2b49ec5a38e17c",
+    "content_hash": "7b69b965eaae9f38a96e5056f4462d25630f3b2deafd5f6f0c2b49ec5a38e17c",
+    "timestamp": "2026-01-30T09:27:36.924541",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "fedcourt_mediation.md"
+  },
+  {
+    "source_name": "WIPO Guide - UDRP",
+    "version_id": "970422564591e486d2a499a28249ef630aa5c300e83e03ca8bec1845729e6001",
+    "content_hash": "970422564591e486d2a499a28249ef630aa5c300e83e03ca8bec1845729e6001",
+    "timestamp": "2026-01-30T09:27:04.283590",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "wipo_guide_udrp.md"
+  },
+  {
+    "source_name": "FCFCOA - Intellectual Property Jurisdiction",
+    "version_id": "b07bfca807d350e6c8e05f24940b60c030272e32e58816d22296b22f5e90f6b6",
+    "content_hash": "b07bfca807d350e6c8e05f24940b60c030272e32e58816d22296b22f5e90f6b6",
+    "timestamp": "2026-01-30T09:28:17.768124",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "fcfcoa_ip_info.md"
+  },
+  {
+    "source_name": "Austrade - Australian Business Regulations",
+    "version_id": "a632dcf5827ad14ddcd4cd0cce20f987d1eead393ee6b58cfe33c5be94455797",
+    "content_hash": "a632dcf5827ad14ddcd4cd0cce20f987d1eead393ee6b58cfe33c5be94455797",
+    "timestamp": "2026-01-30T09:27:45.340642",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "austrade_regs.md"
+  },
+  {
+    "source_name": "WIPO Arbitration and Mediation Center",
+    "version_id": "2bba436b4e4445ee80adc890ce2ca1d1d501dd7483a621cd6aca158f96675e35",
+    "content_hash": "2bba436b4e4445ee80adc890ce2ca1d1d501dd7483a621cd6aca158f96675e35",
+    "timestamp": "2026-01-29T02:54:45.704338",
+    "priority": "Medium",
+    "details": "RSS/API Update",
+    "file": "WIPO_AMC.xml"
+  },
+  {
+    "source_name": "TTIP Attorney - Engaging an Attorney",
+    "version_id": "0e02c2e6484b78dedaed4783761a8456770b51995b13a3954eebb0611f63e20b",
+    "content_hash": "0e02c2e6484b78dedaed4783761a8456770b51995b13a3954eebb0611f63e20b",
+    "timestamp": "2026-01-30T09:27:41.946391",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "ttip_engage_attorney.md"
+  },
+  {
+    "source_name": "ASIC - Register a Company",
+    "version_id": "a3f3dd4edb65d24ae7e10dcad0259304b070906fddcda6c57986a155b5931267",
+    "content_hash": "a3f3dd4edb65d24ae7e10dcad0259304b070906fddcda6c57986a155b5931267",
+    "timestamp": "2026-01-30T09:28:10.778365",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "asic_company_reg.md"
+  },
+  {
+    "source_name": "Arts Law - Protecting Designs",
+    "version_id": "e352794d6da563479d34458bd72c0e09761ef4b8b02661b2387ff79e291a8485",
+    "content_hash": "e352794d6da563479d34458bd72c0e09761ef4b8b02661b2387ff79e291a8485",
+    "timestamp": "2026-01-30T09:26:48.406668",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "artslaw_designs.md"
+  },
+  {
+    "source_name": "ICANN - UDRP Policy",
+    "version_id": "4c073623f8474c59cc32c37eae1456adf2377f49a9f970b4765517e4a78f3d69",
+    "content_hash": "4c073623f8474c59cc32c37eae1456adf2377f49a9f970b4765517e4a78f3d69",
+    "timestamp": "2026-01-30T09:26:55.313984",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "icann_udrp.md"
   },
   {
     "source_name": "WIPO Press Room",
@@ -52,5 +268,41 @@
     "priority": "Low",
     "details": "RSS/API Update",
     "file": "WIPO_Press.xml"
+  },
+  {
+    "source_name": "Arts Law - Legal Help: Who Can You Go To?",
+    "version_id": "2ad503d528b07323549febc5edeffc46725e1d90d7f31c35a89ccc0f27ff31a0",
+    "content_hash": "2ad503d528b07323549febc5edeffc46725e1d90d7f31c35a89ccc0f27ff31a0",
+    "timestamp": "2026-01-30T09:26:51.609404",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "artslaw_legalhelp.md"
+  },
+  {
+    "source_name": "Federal Court - Annual Reports",
+    "version_id": "cdae434b87c91cbe35ac30c4432b6096d933a898087b233b2ce2c87ae7df6d96",
+    "content_hash": "cdae434b87c91cbe35ac30c4432b6096d933a898087b233b2ce2c87ae7df6d96",
+    "timestamp": "2026-01-30T09:27:34.799875",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "fedcourt_reports.md"
+  },
+  {
+    "source_name": "IP Australia - What are trade marks?",
+    "version_id": "72bce073ce7d8c6ded229e53a9b83f158b8f9a1864016b0d7e26fd7c4a977574",
+    "content_hash": "72bce073ce7d8c6ded229e53a9b83f158b8f9a1864016b0d7e26fd7c4a977574",
+    "timestamp": "2026-01-29T03:03:08.530611",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "IPA_what-are-tradmarks.md"
+  },
+  {
+    "source_name": "AFP - Intellectual Property Crime",
+    "version_id": "f210a7d4bb24037cc2e8c458155912bcebeda6de507f3bd6efce9572d3ffe476",
+    "content_hash": "f210a7d4bb24037cc2e8c458155912bcebeda6de507f3bd6efce9572d3ffe476",
+    "timestamp": "2026-01-30T09:28:01.162882",
+    "priority": "Medium",
+    "details": "Web Scrape Update",
+    "file": "afp_ip_crime.md"
   }
 ]
