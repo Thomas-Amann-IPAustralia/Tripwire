@@ -150,43 +150,68 @@ def save_to_archive(filename, content):
 # --- Main Execution ---
 
 def main():
-    if not os.path.exists(SOURCES_FILE): sys.exit(1)
-    with open(SOURCES_FILE, 'r') as f: sources = json.load(f)
+    if not os.path.exists(SOURCES_FILE):
+        logger.critical(f"Error: {SOURCES_FILE} not found.")
+        sys.exit(1)
+
+    with open(SOURCES_FILE, 'r') as f:
+        sources = json.load(f)
 
     session = get_robust_session()
     driver = None
     logger.info(f"--- Tripwire Run: {datetime.datetime.now()} ---")
 
     for source in sources:
-        name, stype, priority = source['name'], source['type'], source['priority']
+        name = source.get('name')
+        stype = source.get('type')
+        priority = source.get('priority', 'Low')
         output_filename = source.get('output_filename')
-
-        # STAGE 0: The Sentry 
+        
+        # --- STAGE 0: THE SENTRY ---
         old_id = get_last_version_id(name)
         current_id = fetch_stage0_metadata(session, source)
-
+        
+        # LOG NO CHANGE: Ensure "No Change" is recorded and skip to next
         if old_id and current_id and old_id == current_id:
             logger.info(f"Stage 0: No change for {name}.")
             log_to_audit(name, priority, "Success", "No", current_id)
             continue
 
-        # STAGE 1: Extraction 
+        # --- STAGE 1: EXTRACTION ---
         logger.info(f"Stage 1: Processing {name}...")
         try:
             if stype == "Legislation_OData":
                 ver_id, meta = fetch_legislation_metadata(session, source)
-                content = download_legislation_content(session, meta)
-                if content:
-                    save_to_archive(output_filename, content)
-                    log_to_audit(name, priority, "Success", "Yes", ver_id)
+                if ver_id:
+                    content = download_legislation_content(session, meta)
+                    if content:
+                        save_to_archive(output_filename, content)
+                        log_to_audit(name, priority, "Success", "Yes", ver_id)
+                    else:
+                        log_to_audit(name, priority, "Error: Download Failed", "N/A", ver_id)
+                else:
+                    log_to_audit(name, priority, "Error: Metadata Failed", "N/A", current_id)
+            
             elif stype == "WebPage":
                 if not driver: driver = initialize_driver()
                 markdown = fetch_webpage_content(driver, source['url'])
                 if markdown:
                     save_to_archive(output_filename, markdown)
                     log_to_audit(name, priority, "Success", "Yes", current_id)
+                else:
+                    log_to_audit(name, priority, "Error: Scrape Failed", "N/A", current_id)
+
+            elif stype == "RSS":
+                resp = session.get(source['url'], timeout=15)
+                if resp.status_code == 200:
+                    save_to_archive(output_filename, resp.content)
+                    log_to_audit(name, priority, "Success", "Yes", current_id)
+                else:
+                    log_to_audit(name, priority, f"Error: {resp.status_code}", "N/A", current_id)
+
         except Exception as e:
-            log_to_audit(name, priority, "Error", "N/A", current_id)
+            logger.error(f"Unexpected error for {name}: {e}")
+            log_to_audit(name, priority, "Exception", "N/A", current_id)
 
     if driver: driver.quit()
 
