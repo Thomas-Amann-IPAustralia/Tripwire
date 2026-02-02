@@ -1,4 +1,5 @@
 import json
+import csv
 import hashlib
 import requests
 import datetime
@@ -8,6 +9,7 @@ import time
 import random
 import logging
 import re
+import subprocess
 from typing import List, Dict, Optional
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -24,12 +26,11 @@ from bs4 import BeautifulSoup
 from markdownify import markdownify as md
 
 # --- Configuration ---
-HISTORY_FILE = 'tripwire_history.json'
+AUDIT_LOG = 'audit_log.csv' # NEW: Replaces HISTORY_FILE 
 SOURCES_FILE = 'sources.json'
 OUTPUT_DIR = 'content_archive'
-HISTORY_LIMIT = 10 
 
-# --- Scrape Config ---
+# --- Scrape Config  ---
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
 BLOCK_PAGE_SIGNATURES = [
     "access denied", "enable javascript", "checking if the site connection is secure",
@@ -44,229 +45,107 @@ logging.basicConfig(
 )
 logger = logging.getLogger("Tripwire")
 
-# --- Robust Session Factory ---
+# --- Stage 0: Audit & Metadata Helpers  ---
+
+def get_last_version_id(source_name: str) -> Optional[str]:
+    """Reads the Audit CSV to find the last known Version_ID."""
+    if not os.path.exists(AUDIT_LOG):
+        return None
+    try:
+        with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
+            reader = list(csv.DictReader(f))
+            for row in reversed(reader):
+                if row['Source_Name'] == source_name and row['Status'] == 'Success':
+                    return row['Version_ID']
+    except Exception:
+        return None
+    return None
+
+def log_to_audit(name, priority, status, change_detected, version_id):
+    """Universal CSV logger for auditability."""
+    file_exists = os.path.exists(AUDIT_LOG)
+    with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow(['Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected', 'Version_ID'])
+        writer.writerow([datetime.datetime.now().isoformat(), name, priority, status, change_detected, version_id])
+
+def fetch_stage0_metadata(session, source) -> Optional[str]:
+    """Lightweight metadata fetch to determine if Stage 1 is needed."""
+    stype = source.get('type')
+    try:
+        if stype == "Legislation_OData":
+            params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
+            resp = session.get(source['base_url'], params=params, timeout=20)
+            return resp.json().get('value', [{}])[0].get('registerId')
+        elif stype in ["RSS", "WebPage"]:
+            resp = session.head(source['url'], timeout=15)
+            # Use ETag or Content-Length as a unique identifier
+            return resp.headers.get('ETag') or resp.headers.get('Content-Length')
+    except Exception:
+        return None
+    return None
+
+# --- Stage 1: Extraction & Normalization  ---
+
 def get_robust_session():
-    """Creates a requests session with retry logic for stability."""
     session = requests.Session()
-    retry_strategy = Retry(
-        total=5,
-        backoff_factor=2,
-        status_forcelist=[429, 500, 502, 503, 504],
-        allowed_methods=["GET"]
-    )
-    adapter = HTTPAdapter(max_retries=retry_strategy)
-    session.mount("https://", adapter)
+    retry_strategy = Retry(total=5, backoff_factor=2, status_forcelist=[429, 500, 502, 503, 504])
+    session.mount("https://", HTTPAdapter(max_retries=retry_strategy))
     return session
 
-# --- JSON History Management ---
-
-def load_history() -> List[Dict]:
-    if not os.path.exists(HISTORY_FILE):
-        return []
-    try:
-        with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except Exception as e:
-        logger.warning(f"History file corrupt or empty: {e}. Starting fresh.")
-        return []
-
-def save_history(history: List[Dict]):
-    try:
-        with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
-            json.dump(history, f, indent=2)
-    except Exception as e:
-        logger.error(f"Failed to save history: {e}")
-
-def prune_history(history: List[Dict]) -> List[Dict]:
-    new_history = []
-    source_names = set(entry['source_name'] for entry in history)
-    for name in source_names:
-        entries = [e for e in history if e['source_name'] == name]
-        entries.sort(key=lambda x: x['timestamp'])
-        new_history.extend(entries[-HISTORY_LIMIT:])
-    return new_history
-
-def get_hash(content):
-    if isinstance(content, str):
-        content = content.encode('utf-8')
-    return hashlib.sha256(content).hexdigest()
-
-def save_to_archive(filename, content):
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-    filepath = os.path.join(OUTPUT_DIR, filename)
-    mode = 'wb' if isinstance(content, bytes) else 'w'
-    encoding = None if isinstance(content, bytes) else 'utf-8'
-    with open(filepath, mode, encoding=encoding) as f:
-        f.write(content)
-    logger.info(f"  -> Saved to: {filepath}")
-    return filename
-
-# --- Selenium / Scraping Functions ---
-
 def initialize_driver():
-    logger.info("  -> Initializing Selenium Driver...")
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless=new')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument('--window-size=1920,1080')
-    chrome_options.add_argument('user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36')
-    
     try:
-        service = ChromeService(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=chrome_options)
-        stealth(driver,
-                languages=["en-US", "en"],
-                vendor="Google Inc.",
-                platform="Win32",
-                webgl_vendor="Intel Inc.",
-                renderer="Intel Iris OpenGL Engine",
-                fix_hairline=True,
-        )
+        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
+        stealth(driver, languages=["en-US", "en"], vendor="Google Inc.", platform="Win32", fix_hairline=True)
         return driver
     except Exception as e:
-        logger.error(f"  [x] Failed to initialize WebDriver: {e}")
+        logger.error(f"Failed to initialize WebDriver: {e}")
         return None
 
 def clean_html_content(html):
     soup = BeautifulSoup(html, 'html.parser')
-    page_body = soup.body
-    if not page_body:
-        return ""
+    body = soup.body
+    if not body: return ""
+    for selector in TAGS_TO_EXCLUDE:
+        for tag in body.select(selector): tag.decompose()
+    text = str(body)
+    text = re.sub(r'Generated on:? \d{1,2}/\d{1,2}/\d{4}.*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'Last updated:? \d{1,2}:\d{2}.*', '', text, flags=re.IGNORECASE)
+    return text
 
-    for tag_selector in TAGS_TO_EXCLUDE:
-        for tag in page_body.select(tag_selector):
-            tag.decompose()
-    
-    text_content = str(page_body)
-    # Noise Reduction
-    text_content = re.sub(r'Generated on:? \d{1,2}/\d{1,2}/\d{4}.*', '', text_content, flags=re.IGNORECASE)
-    text_content = re.sub(r'Last updated:? \d{1,2}:\d{2}.*', '', text_content, flags=re.IGNORECASE)
-    return text_content
-
-def fetch_webpage_content(driver, url, max_retries=2):
-    if url.lower().endswith('.pdf'):
-        logger.warning(f"  [!] Skipping PDF link: {url}")
+def fetch_webpage_content(driver, url):
+    try:
+        driver.get(url)
+        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
+        cleaned = clean_html_content(driver.page_source)
+        return md(cleaned, heading_style="ATX")
+    except Exception:
         return None
-
-    for attempt in range(max_retries + 1):
-        try:
-            driver.get(url)
-            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
-            
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight/2);")
-            time.sleep(random.uniform(1.0, 2.0))
-
-            html_content = driver.page_source
-            if any(sig in html_content.lower() for sig in BLOCK_PAGE_SIGNATURES):
-                logger.warning(f"  [x] Block page detected at {url}.")
-                return None
-
-            cleaned_html = clean_html_content(html_content)
-            if not cleaned_html:
-                return None
-
-            return md(cleaned_html, heading_style="ATX")
-        except Exception as e:
-            logger.warning(f"  [x] Attempt {attempt+1} failed for {url}: {e}")
-            time.sleep(2)
-    return None
-
-# --- Legislation API Logic ---
 
 def fetch_legislation_metadata(session, source):
-    """Fetches metadata using Intelligent Selection (Word > Pdf > Epub)."""
-    base_url = source['base_url']
-    target_title_id = source['title_id'] 
-    
-    params = {
-        "$filter": f"titleid eq '{target_title_id}'", 
-        "$orderby": "start desc",
-        "$top": "40"
-    }
-    
-    headers = {'Accept': 'application/json'}
-    
-    try:
-        resp = session.get(base_url, params=params, headers=headers, timeout=30)
-        resp.raise_for_status()
-        data = resp.json()
-    except Exception as e:
-        logger.error(f"  [x] Metadata request failed: {e}")
-        return None, None
-    
-    documents = data.get('value', [])
-    if not documents:
-        return None, None
-
-    # Sort docs by date to find the absolute latest
-    docs_by_date = {}
-    for doc in documents:
-        start_date = doc.get('start')
-        if start_date not in docs_by_date:
-            docs_by_date[start_date] = []
-        docs_by_date[start_date].append(doc)
-    
-    sorted_dates = sorted(docs_by_date.keys(), reverse=True)
-    selected_doc = None
-    
-    # Priority: Word > Pdf > Epub
-    for date in sorted_dates:
-        version_docs = docs_by_date[date]
-        for doc in version_docs:
-            if doc.get('format') == 'Word':
-                selected_doc = doc; break
-        if selected_doc: break
-        
-        for doc in version_docs:
-            if doc.get('format') == 'Pdf':
-                selected_doc = doc; break
-        if selected_doc: break
-        
-        for doc in version_docs:
-            if doc.get('format') == 'Epub':
-                selected_doc = doc; break
-        if selected_doc: break
-
-    if not selected_doc:
-        selected_doc = documents[0]
-
-    return selected_doc.get('registerId'), selected_doc
+    params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
+    resp = session.get(source['base_url'], params=params, timeout=30)
+    docs = resp.json().get('value', [])
+    return (docs[0].get('registerId'), docs[0]) if docs else (None, None)
 
 def download_legislation_content(session, doc_meta):
-    """Downloads binary content using the OData composite key."""
     def q(val): return f"'{val}'"
-    
-    try:
-        reg_id = doc_meta.get('registerId')
-        d_type = doc_meta.get('type')
-        fmt = doc_meta.get('format')
-        uniq_num = int(doc_meta.get('uniqueTypeNumber') or 0)
-        vol_num = int(doc_meta.get('volumeNumber') or 0)
-        rect_ver = int(doc_meta.get('rectificationVersionNumber') or 0)
+    reg_id = doc_meta.get('registerId')
+    download_url = f"https://api.prod.legislation.gov.au/v1/documents/find(registerId={q(reg_id)},type={q(doc_meta.get('type'))},format={q(doc_meta.get('format'))},uniqueTypeNumber={int(doc_meta.get('uniqueTypeNumber') or 0)},volumeNumber={int(doc_meta.get('volumeNumber') or 0)},rectificationVersionNumber={int(doc_meta.get('rectificationVersionNumber') or 0)})"
+    resp = session.get(download_url, stream=True, timeout=90)
+    return resp.content
 
-        segment = (
-            f"registerId={q(reg_id)},"
-            f"type={q(d_type)},"
-            f"format={q(fmt)},"
-            f"uniqueTypeNumber={uniq_num},"
-            f"volumeNumber={vol_num},"
-            f"rectificationVersionNumber={rect_ver}"
-        )
-        
-        # CORRECTED: Use standard find() URL without /$value appended
-        # The API automatically returns bytes for find()
-        download_url = f"https://api.prod.legislation.gov.au/v1/documents/find({segment})"
-        logger.info(f"  -> Downloading from: {download_url}")
-        
-        response = session.get(download_url, headers={"Accept": "*/*"}, stream=True, timeout=90)
-        response.raise_for_status()
-        return response.content
-
-    except Exception as e:
-        logger.error(f"  [x] Download failed: {e}")
-        return None
+def save_to_archive(filename, content):
+    if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
+    filepath = os.path.join(OUTPUT_DIR, filename)
+    mode, encoding = ('wb', None) if isinstance(content, bytes) else ('w', 'utf-8')
+    with open(filepath, mode, encoding=encoding) as f: f.write(content)
+    return filepath
 
 # --- Main Execution ---
 
@@ -278,107 +157,62 @@ def main():
     with open(SOURCES_FILE, 'r') as f:
         sources = json.load(f)
 
-    history = load_history()
     session = get_robust_session()
-    
-    # Check if we need the browser for any source
-    has_web_sources = any(s.get('type') == 'WebPage' for s in sources)
-    driver = initialize_driver() if has_web_sources else None
-
-    updates_found = False
+    driver = None
     logger.info(f"--- Tripwire Run: {datetime.datetime.now()} ---")
 
     for source in sources:
         name = source.get('name')
         stype = source.get('type')
         priority = source.get('priority', 'Low')
-        output_filename = source.get('output_filename', f"{name.replace(' ', '_')}.dat")
+        output_filename = source.get('output_filename')
         
-        logger.info(f"Checking {name} ({stype})...")
+        # --- STAGE 0: THE SENTRY ---
+        old_id = get_last_version_id(name)
+        current_id = fetch_stage0_metadata(session, source)
         
-        content_to_save = None
-        version_id = None
-        details_str = ""
-        is_new = False
-        
+        # LOG NO CHANGE: Ensure "No Change" is recorded and skip to next
+        if old_id and current_id and old_id == current_id:
+            logger.info(f"Stage 0: No change for {name}.")
+            log_to_audit(name, priority, "Success", "No", current_id)
+            continue
+
+        # --- STAGE 1: EXTRACTION ---
+        logger.info(f"Stage 1: Processing {name}...")
         try:
-            # 1. LEGISLATION
             if stype == "Legislation_OData":
                 ver_id, meta = fetch_legislation_metadata(session, source)
-                if not ver_id: continue
-                
-                # Composite Version ID to detect format changes even if RegisterID is same
-                db_ver_key = f"{ver_id}_{meta.get('format')}"
-                
-                if not any(h['source_name'] == name and h['version_id'] == db_ver_key for h in history):
-                    logger.info(f"  [!] NEW LEGISLATION VERSION ({ver_id}).")
-                    content_to_save = download_legislation_content(session, meta)
-                    if content_to_save:
-                        version_id = db_ver_key
-                        details_str = f"Legislation Update ({meta.get('format')})"
-                        is_new = True
-                else:
-                    logger.info("  No change (Version Match).")
-
-            # 2. WEB PAGE (Selenium Logic)
-            elif stype == "WebPage":
-                if not driver: 
-                    logger.warning("  [!] Web driver required but not initialized.")
-                    continue
-                
-                markdown_content = fetch_webpage_content(driver, source['url'])
-                if markdown_content:
-                    current_hash = get_hash(markdown_content)
-                    if not any(h['source_name'] == name and h['version_id'] == current_hash for h in history):
-                        logger.info(f"  [!] WEBPAGE CHANGE DETECTED.")
-                        content_to_save = markdown_content
-                        version_id = current_hash
-                        details_str = "Web Scrape Update"
-                        is_new = True
+                if ver_id:
+                    content = download_legislation_content(session, meta)
+                    if content:
+                        save_to_archive(output_filename, content)
+                        log_to_audit(name, priority, "Success", "Yes", ver_id)
                     else:
-                        logger.info("  No change.")
+                        log_to_audit(name, priority, "Error: Download Failed", "N/A", ver_id)
+                else:
+                    log_to_audit(name, priority, "Error: Metadata Failed", "N/A", current_id)
+            
+            elif stype == "WebPage":
+                if not driver: driver = initialize_driver()
+                markdown = fetch_webpage_content(driver, source['url'])
+                if markdown:
+                    save_to_archive(output_filename, markdown)
+                    log_to_audit(name, priority, "Success", "Yes", current_id)
+                else:
+                    log_to_audit(name, priority, "Error: Scrape Failed", "N/A", current_id)
 
-            # 3. RSS / API
-            elif stype in ["RSS", "API"]:
+            elif stype == "RSS":
                 resp = session.get(source['url'], timeout=15)
                 if resp.status_code == 200:
-                    current_hash = get_hash(resp.content)
-                    if not any(h['source_name'] == name and h['version_id'] == current_hash for h in history):
-                        logger.info(f"  [!] RSS/API CHANGE DETECTED.")
-                        content_to_save = resp.content
-                        version_id = current_hash
-                        details_str = "RSS/API Update"
-                        is_new = True
-                    else:
-                        logger.info("  No change.")
-
-            # --- SAVE & UPDATE ---
-            if is_new and content_to_save:
-                saved_file = save_to_archive(output_filename, content_to_save)
-                new_entry = {
-                    "source_name": name,
-                    "version_id": version_id,
-                    "content_hash": get_hash(content_to_save),
-                    "timestamp": datetime.datetime.now().isoformat(),
-                    "priority": priority,
-                    "details": details_str,
-                    "file": saved_file
-                }
-                history.append(new_entry)
-                updates_found = True
+                    save_to_archive(output_filename, resp.content)
+                    log_to_audit(name, priority, "Success", "Yes", current_id)
+                else:
+                    log_to_audit(name, priority, f"Error: {resp.status_code}", "N/A", current_id)
 
         except Exception as e:
-            logger.error(f"  [x] Unexpected error for {name}: {e}")
+            logger.error(f"Unexpected error for {name}: {e}")
+            log_to_audit(name, priority, "Exception", "N/A", current_id)
 
-    if driver:
-        driver.quit()
+    if driver: driver.quit()
 
-    if updates_found:
-        history = prune_history(history)
-        save_history(history)
-        logger.info("--- Updates completed and saved ---")
-    else:
-        logger.info("--- No updates found ---")
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
