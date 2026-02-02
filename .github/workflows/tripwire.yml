@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          [cite_start]fetch-depth: 0 # Required for git diff logic 
+          fetch-depth: 0 # Required for git diff logic 
 
       - name: Set up Python
         uses: actions/setup-python@v4
