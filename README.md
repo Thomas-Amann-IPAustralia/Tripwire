@@ -21,8 +21,8 @@ Its primary mission is to autonomously monitor authoritative Intellectual Proper
 * `tripwire.py`: The core logic script. Handles fetching, cleaning, hashing, and archiving data.
 * `sources.json`: Configuration file defining *what* to monitor (URLs, priorities, output filenames).
 * `requirements.txt`: Python dependencies required to run the engine.
-* `tripwire_history.json`: A database of the last known state (hashes and timestamps) for every source.
-* `content_archive/`: Directory where updated documents and scrapes are stored.
+* `audit_log.csv`: A change log for every source.
+* `content_archive/`: Directory where normalised updated documents and scrapes are stored.
 * `.github/workflows/tripwire.yml`: GitHub Actions configuration for automated scheduling.
 
 ## ⚙️ Configuration
