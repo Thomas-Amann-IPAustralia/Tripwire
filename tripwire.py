@@ -82,13 +82,11 @@ def clean_html_content(html):
     if not body: return ""
     for selector in TAGS_TO_EXCLUDE:
         for tag in body.select(selector): tag.decompose()
-    # Remove dynamic timestamp strings often found in footers/headers
     text = str(body)
     text = re.sub(r'Generated on:? \d{1,2}/\d{1,2}/\d{4}.*', '', text, flags=re.IGNORECASE)
     return text
 
 def fetch_webpage_content(driver, url):
-    """Uses Selenium to grab page content and convert to Markdown."""
     driver.get(url)
     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
     cleaned_html = clean_html_content(driver.page_source)
@@ -108,7 +106,6 @@ def download_legislation_content(session, base_url, doc_meta):
     return resp.content if resp.status_code == 200 else None
 
 def save_to_archive(filename, content, is_binary=False):
-    """Saves to archive, handling Word-to-Markdown conversion if needed."""
     if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
     
     if filename.endswith('.docx') or (is_binary and filename.endswith('.md')):
@@ -141,6 +138,7 @@ def sanitize_rss(xml_content):
 # --- Main Logic ---
 
 def main():
+    if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
     with open(SOURCES_FILE, 'r') as f:
         sources = json.load(f)
 
@@ -153,36 +151,44 @@ def main():
         stype = source['type']
         priority = source.get('priority', 'Low')
         out_name = source['output_filename']
+        out_path = os.path.join(OUTPUT_DIR, out_name.replace('.docx', '.md') if stype == "Legislation_OData" else out_name)
         
         old_id = get_last_version_id(name)
         current_id = fetch_stage0_metadata(session, source)
+        file_exists = os.path.exists(out_path)
         
-        # Check for changes
+        # SELF-HEALING LOGIC
+        repopulate_only = False
         if old_id and current_id and old_id == current_id:
-            logger.info(f"Stage 0: No change for {name}.")
-            log_to_audit(name, priority, "Success", "No", current_id)
-            continue
+            if file_exists:
+                logger.info(f"Stage 0: No change and file exists for {name}. Skipping.")
+                continue
+            else:
+                logger.warning(f"Stage 0: Version matches but file missing for {name}. Repopulating archive.")
+                repopulate_only = True
 
         try:
+            change_val = "No" if repopulate_only else "Yes"
+            
             if stype == "Legislation_OData":
                 ver_id, meta = fetch_legislation_metadata(session, source)
                 content = download_legislation_content(session, source['base_url'], meta)
                 if content:
                     save_to_archive(out_name, content, is_binary=True)
-                    log_to_audit(name, priority, "Success", "Yes", ver_id)
+                    log_to_audit(name, priority, "Success", change_val, ver_id)
 
             elif stype == "RSS":
                 resp = session.get(source['url'], timeout=15)
                 clean_xml = sanitize_rss(resp.content)
                 save_to_archive(out_name, clean_xml)
-                log_to_audit(name, priority, "Success", "Yes", current_id)
+                log_to_audit(name, priority, "Success", change_val, current_id)
 
             elif stype == "WebPage":
                 if not driver: driver = initialize_driver()
                 markdown = fetch_webpage_content(driver, source['url'])
                 if markdown:
                     save_to_archive(out_name, markdown)
-                    log_to_audit(name, priority, "Success", "Yes", current_id)
+                    log_to_audit(name, priority, "Success", change_val, current_id)
 
         except Exception as e:
             logger.error(f"Failed {name}: {e}")
