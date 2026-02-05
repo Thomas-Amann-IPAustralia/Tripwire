@@ -37,13 +37,12 @@ jobs:
           git config --global user.name "Tripwire Bot"
           git config --global user.email "actions@github.com"
           
-          # Add current content and history logs
-          git add audit_log.csv content_archive/
+          # Add current content, audit log, and the new diff archive
+          git add audit_log.csv content_archive/ diff_archive/
           
-          # Only commit if there are actual changes in the staging area
           if git diff --cached --quiet; then
-            echo "No substantive changes to archive."
+            echo "No substantive changes."
           else
-            git commit -m "Tripwire: Detected substantive changes [skip ci]"
+            git commit -m "Tripwire: Detected changes & recorded diffs [skip ci]"
             git push
           fi
