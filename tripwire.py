@@ -21,7 +21,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium_stealth import stealth
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
-import docx
+import docx # Required: pip install python-docx
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv' 
@@ -48,13 +48,24 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     return None
 
 def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None):
-    """Logs the results to CSV with a reference to the diff file if it exists."""
+    """Logs results to CSV including Diff_File."""
     file_exists = os.path.exists(AUDIT_LOG)
+    # Define columns explicitly to ensure headers match data
+    headers = ['Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected', 'Version_ID', 'Diff_File']
+    
     with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(['Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected', 'Version_ID', 'Diff_File'])
-        writer.writerow([datetime.datetime.now().isoformat(), name, priority, status, change_detected, version_id, diff_file or "N/A"])
+            writer.writerow(headers)
+        writer.writerow([
+            datetime.datetime.now().isoformat(), 
+            name, 
+            priority, 
+            status, 
+            change_detected, 
+            version_id, 
+            diff_file if diff_file else "N/A"
+        ])
 
 def fetch_stage0_metadata(session, source) -> Optional[str]:
     """Quick check for ETag or RegisterID to see if a full fetch is needed."""
@@ -141,6 +152,7 @@ def get_diff(old_path, new_content) -> Optional[str]:
         f.write(new_content)
 
     try:
+        # captures the hunk for Phase 3 impact assessment
         result = subprocess.run(
             ['diff', '-U10', old_path, temp_path],
             capture_output=True,
@@ -152,7 +164,7 @@ def get_diff(old_path, new_content) -> Optional[str]:
             os.remove(temp_path)
 
 def save_to_archive(filename, content):
-    """Saves the normalized string content to the archive."""
+    """Saves the normalized string content to the archive directory."""
     if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
     filepath = os.path.join(OUTPUT_DIR, filename)
     with open(filepath, 'w', encoding='utf-8') as f:
@@ -163,6 +175,7 @@ def save_diff_record(name, diff_content):
     """Saves the diff hunk to a permanent file for auditing."""
     if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    # Clean name of any characters that might interfere with file paths or CSVs
     safe_name = re.sub(r'\W+', '_', name)
     filename = f"{timestamp}_{safe_name}.diff"
     filepath = os.path.join(DIFF_DIR, filename)
@@ -222,8 +235,11 @@ def main():
                 
                 if diff_hunk:
                     logger.info(f"Substantive change detected for {name}.")
+                    # Record the hunk permanently
                     diff_file = save_diff_record(name, diff_hunk)
+                    # Update the archive
                     save_to_archive(out_name, new_content)
+                    # Log with the reference to the diff file
                     log_to_audit(name, priority, "Success", "Yes", current_id, diff_file)
                 else:
                     logger.info(f"No substantive change for {name}.")
