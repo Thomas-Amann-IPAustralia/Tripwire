@@ -21,12 +21,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium_stealth import stealth
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
-import docx # Required: pip install python-docx
+[cite_start]import docx # Required: pip install python-docx [cite: 1]
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv' 
 SOURCES_FILE = 'sources.json'
 OUTPUT_DIR = 'content_archive'
+DIFF_DIR = 'diff_archive'
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -46,14 +47,14 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     except Exception: return None
     return None
 
-def log_to_audit(name, priority, status, change_detected, version_id):
-    """Logs the results of a check to the CSV audit trail."""
+def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None):
+    """Logs the results to CSV with a reference to the diff file if it exists."""
     file_exists = os.path.exists(AUDIT_LOG)
     with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(['Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected', 'Version_ID'])
-        writer.writerow([datetime.datetime.now().isoformat(), name, priority, status, change_detected, version_id])
+            writer.writerow(['Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected', 'Version_ID', 'Diff_File'])
+        writer.writerow([datetime.datetime.now().isoformat(), name, priority, status, change_detected, version_id, diff_file or "N/A"])
 
 def fetch_stage0_metadata(session, source) -> Optional[str]:
     """Quick check for ETag or RegisterID to see if a full fetch is needed."""
@@ -158,10 +159,23 @@ def save_to_archive(filename, content):
         f.write(content)
     return filepath
 
+def save_diff_record(name, diff_content):
+    """Saves the diff hunk to a permanent file for auditing."""
+    if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    safe_name = re.sub(r'\W+', '_', name)
+    filename = f"{timestamp}_{safe_name}.diff"
+    filepath = os.path.join(DIFF_DIR, filename)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(diff_content)
+    return filename
+
 # --- Main Logic ---
 
 def main():
     if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
+    if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
+    
     with open(SOURCES_FILE, 'r') as f:
         sources = json.load(f)
 
@@ -208,8 +222,9 @@ def main():
                 
                 if diff_hunk:
                     logger.info(f"Substantive change detected for {name}.")
+                    diff_file = save_diff_record(name, diff_hunk)
                     save_to_archive(out_name, new_content)
-                    log_to_audit(name, priority, "Success", "Yes", current_id)
+                    log_to_audit(name, priority, "Success", "Yes", current_id, diff_file)
                 else:
                     logger.info(f"No substantive change for {name}.")
                     log_to_audit(name, priority, "Success", "No", current_id)
