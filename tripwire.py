@@ -21,7 +21,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium_stealth import stealth
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
-[cite_start]import docx # Required: pip install python-docx [cite: 1]
+import docx
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv' 
