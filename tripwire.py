@@ -6,6 +6,7 @@ import os
 import sys
 import logging
 import re
+import subprocess
 from typing import List, Dict, Optional
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -34,6 +35,7 @@ logger = logging.getLogger("Tripwire")
 # --- Stage 0: Helpers ---
 
 def get_last_version_id(source_name: str) -> Optional[str]:
+    """Retrieves the last successful Version_ID from the audit log."""
     if not os.path.exists(AUDIT_LOG): return None
     try:
         with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
@@ -45,6 +47,7 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     return None
 
 def log_to_audit(name, priority, status, change_detected, version_id):
+    """Logs the results of a check to the CSV audit trail."""
     file_exists = os.path.exists(AUDIT_LOG)
     with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
@@ -53,6 +56,7 @@ def log_to_audit(name, priority, status, change_detected, version_id):
         writer.writerow([datetime.datetime.now().isoformat(), name, priority, status, change_detected, version_id])
 
 def fetch_stage0_metadata(session, source) -> Optional[str]:
+    """Quick check for ETag or RegisterID to see if a full fetch is needed."""
     stype = source.get('type')
     try:
         if stype == "Legislation_OData":
@@ -65,9 +69,10 @@ def fetch_stage0_metadata(session, source) -> Optional[str]:
     except Exception: return None
     return None
 
-# --- Stage 1: Extraction & Normalization ---
+# --- Stage 1 & 2: Extraction, Normalization & Diffing ---
 
 def initialize_driver():
+    """Sets up a stealthy headless Chrome instance for web scraping."""
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless=new')
     chrome_options.add_argument('--no-sandbox')
@@ -77,6 +82,7 @@ def initialize_driver():
     return driver
 
 def clean_html_content(html):
+    """Removes boilerplate noise from HTML before conversion."""
     soup = BeautifulSoup(html, 'html.parser')
     body = soup.body
     if not body: return ""
@@ -87,53 +93,70 @@ def clean_html_content(html):
     return text
 
 def fetch_webpage_content(driver, url):
+    """Scrapes a page and returns a normalized Markdown string."""
     driver.get(url)
     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
     cleaned_html = clean_html_content(driver.page_source)
     return md(cleaned_html, heading_style="ATX")
 
 def fetch_legislation_metadata(session, source):
+    """Gets latest metadata for Australian Legislation OData."""
     params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
     resp = session.get(source['base_url'], params=params, timeout=30)
     docs = resp.json().get('value', [])
     return (docs[0].get('registerId'), docs[0]) if docs else (None, None)
 
 def download_legislation_content(session, base_url, doc_meta):
+    """Downloads document (Word format) from the API."""
     def q(val): return f"'{val}'"
     reg_id = doc_meta.get('registerId')
     download_url = f"{base_url}/find(registerId={q(reg_id)},type={q(doc_meta.get('type'))},format='Word',uniqueTypeNumber={int(doc_meta.get('uniqueTypeNumber') or 0)},volumeNumber={int(doc_meta.get('volumeNumber') or 0)},rectificationVersionNumber={int(doc_meta.get('rectificationVersionNumber') or 0)})"
     resp = session.get(download_url, stream=True, timeout=90)
     return resp.content if resp.status_code == 200 else None
 
-def save_to_archive(filename, content, is_binary=False):
-    if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
-    
-    if filename.endswith('.docx') or (is_binary and filename.endswith('.md')):
-        from io import BytesIO
-        doc = docx.Document(BytesIO(content))
-        text_content = "\n\n".join([p.text for p in doc.paragraphs if p.text.strip()])
-        filename = filename.replace('.docx', '.md')
-        mode, encoding, final_content = 'w', 'utf-8', text_content
-    else:
-        mode, encoding = ('wb', None) if isinstance(content, bytes) else ('w', 'utf-8')
-        final_content = content
-
-    filepath = os.path.join(OUTPUT_DIR, filename)
-    with open(filepath, mode, encoding=encoding) as f:
-        f.write(final_content)
-    return filepath
-
 def sanitize_rss(xml_content):
+    """Stabilizes RSS XML by stripping channel dates and sorting items."""
     soup = BeautifulSoup(xml_content, 'xml')
     for tag in ['lastBuildDate', 'pubDate', 'generator']:
         t = soup.find(tag)
         if t and t.parent.name == 'channel': t.decompose()
+    
     items = soup.find_all('item')
     items.sort(key=lambda x: x.find('guid').text if x.find('guid') else (x.find('link').text if x.find('link') else ''))
+    
     channel = soup.find('channel')
-    for item in soup.find_all('item'): item.extract()
-    for item in items: channel.append(item)
+    if channel:
+        for item in soup.find_all('item'): item.extract()
+        for item in items: channel.append(item)
     return soup.prettify()
+
+def get_diff(old_path, new_content) -> Optional[str]:
+    """Executes a unified diff with 10 lines of context (Stage 2)."""
+    if not os.path.exists(old_path):
+        return "Initial archive creation."
+
+    temp_path = old_path + ".tmp"
+    with open(temp_path, 'w', encoding='utf-8') as f:
+        f.write(new_content)
+
+    try:
+        result = subprocess.run(
+            ['diff', '-U10', old_path, temp_path],
+            capture_output=True,
+            text=True
+        )
+        return result.stdout if result.stdout else None
+    finally:
+        if os.path.exists(temp_path):
+            os.remove(temp_path)
+
+def save_to_archive(filename, content):
+    """Saves the normalized string content to the archive."""
+    if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
+    filepath = os.path.join(OUTPUT_DIR, filename)
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(content)
+    return filepath
 
 # --- Main Logic ---
 
@@ -144,51 +167,52 @@ def main():
 
     session = requests.Session()
     driver = None
-    logger.info(f"--- Tripwire Run: {datetime.datetime.now()} ---")
+    logger.info(f"--- Tripwire Stage 2 Run: {datetime.datetime.now()} ---")
 
     for source in sources:
         name = source['name']
         stype = source['type']
         priority = source.get('priority', 'Low')
         out_name = source['output_filename']
-        out_path = os.path.join(OUTPUT_DIR, out_name.replace('.docx', '.md') if stype == "Legislation_OData" else out_name)
         
-        old_id = get_last_version_id(name)
+        if stype == "Legislation_OData":
+            out_name = out_name.replace('.docx', '.md')
+            
+        out_path = os.path.join(OUTPUT_DIR, out_name)
         current_id = fetch_stage0_metadata(session, source)
-        file_exists = os.path.exists(out_path)
         
-        # SELF-HEALING LOGIC
-        repopulate_only = False
-        if old_id and current_id and old_id == current_id:
-            if file_exists:
-                logger.info(f"Stage 0: No change and file exists for {name}. Skipping.")
-                continue
-            else:
-                logger.warning(f"Stage 0: Version matches but file missing for {name}. Repopulating archive.")
-                repopulate_only = True
+        new_content = None
 
         try:
-            change_val = "No" if repopulate_only else "Yes"
-            
+            # 1. Extraction & Normalization
             if stype == "Legislation_OData":
                 ver_id, meta = fetch_legislation_metadata(session, source)
-                content = download_legislation_content(session, source['base_url'], meta)
-                if content:
-                    save_to_archive(out_name, content, is_binary=True)
-                    log_to_audit(name, priority, "Success", change_val, ver_id)
+                binary_content = download_legislation_content(session, source['base_url'], meta)
+                if binary_content:
+                    from io import BytesIO
+                    doc = docx.Document(BytesIO(binary_content))
+                    new_content = "\n\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+                    current_id = ver_id
 
             elif stype == "RSS":
                 resp = session.get(source['url'], timeout=15)
-                clean_xml = sanitize_rss(resp.content)
-                save_to_archive(out_name, clean_xml)
-                log_to_audit(name, priority, "Success", change_val, current_id)
+                new_content = sanitize_rss(resp.content)
 
             elif stype == "WebPage":
                 if not driver: driver = initialize_driver()
-                markdown = fetch_webpage_content(driver, source['url'])
-                if markdown:
-                    save_to_archive(out_name, markdown)
-                    log_to_audit(name, priority, "Success", change_val, current_id)
+                new_content = fetch_webpage_content(driver, source['url'])
+
+            # 2. Stage 2: Substantive Change Detection
+            if new_content:
+                diff_hunk = get_diff(out_path, new_content)
+                
+                if diff_hunk:
+                    logger.info(f"Substantive change detected for {name}.")
+                    save_to_archive(out_name, new_content)
+                    log_to_audit(name, priority, "Success", "Yes", current_id)
+                else:
+                    logger.info(f"No substantive change for {name}.")
+                    log_to_audit(name, priority, "Success", "No", current_id)
 
         except Exception as e:
             logger.error(f"Failed {name}: {e}")
