@@ -55,3 +55,9 @@ Timestamp,Source_Name,Priority,Status,Change_Detected,Version_ID
 2026-02-04T18:46:25.195225,Thomas Amann Website,Medium,Success,Yes,"W/""35b55611e47c43bf5318ecda0524b748"""
 2026-02-05T01:56:19.496454,Thomas Amann Website,Medium,Success,Yes,"W/""08680f80d8640b78ffc897f113e04c27"""
 2026-02-05T01:56:23.262921,IP Australia - What are trade marks?,Medium,Success,Yes,179
+2026-02-05T03:27:49.076622,WIPO Arbitration and Mediation Center,Medium,Success,No,3819
+2026-02-05T03:27:49.677128,WIPO Press Room,Low,Success,No,7305
+2026-02-05T03:27:53.080899,Trade Marks Act 1995,High,Success,No,C2024C00545
+2026-02-05T03:27:56.449109,Patents Regulations 1991,High,Success,No,F2024C00944
+2026-02-05T03:28:03.722569,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27"""
+2026-02-05T03:28:08.092883,IP Australia - What are trade marks?,Medium,Success,No,179
