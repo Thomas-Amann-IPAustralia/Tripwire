@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/">
+ <!-- This is a rebuild of News RSS. If you notice any issues please contact DG-NewsWeb@abc.net.au -->
+ <channel>
+  <title>
+   World
+  </title>
+  <category>
+   Australian Broadcasting Corporation: All content
+  </category>
+  <link>
+   https://www.abc.net.au/news/world/
+  </link>
+  <atom:link href="https://www.abc.net.au/news/world/" rel="self" type="application/rss+xml"/>
+  <description>
+  </description>
+  <language>
+   en-AU
+  </language>
+  <copyright>
+   Copyright 2026, Australian Broadcasting Corporation. All Rights Reserved.
+  </copyright>
+  <docs>
+   http://blogs.law.harvard.edu/tech/rss
+  </docs>
+  <managingEditor>
+   Newson1ine@abc.net.au (ABC News)
+  </managingEditor>
+  <image>
+   <title>
+    World
+   </title>
+   <url>
+    https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+   </url>
+   <link>
+    https://www.abc.net.au/news/world/
+   </link>
+  </image>
+  <item>
+   <title>
+    Trump's border tsar says 700 ICE agents will leave Minnesota
+   </title>
+   <link>
+    https://www.abc.net.au/news/2026-02-05/ice-to-pull-700-officers-out-of-minnesota/106306958
+   </link>
+   <description>
+    The administration's border tsar says the decision came after local and state authorities agreed to cooperate more closely with its immigration crackdown.
+   </description>
+   <pubDate>
+    Wed, 04 Feb 2026 16:06:23 +0000
+   </pubDate>
+   <guid isPermaLink="true">
+    https://www.abc.net.au/news/2026-02-05/ice-to-pull-700-officers-out-of-minnesota/106306958
+   </guid>
+   <category>
+    Immigration
+   </category>
+   <category>
+    Government and Politics
+   </category>
+   <category>
+    World Politics
+   </category>
+   <category>
+    Law, Crime and Justice
+   </category>
+   <category>
+    Crime
+   </category>
+   <category>
+    Police
+   </category>
+   <media:group>
+    <media:description>
+     The fatal shootings of two people in Minneapolis by ICE agents has sparked mass protests across the US.
+    </media:description>
+    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=260&amp;width=862&amp;height=485" width="862"/>
+    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=834&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=278&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1563&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+   </media:group>
+  </item>
+  <item>
+   <title>
+    Ukraine and Russia wrap 'productive' first day of direct peace talks
+   </title>
+   <link>
+    https://www.abc.net.au/news/2026-02-05/ukraine-war-negotiations-kyiv-moscow-meet-in-uae/106307234
+   </link>
+   <description>
+    The two-day trilateral meeting began after Volodymyr Zelenskyy said Russia had exploited a US-backed energy truce last week to stockpile munitions before attacking Ukraine with a record number of ballistic missiles.
+   </description>
+   <pubDate>
+    Wed, 04 Feb 2026 22:42:16 +0000
+   </pubDate>
+   <guid isPermaLink="true">
+    https://www.abc.net.au/news/2026-02-05/ukraine-war-negotiations-kyiv-moscow-meet-in-uae/106307234
+   </guid>
+   <category>
+    Unrest, Conflict and War
+   </category>
+   <category>
+    Territorial Disputes
+   </category>
+   <category>
+    World Politics
+   </category>
+   <media:group>
+    <media:description>
+     Volodymyr Zelenskyy says it is critical talks with Russia lead to a real, lasting peace.
+    </media:description>
+    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f6eb88456a2c08fd363fc035a8cc4ac4?impolicy=wcms_crop_resize&amp;cropH=1125&amp;cropW=2000&amp;xPos=0&amp;yPos=70&amp;width=862&amp;height=485" width="862"/>
+    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f6eb88456a2c08fd363fc035a8cc4ac4?impolicy=wcms_crop_resize&amp;cropH=1333&amp;cropW=1333&amp;xPos=420&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f6eb88456a2c08fd363fc035a8cc4ac4?impolicy=wcms_crop_resize&amp;cropH=1333&amp;cropW=1999&amp;xPos=1&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f6eb88456a2c08fd363fc035a8cc4ac4?impolicy=wcms_crop_resize&amp;cropH=1333&amp;cropW=1000&amp;xPos=586&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f6eb88456a2c08fd363fc035a8cc4ac4?impolicy=wcms_crop_resize&amp;cropH=1333&amp;cropW=1777&amp;xPos=197&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f6eb88456a2c08fd363fc035a8cc4ac4?impolicy=wcms_crop_resize&amp;cropH=1333&amp;cropW=750&amp;xPos=711&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/f6eb88456a2c08fd363fc035a8cc4ac4?impolicy=wcms_crop_resize&amp;cropH=1333&amp;cropW=1000&amp;xPos=586&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+   </media:group>
+  </item>
+  <item>
+   <title>
+    'Bloodbath' at Washington Post as massive layoffs announced
+   </title>
+   <link>
+    https://www.abc.net.au/news/2026-02-05/washington-post-layoffs/106307024
+   </link>
+   <description>
+    The Jeff Bezos-owned paper, which famously brought down US President Richard Nixon, will drastically cut back in size and lay off workers in all its departments.
+   </description>
+   <pubDate>
+    Wed, 04 Feb 2026 18:33:31 +0000
+   </pubDate>
+   <guid isPermaLink="true">
+    https://www.abc.net.au/news/2026-02-05/washington-post-layoffs/106307024
+   </guid>
+   <category>
+    Print Media
+   </category>
+   <category>
+    Media Industry
+   </category>
+   <category>
+    Journalism
+   </category>
+   <category>
+    Business, Economics and Finance
+   </category>
+   <category>
+    World Politics
+   </category>
+   <category>
+    Industry
+   </category>
+   <category>
+    Government and Politics
+   </category>
+   <media:group>
+    <media:description>
+     Staff at The Washington Post were told of mass lay-offs at the paper on an all-company call.
+    </media:description>
+    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dcb2641cb64f9c2257d55d73c19aff96?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=260&amp;width=862&amp;height=485" width="862"/>
+    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dcb2641cb64f9c2257d55d73c19aff96?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=834&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dcb2641cb64f9c2257d55d73c19aff96?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dcb2641cb64f9c2257d55d73c19aff96?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dcb2641cb64f9c2257d55d73c19aff96?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=278&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dcb2641cb64f9c2257d55d73c19aff96?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1563&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/dcb2641cb64f9c2257d55d73c19aff96?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+   </media:group>
+  </item>
+  <item>
+   <title>
+    Xi speaks of 'grand plan' with Russia in call with Putin
+   </title>
+   <link>
+    https://www.abc.net.au/news/2026-02-05/xi-speaks-to-putin-and-trump-on-eve-of-ukraine-war-anniversary/106306896
+   </link>
+   <description>
+    The Chinese leader and his Russian counterpart hail the success of the relationship between the two countries and pledge to further ties in a call broadcast on state television.
+   </description>
+   <pubDate>
+    Wed, 04 Feb 2026 15:25:35 +0000
+   </pubDate>
+   <guid isPermaLink="true">
+    https://www.abc.net.au/news/2026-02-05/xi-speaks-to-putin-and-trump-on-eve-of-ukraine-war-anniversary/106306896
+   </guid>
+   <category>
+    World Politics
+   </category>
+   <media:group>
+    <media:description>
+     Russian President Vladimir Putin and Chinese President Xi Jinping pose for photos before their meeting in Beijing, China September 2, 2025.
+    </media:description>
+    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/804dec7574c87b083401402ae7b04871?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=217&amp;width=862&amp;height=485" width="862"/>
+    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/804dec7574c87b083401402ae7b04871?impolicy=wcms_crop_resize&amp;cropH=3246&amp;cropW=3246&amp;xPos=877&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/804dec7574c87b083401402ae7b04871?impolicy=wcms_crop_resize&amp;cropH=3246&amp;cropW=4869&amp;xPos=66&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/804dec7574c87b083401402ae7b04871?impolicy=wcms_crop_resize&amp;cropH=3246&amp;cropW=2434&amp;xPos=1283&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/804dec7574c87b083401402ae7b04871?impolicy=wcms_crop_resize&amp;cropH=3246&amp;cropW=4328&amp;xPos=336&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/804dec7574c87b083401402ae7b04871?impolicy=wcms_crop_resize&amp;cropH=3246&amp;cropW=1826&amp;xPos=1587&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/804dec7574c87b083401402ae7b04871?impolicy=wcms_crop_resize&amp;cropH=3246&amp;cropW=2434&amp;xPos=1283&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+   </media:group>
+  </item>
+ </channel>
+</rss>
