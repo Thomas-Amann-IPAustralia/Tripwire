@@ -8,8 +8,6 @@ import logging
 import re
 import subprocess
 from typing import List, Dict, Optional
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
 # --- Web Scrape & Document Imports ---
 from selenium import webdriver
@@ -21,7 +19,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium_stealth import stealth
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
-import docx # Required: pip install python-docx
+import docx 
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv' 
@@ -36,7 +34,14 @@ logger = logging.getLogger("Tripwire")
 # --- Stage 0: Helpers ---
 
 def get_last_version_id(source_name: str) -> Optional[str]:
-    """Retrieves the last successful Version_ID from the audit log."""
+    """
+    Retrieves the most recent successful Version_ID for a given source from the audit log.
+    
+    Args:
+        source_name (str): The name of the source to lookup.
+    Returns:
+        Optional[str]: The last recorded Version_ID or None if not found.
+    """
     if not os.path.exists(AUDIT_LOG): return None
     try:
         with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
@@ -48,27 +53,35 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     return None
 
 def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None):
-    """Logs results to CSV including Diff_File."""
-    file_exists = os.path.exists(AUDIT_LOG)
-    # Define columns explicitly to ensure headers match data
-    headers = ['Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected', 'Version_ID', 'Diff_File']
+    """
+    Appends a new entry to the CSV audit log.
     
+    Args:
+        name (str): Source name.
+        priority (str): Source priority level.
+        status (str): Outcome status (Success/Exception).
+        change_detected (str): Yes/No/Initial/Healed.
+        version_id (str): Metadata ID from the source.
+        diff_file (str): Filename of the generated diff hunk, if any.
+    """
+    file_exists = os.path.exists(AUDIT_LOG)
+    headers = ['Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected', 'Version_ID', 'Diff_File']
     with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         if not file_exists:
             writer.writerow(headers)
-        writer.writerow([
-            datetime.datetime.now().isoformat(), 
-            name, 
-            priority, 
-            status, 
-            change_detected, 
-            version_id, 
-            diff_file if diff_file else "N/A"
-        ])
+        writer.writerow([datetime.datetime.now().isoformat(), name, priority, status, change_detected, version_id, diff_file or "N/A"])
 
 def fetch_stage0_metadata(session, source) -> Optional[str]:
-    """Quick check for ETag or RegisterID to see if a full fetch is needed."""
+    """
+    Performs a lightweight check to get the latest metadata ID without downloading full content.
+    
+    Args:
+        session (requests.Session): Active HTTP session.
+        source (dict): Source configuration dictionary.
+    Returns:
+        Optional[str]: RegisterId for legislation, ETag or Content-Length for others.
+    """
     stype = source.get('type')
     try:
         if stype == "Legislation_OData":
@@ -81,10 +94,15 @@ def fetch_stage0_metadata(session, source) -> Optional[str]:
     except Exception: return None
     return None
 
-# --- Stage 1 & 2: Extraction, Normalization & Diffing ---
+# --- Extraction & Normalization Functions ---
 
 def initialize_driver():
-    """Sets up a stealthy headless Chrome instance for web scraping."""
+    """
+    Initializes a headless Chrome driver with stealth settings to bypass anti-bot detection.
+    
+    Returns:
+        webdriver.Chrome: Configured Selenium driver.
+    """
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless=new')
     chrome_options.add_argument('--no-sandbox')
@@ -94,7 +112,14 @@ def initialize_driver():
     return driver
 
 def clean_html_content(html):
-    """Removes boilerplate noise from HTML before conversion."""
+    """
+    Strips non-essential HTML tags (nav, footer, etc.) and removes dynamic timestamps.
+    
+    Args:
+        html (str): Raw HTML string.
+    Returns:
+        str: Cleaned HTML string containing only the body substance.
+    """
     soup = BeautifulSoup(html, 'html.parser')
     body = soup.body
     if not body: return ""
@@ -105,66 +130,110 @@ def clean_html_content(html):
     return text
 
 def fetch_webpage_content(driver, url):
-    """Scrapes a page and returns a normalized Markdown string."""
+    """
+    Uses Selenium to fetch a webpage, wait for rendering, and convert to Markdown.
+    
+    Args:
+        driver (webdriver.Chrome): Active Selenium driver.
+        url (str): Target URL.
+    Returns:
+        str: Normalized Markdown content.
+    """
     driver.get(url)
     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
     cleaned_html = clean_html_content(driver.page_source)
     return md(cleaned_html, heading_style="ATX")
 
-def fetch_legislation_metadata(session, source):
-    """Gets latest metadata for Australian Legislation OData."""
-    params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
-    resp = session.get(source['base_url'], params=params, timeout=30)
-    docs = resp.json().get('value', [])
-    return (docs[0].get('registerId'), docs[0]) if docs else (None, None)
-
-def download_legislation_content(session, base_url, doc_meta):
-    """Downloads document (Word format) from the API."""
-    def q(val): return f"'{val}'"
-    reg_id = doc_meta.get('registerId')
-    download_url = f"{base_url}/find(registerId={q(reg_id)},type={q(doc_meta.get('type'))},format='Word',uniqueTypeNumber={int(doc_meta.get('uniqueTypeNumber') or 0)},volumeNumber={int(doc_meta.get('volumeNumber') or 0)},rectificationVersionNumber={int(doc_meta.get('rectificationVersionNumber') or 0)})"
-    resp = session.get(download_url, stream=True, timeout=90)
-    return resp.content if resp.status_code == 200 else None
-
 def sanitize_rss(xml_content):
-    """Stabilizes RSS XML by stripping channel dates and sorting items."""
+    """
+    Normalizes RSS XML by stripping transient channel-level dates and sorting items by GUID.
+    
+    Args:
+        xml_content (bytes/str): Raw RSS XML.
+    Returns:
+        str: Prettified, stable XML string.
+    """
     soup = BeautifulSoup(xml_content, 'xml')
     for tag in ['lastBuildDate', 'pubDate', 'generator']:
         t = soup.find(tag)
         if t and t.parent.name == 'channel': t.decompose()
-    
     items = soup.find_all('item')
     items.sort(key=lambda x: x.find('guid').text if x.find('guid') else (x.find('link').text if x.find('link') else ''))
-    
     channel = soup.find('channel')
     if channel:
         for item in soup.find_all('item'): item.extract()
         for item in items: channel.append(item)
     return soup.prettify()
 
+def fetch_legislation_metadata(session, source):
+    """
+    Fetches latest document metadata from the Federal Legislation OData API.
+    
+    Args:
+        session (requests.Session): Active HTTP session.
+        source (dict): Source configuration.
+    Returns:
+        tuple: (registerId, full_meta_dict)
+    """
+    params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
+    resp = session.get(source['base_url'], params=params, timeout=30)
+    docs = resp.json().get('value', [])
+    return (docs[0].get('registerId'), docs[0]) if docs else (None, None)
+
+def download_legislation_content(session, base_url, doc_meta):
+    """
+    Downloads a Word document from OData API and converts it to Markdown.
+    
+    Args:
+        session (requests.Session): Active HTTP session.
+        base_url (str): API base URL.
+        doc_meta (dict): Metadata for the specific document version.
+    Returns:
+        str: Normalized Markdown text extracted from the document.
+    """
+    from io import BytesIO
+    def q(val): return f"'{val}'"
+    reg_id = doc_meta.get('registerId')
+    download_url = f"{base_url}/find(registerId={q(reg_id)},type={q(doc_meta.get('type'))},format='Word',uniqueTypeNumber={int(doc_meta.get('uniqueTypeNumber') or 0)},volumeNumber={int(doc_meta.get('volumeNumber') or 0)},rectificationVersionNumber={int(doc_meta.get('rectificationVersionNumber') or 0)})"
+    resp = session.get(download_url, stream=True, timeout=90)
+    if resp.status_code == 200:
+        doc = docx.Document(BytesIO(resp.content))
+        return "\n\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+    return None
+
+# --- Stage 2 Logic ---
+
 def get_diff(old_path, new_content) -> Optional[str]:
-    """Executes a unified diff with 10 lines of context (Stage 2)."""
+    """
+    Performs a unified diff (-U10) between the archived file and the new content.
+    
+    Args:
+        old_path (str): Path to the archived version.
+        new_content (str): Newest normalized content.
+    Returns:
+        Optional[str]: The diff hunk if changes exist, otherwise None.
+    """
     if not os.path.exists(old_path):
         return "Initial archive creation."
-
     temp_path = old_path + ".tmp"
     with open(temp_path, 'w', encoding='utf-8') as f:
         f.write(new_content)
-
     try:
-        # captures the hunk for Phase 3 impact assessment
-        result = subprocess.run(
-            ['diff', '-U10', old_path, temp_path],
-            capture_output=True,
-            text=True
-        )
+        result = subprocess.run(['diff', '-U10', old_path, temp_path], capture_output=True, text=True)
         return result.stdout if result.stdout else None
     finally:
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
+        if os.path.exists(temp_path): os.remove(temp_path)
 
 def save_to_archive(filename, content):
-    """Saves the normalized string content to the archive directory."""
+    """
+    Saves content to the archive directory using UTF-8 encoding.
+    
+    Args:
+        filename (str): Target filename.
+        content (str): Content to save.
+    Returns:
+        str: Full path to the saved file.
+    """
     if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
     filepath = os.path.join(OUTPUT_DIR, filename)
     with open(filepath, 'w', encoding='utf-8') as f:
@@ -172,10 +241,17 @@ def save_to_archive(filename, content):
     return filepath
 
 def save_diff_record(name, diff_content):
-    """Saves the diff hunk to a permanent file for auditing."""
+    """
+    Saves a diff hunk to the diff_archive directory with a timestamp.
+    
+    Args:
+        name (str): Source name.
+        diff_content (str): The raw diff text.
+    Returns:
+        str: The generated filename of the diff record.
+    """
     if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    # Clean name of any characters that might interfere with file paths or CSVs
     safe_name = re.sub(r'\W+', '_', name)
     filename = f"{timestamp}_{safe_name}.diff"
     filepath = os.path.join(DIFF_DIR, filename)
@@ -183,66 +259,70 @@ def save_diff_record(name, diff_content):
         f.write(diff_content)
     return filename
 
-# --- Main Logic ---
+# --- Main Loop ---
 
 def main():
     if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
     if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
-    
-    with open(SOURCES_FILE, 'r') as f:
-        sources = json.load(f)
+    with open(SOURCES_FILE, 'r') as f: sources = json.load(f)
 
     session = requests.Session()
     driver = None
-    logger.info(f"--- Tripwire Stage 2 Run: {datetime.datetime.now()} ---")
+    logger.info(f"--- Tripwire Stage 2 (Modular & Documented) Run: {datetime.datetime.now()} ---")
 
     for source in sources:
-        name = source['name']
-        stype = source['type']
-        priority = source.get('priority', 'Low')
-        out_name = source['output_filename']
-        
-        if stype == "Legislation_OData":
-            out_name = out_name.replace('.docx', '.md')
-            
+        name, stype, priority = source['name'], source['type'], source.get('priority', 'Low')
+        out_name = source['output_filename'].replace('.docx', '.md') if stype == "Legislation_OData" else source['output_filename']
         out_path = os.path.join(OUTPUT_DIR, out_name)
-        current_id = fetch_stage0_metadata(session, source)
         
-        new_content = None
+        old_id = get_last_version_id(name)
+        current_id = fetch_stage0_metadata(session, source)
+        file_exists = os.path.exists(out_path)
 
+        # START: Self-Healing Logic
+        # Check if we need to repopulate a missing file even if the Version ID matches
+        repopulate_only = False
+        if old_id and current_id and old_id == current_id:
+            if file_exists:
+                logger.info(f"No version change for {name}. Skipping.")
+                continue
+            else:
+                logger.warning(f"File missing for {name}. Healing archive...")
+                repopulate_only = True
+
+        new_content = None
         try:
-            # 1. Extraction & Normalization
+            # START: Extraction and Normalisation
+            # Fetches raw content from the source and converts it to a standard Markdown/XML format
             if stype == "Legislation_OData":
                 ver_id, meta = fetch_legislation_metadata(session, source)
-                binary_content = download_legislation_content(session, source['base_url'], meta)
-                if binary_content:
-                    from io import BytesIO
-                    doc = docx.Document(BytesIO(binary_content))
-                    new_content = "\n\n".join([p.text for p in doc.paragraphs if p.text.strip()])
+                if meta:
+                    new_content = download_legislation_content(session, source['base_url'], meta)
                     current_id = ver_id
-
             elif stype == "RSS":
                 resp = session.get(source['url'], timeout=15)
                 new_content = sanitize_rss(resp.content)
-
             elif stype == "WebPage":
                 if not driver: driver = initialize_driver()
                 new_content = fetch_webpage_content(driver, source['url'])
 
-            # 2. Stage 2: Substantive Change Detection
             if new_content:
+                # START: Substantive Change Detection
+                # Compares the new normalized content against the archived version
                 diff_hunk = get_diff(out_path, new_content)
                 
-                if diff_hunk:
-                    logger.info(f"Substantive change detected for {name}.")
-                    # Record the hunk permanently
-                    diff_file = save_diff_record(name, diff_hunk)
-                    # Update the archive
+                # Determine if we should save (change detected, initial run, or self-healing)
+                if diff_hunk or not file_exists or repopulate_only:
                     save_to_archive(out_name, new_content)
-                    # Log with the reference to the diff file
-                    log_to_audit(name, priority, "Success", "Yes", current_id, diff_file)
+                    
+                    if diff_hunk and diff_hunk != "Initial archive creation." and not repopulate_only:
+                        diff_file = save_diff_record(name, diff_hunk)
+                        log_to_audit(name, priority, "Success", "Yes", current_id, diff_file)
+                    elif repopulate_only:
+                        log_to_audit(name, priority, "Success", "Healed", current_id)
+                    else:
+                        log_to_audit(name, priority, "Success", "Initial", current_id)
                 else:
-                    logger.info(f"No substantive change for {name}.")
                     log_to_audit(name, priority, "Success", "No", current_id)
 
         except Exception as e:
