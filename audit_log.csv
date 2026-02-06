@@ -15,3 +15,6 @@ Timestamp,Source_Name,Priority,Status,Change_Detected,Version_ID,Diff_File
 2026-02-05T04:56:19.906906,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
 2026-02-06T01:55:02.996199,ABC News - World,Medium,Success,Yes,"""180y7iqx2izbj1""",20260206_015502_ABC_News_World.diff
 2026-02-06T01:55:08.311559,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
+2026-02-06T06:52:56.744119,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A
+2026-02-06T06:52:57.499274,ABC News - World,Medium,Success,Yes,"""61g6zh21khbfs""",20260206_065257_ABC_News_World.diff
+2026-02-06T06:53:00.726852,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
