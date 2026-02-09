@@ -19,7 +19,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium_stealth import stealth
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
-import docx 
+import docx
+
+# --- Stage 3: Semantic Analysis Imports ---
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+import pandas as pd 
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv' 
@@ -27,6 +33,13 @@ SOURCES_FILE = 'sources.json'
 OUTPUT_DIR = 'content_archive'
 DIFF_DIR = 'diff_archive'
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
+
+# --- Stage 3 Configuration ---
+SEMANTIC_MODEL = 'google/embedding-gemma'
+TOM_SPREADSHEET = '260120_SQLiteStructure.xlsx'  # Tom's pre-vectorised website content
+SEMANTIC_SHEET = 'Semantic'  # Sheet containing chunk embeddings
+INFLUENCES_SHEET = 'Influences'  # Sheet containing source-to-UDID relationships
+SIMILARITY_THRESHOLD = 0.70  # Initial threshold, tune based on testing
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("Tripwire")
@@ -259,6 +272,105 @@ def save_diff_record(name, diff_content):
         f.write(diff_content)
     return filename
 
+# --- Stage 3: Semantic Analysis & Relevance Gate ---
+
+def extract_change_content(diff_file_path):
+    """
+    Parses a diff file to extract added and removed content lines.
+    Strips diff metadata (+++, ---, @@) and returns both additions and removals.
+    
+    Args:
+        diff_file_path (str): Path to the .diff file.
+    Returns:
+        dict: Contains 'added', 'removed', and 'change_context' strings.
+    """
+    additions = []
+    removals = []
+    
+    try:
+        with open(diff_file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.rstrip()
+                # Extract additions (lines starting with +, but not +++)
+                if line.startswith('+') and not line.startswith('+++'):
+                    additions.append(line[1:].strip())
+                # Extract removals (lines starting with -, but not ---)
+                elif line.startswith('-') and not line.startswith('---'):
+                    removals.append(line[1:].strip())
+    except Exception as e:
+        logger.error(f"Failed to parse diff file {diff_file_path}: {e}")
+        return {'added': '', 'removed': '', 'change_context': ''}
+    
+    # Combine removals and additions as "change context"
+    change_context = ' '.join(removals + additions)
+    
+    return {
+        'added': ' '.join(additions),
+        'removed': ' '.join(removals),
+        'change_context': change_context
+    }
+
+def calculate_similarity(diff_path):
+    """
+    Thin implementation: Converts diff content to embedding vector and prepares for comparison.
+    This is Phase 1 - just proves the concept works.
+    
+    Args:
+        diff_path (str): Path to the diff file.
+    Returns:
+        dict: Contains change_text, diff_vector shape, and readiness status.
+    """
+    # Extract change content
+    change = extract_change_content(diff_path)
+    
+    if not change['change_context']:
+        logger.warning(f"No substantive content extracted from {diff_path}")
+        return {
+            'status': 'no_content',
+            'change_text': '',
+            'diff_vector': None
+        }
+    
+    logger.info(f"Change context preview: {change['change_context'][:200]}...")
+    
+    # Initialize model (in production, this should be done once globally)
+    try:
+        model = SentenceTransformer(SEMANTIC_MODEL)
+        logger.info(f"Loaded model: {SEMANTIC_MODEL}")
+    except Exception as e:
+        logger.error(f"Failed to load semantic model: {e}")
+        return {
+            'status': 'model_error',
+            'change_text': change['change_context'],
+            'diff_vector': None
+        }
+    
+    # Generate embedding
+    try:
+        diff_vector = model.encode([change['change_context']])
+        logger.info(f"Generated embedding vector with shape: {diff_vector.shape}")
+    except Exception as e:
+        logger.error(f"Failed to generate embedding: {e}")
+        return {
+            'status': 'embedding_error',
+            'change_text': change['change_context'],
+            'diff_vector': None
+        }
+    
+    # TODO Phase 2: Load TOM_SPREADSHEET and read SEMANTIC_SHEET for chunk embeddings
+    # TODO Phase 2: Load INFLUENCES_SHEET for source relationship boosting
+    # TODO Phase 3: Add power word detection
+    # TODO Phase 3: Add handover packet generation
+    
+    return {
+        'status': 'ready',
+        'change_text': change['change_context'],
+        'diff_vector': diff_vector,
+        'vector_shape': diff_vector.shape,
+        'added_lines': len(change['added'].split()),
+        'removed_lines': len(change['removed'].split())
+    }
+
 # --- Main Loop ---
 
 def main():
@@ -332,4 +444,42 @@ def main():
     if driver: driver.quit()
 
 if __name__ == "__main__":
+    # Check if running Stage 3 test mode
+    if len(sys.argv) > 1 and sys.argv[1] == '--test-stage3':
+        logger.info("=== Running Stage 3 Thin Implementation Test ===")
+        
+        # Check if diff file argument provided
+        if len(sys.argv) < 3:
+            logger.error("Usage: python tripwire.py --test-stage3 <path_to_diff_file>")
+            logger.info(f"Example: python tripwire.py --test-stage3 {DIFF_DIR}/20260208_064622_ABC_News_World.diff")
+            sys.exit(1)
+        
+        diff_file = sys.argv[2]
+        
+        if not os.path.exists(diff_file):
+            logger.error(f"Diff file not found: {diff_file}")
+            sys.exit(1)
+        
+        # Run Stage 3 analysis
+        result = calculate_similarity(diff_file)
+        
+        logger.info("\n=== Stage 3 Test Results ===")
+        logger.info(f"Status: {result['status']}")
+        logger.info(f"Change text length: {len(result.get('change_text', ''))} characters")
+        
+        if result.get('diff_vector') is not None:
+            logger.info(f"Vector shape: {result['vector_shape']}")
+            logger.info(f"Added word count: {result['added_lines']}")
+            logger.info(f"Removed word count: {result['removed_lines']}")
+            logger.info("\n✓ Stage 3 thin implementation working correctly!")
+            logger.info("Next steps:")
+            logger.info("1. Create test fixtures (test_fixtures/)")
+            logger.info("2. Write test_stage3.py")
+            logger.info("3. Implement full similarity comparison with semantic.csv")
+        else:
+            logger.error("✗ Stage 3 failed - check errors above")
+        
+        sys.exit(0)
+    
+    # Normal Stage 2 operation
     main()
