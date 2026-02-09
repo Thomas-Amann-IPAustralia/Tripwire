@@ -1,0 +1,49 @@
+name: Test Stage 3 (Thin Implementation)
+
+on:
+  workflow_dispatch:
+    inputs:
+      diff_file:
+        description: 'Diff file to test (e.g., diff_archive/20260208_064622_ABC_News_World.diff)'
+        required: false
+        default: 'diff_archive/20260208_064622_ABC_News_World.diff'
+
+permissions:
+  contents: read
+
+jobs:
+  test-stage3:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: List Available Diff Files
+        run: |
+          echo "=== Available diff files for testing ==="
+          ls -la diff_archive/ || echo "No diff_archive directory found"
+
+      - name: Run Stage 3 Test
+        run: |
+          if [ -f "${{ github.event.inputs.diff_file }}" ]; then
+            python tripwire.py --test-stage3 "${{ github.event.inputs.diff_file }}"
+          else
+            echo "Diff file not found: ${{ github.event.inputs.diff_file }}"
+            echo "Using first available diff file..."
+            FIRST_DIFF=$(ls diff_archive/*.diff 2>/dev/null | head -n 1)
+            if [ -n "$FIRST_DIFF" ]; then
+              python tripwire.py --test-stage3 "$FIRST_DIFF"
+            else
+              echo "No diff files found. Run Stage 2 first to generate diffs."
+              exit 1
+            fi
+          fi
