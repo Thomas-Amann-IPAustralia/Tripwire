@@ -1,0 +1,178 @@
+--- content_archive/ABC_News.xml	2026-02-09 02:02:27.662557128 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-09 02:02:51.883681958 +0000
+@@ -70,115 +70,130 @@
+     <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/264764b2ac8f258db0a040eb34491208?impolicy=wcms_crop_resize&amp;cropH=2832&amp;cropW=2832&amp;xPos=704&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+     <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/264764b2ac8f258db0a040eb34491208?impolicy=wcms_crop_resize&amp;cropH=2827&amp;cropW=4240&amp;xPos=0&amp;yPos=3&amp;width=862&amp;height=575" width="862"/>
+     <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/264764b2ac8f258db0a040eb34491208?impolicy=wcms_crop_resize&amp;cropH=2832&amp;cropW=2124&amp;xPos=1058&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+     <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/264764b2ac8f258db0a040eb34491208?impolicy=wcms_crop_resize&amp;cropH=2832&amp;cropW=3776&amp;xPos=232&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+     <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/264764b2ac8f258db0a040eb34491208?impolicy=wcms_crop_resize&amp;cropH=2832&amp;cropW=1593&amp;xPos=1324&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+     <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/264764b2ac8f258db0a040eb34491208?impolicy=wcms_crop_resize&amp;cropH=2832&amp;cropW=2124&amp;xPos=1058&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Korean cryptocurrency exchange accidentally gives away $60b in bitcoin
++    The Christchurch terrorist who pleaded guilty to mass murder has changed his mind
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-08/korean-exchange-bithumb-accidentally-gives-away-60b-bitcoin/106318826
++    https://www.abc.net.au/news/2026-02-08/new-zealanders-hoped-never-to-see-christchurch-terrorist-again/106317996
+    </link>
+    <description>
+-    A South Korean cryptocurrency exchange apologises after mistakenly transferring more than $60 billion worth of bitcoin to users, which briefly prompted a sell-off on the platform.
++    Extraordinary arrangements are in place in Wellington, New Zealand, as a convicted terrorist prepares to address the country's Court of Appeal.
+    </description>
++   <dc:creator>
++    Barbara Miller
++   </dc:creator>
+    <pubDate>
+-    Sat, 07 Feb 2026 23:24:21 +0000
++    Sun, 08 Feb 2026 03:19:37 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-08/korean-exchange-bithumb-accidentally-gives-away-60b-bitcoin/106318826
++    https://www.abc.net.au/news/2026-02-08/new-zealanders-hoped-never-to-see-christchurch-terrorist-again/106317996
+    </guid>
+    <category>
+-    Cryptocurrency
++    Terrorism
+    </category>
+    <media:group>
+     <media:description>
+-     The error caused temporary volatility in bitcoin prices on the platform.
++     Al Noor mosque in Christchurch.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ff595f5a89bf35a824ad7cc60011f2d8?impolicy=wcms_crop_resize&amp;cropH=1969&amp;cropW=3500&amp;xPos=0&amp;yPos=182&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ff595f5a89bf35a824ad7cc60011f2d8?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=2333&amp;xPos=584&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ff595f5a89bf35a824ad7cc60011f2d8?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=3499&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ff595f5a89bf35a824ad7cc60011f2d8?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1750&amp;xPos=875&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ff595f5a89bf35a824ad7cc60011f2d8?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=3111&amp;xPos=195&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ff595f5a89bf35a824ad7cc60011f2d8?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1312&amp;xPos=1094&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/ff595f5a89bf35a824ad7cc60011f2d8?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1750&amp;xPos=875&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=1969&amp;cropW=3500&amp;xPos=0&amp;yPos=182&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=2333&amp;xPos=584&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=3499&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1750&amp;xPos=875&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=3111&amp;xPos=195&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1312&amp;xPos=1094&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1750&amp;xPos=875&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    WHO says one person dead from Nipah virus in Bangladesh
++    Man extradited from Dubai to Moscow over top Russian general's shooting
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-08/who-says-one-person-dead-from-nipah-virus-in-bangladesh/106318702
++    https://www.abc.net.au/news/2026-02-09/russian-general-shooting-dubai-moscow-extradition/106319910
+    </link>
+    <description>
+-    A woman dies in northern Bangladesh after contracting the deadly Nipah virus infection.
++    Lieutenant General Vladimir Alexeyev is the deputy head of Russia's vast GRU military intelligence service.
+    </description>
+    <pubDate>
+-    Sat, 07 Feb 2026 22:24:50 +0000
++    Sun, 08 Feb 2026 14:10:06 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-08/who-says-one-person-dead-from-nipah-virus-in-bangladesh/106318702
++    https://www.abc.net.au/news/2026-02-09/russian-general-shooting-dubai-moscow-extradition/106319910
+    </guid>
+    <category>
+-    Infectious Diseases
++    Unrest, Conflict and War
+    </category>
+    <category>
+-    Travel Health and Safety
++    World Politics
++   </category>
++   <category>
++    Security Intelligence
++   </category>
++   <category>
++    Defence and National Security
+    </category>
+    <media:group>
+     <media:description>
+-     Scientists in Bangladesh have previously caught bats to test them for the virus.
++     Russian Lieutenant General Vladimir Alexeyev is the deputy head of the country's sprawling GRU intelligence agency.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3013db75d47f52c133ad0ea24861c0bc?impolicy=wcms_crop_resize&amp;cropH=2511&amp;cropW=4463&amp;xPos=270&amp;yPos=367&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3013db75d47f52c133ad0ea24861c0bc?impolicy=wcms_crop_resize&amp;cropH=3061&amp;cropW=3061&amp;xPos=126&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3013db75d47f52c133ad0ea24861c0bc?impolicy=wcms_crop_resize&amp;cropH=2675&amp;cropW=4012&amp;xPos=666&amp;yPos=386&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3013db75d47f52c133ad0ea24861c0bc?impolicy=wcms_crop_resize&amp;cropH=3061&amp;cropW=2296&amp;xPos=656&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3013db75d47f52c133ad0ea24861c0bc?impolicy=wcms_crop_resize&amp;cropH=2868&amp;cropW=3824&amp;xPos=820&amp;yPos=193&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3013db75d47f52c133ad0ea24861c0bc?impolicy=wcms_crop_resize&amp;cropH=3061&amp;cropW=1722&amp;xPos=714&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3013db75d47f52c133ad0ea24861c0bc?impolicy=wcms_crop_resize&amp;cropH=3061&amp;cropW=2296&amp;xPos=656&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6e701daf415e85008f7cf87f55e0bfed?impolicy=wcms_crop_resize&amp;cropH=1440&amp;cropW=2560&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6e701daf415e85008f7cf87f55e0bfed?impolicy=wcms_crop_resize&amp;cropH=1440&amp;cropW=1440&amp;xPos=862&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6e701daf415e85008f7cf87f55e0bfed?impolicy=wcms_crop_resize&amp;cropH=1440&amp;cropW=2160&amp;xPos=400&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6e701daf415e85008f7cf87f55e0bfed?impolicy=wcms_crop_resize&amp;cropH=1440&amp;cropW=1080&amp;xPos=1042&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6e701daf415e85008f7cf87f55e0bfed?impolicy=wcms_crop_resize&amp;cropH=1440&amp;cropW=1920&amp;xPos=622&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6e701daf415e85008f7cf87f55e0bfed?impolicy=wcms_crop_resize&amp;cropH=1440&amp;cropW=810&amp;xPos=1177&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/6e701daf415e85008f7cf87f55e0bfed?impolicy=wcms_crop_resize&amp;cropH=1440&amp;cropW=1080&amp;xPos=1042&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    'Sabotage' claims as trains delayed on Winter Olympics opening weekend
++    Thai PM confident of forming government in three-way election count
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-08/winter-olympics-italy-railway-sabotage-allegations/106318876
++    https://www.abc.net.au/news/2026-02-09/thailand-election-result-anutin-results/106320270
+    </link>
+    <description>
+-    Police are investigating three incidents of damage on lines around Bologna, and have not ruled out a potential link to the Milan Cortina Games.
++    South-East Asia's second-largest economy went to the polls on Sunday in a tight race between conservatives aligned with the military and the monarchy, and progressive elements represented by the reform-driven People's Party.
+    </description>
++   <dc:creator>
++    Karishma Vyas
++   </dc:creator>
+    <pubDate>
+-    Sun, 08 Feb 2026 00:01:59 +0000
++    Sun, 08 Feb 2026 19:06:16 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-08/winter-olympics-italy-railway-sabotage-allegations/106318876
++    https://www.abc.net.au/news/2026-02-09/thailand-election-result-anutin-results/106320270
+    </guid>
+    <category>
+-    Rail Transport Industry
++    World Politics
++   </category>
++   <category>
++    Elections
+    </category>
+    <category>
+-    Winter Olympic Games
++    Government and Politics
+    </category>
+    <category>
+-    Crime
++    Unrest, Conflict and War
+    </category>
+    <media:group>
+     <media:description>
+-     Passengers wait at Milan's train station as police investigate possible cable sabotage near Bologna on Saturday.
++     Anutin Charnvirakul says he is confident of being able to lead the next government.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/58810421cb72aba4ae75c5a76eaa3295?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=428&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/58810421cb72aba4ae75c5a76eaa3295?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=608&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/58810421cb72aba4ae75c5a76eaa3295?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/58810421cb72aba4ae75c5a76eaa3295?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1024&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/58810421cb72aba4ae75c5a76eaa3295?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=52&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/58810421cb72aba4ae75c5a76eaa3295?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1337&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/58810421cb72aba4ae75c5a76eaa3295?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1024&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/548c35e84f832231d275b305e7b4beb0?impolicy=wcms_crop_resize&amp;cropH=2648&amp;cropW=4707&amp;xPos=0&amp;yPos=9&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/548c35e84f832231d275b305e7b4beb0?impolicy=wcms_crop_resize&amp;cropH=3616&amp;cropW=3616&amp;xPos=521&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/548c35e84f832231d275b305e7b4beb0?impolicy=wcms_crop_resize&amp;cropH=3138&amp;cropW=4707&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/548c35e84f832231d275b305e7b4beb0?impolicy=wcms_crop_resize&amp;cropH=3616&amp;cropW=2712&amp;xPos=973&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/548c35e84f832231d275b305e7b4beb0?impolicy=wcms_crop_resize&amp;cropH=3530&amp;cropW=4707&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/548c35e84f832231d275b305e7b4beb0?impolicy=wcms_crop_resize&amp;cropH=3616&amp;cropW=2034&amp;xPos=1312&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/548c35e84f832231d275b305e7b4beb0?impolicy=wcms_crop_resize&amp;cropH=3616&amp;cropW=2712&amp;xPos=973&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>
