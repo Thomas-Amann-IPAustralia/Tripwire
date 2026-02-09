@@ -6,3 +6,8 @@ markdownify
 webdriver-manager
 lxml
 python-docx
+sentence-transformers
+scikit-learn
+numpy
+pandas
+openpyxl
