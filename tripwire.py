@@ -286,29 +286,20 @@ def extract_change_content(diff_file_path):
     """
     additions = []
     removals = []
-    
-    try:
-        with open(diff_file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                line = line.rstrip()
-                # Extract additions (lines starting with +, but not +++)
-                if line.startswith('+') and not line.startswith('+++'):
-                    additions.append(line[1:].strip())
-                # Extract removals (lines starting with -, but not ---)
-                elif line.startswith('-') and not line.startswith('---'):
-                    removals.append(line[1:].strip())
-    except Exception as e:
-        logger.error(f"Failed to parse diff file {diff_file_path}: {e}")
-        return {'added': '', 'removed': '', 'change_context': ''}
-    
+
+    with open(diff_file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.rstrip()
+            # Extract additions (lines starting with +, but not +++)
+            if line.startswith('+') and not line.startswith('+++'):
+                additions.append(line[1:].strip())
+            # Extract removals (lines starting with -, but not ---)
+            elif line.startswith('-') and not line.startswith('---'):
+                removals.append(line[1:].strip())
+
     # Combine removals and additions as "change context"
     change_context = ' '.join(removals + additions)
-    
-    return {
-        'added': ' '.join(additions),
-        'removed': ' '.join(removals),
-        'change_context': change_context
-    }
+    return {'added': ' '.join(additions), 'removed': ' '.join(removals), 'change_context': change_context}
 
 def detect_power_words(text):
     """
@@ -330,9 +321,9 @@ def detect_power_words(text):
         r'\bpenalties\b',
         r'\bfine\b',
         r'\bfines\b',
-        r'\$\d+',  # Dollar amounts
+        r'\$\d+(?:,\d+)*',  # Matches dollar amounts with commas like $150,000
         r'\d+\s*days?\b',  # Time periods like "30 days"
-        r'Archives Act 1983',  # Specific act reference
+        r'Archives\s+Act\s+1983', # Handles whitespace better for Act reference
         r'\bprohibited\b',
         r'\bmandatory\b',
         r'\brequired\b',
@@ -435,7 +426,8 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
         }
     
     try:
-        diff_vector = model.encode([change['change_context']])
+        # When encoding the diff context
+        diff_vector = model.encode(["query: " + change['change_context']])
         logger.info(f"Generated embedding vector with shape: {diff_vector.shape}")
     except Exception as e:
         logger.error(f"Failed to generate embedding: {e}")
