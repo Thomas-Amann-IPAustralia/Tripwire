@@ -39,7 +39,7 @@ SEMANTIC_MODEL = 'intfloat/e5-base-v2'
 TOM_SPREADSHEET = '260120_SQLiteStructure.xlsx'  # Tom's pre-vectorised website content
 SEMANTIC_SHEET = 'Semantic'  # Sheet containing chunk embeddings
 INFLUENCES_SHEET = 'Influences'  # Sheet containing source-to-UDID relationships
-SIMILARITY_THRESHOLD = 0.75  # Initial threshold, tune based on testing
+SIMILARITY_THRESHOLD = 0.82  # Initial threshold, tune based on testing
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("Tripwire")
