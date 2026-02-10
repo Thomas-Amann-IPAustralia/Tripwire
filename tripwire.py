@@ -354,15 +354,15 @@ def calculate_final_score(base_similarity, power_word_score):
     """
     Combines semantic similarity with power word boost to get final relevance score.
     
-    Weighting: 75% semantic similarity, 25% power words
+    Weighting: 90% semantic similarity, 10% power words
     
     Args:
-        base_similarity (float): Cosine similarity score (0-1).
-        power_word_score (float): Power word score (0-1).
+        base_similarity (float): Cosine similarity score (0.7-1).
+        power_word_score (float): Power word score (0.7-1).
     Returns:
-        float: Final weighted score (0-1).
+        float: Final weighted score (0.7-1).
     """
-    return (base_similarity * 0.75) + (power_word_score * 0.25)
+    return (base_similarity * 0.90) + (power_word_score * 0.10)
 
 def should_generate_handover(final_score, threshold=SIMILARITY_THRESHOLD):
     """
