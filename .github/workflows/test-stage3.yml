@@ -1,12 +1,13 @@
-name: Test Stage 3 (Thin Implementation)
+name: Test Stage 3 (Phase 2 - With Tests)
 
 on:
   workflow_dispatch:
     inputs:
-      diff_file:
-        description: 'Diff file to test (e.g., diff_archive/20260208_064622_ABC_News_World.diff)'
+      run_manual_test:
+        description: 'Also run manual test on a real diff file?'
         required: false
-        default: 'diff_archive/20260208_064622_ABC_News_World.diff'
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -27,23 +28,38 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: List Available Diff Files
+      - name: Generate Mock Semantic Data
         run: |
-          echo "=== Available diff files for testing ==="
-          ls -la diff_archive/ || echo "No diff_archive directory found"
+          echo "=== Generating mock semantic embeddings ==="
+          python generate_mock_data.py
 
-      - name: Run Stage 3 Test
+      - name: Run Pytest Test Suite
         run: |
-          if [ -f "${{ github.event.inputs.diff_file }}" ]; then
-            python tripwire.py --test-stage3 "${{ github.event.inputs.diff_file }}"
+          echo "=== Running pytest test suite ==="
+          pytest test_stage3.py -v --tb=short
+
+      - name: Manual Test on Real Diff (Optional)
+        if: ${{ github.event.inputs.run_manual_test == 'true' }}
+        run: |
+          echo "=== Testing with real diff file ==="
+          if ls diff_archive/*.diff 1> /dev/null 2>&1; then
+            FIRST_DIFF=$(ls diff_archive/*.diff | head -n 1)
+            echo "Testing with: $FIRST_DIFF"
+            python tripwire.py --test-stage3 "$FIRST_DIFF"
           else
-            echo "Diff file not found: ${{ github.event.inputs.diff_file }}"
-            echo "Using first available diff file..."
-            FIRST_DIFF=$(ls diff_archive/*.diff 2>/dev/null | head -n 1)
-            if [ -n "$FIRST_DIFF" ]; then
-              python tripwire.py --test-stage3 "$FIRST_DIFF"
-            else
-              echo "No diff files found. Run Stage 2 first to generate diffs."
-              exit 1
-            fi
+            echo "No diff files found. Skipping manual test."
           fi
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "✓ Phase 2 Testing Complete!"
+          echo ""
+          echo "All tests passed. Stage 3 Phase 2 implementation verified:"
+          echo "  - Diff parsing ✓"
+          echo "  - Power word detection ✓"
+          echo "  - Semantic embedding ✓"
+          echo "  - Scoring logic ✓"
+          echo "  - Threshold filtering ✓"
+          echo ""
+          echo "Next: Phase 3 - Load Tom's spreadsheet and generate handover packets"
