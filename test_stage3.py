@@ -115,24 +115,24 @@ class TestScoringLogic:
     """Test final score calculation and threshold logic"""
     
     def test_calculate_final_score_weighting(self):
-        """Should weight semantic 75% and power words 25%"""
-        base_sim = 0.8
+        """Should weight semantic 90% and power words 10%"""
+        base_sim = 0.85
         power_score = 0.4
         
         final = calculate_final_score(base_sim, power_score)
         
         # (0.8 * 0.75) + (0.4 * 0.25) = 0.6 + 0.1 = 0.7
-        assert abs(final - 0.7) < 0.01
+        assert abs(final - 0.805) < 0.001
     
     def test_high_semantic_low_power(self):
-        """High semantic similarity should pass even without power words"""
-        final = calculate_final_score(0.9, 0.0)
+        """Test for direct match scenario: high semantic similarity should pass even without power words"""
+        final = calculate_final_score(0.92, 0.0)
         
-        assert final >= 0.67  # 0.9 * 0.75 = 0.675
-        assert should_generate_handover(final, threshold=0.60)
+        assert final >= 0.82
+        assert should_generate_handover(final, threshold=0.82)
     
     def test_low_semantic_high_power(self):
-        """Power words should boost marginal matches"""
+        """Test for legal alert scenario: power words should boost marginal matches"""
         final_without = calculate_final_score(0.60, 0.0)
         final_with = calculate_final_score(0.60, 1.0)
         
@@ -141,9 +141,9 @@ class TestScoringLogic:
     
     def test_threshold_logic(self):
         """Should correctly apply threshold"""
-        assert should_generate_handover(0.75, threshold=0.70) == True
-        assert should_generate_handover(0.65, threshold=0.70) == False
-        assert should_generate_handover(0.70, threshold=0.70) == True  # Equal passes
+        assert should_generate_handover(0.85, threshold=0.82) == True
+        assert should_generate_handover(0.75, threshold=0.82) == False
+        assert should_generate_handover(0.82, threshold=0.82) == True  # Equal passes
 
 
 class TestEndToEnd:
@@ -158,7 +158,7 @@ class TestEndToEnd:
         
         assert result['status'] == 'success'
         assert result['matched_udid'] == 'IPFR-001'
-        assert result['base_similarity'] > 0.60  # Should be quite similar
+        assert result['base_similarity'] > 0.90  # Should be quite similar, adjusted for E5 
         assert result['should_handover'] == True
         
         # Should detect power words
@@ -188,7 +188,7 @@ class TestEndToEnd:
         assert result['status'] == 'success'
         
         # Minimal content should have low similarity
-        assert result['base_similarity'] < 0.50
+        assert result['base_similarity'] < 0.78 # Adjusted for E5 baseline
         assert result['should_handover'] == False
         assert result['filter_reason'] is not None
     
@@ -202,7 +202,7 @@ class TestEndToEnd:
         assert result['status'] == 'success'
         
         # Should have very low similarity to IP content
-        assert result['base_similarity'] < 0.40
+        assert result['base_similarity'] < 0.82 # Adjusted for E5 baseline
         assert result['should_handover'] == False
 
 
