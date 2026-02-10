@@ -43,7 +43,7 @@ udids = []
 chunk_texts = []
 
 for item in mock_content:
-    embedding = model.encode(item['Chunk_Text'])
+    embedding = model.encode("passage: " + item['Chunk_Text'])
     embeddings.append(embedding)
     udids.append(item['UDID'])
     chunk_texts.append(item['Chunk_Text'])
