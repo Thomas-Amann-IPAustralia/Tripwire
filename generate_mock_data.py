@@ -8,7 +8,7 @@ import numpy as np
 import pickle
 
 # Use the same model as Tripwire
-MODEL = 'intfloat/multilingual-e5-small'
+MODEL = 'intfloat/e5-base-v2'
 
 # Mock IPFR website content chunks
 mock_content = [
