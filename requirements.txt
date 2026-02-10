@@ -11,3 +11,4 @@ scikit-learn
 numpy
 pandas
 openpyxl
+pytest
