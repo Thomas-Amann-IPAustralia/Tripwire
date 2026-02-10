@@ -40,8 +40,8 @@ class TestDiffParsing:
     def test_extract_additions_and_removals(self):
         """Should correctly parse additions and removals from diff"""
         result = extract_change_content('test_fixtures/diffs/high_relevance_trademark.diff')
-        [cite_start]assert 'authorisation' in result['removed']  # Old text [cite: 33]
-        [cite_start]assert '$150,000' in result['added']      # New text [cite: 35]
+        assert 'authorisation' in result['removed']  
+        assert '$150,000' in result['added']      
         assert len(result['change_context']) > 0
 
     def test_empty_diff(self):
@@ -114,7 +114,7 @@ class TestEndToEnd:
             mock_semantic_data=mock_semantic_data
         )
         assert result['status'] == 'success'
-        [cite_start]assert result['matched_udid'] == 'IPFR-001' # [cite: 33, 35]
+        assert result['matched_udid'] == 'IPFR-001' 
         assert result['base_similarity'] > 0.85 
         assert result['should_handover'] == True
 
@@ -124,7 +124,7 @@ class TestEndToEnd:
             'test_fixtures/diffs/noise_only.diff',
             mock_semantic_data=mock_semantic_data
         )
-        [cite_start]assert result['base_similarity'] < 0.78 # [cite: 22]
+        assert result['base_similarity'] < 0.78 
         assert result['should_handover'] == False
 
 class TestErrorHandling:
