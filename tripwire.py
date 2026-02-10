@@ -35,7 +35,7 @@ DIFF_DIR = 'diff_archive'
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
 
 # --- Stage 3 Configuration ---
-SEMANTIC_MODEL = 'BAAI/bge-small-en-v1.5'
+SEMANTIC_MODEL = 'intfloat/e5-base-v2'
 TOM_SPREADSHEET = '260120_SQLiteStructure.xlsx'  # Tom's pre-vectorised website content
 SEMANTIC_SHEET = 'Semantic'  # Sheet containing chunk embeddings
 INFLUENCES_SHEET = 'Influences'  # Sheet containing source-to-UDID relationships
