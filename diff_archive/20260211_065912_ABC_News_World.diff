@@ -1,0 +1,218 @@
+--- content_archive/ABC_News.xml	2026-02-11 06:58:34.007632194 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-11 06:59:12.323805734 +0000
+@@ -32,95 +32,89 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
+-    'He was pleased': Christchurch terrorist's former lawyer addresses court
++    A month on from Iran's protests, reports emerge of security forces 'refusing orders'
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-10/christchurch-attacker-was-pleased-when-terrorism-charge-laid/106325142
++    https://www.abc.net.au/news/2026-02-11/amid-us-iran-nuclear-talks-will-defections-spark-regime-change/106323120
+    </link>
+    <description>
+-    A former lawyer for the Australian who murdered 51 people at two New Zealand mosques in 2019 tells a court the shooter "never wanted to defend the terrorism charge".
++    As talks between Washington and Tehran over a nuclear deal continue, fractures within the regime are starting to emerge.
+    </description>
+    <dc:creator>
+-    Barbara Miller
++    Nassim Khadem
+    </dc:creator>
+    <pubDate>
+-    Tue, 10 Feb 2026 02:23:20 +0000
++    Tue, 10 Feb 2026 18:53:54 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-10/christchurch-attacker-was-pleased-when-terrorism-charge-laid/106325142
++    https://www.abc.net.au/news/2026-02-11/amid-us-iran-nuclear-talks-will-defections-spark-regime-change/106323120
+    </guid>
+    <category>
+-    Terrorism
++    World Politics
+    </category>
+    <category>
+-    Courts
++    Unrest, Conflict and War
+    </category>
+    <media:group>
+     <media:description>
+-     New Zealand's Court of Appeal is hearing two applications by the Christchurch terrorist seeking to have his guilty pleas vacated and leave to appeal his conviction and sentence.
++     In the last few weeks, attention has turned to the tensions between the United States and Iran.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ab794680429de3a7ef3b0607cac89bbb?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=463&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ab794680429de3a7ef3b0607cac89bbb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=1082&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ab794680429de3a7ef3b0607cac89bbb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ab794680429de3a7ef3b0607cac89bbb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1187&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ab794680429de3a7ef3b0607cac89bbb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=294&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ab794680429de3a7ef3b0607cac89bbb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=945&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/ab794680429de3a7ef3b0607cac89bbb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1187&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2117&amp;cropW=3764&amp;xPos=964&amp;yPos=503&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2809&amp;cropW=2809&amp;xPos=1363&amp;yPos=524&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2337&amp;cropW=3506&amp;xPos=933&amp;yPos=618&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2945&amp;cropW=2209&amp;xPos=1677&amp;yPos=273&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2599&amp;cropW=3466&amp;xPos=1153&amp;yPos=650&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2830&amp;cropW=1592&amp;xPos=1845&amp;yPos=503&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2945&amp;cropW=2209&amp;xPos=1677&amp;yPos=273&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Ghislaine Maxwell helped Jeffrey Epstein hide behind a veil of wealth
++    FBI releases doorbell camera photos from Nancy Guthrie's home
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-10/ghislaine-maxwell-fed-jeffrey-epstein-abuse-what-happens-now/105610704
++    https://www.abc.net.au/news/2026-02-11/fbi-release-pictures-of-masked-man-at-nancy-guthries-home/106329322
+    </link>
+    <description>
+-    Powerful socialite Ghislaine Maxwell was able to exploit her connections to recruit, groom, and abuse dozens of young girls. Now, she faces a fresh interrogation over her role in Jeffrey Epstein's abuse.
++    FBI director Kash Patel has posted the images on social media, saying they had been recovered after days of work by investigators.
+    </description>
+-   <dc:creator>
+-    Tessa Flemming
+-   </dc:creator>
+    <pubDate>
+-    Tue, 10 Feb 2026 02:22:43 +0000
++    Tue, 10 Feb 2026 18:19:56 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-10/ghislaine-maxwell-fed-jeffrey-epstein-abuse-what-happens-now/105610704
++    https://www.abc.net.au/news/2026-02-11/fbi-release-pictures-of-masked-man-at-nancy-guthries-home/106329322
+    </guid>
+    <category>
+-    Child Sexual Abuse
+-   </category>
+-   <category>
+-    Law, Crime and Justice
++    Crime
+    </category>
+    <category>
+-    Sexual Offences
++    Missing Person
+    </category>
+    <media:group>
+     <media:description>
+-     Ghislaine Maxwell's lawyers have ignited a fresh appeal push years after she was convicted.
++     A video still from the doorbell camera of Nancy Guthrie's home that has been released by the FBI.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f62e3fd424a51676c6e1c798ec581637?impolicy=wcms_crop_resize&amp;cropH=1445&amp;cropW=2568&amp;xPos=0&amp;yPos=174&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f62e3fd424a51676c6e1c798ec581637?impolicy=wcms_crop_resize&amp;cropH=1792&amp;cropW=1792&amp;xPos=388&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f62e3fd424a51676c6e1c798ec581637?impolicy=wcms_crop_resize&amp;cropH=1712&amp;cropW=2568&amp;xPos=0&amp;yPos=40&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f62e3fd424a51676c6e1c798ec581637?impolicy=wcms_crop_resize&amp;cropH=1792&amp;cropW=1344&amp;xPos=612&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f62e3fd424a51676c6e1c798ec581637?impolicy=wcms_crop_resize&amp;cropH=1792&amp;cropW=2389&amp;xPos=89&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f62e3fd424a51676c6e1c798ec581637?impolicy=wcms_crop_resize&amp;cropH=1792&amp;cropW=1008&amp;xPos=891&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/f62e3fd424a51676c6e1c798ec581637?impolicy=wcms_crop_resize&amp;cropH=1792&amp;cropW=1344&amp;xPos=612&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/df551f4eca29ee657185f8d8e5b7dfec?impolicy=wcms_crop_resize&amp;cropH=864&amp;cropW=1536&amp;xPos=0&amp;yPos=40&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/df551f4eca29ee657185f8d8e5b7dfec?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=1536&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/df551f4eca29ee657185f8d8e5b7dfec?impolicy=wcms_crop_resize&amp;cropH=1024&amp;cropW=1536&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/df551f4eca29ee657185f8d8e5b7dfec?impolicy=wcms_crop_resize&amp;cropH=2048&amp;cropW=1536&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/df551f4eca29ee657185f8d8e5b7dfec?impolicy=wcms_crop_resize&amp;cropH=1152&amp;cropW=1536&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/df551f4eca29ee657185f8d8e5b7dfec?impolicy=wcms_crop_resize&amp;cropH=2048&amp;cropW=1152&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/df551f4eca29ee657185f8d8e5b7dfec?impolicy=wcms_crop_resize&amp;cropH=2048&amp;cropW=1536&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+     'We are only getting started,' ICE boss vows at fiery hearing
+    </title>
+    <link>
+     https://www.abc.net.au/news/2026-02-11/ice-customs-border-patrol-heads-questioned-by-congress/106329244
+    </link>
+    <description>
+@@ -152,72 +146,48 @@
+     <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ad22255b0ba48599cb2893a2ee183a?impolicy=wcms_crop_resize&amp;cropH=2666&amp;cropW=2666&amp;xPos=1316&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+     <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ad22255b0ba48599cb2893a2ee183a?impolicy=wcms_crop_resize&amp;cropH=2666&amp;cropW=3999&amp;xPos=1&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+     <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ad22255b0ba48599cb2893a2ee183a?impolicy=wcms_crop_resize&amp;cropH=2666&amp;cropW=1999&amp;xPos=382&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+     <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ad22255b0ba48599cb2893a2ee183a?impolicy=wcms_crop_resize&amp;cropH=2666&amp;cropW=3555&amp;xPos=276&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+     <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ad22255b0ba48599cb2893a2ee183a?impolicy=wcms_crop_resize&amp;cropH=2666&amp;cropW=1500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+     <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/39ad22255b0ba48599cb2893a2ee183a?impolicy=wcms_crop_resize&amp;cropH=2666&amp;cropW=1999&amp;xPos=382&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Israel undermines two-state solution while Herzog visits Australia
++    'My features were a puzzle': Surgeon Kelvin Kong on growing up Chinese and Indigenous
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-11/isaac-herzog-visit-protest-police-west-bank-annexation/106325902
++    https://www.abc.net.au/news/2026-02-11/kelvin-kong-s-growing-up-chinese-and-indigenous-australia/106326388
+    </link>
+    <description>
+-    While Israeli President Isaac Herzog visited Sydney, his government was taking concrete actions in the West Bank designed to "continue to kill the idea of a Palestinian state".
++    Australia's first identified First Nations surgeon, Dr Kelvin Kong spoke about his Malaysian Chinese heritage during the annual Wang Gungwu lecture at Parliament House.
+    </description>
+    <dc:creator>
+-    Laura Tingle
++    Iris Zhao
+    </dc:creator>
+    <pubDate>
+-    Tue, 10 Feb 2026 18:00:00 +0000
++    Tue, 10 Feb 2026 20:44:10 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-11/isaac-herzog-visit-protest-police-west-bank-annexation/106325902
++    https://www.abc.net.au/news/2026-02-11/kelvin-kong-s-growing-up-chinese-and-indigenous-australia/106326388
+    </guid>
+    <category>
+-    World Politics
+-   </category>
+-   <category>
+-    Unrest, Conflict and War
+-   </category>
+-   <category>
+-    Islam
+-   </category>
+-   <category>
+-    Religion
+-   </category>
+-   <category>
+-    Community and Society
+-   </category>
+-   <category>
+-    Judaism
+-   </category>
+-   <category>
+-    Government and Politics
+-   </category>
+-   <category>
+-    Law, Crime and Justice
+-   </category>
+-   <category>
+-    Race Relations
++    Indigenous Australians
+    </category>
+    <category>
+-    Terrorism
++    Multiculturalism
+    </category>
+    <media:group>
+     <media:description>
+-     Isaac Herzog was invited to Australia in the wake of December's deadly Bondi terror attack, which targeted Jews.
++     Surgeon Kelvin Kong has a passion for ear health and treating the epidemic levels of ear infections in Indigenous children.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0faa31b6ee98508c3fdc8b11318105a7?impolicy=wcms_crop_resize&amp;cropH=1585&amp;cropW=2817&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0faa31b6ee98508c3fdc8b11318105a7?impolicy=wcms_crop_resize&amp;cropH=1878&amp;cropW=1878&amp;xPos=455&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0faa31b6ee98508c3fdc8b11318105a7?impolicy=wcms_crop_resize&amp;cropH=1878&amp;cropW=2817&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0faa31b6ee98508c3fdc8b11318105a7?impolicy=wcms_crop_resize&amp;cropH=1878&amp;cropW=1409&amp;xPos=689&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0faa31b6ee98508c3fdc8b11318105a7?impolicy=wcms_crop_resize&amp;cropH=1878&amp;cropW=2504&amp;xPos=142&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0faa31b6ee98508c3fdc8b11318105a7?impolicy=wcms_crop_resize&amp;cropH=1878&amp;cropW=1056&amp;xPos=866&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/0faa31b6ee98508c3fdc8b11318105a7?impolicy=wcms_crop_resize&amp;cropH=1878&amp;cropW=1409&amp;xPos=689&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a6e6eb4ad42ab3c33ecf510a2d7688e2?impolicy=wcms_crop_resize&amp;cropH=926&amp;cropW=1646&amp;xPos=0&amp;yPos=19&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a6e6eb4ad42ab3c33ecf510a2d7688e2?impolicy=wcms_crop_resize&amp;cropH=1161&amp;cropW=1161&amp;xPos=250&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a6e6eb4ad42ab3c33ecf510a2d7688e2?impolicy=wcms_crop_resize&amp;cropH=1097&amp;cropW=1646&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a6e6eb4ad42ab3c33ecf510a2d7688e2?impolicy=wcms_crop_resize&amp;cropH=1161&amp;cropW=871&amp;xPos=395&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a6e6eb4ad42ab3c33ecf510a2d7688e2?impolicy=wcms_crop_resize&amp;cropH=1161&amp;cropW=1548&amp;xPos=56&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a6e6eb4ad42ab3c33ecf510a2d7688e2?impolicy=wcms_crop_resize&amp;cropH=1161&amp;cropW=653&amp;xPos=504&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/a6e6eb4ad42ab3c33ecf510a2d7688e2?impolicy=wcms_crop_resize&amp;cropH=1161&amp;cropW=871&amp;xPos=395&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>
