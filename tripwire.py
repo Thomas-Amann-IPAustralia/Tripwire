@@ -22,10 +22,10 @@ from markdownify import markdownify as md
 import docx
 
 # --- Stage 3: Semantic Analysis Imports ---
-from sentence_transformers import SentenceTransformer
+from openai import OpenAI  # Swapped from sentence_transformers
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-import pandas as pd 
+import pandas as pd
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv' 
@@ -35,11 +35,14 @@ DIFF_DIR = 'diff_archive'
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
 
 # --- Stage 3 Configuration ---
-SEMANTIC_MODEL = 'intfloat/e5-base-v2'
+SEMANTIC_MODEL = 'text-embedding-3-small' 
+SIMILARITY_THRESHOLD = 0.45  # Initial threshold, tune based on testing
+
+# Spreadsheet Logic (Phase 3)
 TOM_SPREADSHEET = '260120_SQLiteStructure.xlsx'  # Tom's pre-vectorised website content
 SEMANTIC_SHEET = 'Semantic'  # Sheet containing chunk embeddings
 INFLUENCES_SHEET = 'Influences'  # Sheet containing source-to-UDID relationships
-SIMILARITY_THRESHOLD = 0.82  # Initial threshold, tune based on testing
+LINKSTO_SHEET = 'LinksTo'
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("Tripwire")
@@ -387,7 +390,7 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
         diff_path (str): Path to the diff file.
         mock_semantic_data (dict, optional): Mock data for testing with keys:
             - 'udids': list of UDID strings
-            - 'embeddings': numpy array of shape (n, 384)
+            - 'embeddings': numpy array of shape (n, 1536)
             - 'chunk_texts': list of chunk text strings
     Returns:
         dict: Contains status, scores, matches, and power word analysis.
@@ -413,31 +416,17 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
     
     # Step 3: Generate embedding
     try:
-        model = SentenceTransformer(SEMANTIC_MODEL)
-        logger.info(f"Loaded model: {SEMANTIC_MODEL}")
+        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        response = client.embeddings.create(
+            input=[change['change_context']],
+            model=SEMANTIC_MODEL
+        )
+        # Vector dimension is now 1536
+        diff_vector = np.array(response.data[0].embedding).reshape(1, -1)
+        logger.info(f"Generated OpenAI embedding (1536d)")
     except Exception as e:
-        logger.error(f"Failed to load semantic model: {e}")
-        return {
-            'status': 'model_error',
-            'change_text': change['change_context'],
-            'power_words': power_analysis,
-            'final_score': 0.0,
-            'should_handover': False
-        }
-    
-    try:
-        # When encoding the diff context
-        diff_vector = model.encode(["query: " + change['change_context']])
-        logger.info(f"Generated embedding vector with shape: {diff_vector.shape}")
-    except Exception as e:
-        logger.error(f"Failed to generate embedding: {e}")
-        return {
-            'status': 'embedding_error',
-            'change_text': change['change_context'],
-            'power_words': power_analysis,
-            'final_score': 0.0,
-            'should_handover': False
-        }
+        logger.error(f"API Error: {e}")
+        return {'status': 'error', 'final_score': 0.0, 'should_handover': False}
     
     # Step 4: Compare against semantic data (mock or real)
     if mock_semantic_data:
