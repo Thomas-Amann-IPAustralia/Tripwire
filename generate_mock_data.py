@@ -2,13 +2,16 @@
 Generate mock semantic data for testing Stage 3.
 Creates embeddings for mock IPFR website content using the same model as Tripwire.
 """
-
-from sentence_transformers import SentenceTransformer
+import os 
 import numpy as np
 import pickle
+from openai import OpenAI
 
 # Use the same model as Tripwire
-MODEL = 'intfloat/e5-base-v2'
+MODEL = 'text-embedding-3-small'
+
+# Initialize OpenAI Client (Requires OPENAI_API_KEY in your environment)
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 # Mock IPFR website content chunks
 mock_content = [
@@ -34,16 +37,22 @@ mock_content = [
     },
 ]
 
-print(f"Loading model: {MODEL}")
-model = SentenceTransformer(MODEL)
+print(f"Using model: {MODEL}")
 
-print("Generating embeddings...")
+print("Generating embeddings via OpenAI API...")
 embeddings = []
 udids = []
 chunk_texts = []
 
 for item in mock_content:
-    embedding = model.encode("passage: " + item['Chunk_Text'])
+    input_text = item['Chunk_Text'].replace("\n", " ")
+    
+    response = client.embeddings.create(
+        input=[input_text],
+        model=MODEL
+    )
+    
+    embedding = response.data[0].embedding
     embeddings.append(embedding)
     udids.append(item['UDID'])
     chunk_texts.append(item['Chunk_Text'])
@@ -59,10 +68,13 @@ mock_data = {
     'chunk_texts': chunk_texts
 }
 
+# Ensure directory exists
+os.makedirs('test_fixtures', exist_ok=True)
+
 output_file = 'test_fixtures/mock_semantic_data.pkl'
 with open(output_file, 'wb') as f:
     pickle.dump(mock_data, f)
 
 print(f"\n✓ Saved mock semantic data to {output_file}")
-print(f"  Shape: {embeddings_array.shape}")
+print(f"  Shape: {embeddings_array.shape} (Expected: (4, 1536))") #
 print(f"  UDIDs: {udids}")
