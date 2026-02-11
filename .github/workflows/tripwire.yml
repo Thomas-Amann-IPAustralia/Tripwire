@@ -30,6 +30,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Tripwire Script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: python tripwire.py
 
       - name: Commit and Push Changes
