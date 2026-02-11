@@ -25,6 +25,10 @@ from tripwire import (
 # Load mock semantic data
 MOCK_DATA_PATH = 'test_fixtures/mock_semantic_data.pkl'
 
+# --- NEW THRESHOLD CONSTANTS ---
+# text-embedding-3-small typically requires lower thresholds than E5
+V3_SMALL_THRESHOLD = 0.45
+
 @pytest.fixture
 def mock_semantic_data():
     """Load pre-generated mock semantic embeddings"""
@@ -32,7 +36,10 @@ def mock_semantic_data():
         pytest.skip(f"Mock data not found. Run: python generate_mock_data.py")
     
     with open(MOCK_DATA_PATH, 'rb') as f:
-        return pickle.load(f)
+        data = pickle.load(f)
+        # Verify dimension change: 768 -> 1536
+        assert data['embeddings'].shape[1] == 1536, "Mock data must be regenerated for v3-small"
+        return data
 
 class TestDiffParsing:
     """Test diff file parsing and content extraction"""
@@ -78,34 +85,39 @@ class TestScoringLogic:
     
     def test_calculate_final_score_weighting(self):
         """Should weight semantic 90% and power words 10%"""
-        base_sim = 0.85
+        base_sim = 0.50
         power_score = 0.4
         final = calculate_final_score(base_sim, power_score)
-        # (0.85 * 0.90) + (0.4 * 0.10) = 0.765 + 0.04 = 0.805
-        assert abs(final - 0.805) < 0.001
+        # (0.50 * 0.90) + (0.4 * 0.10) = 0.45 + 0.04 = 0.49
+        assert abs(final - 0.49) < 0.001
 
     def test_high_semantic_low_power(self):
         """High semantic similarity should pass even without power words"""
-        # 0.92 * 0.9 = 0.828 (Clears the 0.82 threshold)
-        final = calculate_final_score(0.92, 0.0)
-        assert final >= 0.82
-        assert should_generate_handover(final, threshold=0.82)
+        # 0.52 * 0.9 = 0.468 (Clears the 0.45 threshold)
+        final = calculate_final_score(0.52, 0.0)
+        assert final >= V3_SMALL_THRESHOLD
+        assert should_generate_handover(final, threshold=V3_SMALL_THRESHOLD)
 
     def test_low_semantic_high_power(self):
         """Power words should boost marginal matches by 10%"""
-        final_without = calculate_final_score(0.60, 0.0)
-        final_with = calculate_final_score(0.60, 1.0)
+        # 0.40 is marginal for v3-small (just below 0.45 gate)
+        base_sim = 0.40 
+        final_without = calculate_final_score(base_sim, 0.0)
+        final_with = calculate_final_score(base_sim, 1.0)
         assert final_with > final_without
         assert abs((final_with - final_without) - 0.10) < 0.001
+        
+        # This confirms power words can push a 0.40 match over the 0.45 threshold
+        assert should_generate_handover(final_with, threshold=V3_SMALL_THRESHOLD) == True
 
     def test_threshold_logic(self):
         """Should correctly apply threshold boundaries"""
-        assert should_generate_handover(0.85, threshold=0.82) == True
-        assert should_generate_handover(0.75, threshold=0.82) == False
-        assert should_generate_handover(0.82, threshold=0.82) == True
+        assert should_generate_handover(0.50, threshold=V3_SMALL_THRESHOLD) == True
+        assert should_generate_handover(0.35, threshold=V3_SMALL_THRESHOLD) == False
+        assert should_generate_handover(0.45, threshold=V3_SMALL_THRESHOLD) == True
 
 class TestEndToEnd:
-    """Test complete workflow with E5-optimized expectations"""
+    """Test complete workflow with v3-small expectations"""
     
     def test_high_relevance_trademark_match(self, mock_semantic_data):
         """Should match trademark infringement diff to IPFR-001"""
@@ -115,7 +127,7 @@ class TestEndToEnd:
         )
         assert result['status'] == 'success'
         assert result['matched_udid'] == 'IPFR-001' 
-        assert result['base_similarity'] > 0.85 
+        assert result['base_similarity'] > 0.4
         assert result['should_handover'] == True
 
     def test_noise_only_filtered(self, mock_semantic_data):
@@ -124,7 +136,8 @@ class TestEndToEnd:
             'test_fixtures/diffs/noise_only.diff',
             mock_semantic_data=mock_semantic_data
         )
-        assert result['base_similarity'] < 0.78 
+        # Noise usually drops significantly with v3-small
+        assert result['base_similarity'] < 0.35 
         assert result['should_handover'] == False
 
 class TestErrorHandling:
@@ -137,11 +150,11 @@ class TestErrorHandling:
 
     def test_invalid_semantic_data(self):
         """Should handle malformed semantic data gracefully"""
+        # Updated dimension to 1536 for v3-small
         result = calculate_similarity(
             'test_fixtures/diffs/high_relevance_trademark.diff',
-            mock_semantic_data={'embeddings': np.zeros((1, 768)), 'udids': ['ERR-01']}
+            mock_semantic_data={'embeddings': np.zeros((1, 1536)), 'udids': ['ERR-01']}
         )
-        # Should not crash, status should reflect attempt
         assert 'status' in result
 
 if __name__ == '__main__':
