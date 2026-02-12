@@ -71,3 +71,6 @@ Timestamp,Source_Name,Priority,Status,Change_Detected,Version_ID,Diff_File
 2026-02-12T06:59:28.087411,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A
 2026-02-12T06:59:29.168086,ABC News - World,Medium,Success,Yes,"""hni3dqotgobl7""",20260212_065929_ABC_News_World.diff
 2026-02-12T06:59:36.476309,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
+2026-02-12T13:03:40.006593,WIPO Press Room,Low,Success,Yes,7272,20260212_130340_WIPO_Press_Room.diff
+2026-02-12T13:03:50.670659,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
+2026-02-12T13:03:51.541271,ABC News - World,Medium,Success,Yes,"""lwpwubo0lrbhy""",20260212_130351_ABC_News_World.diff
