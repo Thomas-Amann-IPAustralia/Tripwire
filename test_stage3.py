@@ -1,6 +1,6 @@
 """
 Test suite for Tripwire Stage 3: Semantic Analysis & Relevance Gate
-Consolidated version with E5-optimized thresholds and error handling.
+Consolidated version with OpenAI thresholds and error handling.
 
 Run with: pytest test_stage3.py -v
 """
