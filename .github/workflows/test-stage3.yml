@@ -43,6 +43,8 @@ jobs:
           python generate_mock_data.py
 
       - name: Run Pytest Test Suite
+        env:
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "=== Running pytest test suite ==="
           pytest test_stage3.py -v --tb=short
