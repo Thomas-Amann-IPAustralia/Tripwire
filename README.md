@@ -18,12 +18,17 @@ Its primary mission is to autonomously monitor authoritative Intellectual Proper
 
 ## 📂 Repository Structure
 
-* `tripwire.py`: The core logic script. Handles fetching, cleaning, hashing, and archiving data.
+* `tripwire.py`: The core logic script. Handles fetching, cleaning, identifying differences in the source content and generates embeddings to work out content relevance between the change in the source and the IP First Response content.
 * `sources.json`: Configuration file defining *what* to monitor (URLs, priorities, output filenames).
 * `requirements.txt`: Python dependencies required to run the engine.
 * `audit_log.csv`: A change log for every source.
 * `content_archive/`: Directory where normalised updated documents and scrapes are stored.
 * `.github/workflows/tripwire.yml`: GitHub Actions configuration for automated scheduling.
+* `diff_archive`: Contains the diff files from `sources.json` generated using git. 
+* `test_fixtures/diffs`: Test fixtures in `diff` format, including scenarios like high relevance, power words, noise and unrelated content. 
+* `TESTING_GUIDE.md`: Guide for Stage 3 (relevance gate) testing.
+* `generate_mock_data.py`: Generates 4 dummy website chunks and embeddings for IP First Response, used to test for relevance. 
+* `test_stage3.py`: Test suite for Tripwire Stage 3: Semantic analysis and relevance gate.
 
 ## ⚙️ Configuration
 
