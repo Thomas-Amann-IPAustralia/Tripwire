@@ -19,7 +19,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium_stealth import stealth
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
-import docx 
+import docx
+
+# --- Stage 3: Semantic Analysis Imports ---
+from openai import OpenAI
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+import pandas as pd
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv' 
@@ -27,6 +33,18 @@ SOURCES_FILE = 'sources.json'
 OUTPUT_DIR = 'content_archive'
 DIFF_DIR = 'diff_archive'
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
+
+# --- Stage 3 Configuration ---
+SEMANTIC_MODEL = 'text-embedding-3-small' 
+SIMILARITY_THRESHOLD = 0.45  # Initial threshold, tune based on testing
+OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
+client = OpenAI(api_key=OPENAI_KEY)
+
+# Spreadsheet Logic (Phase 3)
+TOM_SPREADSHEET = '260120_SQLiteStructure.xlsx'  # Tom's pre-vectorised website content
+SEMANTIC_SHEET = 'Semantic'  # Sheet containing chunk embeddings
+INFLUENCES_SHEET = 'Influences'  # Sheet containing source-to-UDID relationships
+LINKSTO_SHEET = 'LinksTo'
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("Tripwire")
@@ -259,6 +277,229 @@ def save_diff_record(name, diff_content):
         f.write(diff_content)
     return filename
 
+# --- Stage 3: Semantic Analysis & Relevance Gate ---
+
+def extract_change_content(diff_file_path):
+    """
+    Parses a diff file to extract added and removed content lines.
+    Strips diff metadata (+++, ---, @@) and returns both additions and removals.
+    
+    Args:
+        diff_file_path (str): Path to the .diff file.
+    Returns:
+        dict: Contains 'added', 'removed', and 'change_context' strings.
+    """
+    additions = []
+    removals = []
+
+    with open(diff_file_path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.rstrip()
+            # Extract additions (lines starting with +, but not +++)
+            if line.startswith('+') and not line.startswith('+++'):
+                additions.append(line[1:].strip())
+            # Extract removals (lines starting with -, but not ---)
+            elif line.startswith('-') and not line.startswith('---'):
+                removals.append(line[1:].strip())
+
+    # Combine removals and additions as "change context"
+    change_context = ' '.join(removals + additions)
+    return {'added': ' '.join(additions), 'removed': ' '.join(removals), 'change_context': change_context}
+
+def detect_power_words(text):
+    """
+    Scans text for legal trigger words that indicate high-priority changes.
+    
+    Power words include: must, shall, may, penalty, fine, days deadlines, dollar amounts,
+    and references to specific acts.
+    
+    Args:
+        text (str): The text to scan.
+    Returns:
+        dict: Contains 'found' (list of matched words), 'count' (int), and 'score' (float 0-1).
+    """
+    power_patterns = [
+        r'\bmust\b',
+        r'\bshall\b',
+        r'\bmay\b',
+        r'\bpenalty\b',
+        r'\bpenalties\b',
+        r'\bfine\b',
+        r'\bfines\b',
+        r'\$\d+(?:,\d+)*',  # Matches dollar amounts with commas like $150,000
+        r'\d+\s*days?\b',  # Time periods like "30 days"
+        r'Archives\s+Act\s+1983', # Handles whitespace better for Act reference
+        r'\bprohibited\b',
+        r'\bmandatory\b',
+        r'\brequired\b',
+        r'\bobligation\b',
+    ]
+    
+    found_words = []
+    text_lower = text.lower()
+    
+    for pattern in power_patterns:
+        matches = re.findall(pattern, text_lower, re.IGNORECASE)
+        found_words.extend(matches)
+    
+    # Remove duplicates while preserving order
+    found_words = list(dict.fromkeys(found_words))
+    
+    # Calculate power word score (capped at 1.0)
+    # Each power word adds 0.15, maximum 1.0
+    power_score = min(1.0, len(found_words) * 0.15)
+    
+    return {
+        'found': found_words,
+        'count': len(found_words),
+        'score': power_score
+    }
+
+def calculate_final_score(base_similarity, power_word_score):
+    """
+    Combines semantic similarity with power word boost to get final relevance score.
+    
+    Weighting: 90% semantic similarity, 10% power words
+    
+    Args:
+        base_similarity (float): Cosine similarity score (0.7-1).
+        power_word_score (float): Power word score (0.7-1).
+    Returns:
+        float: Final weighted score (0.7-1).
+    """
+    return (base_similarity * 0.90) + (power_word_score * 0.10)
+
+def should_generate_handover(final_score, threshold=SIMILARITY_THRESHOLD):
+    """
+    Determines if a change is relevant enough to generate a handover packet for Tom.
+    
+    Args:
+        final_score (float): The final weighted relevance score.
+        threshold (float): Minimum score required (default from config).
+    Returns:
+        bool: True if handover should be generated.
+    """
+    return final_score >= threshold
+
+def calculate_similarity(diff_path, mock_semantic_data=None):
+    """
+    Phase 2 implementation: Converts diff to embedding, detects power words, 
+    and calculates relevance score against website content.
+    
+    Can work with mock data for testing or real data from Tom's spreadsheet.
+    
+    Args:
+        diff_path (str): Path to the diff file.
+        mock_semantic_data (dict, optional): Mock data for testing with keys:
+            - 'udids': list of UDID strings
+            - 'embeddings': numpy array of shape (n, 1536)
+            - 'chunk_texts': list of chunk text strings
+    Returns:
+        dict: Contains status, scores, matches, and power word analysis.
+    """
+    # Step 1: Extract change content
+    change = extract_change_content(diff_path)
+    
+    if not change['change_context']:
+        logger.warning(f"No substantive content extracted from {diff_path}")
+        return {
+            'status': 'no_content',
+            'change_text': '',
+            'final_score': 0.0,
+            'should_handover': False
+        }
+    
+    logger.info(f"Change context preview: {change['change_context'][:200]}...")
+    
+    # Step 2: Detect power words
+    power_analysis = detect_power_words(change['change_context'])
+    logger.info(f"Power words found: {power_analysis['count']} - {power_analysis['found']}")
+    logger.info(f"Power word score: {power_analysis['score']:.2f}")
+    
+    # Step 3: Generate embedding
+    try:
+        response = client.embeddings.create(
+            input=[change['change_context']],
+            model=SEMANTIC_MODEL
+        )
+        # Vector dimension is now 1536
+        diff_vector = np.array(response.data[0].embedding).reshape(1, -1)
+        logger.info(f"Generated OpenAI embedding (1536d)")
+    except Exception as e:
+        logger.error(f"API Error: {e}")
+        return {'status': 'error', 'final_score': 0.0, 'base_similarity': 0.0, 'should_handover': False}
+    
+    # Step 4: Compare against semantic data (mock or real)
+    if mock_semantic_data:
+        # TESTING MODE: Use provided mock data
+        logger.info("Using mock semantic data for testing")
+        website_vectors = mock_semantic_data['embeddings']
+        udids = mock_semantic_data['udids']
+        chunk_texts = mock_semantic_data.get('chunk_texts', [''] * len(udids))
+    else:
+        # TODO Phase 3: Load Tom's spreadsheet
+        # semantic_df = pd.read_excel(TOM_SPREADSHEET, sheet_name=SEMANTIC_SHEET)
+        # influences_df = pd.read_excel(TOM_SPREADSHEET, sheet_name=INFLUENCES_SHEET)
+        # website_vectors = np.array(semantic_df['Chunk_Embedding'].tolist())
+        # udids = semantic_df['UDID'].values
+        # chunk_texts = semantic_df['Chunk_Text'].values
+        
+        logger.warning("Real spreadsheet loading not implemented yet (Phase 3)")
+        return {
+            'status': 'awaiting_phase3',
+            'change_text': change['change_context'],
+            'diff_vector_shape': diff_vector.shape,
+            'power_words': power_analysis,
+            'message': 'Phase 3: Implement spreadsheet loading and handover packet generation'
+        }
+    
+    # Step 5: Calculate cosine similarities
+    try:
+        similarities = cosine_similarity(diff_vector, website_vectors)[0]
+        logger.info(f"Calculated similarities for {len(similarities)} chunks")
+    except Exception as e:
+        logger.error(f"Failed to calculate similarities: {e}")
+        return {
+            'status': 'similarity_error',
+            'change_text': change['change_context'],
+            'power_words': power_analysis,
+            'final_score': 0.0,
+            'should_handover': False
+        }
+    
+    # Step 6: Find best match
+    best_match_idx = np.argmax(similarities)
+    base_similarity = similarities[best_match_idx]
+    matched_udid = udids[best_match_idx]
+    matched_text = chunk_texts[best_match_idx]
+    
+    logger.info(f"Best match: {matched_udid} with similarity {base_similarity:.3f}")
+    logger.info(f"Matched chunk preview: {matched_text[:100]}...")
+    
+    # Step 7: Calculate final score with power word boost
+    final_score = calculate_final_score(base_similarity, power_analysis['score'])
+    should_handover = should_generate_handover(final_score)
+    
+    logger.info(f"Base similarity: {base_similarity:.3f}")
+    logger.info(f"Final score (with power words): {final_score:.3f}")
+    logger.info(f"Threshold: {SIMILARITY_THRESHOLD}")
+    logger.info(f"Should generate handover: {should_handover}")
+    
+    # Step 8: Return comprehensive results
+    return {
+        'status': 'success',
+        'change_text': change['change_context'],
+        'diff_vector_shape': diff_vector.shape,
+        'power_words': power_analysis,
+        'base_similarity': float(base_similarity),
+        'final_score': float(final_score),
+        'matched_udid': matched_udid,
+        'matched_text': matched_text,
+        'threshold': SIMILARITY_THRESHOLD,
+        'should_handover': should_handover,
+        'filter_reason': None if should_handover else f"Below threshold: {final_score:.3f} < {SIMILARITY_THRESHOLD}"
+    }
+
 # --- Main Loop ---
 
 def main():
@@ -332,4 +573,52 @@ def main():
     if driver: driver.quit()
 
 if __name__ == "__main__":
+    # Check if running Stage 3 test mode
+    if len(sys.argv) > 1 and sys.argv[1] == '--test-stage3':
+        logger.info("=== Running Stage 3 Phase 2 Test ===")
+        
+        # Check if diff file argument provided
+        if len(sys.argv) < 3:
+            logger.error("Usage: python tripwire.py --test-stage3 <path_to_diff_file>")
+            logger.info(f"Example: python tripwire.py --test-stage3 {DIFF_DIR}/20260208_064622_ABC_News_World.diff")
+            sys.exit(1)
+        
+        diff_file = sys.argv[2]
+        
+        if not os.path.exists(diff_file):
+            logger.error(f"Diff file not found: {diff_file}")
+            sys.exit(1)
+        
+        # Run Stage 3 analysis (will show "awaiting_phase3" without mock data)
+        result = calculate_similarity(diff_file)
+        
+        logger.info("\n=== Stage 3 Phase 2 Test Results ===")
+        logger.info(f"Status: {result['status']}")
+        logger.info(f"Change text length: {len(result.get('change_text', ''))} characters")
+        
+        if result.get('power_words'):
+            pw = result['power_words']
+            logger.info(f"Power words detected: {pw['count']}")
+            logger.info(f"Power words: {pw['found']}")
+            logger.info(f"Power word score: {pw['score']:.2f}")
+        
+        if result.get('final_score') is not None:
+            logger.info(f"Base similarity: {result.get('base_similarity', 0):.3f}")
+            logger.info(f"Final score: {result['final_score']:.3f}")
+            logger.info(f"Should handover: {result.get('should_handover', False)}")
+            if result.get('filter_reason'):
+                logger.info(f"Filter reason: {result['filter_reason']}")
+        
+        if result['status'] == 'awaiting_phase3':
+            logger.info("\n✓ Phase 2 complete! Power word detection and scoring working.")
+            logger.info("Next: Create test fixtures and run pytest to validate logic.")
+            logger.info("Phase 3: Load Tom's spreadsheet and generate handover packets.")
+        elif result['status'] == 'success':
+            logger.info("\n✓ All systems working! Ready for production.")
+        else:
+            logger.error("\n✗ Test failed - check errors above")
+        
+        sys.exit(0)
+    
+    # Normal Stage 2 operation
     main()
