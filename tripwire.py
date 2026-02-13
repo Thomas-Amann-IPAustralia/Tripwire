@@ -22,7 +22,7 @@ from markdownify import markdownify as md
 import docx
 
 # --- Stage 3: Semantic Analysis Imports ---
-from openai import OpenAI  # Swapped from sentence_transformers
+from openai import OpenAI
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import pandas as pd
@@ -37,6 +37,7 @@ TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.nopr
 # --- Stage 3 Configuration ---
 SEMANTIC_MODEL = 'text-embedding-3-small' 
 SIMILARITY_THRESHOLD = 0.45  # Initial threshold, tune based on testing
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "").strip())
 
 # Spreadsheet Logic (Phase 3)
 TOM_SPREADSHEET = '260120_SQLiteStructure.xlsx'  # Tom's pre-vectorised website content
@@ -416,7 +417,6 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
     
     # Step 3: Generate embedding
     try:
-        client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
         response = client.embeddings.create(
             input=[change['change_context']],
             model=SEMANTIC_MODEL
