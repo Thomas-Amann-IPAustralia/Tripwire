@@ -37,7 +37,8 @@ TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.nopr
 # --- Stage 3 Configuration ---
 SEMANTIC_MODEL = 'text-embedding-3-small' 
 SIMILARITY_THRESHOLD = 0.45  # Initial threshold, tune based on testing
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "").strip())
+OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
+client = OpenAI(api_key=OPENAI_KEY)
 
 # Spreadsheet Logic (Phase 3)
 TOM_SPREADSHEET = '260120_SQLiteStructure.xlsx'  # Tom's pre-vectorised website content
