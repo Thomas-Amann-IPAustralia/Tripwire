@@ -11,7 +11,8 @@ from openai import OpenAI
 MODEL = 'text-embedding-3-small'
 
 # Initialize OpenAI Client (Requires OPENAI_API_KEY in your environment)
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+raw_key = os.environ.get("OPENAI_API_KEY", "")
+client = OpenAI(api_key=raw_key.strip())
 
 # Mock IPFR website content chunks
 mock_content = [
