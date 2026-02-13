@@ -1,0 +1,141 @@
+--- content_archive/ABC_News.xml	2026-02-09 13:05:00.862638009 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-09 13:05:33.199556520 +0000
+@@ -32,95 +32,104 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
+-    The Christchurch terrorist who pleaded guilty to mass murder has changed his mind
++    Japan's 'Iron Lady' leads coalition to landslide election victory
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-08/new-zealanders-hoped-never-to-see-christchurch-terrorist-again/106317996
++    https://www.abc.net.au/news/2026-02-09/japan-election-sanae-takaichi-landslide-victory/106320228
+    </link>
+    <description>
+-    Extraordinary arrangements are in place in Wellington, New Zealand, as a convicted terrorist prepares to address the country's Court of Appeal.
++    Sanae Takaichi's Liberal Democratic Party and its coalition partner are expected to hold upwards of two-thirds of the seats in Japan's lower house.
+    </description>
+-   <dc:creator>
+-    Barbara Miller
+-   </dc:creator>
+    <pubDate>
+-    Sun, 08 Feb 2026 03:19:37 +0000
++    Sun, 08 Feb 2026 18:52:41 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-08/new-zealanders-hoped-never-to-see-christchurch-terrorist-again/106317996
++    https://www.abc.net.au/news/2026-02-09/japan-election-sanae-takaichi-landslide-victory/106320228
+    </guid>
+    <category>
+-    Terrorism
++    World Politics
++   </category>
++   <category>
++    Government and Politics
++   </category>
++   <category>
++    Elections
++   </category>
++   <category>
++    Political Parties
++   </category>
++   <category>
++    Business, Economics and Finance
+    </category>
+    <media:group>
+     <media:description>
+-     Al Noor mosque in Christchurch.
++     Sanae Takaichi has led the Liberal Democratic Party to a landslide election win.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=1969&amp;cropW=3500&amp;xPos=0&amp;yPos=182&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=2333&amp;xPos=584&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=3499&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1750&amp;xPos=875&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=3111&amp;xPos=195&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1312&amp;xPos=1094&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/fb58a6cc0da9c2f20f37e9f413afd878?impolicy=wcms_crop_resize&amp;cropH=2333&amp;cropW=1750&amp;xPos=875&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1194&amp;cropW=2122&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=1437&amp;xPos=74&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1415&amp;cropW=2122&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=1078&amp;xPos=253&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=1916&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=808&amp;xPos=388&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=1078&amp;xPos=253&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Japan's 'Iron Lady' leads coalition to landslide election victory
++    Iranian Nobel Peace Prize winner sentenced to further jail time
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-09/japan-election-sanae-takaichi-landslide-victory/106320228
++    https://www.abc.net.au/news/2026-02-09/nobel-peace-laureate-narges-mohammadi-sentenced-iran/106314130
+    </link>
+    <description>
+-    Sanae Takaichi's Liberal Democratic Party and its coalition partner are expected to hold upwards of two-thirds of the seats in Japan's lower house.
++    Women's rights activist Narges Mohammadi is sentenced to a further six years in jail.
+    </description>
+    <pubDate>
+-    Sun, 08 Feb 2026 18:52:41 +0000
++    Mon, 09 Feb 2026 00:14:00 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-09/japan-election-sanae-takaichi-landslide-victory/106320228
++    https://www.abc.net.au/news/2026-02-09/nobel-peace-laureate-narges-mohammadi-sentenced-iran/106314130
+    </guid>
+    <category>
+     World Politics
+    </category>
+    <category>
+-    Government and Politics
++    Activism
+    </category>
+    <category>
+-    Elections
++    Human Rights
+    </category>
+    <category>
+-    Political Parties
++    Women
+    </category>
+    <category>
+-    Business, Economics and Finance
++    Crime
+    </category>
+    <media:group>
+     <media:description>
+-     Sanae Takaichi has led the Liberal Democratic Party to a landslide election win.
++     The Iranian human rights activist has been repeatedly tried and jailed.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1194&amp;cropW=2122&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=1437&amp;xPos=74&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1415&amp;cropW=2122&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=1078&amp;xPos=253&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=1916&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=808&amp;xPos=388&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/24b72a08044d249185bb0241ac9efbd6?impolicy=wcms_crop_resize&amp;cropH=1437&amp;cropW=1078&amp;xPos=253&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/7018d7dd276dd27778b9c47b3728ac7a?impolicy=wcms_crop_resize&amp;cropH=960&amp;cropW=1707&amp;xPos=0&amp;yPos=377&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/7018d7dd276dd27778b9c47b3728ac7a?impolicy=wcms_crop_resize&amp;cropH=1707&amp;cropW=1707&amp;xPos=0&amp;yPos=4&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/7018d7dd276dd27778b9c47b3728ac7a?impolicy=wcms_crop_resize&amp;cropH=1138&amp;cropW=1707&amp;xPos=0&amp;yPos=288&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/7018d7dd276dd27778b9c47b3728ac7a?impolicy=wcms_crop_resize&amp;cropH=1907&amp;cropW=1430&amp;xPos=124&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/7018d7dd276dd27778b9c47b3728ac7a?impolicy=wcms_crop_resize&amp;cropH=1280&amp;cropW=1707&amp;xPos=0&amp;yPos=217&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/7018d7dd276dd27778b9c47b3728ac7a?impolicy=wcms_crop_resize&amp;cropH=1907&amp;cropW=1072&amp;xPos=303&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/7018d7dd276dd27778b9c47b3728ac7a?impolicy=wcms_crop_resize&amp;cropH=1907&amp;cropW=1430&amp;xPos=124&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+     Man extradited from Dubai to Moscow over top Russian general's shooting
+    </title>
+    <link>
+     https://www.abc.net.au/news/2026-02-09/russian-general-shooting-dubai-moscow-extradition/106319910
+    </link>
+    <description>
