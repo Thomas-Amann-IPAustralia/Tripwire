@@ -28,6 +28,13 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
+      - name: Verify API Key via Curl
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          curl https://api.openai.com/v1/models \
+            -H "Authorization: Bearer $OPENAI_API_KEY"
+
       - name: Generate Mock Semantic Data
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
