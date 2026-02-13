@@ -427,7 +427,7 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
         logger.info(f"Generated OpenAI embedding (1536d)")
     except Exception as e:
         logger.error(f"API Error: {e}")
-        return {'status': 'error', 'final_score': 0.0, 'should_handover': False}
+        return {'status': 'error', 'final_score': 0.0, 'base_similarity': 0.0, 'should_handover': False}
     
     # Step 4: Compare against semantic data (mock or real)
     if mock_semantic_data:
