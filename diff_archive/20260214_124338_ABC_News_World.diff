@@ -1,0 +1,59 @@
+--- content_archive/ABC_News.xml	2026-02-14 12:42:57.403265896 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-14 12:43:38.802463293 +0000
+@@ -134,42 +134,42 @@
+     <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=540&amp;xPos=209&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+     <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=810&amp;xPos=74&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+     <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=405&amp;xPos=277&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+     <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=720&amp;xPos=119&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+     <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=304&amp;xPos=327&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+     <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=405&amp;xPos=277&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    New crew launched to International Space Station after medical evacuation
++    Nine people killed in Canada mass shooting identified
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-14/new-crew-launch-towards-international-space-tation/106343980
++    https://www.abc.net.au/news/2026-02-14/tumbler-ridge-school-mass-shooting-victims-named/106343974
+    </link>
+    <description>
+-    The US, French and Russian astronauts are expected to complete the mission in eight to nine months.
++    Six children and two adults were killed in the shooting in the remote Canadian town of Tumbler Ridge on Tuesday.
+    </description>
+    <pubDate>
+-    Fri, 13 Feb 2026 14:11:20 +0000
++    Fri, 13 Feb 2026 13:07:35 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-14/new-crew-launch-towards-international-space-tation/106343980
++    https://www.abc.net.au/news/2026-02-14/tumbler-ridge-school-mass-shooting-victims-named/106343974
+    </guid>
+    <category>
+-    Space
++    Shootings
+    </category>
+    <media:group>
+     <media:description>
+-     From left, pilot Jack Hathaway, Russian cosmonaut Andrei Fedyaev, commander Jessica Meir and ESA astronaut Sophia Adenot, of France, before heading to pad 40 at the Cape Canaveral Space Force Station
++     Abel Mwansa, 12, and Kylie Smith, 12, were among those killed in the mass shooting.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1618&amp;cropW=2877&amp;xPos=0&amp;yPos=150&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=1918&amp;xPos=480&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=2877&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=1439&amp;xPos=496&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=2557&amp;xPos=160&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=1079&amp;xPos=899&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=1439&amp;xPos=496&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d4d06fd879139f1cae9911047ef75244?impolicy=wcms_crop_resize&amp;cropH=450&amp;cropW=800&amp;xPos=0&amp;yPos=64&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d4d06fd879139f1cae9911047ef75244?impolicy=wcms_crop_resize&amp;cropH=600&amp;cropW=600&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d4d06fd879139f1cae9911047ef75244?impolicy=wcms_crop_resize&amp;cropH=533&amp;cropW=800&amp;xPos=0&amp;yPos=22&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d4d06fd879139f1cae9911047ef75244?impolicy=wcms_crop_resize&amp;cropH=600&amp;cropW=450&amp;xPos=180&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d4d06fd879139f1cae9911047ef75244?impolicy=wcms_crop_resize&amp;cropH=600&amp;cropW=800&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d4d06fd879139f1cae9911047ef75244?impolicy=wcms_crop_resize&amp;cropH=600&amp;cropW=338&amp;xPos=32&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/d4d06fd879139f1cae9911047ef75244?impolicy=wcms_crop_resize&amp;cropH=600&amp;cropW=450&amp;xPos=180&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>
