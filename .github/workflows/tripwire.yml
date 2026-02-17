@@ -48,3 +48,14 @@ jobs:
             git commit -m "Tripwire: Detected changes & recorded diffs [skip ci]"
             git push
           fi
+          
+      - name: Upload handover packets
+        # Always upload so you can see runs with no packets (empty artifact) too
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handover-packets-${{ github.run_number }}
+          path: handover_packets/
+          # Keeps the last 90 days of runs; lower if storage is a concern
+          retention-days: 90
+          if-no-files-found: ignore
