@@ -51,6 +51,8 @@ jobs:
 
       - name: Manual Test on Real Diff (Optional)
         if: ${{ github.event.inputs.run_manual_test == 'true' }}
+        env:
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "=== Testing with real diff file ==="
           DIFF_FILE="diff_archive/20260216_184111_IP_Australia_What_are_trade_marks_.diff"
