@@ -580,7 +580,7 @@ if __name__ == "__main__":
         # Check if diff file argument provided
         if len(sys.argv) < 3:
             logger.error("Usage: python tripwire.py --test-stage3 <path_to_diff_file>")
-            logger.info(f"Example: python tripwire.py --test-stage3 {DIFF_DIR}/20260208_064622_ABC_News_World.diff")
+            logger.info(f"Example: python tripwire.py --test-stage3 {DIFF_DIR}/20260216_184111_IP_Australia_What_are_trade_marks_.diff")
             sys.exit(1)
         
         diff_file = sys.argv[2]
