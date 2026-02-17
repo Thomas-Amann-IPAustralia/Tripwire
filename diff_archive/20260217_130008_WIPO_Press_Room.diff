@@ -1,0 +1,76 @@
+--- content_archive/WIPO_Press.xml	2026-02-17 12:59:30.279503112 +0000
++++ content_archive/WIPO_Press.xml.tmp	2026-02-17 13:00:08.491235859 +0000
+@@ -28,40 +28,20 @@
+    </guid>
+    <description>
+     Investment in intangible assets such as data, software, brands and other intellectual property-backed assets grew three times faster in 2024 than investment in physical assets such as machinery and buildings, which has languished amid high interest rates and subdued economic recovery, according to new data from the World Intellectual Property Organization (WIPO) and Italy’s Luiss Business School.
+    </description>
+    <pubDate>
+     Wed, 09 Jul 2025 08:00:00 +0200
+    </pubDate>
+   </item>
+   <item>
+    <title>
+-    Director General Daren Tang Opens WIPO Assemblies Meetings, Welcoming Largest-Ever Delegate Participation
+-   </title>
+-   <author>
+-    WIPO
+-   </author>
+-   <link>
+-    https://www.wipo.int/pressroom/en/articles/2025/article_0006.html
+-   </link>
+-   <guid>
+-    https://www.wipo.int/pressroom/en/articles/2025/article_0006.html
+-   </guid>
+-   <description>
+-    Director General Daren Tang welcomed the biggest-ever contingent of delegates to a WIPO Assemblies meeting on Tuesday, calling for collective action to ensure that the global intellectual property (IP) ecosystem continues to evolve in supporting the world’s innovators and creators.
+-   </description>
+-   <pubDate>
+-    Tue, 08 Jul 2025 11:00:00 +0200
+-   </pubDate>
+-  </item>
+-  <item>
+-   <title>
+     WIPO Announces 2025 Global Awards Winners: Recognizing IP-Driven Innovation and Impact
+    </title>
+    <author>
+     WIPO
+    </author>
+    <link>
+     https://www.wipo.int/pressroom/en/articles/2025/article_0007.html
+    </link>
+    <guid>
+     https://www.wipo.int/pressroom/en/articles/2025/article_0007.html
+@@ -206,12 +186,32 @@
+    <guid>
+     https://www.wipo.int/pressroom/en/articles/2026/article_0001.html
+    </guid>
+    <description>
+     The Coordination Committee of the World Intellectual Property Organization (WIPO) has nominated Mr. Daren Tang from Singapore for a second six year term to the post of Director General.
+    </description>
+    <pubDate>
+     Thu, 12 Feb 2026 12:00:00 +0100
+    </pubDate>
+   </item>
++  <item>
++   <title>
++    World Intellectual Property Report: Pace of Innovation Diffusion Reaches Historical Heights, But Access, Usage and Capability Gaps Remain
++   </title>
++   <author>
++    WIPO
++   </author>
++   <link>
++    https://www.wipo.int/pressroom/en/articles/2026/article_0002.html
++   </link>
++   <guid>
++    https://www.wipo.int/pressroom/en/articles/2026/article_0002.html
++   </guid>
++   <description>
++    New technologies are spreading across borders at unprecedented pace and gaps are narrowing in how intensively countries are using the innovations, the latest World Intellectual Property Report (WIPR) 2026, Technology on the Move finds.
++   </description>
++   <pubDate>
++    Thu, 12 Feb 2026 09:00:00 +0100
++   </pubDate>
++  </item>
+  </channel>
+ </rss>
