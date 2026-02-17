@@ -347,9 +347,9 @@ def detect_power_words(text):
         r'\bpenalties\b',
         r'\bfine\b',
         r'\bfines\b',
-        r'\$\d+(?:,\d+)*',  # Matches dollar amounts with commas like $150,000
-        r'\d+\s*days?\b',  # Time periods like "30 days"
-        r'Archives\s+Act\s+1983', # Handles whitespace better for Act reference
+        r'\$\d+(?:,\d+)*',          # Dollar amounts with commas like $150,000
+        r'\d+\s*days?\b',            # Time periods like "30 days"
+        r'Archives\s+Act\s+1983',
         r'\bprohibited\b',
         r'\bmandatory\b',
         r'\brequired\b',
@@ -366,8 +366,7 @@ def detect_power_words(text):
     # Remove duplicates while preserving order
     found_words = list(dict.fromkeys(found_words))
     
-    # Calculate power word score (capped at 1.0)
-    # Each power word adds 0.15, maximum 1.0
+    # Each power word adds 0.15, capped at 1.0
     power_score = min(1.0, len(found_words) * 0.15)
     
     return {
@@ -378,17 +377,21 @@ def detect_power_words(text):
 
 def calculate_final_score(base_similarity, power_word_score):
     """
-    Combines semantic similarity with power word boost to get final relevance score.
-    
-    Weighting: 90% semantic similarity, 10% power words
-    
+    Adds the power word boost directly on top of the base similarity score,
+    capped at 1.0.
+
+    This replaces the previous 90/10 weighted blend. The additive approach means
+    the boost is always visible in the log and has a consistent, predictable effect
+    regardless of the base score — a score of 0.40 with a boost of 0.10 will
+    clearly show as 0.50, whereas the weighted formula would have shown 0.46.
+
     Args:
-        base_similarity (float): Cosine similarity score (0.7-1).
-        power_word_score (float): Power word score (0.7-1).
+        base_similarity (float): Cosine similarity score (0-1).
+        power_word_score (float): Additive boost from power words (0-1).
     Returns:
-        float: Final weighted score (0.7-1).
+        float: Final score, capped at 1.0.
     """
-    return (base_similarity * 0.90) + (power_word_score * 0.10)
+    return min(1.0, base_similarity + power_word_score)
 
 def should_generate_handover(final_score, threshold=SIMILARITY_THRESHOLD):
     """
