@@ -1,0 +1,248 @@
+--- content_archive/ABC_News.xml	2026-02-17 01:57:38.304727914 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-17 01:58:31.972503119 +0000
+@@ -32,165 +32,174 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
+-    Gisèle Pelicot intends to visit ex-husband in prison to get answers
++    Australian women and children with links to ISIS forced to head back to camp in Syria
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-15/gis%C3%A8le-pelicot-intends-to-visit-abuser-in-prison-to-get-answers/106346438
++    https://www.abc.net.au/news/2026-02-16/australian-families-with-isis-links-leave-camp-in-syria/106351298
+    </link>
+    <description>
+-    Gisèle Pelicot, the woman at the centre of France's largest rape trial, says she intends to visit her ex-husband in jail and look her abuser "straight in the eye" to get answers to other allegations under investigation.
++    A group of Australian families with links to Islamic State fighters are forced to turn around after leaving a camp in Syria to try and begin their journey home to Australia.
+    </description>
+    <dc:creator>
+-    Jessica Riga
++    Matthew Doran and Nick Dole
+    </dc:creator>
+    <pubDate>
+-    Sun, 15 Feb 2026 01:02:04 +0000
++    Mon, 16 Feb 2026 09:14:26 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-15/gis%C3%A8le-pelicot-intends-to-visit-abuser-in-prison-to-get-answers/106346438
++    https://www.abc.net.au/news/2026-02-16/australian-families-with-isis-links-leave-camp-in-syria/106351298
+    </guid>
+    <category>
+-    Sexual Offences
++    War
+    </category>
+    <category>
+-    Law, Crime and Justice
++    Foreign Affairs
++   </category>
++   <category>
++    Extremism
+    </category>
+    <media:group>
+     <media:description>
+-     Gisèle Pelicot has done multiple in-depth interviews ahead of the release of her memoir.
++     The ABC has been told there are 34 people in the group.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ef87dc8e042dced18e3c7aa3d910352b?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=50&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ef87dc8e042dced18e3c7aa3d910352b?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=986&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ef87dc8e042dced18e3c7aa3d910352b?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ef87dc8e042dced18e3c7aa3d910352b?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1402&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ef87dc8e042dced18e3c7aa3d910352b?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=430&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ef87dc8e042dced18e3c7aa3d910352b?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1715&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/ef87dc8e042dced18e3c7aa3d910352b?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1402&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ec561a81d95a4f09d68bdd15dd2113fa?impolicy=wcms_crop_resize&amp;cropH=492&amp;cropW=875&amp;xPos=0&amp;yPos=127&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ec561a81d95a4f09d68bdd15dd2113fa?impolicy=wcms_crop_resize&amp;cropH=518&amp;cropW=518&amp;xPos=197&amp;yPos=83&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ec561a81d95a4f09d68bdd15dd2113fa?impolicy=wcms_crop_resize&amp;cropH=583&amp;cropW=875&amp;xPos=0&amp;yPos=72&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ec561a81d95a4f09d68bdd15dd2113fa?impolicy=wcms_crop_resize&amp;cropH=548&amp;cropW=411&amp;xPos=192&amp;yPos=108&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ec561a81d95a4f09d68bdd15dd2113fa?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=875&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ec561a81d95a4f09d68bdd15dd2113fa?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=369&amp;xPos=253&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/ec561a81d95a4f09d68bdd15dd2113fa?impolicy=wcms_crop_resize&amp;cropH=548&amp;cropW=411&amp;xPos=192&amp;yPos=108&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    New Zealand's North Island braces for more rain amid widespread flooding
++    Defamation case against Australian over blog posts withdrawn from Thai court
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-15/new-zealand-north-island-rain-flooding/106347264
++    https://www.abc.net.au/news/2026-02-17/australian-writer-murray-hunter-thai-defamation-case-dropped/106352654
+    </link>
+    <description>
+-    Floods cause power outages, road collapses, home evacuations and are linked to the death of a man whose vehicle was submerged on a highway.
++    The Malaysian Communications and Multimedia Commission has dropped a criminal defamation case against Australian writer Murray Hunter.
+    </description>
+    <pubDate>
+-    Sun, 15 Feb 2026 10:19:27 +0000
++    Mon, 16 Feb 2026 22:59:56 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-15/new-zealand-north-island-rain-flooding/106347264
++    https://www.abc.net.au/news/2026-02-17/australian-writer-murray-hunter-thai-defamation-case-dropped/106352654
+    </guid>
+    <category>
+-    Floods
++    Courts
++   </category>
++   <category>
++    Human Rights
++   </category>
++   <category>
++    Journalism
+    </category>
+    <media:group>
+     <media:description>
+-     Flooding in Ōtorohanga, New Zealand.
++     Australian Murray Hunter, an independent scholar and writer who lives in southern Thailand, talks to the Associated Press.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=591&amp;cropW=1050&amp;xPos=0&amp;yPos=33&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=656&amp;xPos=197&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=984&amp;xPos=33&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=492&amp;xPos=279&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=875&amp;xPos=88&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=369&amp;xPos=341&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=492&amp;xPos=279&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dbb85e394d29119ee122098b1bf5df99?impolicy=wcms_crop_resize&amp;cropH=576&amp;cropW=1024&amp;xPos=0&amp;yPos=53&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dbb85e394d29119ee122098b1bf5df99?impolicy=wcms_crop_resize&amp;cropH=683&amp;cropW=683&amp;xPos=171&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dbb85e394d29119ee122098b1bf5df99?impolicy=wcms_crop_resize&amp;cropH=683&amp;cropW=1024&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dbb85e394d29119ee122098b1bf5df99?impolicy=wcms_crop_resize&amp;cropH=683&amp;cropW=512&amp;xPos=256&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dbb85e394d29119ee122098b1bf5df99?impolicy=wcms_crop_resize&amp;cropH=683&amp;cropW=911&amp;xPos=57&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/dbb85e394d29119ee122098b1bf5df99?impolicy=wcms_crop_resize&amp;cropH=683&amp;cropW=384&amp;xPos=320&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/dbb85e394d29119ee122098b1bf5df99?impolicy=wcms_crop_resize&amp;cropH=683&amp;cropW=512&amp;xPos=256&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    As high-speed rail plans gather pace, Britain's HS2 offers hard lessons
++    Quiz: Think you know the Year of the Horse? Take the 10-question challenge
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-16/australia-high-speed-rail-uk-hs2-delays-cost-blow-outs/106075750
++    https://www.abc.net.au/news/2026-02-17/lunar-new-year-of-the-horse-quiz-china-south-korea-vietnam-asia/106348886
+    </link>
+    <description>
+-    While the federal government considers an ambitious plan, a similar project in the UK has seen its fair share of controversies.
++    How much do you know about the Year of the Horse and unique Lunar New Year traditions in Asian countries? Put your knowledge to the test with these 10 questions and see if you're a true Lunar New Year expert!
+    </description>
+    <dc:creator>
+-    Thomas Morgan
++    Xiaoning Mo
+    </dc:creator>
+    <pubDate>
+-    Sun, 15 Feb 2026 18:57:40 +0000
++    Mon, 16 Feb 2026 19:13:23 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-16/australia-high-speed-rail-uk-hs2-delays-cost-blow-outs/106075750
++    https://www.abc.net.au/news/2026-02-17/lunar-new-year-of-the-horse-quiz-china-south-korea-vietnam-asia/106348886
+    </guid>
+    <category>
+-    Rail Transport Industry
+-   </category>
+-   <category>
+-    Transport Industry
+-   </category>
+-   <category>
+-    Urban Development and Planning
+-   </category>
+-   <category>
+-    Government and Politics
++    Community and Multicultural Festivals
+    </category>
+    <category>
+-    Business, Economics and Finance
++    Human Interest
+    </category>
+    <category>
+-    Community and Society
++    History
+    </category>
+    <media:group>
+     <media:description>
+-     The High Speed Rail Authority wants to build fast rail linking Sydney with Newcastle.
++     Draco Malfoy, whose Chinese name "Ma-er-fu" contains "Ma (Horse)" and "Fu (fortune)", became a festive mascot for the 2026 Year of the Horse, appearing on red decorations, phone covers, and merchandise, symbolizing luck and prosperity.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=4999&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=2812&amp;xPos=1094&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=4218&amp;xPos=391&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=2109&amp;xPos=1446&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=3749&amp;xPos=625&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=1582&amp;xPos=1709&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=2109&amp;xPos=1446&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ae2eb90809be59548039ba13d55121?impolicy=wcms_crop_resize&amp;cropH=254&amp;cropW=451&amp;xPos=0&amp;yPos=172&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ae2eb90809be59548039ba13d55121?impolicy=wcms_crop_resize&amp;cropH=451&amp;cropW=451&amp;xPos=0&amp;yPos=38&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ae2eb90809be59548039ba13d55121?impolicy=wcms_crop_resize&amp;cropH=301&amp;cropW=451&amp;xPos=0&amp;yPos=149&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ae2eb90809be59548039ba13d55121?impolicy=wcms_crop_resize&amp;cropH=598&amp;cropW=448&amp;xPos=1&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ae2eb90809be59548039ba13d55121?impolicy=wcms_crop_resize&amp;cropH=338&amp;cropW=451&amp;xPos=0&amp;yPos=130&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/39ae2eb90809be59548039ba13d55121?impolicy=wcms_crop_resize&amp;cropH=598&amp;cropW=336&amp;xPos=57&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/39ae2eb90809be59548039ba13d55121?impolicy=wcms_crop_resize&amp;cropH=598&amp;cropW=448&amp;xPos=1&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Israel launches air strikes at Gaza days before Trump's Board of Peace meeting
++    Ukrainian ex-minister accused of stashing laundered millions offshore
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-16/israeli-air-strikes-days-before-board-of-peace-meeting/106348162
++    https://www.abc.net.au/news/2026-02-17/ukraine-herman-halushchenko-corruption-allegations/106352078
+    </link>
+    <description>
+-    US President Donald Trump says the first meeting of his newly created Board of Peace will take place on Thursday, with over $7 billion to be pledged for reconstruction and humanitarian efforts in Gaza.
++    Ukraine's anti-corruption police have accused its ex-energy minister of helping launder kickbacks and stashing millions offshore, a day after he was detained trying to leave the country.
+    </description>
+    <pubDate>
+-    Sun, 15 Feb 2026 22:58:55 +0000
++    Mon, 16 Feb 2026 17:31:47 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-16/israeli-air-strikes-days-before-board-of-peace-meeting/106348162
++    https://www.abc.net.au/news/2026-02-17/ukraine-herman-halushchenko-corruption-allegations/106352078
+    </guid>
+    <category>
+-    Unrest, Conflict and War
++    World Politics
++   </category>
++   <category>
++    Corruption
+    </category>
+    <category>
+-    World Politics
++    Bribery
++   </category>
++   <category>
++    Business, Economics and Finance
++   </category>
++   <category>
++    Law, Crime and Justice
+    </category>
+    <media:group>
+     <media:description>
+-     Delegations from more than 20 countries are expected to attend Donald Trump's first Board of Peace meeting.
++     Herman Halushchenko served briefly as justice minister before resigning over the corruption case.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2470&amp;cropW=4390&amp;xPos=417&amp;yPos=346&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2701&amp;cropW=2701&amp;xPos=1092&amp;yPos=115&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2407&amp;cropW=3611&amp;xPos=613&amp;yPos=409&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2816&amp;cropW=2112&amp;xPos=1288&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2425&amp;cropW=3234&amp;xPos=622&amp;yPos=391&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2816&amp;cropW=1584&amp;xPos=1581&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2816&amp;cropW=2112&amp;xPos=1288&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3c706e60e22e30a53b77ba1afa7ad8f5?impolicy=wcms_crop_resize&amp;cropH=2089&amp;cropW=3713&amp;xPos=0&amp;yPos=90&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3c706e60e22e30a53b77ba1afa7ad8f5?impolicy=wcms_crop_resize&amp;cropH=2653&amp;cropW=2653&amp;xPos=559&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3c706e60e22e30a53b77ba1afa7ad8f5?impolicy=wcms_crop_resize&amp;cropH=2475&amp;cropW=3713&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3c706e60e22e30a53b77ba1afa7ad8f5?impolicy=wcms_crop_resize&amp;cropH=2653&amp;cropW=1990&amp;xPos=891&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3c706e60e22e30a53b77ba1afa7ad8f5?impolicy=wcms_crop_resize&amp;cropH=2653&amp;cropW=3537&amp;xPos=117&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3c706e60e22e30a53b77ba1afa7ad8f5?impolicy=wcms_crop_resize&amp;cropH=2653&amp;cropW=1492&amp;xPos=1140&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3c706e60e22e30a53b77ba1afa7ad8f5?impolicy=wcms_crop_resize&amp;cropH=2653&amp;cropW=1990&amp;xPos=891&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>
