@@ -1,4 +1,4 @@
-name: Test Stage 3 (Phase 2 - With Tests)
+name: Test Stage 3 (Phase 3 - With Tests)
 
 on:
   workflow_dispatch:
@@ -64,13 +64,4 @@ jobs:
       - name: Summary
         if: success()
         run: |
-          echo "✓ Phase 2 Testing Complete!"
-          echo ""
-          echo "All tests passed. Stage 3 Phase 2 implementation verified:"
-          echo "  - Diff parsing ✓"
-          echo "  - Power word detection ✓"
-          echo "  - Semantic embedding ✓"
-          echo "  - Scoring logic ✓"
-          echo "  - Threshold filtering ✓"
-          echo ""
-          echo "Next: Phase 3 - Load Tom's spreadsheet and generate handover packets"
+          echo "✓ Phase 3 Testing Complete!"
