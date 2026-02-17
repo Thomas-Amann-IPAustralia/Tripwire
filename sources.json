@@ -39,13 +39,6 @@
     "output_filename": "TomAmannSite.md"
   },
   {
-    "name": "ABC News - World",
-    "type": "RSS",
-    "url": "https://www.abc.net.au/news/feed/104217382/rss.xml",
-    "priority": "Medium",
-    "output_filename": "ABC_News.xml"
-  },
-  {
     "name": "IP Australia - What are trade marks?",
     "type": "WebPage",
     "url": "https://www.ipaustralia.gov.au/trade-marks/what-are-trade-marks",
