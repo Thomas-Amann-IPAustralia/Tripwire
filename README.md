@@ -52,7 +52,7 @@ An AI will review handover packets containing high relevance to determine if IPF
 ├── tripwire.py                   # Main script
 ├── test_stage3.py                # Test suite
 ├── sources.json                  # Source configuration
-├── Semantic_Embeddings_Output.json  # IPFR embeddings (37 MB, required)
+├── Semantic_Embeddings_Output.json  # IPFR embeddings (required)
 ├── content_archive/              # Current content (baseline for diffs)
 ├── diff_archive/                 # Generated diffs
 ├── handover_packets/             # Generated packets (Git-ignored)
@@ -147,7 +147,7 @@ Actions → Test Stage 3 → Run workflow
 Check the logs for "Should generate handover: False". If the score is below 0.45, this is expected — the change wasn't relevant enough. Consider lowering the threshold or checking if the source is appropriate.
 
 **"Semantic embeddings file not found"?**
-Ensure `Semantic_Embeddings_Output.json` (37 MB) is in the repository root.
+Ensure `Semantic_Embeddings_Output.json` is in the repository root.
 
 **OpenAI API errors?**
 Verify the API key is set in GitHub Secrets and is valid:
