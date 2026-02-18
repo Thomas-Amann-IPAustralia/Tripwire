@@ -65,7 +65,7 @@ An AI will review handover packets containing high relevance to determine if IPF
 
 ## Setup
 
-1. **Add embeddings file**: Place `Semantic_Embeddings_Output.json` (37 MB) in repo root
+1. **Add embeddings file**: Place `Semantic_Embeddings_Output.json` in repo root. **Note: the current file is a subset of all of the embeddings on IPFR due to size limitations when uploading the file.**
 
 2. **Set API key**: Settings → Secrets → Actions → Add `OPENAI_API_KEY`
 
