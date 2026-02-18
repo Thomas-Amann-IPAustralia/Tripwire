@@ -51,14 +51,16 @@ jobs:
 
       - name: Manual Test on Real Diff (Optional)
         if: ${{ github.event.inputs.run_manual_test == 'true' }}
+        env:
+            OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "=== Testing with real diff file ==="
-          if ls diff_archive/*.diff 1> /dev/null 2>&1; then
-            FIRST_DIFF=$(ls diff_archive/*.diff | head -n 1)
-            echo "Testing with: $FIRST_DIFF"
-            python tripwire.py --test-stage3 "$FIRST_DIFF"
+          DIFF_FILE="diff_archive/20260216_184111_IP_Australia_What_are_trade_marks_.diff"
+          if [ -f "$DIFF_FILE" ]; then
+            echo "Testing with: $DIFF_FILE"
+            python tripwire.py --test-stage3 "$DIFF_FILE"
           else
-            echo "No diff files found. Skipping manual test."
+            echo "Specified diff file not found. Skipping."
           fi
 
       - name: Summary

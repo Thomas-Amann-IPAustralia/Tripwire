@@ -40,11 +40,10 @@ SIMILARITY_THRESHOLD = 0.45  # Initial threshold, tune based on testing
 OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
 client = OpenAI(api_key=OPENAI_KEY)
 
-# Spreadsheet Logic (Phase 3)
-TOM_SPREADSHEET = '260120_SQLiteStructure.xlsx'  # Tom's pre-vectorised website content
-SEMANTIC_SHEET = 'Semantic'  # Sheet containing chunk embeddings
-INFLUENCES_SHEET = 'Influences'  # Sheet containing source-to-UDID relationships
-LINKSTO_SHEET = 'LinksTo'
+# Phase 3: Semantic Embeddings
+SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
+HANDOVER_DIR = 'handover_packets'
+_semantic_cache = None  # Module-level cache so embeddings load once per run
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("Tripwire")
@@ -70,9 +69,14 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     except Exception: return None
     return None
 
-def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None):
+def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None,
+                 similarity_score=None, power_words=None, matched_udid=None,
+                 matched_chunk_id=None, outcome=None, reason=None):
     """
     Appends a new entry to the CSV audit log.
+    
+    Stage 2 fields are always written. Stage 3 fields (similarity_score through reason)
+    are only populated when semantic analysis has been performed on a diff.
     
     Args:
         name (str): Source name.
@@ -81,14 +85,33 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
         change_detected (str): Yes/No/Initial/Healed.
         version_id (str): Metadata ID from the source.
         diff_file (str): Filename of the generated diff hunk, if any.
+        similarity_score (float, optional): Final semantic similarity score.
+        power_words (list, optional): Power words detected in the diff.
+        matched_udid (str, optional): Best-matching UDID from semantic analysis.
+        matched_chunk_id (str, optional): Best-matching Chunk ID from semantic analysis.
+        outcome (str, optional): 'handover' or 'filtered'.
+        reason (str, optional): Explanation of the outcome.
     """
     file_exists = os.path.exists(AUDIT_LOG)
-    headers = ['Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected', 'Version_ID', 'Diff_File']
+    headers = [
+        'Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected',
+        'Version_ID', 'Diff_File', 'Similarity_Score', 'Power_Words',
+        'Matched_UDID', 'Matched_Chunk_ID', 'Outcome', 'Reason'
+    ]
     with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         if not file_exists:
             writer.writerow(headers)
-        writer.writerow([datetime.datetime.now().isoformat(), name, priority, status, change_detected, version_id, diff_file or "N/A"])
+        writer.writerow([
+            datetime.datetime.now().isoformat(), name, priority, status,
+            change_detected, version_id, diff_file or "N/A",
+            f"{similarity_score:.4f}" if similarity_score is not None else "N/A",
+            '; '.join(power_words) if power_words else "N/A",
+            matched_udid or "N/A",
+            matched_chunk_id or "N/A",
+            outcome or "N/A",
+            reason or "N/A"
+        ])
 
 def fetch_stage0_metadata(session, source) -> Optional[str]:
     """
@@ -326,9 +349,9 @@ def detect_power_words(text):
         r'\bpenalties\b',
         r'\bfine\b',
         r'\bfines\b',
-        r'\$\d+(?:,\d+)*',  # Matches dollar amounts with commas like $150,000
-        r'\d+\s*days?\b',  # Time periods like "30 days"
-        r'Archives\s+Act\s+1983', # Handles whitespace better for Act reference
+        r'\$\d+(?:,\d+)*',          # Dollar amounts with commas like $150,000
+        r'\d+\s*days?\b',            # Time periods like "30 days"
+        r'Archives\s+Act\s+1983',
         r'\bprohibited\b',
         r'\bmandatory\b',
         r'\brequired\b',
@@ -345,8 +368,7 @@ def detect_power_words(text):
     # Remove duplicates while preserving order
     found_words = list(dict.fromkeys(found_words))
     
-    # Calculate power word score (capped at 1.0)
-    # Each power word adds 0.15, maximum 1.0
+    # Each power word adds 0.15, capped at 1.0
     power_score = min(1.0, len(found_words) * 0.15)
     
     return {
@@ -357,17 +379,21 @@ def detect_power_words(text):
 
 def calculate_final_score(base_similarity, power_word_score):
     """
-    Combines semantic similarity with power word boost to get final relevance score.
-    
-    Weighting: 90% semantic similarity, 10% power words
-    
+    Adds the power word boost directly on top of the base similarity score,
+    capped at 1.0.
+
+    This replaces the previous 90/10 weighted blend. The additive approach means
+    the boost is always visible in the log and has a consistent, predictable effect
+    regardless of the base score — a score of 0.40 with a boost of 0.10 will
+    clearly show as 0.50, whereas the weighted formula would have shown 0.46.
+
     Args:
-        base_similarity (float): Cosine similarity score (0.7-1).
-        power_word_score (float): Power word score (0.7-1).
+        base_similarity (float): Cosine similarity score (0-1).
+        power_word_score (float): Additive boost from power words (0-1).
     Returns:
-        float: Final weighted score (0.7-1).
+        float: Final score, capped at 1.0.
     """
-    return (base_similarity * 0.90) + (power_word_score * 0.10)
+    return min(1.0, base_similarity + power_word_score)
 
 def should_generate_handover(final_score, threshold=SIMILARITY_THRESHOLD):
     """
@@ -429,29 +455,34 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
         logger.error(f"API Error: {e}")
         return {'status': 'error', 'final_score': 0.0, 'base_similarity': 0.0, 'should_handover': False}
     
-    # Step 4: Compare against semantic data (mock or real)
+    # Step 4: Load semantic embeddings from JSON (Phase 3)
+    global _semantic_cache
     if mock_semantic_data:
         # TESTING MODE: Use provided mock data
         logger.info("Using mock semantic data for testing")
         website_vectors = mock_semantic_data['embeddings']
         udids = mock_semantic_data['udids']
         chunk_texts = mock_semantic_data.get('chunk_texts', [''] * len(udids))
+        chunks_raw = None
     else:
-        # TODO Phase 3: Load Tom's spreadsheet
-        # semantic_df = pd.read_excel(TOM_SPREADSHEET, sheet_name=SEMANTIC_SHEET)
-        # influences_df = pd.read_excel(TOM_SPREADSHEET, sheet_name=INFLUENCES_SHEET)
-        # website_vectors = np.array(semantic_df['Chunk_Embedding'].tolist())
-        # udids = semantic_df['UDID'].values
-        # chunk_texts = semantic_df['Chunk_Text'].values
-        
-        logger.warning("Real spreadsheet loading not implemented yet (Phase 3)")
-        return {
-            'status': 'awaiting_phase3',
-            'change_text': change['change_context'],
-            'diff_vector_shape': diff_vector.shape,
-            'power_words': power_analysis,
-            'message': 'Phase 3: Implement spreadsheet loading and handover packet generation'
-        }
+        if _semantic_cache is None:
+            if not os.path.exists(SEMANTIC_EMBEDDINGS_FILE):
+                logger.error(f"Semantic embeddings file not found: {SEMANTIC_EMBEDDINGS_FILE}")
+                return {'status': 'missing_embeddings', 'final_score': 0.0, 'should_handover': False}
+            logger.info(f"Loading semantic embeddings from {SEMANTIC_EMBEDDINGS_FILE}...")
+            with open(SEMANTIC_EMBEDDINGS_FILE, 'r', encoding='utf-8') as f:
+                raw = json.load(f)
+            _semantic_cache = {
+                'vectors': np.array([json.loads(item['Chunk_Embedding']) for item in raw]),
+                'udids': [item['UDID'] for item in raw],
+                'chunk_texts': [item['Chunk_Text'] for item in raw],
+                'chunks_raw': raw
+            }
+            logger.info(f"Loaded {len(raw)} semantic chunks")
+        website_vectors = _semantic_cache['vectors']
+        udids = _semantic_cache['udids']
+        chunk_texts = _semantic_cache['chunk_texts']
+        chunks_raw = _semantic_cache['chunks_raw']
     
     # Step 5: Calculate cosine similarities
     try:
@@ -472,8 +503,9 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
     base_similarity = similarities[best_match_idx]
     matched_udid = udids[best_match_idx]
     matched_text = chunk_texts[best_match_idx]
+    matched_chunk_id = chunks_raw[best_match_idx].get('Chunk_ID', 'N/A') if chunks_raw else 'N/A'
     
-    logger.info(f"Best match: {matched_udid} with similarity {base_similarity:.3f}")
+    logger.info(f"Best match: {matched_udid} ({matched_chunk_id}) with similarity {base_similarity:.3f}")
     logger.info(f"Matched chunk preview: {matched_text[:100]}...")
     
     # Step 7: Calculate final score with power word boost
@@ -494,11 +526,144 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
         'base_similarity': float(base_similarity),
         'final_score': float(final_score),
         'matched_udid': matched_udid,
+        'matched_chunk_id': matched_chunk_id,
         'matched_text': matched_text,
+        'matched_chunk_raw': chunks_raw[best_match_idx] if chunks_raw else None,
         'threshold': SIMILARITY_THRESHOLD,
         'should_handover': should_handover,
         'filter_reason': None if should_handover else f"Below threshold: {final_score:.3f} < {SIMILARITY_THRESHOLD}"
     }
+
+def write_github_summary(handover_paths: list):
+    """
+    Writes a markdown summary of this run's handover packets to the GitHub Actions
+    job summary (GITHUB_STEP_SUMMARY). If that env variable isn't set (i.e. running
+    locally), the summary is written to stdout instead.
+
+    Args:
+        handover_paths (list): Paths to handover packet JSON files generated this run.
+    """
+    summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
+
+    lines = ["## Tripwire run summary\n"]
+
+    if not handover_paths:
+        lines.append("No handover packets generated this run — all changes were below threshold or no changes were detected.\n")
+    else:
+        lines.append(f"**{len(handover_paths)} handover packet(s) generated this run.**\n")
+        lines.append("| Priority | Score | Source | Matched UDID | Headline | Diff file |")
+        lines.append("|----------|-------|--------|--------------|----------|-----------|")
+
+        for path in handover_paths:
+            try:
+                with open(path, 'r', encoding='utf-8') as f:
+                    p = json.load(f)
+                priority   = p.get('packet_priority', 'N/A')
+                score      = p.get('analysis', {}).get('similarity_score', 0)
+                source     = p.get('source', {}).get('name', 'N/A')
+                udid       = p.get('matched_chunk', {}).get('udid', 'N/A')
+                headline   = p.get('matched_chunk', {}).get('headline_alt', 'N/A')
+                diff_file  = p.get('source', {}).get('diff_file', 'N/A')
+                lines.append(f"| **{priority}** | {score:.3f} | {source} | `{udid}` | {headline} | `{diff_file}` |")
+            except Exception as e:
+                lines.append(f"| — | — | Error reading packet: {e} | — | — | — |")
+
+        lines.append("")
+        lines.append("> Full JSON packets are available in the **handover_packets** artifact attached to this run.")
+
+    summary = "\n".join(lines) + "\n"
+
+    if summary_file:
+        with open(summary_file, 'a', encoding='utf-8') as f:
+            f.write(summary)
+    else:
+        print(summary)
+
+
+def generate_handover_packet(source_name: str, priority: str, diff_file: str,
+                             analysis: dict, timestamp: str) -> str:
+    """
+    Generates a JSON handover packet for Tom containing all context needed to review
+    a flagged content change.
+
+    Args:
+        source_name (str): Name of the monitored source.
+        priority (str): Source priority level (High/Medium/Low).
+        diff_file (str): Filename of the associated diff.
+        analysis (dict): The result dict from calculate_similarity().
+        timestamp (str): ISO timestamp from the audit log entry.
+    Returns:
+        str: Path to the written handover packet file.
+    """
+    os.makedirs(HANDOVER_DIR, exist_ok=True)
+
+    chunk = analysis.get('matched_chunk_raw') or {}
+    power = analysis.get('power_words', {})
+    final_score = analysis.get('final_score', 0.0)
+
+    # Derive packet priority from score and power word count
+    pw_count = power.get('count', 0)
+    if final_score >= 0.75 or pw_count >= 5:
+        packet_priority = 'Critical'
+    elif final_score >= 0.60 or pw_count >= 3:
+        packet_priority = 'High'
+    else:
+        packet_priority = 'Medium'
+
+    safe_ts = timestamp.replace(':', '').replace('.', '')[:15]
+    udid = analysis.get('matched_udid', 'unknown')
+    filename = f"handover_{safe_ts}_{udid}.json"
+    filepath = os.path.join(HANDOVER_DIR, filename)
+
+    packet = {
+        'packet_id': filename.replace('.json', ''),
+        'generated_at': timestamp,
+        'packet_priority': packet_priority,
+        'source': {
+            'name': source_name,
+            'monitoring_priority': priority,
+            'diff_file': diff_file,
+            'diff_file_path': os.path.join(DIFF_DIR, diff_file)
+        },
+        'analysis': {
+            'similarity_score': final_score,
+            'base_similarity': analysis.get('base_similarity'),
+            'threshold': analysis.get('threshold', SIMILARITY_THRESHOLD),
+            'power_words_found': power.get('found', []),
+            'power_word_count': pw_count,
+            'power_word_score': power.get('score', 0.0)
+        },
+        'change': {
+            'hunk': analysis.get('change_text', ''),
+            'preview': (analysis.get('change_text', '') or '')[:200]
+        },
+        'matched_chunk': {
+            'udid': udid,
+            'chunk_id': chunk.get('Chunk_ID', 'N/A'),
+            'headline_alt': chunk.get('Headline_Alt', 'N/A'),
+            'chunk_text': chunk.get('Chunk_Text', analysis.get('matched_text', '')),
+            'chunk_context_prepend': chunk.get('Chunk_Context_Prepend', ''),
+            'token_count': chunk.get('Chunk_Token_Count', 'N/A')
+        },
+        'review_context': {
+            'why_flagged': (
+                f"Similarity score of {final_score:.2%} exceeds threshold of "
+                f"{analysis.get('threshold', SIMILARITY_THRESHOLD):.2%}"
+            ),
+            'power_words_note': (
+                f"Found {pw_count} enforcement-related term(s): "
+                f"{', '.join(power.get('found', []))}"
+                if pw_count else "No enforcement terms detected"
+            )
+        }
+    }
+
+    with open(filepath, 'w', encoding='utf-8') as f:
+        json.dump(packet, f, indent=2, ensure_ascii=False)
+
+    logger.info(f"Handover packet written: {filename} [{packet_priority}]")
+    return filepath
+
 
 # --- Main Loop ---
 
@@ -510,6 +675,7 @@ def main():
     session = requests.Session()
     driver = None
     logger.info(f"--- Tripwire Stage 2 (Modular & Documented) Run: {datetime.datetime.now()} ---")
+    handover_paths = []
 
     for source in sources:
         name, stype, priority = source['name'], source['type'], source.get('priority', 'Low')
@@ -558,7 +724,30 @@ def main():
                     
                     if diff_hunk and diff_hunk != "Initial archive creation." and not repopulate_only:
                         diff_file = save_diff_record(name, diff_hunk)
-                        log_to_audit(name, priority, "Success", "Yes", current_id, diff_file)
+                        diff_path = os.path.join(DIFF_DIR, diff_file)
+
+                        # Stage 3: Semantic analysis and handover packet generation
+                        analysis = calculate_similarity(diff_path)
+                        s3_score = analysis.get('final_score') if analysis['status'] == 'success' else None
+                        s3_words = analysis.get('power_words', {}).get('found') if analysis['status'] == 'success' else None
+                        s3_udid = analysis.get('matched_udid') if analysis['status'] == 'success' else None
+                        s3_chunk_id = analysis.get('matched_chunk_id') if analysis['status'] == 'success' else None
+                        s3_outcome = None
+                        s3_reason = analysis.get('filter_reason') or analysis.get('message') or analysis['status']
+
+                        if analysis.get('should_handover'):
+                            ts = datetime.datetime.now().isoformat()
+                            packet_path = generate_handover_packet(name, priority, diff_file, analysis, ts)
+                            handover_paths.append(packet_path)
+                            s3_outcome = 'handover'
+                            s3_reason = f"Score {s3_score:.3f} >= threshold {SIMILARITY_THRESHOLD}"
+                        elif analysis['status'] == 'success':
+                            s3_outcome = 'filtered'
+
+                        log_to_audit(name, priority, "Success", "Yes", current_id, diff_file,
+                                     similarity_score=s3_score, power_words=s3_words,
+                                     matched_udid=s3_udid, matched_chunk_id=s3_chunk_id,
+                                     outcome=s3_outcome, reason=s3_reason)
                     elif repopulate_only:
                         log_to_audit(name, priority, "Success", "Healed", current_id)
                     else:
@@ -571,6 +760,7 @@ def main():
             log_to_audit(name, priority, "Exception", "N/A", current_id)
 
     if driver: driver.quit()
+    write_github_summary(handover_paths)
 
 if __name__ == "__main__":
     # Check if running Stage 3 test mode
@@ -580,7 +770,7 @@ if __name__ == "__main__":
         # Check if diff file argument provided
         if len(sys.argv) < 3:
             logger.error("Usage: python tripwire.py --test-stage3 <path_to_diff_file>")
-            logger.info(f"Example: python tripwire.py --test-stage3 {DIFF_DIR}/20260216_184111_IP_Australia_What_are_trade_marks_.diff")
+            logger.info(f"Example: python tripwire.py --test-stage3 {DIFF_DIR}/some_file.diff")
             sys.exit(1)
         
         diff_file = sys.argv[2]

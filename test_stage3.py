@@ -81,34 +81,42 @@ class TestPowerWordDetection:
         assert any('archives act 1983' in word.lower() for word in result['found'])
 
 class TestScoringLogic:
-    """Test final score calculation and threshold logic using 90/10 weighting"""
-    
-    def test_calculate_final_score_weighting(self):
-        """Should weight semantic 90% and power words 10%"""
+    """Test final score calculation and threshold logic using additive boost"""
+
+    def test_calculate_final_score_additive(self):
+        """Should add power word score directly to base similarity"""
         base_sim = 0.50
-        power_score = 0.4
+        power_score = 0.30
         final = calculate_final_score(base_sim, power_score)
-        # (0.50 * 0.90) + (0.4 * 0.10) = 0.45 + 0.04 = 0.49
-        assert abs(final - 0.49) < 0.001
+        # 0.50 + 0.30 = 0.80
+        assert abs(final - 0.80) < 0.001
+
+    def test_boost_visible_in_score(self):
+        """Boost should be the exact difference between scores with and without power words"""
+        base_sim = 0.40
+        boost = 0.15
+        final_without = calculate_final_score(base_sim, 0.0)
+        final_with = calculate_final_score(base_sim, boost)
+        assert abs((final_with - final_without) - boost) < 0.001
 
     def test_high_semantic_low_power(self):
-        """High semantic similarity should pass even without power words"""
-        # 0.52 * 0.9 = 0.468 (Clears the 0.45 threshold)
-        final = calculate_final_score(0.52, 0.0)
+        """High semantic similarity should pass threshold without power words"""
+        final = calculate_final_score(0.50, 0.0)
         assert final >= V3_SMALL_THRESHOLD
         assert should_generate_handover(final, threshold=V3_SMALL_THRESHOLD)
 
-    def test_low_semantic_high_power(self):
-        """Power words should boost marginal matches by 10%"""
-        # 0.40 is marginal for v3-small (just below 0.45 gate)
-        base_sim = 0.40 
-        final_without = calculate_final_score(base_sim, 0.0)
-        final_with = calculate_final_score(base_sim, 1.0)
-        assert final_with > final_without
-        assert abs((final_with - final_without) - 0.10) < 0.001
-        
-        # This confirms power words can push a 0.40 match over the 0.45 threshold
-        assert should_generate_handover(final_with, threshold=V3_SMALL_THRESHOLD) == True
+    def test_low_semantic_boost_crosses_threshold(self):
+        """Power words should be able to push a marginal match over the threshold"""
+        base_sim = 0.40  # Below 0.45 threshold on its own
+        final = calculate_final_score(base_sim, 0.15)
+        # 0.40 + 0.15 = 0.55 — clearly over threshold
+        assert final >= V3_SMALL_THRESHOLD
+        assert should_generate_handover(final, threshold=V3_SMALL_THRESHOLD) == True
+
+    def test_score_capped_at_one(self):
+        """Score should never exceed 1.0 regardless of inputs"""
+        final = calculate_final_score(0.95, 0.90)
+        assert final == 1.0
 
     def test_threshold_logic(self):
         """Should correctly apply threshold boundaries"""

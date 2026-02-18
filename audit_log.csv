@@ -1,122 +1,118 @@
-Timestamp,Source_Name,Priority,Status,Change_Detected,Version_ID,Diff_File
-2026-02-05T03:57:11.465068,WIPO Arbitration and Mediation Center,Medium,Success,No,3819,N/A
-2026-02-05T03:57:12.102969,WIPO Press Room,Low,Success,No,7305,N/A
-2026-02-05T03:57:13.399822,Trade Marks Act 1995,High,Success,No,C2024C00545,N/A
-2026-02-05T03:57:14.658465,Patents Regulations 1991,High,Success,No,F2024C00944,N/A
-2026-02-05T03:57:16.605272,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A
-2026-02-05T03:57:20.885006,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-05T04:13:38.459808,WIPO Arbitration and Mediation Center,Medium,Success,No,3819,N/A
-2026-02-05T04:13:38.981699,WIPO Press Room,Low,Success,No,7305,N/A
-2026-02-05T04:13:44.983191,Trade Marks Act 1995,High,Success,No,C2024C00545,N/A
-2026-02-05T04:13:46.251150,Patents Regulations 1991,High,Success,No,F2024C00944,N/A
-2026-02-05T04:13:56.675887,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A
-2026-02-05T04:13:57.660409,ABC News - World,Medium,Success,Yes,"""9gdmaytcojbnw""",20260205_041357_ABC_News_World.diff
-2026-02-05T04:14:01.565736,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-05T04:56:19.906906,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-06T01:55:02.996199,ABC News - World,Medium,Success,Yes,"""180y7iqx2izbj1""",20260206_015502_ABC_News_World.diff
-2026-02-06T01:55:08.311559,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-06T06:52:56.744119,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A
-2026-02-06T06:52:57.499274,ABC News - World,Medium,Success,Yes,"""61g6zh21khbfs""",20260206_065257_ABC_News_World.diff
-2026-02-06T06:53:00.726852,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-06T12:55:28.153358,ABC News - World,Medium,Success,Yes,"""4awxwpb9jebp6""",20260206_125528_ABC_News_World.diff
-2026-02-06T18:47:08.974618,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A
-2026-02-06T18:47:10.265218,ABC News - World,Medium,Success,Yes,"""9pm7lrr3sqbk7""",20260206_184710_ABC_News_World.diff
-2026-02-07T01:51:53.870496,ABC News - World,Medium,Success,Yes,"""e718sqoyjjbni""",20260207_015153_ABC_News_World.diff
-2026-02-07T06:39:51.537314,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A
-2026-02-07T06:39:52.183080,ABC News - World,Medium,Success,Yes,55,20260207_063952_ABC_News_World.diff
-2026-02-07T12:43:45.557837,WIPO Arbitration and Mediation Center,Medium,Success,No,,N/A
-2026-02-07T12:43:58.019314,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A
-2026-02-07T12:43:59.178906,ABC News - World,Medium,Success,Yes,"""sbpu487fe3bdi""",20260207_124359_ABC_News_World.diff
-2026-02-07T12:44:08.291519,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-07T18:33:05.458061,WIPO Arbitration and Mediation Center,Medium,Success,No,3819,N/A
-2026-02-08T02:25:20.426317,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A
-2026-02-08T02:25:21.282229,ABC News - World,Medium,Success,Yes,"""13snroqgdz3bbx""",20260208_022521_ABC_News_World.diff
-2026-02-08T06:46:21.756945,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A
-2026-02-08T06:46:22.440369,ABC News - World,Medium,Success,Yes,"""eowrsz1rc4bbg""",20260208_064622_ABC_News_World.diff
-2026-02-08T06:46:26.075555,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-08T12:44:56.436882,ABC News - World,Medium,Success,Yes,"""pss8nm70vzbbf""",20260208_124456_ABC_News_World.diff
-2026-02-08T12:45:08.158429,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-08T18:34:49.757942,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A
-2026-02-08T18:34:54.193809,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-09T02:02:51.889451,ABC News - World,Medium,Success,Yes,"""bb6ajxqvchbii""",20260209_020251_ABC_News_World.diff
-2026-02-09T02:03:01.834805,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-09T07:02:45.087043,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A
-2026-02-09T07:02:46.195518,ABC News - World,Medium,Success,Yes,"""vjwyj7xigcbki""",20260209_070246_ABC_News_World.diff
-2026-02-09T07:02:50.259728,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-09T13:05:32.198919,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A
-2026-02-09T13:05:33.203847,ABC News - World,Medium,Success,Yes,"""tmqqsqstqublr""",20260209_130533_ABC_News_World.diff
-2026-02-09T13:05:40.411735,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-10T05:51:14.352753,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A
-2026-02-10T05:51:16.335831,ABC News - World,Medium,Success,Yes,"""ltbf5z3pcpbdc""",20260210_055116_ABC_News_World.diff
-2026-02-10T05:51:21.234553,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-10T07:01:57.248000,Thomas Amann Website,Medium,Success,No,"W/""eefcb82538c6bace1e7b775fa374bab9""",N/A
-2026-02-10T07:01:58.204828,ABC News - World,Medium,Success,Yes,55,20260210_070158_ABC_News_World.diff
-2026-02-10T07:02:07.562667,IP Australia - What are trade marks?,Medium,Success,Yes,179,20260210_070207_IP_Australia_What_are_trade_marks_.diff
-2026-02-10T13:09:29.832079,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-10T13:09:30.923936,ABC News - World,Medium,Success,No,"""38zzmlksazbbv""",N/A
-2026-02-10T19:03:03.111710,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A
-2026-02-10T19:03:06.699385,IP Australia - What are trade marks?,Medium,Success,Yes,"""697acef8-2fa44""",20260210_190306_IP_Australia_What_are_trade_marks_.diff
-2026-02-11T02:08:43.825027,ABC News - World,Medium,Success,Yes,"""ujltb807zpby2""",20260211_020843_ABC_News_World.diff
-2026-02-11T02:08:54.198424,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-11T06:59:11.759795,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-11T06:59:12.329017,ABC News - World,Medium,Success,Yes,"""q5v9avggsubhg""",20260211_065912_ABC_News_World.diff
-2026-02-11T06:59:17.100974,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-11T13:05:45.296418,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A
-2026-02-11T13:05:46.974966,ABC News - World,Medium,Success,No,"""pg9wyzacmwbhg""",N/A
-2026-02-11T13:05:54.661751,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-11T19:00:30.430513,ABC News - World,Medium,Success,Yes,"""5ua13dt2wxbt6""",20260211_190030_ABC_News_World.diff
-2026-02-11T19:00:41.950484,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-12T02:02:18.090397,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-12T02:02:24.637152,ABC News - World,Medium,Success,Yes,"""ycmwewzi0bo7""",20260212_020224_ABC_News_World.diff
-2026-02-12T06:59:28.087411,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A
-2026-02-12T06:59:29.168086,ABC News - World,Medium,Success,Yes,"""hni3dqotgobl7""",20260212_065929_ABC_News_World.diff
-2026-02-12T06:59:36.476309,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-12T13:03:40.006593,WIPO Press Room,Low,Success,Yes,7272,20260212_130340_WIPO_Press_Room.diff
-2026-02-12T13:03:50.670659,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-12T13:03:51.541271,ABC News - World,Medium,Success,Yes,"""lwpwubo0lrbhy""",20260212_130351_ABC_News_World.diff
-2026-02-12T19:00:31.373829,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A
-2026-02-12T19:00:32.500020,ABC News - World,Medium,Success,Yes,"""7gge6od17fbn5""",20260212_190032_ABC_News_World.diff
-2026-02-12T19:00:36.369124,IP Australia - What are trade marks?,Medium,Success,Yes,"""697acef8-2fa44""",20260212_190036_IP_Australia_What_are_trade_marks_.diff
-2026-02-13T02:05:10.567175,ABC News - World,Medium,Success,Yes,"""17bwc7yn2adbo3""",20260213_020510_ABC_News_World.diff
-2026-02-13T02:05:22.386400,IP Australia - What are trade marks?,Medium,Success,Yes,179,20260213_020522_IP_Australia_What_are_trade_marks_.diff
-2026-02-13T06:58:15.439130,ABC News - World,Medium,Success,Yes,"""b3m2cg73fkbia""",20260213_065815_ABC_News_World.diff
-2026-02-13T06:58:27.372366,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-13T12:56:09.104052,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-13T12:56:09.946158,ABC News - World,Medium,Success,Yes,"""1409op7dewyblb""",20260213_125609_ABC_News_World.diff
-2026-02-13T18:45:03.197930,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A
-2026-02-13T18:45:04.453341,ABC News - World,Medium,Success,Yes,"""ndtiyvroc7bio""",20260213_184504_ABC_News_World.diff
-2026-02-14T01:54:08.074171,ABC News - World,Medium,Success,Yes,"""2js8odwkuob9w""",20260214_015408_ABC_News_World.diff
-2026-02-14T01:54:19.431806,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-14T06:42:20.412051,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-14T12:43:38.823287,ABC News - World,Medium,Success,Yes,"""nv7ndkw9oxb60""",20260214_124338_ABC_News_World.diff
-2026-02-14T12:43:50.586404,IP Australia - What are trade marks?,Medium,Success,Yes,179,20260214_124350_IP_Australia_What_are_trade_marks_.diff
-2026-02-14T18:32:50.958623,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-14T18:32:55.282542,IP Australia - What are trade marks?,Medium,Success,Yes,"""697acef8-2fa44""",20260214_183255_IP_Australia_What_are_trade_marks_.diff
-2026-02-15T02:04:27.395364,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A
-2026-02-15T02:04:28.524951,ABC News - World,Medium,Success,Yes,"""ymq1v8ak6sbe6""",20260215_020428_ABC_News_World.diff
-2026-02-15T02:04:36.906497,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-15T06:50:37.883677,WIPO Arbitration and Mediation Center,Medium,Success,Yes,"""181cdbc18e47915e2c3fdcd04aff7d8f""",20260215_065037_WIPO_Arbitration_and_Mediation_Center.diff
-2026-02-15T06:50:38.556872,WIPO Press Room,Low,Success,Yes,"""181cdbc18e47915e2c3fdcd04aff7d8f""",20260215_065038_WIPO_Press_Room.diff
-2026-02-15T06:50:41.727615,ABC News - World,Medium,Success,Yes,"""pfezaz5rq2b7j""",20260215_065041_ABC_News_World.diff
-2026-02-15T06:50:53.012777,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-15T12:46:08.458426,WIPO Arbitration and Mediation Center,Medium,Success,Yes,3819,20260215_124608_WIPO_Arbitration_and_Mediation_Center.diff
-2026-02-15T12:46:09.274480,WIPO Press Room,Low,Success,Yes,7272,20260215_124609_WIPO_Press_Room.diff
-2026-02-15T12:46:21.369219,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-15T18:34:35.925236,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-15T18:34:43.591491,IP Australia - What are trade marks?,Medium,Success,Yes,"""697acef8-2fa44""",20260215_183443_IP_Australia_What_are_trade_marks_.diff
-2026-02-16T02:00:36.106597,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A
-2026-02-16T02:00:36.945801,ABC News - World,Medium,Success,Yes,"""ldjpip51s8bdo""",20260216_020036_ABC_News_World.diff
-2026-02-16T07:01:23.492391,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-16T07:01:24.607862,ABC News - World,Medium,Success,Yes,"""k9e1ayo6vwbe5""",20260216_070124_ABC_News_World.diff
-2026-02-16T12:59:33.504187,ABC News - World,Medium,Success,Yes,"""xltz73vkkmbkh""",20260216_125933_ABC_News_World.diff
-2026-02-16T18:40:58.228519,Thomas Amann Website,Medium,Success,No,"W/""eefcb82538c6bace1e7b775fa374bab9""",N/A
-2026-02-16T18:41:11.081165,IP Australia - What are trade marks?,Medium,Success,Yes,179,20260216_184111_IP_Australia_What_are_trade_marks_.diff
-2026-02-17T01:58:31.087804,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A
-2026-02-17T01:58:31.982955,ABC News - World,Medium,Success,Yes,"""17oxsyyharfbs2""",20260217_015831_ABC_News_World.diff
-2026-02-17T01:58:35.030790,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A
-2026-02-17T06:57:05.711651,ABC News - World,Medium,Success,Yes,"""126tgyt70ucbry""",20260217_065705_ABC_News_World.diff
-2026-02-17T06:57:13.732838,IP Australia - What are trade marks?,Medium,Success,No,179,N/A
-2026-02-17T13:00:08.512893,WIPO Press Room,Low,Success,Yes,7255,20260217_130008_WIPO_Press_Room.diff
-2026-02-17T18:56:21.713028,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A
-2026-02-17T18:56:22.790711,ABC News - World,Medium,Success,Yes,"""9fwgucsnucbp0""",20260217_185622_ABC_News_World.diff
-2026-02-18T02:02:15.992089,Thomas Amann Website,Medium,Success,No,"W/""ec801613242acc2a3b1d46edac632bc5""",N/A
+Timestamp,Source_Name,Priority,Status,Change_Detected,Version_ID,Diff_File,Similarity_Score,Power_Words,Matched_UDID,Matched_Chunk_ID,Outcome,Reason
+2026-02-05T03:57:11.465068,WIPO Arbitration and Mediation Center,Medium,Success,No,3819,N/A,,,,,,
+2026-02-05T03:57:12.102969,WIPO Press Room,Low,Success,No,7305,N/A,,,,,,
+2026-02-05T03:57:13.399822,Trade Marks Act 1995,High,Success,No,C2024C00545,N/A,,,,,,
+2026-02-05T03:57:14.658465,Patents Regulations 1991,High,Success,No,F2024C00944,N/A,,,,,,
+2026-02-05T03:57:16.605272,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A,,,,,,
+2026-02-05T03:57:20.885006,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-05T04:13:38.459808,WIPO Arbitration and Mediation Center,Medium,Success,No,3819,N/A,,,,,,
+2026-02-05T04:13:38.981699,WIPO Press Room,Low,Success,No,7305,N/A,,,,,,
+2026-02-05T04:13:44.983191,Trade Marks Act 1995,High,Success,No,C2024C00545,N/A,,,,,,
+2026-02-05T04:13:46.251150,Patents Regulations 1991,High,Success,No,F2024C00944,N/A,,,,,,
+2026-02-05T04:13:56.675887,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A,,,,,,
+2026-02-05T04:13:57.660409,ABC News - World,Medium,Success,Yes,"""9gdmaytcojbnw""",20260205_041357_ABC_News_World.diff,,,,,,
+2026-02-05T04:14:01.565736,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-05T04:56:19.906906,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-06T01:55:02.996199,ABC News - World,Medium,Success,Yes,"""180y7iqx2izbj1""",20260206_015502_ABC_News_World.diff,,,,,,
+2026-02-06T01:55:08.311559,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-06T06:52:56.744119,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A,,,,,,
+2026-02-06T06:52:57.499274,ABC News - World,Medium,Success,Yes,"""61g6zh21khbfs""",20260206_065257_ABC_News_World.diff,,,,,,
+2026-02-06T06:53:00.726852,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-06T12:55:28.153358,ABC News - World,Medium,Success,Yes,"""4awxwpb9jebp6""",20260206_125528_ABC_News_World.diff,,,,,,
+2026-02-06T18:47:08.974618,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A,,,,,,
+2026-02-06T18:47:10.265218,ABC News - World,Medium,Success,Yes,"""9pm7lrr3sqbk7""",20260206_184710_ABC_News_World.diff,,,,,,
+2026-02-07T01:51:53.870496,ABC News - World,Medium,Success,Yes,"""e718sqoyjjbni""",20260207_015153_ABC_News_World.diff,,,,,,
+2026-02-07T06:39:51.537314,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A,,,,,,
+2026-02-07T06:39:52.183080,ABC News - World,Medium,Success,Yes,55,20260207_063952_ABC_News_World.diff,,,,,,
+2026-02-07T12:43:45.557837,WIPO Arbitration and Mediation Center,Medium,Success,No,,N/A,,,,,,
+2026-02-07T12:43:58.019314,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A,,,,,,
+2026-02-07T12:43:59.178906,ABC News - World,Medium,Success,Yes,"""sbpu487fe3bdi""",20260207_124359_ABC_News_World.diff,,,,,,
+2026-02-07T12:44:08.291519,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-07T18:33:05.458061,WIPO Arbitration and Mediation Center,Medium,Success,No,3819,N/A,,,,,,
+2026-02-08T02:25:20.426317,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A,,,,,,
+2026-02-08T02:25:21.282229,ABC News - World,Medium,Success,Yes,"""13snroqgdz3bbx""",20260208_022521_ABC_News_World.diff,,,,,,
+2026-02-08T06:46:21.756945,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A,,,,,,
+2026-02-08T06:46:22.440369,ABC News - World,Medium,Success,Yes,"""eowrsz1rc4bbg""",20260208_064622_ABC_News_World.diff,,,,,,
+2026-02-08T06:46:26.075555,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-08T12:44:56.436882,ABC News - World,Medium,Success,Yes,"""pss8nm70vzbbf""",20260208_124456_ABC_News_World.diff,,,,,,
+2026-02-08T12:45:08.158429,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-08T18:34:49.757942,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A,,,,,,
+2026-02-08T18:34:54.193809,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-09T02:02:51.889451,ABC News - World,Medium,Success,Yes,"""bb6ajxqvchbii""",20260209_020251_ABC_News_World.diff,,,,,,
+2026-02-09T02:03:01.834805,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-09T07:02:45.087043,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A,,,,,,
+2026-02-09T07:02:46.195518,ABC News - World,Medium,Success,Yes,"""vjwyj7xigcbki""",20260209_070246_ABC_News_World.diff,,,,,,
+2026-02-09T07:02:50.259728,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-09T13:05:32.198919,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A,,,,,,
+2026-02-09T13:05:33.203847,ABC News - World,Medium,Success,Yes,"""tmqqsqstqublr""",20260209_130533_ABC_News_World.diff,,,,,,
+2026-02-09T13:05:40.411735,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-10T05:51:14.352753,Thomas Amann Website,Medium,Success,No,"W/""08680f80d8640b78ffc897f113e04c27""",N/A,,,,,,
+2026-02-10T05:51:16.335831,ABC News - World,Medium,Success,Yes,"""ltbf5z3pcpbdc""",20260210_055116_ABC_News_World.diff,,,,,,
+2026-02-10T05:51:21.234553,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-10T07:01:57.248000,Thomas Amann Website,Medium,Success,No,"W/""eefcb82538c6bace1e7b775fa374bab9""",N/A,,,,,,
+2026-02-10T07:01:58.204828,ABC News - World,Medium,Success,Yes,55,20260210_070158_ABC_News_World.diff,,,,,,
+2026-02-10T07:02:07.562667,IP Australia - What are trade marks?,Medium,Success,Yes,179,20260210_070207_IP_Australia_What_are_trade_marks_.diff,,,,,,
+2026-02-10T13:09:29.832079,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A,,,,,,
+2026-02-10T13:09:30.923936,ABC News - World,Medium,Success,No,"""38zzmlksazbbv""",N/A,,,,,,
+2026-02-10T19:03:03.111710,Thomas Amann Website,Medium,Success,No,"W/""83b7076ebe8a82686af8e46e2b75fb0c""",N/A,,,,,,
+2026-02-10T19:03:06.699385,IP Australia - What are trade marks?,Medium,Success,Yes,"""697acef8-2fa44""",20260210_190306_IP_Australia_What_are_trade_marks_.diff,,,,,,
+2026-02-11T02:08:43.825027,ABC News - World,Medium,Success,Yes,"""ujltb807zpby2""",20260211_020843_ABC_News_World.diff,,,,,,
+2026-02-11T02:08:54.198424,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-11T06:59:11.759795,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A,,,,,,
+2026-02-11T06:59:12.329017,ABC News - World,Medium,Success,Yes,"""q5v9avggsubhg""",20260211_065912_ABC_News_World.diff,,,,,,
+2026-02-11T06:59:17.100974,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-11T13:05:45.296418,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A,,,,,,
+2026-02-11T13:05:46.974966,ABC News - World,Medium,Success,No,"""pg9wyzacmwbhg""",N/A,,,,,,
+2026-02-11T13:05:54.661751,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-11T19:00:30.430513,ABC News - World,Medium,Success,Yes,"""5ua13dt2wxbt6""",20260211_190030_ABC_News_World.diff,,,,,,
+2026-02-11T19:00:41.950484,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-12T02:02:18.090397,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A,,,,,,
+2026-02-12T02:02:24.637152,ABC News - World,Medium,Success,Yes,"""ycmwewzi0bo7""",20260212_020224_ABC_News_World.diff,,,,,,
+2026-02-12T06:59:28.087411,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A,,,,,,
+2026-02-12T06:59:29.168086,ABC News - World,Medium,Success,Yes,"""hni3dqotgobl7""",20260212_065929_ABC_News_World.diff,,,,,,
+2026-02-12T06:59:36.476309,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-12T13:03:40.006593,WIPO Press Room,Low,Success,Yes,7272,20260212_130340_WIPO_Press_Room.diff,,,,,,
+2026-02-12T13:03:50.670659,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A,,,,,,
+2026-02-12T13:03:51.541271,ABC News - World,Medium,Success,Yes,"""lwpwubo0lrbhy""",20260212_130351_ABC_News_World.diff,,,,,,
+2026-02-12T19:00:31.373829,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A,,,,,,
+2026-02-12T19:00:32.500020,ABC News - World,Medium,Success,Yes,"""7gge6od17fbn5""",20260212_190032_ABC_News_World.diff,,,,,,
+2026-02-12T19:00:36.369124,IP Australia - What are trade marks?,Medium,Success,Yes,"""697acef8-2fa44""",20260212_190036_IP_Australia_What_are_trade_marks_.diff,,,,,,
+2026-02-13T02:05:10.567175,ABC News - World,Medium,Success,Yes,"""17bwc7yn2adbo3""",20260213_020510_ABC_News_World.diff,,,,,,
+2026-02-13T02:05:22.386400,IP Australia - What are trade marks?,Medium,Success,Yes,179,20260213_020522_IP_Australia_What_are_trade_marks_.diff,,,,,,
+2026-02-13T06:58:15.439130,ABC News - World,Medium,Success,Yes,"""b3m2cg73fkbia""",20260213_065815_ABC_News_World.diff,,,,,,
+2026-02-13T06:58:27.372366,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-13T12:56:09.104052,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A,,,,,,
+2026-02-13T12:56:09.946158,ABC News - World,Medium,Success,Yes,"""1409op7dewyblb""",20260213_125609_ABC_News_World.diff,,,,,,
+2026-02-13T18:45:03.197930,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A,,,,,,
+2026-02-13T18:45:04.453341,ABC News - World,Medium,Success,Yes,"""ndtiyvroc7bio""",20260213_184504_ABC_News_World.diff,,,,,,
+2026-02-14T01:54:08.074171,ABC News - World,Medium,Success,Yes,"""2js8odwkuob9w""",20260214_015408_ABC_News_World.diff,,,,,,
+2026-02-14T01:54:19.431806,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-14T06:42:20.412051,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-14T12:43:38.823287,ABC News - World,Medium,Success,Yes,"""nv7ndkw9oxb60""",20260214_124338_ABC_News_World.diff,,,,,,
+2026-02-14T12:43:50.586404,IP Australia - What are trade marks?,Medium,Success,Yes,179,20260214_124350_IP_Australia_What_are_trade_marks_.diff,,,,,,
+2026-02-14T18:32:50.958623,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A,,,,,,
+2026-02-14T18:32:55.282542,IP Australia - What are trade marks?,Medium,Success,Yes,"""697acef8-2fa44""",20260214_183255_IP_Australia_What_are_trade_marks_.diff,,,,,,
+2026-02-15T02:04:27.395364,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A,,,,,,
+2026-02-15T02:04:28.524951,ABC News - World,Medium,Success,Yes,"""ymq1v8ak6sbe6""",20260215_020428_ABC_News_World.diff,,,,,,
+2026-02-15T02:04:36.906497,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-15T06:50:37.883677,WIPO Arbitration and Mediation Center,Medium,Success,Yes,"""181cdbc18e47915e2c3fdcd04aff7d8f""",20260215_065037_WIPO_Arbitration_and_Mediation_Center.diff,,,,,,
+2026-02-15T06:50:38.556872,WIPO Press Room,Low,Success,Yes,"""181cdbc18e47915e2c3fdcd04aff7d8f""",20260215_065038_WIPO_Press_Room.diff,,,,,,
+2026-02-15T06:50:41.727615,ABC News - World,Medium,Success,Yes,"""pfezaz5rq2b7j""",20260215_065041_ABC_News_World.diff,,,,,,
+2026-02-15T06:50:53.012777,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-15T12:46:08.458426,WIPO Arbitration and Mediation Center,Medium,Success,Yes,3819,20260215_124608_WIPO_Arbitration_and_Mediation_Center.diff,,,,,,
+2026-02-15T12:46:09.274480,WIPO Press Room,Low,Success,Yes,7272,20260215_124609_WIPO_Press_Room.diff,,,,,,
+2026-02-15T12:46:21.369219,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,,,,,,
+2026-02-15T18:34:35.925236,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A,,,,,,
+2026-02-15T18:34:43.591491,IP Australia - What are trade marks?,Medium,Success,Yes,"""697acef8-2fa44""",20260215_183443_IP_Australia_What_are_trade_marks_.diff,,,,,,
+2026-02-16T02:00:36.106597,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A,,,,,,
+2026-02-16T02:00:36.945801,ABC News - World,Medium,Success,Yes,"""ldjpip51s8bdo""",20260216_020036_ABC_News_World.diff,,,,,,
+2026-02-16T07:01:23.492391,Thomas Amann Website,Medium,Success,No,"W/""03e629ebc5e6ae4e51bfe4d5df8c602a""",N/A,,,,,,
+2026-02-16T07:01:24.607862,ABC News - World,Medium,Success,Yes,"""k9e1ayo6vwbe5""",20260216_070124_ABC_News_World.diff,,,,,,
+2026-02-16T12:59:33.504187,ABC News - World,Medium,Success,Yes,"""xltz73vkkmbkh""",20260216_125933_ABC_News_World.diff,,,,,,
+2026-02-16T18:40:58.228519,Thomas Amann Website,Medium,Success,No,"W/""eefcb82538c6bace1e7b775fa374bab9""",N/A,,,,,,
+2026-02-16T18:41:11.081165,IP Australia - What are trade marks?,Medium,Success,Yes,179,20260216_184111_IP_Australia_What_are_trade_marks_.diff,,,,,,
+2026-02-17T01:58:31.087804,Thomas Amann Website,Medium,Success,No,"W/""fd20b2c10ae50bcc7a86c14b0b538c71""",N/A,,,,,,
+2026-02-17T01:58:31.982955,ABC News - World,Medium,Success,Yes,"""17oxsyyharfbs2""",20260217_015831_ABC_News_World.diff,,,,,,
+2026-02-17T01:58:35.030790,IP Australia - What are trade marks?,Medium,Success,No,"""697acef8-2fa44""",N/A,,,,,,
+2026-02-17T06:28:22.021001,ABC News - World,Medium,Success,Yes,"""126tgyt70ucbry""",20260217_062820_ABC_News_World.diff,0.3046,may; penalty,CS1001,,filtered,Below threshold: 0.305 < 0.45
+2026-02-17T06:28:31.593765,IP Australia - What are trade marks?,Medium,Success,No,179,N/A,N/A,N/A,N/A,N/A,N/A,
