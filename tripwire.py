@@ -71,7 +71,7 @@ def get_last_version_id(source_name: str) -> Optional[str]:
 
 def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None,
                  similarity_score=None, power_words=None, matched_udid=None,
-                 outcome=None, reason=None):
+                 matched_chunk_id=None, outcome=None, reason=None):
     """
     Appends a new entry to the CSV audit log.
     
@@ -88,6 +88,7 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
         similarity_score (float, optional): Final semantic similarity score.
         power_words (list, optional): Power words detected in the diff.
         matched_udid (str, optional): Best-matching UDID from semantic analysis.
+        matched_chunk_id (str, optional): Best-matching Chunk ID from semantic analysis.
         outcome (str, optional): 'handover' or 'filtered'.
         reason (str, optional): Explanation of the outcome.
     """
@@ -95,7 +96,7 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
     headers = [
         'Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected',
         'Version_ID', 'Diff_File', 'Similarity_Score', 'Power_Words',
-        'Matched_UDID', 'Outcome', 'Reason'
+        'Matched_UDID', 'Matched_Chunk_ID', 'Outcome', 'Reason'
     ]
     with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
@@ -107,6 +108,7 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
             f"{similarity_score:.4f}" if similarity_score is not None else "N/A",
             '; '.join(power_words) if power_words else "N/A",
             matched_udid or "N/A",
+            matched_chunk_id or "N/A",
             outcome or "N/A",
             reason or "N/A"
         ])
@@ -501,8 +503,9 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
     base_similarity = similarities[best_match_idx]
     matched_udid = udids[best_match_idx]
     matched_text = chunk_texts[best_match_idx]
+    matched_chunk_id = chunks_raw[best_match_idx].get('Chunk_ID', 'N/A') if chunks_raw else 'N/A'
     
-    logger.info(f"Best match: {matched_udid} with similarity {base_similarity:.3f}")
+    logger.info(f"Best match: {matched_udid} ({matched_chunk_id}) with similarity {base_similarity:.3f}")
     logger.info(f"Matched chunk preview: {matched_text[:100]}...")
     
     # Step 7: Calculate final score with power word boost
@@ -523,6 +526,7 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
         'base_similarity': float(base_similarity),
         'final_score': float(final_score),
         'matched_udid': matched_udid,
+        'matched_chunk_id': matched_chunk_id,
         'matched_text': matched_text,
         'matched_chunk_raw': chunks_raw[best_match_idx] if chunks_raw else None,
         'threshold': SIMILARITY_THRESHOLD,
@@ -727,6 +731,7 @@ def main():
                         s3_score = analysis.get('final_score') if analysis['status'] == 'success' else None
                         s3_words = analysis.get('power_words', {}).get('found') if analysis['status'] == 'success' else None
                         s3_udid = analysis.get('matched_udid') if analysis['status'] == 'success' else None
+                        s3_chunk_id = analysis.get('matched_chunk_id') if analysis['status'] == 'success' else None
                         s3_outcome = None
                         s3_reason = analysis.get('filter_reason') or analysis.get('message') or analysis['status']
 
@@ -741,7 +746,8 @@ def main():
 
                         log_to_audit(name, priority, "Success", "Yes", current_id, diff_file,
                                      similarity_score=s3_score, power_words=s3_words,
-                                     matched_udid=s3_udid, outcome=s3_outcome, reason=s3_reason)
+                                     matched_udid=s3_udid, matched_chunk_id=s3_chunk_id,
+                                     outcome=s3_outcome, reason=s3_reason)
                     elif repopulate_only:
                         log_to_audit(name, priority, "Success", "Healed", current_id)
                     else:
