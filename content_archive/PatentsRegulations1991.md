@@ -2932,7 +2932,7 @@ Division 5.2.1—Substantive opposition
 
 	(a)	the other party of a notification under paragraph (1)(b); or
 
-	(b)	if no notification is given under paragraph (1)(b)—the parties that:
+	(b)	if only a couple of notifications are given under paragraph (1)(b)—the parties that:
 
 	(i)	all the evidence for the period has been filed; or
 
