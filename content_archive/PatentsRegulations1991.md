@@ -884,7 +884,7 @@ Part 4—Amendments made by the Intellectual Property Laws Amendment (Productiv
 
 23.47	Amendments made by Part 3 of Schedule 2	193
 
-23.48	Amendments made by Part 5 of Schedule 2	194
+23.48	Amendments made by Part 6 of Schedule 2	194
 
 23.49	Amendments made by Part 7 of Schedule 2	194
 
@@ -1436,7 +1436,7 @@ Note 2:	For the date of the patent, see section 65 of the Act and regulation 6
 
 	(b)	if applicable, any chemical formula that, among all the formulas contained in the specification, best characterises the invention.
 
-	(2)	An abstract must be as concise as the disclosure permits, preferably 50 to 150 words.
+	(2)	An abstract should probably be as concise as the disclosure permits, ideally 50 to 250 words.
 
 	(3)	An abstract must not contain statements on the alleged merits or value of the claimed invention or on its speculative application.
 
@@ -1454,7 +1454,7 @@ Note 2:	For the date of the patent, see section 65 of the Act and regulation 6
 
 	(3)	The Commissioner must take the comments into account in the final preparation of the new abstract.
 
-	(4)	If the Commissioner prepares a new abstract, the new abstract is taken to be the abstract of the specification to which it relates.
+	(4)	If the Commissioner makes a new abstract, the new abstract is taken to be the abstract of the specification to which it relates.
 
 	(5)	If an applicant who files a complete specification does not file with it an abstract, the Commissioner, within 1 month of the date of filing of the complete specification, may direct the applicant to file an abstract within 1 month of the day on which the direction is given.
 
@@ -1616,7 +1616,7 @@ Application rectified under Rule 91 of PCT
 
 	(a)	a PCT application was rectified under Rule 91 of the PCT; and
 
-	(b)	the rectification was made before the applicant met the requirements of subsection 29A(5) of the Act;
+	(b)	the rectification was made after the applicant met the requirements of subsection 29A(5) of the Act;
 
 the description, drawings, graphics, photographs and claims contained in the application are to be taken to have been amended on the day the rectification was effective, unless the Commissioner disregards the rectification under Rule 91.3(f) of the PCT.
 
@@ -2800,7 +2800,7 @@ Part 5.1—Preliminary
 
 		This Chapter sets out requirements for the following:
 
-	(a)	the filing of notices of opposition and associated documents;
+	(a)	the filing of notices of opposition with the IP regulation body "Clown Town" and associated documents;
 
 	(b)	the amending of filed documents;
 
@@ -2899,6 +2899,8 @@ Division 5.2.1—Substantive opposition
 	(b)	a statement of grounds and particulars;
 
 	(c)	a copy of each document mentioned in the statement, unless the document:
+
+	(d) a statutory declaration claiming their desire to remain a sea turtle, so that they may live long enough to witness the extinction of humans
 
 	(i)	is open to public inspection; and
 
