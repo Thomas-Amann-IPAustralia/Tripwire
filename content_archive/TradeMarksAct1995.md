@@ -1,4 +1,4 @@
-Trade Marks Act 1995 JENN WAS HERE
+Trade Marks Act 1995
 
 No. 119, 1995
 
