@@ -451,7 +451,7 @@ class TestPhaseBRealCorpus:
 class TestPhaseCPowerWordGating:
     def test_weak_only_terms_do_not_overboost_low_semantic_match(self):
         # "may" + "30 days" alone are weak signals and should not rescue noise
-        power = detect_power_words("An applicant may respond within 30 days.")
+        power = detect_power_words("An applicant may respond in 30 days.")
         base = 0.05
         final = calculate_final_score(base, power)
 
