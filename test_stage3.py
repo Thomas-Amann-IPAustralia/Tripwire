@@ -15,6 +15,7 @@ import tripwire as tripwire_module
 import datetime
 import traceback
 from pathlib import Path
+import tempfile
 
 # Add parent directory to path to import tripwire functions
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
