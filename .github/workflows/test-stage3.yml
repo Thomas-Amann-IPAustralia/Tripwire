@@ -47,7 +47,7 @@ jobs:
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "=== Running pytest test suite ==="
-          pytest -s test_stage3.py -v --tb=short
+          pytest test_stage3.py -v --tb=short
 
       - name: Upload handover packets
         if: always()
