@@ -10,6 +10,8 @@ import sys
 import os
 import pickle
 import numpy as np
+import json
+import tripwire as tripwire_module
 
 # Add parent directory to path to import tripwire functions
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -242,6 +244,75 @@ class TestErrorHandling:
             mock_semantic_data={'embeddings': np.zeros((1, 1536)), 'udids': ['ERR-01']}
         )
         assert 'status' in result
+
+class TestPhaseBRealCorpus:
+    """Test against IPFR real embeddings"""
+
+    @pytest.mark.integration
+    def test_phaseb_multi_impact_against_real_semantic_embeddings_output():
+        """
+        Phase B integration test:
+        - uses real Semantic_Embeddings_Output.json from repo root
+        - uses synthetic 3-hunk diff fixture
+        - prints output so it can be inspected in GitHub Actions logs
+        """
+    
+        diff_path = 'test_fixtures/diffs/multi_impact_three_hunks.diff'
+        semantic_json_path = 'Semantic_Embeddings_Output.json'
+    
+        # Make failures easier to read
+        assert os.path.exists(diff_path), f"Missing diff fixture: {diff_path}"
+        assert os.path.exists(semantic_json_path), (
+            f"Missing {semantic_json_path}. Run pytest from repo root, or confirm file exists in repo."
+        )
+    
+        # Optional but useful: force reload from the real JSON file (not any prior cache)
+        if hasattr(tripwire_module, "_semantic_cache"):
+            tripwire_module._semantic_cache = None
+    
+        # Requires OPENAI_API_KEY because calculate_similarity() embeds the diff hunks live
+        if not os.getenv("OPENAI_API_KEY"):
+            pytest.skip("OPENAI_API_KEY not set; skipping real semantic integration test")
+    
+        # IMPORTANT: no mock_semantic_data passed here
+        result = calculate_similarity(diff_path)
+    
+        # Basic structural checks
+        assert isinstance(result, dict)
+        assert 'status' in result
+    
+        # Print a readable subset to GitHub Actions / pytest logs
+        debug_output = {
+            "status": result.get("status"),
+            "multi_impact_likely": result.get("multi_impact_likely"),
+            "impact_count": result.get("impact_count"),
+            "matched_udid": result.get("matched_udid"),
+            "matched_chunk_id": result.get("matched_chunk_id"),
+            "base_similarity": result.get("base_similarity"),
+            "final_score": result.get("final_score"),
+            "should_handover": result.get("should_handover"),
+            "hunk_count": len(result.get("change_hunks", []) or []),
+            "top_impacted_pages": (result.get("impacted_pages") or [])[:10],
+            "top_chunks": (result.get("top_chunks") or [])[:10],
+            "hunk_matches": (result.get("hunk_matches") or []),
+            "power_words": result.get("power_words"),
+        }
+    
+        print("\n=== Phase B Real Semantic Test Output ===")
+        print(json.dumps(debug_output, indent=2, ensure_ascii=False))
+    
+        # If successful, validate expected Phase B structure exists
+        if result.get("status") == "success":
+            assert 'change_hunks' in result
+            assert 'hunk_matches' in result
+            assert 'impacted_pages' in result
+            assert 'top_chunks' in result
+            assert len(result['change_hunks']) == 3
+            assert isinstance(result['impacted_pages'], list)
+            assert isinstance(result['hunk_matches'], list)
+    
+        # If not success, fail with the printed status for visibility
+        assert result.get("status") == "success", f"Tripwire returned non-success status: {result.get('status')}"
 
 if __name__ == '__main__':
     pytest.main([__file__, '-v', '--tb=short'])
