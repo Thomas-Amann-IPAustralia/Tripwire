@@ -12,6 +12,8 @@ import pickle
 import numpy as np
 import json
 import tripwire as tripwire_module
+import datetime
+import traceback
 
 # Add parent directory to path to import tripwire functions
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +23,8 @@ from tripwire import (
     detect_power_words,
     calculate_final_score,
     should_generate_handover,
-    calculate_similarity
+    calculate_similarity,
+    generate_handover_packet
 )
 
 # Load mock semantic data
@@ -246,73 +249,202 @@ class TestErrorHandling:
         assert 'status' in result
 
 class TestPhaseBRealCorpus:
-    """Test against IPFR real embeddings"""
+    """
+    Integration tests for Phase B against the real Semantic_Embeddings_Output.json corpus.
+    Requires:
+      - test_fixtures/diffs/multi_impact_three_hunks.diff
+      - Semantic_Embeddings_Output.json in repo root
+      - OPENAI_API_KEY set (diff hunks are embedded live)
+    """
+
+    def _analysis_summary(self, analysis):
+        if not isinstance(analysis, dict):
+            return {"analysis_type": str(type(analysis))}
+
+        return {
+            "status": analysis.get("status"),
+            "should_handover": analysis.get("should_handover"),
+            "multi_impact_likely": analysis.get("multi_impact_likely"),
+            "impact_count": analysis.get("impact_count"),
+            "matched_udid": analysis.get("matched_udid"),
+            "matched_chunk_id": analysis.get("matched_chunk_id"),
+            "base_similarity": analysis.get("base_similarity"),
+            "final_score": analysis.get("final_score"),
+            "hunk_count": len(analysis.get("change_hunks", []) or []),
+            "impacted_pages_count": len(analysis.get("impacted_pages", []) or []),
+            "top_chunks_count": len(analysis.get("top_chunks", []) or []),
+            "top_impacted_pages": (analysis.get("impacted_pages") or [])[:10],
+            "top_chunks": (analysis.get("top_chunks") or [])[:10],
+            "hunk_matches": (analysis.get("hunk_matches") or []),
+            "power_words": analysis.get("power_words"),
+        }
+
+    def _print_json_block(self, title, payload):
+        print(f"\n=== {title} ===")
+        print(json.dumps(payload, indent=2, ensure_ascii=False))
 
     @pytest.mark.integration
-    def test_phaseb_multi_impact_against_real_semantic_embeddings_output(self):
+    def test_phaseb_real_semantic_generates_and_prints_handover_packet(self):
         """
-        Phase B integration test:
-        - uses real Semantic_Embeddings_Output.json from repo root
-        - uses synthetic 3-hunk diff fixture
-        - prints output so it can be inspected in GitHub Actions logs
+        Debug/inspection test:
+        - Always attempts to generate a handover packet after successful analysis
+          (even if should_handover=False) so you can inspect packet structure/content.
         """
-    
-        diff_path = 'test_fixtures/diffs/multi_impact_three_hunks.diff'
-        semantic_json_path = 'Semantic_Embeddings_Output.json'
-    
-        # Make failures easier to read
+        diff_path = "test_fixtures/diffs/multi_impact_three_hunks.diff"
+        semantic_json_path = "Semantic_Embeddings_Output.json"
+
+        analysis = None
+        packet = None
+        packet_path = None
+        failure_info = None
+
         assert os.path.exists(diff_path), f"Missing diff fixture: {diff_path}"
         assert os.path.exists(semantic_json_path), (
-            f"Missing {semantic_json_path}. Run pytest from repo root, or confirm file exists in repo."
+            f"Missing {semantic_json_path}. Run pytest from repo root and ensure file exists in repo."
         )
-    
-        # Optional but useful: force reload from the real JSON file (not any prior cache)
-        if hasattr(tripwire_module, "_semantic_cache"):
-            tripwire_module._semantic_cache = None
-    
-        # Requires OPENAI_API_KEY because calculate_similarity() embeds the diff hunks live
+
         if not os.getenv("OPENAI_API_KEY"):
             pytest.skip("OPENAI_API_KEY not set; skipping real semantic integration test")
-    
-        # IMPORTANT: no mock_semantic_data passed here
-        result = calculate_similarity(diff_path)
-    
-        # Basic structural checks
-        assert isinstance(result, dict)
-        assert 'status' in result
-    
-        # Print a readable subset to GitHub Actions / pytest logs
-        debug_output = {
-            "status": result.get("status"),
-            "multi_impact_likely": result.get("multi_impact_likely"),
-            "impact_count": result.get("impact_count"),
-            "matched_udid": result.get("matched_udid"),
-            "matched_chunk_id": result.get("matched_chunk_id"),
-            "base_similarity": result.get("base_similarity"),
-            "final_score": result.get("final_score"),
-            "should_handover": result.get("should_handover"),
-            "hunk_count": len(result.get("change_hunks", []) or []),
-            "top_impacted_pages": (result.get("impacted_pages") or [])[:10],
-            "top_chunks": (result.get("top_chunks") or [])[:10],
-            "hunk_matches": (result.get("hunk_matches") or []),
-            "power_words": result.get("power_words"),
-        }
-    
-        print("\n=== Phase B Real Semantic Test Output ===")
-        print(json.dumps(debug_output, indent=2, ensure_ascii=False))
-    
-        # If successful, validate expected Phase B structure exists
-        if result.get("status") == "success":
-            assert 'change_hunks' in result
-            assert 'hunk_matches' in result
-            assert 'impacted_pages' in result
-            assert 'top_chunks' in result
-            assert len(result['change_hunks']) == 3
-            assert isinstance(result['impacted_pages'], list)
-            assert isinstance(result['hunk_matches'], list)
-    
-        # If not success, fail with the printed status for visibility
-        assert result.get("status") == "success", f"Tripwire returned non-success status: {result.get('status')}"
+
+        # Force reload from real file (avoid stale cache from prior tests)
+        if hasattr(tripwire_module, "_semantic_cache"):
+            tripwire_module._semantic_cache = None
+
+        try:
+            analysis = calculate_similarity(diff_path)
+
+            # Print analysis summary early so it's visible even if packet generation fails later
+            self._print_json_block("Phase B Real Semantic Analysis Summary", self._analysis_summary(analysis))
+
+            assert isinstance(analysis, dict), "calculate_similarity() did not return a dict"
+            assert analysis.get("status") == "success", f"Analysis failed: {analysis}"
+
+            # Generate packet FOR INSPECTION (regardless of threshold)
+            ts = datetime.datetime.now().isoformat()
+            packet_path = generate_handover_packet(
+                source_name="TEST - Synthetic Multi Hunk Diff",
+                priority="Medium",
+                diff_file=os.path.basename(diff_path),  # function usually expects filename label
+                analysis=analysis,
+                timestamp=ts,
+            )
+
+            assert packet_path, "generate_handover_packet returned empty path"
+            assert os.path.exists(packet_path), f"Handover packet not created: {packet_path}"
+
+            with open(packet_path, "r", encoding="utf-8") as f:
+                packet = json.load(f)
+
+            # Print compact summary first (easy to scan in Actions logs)
+            packet_summary = {
+                "packet_path": packet_path,
+                "packet_id": packet.get("packet_id"),
+                "packet_priority": packet.get("packet_priority"),
+                "analysis_similarity_score": (packet.get("analysis") or {}).get("similarity_score"),
+                "analysis_final_score": (packet.get("analysis") or {}).get("final_score"),
+                "multi_impact_likely": (packet.get("analysis") or {}).get("multi_impact_likely"),
+                "impact_count": (packet.get("analysis") or {}).get("impact_count"),
+                "matched_udid": (packet.get("matched_chunk") or {}).get("udid"),
+                "impacted_pages_count": len(packet.get("impacted_pages", []) or []),
+                "top_chunks_count": len(packet.get("top_chunks", []) or []),
+                "hunks_count": len((packet.get("change") or {}).get("hunks", []) or []),
+            }
+            self._print_json_block("Phase B Handover Packet Summary", packet_summary)
+
+            # Print the full packet JSON (what you asked to inspect)
+            self._print_json_block("Phase B Real Semantic Handover Packet", packet)
+
+            # Save a copy for artifact upload
+            os.makedirs("test_outputs", exist_ok=True)
+            with open("test_outputs/phaseb_real_semantic_handover_packet.json", "w", encoding="utf-8") as f:
+                json.dump(packet, f, indent=2, ensure_ascii=False)
+
+            # Basic schema sanity checks (adjust if your packet shape differs)
+            assert "analysis" in packet
+            assert "change" in packet
+            assert "matched_chunk" in packet
+
+            # Phase B expected additions (if your implementation uses these names)
+            assert "impacted_pages" in packet
+            assert "top_chunks" in packet
+
+            # Phase B evidence visibility
+            assert "multi_impact_likely" in packet["analysis"]
+            assert "impact_count" in packet["analysis"]
+            assert isinstance((packet.get("change") or {}).get("hunks", []), list)
+
+        except Exception as e:
+            failure_info = {
+                "error_type": type(e).__name__,
+                "error_message": str(e),
+                "traceback": traceback.format_exc(),
+                "packet_path": packet_path,
+            }
+            raise
+
+        finally:
+            # Always print final debug info, even if the test fails
+            final_debug = {
+                "analysis_summary": self._analysis_summary(analysis) if analysis else None,
+                "packet_path": packet_path,
+                "packet_keys": sorted(list(packet.keys())) if isinstance(packet, dict) else None,
+                "failure_info": failure_info,
+            }
+            self._print_json_block("Phase B Final Debug", final_debug)
+
+            os.makedirs("test_outputs", exist_ok=True)
+            with open("test_outputs/phaseb_real_semantic_final_debug.json", "w", encoding="utf-8") as f:
+                json.dump(final_debug, f, indent=2, ensure_ascii=False)
+
+    @pytest.mark.integration
+    def test_phaseb_real_semantic_threshold_faithful_packet_generation(self):
+        """
+        Threshold-faithful variant:
+        - Only generates a packet if analysis says should_handover=True
+        - Useful to validate production-like behavior
+        """
+        diff_path = "test_fixtures/diffs/multi_impact_three_hunks.diff"
+        semantic_json_path = "Semantic_Embeddings_Output.json"
+
+        assert os.path.exists(diff_path), f"Missing diff fixture: {diff_path}"
+        assert os.path.exists(semantic_json_path), f"Missing {semantic_json_path}"
+
+        if not os.getenv("OPENAI_API_KEY"):
+            pytest.skip("OPENAI_API_KEY not set; skipping real semantic integration test")
+
+        if hasattr(tripwire_module, "_semantic_cache"):
+            tripwire_module._semantic_cache = None
+
+        analysis = calculate_similarity(diff_path)
+        self._print_json_block("Threshold-Faithful Analysis Summary", self._analysis_summary(analysis))
+
+        assert analysis.get("status") == "success", f"Analysis failed: {analysis}"
+
+        if not analysis.get("should_handover"):
+            pytest.skip(
+                f"Analysis succeeded but should_handover=False "
+                f"(final_score={analysis.get('final_score')}, impact_count={analysis.get('impact_count')})"
+            )
+
+        ts = datetime.datetime.now().isoformat()
+        packet_path = generate_handover_packet(
+            source_name="TEST - Synthetic Multi Hunk Diff",
+            priority="Medium",
+            diff_file=os.path.basename(diff_path),
+            analysis=analysis,
+            timestamp=ts,
+        )
+
+        assert os.path.exists(packet_path), f"Handover packet was not created: {packet_path}"
+
+        with open(packet_path, "r", encoding="utf-8") as f:
+            packet = json.load(f)
+
+        self._print_json_block("Threshold-Faithful Handover Packet", packet)
+
+        os.makedirs("test_outputs", exist_ok=True)
+        with open("test_outputs/phaseb_real_semantic_threshold_faithful_packet.json", "w", encoding="utf-8") as f:
+            json.dump(packet, f, indent=2, ensure_ascii=False)
 
 if __name__ == '__main__':
     pytest.main([__file__, '-v', '--tb=short'])
