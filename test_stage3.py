@@ -249,7 +249,7 @@ class TestPhaseBRealCorpus:
     """Test against IPFR real embeddings"""
 
     @pytest.mark.integration
-    def test_phaseb_multi_impact_against_real_semantic_embeddings_output():
+    def test_phaseb_multi_impact_against_real_semantic_embeddings_output(self):
         """
         Phase B integration test:
         - uses real Semantic_Embeddings_Output.json from repo root
