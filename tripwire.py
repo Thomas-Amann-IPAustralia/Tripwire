@@ -45,6 +45,16 @@ SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
 HANDOVER_DIR = 'handover_packets'
 _semantic_cache = None  # Module-level cache so embeddings load once per run
 
+# Phase B: Multi-impact retrieval & aggregation
+TOP_K_CHUNKS_PER_HUNK = 12
+MAX_IMPACT_PAGES_IN_PACKET = 10
+MAX_TOP_CHUNKS_IN_PACKET = 25
+MULTI_IMPACT_MIN_SCORE = max(0.35, SIMILARITY_THRESHOLD - 0.05)
+PAGE_HUNK_COVERAGE_BONUS = 0.03   # per additional hunk matched by the same page
+PAGE_CHUNK_DENSITY_BONUS = 0.01   # per additional supporting chunk matched by the same page
+MAX_PAGE_COVERAGE_BONUS = 0.08
+MAX_PAGE_DENSITY_BONUS = 0.05
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("Tripwire")
 
@@ -302,32 +312,194 @@ def save_diff_record(name, diff_content):
 
 # --- Stage 3: Semantic Analysis & Relevance Gate ---
 
-def extract_change_content(diff_file_path):
+def parse_diff_hunks(diff_file_path: str) -> List[Dict]:
     """
-    Parses a diff file to extract added and removed content lines.
-    Strips diff metadata (+++, ---, @@) and returns both additions and removals.
-    
-    Args:
-        diff_file_path (str): Path to the .diff file.
-    Returns:
-        dict: Contains 'added', 'removed', and 'change_context' strings.
+    Parses a unified diff into hunk-level change objects so semantically distinct
+    changes can be analysed independently (Phase B multi-impact detection).
     """
-    additions = []
-    removals = []
+    hunks: List[Dict] = []
+    current = None
+
+    def _finalise_hunk(h):
+        if not h:
+            return None
+        added = ' '.join([x for x in h.get('added_lines', []) if x]).strip()
+        removed = ' '.join([x for x in h.get('removed_lines', []) if x]).strip()
+        change_context = ' '.join([x for x in [removed, added] if x]).strip()
+        if not change_context:
+            return None
+        return {
+            'hunk_index': h['hunk_index'],
+            'header': h.get('header', ''),
+            'added': added,
+            'removed': removed,
+            'change_context': change_context,
+        }
 
     with open(diff_file_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.rstrip()
-            # Extract additions (lines starting with +, but not +++)
-            if line.startswith('+') and not line.startswith('+++'):
-                additions.append(line[1:].strip())
-            # Extract removals (lines starting with -, but not ---)
-            elif line.startswith('-') and not line.startswith('---'):
-                removals.append(line[1:].strip())
+        for raw_line in f:
+            line = raw_line.rstrip('\n')
 
-    # Combine removals and additions as "change context"
-    change_context = ' '.join(removals + additions)
-    return {'added': ' '.join(additions), 'removed': ' '.join(removals), 'change_context': change_context}
+            if line.startswith('@@'):
+                finalised = _finalise_hunk(current)
+                if finalised:
+                    hunks.append(finalised)
+                current = {
+                    'hunk_index': len(hunks) + 1,
+                    'header': line,
+                    'added_lines': [],
+                    'removed_lines': []
+                }
+                continue
+
+            if line.startswith('+++') or line.startswith('---'):
+                continue
+
+            if current is None and (line.startswith('+') or line.startswith('-')):
+                current = {
+                    'hunk_index': 1,
+                    'header': 'NO_HUNK_HEADER',
+                    'added_lines': [],
+                    'removed_lines': []
+                }
+
+            if current is None:
+                continue
+
+            if line.startswith('+'):
+                current['added_lines'].append(line[1:].strip())
+            elif line.startswith('-'):
+                current['removed_lines'].append(line[1:].strip())
+
+    finalised = _finalise_hunk(current)
+    if finalised:
+        hunks.append(finalised)
+
+    return hunks
+
+
+def extract_change_content(diff_file_path):
+    """
+    Backwards-compatible change extractor. Phase B now parses hunks first and then
+    flattens them into a single overall change context for logging/high-level signals.
+    """
+    hunks = parse_diff_hunks(diff_file_path)
+    additions = [h['added'] for h in hunks if h.get('added')]
+    removals = [h['removed'] for h in hunks if h.get('removed')]
+    change_context = ' '.join([x for x in removals + additions if x]).strip()
+    return {
+        'added': ' '.join(additions).strip(),
+        'removed': ' '.join(removals).strip(),
+        'change_context': change_context,
+        'hunks': hunks
+    }
+
+
+def _top_k_indices(values: np.ndarray, k: int) -> np.ndarray:
+    """Returns indices of the top-k values in descending order."""
+    if len(values) == 0:
+        return np.array([], dtype=int)
+    k = max(1, min(k, len(values)))
+    if k == len(values):
+        return np.argsort(values)[::-1]
+    idx = np.argpartition(values, -k)[-k:]
+    return idx[np.argsort(values[idx])[::-1]]
+
+
+def _build_chunk_candidate(idx: int, similarity: float, hunk: Dict, hunk_power: Dict,
+                           udids: List[str], chunk_texts: List[str], chunks_raw: Optional[List[Dict]]) -> Dict:
+    raw = (chunks_raw[idx] if chunks_raw else {}) or {}
+    base_similarity = float(similarity)
+    final_score = float(calculate_final_score(base_similarity, hunk_power.get('score', 0.0)))
+    return {
+        'raw_index': int(idx),
+        'udid': udids[idx],
+        'chunk_id': raw.get('Chunk_ID', 'N/A') if raw else 'N/A',
+        'headline_alt': raw.get('Headline_Alt', 'N/A') if raw else 'N/A',
+        'chunk_text': chunk_texts[idx],
+        'chunk_context_prepend': raw.get('Chunk_Context_Prepend', '') if raw else '',
+        'token_count': raw.get('Chunk_Token_Count', 'N/A') if raw else 'N/A',
+        'base_similarity': base_similarity,
+        'final_score': final_score,
+        'hunk_index': hunk['hunk_index'],
+        'hunk_header': hunk.get('header', ''),
+        'hunk_change_preview': hunk.get('change_context', '')[:180],
+        'hunk_power_words': hunk_power.get('found', []),
+        'hunk_power_word_score': float(hunk_power.get('score', 0.0)),
+    }
+
+
+def aggregate_page_impacts(top_chunks: List[Dict]) -> List[Dict]:
+    """
+    Aggregates chunk-level matches into page-level impact candidates (UDID-level).
+    """
+    pages: Dict[str, Dict] = {}
+
+    for c in top_chunks:
+        udid = c['udid']
+        page = pages.get(udid)
+        if page is None:
+            page = {
+                'udid': udid,
+                'max_base_similarity': c['base_similarity'],
+                'max_final_score': c['final_score'],
+                'best_chunk': c,
+                'chunk_hits': 0,
+                'matched_hunks': set(),
+                'supporting_chunks': []
+            }
+            pages[udid] = page
+
+        page['chunk_hits'] += 1
+        page['matched_hunks'].add(c['hunk_index'])
+        page['supporting_chunks'].append(c)
+
+        if c['base_similarity'] > page['max_base_similarity']:
+            page['max_base_similarity'] = c['base_similarity']
+        if c['final_score'] > page['max_final_score']:
+            page['max_final_score'] = c['final_score']
+        if c['final_score'] > page['best_chunk']['final_score']:
+            page['best_chunk'] = c
+
+    impacted_pages: List[Dict] = []
+    for page in pages.values():
+        distinct_hunks = len(page['matched_hunks'])
+        chunk_hits = page['chunk_hits']
+
+        coverage_bonus = min(MAX_PAGE_COVERAGE_BONUS, max(0, distinct_hunks - 1) * PAGE_HUNK_COVERAGE_BONUS)
+        density_bonus = min(MAX_PAGE_DENSITY_BONUS, max(0, chunk_hits - 1) * PAGE_CHUNK_DENSITY_BONUS)
+
+        aggregated_base = min(1.0, page['max_base_similarity'] + coverage_bonus + density_bonus)
+        aggregated_final = min(1.0, page['max_final_score'] + coverage_bonus + density_bonus)
+
+        supporting_chunks = sorted(
+            page['supporting_chunks'],
+            key=lambda x: (x['final_score'], x['base_similarity']),
+            reverse=True
+        )
+
+        impacted_pages.append({
+            'udid': page['udid'],
+            'aggregated_base_similarity': float(aggregated_base),
+            'aggregated_final_score': float(aggregated_final),
+            'max_base_similarity': float(page['max_base_similarity']),
+            'max_final_score': float(page['max_final_score']),
+            'chunk_hits': int(chunk_hits),
+            'distinct_hunk_hits': int(distinct_hunks),
+            'coverage_bonus': float(coverage_bonus),
+            'density_bonus': float(density_bonus),
+            'best_chunk': page['best_chunk'],
+            'supporting_chunks': supporting_chunks[:5],
+            'matched_hunk_indices': sorted(page['matched_hunks']),
+        })
+
+    impacted_pages.sort(
+        key=lambda p: (p['aggregated_final_score'], p['distinct_hunk_hits'], p['chunk_hits'], p['max_base_similarity']),
+        reverse=True
+    )
+    for rank, page in enumerate(impacted_pages, start=1):
+        page['rank'] = rank
+    return impacted_pages
 
 def detect_power_words(text):
     """
@@ -409,66 +581,73 @@ def should_generate_handover(final_score, threshold=SIMILARITY_THRESHOLD):
 
 def calculate_similarity(diff_path, mock_semantic_data=None):
     """
-    Phase 2 implementation: Converts diff to embedding, detects power words, 
-    and calculates relevance score against website content.
-    
-    Can work with mock data for testing or real data from Tom's spreadsheet.
-    
-    Args:
-        diff_path (str): Path to the diff file.
-        mock_semantic_data (dict, optional): Mock data for testing with keys:
-            - 'udids': list of UDID strings
-            - 'embeddings': numpy array of shape (n, 1536)
-            - 'chunk_texts': list of chunk text strings
-    Returns:
-        dict: Contains status, scores, matches, and power word analysis.
+    Phase B implementation: hunk-aware semantic matching with chunk-level retrieval
+    and page-level (UDID) aggregation to detect likely multi-page impacts.
     """
-    # Step 1: Extract change content
     change = extract_change_content(diff_path)
-    
-    if not change['change_context']:
+    all_hunks = change.get('hunks', [])
+
+    if not change['change_context'] or not all_hunks:
         logger.warning(f"No substantive content extracted from {diff_path}")
         return {
             'status': 'no_content',
             'change_text': '',
+            'change_hunks': [],
             'final_score': 0.0,
             'should_handover': False
         }
-    
+
     logger.info(f"Change context preview: {change['change_context'][:200]}...")
-    
-    # Step 2: Detect power words
-    power_analysis = detect_power_words(change['change_context'])
-    logger.info(f"Power words found: {power_analysis['count']} - {power_analysis['found']}")
-    logger.info(f"Power word score: {power_analysis['score']:.2f}")
-    
-    # Step 3: Generate embedding
+    logger.info(f"Parsed {len(all_hunks)} diff hunk(s) for semantic analysis")
+
+    overall_power_analysis = detect_power_words(change['change_context'])
+    logger.info(f"Power words found (overall): {overall_power_analysis['count']} - {overall_power_analysis['found']}")
+    logger.info(f"Overall power word score: {overall_power_analysis['score']:.2f}")
+
+    hunk_texts = []
+    hunk_power_analyses = []
+    for h in all_hunks:
+        h_text = (h.get('change_context') or '').strip()
+        hunk_texts.append(h_text)
+        hunk_power_analyses.append(detect_power_words(h_text))
+
     try:
-        response = client.embeddings.create(
-            input=[change['change_context']],
-            model=SEMANTIC_MODEL
-        )
-        # Vector dimension is now 1536
-        diff_vector = np.array(response.data[0].embedding).reshape(1, -1)
-        logger.info(f"Generated OpenAI embedding (1536d)")
+        response = client.embeddings.create(input=hunk_texts, model=SEMANTIC_MODEL)
+        diff_vectors = np.array([row.embedding for row in response.data])
+        if diff_vectors.ndim == 1:
+            diff_vectors = diff_vectors.reshape(1, -1)
+        logger.info(f"Generated {len(diff_vectors)} OpenAI embedding(s) for diff hunks ({diff_vectors.shape[-1]}d)")
     except Exception as e:
         logger.error(f"API Error: {e}")
-        return {'status': 'error', 'final_score': 0.0, 'base_similarity': 0.0, 'should_handover': False}
-    
-    # Step 4: Load semantic embeddings from JSON (Phase 3)
+        return {
+            'status': 'error',
+            'change_text': change['change_context'],
+            'change_hunks': all_hunks,
+            'power_words': overall_power_analysis,
+            'final_score': 0.0,
+            'base_similarity': 0.0,
+            'should_handover': False
+        }
+
     global _semantic_cache
     if mock_semantic_data:
-        # TESTING MODE: Use provided mock data
         logger.info("Using mock semantic data for testing")
         website_vectors = mock_semantic_data['embeddings']
         udids = mock_semantic_data['udids']
         chunk_texts = mock_semantic_data.get('chunk_texts', [''] * len(udids))
-        chunks_raw = None
+        chunks_raw = mock_semantic_data.get('chunks_raw')
     else:
         if _semantic_cache is None:
             if not os.path.exists(SEMANTIC_EMBEDDINGS_FILE):
                 logger.error(f"Semantic embeddings file not found: {SEMANTIC_EMBEDDINGS_FILE}")
-                return {'status': 'missing_embeddings', 'final_score': 0.0, 'should_handover': False}
+                return {
+                    'status': 'missing_embeddings',
+                    'change_text': change['change_context'],
+                    'change_hunks': all_hunks,
+                    'power_words': overall_power_analysis,
+                    'final_score': 0.0,
+                    'should_handover': False
+                }
             logger.info(f"Loading semantic embeddings from {SEMANTIC_EMBEDDINGS_FILE}...")
             with open(SEMANTIC_EMBEDDINGS_FILE, 'r', encoding='utf-8') as f:
                 raw = json.load(f)
@@ -483,55 +662,153 @@ def calculate_similarity(diff_path, mock_semantic_data=None):
         udids = _semantic_cache['udids']
         chunk_texts = _semantic_cache['chunk_texts']
         chunks_raw = _semantic_cache['chunks_raw']
-    
-    # Step 5: Calculate cosine similarities
+
     try:
-        similarities = cosine_similarity(diff_vector, website_vectors)[0]
-        logger.info(f"Calculated similarities for {len(similarities)} chunks")
+        similarity_matrix = cosine_similarity(diff_vectors, website_vectors)
+        logger.info(f"Calculated similarity matrix: {similarity_matrix.shape[0]} hunks x {similarity_matrix.shape[1]} chunks")
     except Exception as e:
         logger.error(f"Failed to calculate similarities: {e}")
         return {
             'status': 'similarity_error',
             'change_text': change['change_context'],
-            'power_words': power_analysis,
+            'change_hunks': all_hunks,
+            'power_words': overall_power_analysis,
             'final_score': 0.0,
             'should_handover': False
         }
-    
-    # Step 6: Find best match
-    best_match_idx = np.argmax(similarities)
-    base_similarity = similarities[best_match_idx]
-    matched_udid = udids[best_match_idx]
-    matched_text = chunk_texts[best_match_idx]
-    matched_chunk_id = chunks_raw[best_match_idx].get('Chunk_ID', 'N/A') if chunks_raw else 'N/A'
-    
-    logger.info(f"Best match: {matched_udid} ({matched_chunk_id}) with similarity {base_similarity:.3f}")
-    logger.info(f"Matched chunk preview: {matched_text[:100]}...")
-    
-    # Step 7: Calculate final score with power word boost
-    final_score = calculate_final_score(base_similarity, power_analysis['score'])
+
+    top_chunks: List[Dict] = []
+    hunk_matches: List[Dict] = []
+
+    for h_idx, hunk in enumerate(all_hunks):
+        row = similarity_matrix[h_idx]
+        top_idx = _top_k_indices(row, TOP_K_CHUNKS_PER_HUNK)
+        hunk_power = hunk_power_analyses[h_idx]
+        hunk_candidates: List[Dict] = []
+
+        for idx in top_idx:
+            candidate = _build_chunk_candidate(
+                idx=int(idx),
+                similarity=float(row[int(idx)]),
+                hunk=hunk,
+                hunk_power=hunk_power,
+                udids=udids,
+                chunk_texts=chunk_texts,
+                chunks_raw=chunks_raw
+            )
+            top_chunks.append(candidate)
+            hunk_candidates.append(candidate)
+
+        per_page_best: Dict[str, Dict] = {}
+        for c in hunk_candidates:
+            existing = per_page_best.get(c['udid'])
+            if existing is None or c['final_score'] > existing['final_score']:
+                per_page_best[c['udid']] = c
+
+        top_pages_for_hunk = sorted(
+            per_page_best.values(),
+            key=lambda x: (x['final_score'], x['base_similarity']),
+            reverse=True
+        )[:5]
+
+        hunk_matches.append({
+            'hunk_index': hunk['hunk_index'],
+            'header': hunk.get('header', ''),
+            'change_text': hunk.get('change_context', ''),
+            'change_preview': hunk.get('change_context', '')[:220],
+            'added': hunk.get('added', ''),
+            'removed': hunk.get('removed', ''),
+            'power_words': hunk_power,
+            'top_chunks': hunk_candidates[:5],
+            'top_pages': [
+                {
+                    'udid': c['udid'],
+                    'score': c['final_score'],
+                    'base_similarity': c['base_similarity'],
+                    'chunk_id': c['chunk_id'],
+                    'headline_alt': c['headline_alt']
+                } for c in top_pages_for_hunk
+            ]
+        })
+
+    if not top_chunks:
+        return {
+            'status': 'no_candidates',
+            'change_text': change['change_context'],
+            'change_hunks': all_hunks,
+            'power_words': overall_power_analysis,
+            'final_score': 0.0,
+            'should_handover': False
+        }
+
+    impacted_pages = aggregate_page_impacts(top_chunks)
+    primary_page = impacted_pages[0] if impacted_pages else None
+    primary_chunk = primary_page.get('best_chunk') if primary_page else None
+
+    base_similarity = float(primary_page['aggregated_base_similarity']) if primary_page else 0.0
+    final_score = float(primary_page['aggregated_final_score']) if primary_page else 0.0
     should_handover = should_generate_handover(final_score)
-    
-    logger.info(f"Base similarity: {base_similarity:.3f}")
-    logger.info(f"Final score (with power words): {final_score:.3f}")
-    logger.info(f"Threshold: {SIMILARITY_THRESHOLD}")
-    logger.info(f"Should generate handover: {should_handover}")
-    
-    # Step 8: Return comprehensive results
+
+    impact_count = sum(1 for p in impacted_pages if p['aggregated_final_score'] >= MULTI_IMPACT_MIN_SCORE)
+    multi_impact_likely = impact_count >= 2
+
+    if primary_page:
+        logger.info(
+            f"Primary page match: {primary_page['udid']} with aggregated score {final_score:.3f} "
+            f"(chunk hits={primary_page['chunk_hits']}, hunk hits={primary_page['distinct_hunk_hits']})"
+        )
+    if multi_impact_likely:
+        logger.info(f"Multi-impact likely: {impact_count} page candidates >= {MULTI_IMPACT_MIN_SCORE:.2f}")
+
+    logger.info(f"Threshold: {SIMILARITY_THRESHOLD} | Should generate handover: {should_handover}")
+
+    top_chunks_sorted = sorted(
+        top_chunks,
+        key=lambda x: (x['final_score'], x['base_similarity']),
+        reverse=True
+    )
+
+    filter_reason = None
+    if not should_handover:
+        filter_reason = f"Below threshold: {final_score:.3f} < {SIMILARITY_THRESHOLD}"
+    elif multi_impact_likely:
+        filter_reason = f"Multi-impact candidate: {impact_count} pages >= {MULTI_IMPACT_MIN_SCORE:.2f}"
+
+    matched_chunk_raw = None
+    if primary_chunk:
+        if chunks_raw:
+            matched_chunk_raw = chunks_raw[primary_chunk['raw_index']]
+        else:
+            matched_chunk_raw = {
+                'Chunk_ID': primary_chunk.get('chunk_id'),
+                'Chunk_Text': primary_chunk.get('chunk_text'),
+                'Headline_Alt': primary_chunk.get('headline_alt', 'N/A'),
+                'Chunk_Context_Prepend': primary_chunk.get('chunk_context_prepend', ''),
+                'Chunk_Token_Count': primary_chunk.get('token_count', 'N/A')
+            }
+
     return {
         'status': 'success',
         'change_text': change['change_context'],
-        'diff_vector_shape': diff_vector.shape,
-        'power_words': power_analysis,
-        'base_similarity': float(base_similarity),
-        'final_score': float(final_score),
-        'matched_udid': matched_udid,
-        'matched_chunk_id': matched_chunk_id,
-        'matched_text': matched_text,
-        'matched_chunk_raw': chunks_raw[best_match_idx] if chunks_raw else None,
+        'change_hunks': all_hunks,
+        'hunk_matches': hunk_matches,
+        'diff_vector_shape': tuple(diff_vectors.shape),
+        'power_words': overall_power_analysis,
+        'base_similarity': base_similarity,
+        'final_score': final_score,
+        'matched_udid': primary_page['udid'] if primary_page else None,
+        'matched_chunk_id': primary_chunk.get('chunk_id') if primary_chunk else None,
+        'matched_text': primary_chunk.get('chunk_text') if primary_chunk else '',
+        'matched_chunk_raw': matched_chunk_raw,
+        'primary_match': {'page': primary_page, 'chunk': primary_chunk} if primary_page and primary_chunk else None,
+        'impacted_pages': impacted_pages,
+        'top_chunks': top_chunks_sorted[:MAX_TOP_CHUNKS_IN_PACKET],
+        'impact_count': int(impact_count),
+        'multi_impact_likely': bool(multi_impact_likely),
+        'multi_impact_threshold': float(MULTI_IMPACT_MIN_SCORE),
         'threshold': SIMILARITY_THRESHOLD,
         'should_handover': should_handover,
-        'filter_reason': None if should_handover else f"Below threshold: {final_score:.3f} < {SIMILARITY_THRESHOLD}"
+        'filter_reason': filter_reason
     }
 
 def write_github_summary(handover_paths: list):
@@ -586,22 +863,19 @@ def generate_handover_packet(source_name: str, priority: str, diff_file: str,
     Generates a JSON handover packet for Tom containing all context needed to review
     a flagged content change.
 
-    Args:
-        source_name (str): Name of the monitored source.
-        priority (str): Source priority level (High/Medium/Low).
-        diff_file (str): Filename of the associated diff.
-        analysis (dict): The result dict from calculate_similarity().
-        timestamp (str): ISO timestamp from the audit log entry.
-    Returns:
-        str: Path to the written handover packet file.
+    Phase B extends the packet to include multi-page impact candidates and hunk-level
+    evidence while retaining the legacy matched_chunk block for compatibility.
     """
     os.makedirs(HANDOVER_DIR, exist_ok=True)
 
     chunk = analysis.get('matched_chunk_raw') or {}
     power = analysis.get('power_words', {})
     final_score = analysis.get('final_score', 0.0)
+    impacted_pages = analysis.get('impacted_pages', [])
+    top_chunks = analysis.get('top_chunks', [])
+    hunk_matches = analysis.get('hunk_matches', [])
+    primary_udid = analysis.get('matched_udid', 'unknown')
 
-    # Derive packet priority from score and power word count
     pw_count = power.get('count', 0)
     if final_score >= 0.75 or pw_count >= 5:
         packet_priority = 'Critical'
@@ -610,10 +884,68 @@ def generate_handover_packet(source_name: str, priority: str, diff_file: str,
     else:
         packet_priority = 'Medium'
 
-    safe_ts = timestamp.replace(':', '').replace('.', '')[:15]
-    udid = analysis.get('matched_udid', 'unknown')
-    filename = f"handover_{safe_ts}_{udid}.json"
+    safe_ts = re.sub(r'[^0-9T]', '', timestamp).replace('T', '_')
+    safe_ts = safe_ts[:20] if safe_ts else datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    diff_stub = os.path.splitext(os.path.basename(diff_file))[0]
+    diff_stub = re.sub(r'\W+', '_', diff_stub)[:40]
+    filename = f"handover_{safe_ts}_{primary_udid}_{diff_stub}.json"
     filepath = os.path.join(HANDOVER_DIR, filename)
+
+    packet_hunks = []
+    for hm in hunk_matches:
+        packet_hunks.append({
+            'hunk_index': hm.get('hunk_index'),
+            'header': hm.get('header', ''),
+            'change_preview': hm.get('change_preview', ''),
+            'power_words': hm.get('power_words', {}),
+            'top_pages': hm.get('top_pages', []),
+            'top_chunks': [
+                {
+                    'udid': c.get('udid'),
+                    'chunk_id': c.get('chunk_id'),
+                    'headline_alt': c.get('headline_alt'),
+                    'base_similarity': c.get('base_similarity'),
+                    'final_score': c.get('final_score')
+                }
+                for c in hm.get('top_chunks', [])[:5]
+            ]
+        })
+
+    packet_impacted_pages = []
+    for p in impacted_pages[:MAX_IMPACT_PAGES_IN_PACKET]:
+        best = p.get('best_chunk', {}) or {}
+        packet_impacted_pages.append({
+            'rank': p.get('rank'),
+            'udid': p.get('udid'),
+            'aggregated_final_score': p.get('aggregated_final_score'),
+            'aggregated_base_similarity': p.get('aggregated_base_similarity'),
+            'chunk_hits': p.get('chunk_hits'),
+            'distinct_hunk_hits': p.get('distinct_hunk_hits'),
+            'coverage_bonus': p.get('coverage_bonus'),
+            'density_bonus': p.get('density_bonus'),
+            'matched_hunk_indices': p.get('matched_hunk_indices', []),
+            'best_chunk': {
+                'chunk_id': best.get('chunk_id'),
+                'headline_alt': best.get('headline_alt'),
+                'base_similarity': best.get('base_similarity'),
+                'final_score': best.get('final_score'),
+                'chunk_text': best.get('chunk_text', '')[:500]
+            }
+        })
+
+    packet_top_chunks = []
+    for c in top_chunks[:MAX_TOP_CHUNKS_IN_PACKET]:
+        packet_top_chunks.append({
+            'udid': c.get('udid'),
+            'chunk_id': c.get('chunk_id'),
+            'headline_alt': c.get('headline_alt'),
+            'hunk_index': c.get('hunk_index'),
+            'base_similarity': c.get('base_similarity'),
+            'final_score': c.get('final_score'),
+            'hunk_power_words': c.get('hunk_power_words', []),
+            'hunk_power_word_score': c.get('hunk_power_word_score', 0.0),
+            'chunk_text': c.get('chunk_text', '')[:500]
+        })
 
     packet = {
         'packet_id': filename.replace('.json', ''),
@@ -631,29 +963,41 @@ def generate_handover_packet(source_name: str, priority: str, diff_file: str,
             'threshold': analysis.get('threshold', SIMILARITY_THRESHOLD),
             'power_words_found': power.get('found', []),
             'power_word_count': pw_count,
-            'power_word_score': power.get('score', 0.0)
+            'power_word_score': power.get('score', 0.0),
+            'multi_impact_likely': analysis.get('multi_impact_likely', False),
+            'impact_count': analysis.get('impact_count', 0),
+            'multi_impact_threshold': analysis.get('multi_impact_threshold', MULTI_IMPACT_MIN_SCORE)
         },
         'change': {
             'hunk': analysis.get('change_text', ''),
-            'preview': (analysis.get('change_text', '') or '')[:200]
+            'preview': (analysis.get('change_text', '') or '')[:200],
+            'hunks': packet_hunks
         },
         'matched_chunk': {
-            'udid': udid,
+            'udid': primary_udid,
             'chunk_id': chunk.get('Chunk_ID', 'N/A'),
             'headline_alt': chunk.get('Headline_Alt', 'N/A'),
             'chunk_text': chunk.get('Chunk_Text', analysis.get('matched_text', '')),
             'chunk_context_prepend': chunk.get('Chunk_Context_Prepend', ''),
             'token_count': chunk.get('Chunk_Token_Count', 'N/A')
         },
+        'impacted_pages': packet_impacted_pages,
+        'top_chunks': packet_top_chunks,
         'review_context': {
             'why_flagged': (
-                f"Similarity score of {final_score:.2%} exceeds threshold of "
+                f"Primary page aggregated similarity score of {final_score:.2%} exceeds threshold of "
                 f"{analysis.get('threshold', SIMILARITY_THRESHOLD):.2%}"
             ),
             'power_words_note': (
                 f"Found {pw_count} enforcement-related term(s): "
                 f"{', '.join(power.get('found', []))}"
                 if pw_count else "No enforcement terms detected"
+            ),
+            'multi_impact_note': (
+                f"Multi-impact likely: {analysis.get('impact_count', 0)} page candidates "
+                f"scored >= {analysis.get('multi_impact_threshold', MULTI_IMPACT_MIN_SCORE):.2f}"
+                if analysis.get('multi_impact_likely') else
+                "No strong evidence yet that multiple IPFR pages are impacted"
             )
         }
     }
@@ -740,7 +1084,12 @@ def main():
                             packet_path = generate_handover_packet(name, priority, diff_file, analysis, ts)
                             handover_paths.append(packet_path)
                             s3_outcome = 'handover'
-                            s3_reason = f"Score {s3_score:.3f} >= threshold {SIMILARITY_THRESHOLD}"
+                            s3_reason = (
+                                f"Score {s3_score:.3f} >= threshold {SIMILARITY_THRESHOLD}"
+                                + (f"; multi-impact likely ({analysis.get('impact_count', 0)} pages >= "
+                                   f"{analysis.get('multi_impact_threshold', MULTI_IMPACT_MIN_SCORE):.2f})"
+                                   if analysis.get('multi_impact_likely') else "")
+                            )
                         elif analysis['status'] == 'success':
                             s3_outcome = 'filtered'
 
@@ -779,7 +1128,7 @@ if __name__ == "__main__":
             logger.error(f"Diff file not found: {diff_file}")
             sys.exit(1)
         
-        # Run Stage 3 analysis (will show "awaiting_phase3" without mock data)
+        # Run Stage 3 analysis
         result = calculate_similarity(diff_file)
         
         logger.info("\n=== Stage 3 Phase 2 Test Results ===")
@@ -799,11 +1148,7 @@ if __name__ == "__main__":
             if result.get('filter_reason'):
                 logger.info(f"Filter reason: {result['filter_reason']}")
         
-        if result['status'] == 'awaiting_phase3':
-            logger.info("\n✓ Phase 2 complete! Power word detection and scoring working.")
-            logger.info("Next: Create test fixtures and run pytest to validate logic.")
-            logger.info("Phase 3: Load Tom's spreadsheet and generate handover packets.")
-        elif result['status'] == 'success':
+        if result['status'] == 'success':
             logger.info("\n✓ All systems working! Ready for production.")
         else:
             logger.error("\n✗ Test failed - check errors above")
