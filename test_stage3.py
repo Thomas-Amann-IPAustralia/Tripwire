@@ -148,6 +148,27 @@ class TestEndToEnd:
         assert result['base_similarity'] < 0.35 
         assert result['should_handover'] == False
 
+    def test_phaseb_returns_impacted_pages_structure(self, mock_semantic_data):
+        result = calculate_similarity(
+            'test_fixtures/diffs/high_relevance_trademark.diff',
+            mock_semantic_data=mock_semantic_data
+        )
+        assert result['status'] == 'success'
+        assert 'impacted_pages' in result
+        assert isinstance(result['impacted_pages'], list)
+        assert len(result['impacted_pages']) >= 1
+        assert 'top_chunks' in result
+        assert isinstance(result['top_chunks'], list)
+
+    def test_phaseb_primary_match_backwards_compatible(self, mock_semantic_data):
+        result = calculate_similarity(
+            'test_fixtures/diffs/high_relevance_trademark.diff',
+            mock_semantic_data=mock_semantic_data
+        )
+        # keep legacy fields populated
+        assert result.get('matched_udid') == 'IPFR-001'
+        assert result.get('matched_chunk_id') is not None
+
 class TestErrorHandling:
     """Test error handling and edge cases for Stage 3 robustness"""
     
