@@ -49,6 +49,20 @@ jobs:
           echo "=== Running pytest test suite ==="
           pytest -s test_stage3.py -v --tb=short
 
+      - name: Upload handover packets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handover-packets-test
+          path: handover_packets/
+      
+      - name: Upload test output JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phaseb-test-output-json
+          path: test_outputs/
+
       - name: Manual Test on Real Diff (Optional)
         if: ${{ github.event.inputs.run_manual_test == 'true' }}
         env:
