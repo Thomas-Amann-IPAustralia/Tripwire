@@ -47,7 +47,7 @@ jobs:
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "=== Running pytest test suite ==="
-          pytest test_stage3.py -v --tb=short
+          pytest -s test_stage3.py -v --tb=short
 
       - name: Manual Test on Real Diff (Optional)
         if: ${{ github.event.inputs.run_manual_test == 'true' }}
