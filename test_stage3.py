@@ -56,6 +56,24 @@ class TestDiffParsing:
         result = extract_change_content('test_fixtures/diffs/noise_only.diff')
         assert 'change_context' in result
 
+    def test_phaseb_extracts_three_distinct_hunks(self):
+        """Phase B should preserve hunk boundaries for multi-impact analysis - verifies hunk-aware parsing is active."""
+        result = extract_change_content('test_fixtures/diffs/multi_impact_three_hunks.diff')
+    
+        assert 'hunks' in result
+        assert isinstance(result['hunks'], list)
+        assert len(result['hunks']) == 3
+    
+        # Check hunk headers are preserved
+        headers = [h.get('header', '') for h in result['hunks']]
+        assert any('Trade marks enforcement guidance' in h for h in headers)
+        assert any('Patent filing process' in h for h in headers)
+        assert any('Design registration overview' in h for h in headers)
+    
+        # Backward compatibility still intact
+        assert 'change_context' in result
+        assert len(result['change_context']) > 0
+
 class TestPowerWordDetection:
     """Test power word scanning and scoring"""
     
@@ -168,6 +186,45 @@ class TestEndToEnd:
         # keep legacy fields populated
         assert result.get('matched_udid') == 'IPFR-001'
         assert result.get('matched_chunk_id') is not None
+
+    def test_multi_impact_three_hunks_detected(self, mock_semantic_data):
+        """Phase B should surface multiple impacted pages from a 3-hunk diff."""
+        result = calculate_similarity(
+            'test_fixtures/diffs/multi_impact_three_hunks.diff',
+            mock_semantic_data=mock_semantic_data
+        )
+    
+        assert result['status'] == 'success'
+    
+        # New Phase B structures
+        assert 'change_hunks' in result
+        assert 'hunk_matches' in result
+        assert 'impacted_pages' in result
+        assert 'top_chunks' in result
+    
+        assert isinstance(result['change_hunks'], list)
+        assert isinstance(result['hunk_matches'], list)
+        assert isinstance(result['impacted_pages'], list)
+        assert isinstance(result['top_chunks'], list)
+    
+        assert len(result['change_hunks']) == 3
+        assert len(result['hunk_matches']) == 3
+        assert len(result['impacted_pages']) >= 2
+    
+        # Phase B objective signal
+        assert result['multi_impact_likely'] is True
+        assert result['impact_count'] >= 2
+    
+        # Should still preserve primary match fields for compatibility
+        assert result.get('matched_udid') is not None
+        assert result.get('matched_chunk_id') is not None
+    
+        # Validate likely impacted pages include the intended mock targets
+        impacted_udids = {p['udid'] for p in result['impacted_pages']}
+        assert 'IPFR-001' in impacted_udids  # trademark
+        assert 'IPFR-002' in impacted_udids  # patent
+        # Design may vary slightly depending on embedding behavior; keep this soft:
+        assert any(u in impacted_udids for u in ['IPFR-003'])
 
 class TestErrorHandling:
     """Test error handling and edge cases for Stage 3 robustness"""
