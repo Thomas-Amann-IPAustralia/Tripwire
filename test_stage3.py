@@ -14,6 +14,7 @@ import json
 import tripwire as tripwire_module
 import datetime
 import traceback
+from pathlib import Path
 
 # Add parent directory to path to import tripwire functions
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -24,6 +25,7 @@ from tripwire import (
     calculate_final_score,
     should_generate_handover,
     calculate_similarity,
+    get_diff,
     generate_handover_packet
 )
 
@@ -446,5 +448,210 @@ class TestPhaseBRealCorpus:
         with open("test_outputs/phaseb_real_semantic_threshold_faithful_packet.json", "w", encoding="utf-8") as f:
             json.dump(packet, f, indent=2, ensure_ascii=False)
 
+class TestPhaseCPowerWordGating:
+    def test_weak_only_terms_do_not_overboost_low_semantic_match(self):
+        # "may" + "30 days" alone are weak signals and should not rescue noise
+        power = detect_power_words("An applicant may respond within 30 days.")
+        base = 0.05
+        final = calculate_final_score(base, power)
+
+        assert power["weak_only"] is True
+        assert final == pytest.approx(base)
+
+    def test_strong_legal_trigger_can_still_boost_low_semantic_match(self):
+        power = detect_power_words("Penalty of $150,000 applies. You must comply.")
+        base = 0.05
+        final = calculate_final_score(base, power)
+
+        assert power["has_strong_trigger"] is True
+        assert final > base  # strong trigger override is allowed
+
+    def test_numeric_mode_is_backwards_compatible(self):
+        # Existing tests and callers that pass a numeric boost should keep additive behaviour
+        assert calculate_final_score(0.40, 0.15) == pytest.approx(0.55)
+
+
+class TestPhaseCDiffGeneration:
+    def test_get_diff_returns_unified_diff_text(self):
+        with tempfile.TemporaryDirectory() as td:
+            old_path = Path(td) / "old.txt"
+            old_path.write_text("line1\nline2\nline3\n", encoding="utf-8")
+            new_content = "line1\nline2 changed\nline3\n"
+
+            diff_text = get_diff(str(old_path), new_content)
+
+            assert diff_text is not None
+            assert diff_text.startswith("--- ")
+            assert "\n+++ " in diff_text
+            assert "@@" in diff_text
+            assert "-line2" in diff_text
+            assert "+line2 changed" in diff_text
+
+
+class TestPhaseCHandoverPacket:
+    def test_packet_includes_llm_readiness_and_trims_large_text(self, monkeypatch):
+        # Keep packet output isolated
+        with tempfile.TemporaryDirectory() as td:
+            monkeypatch.setattr(tripwire_module, "HANDOVER_DIR", td, raising=False)
+
+            huge_text = "X" * 15000
+            analysis = {
+                "status": "success",
+                "matched_udid": "B1000",
+                "matched_chunk_id": "B1000::c1",
+                "matched_chunk_raw": {
+                    "UDID": "B1000",
+                    "Chunk_ID": "B1000::c1",
+                    "Main_Title": "Receiving a letter of demand",
+                    "Headline_Alt": "Letter of demand basics",
+                    "URL": "https://example.test/b1000",
+                    "Chunk_Text": huge_text,
+                    "Chunk_Context_Prepend": "context",
+                    "Chunk_Token_Count": 999,
+                },
+                "matched_text": huge_text,
+                "power_words": {"count": 2, "found": ["must", "$150,000"]},
+                "base_similarity": 0.41,
+                "final_score": 0.58,
+                "threshold": 0.45,
+                "should_handover": True,
+                "multi_impact_likely": True,
+                "impact_count": 3,
+                "multi_impact_threshold": 0.40,
+                "change_text": huge_text,
+                "change_hunks": [
+                    {
+                        "hunk_index": 0,
+                        "header": "@@ -1,3 +1,3 @@",
+                        "change_preview": huge_text,
+                    }
+                ],
+                "hunk_matches": [
+                    {
+                        "hunk_index": 0,
+                        "top_chunks": [
+                            {
+                                "udid": "B1000",
+                                "chunk_id": "B1000::c1",
+                                "headline_alt": "Letter of demand basics",
+                                "base_similarity": 0.41,
+                                "final_score": 0.58,
+                                "matched_terms": ["must"],
+                            }
+                        ],
+                        "top_pages": [
+                            {
+                                "udid": "B1000",
+                                "aggregated_final_score": 0.58,
+                                "chunk_hits": 1,
+                                "distinct_hunk_hits": 1,
+                            }
+                        ],
+                    }
+                ],
+                "impacted_pages": [
+                    {
+                        "rank": 1,
+                        "udid": "B1000",
+                        "url": "https://example.test/b1000",
+                        "title": "Receiving a letter of demand",
+                        "aggregated_final_score": 0.58,
+                        "aggregated_base_similarity": 0.41,
+                        "coverage_bonus": 0.05,
+                        "density_bonus": 0.02,
+                        "chunk_hits": 2,
+                        "distinct_hunk_hits": 1,
+                        "matched_hunk_indices": [0],
+                        "best_chunk": {
+                            "chunk_id": "B1000::c1",
+                            "headline_alt": "Letter of demand basics",
+                            "final_score": 0.58,
+                            "base_similarity": 0.41,
+                            "chunk_text": huge_text,
+                        },
+                        "supporting_chunks": [
+                            {
+                                "chunk_id": "B1000::c2",
+                                "final_score": 0.51,
+                                "base_similarity": 0.39,
+                                "chunk_text": huge_text,
+                            }
+                        ],
+                    }
+                ],
+                "top_chunks": [
+                    {
+                        "rank": 1,
+                        "udid": "B1000",
+                        "chunk_id": "B1000::c1",
+                        "headline_alt": "Letter of demand basics",
+                        "base_similarity": 0.41,
+                        "final_score": 0.58,
+                        "chunk_text": huge_text,
+                        "matched_terms": ["must", "$150,000"],
+                    }
+                ],
+            }
+
+            ts = datetime.datetime.now().isoformat()
+            packet_path = generate_handover_packet("TEST_SOURCE", "High", "example.diff", analysis, ts)
+            payload = json.loads(Path(packet_path).read_text(encoding="utf-8"))
+
+            assert "llm_readiness" in payload
+            assert payload["llm_readiness"]["estimated_tokens"] > 0
+            assert "recommended_handling" in payload["llm_readiness"]
+
+            # Large text should be truncated in multiple places
+            assert len(payload["change"]["hunk"]) < len(huge_text)
+            assert len(payload["matched_chunk"]["chunk_text"]) < len(huge_text)
+            assert len(payload["impacted_pages"][0]["best_chunk"]["chunk_text"]) < len(huge_text)
+
+@pytest.mark.integration
+def test_phasec_real_corpus_packet_summary_prints(tmp_path):
+    """
+    Optional integration check for GitHub/local runs:
+    - Requires Semantic_Embeddings_Output.json in repo root
+    - Requires OPENAI_API_KEY (Tripwire embeds diff hunks live)
+    Prints a compact packet summary including llm_readiness so Actions logs are easier to inspect.
+    """
+    semantic_json = "Semantic_Embeddings_Output.json"
+    diff_path = "test_fixtures/diffs/multi_impact_three_hunks.diff"
+
+    if not os.path.exists(semantic_json):
+        pytest.skip(f"{semantic_json} not found in repo root")
+    if not os.path.exists(diff_path):
+        pytest.skip(f"{diff_path} not found")
+    if not os.getenv("OPENAI_API_KEY"):
+        pytest.skip("OPENAI_API_KEY not set")
+
+    # Isolate packet output
+    orig_handover_dir = tripwire_module.HANDOVER_DIR
+    tripwire_module.HANDOVER_DIR = str(tmp_path)
+    try:
+        analysis = tripwire_module.calculate_similarity(diff_path)  # uses real corpus file + live embeddings
+        assert isinstance(analysis, dict)
+        assert analysis.get("status") == "success"
+
+        ts = datetime.datetime.now().isoformat()
+        packet_path = generate_handover_packet("INTEGRATION_TEST", "Medium", os.path.basename(diff_path), analysis, ts)
+        payload = json.loads(Path(packet_path).read_text(encoding="utf-8"))
+
+        summary = {
+            "status": analysis.get("status"),
+            "should_handover": analysis.get("should_handover"),
+            "multi_impact_likely": analysis.get("multi_impact_likely"),
+            "impact_count": analysis.get("impact_count"),
+            "matched_udid": analysis.get("matched_udid"),
+            "matched_chunk_id": analysis.get("matched_chunk_id"),
+            "final_score": analysis.get("final_score"),
+            "impacted_pages_count": len(analysis.get("impacted_pages", []) or []),
+            "top_chunks_count": len(analysis.get("top_chunks", []) or []),
+            "packet_llm_readiness": payload.get("llm_readiness"),
+        }
+        print("\n=== PHASE C REAL-CORPUS SUMMARY ===")
+        print(json.dumps(summary, indent=2, ensure_ascii=False))
+    finally:
+        tripwire_module.HANDOVER_DIR = orig_handover_dir
+        
 if __name__ == '__main__':
     pytest.main([__file__, '-v', '--tb=short'])
