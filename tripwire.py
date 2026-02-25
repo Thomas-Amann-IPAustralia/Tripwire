@@ -1,3 +1,4 @@
+
 import json
 import csv
 import requests
@@ -6,109 +7,84 @@ import os
 import sys
 import logging
 import re
-import subprocess
 import difflib
 from typing import List, Dict, Optional, Tuple
 
-# --- Web Scrape & Document Imports ---
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium_stealth import stealth
+# --- Optional Web/Doc imports ---
+try:
+    from selenium import webdriver
+    from selenium.webdriver.chrome.service import Service as ChromeService
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.common.by import By
+    from webdriver_manager.chrome import ChromeDriverManager
+    from selenium_stealth import stealth
+except Exception:
+    webdriver = None
+    ChromeService = None
+    WebDriverWait = None
+    EC = None
+    By = None
+    ChromeDriverManager = None
+    stealth = None
+
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
 import docx
 
-# --- Stage 3: Semantic Analysis Imports ---
-from openai import OpenAI
+# --- Optional OpenAI import ---
+try:
+    from openai import OpenAI
+except Exception:
+    OpenAI = None
+
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-import pandas as pd
+import pandas as pd  # kept if used elsewhere / future compatibility
 
 # --- Configuration ---
-AUDIT_LOG = 'audit_log.csv' 
+AUDIT_LOG = 'audit_log.csv'
 SOURCES_FILE = 'sources.json'
 OUTPUT_DIR = 'content_archive'
 DIFF_DIR = 'diff_archive'
+HANDOVER_DIR = 'handover_packets'
+SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
+
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
 
-# --- Stage 3 Configuration ---
-SEMANTIC_MODEL = 'text-embedding-3-small' 
-SIMILARITY_THRESHOLD = 0.45  # Initial threshold, tune based on testing
+# Semantic scoring config
+SEMANTIC_MODEL = 'text-embedding-3-small'
 OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-client = OpenAI(api_key=OPENAI_KEY)
+client = OpenAI(api_key=OPENAI_KEY) if (OpenAI and OPENAI_KEY) else None
 
-# Phase 3: Semantic Embeddings
-SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
-HANDOVER_DIR = 'handover_packets'
-IMPACT_LINKS_LOG = 'impact_links.csv'
-_semantic_cache = None  # Module-level cache so embeddings load once per run
+# Candidate / packet policy
+CANDIDATE_MIN_SCORE = 0.35  # all page candidates >= this are "relevant" and must be handed over (across batches) if handover triggers
+MEDIUM_PRIMARY_HANDOVER_THRESHOLD = 0.45
+LOW_PRIMARY_HANDOVER_THRESHOLD = 0.50
 
-# Phase C: score quality controls & packet sizing (keeps Phase B structures)
-POWER_BOOST_MIN_BASE_SIM = 0.20
-POWER_BOOST_STRONG_OVERRIDE_TERMS = {
-    'must', 'shall', 'penalty', 'penalties', 'fine', 'fines', 'prohibited',
-    'mandatory', 'required', 'obligation', 'archives act 1983', 'dollar_amount'
-}
-POWER_BOOST_MAX = 0.35
-POWER_WEAK_ONLY_CAP = 0.08
-HANDOVER_PACKET_TARGET_MAX_CHARS = 32000
-HANDOVER_PACKET_HARD_MAX_CHARS = 50000
-MAX_MATCHED_CHUNK_TEXT_CHARS = 900
-MAX_CHANGE_TEXT_CHARS = 4000
-MAX_HUNK_PREVIEW_CHARS = 320
-MAX_PACKET_CHUNK_TEXT_CHARS = 260
+# No top-k chunk cap: keep every chunk match >= threshold for evidence aggregation
+HUNK_CHUNK_MIN_SIMILARITY = CANDIDATE_MIN_SCORE
 
-# Phase B: Multi-impact retrieval & aggregation
-TOP_K_CHUNKS_PER_HUNK = 12
-MAX_IMPACT_PAGES_IN_PACKET = 10
-MAX_TOP_CHUNKS_IN_PACKET = 25
-MULTI_IMPACT_MIN_SCORE = max(0.35, SIMILARITY_THRESHOLD - 0.05)
-PAGE_HUNK_COVERAGE_BONUS = 0.03   # per additional hunk matched by the same page
-PAGE_CHUNK_DENSITY_BONUS = 0.01   # per additional supporting chunk matched by the same page
-MAX_PAGE_COVERAGE_BONUS = 0.08
-MAX_PAGE_DENSITY_BONUS = 0.05
+# Packet/display controls (do not truncate threshold-passing candidates overall; batching handles overflow)
+MAX_CANDIDATES_PER_PACKET = 50
+MAX_RELEVANT_CHUNK_IDS_PER_CANDIDATE = 50
+PER_HUNK_SUMMARY_LIMIT = 8
+
+# Page aggregation bonuses
+PAGE_HUNK_COVERAGE_BONUS = 0.04
+MAX_PAGE_COVERAGE_BONUS = 0.12
+PAGE_CHUNK_DENSITY_BONUS = 0.01
+MAX_PAGE_DENSITY_BONUS = 0.06
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("Tripwire")
 
-# --- Stage 0: Helpers ---
-
-def _normalise_header_value(value: Optional[str]) -> str:
-    return (value or '').strip().strip('"').strip("'")
+_semantic_cache = None
 
 
-def _build_http_version_token(resp: requests.Response) -> Optional[str]:
-    """
-    Build a stable metadata token from multiple HTTP headers so change detection does not
-    depend entirely on ETag support.
-    """
-    if resp is None:
-        return None
-    headers = getattr(resp, 'headers', {}) or {}
-    status_code = getattr(resp, 'status_code', None)
-    if status_code and int(status_code) >= 400:
-        return None
-
-    etag = _normalise_header_value(headers.get('ETag'))
-    last_modified = _normalise_header_value(headers.get('Last-Modified'))
-    content_length = _normalise_header_value(headers.get('Content-Length'))
-    content_type = _normalise_header_value(headers.get('Content-Type'))
-
-    parts = []
-    if etag:
-        parts.append(f"etag:{etag}")
-    if last_modified:
-        parts.append(f"lm:{last_modified}")
-    if content_length:
-        parts.append(f"cl:{content_length}")
-    if content_type:
-        parts.append(f"ct:{content_type}")
-
-    return '|'.join(parts) if parts else None
+# ---------------------------
+# Audit / stage 0 helpers
+# ---------------------------
 
 def get_last_version_id(source_name: str) -> Optional[str]:
     """
@@ -119,24 +95,24 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     Returns:
         Optional[str]: The last recorded Version_ID or None if not found.
     """
-    if not os.path.exists(AUDIT_LOG): return None
+    if not os.path.exists(AUDIT_LOG):
+        return None
     try:
         with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
-            reader = list(csv.DictReader(f))
-            for row in reversed(reader):
-                if row['Source_Name'] == source_name and row['Status'] == 'Success':
-                    return row['Version_ID']
-    except Exception: return None
+            rows = list(csv.DictReader(f))
+        for row in reversed(rows):
+            if row.get('Source_Name') == source_name and row.get('Status') == 'Success':
+                return row.get('Version_ID')
+    except Exception:
+        return None
     return None
+
 
 def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None,
                  similarity_score=None, power_words=None, matched_udid=None,
                  matched_chunk_id=None, outcome=None, reason=None):
     """
     Appends a new entry to the CSV audit log.
-    
-    Stage 2 fields are always written. Stage 3 fields (similarity_score through reason)
-    are only populated when semantic analysis has been performed on a diff.
     
     Args:
         name (str): Source name.
@@ -163,9 +139,14 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
         if not file_exists:
             writer.writerow(headers)
         writer.writerow([
-            datetime.datetime.now().isoformat(), name, priority, status,
-            change_detected, version_id, diff_file or "N/A",
-            f"{similarity_score:.4f}" if similarity_score is not None else "N/A",
+            datetime.datetime.now().isoformat(),
+            name,
+            priority,
+            status,
+            change_detected,
+            version_id or "N/A",
+            diff_file or "N/A",
+            f"{float(similarity_score):.4f}" if similarity_score is not None else "N/A",
             '; '.join(power_words) if power_words else "N/A",
             matched_udid or "N/A",
             matched_chunk_id or "N/A",
@@ -174,107 +155,34 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
         ])
 
 
-def log_impact_links(source_name, priority, diff_file, analysis, threshold=None):
-    """
-    Phase C sidecar log: one row per impacted-page candidate (UDID-level).
-    Useful for tuning thresholds and validating multi-impact behaviour over time.
-    """
-    if not isinstance(analysis, dict) or analysis.get('status') != 'success':
-        return
-    impacted_pages = analysis.get('impacted_pages') or []
-    if not impacted_pages:
-        return
-
-    file_exists = os.path.exists(IMPACT_LINKS_LOG)
-    headers = [
-        'Timestamp', 'Source_Name', 'Priority', 'Diff_File',
-        'Primary_UDID', 'Primary_Final_Score', 'Threshold', 'Should_Handover',
-        'Multi_Impact_Likely', 'Impact_Count',
-        'Candidate_Rank', 'Candidate_UDID', 'Candidate_Aggregated_Final_Score',
-        'Candidate_Aggregated_Base_Similarity', 'Candidate_Chunk_Hits', 'Candidate_Distinct_Hunk_Hits',
-        'Candidate_Coverage_Bonus', 'Candidate_Density_Bonus',
-        'Matched_Hunk_Indices', 'Best_Chunk_ID', 'Best_Headline'
-    ]
-
-    primary_udid = analysis.get('matched_udid')
-    primary_score = analysis.get('final_score')
-    eff_threshold = threshold if threshold is not None else analysis.get('threshold', SIMILARITY_THRESHOLD)
-
-    with open(IMPACT_LINKS_LOG, mode='a', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(headers)
-
-        for p in impacted_pages[:MAX_IMPACT_PAGES_IN_PACKET]:
-            best = p.get('best_chunk') or {}
-            writer.writerow([
-                datetime.datetime.now().isoformat(),
-                source_name,
-                priority,
-                diff_file or "N/A",
-                primary_udid or "N/A",
-                f"{float(primary_score):.4f}" if primary_score is not None else "N/A",
-                f"{float(eff_threshold):.4f}" if eff_threshold is not None else "N/A",
-                str(bool(analysis.get('should_handover'))),
-                str(bool(analysis.get('multi_impact_likely'))),
-                int(analysis.get('impact_count', 0)),
-                p.get('rank', 'N/A'),
-                p.get('udid', 'N/A'),
-                f"{float(p.get('aggregated_final_score', 0.0)):.4f}",
-                f"{float(p.get('aggregated_base_similarity', 0.0)):.4f}",
-                int(p.get('chunk_hits', 0)),
-                int(p.get('distinct_hunk_hits', 0)),
-                f"{float(p.get('coverage_bonus', 0.0)):.4f}",
-                f"{float(p.get('density_bonus', 0.0)):.4f}",
-                ';'.join([str(x) for x in (p.get('matched_hunk_indices') or [])]),
-                best.get('chunk_id', 'N/A'),
-                best.get('headline_alt', 'N/A'),
-            ])
-
 def fetch_stage0_metadata(session, source) -> Optional[str]:
     """
     Performs a lightweight check to get the latest metadata ID without downloading full content.
-
-    Phase C improvement:
-    - Web/RSS checks now use a composite HTTP header token (ETag + Last-Modified + Content-Length)
-      with a streamed GET fallback when HEAD is unsupported or incomplete.
+    
+    Args:
+        session (requests.Session): Active HTTP session.
+        source (dict): Source configuration dictionary.
+    Returns:
+        Optional[str]: RegisterId for legislation, ETag or Content-Length for others.
     """
     stype = source.get('type')
     try:
         if stype == "Legislation_OData":
             params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
             resp = session.get(source['base_url'], params=params, timeout=20)
-            item = resp.json().get('value', [{}])[0]
-            register_id = item.get('registerId')
-            start = item.get('start')
-            version = item.get('version')
-            return '|'.join([str(x) for x in [register_id, start, version] if x]) or register_id
-
+            resp.raise_for_status()
+            return resp.json().get('value', [{}])[0].get('registerId')
         elif stype in ["RSS", "WebPage"]:
-            url = source['url']
-            # Fast path: HEAD request
-            try:
-                resp = session.head(url, timeout=15, allow_redirects=True)
-                token = _build_http_version_token(resp)
-                if token:
-                    return token
-            except Exception:
-                pass
-
-            # Fallback path: streamed GET for hosts that omit metadata on HEAD
-            try:
-                resp = session.get(url, timeout=20, stream=True, allow_redirects=True)
-                token = _build_http_version_token(resp)
-                resp.close()
-                if token:
-                    return token
-            except Exception:
-                pass
+            resp = session.head(source['url'], timeout=15)
+            return resp.headers.get('ETag') or resp.headers.get('Content-Length')
     except Exception:
         return None
     return None
 
-# --- Extraction & Normalization Functions ---
+
+# ---------------------------
+# Fetch / normalize helpers
+# ---------------------------
 
 def initialize_driver():
     """
@@ -283,15 +191,19 @@ def initialize_driver():
     Returns:
         webdriver.Chrome: Configured Selenium driver.
     """
+    if webdriver is None:
+        raise RuntimeError("Selenium/webdriver dependencies not available in this environment.")
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless=new')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
-    stealth(driver, languages=["en-US", "en"], vendor="Google Inc.", platform="Win32", fix_hairline=True)
+    if stealth:
+        stealth(driver, languages=["en-US", "en"], vendor="Google Inc.", platform="Win32", fix_hairline=True)
     return driver
 
-def clean_html_content(html):
+
+def clean_html_content(html: str) -> str:
     """
     Strips non-essential HTML tags (nav, footer, etc.) and removes dynamic timestamps.
     
@@ -302,12 +214,15 @@ def clean_html_content(html):
     """
     soup = BeautifulSoup(html, 'html.parser')
     body = soup.body
-    if not body: return ""
+    if not body:
+        return ""
     for selector in TAGS_TO_EXCLUDE:
-        for tag in body.select(selector): tag.decompose()
+        for tag in body.select(selector):
+            tag.decompose()
     text = str(body)
     text = re.sub(r'Generated on:? \d{1,2}/\d{1,2}/\d{4}.*', '', text, flags=re.IGNORECASE)
     return text
+
 
 def fetch_webpage_content(driver, url):
     """
@@ -324,6 +239,7 @@ def fetch_webpage_content(driver, url):
     cleaned_html = clean_html_content(driver.page_source)
     return md(cleaned_html, heading_style="ATX")
 
+
 def sanitize_rss(xml_content):
     """
     Normalizes RSS XML by stripping transient channel-level dates and sorting items by GUID.
@@ -336,14 +252,18 @@ def sanitize_rss(xml_content):
     soup = BeautifulSoup(xml_content, 'xml')
     for tag in ['lastBuildDate', 'pubDate', 'generator']:
         t = soup.find(tag)
-        if t and t.parent.name == 'channel': t.decompose()
+        if t and t.parent and t.parent.name == 'channel':
+            t.decompose()
     items = soup.find_all('item')
     items.sort(key=lambda x: x.find('guid').text if x.find('guid') else (x.find('link').text if x.find('link') else ''))
     channel = soup.find('channel')
     if channel:
-        for item in soup.find_all('item'): item.extract()
-        for item in items: channel.append(item)
+        for item in soup.find_all('item'):
+            item.extract()
+        for item in items:
+            channel.append(item)
     return soup.prettify()
+
 
 def fetch_legislation_metadata(session, source):
     """
@@ -357,82 +277,106 @@ def fetch_legislation_metadata(session, source):
     """
     params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
     resp = session.get(source['base_url'], params=params, timeout=30)
-    docs = resp.json().get('value', [])
-    return (docs[0].get('registerId'), docs[0]) if docs else (None, None)
+    resp.raise_for_status()
+    val = resp.json().get('value', [])
+    if not val:
+        return None, None
+    meta = val[0]
+    return meta.get('registerId'), meta
 
-def download_legislation_content(session, base_url, doc_meta):
-    """
-    Downloads a Word document from OData API and converts it to Markdown.
-    
-    Args:
-        session (requests.Session): Active HTTP session.
-        base_url (str): API base URL.
-        doc_meta (dict): Metadata for the specific document version.
-    Returns:
-        str: Normalized Markdown text extracted from the document.
-    """
-    from io import BytesIO
-    def q(val): return f"'{val}'"
-    reg_id = doc_meta.get('registerId')
-    download_url = f"{base_url}/find(registerId={q(reg_id)},type={q(doc_meta.get('type'))},format='Word',uniqueTypeNumber={int(doc_meta.get('uniqueTypeNumber') or 0)},volumeNumber={int(doc_meta.get('volumeNumber') or 0)},rectificationVersionNumber={int(doc_meta.get('rectificationVersionNumber') or 0)})"
-    resp = session.get(download_url, stream=True, timeout=90)
-    if resp.status_code == 200:
-        doc = docx.Document(BytesIO(resp.content))
-        return "\n\n".join([p.text for p in doc.paragraphs if p.text.strip()])
-    return None
 
-# --- Stage 2 Logic ---
+def _extract_docx_text(docx_path: str) -> str:
+    d = docx.Document(docx_path)
+    lines = []
+    for para in d.paragraphs:
+        t = (para.text or '').strip()
+        if t:
+            lines.append(t)
+    return "\n\n".join(lines)
+
+
+def download_legislation_content(session, base_url, meta):
+    candidate_urls = []
+    for k in ['download', 'downloadUrl', 'Download', 'DownloadUrl', 'url', 'Url']:
+        v = meta.get(k)
+        if isinstance(v, str) and v.startswith('http'):
+            candidate_urls.append(v)
+
+    for k in ['documents', 'Documents', 'files', 'Files']:
+        docs = meta.get(k)
+        if isinstance(docs, list):
+            for item in docs:
+                if isinstance(item, dict):
+                    for kk in ['downloadUrl', 'url', 'href']:
+                        v = item.get(kk)
+                        if isinstance(v, str) and v.startswith('http'):
+                            candidate_urls.append(v)
+
+    for url in candidate_urls:
+        try:
+            r = session.get(url, timeout=60)
+            r.raise_for_status()
+            ctype = (r.headers.get('Content-Type') or '').lower()
+
+            if 'word' in ctype or url.lower().endswith('.docx'):
+                tmp = os.path.join(OUTPUT_DIR, "_tmp_legislation_download.docx")
+                with open(tmp, 'wb') as f:
+                    f.write(r.content)
+                text = _extract_docx_text(tmp)
+                try:
+                    os.remove(tmp)
+                except Exception:
+                    pass
+                return text
+
+            if 'html' in ctype:
+                return md(clean_html_content(r.text), heading_style="ATX")
+
+            try:
+                return r.text
+            except Exception:
+                pass
+        except Exception as e:
+            logger.warning(f"Legislation download candidate failed {url}: {e}")
+
+    return json.dumps(meta, indent=2, sort_keys=True, ensure_ascii=False)
+
 
 def get_diff(old_path, new_content) -> Optional[str]:
     """
-    Performs a unified diff (-U10 equivalent) between the archived file and new content.
-
-    Phase C improvement:
-    - Uses Python's difflib instead of shelling out to `diff`, which is more portable
-      across GitHub Actions and constrained local environments.
+    Performs a unified diff (-U10) between the archived file and the new content.
+    
+    Args:
+        old_path (str): Path to the archived version.
+        new_content (str): Newest normalized content.
+    Returns:
+        Optional[str]: The diff hunk if changes exist, otherwise None.
     """
     if not os.path.exists(old_path):
         return "Initial archive creation."
-
     with open(old_path, 'r', encoding='utf-8') as f:
         old_content = f.read()
-
     if old_content == new_content:
         return None
-
-    old_lines = old_content.splitlines(keepends=True)
-    new_lines = new_content.splitlines(keepends=True)
-
-    diff_lines = list(difflib.unified_diff(
-        old_lines,
-        new_lines,
+    diff_lines = difflib.unified_diff(
+        old_content.splitlines(keepends=True),
+        new_content.splitlines(keepends=True),
         fromfile=old_path,
-        tofile=old_path + ".tmp",
-        n=10,
-        lineterm=""
-    ))
-    if not diff_lines:
-        return None
+        tofile='new_content',
+        lineterm=''
+    )
+    diff_text = ''.join(diff_lines)
+    return diff_text if diff_text.strip() else None
 
-    return "\n".join(diff_lines) + "\n"
 
 def save_to_archive(filename, content):
-    """
-    Saves content to the archive directory using UTF-8 encoding.
-    
-    Args:
-        filename (str): Target filename.
-        content (str): Content to save.
-    Returns:
-        str: Full path to the saved file.
-    """
-    if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
-    filepath = os.path.join(OUTPUT_DIR, filename)
-    with open(filepath, 'w', encoding='utf-8') as f:
+    path = os.path.join(OUTPUT_DIR, filename)
+    with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
-    return filepath
+    return path
 
-def save_diff_record(name, diff_content):
+
+def save_diff_record(source_name, diff_content):
     """
     Saves a diff hunk to the diff_archive directory with a timestamp.
     
@@ -442,81 +386,52 @@ def save_diff_record(name, diff_content):
     Returns:
         str: The generated filename of the diff record.
     """
-    if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    safe_name = re.sub(r'\W+', '_', name)
-    filename = f"{timestamp}_{safe_name}.diff"
-    filepath = os.path.join(DIFF_DIR, filename)
-    with open(filepath, 'w', encoding='utf-8') as f:
+    safe_name = re.sub(r'[^A-Za-z0-9._-]+', '_', source_name)[:80].strip('_')
+    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{ts}_{safe_name}.diff"
+    path = os.path.join(DIFF_DIR, filename)
+    with open(path, 'w', encoding='utf-8') as f:
         f.write(diff_content)
     return filename
 
-# --- Stage 3: Semantic Analysis & Relevance Gate ---
 
-def parse_diff_hunks(diff_file_path: str) -> List[Dict]:
+# ---------------------------
+# Stage 3 helpers
+# ---------------------------
+
+def parse_diff_hunks(diff_file_path: str) -> List[dict]:
     """
     Parses a unified diff into hunk-level change objects so semantically distinct
-    changes can be analysed independently (Phase B multi-impact detection).
+    changes can be analysed independently (multi-impact detection).
     """
-    hunks: List[Dict] = []
+    hunks: List[dict] = []
     current = None
-
-    def _finalise_hunk(h):
-        if not h:
-            return None
-        added = ' '.join([x for x in h.get('added_lines', []) if x]).strip()
-        removed = ' '.join([x for x in h.get('removed_lines', []) if x]).strip()
-        change_context = ' '.join([x for x in [removed, added] if x]).strip()
-        if not change_context:
-            return None
-        return {
-            'hunk_index': h['hunk_index'],
-            'header': h.get('header', ''),
-            'added': added,
-            'removed': removed,
-            'change_context': change_context,
-        }
-
     with open(diff_file_path, 'r', encoding='utf-8') as f:
-        for raw_line in f:
-            line = raw_line.rstrip('\n')
-
+        for raw in f:
+            line = raw.rstrip('\n')
             if line.startswith('@@'):
-                finalised = _finalise_hunk(current)
-                if finalised:
-                    hunks.append(finalised)
+                if current:
+                    current['change_context'] = ' '.join(current['removed_lines'] + current['added_lines']).strip()
+                    hunks.append(current)
                 current = {
-                    'hunk_index': len(hunks) + 1,
+                    'hunk_index': len(hunks) + 1,  # 1-based index
                     'header': line,
                     'added_lines': [],
-                    'removed_lines': []
+                    'removed_lines': [],
                 }
                 continue
-
-            if line.startswith('+++') or line.startswith('---'):
-                continue
-
-            if current is None and (line.startswith('+') or line.startswith('-')):
-                current = {
-                    'hunk_index': 1,
-                    'header': 'NO_HUNK_HEADER',
-                    'added_lines': [],
-                    'removed_lines': []
-                }
-
             if current is None:
                 continue
-
-            if line.startswith('+'):
+            if line.startswith('+') and not line.startswith('+++'):
                 current['added_lines'].append(line[1:].strip())
-            elif line.startswith('-'):
+            elif line.startswith('-') and not line.startswith('---'):
                 current['removed_lines'].append(line[1:].strip())
 
-    finalised = _finalise_hunk(current)
-    if finalised:
-        hunks.append(finalised)
+    if current:
+        current['change_context'] = ' '.join(current['removed_lines'] + current['added_lines']).strip()
+        hunks.append(current)
 
-    return hunks
+    return [h for h in hunks if h.get('change_context')]
 
 
 def extract_change_content(diff_file_path):
@@ -525,917 +440,720 @@ def extract_change_content(diff_file_path):
     flattens them into a single overall change context for logging/high-level signals.
     """
     hunks = parse_diff_hunks(diff_file_path)
-    additions = [h['added'] for h in hunks if h.get('added')]
-    removals = [h['removed'] for h in hunks if h.get('removed')]
-    change_context = ' '.join([x for x in removals + additions if x]).strip()
+    additions, removals = [], []
+    for h in hunks:
+        additions.extend(h.get('added_lines', []))
+        removals.extend(h.get('removed_lines', []))
     return {
-        'added': ' '.join(additions).strip(),
-        'removed': ' '.join(removals).strip(),
-        'change_context': change_context,
+        'added': ' '.join(additions),
+        'removed': ' '.join(removals),
+        'change_context': ' '.join(removals + additions).strip(),
         'hunks': hunks
     }
 
 
-def _top_k_indices(values: np.ndarray, k: int) -> np.ndarray:
-    """Returns indices of the top-k values in descending order."""
-    if len(values) == 0:
-        return np.array([], dtype=int)
-    k = max(1, min(k, len(values)))
-    if k == len(values):
-        return np.argsort(values)[::-1]
-    idx = np.argpartition(values, -k)[-k:]
-    return idx[np.argsort(values[idx])[::-1]]
-
-
-def _build_chunk_candidate(idx: int, similarity: float, hunk: Dict, hunk_power: Dict,
-                           udids: List[str], chunk_texts: List[str], chunks_raw: Optional[List[Dict]]) -> Dict:
-    raw = (chunks_raw[idx] if chunks_raw else {}) or {}
-    base_similarity = float(similarity)
-    final_score = float(calculate_final_score(base_similarity, hunk_power))
-    applied_power_boost = max(0.0, round(final_score - base_similarity, 6))
-    return {
-        'raw_index': int(idx),
-        'udid': udids[idx],
-        'chunk_id': raw.get('Chunk_ID', 'N/A') if raw else 'N/A',
-        'headline_alt': raw.get('Headline_Alt', 'N/A') if raw else 'N/A',
-        'chunk_text': chunk_texts[idx],
-        'chunk_context_prepend': raw.get('Chunk_Context_Prepend', '') if raw else '',
-        'token_count': raw.get('Chunk_Token_Count', 'N/A') if raw else 'N/A',
-        'base_similarity': base_similarity,
-        'final_score': final_score,
-        'hunk_index': hunk['hunk_index'],
-        'hunk_header': hunk.get('header', ''),
-        'hunk_change_preview': hunk.get('change_context', '')[:180],
-        'hunk_power_words': hunk_power.get('found', []),
-        'hunk_power_word_score': float(hunk_power.get('score', 0.0)),
-        'applied_power_boost': float(applied_power_boost),
-    }
-
-
-def aggregate_page_impacts(top_chunks: List[Dict]) -> List[Dict]:
-    """
-    Aggregates chunk-level matches into page-level impact candidates (UDID-level).
-    """
-    pages: Dict[str, Dict] = {}
-
-    for c in top_chunks:
-        udid = c['udid']
-        page = pages.get(udid)
-        if page is None:
-            page = {
-                'udid': udid,
-                'max_base_similarity': c['base_similarity'],
-                'max_final_score': c['final_score'],
-                'best_chunk': c,
-                'chunk_hits': 0,
-                'matched_hunks': set(),
-                'supporting_chunks': []
-            }
-            pages[udid] = page
-
-        page['chunk_hits'] += 1
-        page['matched_hunks'].add(c['hunk_index'])
-        page['supporting_chunks'].append(c)
-
-        if c['base_similarity'] > page['max_base_similarity']:
-            page['max_base_similarity'] = c['base_similarity']
-        if c['final_score'] > page['max_final_score']:
-            page['max_final_score'] = c['final_score']
-        if c['final_score'] > page['best_chunk']['final_score']:
-            page['best_chunk'] = c
-
-    impacted_pages: List[Dict] = []
-    for page in pages.values():
-        distinct_hunks = len(page['matched_hunks'])
-        chunk_hits = page['chunk_hits']
-
-        coverage_bonus = min(MAX_PAGE_COVERAGE_BONUS, max(0, distinct_hunks - 1) * PAGE_HUNK_COVERAGE_BONUS)
-        density_bonus = min(MAX_PAGE_DENSITY_BONUS, max(0, chunk_hits - 1) * PAGE_CHUNK_DENSITY_BONUS)
-
-        aggregated_base = min(1.0, page['max_base_similarity'] + coverage_bonus + density_bonus)
-        aggregated_final = min(1.0, page['max_final_score'] + coverage_bonus + density_bonus)
-
-        supporting_chunks = sorted(
-            page['supporting_chunks'],
-            key=lambda x: (x['final_score'], x['base_similarity']),
-            reverse=True
-        )
-
-        impacted_pages.append({
-            'udid': page['udid'],
-            'aggregated_base_similarity': float(aggregated_base),
-            'aggregated_final_score': float(aggregated_final),
-            'max_base_similarity': float(page['max_base_similarity']),
-            'max_final_score': float(page['max_final_score']),
-            'chunk_hits': int(chunk_hits),
-            'distinct_hunk_hits': int(distinct_hunks),
-            'coverage_bonus': float(coverage_bonus),
-            'density_bonus': float(density_bonus),
-            'best_chunk': page['best_chunk'],
-            'supporting_chunks': supporting_chunks[:5],
-            'matched_hunk_indices': sorted(page['matched_hunks']),
-        })
-
-    impacted_pages.sort(
-        key=lambda p: (p['aggregated_final_score'], p['distinct_hunk_hits'], p['chunk_hits'], p['max_base_similarity']),
-        reverse=True
-    )
-    for rank, page in enumerate(impacted_pages, start=1):
-        page['rank'] = rank
-    return impacted_pages
-
 def detect_power_words(text):
-    """
-    Scans text for legal trigger words that indicate high-priority changes.
+    tiers = {
+        'strong': [
+            r'\bmust\b', r'\bshall\b', r'\bpenalt(?:y|ies)\b', r'\bfines?\b',
+            r'\$\d+(?:,\d+)*', r'\bprohibited\b', r'\bmandatory\b', r'\brequired\b',
+            r'\bobligation\b', r'archives\s+act\s+1983'
+        ],
+        'moderate': [
+            r'\bwithin\b', r'\bdeadline\b', r'\bdeadlines\b', r'\bnotice\b',
+            r'\bservice\b', r'\bevidence\b', r'\bdeclaration\b'
+        ],
+        'weak': [
+            r'\bmay\b', r'\d+\s*days?\b'
+        ]
+    }
+    text_l = (text or '').lower()
+    by_tier = {'strong': [], 'moderate': [], 'weak': []}
+    for tier, patterns in tiers.items():
+        for pat in patterns:
+            matches = re.findall(pat, text_l, re.IGNORECASE)
+            for m in matches:
+                if m not in by_tier[tier]:
+                    by_tier[tier].append(m)
 
-    Phase C improvement:
-    - Weighted trigger groups (strong/moderate/weak) reduce false positives from common
-      words like "may" and generic time windows.
-    - Preserves backwards-compatible keys: found, count, score.
-    """
-    text = text or ""
-    text_lower = text.lower()
-
-    pattern_specs = [
-        # Strong legal / enforcement triggers
-        (r'\bmust\b', 'must', 'strong', 0.12),
-        (r'\bshall\b', 'shall', 'strong', 0.12),
-        (r'\bpenalt(?:y|ies)\b', 'penalty', 'strong', 0.14),
-        (r'\bfine(?:s)?\b', 'fine', 'strong', 0.12),
-        (r'\bprohibited\b', 'prohibited', 'strong', 0.12),
-        (r'\bmandatory\b', 'mandatory', 'strong', 0.12),
-        (r'\brequired\b', 'required', 'strong', 0.10),
-        (r'\bobligation\b', 'obligation', 'strong', 0.10),
-        (r'archives\s+act\s+1983', 'archives act 1983', 'strong', 0.14),
-        (r'\$\d+(?:,\d+)*(?:\.\d+)?', 'dollar_amount', 'strong', 0.16),
-
-        # Moderate procedural triggers
-        (r'\bdeadline\b', 'deadline', 'moderate', 0.07),
-        (r'\bwithin\b', 'within', 'moderate', 0.05),
-        (r'\bnotice\b', 'notice', 'moderate', 0.05),
-        (r'\bcease and desist\b', 'cease and desist', 'moderate', 0.08),
-
-        # Weak/common triggers
-        (r'\bmay\b', 'may', 'weak', 0.02),
-        (r'\d+\s*days?\b', 'days', 'weak', 0.02),
-    ]
-
-    found_words = []
-    weighted_hits = []
-    groups = {'strong': 0, 'moderate': 0, 'weak': 0}
-
-    for pattern, label, group, weight in pattern_specs:
-        matches = re.findall(pattern, text_lower, re.IGNORECASE)
-        if not matches:
-            continue
-        groups[group] += len(matches)
-        for m in matches:
-            match_text = m if isinstance(m, str) else str(m)
-            found_words.append(match_text)
-            weighted_hits.append({
-                'match': match_text,
-                'label': label,
-                'group': group,
-                'weight': weight,
-            })
-
-    found_words = list(dict.fromkeys(found_words))
-    raw_score = float(sum(h['weight'] for h in weighted_hits))
-    weak_only = groups['strong'] == 0 and groups['moderate'] == 0 and groups['weak'] > 0
-    score = min(POWER_WEAK_ONLY_CAP if weak_only else POWER_BOOST_MAX, raw_score)
+    found = by_tier['strong'] + by_tier['moderate'] + by_tier['weak']
+    strong_count = len(by_tier['strong'])
+    moderate_count = len(by_tier['moderate'])
+    weak_count = len(by_tier['weak'])
+    weak_only = weak_count > 0 and strong_count == 0 and moderate_count == 0
+    raw_score = min(0.35, strong_count * 0.08 + moderate_count * 0.04 + weak_count * 0.02)
 
     return {
-        'found': found_words,
-        'count': len(found_words),
-        'score': float(score),       # backwards-compatible key
-        'raw_score': raw_score,
-        'groups': groups,
+        'found': found,
+        'power_words_found': found,
+        'by_tier': by_tier,
+        'strong_count': strong_count,
+        'moderate_count': moderate_count,
+        'weak_count': weak_count,
+        'count': len(found),
         'weak_only': weak_only,
-        'has_strong_trigger': groups['strong'] > 0,
-        'weighted_hits': weighted_hits,
+        'score': raw_score
     }
 
-def calculate_final_score(base_similarity, power_word_score):
+
+def calculate_final_score(base_similarity, power_word_analysis):
+    if isinstance(power_word_analysis, dict):
+        boost = float(power_word_analysis.get('score', 0.0))
+        weak_only = bool(power_word_analysis.get('weak_only', False))
+        strong_count = int(power_word_analysis.get('strong_count', 0))
+        if weak_only and float(base_similarity) < 0.20:
+            boost = 0.0
+        elif strong_count == 0 and float(base_similarity) < 0.10:
+            boost = min(boost, 0.02)
+    else:
+        boost = float(power_word_analysis or 0.0)
+    return min(1.0, float(base_similarity) + boost)
+
+
+def get_primary_handover_threshold_for_priority(priority: str) -> Optional[float]:
+    p = (priority or '').strip().lower()
+    if p == 'high':
+        return None  # bypass primary-score gate for high-priority sources
+    if p == 'medium':
+        return MEDIUM_PRIMARY_HANDOVER_THRESHOLD
+    return LOW_PRIMARY_HANDOVER_THRESHOLD
+
+
+def should_generate_handover(primary_score: float,
+                             impact_count: int,
+                             source_priority: str) -> Tuple[bool, str, Optional[float]]:
     """
-    Backwards-compatible additive scoring plus Phase C gated boost mode.
-
-    - Numeric `power_word_score` => legacy additive behaviour (tests and older callers).
-    - Dict `power_word_score` (from detect_power_words) => gated additive boost:
-      * apply boost if semantic similarity is already plausible, OR
-      * apply if a strong legal trigger is present.
-      * weak-only boosts are capped.
+    High-priority source: handover if any threshold-passing candidates exist.
+    Medium/Low: require primary score to pass priority-specific threshold.
     """
-    base_similarity = float(base_similarity)
+    if impact_count <= 0:
+        return False, "No candidates passed candidate_min_score", get_primary_handover_threshold_for_priority(source_priority)
 
-    if isinstance(power_word_score, (int, float)):
-        return min(1.0, base_similarity + float(power_word_score))
+    threshold = get_primary_handover_threshold_for_priority(source_priority)
+    p = (source_priority or '').strip().lower()
+    if p == 'high':
+        return True, "High priority source: handover triggered when threshold-passing candidates exist", None
 
-    analysis = power_word_score or {}
-    raw_boost = float(analysis.get('score', 0.0) or 0.0)
-    weighted_labels = {str(h.get('label', '')).lower() for h in (analysis.get('weighted_hits') or []) if isinstance(h, dict)}
-    has_strong_trigger = bool(analysis.get('has_strong_trigger')) or bool(weighted_labels & POWER_BOOST_STRONG_OVERRIDE_TERMS)
-    weak_only = bool(analysis.get('weak_only'))
+    if threshold is None:
+        return True, "No primary handover threshold configured", None
 
-    apply_boost = (base_similarity >= POWER_BOOST_MIN_BASE_SIM) or has_strong_trigger
-    applied_boost = raw_boost if apply_boost else 0.0
+    ok = float(primary_score) >= float(threshold)
+    return ok, (
+        f"Primary score {primary_score:.3f} {'>=' if ok else '<'} "
+        f"{p or 'default'} threshold {threshold:.3f}"
+    ), threshold
 
-    if weak_only:
-        applied_boost = min(applied_boost, POWER_WEAK_ONLY_CAP)
 
-    return min(1.0, base_similarity + applied_boost)
+def _load_semantic_embeddings(mock_semantic_data=None):
+    global _semantic_cache
+    if mock_semantic_data:
+        vectors = np.array(mock_semantic_data['embeddings'])
+        udids = mock_semantic_data['udids']
+        chunk_texts = mock_semantic_data.get('chunk_texts', [''] * len(udids))
+        chunks_raw = mock_semantic_data.get('chunks_raw')
+        if chunks_raw is None:
+            chunks_raw = []
+            for i, udid in enumerate(udids):
+                chunks_raw.append({
+                    'UDID': udid,
+                    'Chunk_ID': f"{udid}-C{i+1:02d}",
+                    'Chunk_Text': chunk_texts[i] if i < len(chunk_texts) else '',
+                    'Headline_Alt': ''
+                })
+        return vectors, udids, chunk_texts, chunks_raw
 
-def should_generate_handover(final_score, threshold=SIMILARITY_THRESHOLD):
+    if _semantic_cache is None:
+        if not os.path.exists(SEMANTIC_EMBEDDINGS_FILE):
+            raise FileNotFoundError(f"Semantic embeddings file not found: {SEMANTIC_EMBEDDINGS_FILE}")
+        with open(SEMANTIC_EMBEDDINGS_FILE, 'r', encoding='utf-8') as f:
+            raw = json.load(f)
+
+        vectors = []
+        for item in raw:
+            emb = item.get('Chunk_Embedding')
+            if isinstance(emb, str):
+                emb = json.loads(emb)
+            vectors.append(emb)
+
+        _semantic_cache = {
+            'vectors': np.array(vectors),
+            'udids': [item.get('UDID', 'N/A') for item in raw],
+            'chunk_texts': [item.get('Chunk_Text', '') for item in raw],
+            'chunks_raw': raw
+        }
+        logger.info(f"Loaded {len(raw)} semantic chunks from {SEMANTIC_EMBEDDINGS_FILE}")
+
+    return _semantic_cache['vectors'], _semantic_cache['udids'], _semantic_cache['chunk_texts'], _semantic_cache['chunks_raw']
+
+
+def _embed_texts(texts: List[str]) -> np.ndarray:
+    if not texts:
+        return np.zeros((0, 1536))
+    if client is None:
+        raise RuntimeError("OpenAI client unavailable. Set OPENAI_API_KEY and install openai package.")
+    response = client.embeddings.create(input=texts, model=SEMANTIC_MODEL)
+    return np.array([d.embedding for d in response.data])
+
+
+def _priority_to_source_weight(priority: str) -> float:
+    p = (priority or '').strip().lower()
+    if p == 'high':
+        return 1.0
+    if p == 'medium':
+        return 0.6
+    return 0.3
+
+
+def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=None):
     """
-    Determines if a change is relevant enough to generate a handover packet for Tom.
-    
-    Args:
-        final_score (float): The final weighted relevance score.
-        threshold (float): Minimum score required (default from config).
-    Returns:
-        bool: True if handover should be generated.
-    """
-    return final_score >= threshold
-
-def calculate_similarity(diff_path, mock_semantic_data=None):
-    """
-    Phase B implementation: hunk-aware semantic matching with chunk-level retrieval
-    and page-level (UDID) aggregation to detect likely multi-page impacts.
+    Recall-first candidate retrieval:
+    - parse diff into hunks
+    - embed each hunk
+    - keep all chunk matches >= HUNK_CHUNK_MIN_SIMILARITY (no top-k cap)
+    - aggregate to page-level candidates (UDID)
+    - keep all threshold-passing candidates for handover across batches
     """
     change = extract_change_content(diff_path)
-    all_hunks = change.get('hunks', [])
-
-    if not change['change_context'] or not all_hunks:
-        logger.warning(f"No substantive content extracted from {diff_path}")
+    hunks = change.get('hunks', [])
+    if not hunks:
         return {
             'status': 'no_content',
             'change_text': '',
             'change_hunks': [],
+            'power_words': detect_power_words(''),
+            'base_similarity': 0.0,
             'final_score': 0.0,
-            'should_handover': False
+            'candidate_min_score': CANDIDATE_MIN_SCORE,
+            'threshold_passing_candidates': [],
+            'impacted_pages': [],
+            'impact_count': 0,
+            'multi_impact_likely': False,
+            'should_handover': False,
+            'handover_decision_reason': "No substantive hunks parsed",
+            'primary_handover_threshold_used': get_primary_handover_threshold_for_priority(source_priority),
         }
 
-    logger.info(f"Change context preview: {change['change_context'][:200]}...")
-    logger.info(f"Parsed {len(all_hunks)} diff hunk(s) for semantic analysis")
-
-    overall_power_analysis = detect_power_words(change['change_context'])
-    logger.info(f"Power words found (overall): {overall_power_analysis['count']} - {overall_power_analysis['found']}")
-    logger.info(f"Overall power word score: {overall_power_analysis['score']:.2f}")
-
-    hunk_texts = []
-    hunk_power_analyses = []
-    for h in all_hunks:
-        h_text = (h.get('change_context') or '').strip()
-        hunk_texts.append(h_text)
-        hunk_power_analyses.append(detect_power_words(h_text))
+    overall_power = detect_power_words(change.get('change_context', ''))
+    for h in hunks:
+        h['power_words'] = detect_power_words(h.get('change_context', ''))
 
     try:
-        response = client.embeddings.create(input=hunk_texts, model=SEMANTIC_MODEL)
-        diff_vectors = np.array([row.embedding for row in response.data])
-        if diff_vectors.ndim == 1:
-            diff_vectors = diff_vectors.reshape(1, -1)
-        logger.info(f"Generated {len(diff_vectors)} OpenAI embedding(s) for diff hunks ({diff_vectors.shape[-1]}d)")
+        hunk_vectors = _embed_texts([h['change_context'] for h in hunks])
     except Exception as e:
-        logger.error(f"API Error: {e}")
         return {
             'status': 'error',
-            'change_text': change['change_context'],
-            'change_hunks': all_hunks,
-            'power_words': overall_power_analysis,
-            'final_score': 0.0,
-            'base_similarity': 0.0,
-            'should_handover': False
+            'message': str(e),
+            'change_text': change.get('change_context', ''),
+            'change_hunks': [],
+            'power_words': overall_power,
+            'impacted_pages': [],
+            'threshold_passing_candidates': [],
+            'impact_count': 0,
+            'multi_impact_likely': False,
+            'should_handover': False,
+            'handover_decision_reason': f"Embedding error: {e}"
         }
-
-    global _semantic_cache
-    if mock_semantic_data:
-        logger.info("Using mock semantic data for testing")
-        website_vectors = mock_semantic_data['embeddings']
-        udids = mock_semantic_data['udids']
-        chunk_texts = mock_semantic_data.get('chunk_texts', [''] * len(udids))
-        chunks_raw = mock_semantic_data.get('chunks_raw')
-    else:
-        if _semantic_cache is None:
-            if not os.path.exists(SEMANTIC_EMBEDDINGS_FILE):
-                logger.error(f"Semantic embeddings file not found: {SEMANTIC_EMBEDDINGS_FILE}")
-                return {
-                    'status': 'missing_embeddings',
-                    'change_text': change['change_context'],
-                    'change_hunks': all_hunks,
-                    'power_words': overall_power_analysis,
-                    'final_score': 0.0,
-                    'should_handover': False
-                }
-            logger.info(f"Loading semantic embeddings from {SEMANTIC_EMBEDDINGS_FILE}...")
-            with open(SEMANTIC_EMBEDDINGS_FILE, 'r', encoding='utf-8') as f:
-                raw = json.load(f)
-            _semantic_cache = {
-                'vectors': np.array([json.loads(item['Chunk_Embedding']) for item in raw]),
-                'udids': [item['UDID'] for item in raw],
-                'chunk_texts': [item['Chunk_Text'] for item in raw],
-                'chunks_raw': raw
-            }
-            logger.info(f"Loaded {len(raw)} semantic chunks")
-        website_vectors = _semantic_cache['vectors']
-        udids = _semantic_cache['udids']
-        chunk_texts = _semantic_cache['chunk_texts']
-        chunks_raw = _semantic_cache['chunks_raw']
 
     try:
-        similarity_matrix = cosine_similarity(diff_vectors, website_vectors)
-        logger.info(f"Calculated similarity matrix: {similarity_matrix.shape[0]} hunks x {similarity_matrix.shape[1]} chunks")
+        corpus_vectors, udids, chunk_texts, chunks_raw = _load_semantic_embeddings(mock_semantic_data=mock_semantic_data)
     except Exception as e:
-        logger.error(f"Failed to calculate similarities: {e}")
         return {
-            'status': 'similarity_error',
-            'change_text': change['change_context'],
-            'change_hunks': all_hunks,
-            'power_words': overall_power_analysis,
-            'final_score': 0.0,
-            'should_handover': False
+            'status': 'missing_embeddings' if isinstance(e, FileNotFoundError) else 'similarity_error',
+            'message': str(e),
+            'change_text': change.get('change_context', ''),
+            'change_hunks': [],
+            'power_words': overall_power,
+            'impacted_pages': [],
+            'threshold_passing_candidates': [],
+            'impact_count': 0,
+            'multi_impact_likely': False,
+            'should_handover': False,
+            'handover_decision_reason': str(e)
         }
 
-    top_chunks: List[Dict] = []
-    hunk_matches: List[Dict] = []
+    similarity_matrix = cosine_similarity(hunk_vectors, corpus_vectors)
 
-    for h_idx, hunk in enumerate(all_hunks):
-        row = similarity_matrix[h_idx]
-        top_idx = _top_k_indices(row, TOP_K_CHUNKS_PER_HUNK)
-        hunk_power = hunk_power_analyses[h_idx]
-        hunk_candidates: List[Dict] = []
+    hunk_matches = []
+    page_acc: Dict[str, dict] = {}
 
-        for idx in top_idx:
-            candidate = _build_chunk_candidate(
-                idx=int(idx),
-                similarity=float(row[int(idx)]),
-                hunk=hunk,
-                hunk_power=hunk_power,
-                udids=udids,
-                chunk_texts=chunk_texts,
-                chunks_raw=chunks_raw
-            )
-            top_chunks.append(candidate)
-            hunk_candidates.append(candidate)
+    for hidx, hunk in enumerate(hunks):
+        scores = similarity_matrix[hidx]
+        passing_chunk_indices = np.where(scores >= HUNK_CHUNK_MIN_SIMILARITY)[0].tolist()
 
-        per_page_best: Dict[str, Dict] = {}
-        for c in hunk_candidates:
-            existing = per_page_best.get(c['udid'])
-            if existing is None or c['final_score'] > existing['final_score']:
-                per_page_best[c['udid']] = c
+        # for summary visibility, include top diagnostic chunk if nothing passed
+        diagnostic_indices = passing_chunk_indices.copy()
+        if not diagnostic_indices and scores.size > 0:
+            diagnostic_indices = [int(np.argmax(scores))]
 
-        top_pages_for_hunk = sorted(
-            per_page_best.values(),
-            key=lambda x: (x['final_score'], x['base_similarity']),
-            reverse=True
-        )[:5]
+        page_best_for_hunk: Dict[str, float] = {}
+        hunk_chunk_summaries = []
+
+        for ci in diagnostic_indices:
+            score = float(scores[ci])
+            raw = chunks_raw[ci] if chunks_raw and ci < len(chunks_raw) else {}
+            udid = (udids[ci] if ci < len(udids) else raw.get('UDID')) or 'N/A'
+            chunk_id = raw.get('Chunk_ID') or f"{udid}-UNK-{ci}"
+            headline = raw.get('Headline_Alt') or raw.get('Page_Title') or ''
+
+            passes = score >= HUNK_CHUNK_MIN_SIMILARITY
+
+            # summary/debug entry
+            hunk_chunk_summaries.append({
+                'udid': udid,
+                'chunk_id': chunk_id,
+                'similarity': score,
+                'headline_alt': headline,
+                'passes_chunk_threshold': passes
+            })
+
+            if not passes:
+                continue
+
+            page_best_for_hunk[udid] = max(page_best_for_hunk.get(udid, 0.0), score)
+
+            rec = page_acc.setdefault(udid, {
+                'udid': udid,
+                'chunk_hits': 0,
+                'matched_hunks': set(),
+                'chunk_id_set': set(),
+                'chunk_ids': [],
+                'best_chunk_id': chunk_id,
+                'best_chunk_similarity': score,
+                'best_headline': headline,
+                'base_similarity': 0.0,
+                'avg_similarity_sum': 0.0,
+            })
+
+            rec['chunk_hits'] += 1
+            rec['matched_hunks'].add(hunk['hunk_index'])
+
+            if chunk_id not in rec['chunk_id_set']:
+                rec['chunk_id_set'].add(chunk_id)
+                rec['chunk_ids'].append(chunk_id)
+
+            rec['avg_similarity_sum'] += score
+            if score > rec['base_similarity']:
+                rec['base_similarity'] = score
+                rec['best_chunk_id'] = chunk_id
+                rec['best_headline'] = headline
+            rec['best_chunk_similarity'] = max(rec['best_chunk_similarity'], score)
+
+        top_pages_for_hunk = [
+            {'udid': u, 'similarity': s}
+            for u, s in sorted(page_best_for_hunk.items(), key=lambda x: x[1], reverse=True)[:PER_HUNK_SUMMARY_LIMIT]
+        ]
 
         hunk_matches.append({
             'hunk_index': hunk['hunk_index'],
-            'header': hunk.get('header', ''),
-            'change_text': hunk.get('change_context', ''),
-            'change_preview': hunk.get('change_context', '')[:220],
-            'added': hunk.get('added', ''),
-            'removed': hunk.get('removed', ''),
-            'power_words': hunk_power,
-            'top_chunks': hunk_candidates[:5],
-            'top_pages': [
-                {
-                    'udid': c['udid'],
-                    'score': c['final_score'],
-                    'base_similarity': c['base_similarity'],
-                    'chunk_id': c['chunk_id'],
-                    'headline_alt': c['headline_alt']
-                } for c in top_pages_for_hunk
-            ]
+            'hunk_header': h.get('header', ''),
+            'change_text': h.get('change_context', ''),
+            'power_words_found': h.get('power_words', {}).get('power_words_found', []),
+            'chunk_similarity_threshold': HUNK_CHUNK_MIN_SIMILARITY,
+            'passing_chunk_count': len(passing_chunk_indices),
+            'top_pages': top_pages_for_hunk,
+            'top_chunks': sorted(hunk_chunk_summaries, key=lambda x: x['similarity'], reverse=True)[:PER_HUNK_SUMMARY_LIMIT]
         })
 
-    if not top_chunks:
-        return {
-            'status': 'no_candidates',
-            'change_text': change['change_context'],
-            'change_hunks': all_hunks,
-            'power_words': overall_power_analysis,
-            'final_score': 0.0,
-            'should_handover': False
-        }
+    impacted_pages = []
+    for udid, rec in page_acc.items():
+        distinct_hunks = len(rec['matched_hunks'])
+        coverage_bonus = min(MAX_PAGE_COVERAGE_BONUS, max(0, distinct_hunks - 1) * PAGE_HUNK_COVERAGE_BONUS)
+        density_bonus = min(MAX_PAGE_DENSITY_BONUS, max(0, rec['chunk_hits'] - 1) * PAGE_CHUNK_DENSITY_BONUS)
 
-    impacted_pages = aggregate_page_impacts(top_chunks)
-    primary_page = impacted_pages[0] if impacted_pages else None
-    primary_chunk = primary_page.get('best_chunk') if primary_page else None
+        power_adjusted = calculate_final_score(rec['base_similarity'], overall_power)
+        power_uplift = max(0.0, power_adjusted - rec['base_similarity'])
 
-    base_similarity = float(primary_page['aggregated_base_similarity']) if primary_page else 0.0
-    final_score = float(primary_page['aggregated_final_score']) if primary_page else 0.0
-    should_handover = should_generate_handover(final_score)
+        final_score = min(1.0, rec['base_similarity'] + coverage_bonus + density_bonus + power_uplift)
 
-    impact_count = sum(1 for p in impacted_pages if p['aggregated_final_score'] >= MULTI_IMPACT_MIN_SCORE)
-    multi_impact_likely = impact_count >= 2
+        impacted_pages.append({
+            'udid': udid,
+            'aggregated_base_similarity': float(rec['base_similarity']),
+            'aggregated_final_score': float(final_score),
+            'chunk_hits': rec['chunk_hits'],
+            'distinct_hunk_hits': distinct_hunks,
+            'coverage_bonus': float(coverage_bonus),
+            'density_bonus': float(density_bonus),
+            'matched_hunk_indices': sorted(rec['matched_hunks']),
+            'relevant_chunk_ids': rec['chunk_ids'][:MAX_RELEVANT_CHUNK_IDS_PER_CANDIDATE],
+            'best_chunk_id': rec['best_chunk_id'],
+            'best_headline': rec['best_headline'],
+            'avg_similarity': float(rec['avg_similarity_sum'] / max(1, rec['chunk_hits']))
+        })
 
-    if primary_page:
-        logger.info(
-            f"Primary page match: {primary_page['udid']} with aggregated score {final_score:.3f} "
-            f"(chunk hits={primary_page['chunk_hits']}, hunk hits={primary_page['distinct_hunk_hits']})"
-        )
-    if multi_impact_likely:
-        logger.info(f"Multi-impact likely: {impact_count} page candidates >= {MULTI_IMPACT_MIN_SCORE:.2f}")
-
-    logger.info(f"Threshold: {SIMILARITY_THRESHOLD} | Should generate handover: {should_handover}")
-
-    top_chunks_sorted = sorted(
-        top_chunks,
-        key=lambda x: (x['final_score'], x['base_similarity']),
+    impacted_pages.sort(
+        key=lambda p: (p['aggregated_final_score'], p['distinct_hunk_hits'], p['chunk_hits']),
         reverse=True
     )
+    for i, p in enumerate(impacted_pages, start=1):
+        p['candidate_rank'] = i
 
-    filter_reason = None
-    if not should_handover:
-        filter_reason = f"Below threshold: {final_score:.3f} < {SIMILARITY_THRESHOLD}"
-    elif multi_impact_likely:
-        filter_reason = f"Multi-impact candidate: {impact_count} pages >= {MULTI_IMPACT_MIN_SCORE:.2f}"
+    threshold_passing_candidates = [
+        p for p in impacted_pages
+        if float(p.get('aggregated_final_score', 0.0)) >= CANDIDATE_MIN_SCORE
+    ]
 
-    matched_chunk_raw = None
-    if primary_chunk:
-        if chunks_raw:
-            matched_chunk_raw = chunks_raw[primary_chunk['raw_index']]
-        else:
-            matched_chunk_raw = {
-                'Chunk_ID': primary_chunk.get('chunk_id'),
-                'Chunk_Text': primary_chunk.get('chunk_text'),
-                'Headline_Alt': primary_chunk.get('headline_alt', 'N/A'),
-                'Chunk_Context_Prepend': primary_chunk.get('chunk_context_prepend', ''),
-                'Chunk_Token_Count': primary_chunk.get('token_count', 'N/A')
-            }
+    primary = impacted_pages[0] if impacted_pages else None
+    primary_score = float(primary['aggregated_final_score']) if primary else 0.0
+    impact_count = len(threshold_passing_candidates)
+    multi_impact_likely = impact_count > 1
+
+    should_handover, handover_reason, primary_threshold_used = should_generate_handover(
+        primary_score=primary_score,
+        impact_count=impact_count,
+        source_priority=source_priority
+    )
 
     return {
         'status': 'success',
-        'change_text': change['change_context'],
-        'change_hunks': all_hunks,
-        'hunk_matches': hunk_matches,
-        'diff_vector_shape': tuple(diff_vectors.shape),
-        'power_words': overall_power_analysis,
-        'base_similarity': base_similarity,
-        'final_score': final_score,
-        'matched_udid': primary_page['udid'] if primary_page else None,
-        'matched_chunk_id': primary_chunk.get('chunk_id') if primary_chunk else None,
-        'matched_text': primary_chunk.get('chunk_text') if primary_chunk else '',
-        'matched_chunk_raw': matched_chunk_raw,
-        'primary_match': {'page': primary_page, 'chunk': primary_chunk} if primary_page and primary_chunk else None,
+        'change_text': change.get('change_context', ''),
+        'change_hunks': [
+            {
+                'hunk_index': h['hunk_index'],
+                'hunk_header': h.get('header', ''),
+                'hunk_text': h.get('change_context', ''),
+                'power_words_found': h.get('power_words', {}).get('power_words_found', [])
+            }
+            for h in hunks
+        ],
+        'power_words': overall_power,
+        'base_similarity': float(primary['aggregated_base_similarity']) if primary else 0.0,
+        'final_score': primary_score,
+        'primary_udid': primary['udid'] if primary else None,
+        'primary_chunk_id': primary.get('best_chunk_id') if primary else None,
+        'primary_headline': primary.get('best_headline') if primary else None,
+        # aliases for audit compatibility
+        'matched_udid': primary['udid'] if primary else None,
+        'matched_chunk_id': primary.get('best_chunk_id') if primary else None,
+        'candidate_min_score': CANDIDATE_MIN_SCORE,
+        'hunk_chunk_min_similarity': HUNK_CHUNK_MIN_SIMILARITY,
+        'primary_handover_threshold_used': primary_threshold_used,
+        'threshold_passing_candidates': threshold_passing_candidates,
         'impacted_pages': impacted_pages,
-        'top_chunks': top_chunks_sorted[:MAX_TOP_CHUNKS_IN_PACKET],
-        'impact_count': int(impact_count),
-        'multi_impact_likely': bool(multi_impact_likely),
-        'multi_impact_threshold': float(MULTI_IMPACT_MIN_SCORE),
-        'threshold': SIMILARITY_THRESHOLD,
+        'impact_count': impact_count,
+        'multi_impact_likely': multi_impact_likely,
+        'hunk_matches': hunk_matches,
         'should_handover': should_handover,
-        'filter_reason': filter_reason
+        'handover_decision_reason': handover_reason,
+        'filter_reason': None if should_handover else handover_reason,
     }
 
-def _approx_tokens_from_chars(char_count: int) -> int:
-    return max(1, int(round(char_count / 4.0)))
+
+# ---------------------------
+# Packet generation (batched)
+# ---------------------------
+
+def _derive_packet_priority(priority: str, primary_score: float, power_count: int) -> str:
+    # source priority can dominate urgency but preserve score influence
+    p = (priority or '').strip().lower()
+    if p == 'high':
+        if primary_score >= 0.70 or power_count >= 5:
+            return 'Critical'
+        return 'High'
+    if primary_score >= 0.75 or power_count >= 5:
+        return 'Critical'
+    if primary_score >= 0.60 or power_count >= 3:
+        return 'High'
+    return 'Medium'
 
 
-def _truncate_text(value: Optional[str], max_chars: int) -> str:
-    if value is None:
-        return ""
-    value = str(value)
-    if len(value) <= max_chars:
-        return value
-    return value[:max_chars].rstrip() + " …[truncated]"
-
-
-def _estimate_packet_size(packet: Dict) -> Tuple[int, int]:
-    payload = json.dumps(packet, ensure_ascii=False)
-    chars = len(payload)
-    return chars, _approx_tokens_from_chars(chars)
-
-
-def _trim_packet_for_llm(packet: Dict) -> Dict:
+def generate_handover_packets(source_name: str, priority: str, diff_file: str,
+                              analysis: dict, timestamp: str,
+                              version_id: Optional[str] = None) -> List[str]:
     """
-    Deterministic trimming pass to keep handover packets useful for LLM ingestion
-    while preserving the core evidence structure.
+    Generates one or more JSON handover packets for LLM confirmation.
+    All candidates with score >= CANDIDATE_MIN_SCORE are included across batches (no truncation).
     """
-    pkt = json.loads(json.dumps(packet, ensure_ascii=False))
+    if not analysis or analysis.get('status') != 'success':
+        return []
 
-    if 'change' in pkt and isinstance(pkt['change'], dict):
-        pkt['change']['hunk'] = _truncate_text(pkt['change'].get('hunk', ''), MAX_CHANGE_TEXT_CHARS)
-        for h in (pkt['change'].get('hunks') or []):
-            h['change_preview'] = _truncate_text(h.get('change_preview', ''), MAX_HUNK_PREVIEW_CHARS)
-            if isinstance(h.get('top_chunks'), list):
-                h['top_chunks'] = h['top_chunks'][:3]
-            if isinstance(h.get('top_pages'), list):
-                h['top_pages'] = h['top_pages'][:3]
+    all_candidates = list(analysis.get('threshold_passing_candidates') or [])
+    if not all_candidates:
+        return []
 
-    if 'matched_chunk' in pkt and isinstance(pkt['matched_chunk'], dict):
-        pkt['matched_chunk']['chunk_text'] = _truncate_text(pkt['matched_chunk'].get('chunk_text', ''), MAX_MATCHED_CHUNK_TEXT_CHARS)
+    os.makedirs(HANDOVER_DIR, exist_ok=True)
 
-    if isinstance(pkt.get('impacted_pages'), list):
-        pkt['impacted_pages'] = pkt['impacted_pages'][:MAX_IMPACT_PAGES_IN_PACKET]
-        for p in pkt['impacted_pages']:
-            if not isinstance(p, dict):
-                continue
-            best = p.get('best_chunk')
-            if isinstance(best, dict):
-                best['chunk_text'] = _truncate_text(best.get('chunk_text', ''), MAX_PACKET_CHUNK_TEXT_CHARS)
-            if isinstance(p.get('supporting_chunks'), list):
-                p['supporting_chunks'] = p['supporting_chunks'][:3]
-                for s in p['supporting_chunks']:
-                    if isinstance(s, dict):
-                        s['chunk_text'] = _truncate_text(s.get('chunk_text', ''), MAX_PACKET_CHUNK_TEXT_CHARS)
+    batch_size = max(1, int(MAX_CANDIDATES_PER_PACKET))
+    batches = [all_candidates[i:i + batch_size] for i in range(0, len(all_candidates), batch_size)]
+    batch_count = len(batches)
 
-    if isinstance(pkt.get('top_chunks'), list):
-        pkt['top_chunks'] = pkt['top_chunks'][:MAX_TOP_CHUNKS_IN_PACKET]
-        for c in pkt['top_chunks']:
-            if isinstance(c, dict):
-                c['chunk_text'] = _truncate_text(c.get('chunk_text', ''), MAX_PACKET_CHUNK_TEXT_CHARS)
+    power = analysis.get('power_words', {}) or {}
+    power_count = int(power.get('count', 0))
+    primary_score = float(analysis.get('final_score') or 0.0)
+    packet_priority = _derive_packet_priority(priority, primary_score, power_count)
+    primary_udid = analysis.get('primary_udid') or 'unknown'
+    safe_ts = timestamp.replace(':', '').replace('.', '').replace('-', '')[:14]
 
-    chars, _ = _estimate_packet_size(pkt)
-    if chars > HANDOVER_PACKET_HARD_MAX_CHARS:
-        if isinstance(pkt.get('top_chunks'), list):
-            pkt['top_chunks'] = pkt['top_chunks'][:10]
-            for c in pkt['top_chunks']:
-                if isinstance(c, dict):
-                    c['chunk_text'] = _truncate_text(c.get('chunk_text', ''), 180)
-        if isinstance(pkt.get('impacted_pages'), list):
-            pkt['impacted_pages'] = pkt['impacted_pages'][:6]
-            for p in pkt['impacted_pages']:
-                if isinstance(p, dict):
-                    best = p.get('best_chunk')
-                    if isinstance(best, dict):
-                        best['chunk_text'] = _truncate_text(best.get('chunk_text', ''), 180)
-    return pkt
+    paths: List[str] = []
+
+    for idx, batch in enumerate(batches, start=1):
+        packet_id = f"handover_{safe_ts}_{primary_udid}_batch_{idx:02d}_of_{batch_count:02d}"
+        filepath = os.path.join(HANDOVER_DIR, f"{packet_id}.json")
+
+        packet = {
+            'packet_id': packet_id,
+            'generated_at': timestamp,
+            'packet_priority': packet_priority,
+            'source': {
+                'name': source_name,
+                'monitoring_priority': priority,
+                'source_weight': _priority_to_source_weight(priority),
+                'diff_file': diff_file,
+                'diff_file_path': os.path.join(DIFF_DIR, diff_file),
+                'timestamp_from_audit_log': timestamp,
+                'version_id': version_id
+            },
+            'analysis': {
+                'primary_similarity_score': primary_score,
+                'primary_base_similarity': analysis.get('base_similarity'),
+                'candidate_min_score': analysis.get('candidate_min_score', CANDIDATE_MIN_SCORE),
+                'primary_handover_threshold_used': analysis.get('primary_handover_threshold_used'),
+                'power_words_found': power.get('power_words_found', power.get('found', [])),
+                'power_word_count': power_count,
+                'power_word_score': power.get('score', 0.0),
+                'impact_count': analysis.get('impact_count', 0),
+                'multi_impact_likely': analysis.get('multi_impact_likely', False),
+                'handover_decision_reason': analysis.get('handover_decision_reason')
+            },
+            'change': {
+                'diff_file': diff_file,
+                'preview': (analysis.get('change_text', '') or '')[:400],
+                'hunks': analysis.get('change_hunks', [])
+            },
+            'llm_handover': {
+                'purpose': 'JSON handover packet for the LLM to confirm whether the source change impacts candidate IPFR pages.',
+                'retrieval_mode': 'high_recall_candidate_generation',
+                'packeting_mode': 'candidate_batching_no_truncation_of_threshold_passing_candidates',
+                'primary_udid': analysis.get('primary_udid'),
+                'candidate_min_score': analysis.get('candidate_min_score', CANDIDATE_MIN_SCORE),
+                'candidate_count_total': len(all_candidates),
+                'candidate_count_in_packet': len(batch),
+                'candidate_batch_index': idx,
+                'candidate_batch_count': batch_count,
+                'candidate_start_index': (idx - 1) * batch_size + 1,
+                'candidate_end_index': (idx - 1) * batch_size + len(batch),
+                'candidate_udids': [c.get('udid') for c in batch],
+                'candidates': [
+                    {
+                        'udid': c.get('udid'),
+                        'candidate_rank': c.get('candidate_rank'),
+                        'candidate_score': c.get('aggregated_final_score'),
+                        'base_similarity': c.get('aggregated_base_similarity'),
+                        'matched_hunk_indices': c.get('matched_hunk_indices', []),
+                        'relevant_chunk_ids': c.get('relevant_chunk_ids', []),
+                        'best_chunk_id': c.get('best_chunk_id'),
+                        'chunk_hit_count': c.get('chunk_hits'),
+                        'distinct_hunk_hits': c.get('distinct_hunk_hits'),
+                        'coverage_bonus': c.get('coverage_bonus'),
+                        'density_bonus': c.get('density_bonus'),
+                        'best_headline': c.get('best_headline')
+                    }
+                    for c in batch
+                ],
+                'hunk_matches': analysis.get('hunk_matches', [])
+            }
+        }
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(packet, f, indent=2, ensure_ascii=False)
+
+        logger.info(f"LLM handover packet written: {os.path.basename(filepath)}")
+        paths.append(filepath)
+
+    return paths
 
 
-def write_github_summary(handover_paths: list):
+def write_github_summary(handover_paths: List[str]):
     """
     Writes a markdown summary of this run's handover packets to the GitHub Actions
-    job summary (GITHUB_STEP_SUMMARY). If that env variable isn't set (i.e. running
-    locally), the summary is written to stdout instead.
-
-    Args:
-        handover_paths (list): Paths to handover packet JSON files generated this run.
+    job summary (GITHUB_STEP_SUMMARY). If unavailable, prints to stdout.
     """
     summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
-
     lines = ["## Tripwire run summary\n"]
 
     if not handover_paths:
-        lines.append("No handover packets generated this run — all changes were below threshold or no changes were detected.\n")
+        lines.append("No handover packets generated this run.\n")
     else:
         lines.append(f"**{len(handover_paths)} handover packet(s) generated this run.**\n")
-        lines.append("| Priority | Score | Source | Matched UDID | Headline | Diff file |")
-        lines.append("|----------|-------|--------|--------------|----------|-----------|")
+        lines.append("| Priority | Score | Source | Primary UDID | Diff file | Batch | Candidates |")
+        lines.append("|---|---:|---|---|---|---|---:|")
 
-        for path in handover_paths:
+        for p in handover_paths:
             try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    p = json.load(f)
-                priority   = p.get('packet_priority', 'N/A')
-                score      = p.get('analysis', {}).get('similarity_score', 0)
-                source     = p.get('source', {}).get('name', 'N/A')
-                udid       = p.get('matched_chunk', {}).get('udid', 'N/A')
-                headline   = p.get('matched_chunk', {}).get('headline_alt', 'N/A')
-                diff_file  = p.get('source', {}).get('diff_file', 'N/A')
-                lines.append(f"| **{priority}** | {score:.3f} | {source} | `{udid}` | {headline} | `{diff_file}` |")
+                with open(p, 'r', encoding='utf-8') as f:
+                    packet = json.load(f)
+                prio = packet.get('packet_priority', '')
+                score = packet.get('analysis', {}).get('primary_similarity_score')
+                src = packet.get('source', {}).get('name', '')
+                udid = packet.get('llm_handover', {}).get('primary_udid', '')
+                diff_file = packet.get('source', {}).get('diff_file', '')
+                lh = packet.get('llm_handover', {})
+                batch = f"{lh.get('candidate_batch_index','?')}/{lh.get('candidate_batch_count','?')}"
+                count = lh.get('candidate_count_in_packet', '')
+                score_fmt = f"{float(score):.3f}" if score is not None else ""
+                lines.append(f"| {prio} | {score_fmt} | {src} | {udid} | {diff_file} | {batch} | {count} |")
             except Exception as e:
-                lines.append(f"| — | — | Error reading packet: {e} | — | — | — |")
+                lines.append(f"| Error | | | | {os.path.basename(p)} | | ({e}) |")
 
-        lines.append("")
-        lines.append("> Full JSON packets are available in the **handover_packets** artifact attached to this run.")
-
-    summary = "\n".join(lines) + "\n"
-
+    output = "\n".join(lines) + "\n"
     if summary_file:
         with open(summary_file, 'a', encoding='utf-8') as f:
-            f.write(summary)
+            f.write(output)
+        logger.info(f"Wrote GitHub Actions summary to {summary_file}")
     else:
-        print(summary)
+        print(output)
 
 
-def generate_handover_packet(source_name: str, priority: str, diff_file: str,
-                             analysis: dict, timestamp: str) -> str:
-    """
-    Generates a JSON handover packet for Tom containing all context needed to review
-    a flagged content change.
-
-    Phase B extends the packet to include multi-page impact candidates and hunk-level
-    evidence while retaining the legacy matched_chunk block for compatibility.
-    """
-    os.makedirs(HANDOVER_DIR, exist_ok=True)
-
-    chunk = analysis.get('matched_chunk_raw') or {}
-    power = analysis.get('power_words', {})
-    final_score = analysis.get('final_score', 0.0)
-    impacted_pages = analysis.get('impacted_pages', [])
-    top_chunks = analysis.get('top_chunks', [])
-    hunk_matches = analysis.get('hunk_matches', [])
-    primary_udid = analysis.get('matched_udid', 'unknown')
-
-    pw_count = power.get('count', 0)
-    if final_score >= 0.75 or pw_count >= 5:
-        packet_priority = 'Critical'
-    elif final_score >= 0.60 or pw_count >= 3:
-        packet_priority = 'High'
-    else:
-        packet_priority = 'Medium'
-
-    safe_ts = re.sub(r'[^0-9T]', '', timestamp).replace('T', '_')
-    safe_ts = safe_ts[:20] if safe_ts else datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    diff_stub = os.path.splitext(os.path.basename(diff_file))[0]
-    diff_stub = re.sub(r'\W+', '_', diff_stub)[:40]
-    filename = f"handover_{safe_ts}_{primary_udid}_{diff_stub}.json"
-    filepath = os.path.join(HANDOVER_DIR, filename)
-
-    packet_hunks = []
-    for hm in hunk_matches:
-        packet_hunks.append({
-            'hunk_index': hm.get('hunk_index'),
-            'header': hm.get('header', ''),
-            'change_preview': _truncate_text(hm.get('change_preview', ''), MAX_HUNK_PREVIEW_CHARS),
-            'power_words': hm.get('power_words', {}),
-            'top_pages': hm.get('top_pages', []),
-            'top_chunks': [
-                {
-                    'udid': c.get('udid'),
-                    'chunk_id': c.get('chunk_id'),
-                    'headline_alt': c.get('headline_alt'),
-                    'base_similarity': c.get('base_similarity'),
-                    'final_score': c.get('final_score')
-                }
-                for c in hm.get('top_chunks', [])[:5]
-            ]
-        })
-
-    packet_impacted_pages = []
-    for p in impacted_pages[:MAX_IMPACT_PAGES_IN_PACKET]:
-        best = p.get('best_chunk', {}) or {}
-        packet_impacted_pages.append({
-            'rank': p.get('rank'),
-            'udid': p.get('udid'),
-            'aggregated_final_score': p.get('aggregated_final_score'),
-            'aggregated_base_similarity': p.get('aggregated_base_similarity'),
-            'chunk_hits': p.get('chunk_hits'),
-            'distinct_hunk_hits': p.get('distinct_hunk_hits'),
-            'coverage_bonus': p.get('coverage_bonus'),
-            'density_bonus': p.get('density_bonus'),
-            'matched_hunk_indices': p.get('matched_hunk_indices', []),
-            'best_chunk': {
-                'chunk_id': best.get('chunk_id'),
-                'headline_alt': best.get('headline_alt'),
-                'base_similarity': best.get('base_similarity'),
-                'final_score': best.get('final_score'),
-                'chunk_text': _truncate_text(best.get('chunk_text', ''), MAX_PACKET_CHUNK_TEXT_CHARS)
-            }
-        })
-
-    packet_top_chunks = []
-    for c in top_chunks[:MAX_TOP_CHUNKS_IN_PACKET]:
-        packet_top_chunks.append({
-            'udid': c.get('udid'),
-            'chunk_id': c.get('chunk_id'),
-            'headline_alt': c.get('headline_alt'),
-            'hunk_index': c.get('hunk_index'),
-            'base_similarity': c.get('base_similarity'),
-            'final_score': c.get('final_score'),
-            'hunk_power_words': c.get('hunk_power_words', []),
-            'hunk_power_word_score': c.get('hunk_power_word_score', 0.0),
-            'chunk_text': _truncate_text(c.get('chunk_text', ''), MAX_PACKET_CHUNK_TEXT_CHARS)
-        })
-
-    packet = {
-        'packet_id': filename.replace('.json', ''),
-        'generated_at': timestamp,
-        'packet_priority': packet_priority,
-        'source': {
-            'name': source_name,
-            'monitoring_priority': priority,
-            'diff_file': diff_file,
-            'diff_file_path': os.path.join(DIFF_DIR, diff_file)
-        },
-        'analysis': {
-            'similarity_score': final_score,
-            'base_similarity': analysis.get('base_similarity'),
-            'threshold': analysis.get('threshold', SIMILARITY_THRESHOLD),
-            'power_words_found': power.get('found', []),
-            'power_word_count': pw_count,
-            'power_word_score': power.get('score', 0.0),
-            'multi_impact_likely': analysis.get('multi_impact_likely', False),
-            'impact_count': analysis.get('impact_count', 0),
-            'multi_impact_threshold': analysis.get('multi_impact_threshold', MULTI_IMPACT_MIN_SCORE)
-        },
-        'change': {
-            'hunk': _truncate_text(analysis.get('change_text', ''), MAX_CHANGE_TEXT_CHARS),
-            'preview': (analysis.get('change_text', '') or '')[:200],
-            'hunks': packet_hunks
-        },
-        'matched_chunk': {
-            'udid': primary_udid,
-            'chunk_id': chunk.get('Chunk_ID', 'N/A'),
-            'headline_alt': chunk.get('Headline_Alt', 'N/A'),
-            'chunk_text': _truncate_text(chunk.get('Chunk_Text', analysis.get('matched_text', '')), MAX_MATCHED_CHUNK_TEXT_CHARS),
-            'chunk_context_prepend': chunk.get('Chunk_Context_Prepend', ''),
-            'token_count': chunk.get('Chunk_Token_Count', 'N/A')
-        },
-        'impacted_pages': packet_impacted_pages,
-        'top_chunks': packet_top_chunks,
-        'review_context': {
-            'why_flagged': (
-                f"Primary page aggregated similarity score of {final_score:.2%} exceeds threshold of "
-                f"{analysis.get('threshold', SIMILARITY_THRESHOLD):.2%}"
-            ),
-            'power_words_note': (
-                f"Found {pw_count} enforcement-related term(s): "
-                f"{', '.join(power.get('found', []))}"
-                if pw_count else "No enforcement terms detected"
-            ),
-            'multi_impact_note': (
-                f"Multi-impact likely: {analysis.get('impact_count', 0)} page candidates "
-                f"scored >= {analysis.get('multi_impact_threshold', MULTI_IMPACT_MIN_SCORE):.2f}"
-                if analysis.get('multi_impact_likely') else
-                "No strong evidence yet that multiple IPFR pages are impacted"
-            )
-        }
-    }
-
-    # Phase C packet-size controls and explicit LLM readiness metadata
-    packet_before_trim = json.loads(json.dumps(packet, ensure_ascii=False))
-    pre_chars, pre_tokens = _estimate_packet_size(packet_before_trim)
-
-    packet = _trim_packet_for_llm(packet)
-    post_chars, post_tokens = _estimate_packet_size(packet)
-    packet['llm_readiness'] = {
-        'estimated_chars': post_chars,
-        'estimated_tokens': post_tokens,
-        'estimated_chars_pre_trim': pre_chars,
-        'estimated_tokens_pre_trim': pre_tokens,
-        'target_max_chars': HANDOVER_PACKET_TARGET_MAX_CHARS,
-        'hard_max_chars': HANDOVER_PACKET_HARD_MAX_CHARS,
-        'fits_small_context_llm': post_tokens <= 6000,
-        'recommended_handling': (
-            'direct ingestion ok' if post_tokens <= 6000
-            else 'summarise or chunk before sending to an LLM'
-        )
-    }
-
-    with open(filepath, 'w', encoding='utf-8') as f:
-        json.dump(packet, f, indent=2, ensure_ascii=False)
-
-    logger.info(
-        f"Handover packet written: {filename} [{packet_priority}] "
-        f"(~{post_tokens} tokens / {post_chars} chars, pre-trim ~{pre_tokens} tokens)"
-    )
-    return filepath
-
-
-# --- Main Loop ---
+# ---------------------------
+# Main loop
+# ---------------------------
 
 def main():
-    if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
-    if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
-    with open(SOURCES_FILE, 'r') as f: sources = json.load(f)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs(DIFF_DIR, exist_ok=True)
+
+    if not os.path.exists(SOURCES_FILE):
+        raise FileNotFoundError(f"Missing {SOURCES_FILE}")
+
+    with open(SOURCES_FILE, 'r', encoding='utf-8') as f:
+        sources = json.load(f)
 
     session = requests.Session()
     driver = None
-    logger.info(f"--- Tripwire Stage 2 (Modular & Documented) Run: {datetime.datetime.now()} ---")
-    handover_paths = []
+    handover_paths: List[str] = []
+
+    logger.info(f"--- Tripwire Run: {datetime.datetime.now().isoformat()} ---")
 
     for source in sources:
-        name, stype, priority = source['name'], source['type'], source.get('priority', 'Low')
+        name = source['name']
+        stype = source['type']
+        priority = source.get('priority', 'Low')
+
         out_name = source['output_filename'].replace('.docx', '.md') if stype == "Legislation_OData" else source['output_filename']
         out_path = os.path.join(OUTPUT_DIR, out_name)
-        
+
         old_id = get_last_version_id(name)
         current_id = fetch_stage0_metadata(session, source)
         file_exists = os.path.exists(out_path)
 
-        # START: Self-Healing Logic
-        # Check if we need to repopulate a missing file even if the Version ID matches
         repopulate_only = False
         if old_id and current_id and old_id == current_id:
             if file_exists:
                 logger.info(f"No version change for {name}. Skipping.")
                 continue
-            else:
-                logger.warning(f"File missing for {name}. Healing archive...")
-                repopulate_only = True
+            logger.warning(f"Archive file missing for {name}; healing archive copy.")
+            repopulate_only = True
 
-        new_content = None
         try:
-            # START: Extraction and Normalisation
-            # Fetches raw content from the source and converts it to a standard Markdown/XML format
+            new_content = None
             if stype == "Legislation_OData":
                 ver_id, meta = fetch_legislation_metadata(session, source)
                 if meta:
-                    new_content = download_legislation_content(session, source['base_url'], meta)
                     current_id = ver_id
+                    new_content = download_legislation_content(session, source['base_url'], meta)
             elif stype == "RSS":
                 resp = session.get(source['url'], timeout=15)
+                resp.raise_for_status()
                 new_content = sanitize_rss(resp.content)
             elif stype == "WebPage":
-                if not driver: driver = initialize_driver()
+                if driver is None:
+                    driver = initialize_driver()
                 new_content = fetch_webpage_content(driver, source['url'])
+            else:
+                raise ValueError(f"Unsupported source type: {stype}")
 
-            if new_content:
-                # START: Substantive Change Detection
-                # Compares the new normalized content against the archived version
-                diff_hunk = get_diff(out_path, new_content)
-                
-                # Determine if we should save (change detected, initial run, or self-healing)
-                if diff_hunk or not file_exists or repopulate_only:
-                    save_to_archive(out_name, new_content)
-                    
-                    if diff_hunk and diff_hunk != "Initial archive creation." and not repopulate_only:
-                        diff_file = save_diff_record(name, diff_hunk)
-                        diff_path = os.path.join(DIFF_DIR, diff_file)
+            if new_content is None:
+                log_to_audit(name, priority, "Exception", "N/A", current_id, reason="No content fetched")
+                continue
 
-                        # Stage 3: Semantic analysis and handover packet generation
-                        analysis = calculate_similarity(diff_path)
-                        s3_score = analysis.get('final_score') if analysis['status'] == 'success' else None
-                        s3_words = analysis.get('power_words', {}).get('found') if analysis['status'] == 'success' else None
-                        s3_udid = analysis.get('matched_udid') if analysis['status'] == 'success' else None
-                        s3_chunk_id = analysis.get('matched_chunk_id') if analysis['status'] == 'success' else None
-                        s3_outcome = None
-                        s3_reason = analysis.get('filter_reason') or analysis.get('message') or analysis['status']
+            diff_hunk = get_diff(out_path, new_content)
 
-                        if analysis.get('status') == 'success':
-                            try:
-                                log_impact_links(name, priority, diff_file, analysis, threshold=SIMILARITY_THRESHOLD)
-                            except Exception as impact_log_err:
-                                logger.warning(f"Impact-links logging failed for {name}: {impact_log_err}")
+            if diff_hunk or not file_exists or repopulate_only:
+                save_to_archive(out_name, new_content)
 
-                        if analysis.get('should_handover'):
-                            ts = datetime.datetime.now().isoformat()
-                            packet_path = generate_handover_packet(name, priority, diff_file, analysis, ts)
-                            handover_paths.append(packet_path)
-                            s3_outcome = 'handover'
-                            s3_reason = (
-                                f"Score {s3_score:.3f} >= threshold {SIMILARITY_THRESHOLD}"
-                                + (f"; multi-impact likely ({analysis.get('impact_count', 0)} pages >= "
-                                   f"{analysis.get('multi_impact_threshold', MULTI_IMPACT_MIN_SCORE):.2f})"
-                                   if analysis.get('multi_impact_likely') else "")
-                            )
-                        elif analysis['status'] == 'success':
-                            s3_outcome = 'filtered'
+                if diff_hunk and diff_hunk != "Initial archive creation." and not repopulate_only:
+                    diff_file = save_diff_record(name, diff_hunk)
+                    diff_path = os.path.join(DIFF_DIR, diff_file)
 
-                        log_to_audit(name, priority, "Success", "Yes", current_id, diff_file,
-                                     similarity_score=s3_score, power_words=s3_words,
-                                     matched_udid=s3_udid, matched_chunk_id=s3_chunk_id,
-                                     outcome=s3_outcome, reason=s3_reason)
-                    elif repopulate_only:
-                        log_to_audit(name, priority, "Success", "Healed", current_id)
-                    else:
-                        log_to_audit(name, priority, "Success", "Initial", current_id)
+                    analysis = calculate_similarity(diff_path, source_priority=priority)
+
+                    s3_success = analysis.get('status') == 'success'
+                    s3_score = analysis.get('final_score') if s3_success else None
+                    s3_words = analysis.get('power_words', {}).get('power_words_found') if s3_success else None
+                    s3_udid = analysis.get('primary_udid') if s3_success else None
+                    s3_chunk_id = analysis.get('primary_chunk_id') if s3_success else None
+                    s3_outcome = None
+                    s3_reason = analysis.get('handover_decision_reason') or analysis.get('message') or analysis.get('status')
+
+                    if s3_success and analysis.get('should_handover'):
+                        ts = datetime.datetime.now().isoformat()
+                        new_packets = generate_handover_packets(
+                            source_name=name,
+                            priority=priority,
+                            diff_file=diff_file,
+                            analysis=analysis,
+                            timestamp=ts,
+                            version_id=current_id
+                        )
+                        handover_paths.extend(new_packets)
+                        s3_outcome = 'handover'
+                    elif s3_success:
+                        s3_outcome = 'filtered'
+
+                    log_to_audit(
+                        name=name,
+                        priority=priority,
+                        status="Success",
+                        change_detected="Yes",
+                        version_id=current_id,
+                        diff_file=diff_file,
+                        similarity_score=s3_score,
+                        power_words=s3_words,
+                        matched_udid=s3_udid,
+                        matched_chunk_id=s3_chunk_id,
+                        outcome=s3_outcome,
+                        reason=s3_reason
+                    )
+
+                elif repopulate_only:
+                    log_to_audit(name, priority, "Success", "Healed", current_id)
                 else:
-                    log_to_audit(name, priority, "Success", "No", current_id)
+                    log_to_audit(name, priority, "Success", "Initial", current_id)
+            else:
+                log_to_audit(name, priority, "Success", "No", current_id)
 
         except Exception as e:
             logger.error(f"Failed {name}: {e}")
-            log_to_audit(name, priority, "Exception", "N/A", current_id)
+            log_to_audit(name, priority, "Exception", "N/A", current_id, reason=str(e))
 
-    if driver: driver.quit()
+    if driver:
+        try:
+            driver.quit()
+        except Exception:
+            pass
+
     write_github_summary(handover_paths)
 
+
 if __name__ == "__main__":
-    # Check if running Stage 3 test mode
     if len(sys.argv) > 1 and sys.argv[1] == '--test-stage3':
-        logger.info("=== Running Stage 3 Phase C Test ===")
-        
-        # Check if diff file argument provided
         if len(sys.argv) < 3:
             logger.error("Usage: python tripwire.py --test-stage3 <path_to_diff_file>")
-            logger.info(f"Example: python tripwire.py --test-stage3 {DIFF_DIR}/some_file.diff")
             sys.exit(1)
-        
         diff_file = sys.argv[2]
-        
         if not os.path.exists(diff_file):
             logger.error(f"Diff file not found: {diff_file}")
             sys.exit(1)
-        
-        # Run Stage 3 analysis
-        result = calculate_similarity(diff_file)
-        
-        logger.info("\n=== Stage 3 Phase C Test Results ===")
-        logger.info(f"Status: {result['status']}")
-        logger.info(f"Change text length: {len(result.get('change_text', ''))} characters")
-        
-        if result.get('power_words'):
-            pw = result['power_words']
-            logger.info(f"Power words detected: {pw['count']}")
-            logger.info(f"Power words: {pw['found']}")
-            logger.info(f"Power word score: {pw['score']:.2f}")
-        
-        if result.get('final_score') is not None:
-            logger.info(f"Base similarity: {result.get('base_similarity', 0):.3f}")
-            logger.info(f"Final score: {result['final_score']:.3f}")
-            logger.info(f"Should handover: {result.get('should_handover', False)}")
-            if result.get('filter_reason'):
-                logger.info(f"Filter reason: {result['filter_reason']}")
-        
-        if result['status'] == 'success':
-            logger.info(f"Multi-impact likely: {result.get('multi_impact_likely', False)} (impact_count={result.get('impact_count', 0)})")
-            logger.info("\n✓ All systems working! Ready for production.")
-        else:
-            logger.error("\n✗ Test failed - check errors above")
-        
+
+        result = calculate_similarity(diff_file, source_priority='High')
+        print(json.dumps({
+            'status': result.get('status'),
+            'primary_udid': result.get('primary_udid'),
+            'primary_score': result.get('final_score'),
+            'impact_count': result.get('impact_count'),
+            'multi_impact_likely': result.get('multi_impact_likely'),
+            'should_handover': result.get('should_handover'),
+            'handover_decision_reason': result.get('handover_decision_reason')
+        }, indent=2))
         sys.exit(0)
-    
-    # Normal Stage 2 operation
+
     main()
