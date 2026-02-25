@@ -46,38 +46,30 @@ jobs:
         env:
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          echo "=== Running pytest test suite ==="
-          pytest test_stage3.py -v --tb=short
+          echo "=== Running Phase C Validation Suite ==="
+          # Added -v for visibility and -ra to show skip/fail reasons
+          pytest test_stage3.py -v -ra --tb=short
 
       - name: Upload handover packets
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: handover-packets-test
-          path: handover_packets/
-      
-      - name: Upload test output JSON
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: phaseb-test-output-json
-          path: test_outputs/
+          name: handover-packets-results
+          path: handover_packets/ # Ensure this matches HANDOVER_DIR in your py script
 
-      - name: Manual Test on Real Diff (Optional)
+      - name: Manual Test on Real Diff
         if: ${{ github.event.inputs.run_manual_test == 'true' }}
         env:
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "=== Testing with real diff file ==="
-          DIFF_FILE="diff_archive/20260216_184111_IP_Australia_What_are_trade_marks_.diff"
+          # Update this to your actual script name
+          SCRIPT_NAME="tripwire.py" 
+          DIFF_FILE=$(find diff_archive -name "*.diff" | head -n 1)
+          
           if [ -f "$DIFF_FILE" ]; then
-            echo "Testing with: $DIFF_FILE"
-            python tripwire.py --test-stage3 "$DIFF_FILE"
+            echo "Testing $SCRIPT_NAME with: $DIFF_FILE"
+            python "$SCRIPT_NAME" --test-stage3 "$DIFF_FILE"
           else
-            echo "Specified diff file not found. Skipping."
+            echo "No real diff files found in diff_archive to test."
           fi
-
-      - name: Summary
-        if: success()
-        run: |
-          echo "✓ Phase 3 Testing Complete!"
