@@ -1007,6 +1007,68 @@ def write_github_summary(handover_paths: List[str]):
     else:
         print(output)
 
+LLM_HANDOVER_LOG = "llm_handover_log.csv"
+
+def log_llm_handover_decision(source_name: str,
+                              priority: str,
+                              version_id: str,
+                              diff_file: str,
+                              analysis: dict,
+                              packets_generated: int):
+    """
+    Records Stage 3 → LLM routing decisions.
+    One row per semantic evaluation event.
+    """
+
+    file_exists = os.path.exists(LLM_HANDOVER_LOG)
+
+    headers = [
+        "Timestamp",
+        "Source_Name",
+        "Priority",
+        "Version_ID",
+        "Diff_File",
+        "Analysis_Status",
+        "Should_Handover",
+        "Decision_Reason",
+        "Final_Score",
+        "Impact_Count",
+        "Strong_Power_Words",
+        "Power_Word_Score",
+        "Candidate_Count",
+        "Top_Candidate_UDIDs",
+        "Packets_Generated"
+    ]
+
+    power = analysis.get("power_words", {}) or {}
+    candidates = analysis.get("threshold_passing_candidates", []) or []
+
+    row = [
+        datetime.datetime.now().isoformat(),
+        source_name,
+        priority,
+        version_id or "N/A",
+        diff_file or "N/A",
+        analysis.get("status"),
+        analysis.get("should_handover"),
+        analysis.get("handover_decision_reason"),
+        analysis.get("final_score"),
+        analysis.get("impact_count"),
+        power.get("strong_count"),
+        power.get("score"),
+        len(candidates),
+        ", ".join([c.get("udid", "N/A") for c in candidates[:10]]),
+        packets_generated
+    ]
+
+    with open(LLM_HANDOVER_LOG, mode="a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+
+        if not file_exists:
+            writer.writerow(headers)
+
+        writer.writerow(row)
+
 
 # ---------------------------
 # Main loop
@@ -1099,10 +1161,29 @@ def main():
                             timestamp=ts,
                             version_id=current_id
                         )
+                        
                         handover_paths.extend(new_packets)
                         s3_outcome = 'handover'
+                        
+                        log_llm_handover_decision(
+                            source_name=name,
+                            priority=priority,
+                            version_id=current_id,
+                            diff_file=diff_file,
+                            analysis=analysis,
+                            packets_generated=len(new_packets)
+                        )
                     elif s3_success:
                         s3_outcome = 'filtered'
+
+                        log_llm_handover_decision(
+                            source_name=name,
+                            priority=priority,
+                            version_id=current_id,
+                            diff_file=diff_file,
+                            analysis=analysis,
+                            packets_generated=0
+                        )
 
                     log_to_audit(
                         name=name,
