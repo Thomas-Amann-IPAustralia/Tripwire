@@ -106,16 +106,19 @@ def test_generate_handover_packets_data_integrity(tmp_path):
 def test_noise_suppression_logic(tmp_path, mock_embeddings_file):
     """Verifies that non-substantive changes result in low scores."""
     noise_diff = tmp_path / "noise.diff"
-    noise_diff.write_text("@@ -1,1 +1,1 @@\n-Page 1\n+Page 2\n")
+    # A typical administrative noise string
+    noise_diff.write_text("@@ -1,1 +1,1 @@\n-Page 54 of 102\n+Page 55 of 103\n")
     
     with patch('tripwire._embed_texts') as mock_embed:
-        # Mock a very low similarity vector
-        mock_embed.return_value = [[0.9] * 1536] 
+        # FIX: Use a vector that does NOT match the [0.1]*1536 in the fixture.
+        # This simulates a 'dissimilar' semantic meaning.
+        mock_embed.return_value = [[-0.1] * 1536] 
+        
         with patch('tripwire.SEMANTIC_EMBEDDINGS_FILE', str(mock_embeddings_file)):
-            # Force low base similarity via mock
             result = tripwire.calculate_similarity(str(noise_diff), source_priority="Low")
-            # Final score should be low if no power words match administrative text
-            assert result['final_score'] < 0.45 
+            
+            # Now the base_similarity will be low, and final_score will stay < 0.45
+            assert result['final_score'] < 0.45
 
 def test_handover_batching_limit(tmp_path):
     """Ensures large candidate lists are split into multiple files."""
