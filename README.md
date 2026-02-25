@@ -112,6 +112,30 @@ final_score =
 | **Medium** | **Balanced Filter** | Balance recall & cost. | **1. Filter:** Remove minor noise (formatting/boilerplate).<br>**2. Summarize:** Extract substantive changes.<br>**3. Map & Verify:** Identify and confirm content influence. |
 | **Low** | **Efficiency First** | Suppress low-impact chatter. | **1. Extensive Filter:** Isolate only major textual or legal shifts.<br>**2. Summarize:** Brief overview of the core change.<br>**3. Map & Verify:** Identify and confirm impact only if thresholds are met. |
 
+### Example
+```mermaid
+graph TD
+    %% Node Definitions
+    A[Detected Change] --> B{Check Priority}
+
+    %% High Priority Path
+    B -- High Priority: Trade Marks Act --> C[Calculate Cosine Similarity]
+    C --> D{Score > 0.65?}
+    D -- Yes: 0.68 --> E[GENERATE HANDOVER PACKET]
+    E --> F[LLM Impact Analysis]
+
+    %% Low Priority Path
+    B -- Low Priority: WIPO Press Room --> G[Calculate Cosine Similarity]
+    G --> H{Score > 0.85?}
+    H -- No: 0.72 --> I[SUPPRESS CHANGE]
+    I --> J[Log to Audit: No Impact]
+
+    %% Styling
+    style E fill:#d4edda,stroke:#28a745,stroke-width:2px
+    style I fill:#f8d7da,stroke:#dc3545,stroke-width:2px
+    style F fill:#fff3cd,stroke:#ffc107,stroke-width:2px
+```
+
 ## LLM Handover Design
 
 When Stage 3 triggers handover:
