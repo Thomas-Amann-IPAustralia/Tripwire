@@ -81,10 +81,10 @@ jobs:
           if analysis.get('status') == 'success' and len(candidates) > 0:
               paths = tripwire.generate_handover_packets(
                   source_name='ManualTestFixture',
-                  source_priority='High',
-                  diff_file_path=diff_file,
+                  priority='High',
+                  diff_file=diff_file,
                   analysis=analysis,
-                  audit_timestamp=ts,
+                  timestamp=ts,
               )
               print("Generated handover packet files:")
               for p in paths: print(' -', p)
