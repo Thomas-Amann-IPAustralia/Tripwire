@@ -11,11 +11,11 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parent
-TRIPWIRE_PATH = ROOT / "tripwire_dropin.py"
+TRIPWIRE_PATH = ROOT / "tripwire.py"
 
 
 def _install_stub_modules():
-    """Install lightweight stubs so tripwire_dropin imports in CI without optional deps."""
+    """Install lightweight stubs so tripwire imports in CI without optional deps."""
     # selenium tree
     selenium = types.ModuleType("selenium")
     selenium.webdriver = types.ModuleType("selenium.webdriver")
@@ -98,7 +98,7 @@ def _load_tripwire_module():
     spec = importlib.util.spec_from_file_location("tripwire_under_test", TRIPWIRE_PATH)
     module = importlib.util.module_from_spec(spec)
     from typing import Tuple as _Tuple
-    module.Tuple = _Tuple  # patch missing import in current drop-in file
+    module.Tuple = _Tuple  # patch missing import in current file
     sys.modules["tripwire_under_test"] = module
     assert spec and spec.loader
     spec.loader.exec_module(module)
@@ -113,7 +113,7 @@ def tripwire(monkeypatch):
     root = Path(tmp_root.name)
     monkeypatch.setattr(mod, "HANDOVER_DIR", str(root / "handover_packets"), raising=False)
     monkeypatch.setattr(mod, "DIFF_DIR", str(root / "diff_archive"), raising=False)
-    # Shim missing helpers/constants in current drop-in if absent
+    # Shim missing helpers/constants in current file if absent
     if not hasattr(mod, "_truncate_text"):
         monkeypatch.setattr(mod, "_truncate_text", lambda text, max_chars: (text or "")[:max_chars], raising=False)
     if not hasattr(mod, "_estimate_packet_size"):
@@ -173,7 +173,7 @@ def _three_hunk_diff_text():
     )
 
 
-def test_dropin_has_main_entrypoint(tripwire):
+def test_has_main_entrypoint(tripwire):
     assert hasattr(tripwire, "main")
     assert callable(tripwire.main)
 
