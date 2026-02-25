@@ -48,17 +48,74 @@ jobs:
         env:
             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          echo "=== Testing with fixture diff file (multi-hunk, power words, noise) ==="
-          SCRIPT_NAME="tripwire.py" 
+          echo "=== Manual Stage 3 run (force handover generation) ==="
           DIFF_FILE="test_fixtures/diffs/stage3_trigger_multi_hunks.diff"
           
-          if [ -f "$DIFF_FILE" ]; then
-            echo "Testing $SCRIPT_NAME with: $DIFF_FILE"
-            python "$SCRIPT_NAME" --test-stage3 "$DIFF_FILE"
-          else
-            echo "No real diff files found in diff_archive to test."
+          if [ ! -f "$DIFF_FILE" ]; then
+            echo "Diff fixture not found: $DIFF_FILE"
+            exit 1
           fi
-
+          
+          # Run Stage 3 and explicitly generate handover packets (so we don't rely on CLI behavior)
+          python - <<'PY'
+          import json, datetime
+          from pathlib import Path
+          import tripwire
+          
+          diff_file = "test_fixtures/diffs/stage3_trigger_multi_hunks.diff"
+          ts = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')
+          
+          print(f"Using diff: {diff_file}")
+          print(f"tripwire.HANDOVER_DIR = {getattr(tripwire, 'HANDOVER_DIR', '(missing)')}")
+          
+          analysis = tripwire.calculate_similarity(diff_file, source_priority='High')
+          print("calculate_similarity keys:", sorted(list(analysis.keys())))
+          print("status:", analysis.get('status'))
+          print("final_score:", analysis.get('final_score'))
+          print("impact_count:", analysis.get('impact_count'))
+          
+          # Only generate packets when stage3 says it's OK and candidates exist
+          candidates = analysis.get('threshold_passing_candidates') or []
+          print("threshold_passing_candidates:", len(candidates))
+          
+          if analysis.get('status') == 'success' and len(candidates) > 0:
+              paths = tripwire.generate_handover_packets(
+                  source_name='ManualTestFixture',
+                  source_priority='High',
+                  diff_file_path=diff_file,
+                  analysis=analysis,
+                  audit_timestamp=ts,
+              )
+              print("Generated handover packet files:")
+              for p in paths: print(' -', p)
+          else:
+              print("No handover packets generated (status not success or no threshold_passing_candidates).")
+              # Dump analysis for debugging
+              Path('stage3_manual_analysis.json').write_text(json.dumps(analysis, indent=2))
+              print("Wrote stage3_manual_analysis.json")
+          PY
+          
+          echo "=== Debug: list any handover-like outputs ==="
+          find . -maxdepth 5 -type f \( -name "*.json" -o -name "stage3_manual_analysis.json" \) | sed 's|^./||'
+          
+          # Normalize outputs into ./handover_packets for artifact upload
+          mkdir -p handover_packets
+          python - <<'PY'
+          import shutil
+          from pathlib import Path
+          import tripwire
+          
+          dst = Path('handover_packets')
+          src = Path(getattr(tripwire, 'HANDOVER_DIR', 'handover_packets'))
+          
+          if src.resolve() != dst.resolve() and src.exists():
+              for f in src.glob('*.json'):
+                  shutil.copy2(f, dst / f.name)
+              print(f"Copied packets from {src} -> {dst}")
+          else:
+              print(f"Packets already in {dst} (or source dir missing)")
+          PY
+          
       - name: Upload handover packets
         if: always()
         uses: actions/upload-artifact@v4
