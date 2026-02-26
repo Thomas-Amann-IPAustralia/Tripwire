@@ -1164,7 +1164,8 @@ def main():
                         
                         handover_paths.extend(new_packets)
                         s3_outcome = 'handover'
-                        
+
+                        logger.info(f"CWD={os.getcwd()} writing {os.path.abspath(LLM_HANDOVER_LOG)}")
                         log_llm_handover_decision(
                             source_name=name,
                             priority=priority,
@@ -1175,7 +1176,8 @@ def main():
                         )
                     elif s3_success:
                         s3_outcome = 'filtered'
-
+                        
+                        logger.info(f"CWD={os.getcwd()} writing {os.path.abspath(LLM_HANDOVER_LOG)}")
                         log_llm_handover_decision(
                             source_name=name,
                             priority=priority,
