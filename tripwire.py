@@ -1032,10 +1032,9 @@ def log_llm_handover_decision(source_name: str,
         "Should_Handover",
         "Decision_Reason",
         "Final_Score",
-        "Impact_Count",
+        "Plausible_Impact_Count",
         "Strong_Power_Words",
         "Power_Word_Score",
-        "Candidate_Count",
         "Top_Candidate_UDIDs",
         "Packets_Generated"
     ]
@@ -1056,8 +1055,7 @@ def log_llm_handover_decision(source_name: str,
         analysis.get("impact_count"),
         power.get("strong_count"),
         power.get("score"),
-        len(candidates),
-        ", ".join([c.get("udid", "N/A") for c in candidates[:10]]),
+        ", ".join([c.get("udid", "N/A") for c in candidates[:10] if isinstance(c, dict)]),
         packets_generated
     ]
 
@@ -1165,7 +1163,6 @@ def main():
                         handover_paths.extend(new_packets)
                         s3_outcome = 'handover'
 
-                        logger.info(f"CWD={os.getcwd()} writing {os.path.abspath(LLM_HANDOVER_LOG)}")
                         log_llm_handover_decision(
                             source_name=name,
                             priority=priority,
@@ -1177,7 +1174,6 @@ def main():
                     elif s3_success:
                         s3_outcome = 'filtered'
                         
-                        logger.info(f"CWD={os.getcwd()} writing {os.path.abspath(LLM_HANDOVER_LOG)}")
                         log_llm_handover_decision(
                             source_name=name,
                             priority=priority,
