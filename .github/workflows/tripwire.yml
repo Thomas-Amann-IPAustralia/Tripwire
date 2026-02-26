@@ -14,12 +14,13 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Required for git diff logic 
+          fetch-depth: 0 # Required for git diff logic
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: "3.9"
+          cache: "pip"
 
       - name: Setup Chrome
         uses: browser-actions/setup-chrome@latest
@@ -36,10 +37,13 @@ jobs:
         run: |
           git config --global user.name "Tripwire Bot"
           git config --global user.email "actions@github.com"
-          
-          # Add current content, audit log, and the new diff archive
+
+          # Add current content, audit log, diff archive
           git add audit_log.csv content_archive/ diff_archive/
-          
+
+          # Add LLM handover log if it exists (don’t fail if absent)
+          git add llm_handover_log.csv 2>/dev/null || true
+
           if git diff --cached --quiet; then
             echo "No substantive changes."
           else
@@ -48,12 +52,19 @@ jobs:
           fi
 
       - name: Upload handover packets
-        # Always upload so you can see runs with no packets (empty artifact) too
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: handover-packets-${{ github.run_number }}
           path: handover_packets/
-          # Keeps the last 90 days of runs; lower if storage is a concern
+          retention-days: 90
+          if-no-files-found: ignore
+
+      - name: Upload LLM handover log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: llm-handover-log-${{ github.run_number }}
+          path: llm_handover_log.csv
           retention-days: 90
           if-no-files-found: ignore

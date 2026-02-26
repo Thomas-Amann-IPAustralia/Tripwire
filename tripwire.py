@@ -1,3 +1,4 @@
+
 import json
 import csv
 import requests
@@ -6,49 +7,84 @@ import os
 import sys
 import logging
 import re
-import subprocess
-from typing import List, Dict, Optional
+import difflib
+from typing import List, Dict, Optional, Tuple
 
-# --- Web Scrape & Document Imports ---
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium_stealth import stealth
+# --- Optional Web/Doc imports ---
+try:
+    from selenium import webdriver
+    from selenium.webdriver.chrome.service import Service as ChromeService
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.common.by import By
+    from webdriver_manager.chrome import ChromeDriverManager
+    from selenium_stealth import stealth
+except Exception:
+    webdriver = None
+    ChromeService = None
+    WebDriverWait = None
+    EC = None
+    By = None
+    ChromeDriverManager = None
+    stealth = None
+
 from bs4 import BeautifulSoup
 from markdownify import markdownify as md
 import docx
 
-# --- Stage 3: Semantic Analysis Imports ---
-from openai import OpenAI
+# --- Optional OpenAI import ---
+try:
+    from openai import OpenAI
+except Exception:
+    OpenAI = None
+
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-import pandas as pd
+import pandas as pd  # kept if used elsewhere / future compatibility
 
 # --- Configuration ---
-AUDIT_LOG = 'audit_log.csv' 
+AUDIT_LOG = 'audit_log.csv'
 SOURCES_FILE = 'sources.json'
 OUTPUT_DIR = 'content_archive'
 DIFF_DIR = 'diff_archive'
+HANDOVER_DIR = 'handover_packets'
+SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
+
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
 
-# --- Stage 3 Configuration ---
-SEMANTIC_MODEL = 'text-embedding-3-small' 
-SIMILARITY_THRESHOLD = 0.45  # Initial threshold, tune based on testing
+# Semantic scoring config
+SEMANTIC_MODEL = 'text-embedding-3-small'
 OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-client = OpenAI(api_key=OPENAI_KEY)
+client = OpenAI(api_key=OPENAI_KEY) if (OpenAI and OPENAI_KEY) else None
 
-# Phase 3: Semantic Embeddings
-SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
-HANDOVER_DIR = 'handover_packets'
-_semantic_cache = None  # Module-level cache so embeddings load once per run
+# Candidate / packet policy
+CANDIDATE_MIN_SCORE = 0.35  # all page candidates >= this are "relevant" and must be handed over (across batches) if handover triggers
+MEDIUM_PRIMARY_HANDOVER_THRESHOLD = 0.45
+LOW_PRIMARY_HANDOVER_THRESHOLD = 0.50
+
+# No top-k chunk cap: keep every chunk match >= threshold for evidence aggregation
+HUNK_CHUNK_MIN_SIMILARITY = CANDIDATE_MIN_SCORE
+
+# Packet/display controls (do not truncate threshold-passing candidates overall; batching handles overflow)
+MAX_CANDIDATES_PER_PACKET = 50
+MAX_RELEVANT_CHUNK_IDS_PER_CANDIDATE = 50
+PER_HUNK_SUMMARY_LIMIT = 8
+
+# Page aggregation bonuses
+PAGE_HUNK_COVERAGE_BONUS = 0.04
+MAX_PAGE_COVERAGE_BONUS = 0.12
+PAGE_CHUNK_DENSITY_BONUS = 0.01
+MAX_PAGE_DENSITY_BONUS = 0.06
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("Tripwire")
 
-# --- Stage 0: Helpers ---
+_semantic_cache = None
+
+
+# ---------------------------
+# Audit / stage 0 helpers
+# ---------------------------
 
 def get_last_version_id(source_name: str) -> Optional[str]:
     """
@@ -59,24 +95,24 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     Returns:
         Optional[str]: The last recorded Version_ID or None if not found.
     """
-    if not os.path.exists(AUDIT_LOG): return None
+    if not os.path.exists(AUDIT_LOG):
+        return None
     try:
         with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
-            reader = list(csv.DictReader(f))
-            for row in reversed(reader):
-                if row['Source_Name'] == source_name and row['Status'] == 'Success':
-                    return row['Version_ID']
-    except Exception: return None
+            rows = list(csv.DictReader(f))
+        for row in reversed(rows):
+            if row.get('Source_Name') == source_name and row.get('Status') == 'Success':
+                return row.get('Version_ID')
+    except Exception:
+        return None
     return None
+
 
 def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None,
                  similarity_score=None, power_words=None, matched_udid=None,
                  matched_chunk_id=None, outcome=None, reason=None):
     """
     Appends a new entry to the CSV audit log.
-    
-    Stage 2 fields are always written. Stage 3 fields (similarity_score through reason)
-    are only populated when semantic analysis has been performed on a diff.
     
     Args:
         name (str): Source name.
@@ -103,15 +139,21 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
         if not file_exists:
             writer.writerow(headers)
         writer.writerow([
-            datetime.datetime.now().isoformat(), name, priority, status,
-            change_detected, version_id, diff_file or "N/A",
-            f"{similarity_score:.4f}" if similarity_score is not None else "N/A",
+            datetime.datetime.now().isoformat(),
+            name,
+            priority,
+            status,
+            change_detected,
+            version_id or "N/A",
+            diff_file or "N/A",
+            f"{float(similarity_score):.4f}" if similarity_score is not None else "N/A",
             '; '.join(power_words) if power_words else "N/A",
             matched_udid or "N/A",
             matched_chunk_id or "N/A",
             outcome or "N/A",
             reason or "N/A"
         ])
+
 
 def fetch_stage0_metadata(session, source) -> Optional[str]:
     """
@@ -128,14 +170,19 @@ def fetch_stage0_metadata(session, source) -> Optional[str]:
         if stype == "Legislation_OData":
             params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
             resp = session.get(source['base_url'], params=params, timeout=20)
+            resp.raise_for_status()
             return resp.json().get('value', [{}])[0].get('registerId')
         elif stype in ["RSS", "WebPage"]:
             resp = session.head(source['url'], timeout=15)
             return resp.headers.get('ETag') or resp.headers.get('Content-Length')
-    except Exception: return None
+    except Exception:
+        return None
     return None
 
-# --- Extraction & Normalization Functions ---
+
+# ---------------------------
+# Fetch / normalize helpers
+# ---------------------------
 
 def initialize_driver():
     """
@@ -144,15 +191,19 @@ def initialize_driver():
     Returns:
         webdriver.Chrome: Configured Selenium driver.
     """
+    if webdriver is None:
+        raise RuntimeError("Selenium/webdriver dependencies not available in this environment.")
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless=new')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
-    stealth(driver, languages=["en-US", "en"], vendor="Google Inc.", platform="Win32", fix_hairline=True)
+    if stealth:
+        stealth(driver, languages=["en-US", "en"], vendor="Google Inc.", platform="Win32", fix_hairline=True)
     return driver
 
-def clean_html_content(html):
+
+def clean_html_content(html: str) -> str:
     """
     Strips non-essential HTML tags (nav, footer, etc.) and removes dynamic timestamps.
     
@@ -163,12 +214,15 @@ def clean_html_content(html):
     """
     soup = BeautifulSoup(html, 'html.parser')
     body = soup.body
-    if not body: return ""
+    if not body:
+        return ""
     for selector in TAGS_TO_EXCLUDE:
-        for tag in body.select(selector): tag.decompose()
+        for tag in body.select(selector):
+            tag.decompose()
     text = str(body)
     text = re.sub(r'Generated on:? \d{1,2}/\d{1,2}/\d{4}.*', '', text, flags=re.IGNORECASE)
     return text
+
 
 def fetch_webpage_content(driver, url):
     """
@@ -185,6 +239,7 @@ def fetch_webpage_content(driver, url):
     cleaned_html = clean_html_content(driver.page_source)
     return md(cleaned_html, heading_style="ATX")
 
+
 def sanitize_rss(xml_content):
     """
     Normalizes RSS XML by stripping transient channel-level dates and sorting items by GUID.
@@ -197,14 +252,18 @@ def sanitize_rss(xml_content):
     soup = BeautifulSoup(xml_content, 'xml')
     for tag in ['lastBuildDate', 'pubDate', 'generator']:
         t = soup.find(tag)
-        if t and t.parent.name == 'channel': t.decompose()
+        if t and t.parent and t.parent.name == 'channel':
+            t.decompose()
     items = soup.find_all('item')
     items.sort(key=lambda x: x.find('guid').text if x.find('guid') else (x.find('link').text if x.find('link') else ''))
     channel = soup.find('channel')
     if channel:
-        for item in soup.find_all('item'): item.extract()
-        for item in items: channel.append(item)
+        for item in soup.find_all('item'):
+            item.extract()
+        for item in items:
+            channel.append(item)
     return soup.prettify()
+
 
 def fetch_legislation_metadata(session, source):
     """
@@ -218,31 +277,70 @@ def fetch_legislation_metadata(session, source):
     """
     params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
     resp = session.get(source['base_url'], params=params, timeout=30)
-    docs = resp.json().get('value', [])
-    return (docs[0].get('registerId'), docs[0]) if docs else (None, None)
+    resp.raise_for_status()
+    val = resp.json().get('value', [])
+    if not val:
+        return None, None
+    meta = val[0]
+    return meta.get('registerId'), meta
 
-def download_legislation_content(session, base_url, doc_meta):
-    """
-    Downloads a Word document from OData API and converts it to Markdown.
-    
-    Args:
-        session (requests.Session): Active HTTP session.
-        base_url (str): API base URL.
-        doc_meta (dict): Metadata for the specific document version.
-    Returns:
-        str: Normalized Markdown text extracted from the document.
-    """
-    from io import BytesIO
-    def q(val): return f"'{val}'"
-    reg_id = doc_meta.get('registerId')
-    download_url = f"{base_url}/find(registerId={q(reg_id)},type={q(doc_meta.get('type'))},format='Word',uniqueTypeNumber={int(doc_meta.get('uniqueTypeNumber') or 0)},volumeNumber={int(doc_meta.get('volumeNumber') or 0)},rectificationVersionNumber={int(doc_meta.get('rectificationVersionNumber') or 0)})"
-    resp = session.get(download_url, stream=True, timeout=90)
-    if resp.status_code == 200:
-        doc = docx.Document(BytesIO(resp.content))
-        return "\n\n".join([p.text for p in doc.paragraphs if p.text.strip()])
-    return None
 
-# --- Stage 2 Logic ---
+def _extract_docx_text(docx_path: str) -> str:
+    d = docx.Document(docx_path)
+    lines = []
+    for para in d.paragraphs:
+        t = (para.text or '').strip()
+        if t:
+            lines.append(t)
+    return "\n\n".join(lines)
+
+
+def download_legislation_content(session, base_url, meta):
+    candidate_urls = []
+    for k in ['download', 'downloadUrl', 'Download', 'DownloadUrl', 'url', 'Url']:
+        v = meta.get(k)
+        if isinstance(v, str) and v.startswith('http'):
+            candidate_urls.append(v)
+
+    for k in ['documents', 'Documents', 'files', 'Files']:
+        docs = meta.get(k)
+        if isinstance(docs, list):
+            for item in docs:
+                if isinstance(item, dict):
+                    for kk in ['downloadUrl', 'url', 'href']:
+                        v = item.get(kk)
+                        if isinstance(v, str) and v.startswith('http'):
+                            candidate_urls.append(v)
+
+    for url in candidate_urls:
+        try:
+            r = session.get(url, timeout=60)
+            r.raise_for_status()
+            ctype = (r.headers.get('Content-Type') or '').lower()
+
+            if 'word' in ctype or url.lower().endswith('.docx'):
+                tmp = os.path.join(OUTPUT_DIR, "_tmp_legislation_download.docx")
+                with open(tmp, 'wb') as f:
+                    f.write(r.content)
+                text = _extract_docx_text(tmp)
+                try:
+                    os.remove(tmp)
+                except Exception:
+                    pass
+                return text
+
+            if 'html' in ctype:
+                return md(clean_html_content(r.text), heading_style="ATX")
+
+            try:
+                return r.text
+            except Exception:
+                pass
+        except Exception as e:
+            logger.warning(f"Legislation download candidate failed {url}: {e}")
+
+    return json.dumps(meta, indent=2, sort_keys=True, ensure_ascii=False)
+
 
 def get_diff(old_path, new_content) -> Optional[str]:
     """
@@ -256,32 +354,29 @@ def get_diff(old_path, new_content) -> Optional[str]:
     """
     if not os.path.exists(old_path):
         return "Initial archive creation."
-    temp_path = old_path + ".tmp"
-    with open(temp_path, 'w', encoding='utf-8') as f:
-        f.write(new_content)
-    try:
-        result = subprocess.run(['diff', '-U10', old_path, temp_path], capture_output=True, text=True)
-        return result.stdout if result.stdout else None
-    finally:
-        if os.path.exists(temp_path): os.remove(temp_path)
+    with open(old_path, 'r', encoding='utf-8') as f:
+        old_content = f.read()
+    if old_content == new_content:
+        return None
+    diff_lines = difflib.unified_diff(
+        old_content.splitlines(keepends=True),
+        new_content.splitlines(keepends=True),
+        fromfile=old_path,
+        tofile='new_content',
+        lineterm=''
+    )
+    diff_text = ''.join(diff_lines)
+    return diff_text if diff_text.strip() else None
+
 
 def save_to_archive(filename, content):
-    """
-    Saves content to the archive directory using UTF-8 encoding.
-    
-    Args:
-        filename (str): Target filename.
-        content (str): Content to save.
-    Returns:
-        str: Full path to the saved file.
-    """
-    if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
-    filepath = os.path.join(OUTPUT_DIR, filename)
-    with open(filepath, 'w', encoding='utf-8') as f:
+    path = os.path.join(OUTPUT_DIR, filename)
+    with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
-    return filepath
+    return path
 
-def save_diff_record(name, diff_content):
+
+def save_diff_record(source_name, diff_content):
     """
     Saves a diff hunk to the diff_archive directory with a timestamp.
     
@@ -291,524 +386,858 @@ def save_diff_record(name, diff_content):
     Returns:
         str: The generated filename of the diff record.
     """
-    if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    safe_name = re.sub(r'\W+', '_', name)
-    filename = f"{timestamp}_{safe_name}.diff"
-    filepath = os.path.join(DIFF_DIR, filename)
-    with open(filepath, 'w', encoding='utf-8') as f:
+    safe_name = re.sub(r'[^A-Za-z0-9._-]+', '_', source_name)[:80].strip('_')
+    ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"{ts}_{safe_name}.diff"
+    path = os.path.join(DIFF_DIR, filename)
+    with open(path, 'w', encoding='utf-8') as f:
         f.write(diff_content)
     return filename
 
-# --- Stage 3: Semantic Analysis & Relevance Gate ---
+
+# ---------------------------
+# Stage 3 helpers
+# ---------------------------
+
+def parse_diff_hunks(diff_file_path: str) -> List[dict]:
+    """
+    Parses a unified diff into hunk-level change objects so semantically distinct
+    changes can be analysed independently (multi-impact detection).
+    """
+    hunks: List[dict] = []
+    current = None
+    with open(diff_file_path, 'r', encoding='utf-8') as f:
+        for raw in f:
+            line = raw.rstrip('\n')
+            if line.startswith('@@'):
+                if current:
+                    current['change_context'] = ' '.join(current['removed_lines'] + current['added_lines']).strip()
+                    hunks.append(current)
+                current = {
+                    'hunk_index': len(hunks) + 1,  # 1-based index
+                    'header': line,
+                    'added_lines': [],
+                    'removed_lines': [],
+                }
+                continue
+            if current is None:
+                continue
+            if line.startswith('+') and not line.startswith('+++'):
+                current['added_lines'].append(line[1:].strip())
+            elif line.startswith('-') and not line.startswith('---'):
+                current['removed_lines'].append(line[1:].strip())
+
+    if current:
+        current['change_context'] = ' '.join(current['removed_lines'] + current['added_lines']).strip()
+        hunks.append(current)
+
+    return [h for h in hunks if h.get('change_context')]
+
 
 def extract_change_content(diff_file_path):
     """
-    Parses a diff file to extract added and removed content lines.
-    Strips diff metadata (+++, ---, @@) and returns both additions and removals.
-    
-    Args:
-        diff_file_path (str): Path to the .diff file.
-    Returns:
-        dict: Contains 'added', 'removed', and 'change_context' strings.
+    Backwards-compatible change extractor. Phase B now parses hunks first and then
+    flattens them into a single overall change context for logging/high-level signals.
     """
-    additions = []
-    removals = []
-
-    with open(diff_file_path, 'r', encoding='utf-8') as f:
-        for line in f:
-            line = line.rstrip()
-            # Extract additions (lines starting with +, but not +++)
-            if line.startswith('+') and not line.startswith('+++'):
-                additions.append(line[1:].strip())
-            # Extract removals (lines starting with -, but not ---)
-            elif line.startswith('-') and not line.startswith('---'):
-                removals.append(line[1:].strip())
-
-    # Combine removals and additions as "change context"
-    change_context = ' '.join(removals + additions)
-    return {'added': ' '.join(additions), 'removed': ' '.join(removals), 'change_context': change_context}
-
-def detect_power_words(text):
-    """
-    Scans text for legal trigger words that indicate high-priority changes.
-    
-    Power words include: must, shall, may, penalty, fine, days deadlines, dollar amounts,
-    and references to specific acts.
-    
-    Args:
-        text (str): The text to scan.
-    Returns:
-        dict: Contains 'found' (list of matched words), 'count' (int), and 'score' (float 0-1).
-    """
-    power_patterns = [
-        r'\bmust\b',
-        r'\bshall\b',
-        r'\bmay\b',
-        r'\bpenalty\b',
-        r'\bpenalties\b',
-        r'\bfine\b',
-        r'\bfines\b',
-        r'\$\d+(?:,\d+)*',          # Dollar amounts with commas like $150,000
-        r'\d+\s*days?\b',            # Time periods like "30 days"
-        r'Archives\s+Act\s+1983',
-        r'\bprohibited\b',
-        r'\bmandatory\b',
-        r'\brequired\b',
-        r'\bobligation\b',
-    ]
-    
-    found_words = []
-    text_lower = text.lower()
-    
-    for pattern in power_patterns:
-        matches = re.findall(pattern, text_lower, re.IGNORECASE)
-        found_words.extend(matches)
-    
-    # Remove duplicates while preserving order
-    found_words = list(dict.fromkeys(found_words))
-    
-    # Each power word adds 0.15, capped at 1.0
-    power_score = min(1.0, len(found_words) * 0.15)
-    
+    hunks = parse_diff_hunks(diff_file_path)
+    additions, removals = [], []
+    for h in hunks:
+        additions.extend(h.get('added_lines', []))
+        removals.extend(h.get('removed_lines', []))
     return {
-        'found': found_words,
-        'count': len(found_words),
-        'score': power_score
+        'added': ' '.join(additions),
+        'removed': ' '.join(removals),
+        'change_context': ' '.join(removals + additions).strip(),
+        'hunks': hunks
     }
 
-def calculate_final_score(base_similarity, power_word_score):
-    """
-    Adds the power word boost directly on top of the base similarity score,
-    capped at 1.0.
 
-    This replaces the previous 90/10 weighted blend. The additive approach means
-    the boost is always visible in the log and has a consistent, predictable effect
-    regardless of the base score — a score of 0.40 with a boost of 0.10 will
-    clearly show as 0.50, whereas the weighted formula would have shown 0.46.
+def detect_power_words(text):
+    tiers = {
+        'strong': [
+            r'\bmust\b', r'\bshall\b', r'\bpenalt(?:y|ies)\b', r'\bfines?\b',
+            r'\$\d+(?:,\d+)*', r'\bprohibited\b', r'\bmandatory\b', r'\brequired\b',
+            r'\bobligation\b', r'archives\s+act\s+1983'
+        ],
+        'moderate': [
+            r'\bwithin\b', r'\bdeadline\b', r'\bdeadlines\b', r'\bnotice\b',
+            r'\bservice\b', r'\bevidence\b', r'\bdeclaration\b'
+        ],
+        'weak': [
+            r'\bmay\b', r'\d+\s*days?\b'
+        ]
+    }
+    text_l = (text or '').lower()
+    by_tier = {'strong': [], 'moderate': [], 'weak': []}
+    for tier, patterns in tiers.items():
+        for pat in patterns:
+            matches = re.findall(pat, text_l, re.IGNORECASE)
+            for m in matches:
+                if m not in by_tier[tier]:
+                    by_tier[tier].append(m)
 
-    Args:
-        base_similarity (float): Cosine similarity score (0-1).
-        power_word_score (float): Additive boost from power words (0-1).
-    Returns:
-        float: Final score, capped at 1.0.
-    """
-    return min(1.0, base_similarity + power_word_score)
+    found = by_tier['strong'] + by_tier['moderate'] + by_tier['weak']
+    strong_count = len(by_tier['strong'])
+    moderate_count = len(by_tier['moderate'])
+    weak_count = len(by_tier['weak'])
+    weak_only = weak_count > 0 and strong_count == 0 and moderate_count == 0
+    raw_score = min(0.35, strong_count * 0.08 + moderate_count * 0.04 + weak_count * 0.02)
 
-def should_generate_handover(final_score, threshold=SIMILARITY_THRESHOLD):
-    """
-    Determines if a change is relevant enough to generate a handover packet for Tom.
-    
-    Args:
-        final_score (float): The final weighted relevance score.
-        threshold (float): Minimum score required (default from config).
-    Returns:
-        bool: True if handover should be generated.
-    """
-    return final_score >= threshold
+    return {
+        'found': found,
+        'power_words_found': found,
+        'by_tier': by_tier,
+        'strong_count': strong_count,
+        'moderate_count': moderate_count,
+        'weak_count': weak_count,
+        'count': len(found),
+        'weak_only': weak_only,
+        'score': raw_score
+    }
 
-def calculate_similarity(diff_path, mock_semantic_data=None):
+
+def calculate_final_score(base_similarity, power_word_analysis):
+    if isinstance(power_word_analysis, dict):
+        boost = float(power_word_analysis.get('score', 0.0))
+        weak_only = bool(power_word_analysis.get('weak_only', False))
+        strong_count = int(power_word_analysis.get('strong_count', 0))
+        if weak_only and float(base_similarity) < 0.20:
+            boost = 0.0
+        elif strong_count == 0 and float(base_similarity) < 0.10:
+            boost = min(boost, 0.02)
+    else:
+        boost = float(power_word_analysis or 0.0)
+    return min(1.0, float(base_similarity) + boost)
+
+
+def get_primary_handover_threshold_for_priority(priority: str) -> Optional[float]:
+    p = (priority or '').strip().lower()
+    if p == 'high':
+        return None  # bypass primary-score gate for high-priority sources
+    if p == 'medium':
+        return MEDIUM_PRIMARY_HANDOVER_THRESHOLD
+    return LOW_PRIMARY_HANDOVER_THRESHOLD
+
+
+def should_generate_handover(primary_score: float,
+                             impact_count: int,
+                             source_priority: str) -> Tuple[bool, str, Optional[float]]:
     """
-    Phase 2 implementation: Converts diff to embedding, detects power words, 
-    and calculates relevance score against website content.
-    
-    Can work with mock data for testing or real data from Tom's spreadsheet.
-    
-    Args:
-        diff_path (str): Path to the diff file.
-        mock_semantic_data (dict, optional): Mock data for testing with keys:
-            - 'udids': list of UDID strings
-            - 'embeddings': numpy array of shape (n, 1536)
-            - 'chunk_texts': list of chunk text strings
-    Returns:
-        dict: Contains status, scores, matches, and power word analysis.
+    High-priority source: handover if any threshold-passing candidates exist.
+    Medium/Low: require primary score to pass priority-specific threshold.
     """
-    # Step 1: Extract change content
+    if impact_count <= 0:
+        return False, "No candidates passed candidate_min_score", get_primary_handover_threshold_for_priority(source_priority)
+
+    threshold = get_primary_handover_threshold_for_priority(source_priority)
+    p = (source_priority or '').strip().lower()
+    if p == 'high':
+        return True, "High priority source: handover triggered when threshold-passing candidates exist", None
+
+    if threshold is None:
+        return True, "No primary handover threshold configured", None
+
+    ok = float(primary_score) >= float(threshold)
+    return ok, (
+        f"Primary score {primary_score:.3f} {'>=' if ok else '<'} "
+        f"{p or 'default'} threshold {threshold:.3f}"
+    ), threshold
+
+
+def _load_semantic_embeddings(mock_semantic_data=None):
+    global _semantic_cache
+    if mock_semantic_data:
+        vectors = np.array(mock_semantic_data['embeddings'])
+        udids = mock_semantic_data['udids']
+        chunk_texts = mock_semantic_data.get('chunk_texts', [''] * len(udids))
+        chunks_raw = mock_semantic_data.get('chunks_raw')
+        if chunks_raw is None:
+            chunks_raw = []
+            for i, udid in enumerate(udids):
+                chunks_raw.append({
+                    'UDID': udid,
+                    'Chunk_ID': f"{udid}-C{i+1:02d}",
+                    'Chunk_Text': chunk_texts[i] if i < len(chunk_texts) else '',
+                    'Headline_Alt': ''
+                })
+        return vectors, udids, chunk_texts, chunks_raw
+
+    if _semantic_cache is None:
+        if not os.path.exists(SEMANTIC_EMBEDDINGS_FILE):
+            raise FileNotFoundError(f"Semantic embeddings file not found: {SEMANTIC_EMBEDDINGS_FILE}")
+        with open(SEMANTIC_EMBEDDINGS_FILE, 'r', encoding='utf-8') as f:
+            raw = json.load(f)
+
+        vectors = []
+        for item in raw:
+            emb = item.get('Chunk_Embedding')
+            if isinstance(emb, str):
+                emb = json.loads(emb)
+            vectors.append(emb)
+
+        _semantic_cache = {
+            'vectors': np.array(vectors),
+            'udids': [item.get('UDID', 'N/A') for item in raw],
+            'chunk_texts': [item.get('Chunk_Text', '') for item in raw],
+            'chunks_raw': raw
+        }
+        logger.info(f"Loaded {len(raw)} semantic chunks from {SEMANTIC_EMBEDDINGS_FILE}")
+
+    return _semantic_cache['vectors'], _semantic_cache['udids'], _semantic_cache['chunk_texts'], _semantic_cache['chunks_raw']
+
+
+def _embed_texts(texts: List[str]) -> np.ndarray:
+    if not texts:
+        return np.zeros((0, 1536))
+    if client is None:
+        raise RuntimeError("OpenAI client unavailable. Set OPENAI_API_KEY and install openai package.")
+    response = client.embeddings.create(input=texts, model=SEMANTIC_MODEL)
+    return np.array([d.embedding for d in response.data])
+
+
+def _priority_to_source_weight(priority: str) -> float:
+    p = (priority or '').strip().lower()
+    if p == 'high':
+        return 1.0
+    if p == 'medium':
+        return 0.6
+    return 0.3
+
+def _is_administrative_noise(text: str) -> bool:
+    """Returns True if the text is purely administrative (Page X, Dates, etc)."""
+    t = text.strip().lower()
+    if len(t) < 5: return True
+    # Regex for "Page 1", "Page 2 of 10", etc.
+    if re.match(r'^page \d+( of \d+)?$', t): return True
+    # Regex for standard dates like "25 February 2026"
+    if re.match(r'^\d{1,2} [a-z]+ \d{4}$', t): return True
+    return False
+
+def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=None):
+    """
+    Recall-first candidate retrieval with Administrative Noise filtering.
+    """
     change = extract_change_content(diff_path)
+    hunks = change.get('hunks', [])
     
-    if not change['change_context']:
-        logger.warning(f"No substantive content extracted from {diff_path}")
+    if not hunks:
         return {
             'status': 'no_content',
             'change_text': '',
+            'change_hunks': [],
+            'power_words': detect_power_words(''),
+            'base_similarity': 0.0,
             'final_score': 0.0,
-            'should_handover': False
+            'candidate_min_score': CANDIDATE_MIN_SCORE,
+            'threshold_passing_candidates': [],
+            'impacted_pages': [],
+            'impact_count': 0,
+            'multi_impact_likely': False,
+            'should_handover': False,
+            'handover_decision_reason': "No substantive hunks parsed",
+            'primary_handover_threshold_used': get_primary_handover_threshold_for_priority(source_priority),
         }
+
+    overall_power = detect_power_words(change.get('change_context', ''))
     
-    logger.info(f"Change context preview: {change['change_context'][:200]}...")
-    
-    # Step 2: Detect power words
-    power_analysis = detect_power_words(change['change_context'])
-    logger.info(f"Power words found: {power_analysis['count']} - {power_analysis['found']}")
-    logger.info(f"Power word score: {power_analysis['score']:.2f}")
-    
-    # Step 3: Generate embedding
-    try:
-        response = client.embeddings.create(
-            input=[change['change_context']],
-            model=SEMANTIC_MODEL
-        )
-        # Vector dimension is now 1536
-        diff_vector = np.array(response.data[0].embedding).reshape(1, -1)
-        logger.info(f"Generated OpenAI embedding (1536d)")
-    except Exception as e:
-        logger.error(f"API Error: {e}")
-        return {'status': 'error', 'final_score': 0.0, 'base_similarity': 0.0, 'should_handover': False}
-    
-    # Step 4: Load semantic embeddings from JSON (Phase 3)
-    global _semantic_cache
-    if mock_semantic_data:
-        # TESTING MODE: Use provided mock data
-        logger.info("Using mock semantic data for testing")
-        website_vectors = mock_semantic_data['embeddings']
-        udids = mock_semantic_data['udids']
-        chunk_texts = mock_semantic_data.get('chunk_texts', [''] * len(udids))
-        chunks_raw = None
-    else:
-        if _semantic_cache is None:
-            if not os.path.exists(SEMANTIC_EMBEDDINGS_FILE):
-                logger.error(f"Semantic embeddings file not found: {SEMANTIC_EMBEDDINGS_FILE}")
-                return {'status': 'missing_embeddings', 'final_score': 0.0, 'should_handover': False}
-            logger.info(f"Loading semantic embeddings from {SEMANTIC_EMBEDDINGS_FILE}...")
-            with open(SEMANTIC_EMBEDDINGS_FILE, 'r', encoding='utf-8') as f:
-                raw = json.load(f)
-            _semantic_cache = {
-                'vectors': np.array([json.loads(item['Chunk_Embedding']) for item in raw]),
-                'udids': [item['UDID'] for item in raw],
-                'chunk_texts': [item['Chunk_Text'] for item in raw],
-                'chunks_raw': raw
-            }
-            logger.info(f"Loaded {len(raw)} semantic chunks")
-        website_vectors = _semantic_cache['vectors']
-        udids = _semantic_cache['udids']
-        chunk_texts = _semantic_cache['chunk_texts']
-        chunks_raw = _semantic_cache['chunks_raw']
-    
-    # Step 5: Calculate cosine similarities
-    try:
-        similarities = cosine_similarity(diff_vector, website_vectors)[0]
-        logger.info(f"Calculated similarities for {len(similarities)} chunks")
-    except Exception as e:
-        logger.error(f"Failed to calculate similarities: {e}")
+    # --- NOISE SUPPRESSION GATEKEEPER ---
+    substantive_hunks = []
+    for h in hunks:
+        ctx = h.get('change_context', '')
+        if _is_administrative_noise(ctx):
+            h['is_noise'] = True
+            h['power_words'] = {'found': [], 'score': 0.0, 'strong_count': 0, 'power_words_found': []}
+            continue
+        
+        h['is_noise'] = False
+        h['power_words'] = detect_power_words(ctx)
+        substantive_hunks.append(h)
+
+    # If everything was noise (e.g., only page numbers changed), return early with 0 score
+    if not substantive_hunks:
         return {
-            'status': 'similarity_error',
-            'change_text': change['change_context'],
-            'power_words': power_analysis,
+            'status': 'success',
+            'change_text': change.get('change_context', ''),
+            'change_hunks': [{'hunk_index': h['hunk_index'], 'hunk_text': h.get('change_context', ''), 'is_noise': True} for h in hunks],
+            'power_words': overall_power,
+            'base_similarity': 0.0,
             'final_score': 0.0,
-            'should_handover': False
+            'impact_count': 0,
+            'should_handover': False,
+            'handover_decision_reason': "All changes identified as administrative noise",
+            'threshold_passing_candidates': [],
+            'impacted_pages': []
         }
+
+    # --- SEMANTIC PROCESSING ---
+    try:
+        # Only embed the substantive content to save cost and avoid false positives
+        hunk_vectors = _embed_texts([h['change_context'] for h in substantive_hunks])
+    except Exception as e:
+        return {
+            'status': 'error',
+            'message': str(e),
+            'change_text': change.get('change_context', ''),
+            'change_hunks': [],
+            'power_words': overall_power,
+            'impacted_pages': [],
+            'threshold_passing_candidates': [],
+            'impact_count': 0,
+            'multi_impact_likely': False,
+            'should_handover': False,
+            'handover_decision_reason': f"Embedding error: {e}"
+        }
+
+    try:
+        corpus_vectors, udids, chunk_texts, chunks_raw = _load_semantic_embeddings(mock_semantic_data=mock_semantic_data)
+    except Exception as e:
+        return {
+            'status': 'missing_embeddings' if isinstance(e, FileNotFoundError) else 'similarity_error',
+            'message': str(e),
+            'change_text': change.get('change_context', ''),
+            'change_hunks': [],
+            'power_words': overall_power,
+            'impacted_pages': [],
+            'threshold_passing_candidates': [],
+            'impact_count': 0,
+            'multi_impact_likely': False,
+            'should_handover': False,
+            'handover_decision_reason': str(e)
+        }
+
+    similarity_matrix = cosine_similarity(hunk_vectors, corpus_vectors)
+
+    hunk_matches = []
+    page_acc: Dict[str, dict] = {}
+
+    # Map similarities back to pages (using the idx from substantive_hunks)
+    for s_idx, hunk in enumerate(substantive_hunks):
+        scores = similarity_matrix[s_idx]
+        passing_chunk_indices = np.where(scores >= HUNK_CHUNK_MIN_SIMILARITY)[0].tolist()
+
+        diagnostic_indices = passing_chunk_indices.copy()
+        if not diagnostic_indices and scores.size > 0:
+            diagnostic_indices = [int(np.argmax(scores))]
+
+        page_best_for_hunk: Dict[str, float] = {}
+        hunk_chunk_summaries = []
+
+        for ci in diagnostic_indices:
+            score = float(scores[ci])
+            raw = chunks_raw[ci] if chunks_raw and ci < len(chunks_raw) else {}
+            udid = (udids[ci] if ci < len(udids) else raw.get('UDID')) or 'N/A'
+            chunk_id = raw.get('Chunk_ID') or f"{udid}-UNK-{ci}"
+            headline = raw.get('Headline_Alt') or raw.get('Page_Title') or ''
+
+            passes = score >= HUNK_CHUNK_MIN_SIMILARITY
+            hunk_chunk_summaries.append({
+                'udid': udid, 'chunk_id': chunk_id, 'similarity': score,
+                'headline_alt': headline, 'passes_chunk_threshold': passes
+            })
+
+            if not passes: continue
+
+            page_best_for_hunk[udid] = max(page_best_for_hunk.get(udid, 0.0), score)
+
+            rec = page_acc.setdefault(udid, {
+                'udid': udid, 'chunk_hits': 0, 'matched_hunks': set(),
+                'chunk_id_set': set(), 'chunk_ids': [], 'best_chunk_id': chunk_id,
+                'best_chunk_similarity': score, 'best_headline': headline,
+                'base_similarity': 0.0, 'avg_similarity_sum': 0.0,
+            })
+
+            rec['chunk_hits'] += 1
+            rec['matched_hunks'].add(hunk['hunk_index'])
+            if chunk_id not in rec['chunk_id_set']:
+                rec['chunk_id_set'].add(chunk_id)
+                rec['chunk_ids'].append(chunk_id)
+
+            rec['avg_similarity_sum'] += score
+            if score > rec['base_similarity']:
+                rec['base_similarity'] = score
+                rec['best_chunk_id'] = chunk_id
+                rec['best_headline'] = headline
+
+        hunk_matches.append({
+            'hunk_index': hunk['hunk_index'],
+            'hunk_header': hunk.get('header', ''),
+            'change_text': hunk.get('change_context', ''),
+            'power_words_found': hunk.get('power_words', {}).get('power_words_found', []),
+            'top_chunks': sorted(hunk_chunk_summaries, key=lambda x: x['similarity'], reverse=True)[:5]
+        })
+
+    # --- SCORING & BONUSES ---
+    impacted_pages = []
+    for udid, rec in page_acc.items():
+        distinct_hunks = len(rec['matched_hunks'])
+        coverage_bonus = min(MAX_PAGE_COVERAGE_BONUS, max(0, distinct_hunks - 1) * PAGE_HUNK_COVERAGE_BONUS)
+        density_bonus = min(MAX_PAGE_DENSITY_BONUS, max(0, rec['chunk_hits'] - 1) * PAGE_CHUNK_DENSITY_BONUS)
+
+        power_adjusted = calculate_final_score(rec['base_similarity'], overall_power)
+        power_uplift = max(0.0, power_adjusted - rec['base_similarity'])
+
+        final_score = min(1.0, rec['base_similarity'] + coverage_bonus + density_bonus + power_uplift)
+
+        impacted_pages.append({
+            'udid': udid,
+            'aggregated_base_similarity': float(rec['base_similarity']),
+            'aggregated_final_score': float(final_score),
+            'chunk_hits': rec['chunk_hits'],
+            'distinct_hunk_hits': distinct_hunks,
+            'matched_hunk_indices': sorted(rec['matched_hunks']),
+            'relevant_chunk_ids': rec['chunk_ids'][:5],
+            'best_chunk_id': rec['best_chunk_id'],
+            'best_headline': rec['best_headline']
+        })
+
+    impacted_pages.sort(key=lambda p: (p['aggregated_final_score'], p['distinct_hunk_hits']), reverse=True)
     
-    # Step 6: Find best match
-    best_match_idx = np.argmax(similarities)
-    base_similarity = similarities[best_match_idx]
-    matched_udid = udids[best_match_idx]
-    matched_text = chunk_texts[best_match_idx]
-    matched_chunk_id = chunks_raw[best_match_idx].get('Chunk_ID', 'N/A') if chunks_raw else 'N/A'
+    threshold_passing_candidates = [
+        p for p in impacted_pages if p['aggregated_final_score'] >= CANDIDATE_MIN_SCORE
+    ]
+
+    primary = impacted_pages[0] if impacted_pages else None
+    primary_score = float(primary['aggregated_final_score']) if primary else 0.0
+    impact_count = len(threshold_passing_candidates)
     
-    logger.info(f"Best match: {matched_udid} ({matched_chunk_id}) with similarity {base_similarity:.3f}")
-    logger.info(f"Matched chunk preview: {matched_text[:100]}...")
-    
-    # Step 7: Calculate final score with power word boost
-    final_score = calculate_final_score(base_similarity, power_analysis['score'])
-    should_handover = should_generate_handover(final_score)
-    
-    logger.info(f"Base similarity: {base_similarity:.3f}")
-    logger.info(f"Final score (with power words): {final_score:.3f}")
-    logger.info(f"Threshold: {SIMILARITY_THRESHOLD}")
-    logger.info(f"Should generate handover: {should_handover}")
-    
-    # Step 8: Return comprehensive results
+    should_handover, handover_reason, primary_threshold_used = should_generate_handover(
+        primary_score=primary_score,
+        impact_count=impact_count,
+        source_priority=source_priority
+    )
+
     return {
         'status': 'success',
-        'change_text': change['change_context'],
-        'diff_vector_shape': diff_vector.shape,
-        'power_words': power_analysis,
-        'base_similarity': float(base_similarity),
-        'final_score': float(final_score),
-        'matched_udid': matched_udid,
-        'matched_chunk_id': matched_chunk_id,
-        'matched_text': matched_text,
-        'matched_chunk_raw': chunks_raw[best_match_idx] if chunks_raw else None,
-        'threshold': SIMILARITY_THRESHOLD,
+        'change_text': change.get('change_context', ''),
+        # Every hunk, including noise, is preserved here for the UI
+        'change_hunks': [
+            {
+                'hunk_index': h['hunk_index'],
+                'hunk_header': h.get('header', ''),
+                'hunk_text': h.get('change_context', ''),
+                'is_noise': h.get('is_noise', False),
+                'power_words_found': h.get('power_words', {}).get('power_words_found', [])
+            }
+            for h in hunks
+        ],
+        'power_words': overall_power,
+        'base_similarity': float(primary['aggregated_base_similarity']) if primary else 0.0,
+        'final_score': primary_score,
+        'primary_udid': primary['udid'] if primary else None,
+        'primary_chunk_id': primary.get('best_chunk_id') if primary else None,
+        'primary_headline': primary.get('best_headline') if primary else None,
+        
+        # Diagnostics
+        'hunk_matches': hunk_matches,
+        'threshold_passing_candidates': threshold_passing_candidates,
+        'impacted_pages': impacted_pages,
+        'impact_count': impact_count,
+        'multi_impact_likely': impact_count > 1,
+        
+        # Decisions
         'should_handover': should_handover,
-        'filter_reason': None if should_handover else f"Below threshold: {final_score:.3f} < {SIMILARITY_THRESHOLD}"
+        'handover_decision_reason': handover_reason,
+        'filter_reason': None if should_handover else handover_reason,
+        'primary_handover_threshold_used': primary_threshold_used,
+        'candidate_min_score': CANDIDATE_MIN_SCORE,
+        'hunk_chunk_min_similarity': HUNK_CHUNK_MIN_SIMILARITY
     }
 
-def write_github_summary(handover_paths: list):
+# ---------------------------
+# Packet generation (batched)
+# ---------------------------
+
+def _derive_packet_priority(priority: str, primary_score: float, power_count: int) -> str:
+    # source priority can dominate urgency but preserve score influence
+    p = (priority or '').strip().lower()
+    if p == 'high':
+        if primary_score >= 0.70 or power_count >= 5:
+            return 'Critical'
+        return 'High'
+    if primary_score >= 0.75 or power_count >= 5:
+        return 'Critical'
+    if primary_score >= 0.60 or power_count >= 3:
+        return 'High'
+    return 'Medium'
+
+
+def generate_handover_packets(source_name: str, priority: str, diff_file: str,
+                              analysis: dict, timestamp: str,
+                              version_id: Optional[str] = None) -> List[str]:
+    """
+    Generates one or more JSON handover packets for LLM confirmation.
+    All candidates with score >= CANDIDATE_MIN_SCORE are included across batches (no truncation).
+    """
+    if not analysis or analysis.get('status') != 'success':
+        return []
+
+    all_candidates = list(analysis.get('threshold_passing_candidates') or [])
+    if not all_candidates:
+        return []
+
+    os.makedirs(HANDOVER_DIR, exist_ok=True)
+
+    batch_size = max(1, int(MAX_CANDIDATES_PER_PACKET))
+    batches = [all_candidates[i:i + batch_size] for i in range(0, len(all_candidates), batch_size)]
+    batch_count = len(batches)
+
+    power = analysis.get('power_words', {}) or {}
+    power_count = int(power.get('count', 0))
+    primary_score = float(analysis.get('final_score') or 0.0)
+    packet_priority = _derive_packet_priority(priority, primary_score, power_count)
+    primary_udid = analysis.get('primary_udid') or 'unknown'
+    safe_ts = timestamp.replace(':', '').replace('.', '').replace('-', '')[:14]
+
+    paths: List[str] = []
+
+    for idx, batch in enumerate(batches, start=1):
+        packet_id = f"handover_{safe_ts}_{primary_udid}_batch_{idx:02d}_of_{batch_count:02d}"
+        filepath = os.path.join(HANDOVER_DIR, f"{packet_id}.json")
+
+        packet = {
+            'packet_id': packet_id,
+            'generated_at': timestamp,
+            'packet_priority': packet_priority,
+            'source': {
+                'name': source_name,
+                'monitoring_priority': priority,
+                'source_weight': _priority_to_source_weight(priority),
+                'diff_file': diff_file,
+                'diff_file_path': os.path.join(DIFF_DIR, diff_file),
+                'timestamp_from_audit_log': timestamp,
+                'version_id': version_id
+            },
+            'analysis': {
+                'primary_similarity_score': primary_score,
+                'primary_base_similarity': analysis.get('base_similarity'),
+                'candidate_min_score': analysis.get('candidate_min_score', CANDIDATE_MIN_SCORE),
+                'primary_handover_threshold_used': analysis.get('primary_handover_threshold_used'),
+                'power_words_found': power.get('power_words_found', power.get('found', [])),
+                'power_word_count': power_count,
+                'power_word_score': power.get('score', 0.0),
+                'impact_count': analysis.get('impact_count', 0),
+                'multi_impact_likely': analysis.get('multi_impact_likely', False),
+                'handover_decision_reason': analysis.get('handover_decision_reason')
+            },
+            'change': {
+                'diff_file': diff_file,
+                'preview': (analysis.get('change_text', '') or '')[:400],
+                'hunks': analysis.get('change_hunks', [])
+            },
+            'llm_handover': {
+                'purpose': 'JSON handover packet for the LLM to confirm whether the source change impacts candidate IPFR pages.',
+                'retrieval_mode': 'high_recall_candidate_generation',
+                'packeting_mode': 'candidate_batching_no_truncation_of_threshold_passing_candidates',
+                'primary_udid': analysis.get('primary_udid'),
+                'candidate_min_score': analysis.get('candidate_min_score', CANDIDATE_MIN_SCORE),
+                'candidate_count_total': len(all_candidates),
+                'candidate_count_in_packet': len(batch),
+                'candidate_batch_index': idx,
+                'candidate_batch_count': batch_count,
+                'candidate_start_index': (idx - 1) * batch_size + 1,
+                'candidate_end_index': (idx - 1) * batch_size + len(batch),
+                'candidate_udids': [c.get('udid') for c in batch],
+                'candidates': [
+                    {
+                        'udid': c.get('udid'),
+                        'candidate_rank': c.get('candidate_rank'),
+                        'candidate_score': c.get('aggregated_final_score'),
+                        'base_similarity': c.get('aggregated_base_similarity'),
+                        'matched_hunk_indices': c.get('matched_hunk_indices', []),
+                        'relevant_chunk_ids': c.get('relevant_chunk_ids', []),
+                        'best_chunk_id': c.get('best_chunk_id'),
+                        'chunk_hit_count': c.get('chunk_hits'),
+                        'distinct_hunk_hits': c.get('distinct_hunk_hits'),
+                        'coverage_bonus': c.get('coverage_bonus'),
+                        'density_bonus': c.get('density_bonus'),
+                        'best_headline': c.get('best_headline')
+                    }
+                    for c in batch
+                ],
+                'hunk_matches': analysis.get('hunk_matches', [])
+            }
+        }
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(packet, f, indent=2, ensure_ascii=False)
+
+        logger.info(f"LLM handover packet written: {os.path.basename(filepath)}")
+        paths.append(filepath)
+
+    return paths
+
+
+def write_github_summary(handover_paths: List[str]):
     """
     Writes a markdown summary of this run's handover packets to the GitHub Actions
-    job summary (GITHUB_STEP_SUMMARY). If that env variable isn't set (i.e. running
-    locally), the summary is written to stdout instead.
-
-    Args:
-        handover_paths (list): Paths to handover packet JSON files generated this run.
+    job summary (GITHUB_STEP_SUMMARY). If unavailable, prints to stdout.
     """
     summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
-
     lines = ["## Tripwire run summary\n"]
 
     if not handover_paths:
-        lines.append("No handover packets generated this run — all changes were below threshold or no changes were detected.\n")
+        lines.append("No handover packets generated this run.\n")
     else:
         lines.append(f"**{len(handover_paths)} handover packet(s) generated this run.**\n")
-        lines.append("| Priority | Score | Source | Matched UDID | Headline | Diff file |")
-        lines.append("|----------|-------|--------|--------------|----------|-----------|")
+        lines.append("| Priority | Score | Source | Primary UDID | Diff file | Batch | Candidates |")
+        lines.append("|---|---:|---|---|---|---|---:|")
 
-        for path in handover_paths:
+        for p in handover_paths:
             try:
-                with open(path, 'r', encoding='utf-8') as f:
-                    p = json.load(f)
-                priority   = p.get('packet_priority', 'N/A')
-                score      = p.get('analysis', {}).get('similarity_score', 0)
-                source     = p.get('source', {}).get('name', 'N/A')
-                udid       = p.get('matched_chunk', {}).get('udid', 'N/A')
-                headline   = p.get('matched_chunk', {}).get('headline_alt', 'N/A')
-                diff_file  = p.get('source', {}).get('diff_file', 'N/A')
-                lines.append(f"| **{priority}** | {score:.3f} | {source} | `{udid}` | {headline} | `{diff_file}` |")
+                with open(p, 'r', encoding='utf-8') as f:
+                    packet = json.load(f)
+                prio = packet.get('packet_priority', '')
+                score = packet.get('analysis', {}).get('primary_similarity_score')
+                src = packet.get('source', {}).get('name', '')
+                udid = packet.get('llm_handover', {}).get('primary_udid', '')
+                diff_file = packet.get('source', {}).get('diff_file', '')
+                lh = packet.get('llm_handover', {})
+                batch = f"{lh.get('candidate_batch_index','?')}/{lh.get('candidate_batch_count','?')}"
+                count = lh.get('candidate_count_in_packet', '')
+                score_fmt = f"{float(score):.3f}" if score is not None else ""
+                lines.append(f"| {prio} | {score_fmt} | {src} | {udid} | {diff_file} | {batch} | {count} |")
             except Exception as e:
-                lines.append(f"| — | — | Error reading packet: {e} | — | — | — |")
+                lines.append(f"| Error | | | | {os.path.basename(p)} | | ({e}) |")
 
-        lines.append("")
-        lines.append("> Full JSON packets are available in the **handover_packets** artifact attached to this run.")
-
-    summary = "\n".join(lines) + "\n"
-
+    output = "\n".join(lines) + "\n"
     if summary_file:
         with open(summary_file, 'a', encoding='utf-8') as f:
-            f.write(summary)
+            f.write(output)
+        logger.info(f"Wrote GitHub Actions summary to {summary_file}")
     else:
-        print(summary)
+        print(output)
 
+LLM_HANDOVER_LOG = "llm_handover_log.csv"
 
-def generate_handover_packet(source_name: str, priority: str, diff_file: str,
-                             analysis: dict, timestamp: str) -> str:
+def log_llm_handover_decision(source_name: str,
+                              priority: str,
+                              version_id: str,
+                              diff_file: str,
+                              analysis: dict,
+                              packets_generated: int):
     """
-    Generates a JSON handover packet for Tom containing all context needed to review
-    a flagged content change.
-
-    Args:
-        source_name (str): Name of the monitored source.
-        priority (str): Source priority level (High/Medium/Low).
-        diff_file (str): Filename of the associated diff.
-        analysis (dict): The result dict from calculate_similarity().
-        timestamp (str): ISO timestamp from the audit log entry.
-    Returns:
-        str: Path to the written handover packet file.
+    Records Stage 3 → LLM routing decisions.
+    One row per semantic evaluation event.
     """
-    os.makedirs(HANDOVER_DIR, exist_ok=True)
 
-    chunk = analysis.get('matched_chunk_raw') or {}
-    power = analysis.get('power_words', {})
-    final_score = analysis.get('final_score', 0.0)
+    file_exists = os.path.exists(LLM_HANDOVER_LOG)
 
-    # Derive packet priority from score and power word count
-    pw_count = power.get('count', 0)
-    if final_score >= 0.75 or pw_count >= 5:
-        packet_priority = 'Critical'
-    elif final_score >= 0.60 or pw_count >= 3:
-        packet_priority = 'High'
-    else:
-        packet_priority = 'Medium'
+    headers = [
+        "Timestamp",
+        "Source_Name",
+        "Priority",
+        "Version_ID",
+        "Diff_File",
+        "Analysis_Status",
+        "Should_Handover",
+        "Decision_Reason",
+        "Final_Score",
+        "Plausible_Impact_Count",
+        "Strong_Power_Words",
+        "Power_Word_Score",
+        "Top_Candidate_UDIDs",
+        "Packets_Generated"
+    ]
 
-    safe_ts = timestamp.replace(':', '').replace('.', '')[:15]
-    udid = analysis.get('matched_udid', 'unknown')
-    filename = f"handover_{safe_ts}_{udid}.json"
-    filepath = os.path.join(HANDOVER_DIR, filename)
+    power = analysis.get("power_words", {}) or {}
+    candidates = analysis.get("threshold_passing_candidates", []) or []
 
-    packet = {
-        'packet_id': filename.replace('.json', ''),
-        'generated_at': timestamp,
-        'packet_priority': packet_priority,
-        'source': {
-            'name': source_name,
-            'monitoring_priority': priority,
-            'diff_file': diff_file,
-            'diff_file_path': os.path.join(DIFF_DIR, diff_file)
-        },
-        'analysis': {
-            'similarity_score': final_score,
-            'base_similarity': analysis.get('base_similarity'),
-            'threshold': analysis.get('threshold', SIMILARITY_THRESHOLD),
-            'power_words_found': power.get('found', []),
-            'power_word_count': pw_count,
-            'power_word_score': power.get('score', 0.0)
-        },
-        'change': {
-            'hunk': analysis.get('change_text', ''),
-            'preview': (analysis.get('change_text', '') or '')[:200]
-        },
-        'matched_chunk': {
-            'udid': udid,
-            'chunk_id': chunk.get('Chunk_ID', 'N/A'),
-            'headline_alt': chunk.get('Headline_Alt', 'N/A'),
-            'chunk_text': chunk.get('Chunk_Text', analysis.get('matched_text', '')),
-            'chunk_context_prepend': chunk.get('Chunk_Context_Prepend', ''),
-            'token_count': chunk.get('Chunk_Token_Count', 'N/A')
-        },
-        'review_context': {
-            'why_flagged': (
-                f"Similarity score of {final_score:.2%} exceeds threshold of "
-                f"{analysis.get('threshold', SIMILARITY_THRESHOLD):.2%}"
-            ),
-            'power_words_note': (
-                f"Found {pw_count} enforcement-related term(s): "
-                f"{', '.join(power.get('found', []))}"
-                if pw_count else "No enforcement terms detected"
-            )
-        }
-    }
+    row = [
+        datetime.datetime.now().isoformat(),
+        source_name,
+        priority,
+        version_id or "N/A",
+        diff_file or "N/A",
+        analysis.get("status"),
+        analysis.get("should_handover"),
+        analysis.get("handover_decision_reason"),
+        analysis.get("final_score"),
+        analysis.get("impact_count"),
+        power.get("strong_count"),
+        power.get("score"),
+        ", ".join([c.get("udid", "N/A") for c in candidates[:10] if isinstance(c, dict)]),
+        packets_generated
+    ]
 
-    with open(filepath, 'w', encoding='utf-8') as f:
-        json.dump(packet, f, indent=2, ensure_ascii=False)
+    with open(LLM_HANDOVER_LOG, mode="a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
 
-    logger.info(f"Handover packet written: {filename} [{packet_priority}]")
-    return filepath
+        if not file_exists:
+            writer.writerow(headers)
+
+        writer.writerow(row)
 
 
-# --- Main Loop ---
+# ---------------------------
+# Main loop
+# ---------------------------
 
 def main():
-    if not os.path.exists(OUTPUT_DIR): os.makedirs(OUTPUT_DIR)
-    if not os.path.exists(DIFF_DIR): os.makedirs(DIFF_DIR)
-    with open(SOURCES_FILE, 'r') as f: sources = json.load(f)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+    os.makedirs(DIFF_DIR, exist_ok=True)
+
+    if not os.path.exists(SOURCES_FILE):
+        raise FileNotFoundError(f"Missing {SOURCES_FILE}")
+
+    with open(SOURCES_FILE, 'r', encoding='utf-8') as f:
+        sources = json.load(f)
 
     session = requests.Session()
     driver = None
-    logger.info(f"--- Tripwire Stage 2 (Modular & Documented) Run: {datetime.datetime.now()} ---")
-    handover_paths = []
+    handover_paths: List[str] = []
+
+    logger.info(f"--- Tripwire Run: {datetime.datetime.now().isoformat()} ---")
 
     for source in sources:
-        name, stype, priority = source['name'], source['type'], source.get('priority', 'Low')
+        name = source['name']
+        stype = source['type']
+        priority = source.get('priority', 'Low')
+
         out_name = source['output_filename'].replace('.docx', '.md') if stype == "Legislation_OData" else source['output_filename']
         out_path = os.path.join(OUTPUT_DIR, out_name)
-        
+
         old_id = get_last_version_id(name)
         current_id = fetch_stage0_metadata(session, source)
         file_exists = os.path.exists(out_path)
 
-        # START: Self-Healing Logic
-        # Check if we need to repopulate a missing file even if the Version ID matches
         repopulate_only = False
         if old_id and current_id and old_id == current_id:
             if file_exists:
                 logger.info(f"No version change for {name}. Skipping.")
                 continue
-            else:
-                logger.warning(f"File missing for {name}. Healing archive...")
-                repopulate_only = True
+            logger.warning(f"Archive file missing for {name}; healing archive copy.")
+            repopulate_only = True
 
-        new_content = None
         try:
-            # START: Extraction and Normalisation
-            # Fetches raw content from the source and converts it to a standard Markdown/XML format
+            new_content = None
             if stype == "Legislation_OData":
                 ver_id, meta = fetch_legislation_metadata(session, source)
                 if meta:
-                    new_content = download_legislation_content(session, source['base_url'], meta)
                     current_id = ver_id
+                    new_content = download_legislation_content(session, source['base_url'], meta)
             elif stype == "RSS":
                 resp = session.get(source['url'], timeout=15)
+                resp.raise_for_status()
                 new_content = sanitize_rss(resp.content)
             elif stype == "WebPage":
-                if not driver: driver = initialize_driver()
+                if driver is None:
+                    driver = initialize_driver()
                 new_content = fetch_webpage_content(driver, source['url'])
+            else:
+                raise ValueError(f"Unsupported source type: {stype}")
 
-            if new_content:
-                # START: Substantive Change Detection
-                # Compares the new normalized content against the archived version
-                diff_hunk = get_diff(out_path, new_content)
-                
-                # Determine if we should save (change detected, initial run, or self-healing)
-                if diff_hunk or not file_exists or repopulate_only:
-                    save_to_archive(out_name, new_content)
-                    
-                    if diff_hunk and diff_hunk != "Initial archive creation." and not repopulate_only:
-                        diff_file = save_diff_record(name, diff_hunk)
-                        diff_path = os.path.join(DIFF_DIR, diff_file)
+            if new_content is None:
+                log_to_audit(name, priority, "Exception", "N/A", current_id, reason="No content fetched")
+                continue
 
-                        # Stage 3: Semantic analysis and handover packet generation
-                        analysis = calculate_similarity(diff_path)
-                        s3_score = analysis.get('final_score') if analysis['status'] == 'success' else None
-                        s3_words = analysis.get('power_words', {}).get('found') if analysis['status'] == 'success' else None
-                        s3_udid = analysis.get('matched_udid') if analysis['status'] == 'success' else None
-                        s3_chunk_id = analysis.get('matched_chunk_id') if analysis['status'] == 'success' else None
-                        s3_outcome = None
-                        s3_reason = analysis.get('filter_reason') or analysis.get('message') or analysis['status']
+            diff_hunk = get_diff(out_path, new_content)
 
-                        if analysis.get('should_handover'):
-                            ts = datetime.datetime.now().isoformat()
-                            packet_path = generate_handover_packet(name, priority, diff_file, analysis, ts)
-                            handover_paths.append(packet_path)
-                            s3_outcome = 'handover'
-                            s3_reason = f"Score {s3_score:.3f} >= threshold {SIMILARITY_THRESHOLD}"
-                        elif analysis['status'] == 'success':
-                            s3_outcome = 'filtered'
+            if diff_hunk or not file_exists or repopulate_only:
+                save_to_archive(out_name, new_content)
 
-                        log_to_audit(name, priority, "Success", "Yes", current_id, diff_file,
-                                     similarity_score=s3_score, power_words=s3_words,
-                                     matched_udid=s3_udid, matched_chunk_id=s3_chunk_id,
-                                     outcome=s3_outcome, reason=s3_reason)
-                    elif repopulate_only:
-                        log_to_audit(name, priority, "Success", "Healed", current_id)
-                    else:
-                        log_to_audit(name, priority, "Success", "Initial", current_id)
+                if diff_hunk and diff_hunk != "Initial archive creation." and not repopulate_only:
+                    diff_file = save_diff_record(name, diff_hunk)
+                    diff_path = os.path.join(DIFF_DIR, diff_file)
+
+                    analysis = calculate_similarity(diff_path, source_priority=priority)
+
+                    s3_success = analysis.get('status') == 'success'
+                    s3_score = analysis.get('final_score') if s3_success else None
+                    s3_words = analysis.get('power_words', {}).get('power_words_found') if s3_success else None
+                    s3_udid = analysis.get('primary_udid') if s3_success else None
+                    s3_chunk_id = analysis.get('primary_chunk_id') if s3_success else None
+                    s3_outcome = None
+                    s3_reason = analysis.get('handover_decision_reason') or analysis.get('message') or analysis.get('status')
+
+                    if s3_success and analysis.get('should_handover'):
+                        ts = datetime.datetime.now().isoformat()
+                        new_packets = generate_handover_packets(
+                            source_name=name,
+                            priority=priority,
+                            diff_file=diff_file,
+                            analysis=analysis,
+                            timestamp=ts,
+                            version_id=current_id
+                        )
+                        
+                        handover_paths.extend(new_packets)
+                        s3_outcome = 'handover'
+
+                        log_llm_handover_decision(
+                            source_name=name,
+                            priority=priority,
+                            version_id=current_id,
+                            diff_file=diff_file,
+                            analysis=analysis,
+                            packets_generated=len(new_packets)
+                        )
+                    elif s3_success:
+                        s3_outcome = 'filtered'
+                        
+                        log_llm_handover_decision(
+                            source_name=name,
+                            priority=priority,
+                            version_id=current_id,
+                            diff_file=diff_file,
+                            analysis=analysis,
+                            packets_generated=0
+                        )
+
+                    log_to_audit(
+                        name=name,
+                        priority=priority,
+                        status="Success",
+                        change_detected="Yes",
+                        version_id=current_id,
+                        diff_file=diff_file,
+                        similarity_score=s3_score,
+                        power_words=s3_words,
+                        matched_udid=s3_udid,
+                        matched_chunk_id=s3_chunk_id,
+                        outcome=s3_outcome,
+                        reason=s3_reason
+                    )
+
+                elif repopulate_only:
+                    log_to_audit(name, priority, "Success", "Healed", current_id)
                 else:
-                    log_to_audit(name, priority, "Success", "No", current_id)
+                    log_to_audit(name, priority, "Success", "Initial", current_id)
+            else:
+                log_to_audit(name, priority, "Success", "No", current_id)
 
         except Exception as e:
             logger.error(f"Failed {name}: {e}")
-            log_to_audit(name, priority, "Exception", "N/A", current_id)
+            log_to_audit(name, priority, "Exception", "N/A", current_id, reason=str(e))
 
-    if driver: driver.quit()
+    if driver:
+        try:
+            driver.quit()
+        except Exception:
+            pass
+
     write_github_summary(handover_paths)
 
+
 if __name__ == "__main__":
-    # Check if running Stage 3 test mode
     if len(sys.argv) > 1 and sys.argv[1] == '--test-stage3':
-        logger.info("=== Running Stage 3 Phase 2 Test ===")
-        
-        # Check if diff file argument provided
         if len(sys.argv) < 3:
             logger.error("Usage: python tripwire.py --test-stage3 <path_to_diff_file>")
-            logger.info(f"Example: python tripwire.py --test-stage3 {DIFF_DIR}/some_file.diff")
             sys.exit(1)
-        
         diff_file = sys.argv[2]
-        
         if not os.path.exists(diff_file):
             logger.error(f"Diff file not found: {diff_file}")
             sys.exit(1)
-        
-        # Run Stage 3 analysis (will show "awaiting_phase3" without mock data)
-        result = calculate_similarity(diff_file)
-        
-        logger.info("\n=== Stage 3 Phase 2 Test Results ===")
-        logger.info(f"Status: {result['status']}")
-        logger.info(f"Change text length: {len(result.get('change_text', ''))} characters")
-        
-        if result.get('power_words'):
-            pw = result['power_words']
-            logger.info(f"Power words detected: {pw['count']}")
-            logger.info(f"Power words: {pw['found']}")
-            logger.info(f"Power word score: {pw['score']:.2f}")
-        
-        if result.get('final_score') is not None:
-            logger.info(f"Base similarity: {result.get('base_similarity', 0):.3f}")
-            logger.info(f"Final score: {result['final_score']:.3f}")
-            logger.info(f"Should handover: {result.get('should_handover', False)}")
-            if result.get('filter_reason'):
-                logger.info(f"Filter reason: {result['filter_reason']}")
-        
-        if result['status'] == 'awaiting_phase3':
-            logger.info("\n✓ Phase 2 complete! Power word detection and scoring working.")
-            logger.info("Next: Create test fixtures and run pytest to validate logic.")
-            logger.info("Phase 3: Load Tom's spreadsheet and generate handover packets.")
-        elif result['status'] == 'success':
-            logger.info("\n✓ All systems working! Ready for production.")
-        else:
-            logger.error("\n✗ Test failed - check errors above")
-        
+
+        result = calculate_similarity(diff_file, source_priority='High')
+        print(json.dumps({
+            'status': result.get('status'),
+            'primary_udid': result.get('primary_udid'),
+            'primary_score': result.get('final_score'),
+            'impact_count': result.get('impact_count'),
+            'multi_impact_likely': result.get('multi_impact_likely'),
+            'should_handover': result.get('should_handover'),
+            'handover_decision_reason': result.get('handover_decision_reason')
+        }, indent=2))
         sys.exit(0)
-    
-    # Normal Stage 2 operation
+
     main()

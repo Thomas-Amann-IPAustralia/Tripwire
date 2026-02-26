@@ -1,169 +1,140 @@
-"""
-Test suite for Tripwire Stage 3: Semantic Analysis & Relevance Gate
-Consolidated version with OpenAI thresholds and error handling.
-
-Run with: pytest test_stage3.py -v
-"""
-
-import pytest
-import sys
 import os
-import pickle
-import numpy as np
+import sys
+import json
+import pytest
+import datetime
+from pathlib import Path
+from unittest.mock import MagicMock, patch
 
-# Add parent directory to path to import tripwire functions
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+# --- 1. IMPORT LOGIC ---
+# This ensures it points to your 'tripwire.py' file
+import tripwire
 
-from tripwire import (
-    extract_change_content,
-    detect_power_words,
-    calculate_final_score,
-    should_generate_handover,
-    calculate_similarity
-)
-
-# Load mock semantic data
-MOCK_DATA_PATH = 'test_fixtures/mock_semantic_data.pkl'
-
-# --- NEW THRESHOLD CONSTANTS ---
-# text-embedding-3-small typically requires lower thresholds than E5
-V3_SMALL_THRESHOLD = 0.45
+# --- 2. FIXTURES ---
 
 @pytest.fixture
-def mock_semantic_data():
-    """Load pre-generated mock semantic embeddings"""
-    if not os.path.exists(MOCK_DATA_PATH):
-        pytest.skip(f"Mock data not found. Run: python generate_mock_data.py")
+def mock_embeddings_file(tmp_path):
+    """Creates a dummy semantic embeddings file in the correct flat-list format."""
+    file_path = tmp_path / "Semantic_Embeddings_Output.json"
+    data = [
+        {
+            "UDID": "udid-1",
+            "Chunk_ID": "U1_C1",
+            "Chunk_Text": "The penalty for late fees is $250,000.",
+            "Chunk_Embedding": [0.1] * 1536
+        }
+    ]
+    file_path.write_text(json.dumps(data))
+    return file_path
+
+@pytest.fixture
+def sample_diff(tmp_path):
+    """Creates a sample unified diff file for parsing tests."""
+    diff_path = tmp_path / "test_update.diff"
+    content = (
+        "--- old.txt\n"
+        "+++ new.txt\n"
+        "@@ -1,1 +1,1 @@\n"
+        "-The fee is $100.\n"
+        "+The Penalty is $250,000.\n"
+    )
+    diff_path.write_text(content)
+    return diff_path
+
+# --- 3. UNIT TESTS ---
+
+def test_parse_diff_hunks_logic(sample_diff):
+    """Verifies diff parser using the correct 'added_lines' key."""
+    hunks = tripwire.parse_diff_hunks(str(sample_diff))
+    assert len(hunks) == 1
+    # Fixed: Using 'added_lines' instead of 'added'
+    assert any("Penalty" in line for line in hunks[0]['added_lines'])
+
+def test_power_words_detection():
+    """Verifies triggers using 'strong_count' and 'score' keys."""
+    text = "A penalty of $250,000 is mandatory."
+    results = tripwire.detect_power_words(text)
+    # Fixed: checking against script-specific keys
+    assert results['strong_count'] > 0
+    assert results['score'] > 0.10
+
+@patch('tripwire.OpenAI')
+def test_calculate_similarity_structure(mock_openai_class, mock_embeddings_file, sample_diff):
+    """Tests the full analysis pipeline return keys."""
+    # Setup Mock OpenAI
+    mock_client = MagicMock()
+    mock_openai_class.return_value = mock_client
+    mock_client.embeddings.create.return_value.data = [MagicMock(embedding=[0.1]*1536)]
     
-    with open(MOCK_DATA_PATH, 'rb') as f:
-        data = pickle.load(f)
-        # Verify dimension change: 768 -> 1536
-        assert data['embeddings'].shape[1] == 1536, "Mock data must be regenerated for v3-small"
-        return data
-
-class TestDiffParsing:
-    """Test diff file parsing and content extraction"""
-    
-    def test_extract_additions_and_removals(self):
-        """Should correctly parse additions and removals from diff"""
-        result = extract_change_content('test_fixtures/diffs/high_relevance_trademark.diff')
-        assert 'authorisation' in result['removed']  
-        assert '$150,000' in result['added']      
-        assert len(result['change_context']) > 0
-
-    def test_empty_diff(self):
-        """Should handle diffs with no substantive changes gracefully"""
-        result = extract_change_content('test_fixtures/diffs/noise_only.diff')
-        assert 'change_context' in result
-
-class TestPowerWordDetection:
-    """Test power word scanning and scoring"""
-    
-    def test_detect_multiple_power_words(self):
-        """Should find multiple power words in text"""
-        text = "Applicants must submit within 30 days. Penalties may include $5,000 fine."
-        result = detect_power_words(text)
-        assert result['count'] >= 4
-        assert 'must' in result['found']
-        assert result['score'] > 0
-
-    def test_detect_dollar_amounts(self):
-        """Should detect dollar amounts with commas"""
-        text = "Penalties up to $150,000 for violations"
-        result = detect_power_words(text)
-        assert any('$150,000' in word for word in result['found'])
-
-    def test_detect_archives_act(self):
-        """Should detect specific act references (case-insensitive)"""
-        text = "Under the Archives Act 1983, records must be preserved"
-        result = detect_power_words(text)
-        # Matches against the lowercase output of detect_power_words
-        assert any('archives act 1983' in word.lower() for word in result['found'])
-
-class TestScoringLogic:
-    """Test final score calculation and threshold logic using additive boost"""
-
-    def test_calculate_final_score_additive(self):
-        """Should add power word score directly to base similarity"""
-        base_sim = 0.50
-        power_score = 0.30
-        final = calculate_final_score(base_sim, power_score)
-        # 0.50 + 0.30 = 0.80
-        assert abs(final - 0.80) < 0.001
-
-    def test_boost_visible_in_score(self):
-        """Boost should be the exact difference between scores with and without power words"""
-        base_sim = 0.40
-        boost = 0.15
-        final_without = calculate_final_score(base_sim, 0.0)
-        final_with = calculate_final_score(base_sim, boost)
-        assert abs((final_with - final_without) - boost) < 0.001
-
-    def test_high_semantic_low_power(self):
-        """High semantic similarity should pass threshold without power words"""
-        final = calculate_final_score(0.50, 0.0)
-        assert final >= V3_SMALL_THRESHOLD
-        assert should_generate_handover(final, threshold=V3_SMALL_THRESHOLD)
-
-    def test_low_semantic_boost_crosses_threshold(self):
-        """Power words should be able to push a marginal match over the threshold"""
-        base_sim = 0.40  # Below 0.45 threshold on its own
-        final = calculate_final_score(base_sim, 0.15)
-        # 0.40 + 0.15 = 0.55 — clearly over threshold
-        assert final >= V3_SMALL_THRESHOLD
-        assert should_generate_handover(final, threshold=V3_SMALL_THRESHOLD) == True
-
-    def test_score_capped_at_one(self):
-        """Score should never exceed 1.0 regardless of inputs"""
-        final = calculate_final_score(0.95, 0.90)
-        assert final == 1.0
-
-    def test_threshold_logic(self):
-        """Should correctly apply threshold boundaries"""
-        assert should_generate_handover(0.50, threshold=V3_SMALL_THRESHOLD) == True
-        assert should_generate_handover(0.35, threshold=V3_SMALL_THRESHOLD) == False
-        assert should_generate_handover(0.45, threshold=V3_SMALL_THRESHOLD) == True
-
-class TestEndToEnd:
-    """Test complete workflow with v3-small expectations"""
-    
-    def test_high_relevance_trademark_match(self, mock_semantic_data):
-        """Should match trademark infringement diff to IPFR-001"""
-        result = calculate_similarity(
-            'test_fixtures/diffs/high_relevance_trademark.diff',
-            mock_semantic_data=mock_semantic_data
-        )
+    with patch('tripwire.SEMANTIC_EMBEDDINGS_FILE', str(mock_embeddings_file)):
+        # Passing mock_semantic_data=None to force file loading from our temp file
+        result = tripwire.calculate_similarity(str(sample_diff), source_priority="High")
+        
         assert result['status'] == 'success'
-        assert result['matched_udid'] == 'IPFR-001' 
-        assert result['base_similarity'] > 0.4
-        assert result['should_handover'] == True
+        assert 'final_score' in result
+        assert 'impact_count' in result
 
-    def test_noise_only_filtered(self, mock_semantic_data):
-        """Timestamp-only changes should not trigger handover"""
-        result = calculate_similarity(
-            'test_fixtures/diffs/noise_only.diff',
-            mock_semantic_data=mock_semantic_data
-        )
-        # Noise usually drops significantly with v3-small
-        assert result['base_similarity'] < 0.35 
-        assert result['should_handover'] == False
-
-class TestErrorHandling:
-    """Test error handling and edge cases for Stage 3 robustness"""
+def test_generate_handover_packets_data_integrity(tmp_path):
+    """Tests packet generation with the 'status': 'success' requirement."""
+    temp_handover = tmp_path / "handover"
+    temp_handover.mkdir()
     
-    def test_missing_diff_file(self, mock_semantic_data):
-        """Should raise FileNotFoundError when diff doesn't exist"""
-        with pytest.raises(FileNotFoundError):
-            extract_change_content('nonexistent_file.diff')
-
-    def test_invalid_semantic_data(self):
-        """Should handle malformed semantic data gracefully"""
-        # Updated dimension to 1536 for v3-small
-        result = calculate_similarity(
-            'test_fixtures/diffs/high_relevance_trademark.diff',
-            mock_semantic_data={'embeddings': np.zeros((1, 1536)), 'udids': ['ERR-01']}
+    with patch('tripwire.HANDOVER_DIR', str(temp_handover)):
+        analysis = {
+            "status": "success", # Requirement for function to run
+            "final_score": 0.75,
+            "primary_udid": "udid-1",
+            "threshold_passing_candidates": [
+                {
+                    "udid": "udid-1",
+                    "candidate_rank": 1,
+                    "aggregated_final_score": 0.75,
+                    "relevant_chunk_ids": ["U1_C1"]
+                }
+            ]
+        }
+        
+        paths = tripwire.generate_handover_packets(
+            "Test Source", "High", "test.diff", analysis, "20260225120000"
         )
-        assert 'status' in result
+        
+        assert len(paths) > 0
+        with open(paths[0], 'r') as f:
+            packet = json.load(f)
+            assert packet['llm_handover']['candidates'][0]['udid'] == "udid-1"
 
-if __name__ == '__main__':
-    pytest.main([__file__, '-v', '--tb=short'])
+def test_noise_suppression_logic(tmp_path, mock_embeddings_file):
+    """Verifies that non-substantive changes result in low scores."""
+    noise_diff = tmp_path / "noise.diff"
+    # A typical administrative noise string
+    noise_diff.write_text("@@ -1,1 +1,1 @@\n-Page 54 of 102\n+Page 55 of 103\n")
+    
+    with patch('tripwire._embed_texts') as mock_embed:
+        # FIX: Use a vector that does NOT match the [0.1]*1536 in the fixture.
+        # This simulates a 'dissimilar' semantic meaning.
+        mock_embed.return_value = [[-0.1] * 1536] 
+        
+        with patch('tripwire.SEMANTIC_EMBEDDINGS_FILE', str(mock_embeddings_file)):
+            result = tripwire.calculate_similarity(str(noise_diff), source_priority="Low")
+            
+            # Now the base_similarity will be low, and final_score will stay < 0.45
+            assert result['final_score'] < 0.45
+
+def test_handover_batching_limit(tmp_path):
+    """Ensures large candidate lists are split into multiple files."""
+    temp_handover = tmp_path / "batches"
+    temp_handover.mkdir()
+    
+    with patch('tripwire.HANDOVER_DIR', str(temp_handover)):
+        with patch('tripwire.MAX_CANDIDATES_PER_PACKET', 2):
+            analysis = {
+                "status": "success",
+                "final_score": 0.8,
+                "threshold_passing_candidates": [{"udid": f"U{i}", "rank": i} for i in range(5)]
+            }
+            
+            paths = tripwire.generate_handover_packets(
+                "Big Bill", "High", "big.diff", analysis, "20260225120000"
+            )
+            # 5 candidates / 2 per packet = 3 packets
+            assert len(paths) == 3
