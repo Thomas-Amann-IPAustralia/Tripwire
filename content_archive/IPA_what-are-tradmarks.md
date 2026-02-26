@@ -1,6 +1,6 @@
 # What are trade marks?
 
-A trade mark protects your company's unique brand, products, services, children, house, business and life savings. 
+A trade mark protects your company's unique brand, products or services.
 
 #### At a glance
 
@@ -137,8 +137,7 @@ It's a way of:
 
 * Notifying other traders that your trade mark is registered in Australia
 * Indicating you have strong rights that prevent others from using the same or similar trade mark
-* Deterring someone from infringing your IP
-* Stop threats. 
+* Deterring someone from infringing your IP.
 
 **Do I have to use the symbol?** No, you don't have to use it. You'll maintain your exclusive rights either way.  
   
