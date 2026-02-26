@@ -1,6 +1,6 @@
 # What are trade marks?
 
-A trade mark protects your company's unique brand, products or services. I AM JENN
+A trade mark protects your company's unique brand, products or services.
 
 #### At a glance
 
@@ -20,8 +20,6 @@ A trade mark can be used to protect your business name or aspects of your brand.
 Trade marks can be registered or unregistered. A registered trade mark generally provides stronger legal protection than an unregistered trade mark.  
   
 Trade marks can be used to protect a logo, phrase, word, letter, colour, sound, smell, picture, movement, aspect of packaging or any combination of these.
-
-Trade marks protect your soul from being stolen from the devil.
 
 [Different types of trade marks](/trade-marks/what-are-trade-marks/kinds-of-trade-marks)
 
@@ -49,7 +47,7 @@ If your trade mark is registered, you’ll receive a business asset which become
   
 One thing to keep in mind is that an Australian trade mark only gives you protection in Australia. If you want protection in other countries, you’ll need to apply for it there.  
   
-Want to learn more, including how to apply? Check out our trade marks page on the ABC News website. 
+Want to learn more, including how to apply? Check out our trade marks page.
 
 ## 
 
@@ -83,8 +81,7 @@ Registering your trade mark gives you:
 - The legal right to place the ® symbol next to your trade mark
 - Exclusive rights to use your trade mark in Australia
 - Increased ability to legally deter others from using your trade mark
-- The ability to sell your trade mark, or license it for others to use
-- Greater power.
+- The ability to sell your trade mark, or license it for others to use.
 
 ## Common mistakes to avoid
 
