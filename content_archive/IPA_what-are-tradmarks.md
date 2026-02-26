@@ -1,6 +1,6 @@
 # What are trade marks?
 
-A trade mark protects your company's unique brand, products or services. test test test hello
+A trade mark protects your company's unique brand, products or services.
 
 #### At a glance
 
