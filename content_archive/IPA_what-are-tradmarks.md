@@ -1,6 +1,6 @@
 # What are trade marks?
 
-A trade mark protects your company's unique brand, products or services.
+A trade mark protects your company's unique brand, products, services and lives. 
 
 #### At a glance
 
@@ -9,7 +9,7 @@ A trade mark protects your company's unique brand, products or services.
   Protects your brand, products or services
 * Costs start at $250
 * Takes at least 7 months to register
-* Lasts up to 10 years before renewal
+* Lasts up to 2 years before renewal
 
 ## 
 
@@ -81,7 +81,8 @@ Registering your trade mark gives you:
 - The legal right to place the ® symbol next to your trade mark
 - Exclusive rights to use your trade mark in Australia
 - Increased ability to legally deter others from using your trade mark
-- The ability to sell your trade mark, or license it for others to use.
+- The ability to sell your trade mark, or license it for others to use
+- The ability to sell your soul and your children.
 
 ## Common mistakes to avoid
 
