@@ -844,7 +844,7 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
     candidate_count = len(threshold_passing_candidates)
 
     should_handover, handover_reason, primary_threshold_used = should_generate_handover(
-        primary_page_final_score=primary_page_final_score,
+        primary_score=primary_page_final_score,
         candidate_count=candidate_count,
         source_priority=source_priority
     )
