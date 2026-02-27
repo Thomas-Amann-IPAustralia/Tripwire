@@ -40,7 +40,6 @@ except Exception:
 
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
-import pandas as pd  # kept if used elsewhere / future compatibility
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv'
@@ -719,7 +718,6 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
         if not diagnostic_indices and scores.size > 0:
             diagnostic_indices = [int(np.argmax(scores))]
 
-        page_best_for_hunk: Dict[str, float] = {}
         hunk_chunk_summaries = []
 
         for ci in diagnostic_indices:
@@ -737,13 +735,11 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
 
             if not passes: continue
 
-            page_best_for_hunk[udid] = max(page_best_for_hunk.get(udid, 0.0), score)
-
             rec = page_acc.setdefault(udid, {
                 'udid': udid, 'chunk_hits': 0, 'matched_hunks': set(),
                 'chunk_id_set': set(), 'chunk_ids': [], 'best_chunk_id': chunk_id,
                 'best_chunk_similarity': score, 'best_headline': headline,
-                'base_similarity': 0.0, 'avg_similarity_sum': 0.0,
+                'base_similarity': 0.0
             })
 
             rec['chunk_hits'] += 1
@@ -752,7 +748,6 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
                 rec['chunk_id_set'].add(chunk_id)
                 rec['chunk_ids'].append(chunk_id)
 
-            rec['avg_similarity_sum'] += score
             if score > rec['base_similarity']:
                 rec['base_similarity'] = score
                 rec['best_chunk_id'] = chunk_id
