@@ -71,8 +71,8 @@ jobs:
           analysis = tripwire.calculate_similarity(diff_file, source_priority='High')
           print("calculate_similarity keys:", sorted(list(analysis.keys())))
           print("status:", analysis.get('status'))
-          print("final_score:", analysis.get('final_score'))
-          print("impact_count:", analysis.get('impact_count'))
+          print("page_final_score:", analysis.get('page_final_score'))
+          print("candidate_count:", analysis.get('candidate_count'))
           
           # Only generate packets when stage3 says it's OK and candidates exist
           candidates = analysis.get('threshold_passing_candidates') or []
@@ -85,6 +85,7 @@ jobs:
                   diff_file=diff_file,
                   analysis=analysis,
                   timestamp=ts,
+                  version_id=ts,
               )
               print("Generated handover packet files:")
               for p in paths: print(' -', p)
