@@ -519,13 +519,13 @@ def get_primary_handover_threshold_for_priority(priority: str) -> Optional[float
 
 
 def should_generate_handover(primary_score: float,
-                             impact_count: int,
+                             candidate_count: int,
                              source_priority: str) -> Tuple[bool, str, Optional[float]]:
     """
     High-priority source: handover if any threshold-passing candidates exist.
     Medium/Low: require primary score to pass priority-specific threshold.
     """
-    if impact_count <= 0:
+    if candidate_count <= 0:
         return False, "No candidates passed candidate_min_score", get_primary_handover_threshold_for_priority(source_priority)
 
     threshold = get_primary_handover_threshold_for_priority(source_priority)
@@ -629,8 +629,8 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             'final_score': 0.0,
             'candidate_min_score': CANDIDATE_MIN_SCORE,
             'threshold_passing_candidates': [],
-            'impacted_pages': [],
-            'impact_count': 0,
+            'plausible_impacted_pages': [],
+            'candidate_count': 0,
             'multi_impact_likely': False,
             'should_handover': False,
             'handover_decision_reason': "No substantive hunks parsed",
@@ -661,11 +661,11 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             'power_words': overall_power,
             'base_similarity': 0.0,
             'final_score': 0.0,
-            'impact_count': 0,
+            'candidate_count': 0,
             'should_handover': False,
             'handover_decision_reason': "All changes identified as administrative noise",
             'threshold_passing_candidates': [],
-            'impacted_pages': []
+            'plausible_impacted_pages': []
         }
 
     # --- SEMANTIC PROCESSING ---
@@ -679,9 +679,9 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             'change_text': change.get('change_context', ''),
             'change_hunks': [],
             'power_words': overall_power,
-            'impacted_pages': [],
+            'plausible_impacted_pages': [],
             'threshold_passing_candidates': [],
-            'impact_count': 0,
+            'candidate_count': 0,
             'multi_impact_likely': False,
             'should_handover': False,
             'handover_decision_reason': f"Embedding error: {e}"
@@ -696,9 +696,9 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             'change_text': change.get('change_context', ''),
             'change_hunks': [],
             'power_words': overall_power,
-            'impacted_pages': [],
+            'plausible_impacted_pages': [],
             'threshold_passing_candidates': [],
-            'impact_count': 0,
+            'candidate_count': 0,
             'multi_impact_likely': False,
             'should_handover': False,
             'handover_decision_reason': str(e)
@@ -707,24 +707,24 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
     similarity_matrix = cosine_similarity(hunk_vectors, corpus_vectors)
 
     hunk_matches = []
-    page_acc: Dict[str, dict] = {}
+    page_evidence: Dict[str, dict] = {}
 
     # Map similarities back to pages (using the idx from substantive_hunks)
-    for s_idx, hunk in enumerate(substantive_hunks):
-        scores = similarity_matrix[s_idx]
-        passing_chunk_indices = np.where(scores >= HUNK_CHUNK_MIN_SIMILARITY)[0].tolist()
+    for sub_hunk_idx, hunk in enumerate(substantive_hunks):
+        chunk_similarities = similarity_matrix[sub_hunk_idx]
+        passing_chunk_indices = np.where(chunk_similarities >= HUNK_CHUNK_MIN_SIMILARITY)[0].tolist()
 
         diagnostic_indices = passing_chunk_indices.copy()
-        if not diagnostic_indices and scores.size > 0:
-            diagnostic_indices = [int(np.argmax(scores))]
+        if not diagnostic_indices and chunk_similarities.size > 0:
+            diagnostic_indices = [int(np.argmax(chunk_similarities))]
 
         hunk_chunk_summaries = []
 
-        for ci in diagnostic_indices:
-            score = float(scores[ci])
-            raw = chunks_raw[ci] if chunks_raw and ci < len(chunks_raw) else {}
-            udid = (udids[ci] if ci < len(udids) else raw.get('UDID')) or 'N/A'
-            chunk_id = raw.get('Chunk_ID') or f"{udid}-UNK-{ci}"
+        for chunk_idx in diagnostic_indices:
+            score = float(chunk_similarities[chunk_idx])
+            raw = chunks_raw[chunk_idx] if chunks_raw and chunk_idx < len(chunks_raw) else {}
+            udid = (udids[chunk_idx] if chunk_idx < len(udids) else raw.get('UDID')) or 'N/A'
+            chunk_id = raw.get('Chunk_ID') or f"{udid}-UNK-{chunk_idx}"
             headline = raw.get('Headline_Alt') or raw.get('Page_Title') or ''
 
             passes = score >= HUNK_CHUNK_MIN_SIMILARITY
@@ -735,22 +735,22 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
 
             if not passes: continue
 
-            rec = page_acc.setdefault(udid, {
+            page_record = page_evidence.setdefault(udid, {
                 'udid': udid, 'chunk_hits': 0, 'matched_hunks': set(),
                 'chunk_id_set': set(), 'chunk_ids': [], 'best_chunk_id': chunk_id,
                 'best_chunk_similarity': 0.0, 'best_headline': headline
             })
 
-            rec['chunk_hits'] += 1
-            rec['matched_hunks'].add(hunk['hunk_index'])
-            if chunk_id not in rec['chunk_id_set']:
-                rec['chunk_id_set'].add(chunk_id)
-                rec['chunk_ids'].append(chunk_id)
+            page_record['chunk_hits'] += 1
+            page_record['matched_hunks'].add(hunk['hunk_index'])
+            if chunk_id not in page_record['chunk_id_set']:
+                page_record['chunk_id_set'].add(chunk_id)
+                page_record['chunk_ids'].append(chunk_id)
 
-            if score > rec['best_chunk_similarity']:
-                rec['best_chunk_similarity'] = score
-                rec['best_chunk_id'] = chunk_id
-                rec['best_headline'] = headline
+            if score > page_record['best_chunk_similarity']:
+                page_record['best_chunk_similarity'] = score
+                page_record['best_chunk_id'] = chunk_id
+                page_record['best_headline'] = headline
 
         hunk_matches.append({
             'hunk_index': hunk['hunk_index'],
@@ -761,42 +761,42 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
         })
 
     # --- SCORING & BONUSES ---
-    impacted_pages = []
-    for udid, rec in page_acc.items():
-        distinct_hunks = len(rec['matched_hunks'])
+    plausible_impacted_pages = []
+    for udid, page_record in page_evidence.items():
+        distinct_hunks = len(page_record['matched_hunks'])
         coverage_bonus = min(MAX_PAGE_COVERAGE_BONUS, max(0, distinct_hunks - 1) * PAGE_HUNK_COVERAGE_BONUS)
-        density_bonus = min(MAX_PAGE_DENSITY_BONUS, max(0, rec['chunk_hits'] - 1) * PAGE_CHUNK_DENSITY_BONUS)
+        density_bonus = min(MAX_PAGE_DENSITY_BONUS, max(0, page_record['chunk_hits'] - 1) * PAGE_CHUNK_DENSITY_BONUS)
 
-        power_adjusted = calculate_final_score(rec['best_chunk_similarity'], overall_power)
-        power_uplift = max(0.0, power_adjusted - rec['best_chunk_similarity'])
+        power_adjusted = calculate_final_score(page_record['best_chunk_similarity'], overall_power)
+        power_uplift = max(0.0, power_adjusted - page_record['best_chunk_similarity'])
 
-        final_score = min(1.0, rec['best_chunk_similarity'] + coverage_bonus + density_bonus + power_uplift)
+        final_score = min(1.0, page_record['best_chunk_similarity'] + coverage_bonus + density_bonus + power_uplift)
 
-        impacted_pages.append({
+        plausible_impacted_pages.append({
             'udid': udid,
-            'aggregated_best_chunk_similarity': float(rec['best_chunk_similarity']),
+            'aggregated_best_chunk_similarity': float(page_record['best_chunk_similarity']),
             'aggregated_final_score': float(final_score),
-            'chunk_hits': rec['chunk_hits'],
+            'chunk_hits': page_record['chunk_hits'],
             'distinct_hunk_hits': distinct_hunks,
-            'matched_hunk_indices': sorted(rec['matched_hunks']),
-            'relevant_chunk_ids': rec['chunk_ids'][:5],
-            'best_chunk_id': rec['best_chunk_id'],
-            'best_headline': rec['best_headline']
+            'matched_hunk_indices': sorted(page_record['matched_hunks']),
+            'relevant_chunk_ids': page_record['chunk_ids'][:5],
+            'best_chunk_id': page_record['best_chunk_id'],
+            'best_headline': page_record['best_headline']
         })
 
-    impacted_pages.sort(key=lambda p: (p['aggregated_final_score'], p['distinct_hunk_hits']), reverse=True)
+    plausible_impacted_pages.sort(key=lambda p: (p['aggregated_final_score'], p['distinct_hunk_hits']), reverse=True)
     
     threshold_passing_candidates = [
-        p for p in impacted_pages if p['aggregated_final_score'] >= CANDIDATE_MIN_SCORE
+        p for p in plausible_impacted_pages if p['aggregated_final_score'] >= CANDIDATE_MIN_SCORE
     ]
 
-    primary = impacted_pages[0] if impacted_pages else None
+    primary = plausible_impacted_pages[0] if plausible_impacted_pages else None
     primary_score = float(primary['aggregated_final_score']) if primary else 0.0
-    impact_count = len(threshold_passing_candidates)
+    candidate_count = len(threshold_passing_candidates)
     
     should_handover, handover_reason, primary_threshold_used = should_generate_handover(
         primary_score=primary_score,
-        impact_count=impact_count,
+        candidate_count=candidate_count,
         source_priority=source_priority
     )
 
@@ -824,9 +824,9 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
         # Diagnostics
         'hunk_matches': hunk_matches,
         'threshold_passing_candidates': threshold_passing_candidates,
-        'impacted_pages': impacted_pages,
-        'impact_count': impact_count,
-        'multi_impact_likely': impact_count > 1,
+        'plausible_impacted_pages': plausible_impacted_pages,
+        'candidate_count': candidate_count,
+        'multi_impact_likely': candidate_count > 1,
         
         # Decisions
         'should_handover': should_handover,
@@ -909,7 +909,7 @@ def generate_handover_packets(source_name: str, priority: str, diff_file: str,
                 'power_words_found': power.get('power_words_found', power.get('found', [])),
                 'power_word_count': power_count,
                 'power_word_score': power.get('score', 0.0),
-                'impact_count': analysis.get('impact_count', 0),
+                'candidate_count': analysis.get('candidate_count', 0),
                 'multi_impact_likely': analysis.get('multi_impact_likely', False),
                 'handover_decision_reason': analysis.get('handover_decision_reason')
             },
@@ -1046,7 +1046,7 @@ def log_llm_handover_decision(source_name: str,
         analysis.get("should_handover"),
         analysis.get("handover_decision_reason"),
         analysis.get("final_score"),
-        analysis.get("impact_count"),
+        analysis.get("candidate_count"),
         power.get("strong_count"),
         power.get("score"),
         ", ".join([c.get("udid", "N/A") for c in candidates[:10] if isinstance(c, dict)]),
@@ -1227,7 +1227,7 @@ if __name__ == "__main__":
             'status': result.get('status'),
             'primary_udid': result.get('primary_udid'),
             'primary_score': result.get('final_score'),
-            'impact_count': result.get('impact_count'),
+            'candidate_count': result.get('candidate_count'),
             'multi_impact_likely': result.get('multi_impact_likely'),
             'should_handover': result.get('should_handover'),
             'handover_decision_reason': result.get('handover_decision_reason')
