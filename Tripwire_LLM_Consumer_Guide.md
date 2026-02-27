@@ -2,7 +2,7 @@
 **Audience:** Analysts & LLM Operators (e.g. Tom)  
 **Purpose:** Correct interpretation and use of Tripwire handover packets
 ## Core Principle
-Tripwire does **not determine impact**. Tripwire identifies plausible semantic impacts, candidate pages requiring inspection, and evidence supporting those hypotheses. The LLM confirms impact, interprets meaning changes, and suggests updates.
+Tripwire does (yet) **not determine impact**. Tripwire currently identifies plausible semantic impacts, candidate pages requiring inspection, and evidence supporting those hypotheses. The LLM will need to confirm impact, interprets meaning changes, and suggests updates.
 ## What Tripwire Has Already Done
 **Noise Suppression:** Administrative changes (page numbers, standalone dates, formatting fragments) are excluded. Absence of candidates ≠ failure.  
 **Semantic Hunk Parsing:** Changes are isolated into meaning-bearing regions. Reason over hunks, not raw diffs.  
