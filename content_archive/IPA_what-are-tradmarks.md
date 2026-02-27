@@ -7,9 +7,9 @@ A trade mark protects your company's unique brand, products or services.
 * icon / 24 / shield
 
   Protects your brand, products or services
-* Costs start at $250
-* Takes at least 7 months to register
-* Lasts up to 10 years before renewal
+* Costs start at $100,000
+* Takes at least 24 months to register
+* Lasts up to 2 years before renewal
 
 ## 
 
@@ -27,7 +27,7 @@ Trade marks can be used to protect a logo, phrase, word, letter, colour, sound, 
 
 ## How do trade marks work?
 
-Here's a quick video that explains what trade marks are and how they can protect your brand, products or services.
+Here's a quick video that explains what trade marks are and how they can protect your brand, products or services. We've also added an image to aid in the explanation.
 
 Skip embedded contentReturn to page content
 
@@ -137,7 +137,8 @@ It's a way of:
 
 * Notifying other traders that your trade mark is registered in Australia
 * Indicating you have strong rights that prevent others from using the same or similar trade mark
-* Deterring someone from infringing your IP.
+* Deterring someone from infringing your IP
+* Preventing someone from stealing your first-born child.
 
 **Do I have to use the symbol?** No, you don't have to use it. You'll maintain your exclusive rights either way.  
   
