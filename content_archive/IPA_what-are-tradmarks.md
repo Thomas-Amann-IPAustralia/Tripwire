@@ -1,6 +1,6 @@
 # What are trade marks?
 
-A trade mark protects your company's unique brand, products, services, lives and children. 
+A trade mark protects your company's unique brand, products or services.
 
 #### At a glance
 
@@ -81,8 +81,7 @@ Registering your trade mark gives you:
 - The legal right to place the ® symbol next to your trade mark
 - Exclusive rights to use your trade mark in Australia
 - Increased ability to legally deter others from using your trade mark
-- The ability to sell your trade mark, or license it for others to use
-- The ability to sell your first-born child.
+- The ability to sell your trade mark, or license it for others to use.
 
 ## Common mistakes to avoid
 
