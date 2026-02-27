@@ -96,10 +96,10 @@ Substantive hunks are:
 Scoring model:
 
 ```
-final_score =
-    base_similarity
-  + coverage_bonus
-  + density_bonus
+page_final_score =
+    page_base_similarity # max chunk_similarity observed for a page before bonuses/uplift
+  + coverage_bonus # which unique hunks contributed matches, captured with matched_hunks
+  + density_bonus # how many passing chunk matches hit this page, captured with chunk_hits
   + power_word_uplift
 ```
 
@@ -120,13 +120,13 @@ graph TD
 
     %% High Priority Path
     B -- High Priority: Trade Marks Act --> C[Calculate Cosine Similarity]
-    C --> D{Score > 0.65?}
+    C --> D{Score > CANDIDATE_MIN_SCORE?}
     D -- Yes: 0.68 --> E[GENERATE HANDOVER PACKET]
     E --> F[LLM Impact Analysis]
 
     %% Low Priority Path
     B -- Low Priority: WIPO Press Room --> G[Calculate Cosine Similarity]
-    G --> H{Score > 0.85?}
+    G --> H{Score > CANDIDATE_MIN_SCORE & LOW_PRIMARY_HANDOVER_THRESHOLD?}
     H -- No: 0.72 --> I[SUPPRESS CHANGE]
     I --> J[Log to Audit: No Impact]
 
