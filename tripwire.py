@@ -738,8 +738,7 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             rec = page_acc.setdefault(udid, {
                 'udid': udid, 'chunk_hits': 0, 'matched_hunks': set(),
                 'chunk_id_set': set(), 'chunk_ids': [], 'best_chunk_id': chunk_id,
-                'best_chunk_similarity': score, 'best_headline': headline,
-                'base_similarity': 0.0
+                'best_chunk_similarity': 0.0, 'best_headline': headline
             })
 
             rec['chunk_hits'] += 1
@@ -748,8 +747,8 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
                 rec['chunk_id_set'].add(chunk_id)
                 rec['chunk_ids'].append(chunk_id)
 
-            if score > rec['base_similarity']:
-                rec['base_similarity'] = score
+            if score > rec['best_chunk_similarity']:
+                rec['best_chunk_similarity'] = score
                 rec['best_chunk_id'] = chunk_id
                 rec['best_headline'] = headline
 
@@ -768,14 +767,14 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
         coverage_bonus = min(MAX_PAGE_COVERAGE_BONUS, max(0, distinct_hunks - 1) * PAGE_HUNK_COVERAGE_BONUS)
         density_bonus = min(MAX_PAGE_DENSITY_BONUS, max(0, rec['chunk_hits'] - 1) * PAGE_CHUNK_DENSITY_BONUS)
 
-        power_adjusted = calculate_final_score(rec['base_similarity'], overall_power)
-        power_uplift = max(0.0, power_adjusted - rec['base_similarity'])
+        power_adjusted = calculate_final_score(rec['best_chunk_similarity'], overall_power)
+        power_uplift = max(0.0, power_adjusted - rec['best_chunk_similarity'])
 
-        final_score = min(1.0, rec['base_similarity'] + coverage_bonus + density_bonus + power_uplift)
+        final_score = min(1.0, rec['best_chunk_similarity'] + coverage_bonus + density_bonus + power_uplift)
 
         impacted_pages.append({
             'udid': udid,
-            'aggregated_base_similarity': float(rec['base_similarity']),
+            'aggregated_best_chunk_similarity': float(rec['best_chunk_similarity']),
             'aggregated_final_score': float(final_score),
             'chunk_hits': rec['chunk_hits'],
             'distinct_hunk_hits': distinct_hunks,
@@ -816,7 +815,7 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             for h in hunks
         ],
         'power_words': overall_power,
-        'base_similarity': float(primary['aggregated_base_similarity']) if primary else 0.0,
+        'best_chunk_similarity': float(primary['aggregated_best_chunk_similarity']) if primary else 0.0,
         'final_score': primary_score,
         'primary_udid': primary['udid'] if primary else None,
         'primary_chunk_id': primary.get('best_chunk_id') if primary else None,
