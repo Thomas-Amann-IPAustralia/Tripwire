@@ -2,6 +2,8 @@ name: Tripwire Check
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 20 * * 0-4"   # 6am Sydney (AEST base), weekdays
 
 permissions:
   contents: write
