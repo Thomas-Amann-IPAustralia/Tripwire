@@ -4,6 +4,8 @@ from pathlib import Path
 import re
 
 import tripwire
+import os
+print("API KEY PRESENT:", bool(os.getenv("OPENAI_API_KEY")))
 
 """
 Tripwire LLM Evaluation Script (Stage 3 + Stage 4)
