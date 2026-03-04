@@ -325,3 +325,131 @@ def test_audit_log_headers_are_upgraded_and_overlap_metrics_written(tmp_path):
         assert rows[0]["AI vs Similarity Overlap Score"] == "0.500"
         assert rows[0]["AI vs Similarity Precision"] == "0.500"
         assert rows[0]["AI vs Similarity Recall"] == "1.000"
+
+def test_end_to_end_llm_verification_pipeline(tmp_path):
+    """
+    Simulates a full Tripwire run:
+    diff → similarity → handover → LLM verification → audit log update
+    """
+
+    # temp directories
+    handover_dir = tmp_path / "handover_packets"
+    verify_dir = tmp_path / "llm_verification_results"
+    archive_dir = tmp_path / "ipfr_content_archive"
+
+    handover_dir.mkdir()
+    verify_dir.mkdir()
+    archive_dir.mkdir()
+
+    # --- create minimal IPFR test pages ---
+    (archive_dir / "101-2 - Design infringement_test.md").write_text(
+        "<!-- section_id: design-infringement-example -->\n"
+        "# Design infringement\n"
+        "Design infringement occurs when someone copies a registered design.",
+        encoding="utf-8"
+    )
+
+    (archive_dir / "101-2_design-infringement_test.json").write_text(
+        '{"@type":"WebPage","name":"Design infringement"}',
+        encoding="utf-8"
+    )
+
+    # --- create semantic embedding fixture ---
+    embeddings_file = tmp_path / "Semantic_Embeddings_Output.json"
+    embeddings_file.write_text(json.dumps([
+        {
+            "UDID": "101-2",
+            "Chunk_ID": "101-2-C01",
+            "Chunk_Text": "Design infringement occurs when someone copies a registered design.",
+            "Headline_Alt": "Design infringement",
+            "Chunk_Embedding": [0.1] * 1536
+        }
+    ]))
+
+    # --- create diff that should match the page ---
+    diff_file = tmp_path / "design_update.diff"
+    diff_file.write_text(
+        "--- old\n"
+        "+++ new\n"
+        "@@ -1 +1 @@\n"
+        "-Design infringement occurs when a design is copied.\n"
+        "+Design infringement occurs when someone copies a registered design.\n"
+    )
+
+    # --- temp audit log ---
+    audit_log = tmp_path / "audit_log.csv"
+
+    with open(audit_log, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=[
+            "Timestamp","Source_Name","Priority","Status","Change_Detected",
+            "Version_ID","Diff_File","Similarity_Score","Power_Words",
+            "Matched_UDID","Matched_Chunk_ID","Outcome","Reason"
+        ])
+        writer.writeheader()
+        writer.writerow({
+            "Timestamp":"2026-03-04",
+            "Source_Name":"TestSource",
+            "Priority":"High",
+            "Status":"Success",
+            "Change_Detected":"Yes",
+            "Version_ID":"v1",
+            "Diff_File":str(diff_file),
+            "Similarity_Score":"",
+            "Power_Words":"",
+            "Matched_UDID":"",
+            "Matched_Chunk_ID":"",
+            "Outcome":"",
+            "Reason":""
+        })
+
+    # --- mock embeddings ---
+    with patch("tripwire._embed_texts") as mock_embed:
+        mock_embed.return_value = np.array([[0.1]*1536])
+
+        # --- mock LLM response ---
+        with patch("tripwire._call_llm_json") as mock_llm:
+
+            mock_llm.return_value = {
+                "overall_decision":"impact",
+                "change_type":"meaning_change",
+                "confidence":"high",
+                "impacted_pages":[
+                    {
+                        "udid":"101-2",
+                        "section_identifier":"design-infringement-example",
+                        "impact_type":"outdated",
+                        "reason":"Source change modifies infringement definition."
+                    }
+                ]
+            }
+
+            with patch("tripwire.AUDIT_LOG", str(audit_log)), \
+                 patch("tripwire.HANDOVER_DIR", str(handover_dir)), \
+                 patch("tripwire.LLM_VERIFY_DIR", str(verify_dir)), \
+                 patch("tripwire.SEMANTIC_EMBEDDINGS_FILE", str(embeddings_file)), \
+                 patch("tripwire.IPFR_CONTENT_ARCHIVE_DIR", str(archive_dir)):
+
+                analysis = tripwire.calculate_similarity(str(diff_file), "High")
+
+                packets = tripwire.generate_handover_packets(
+                    source_name="TestSource",
+                    priority="High",
+                    version_id="v1",
+                    diff_file=str(diff_file),
+                    analysis=analysis,
+                    timestamp="2026-03-04T10:00:00Z"
+                )
+
+                assert len(packets) == 1
+
+                tripwire.run_llm_verification_for_packets(packets)
+
+    # --- verify audit log updated ---
+    with open(audit_log, "r", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+
+    row = rows[0]
+
+    assert row["AI Verification Run"] == "Yes"
+    assert row["AI Decision"] == "Impact Confirmed"
+    assert "101-2" in row["AI Verified Impact Pages"]
