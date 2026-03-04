@@ -1,2 +1,0 @@
-Timestamp,Source_Name,Priority,Version_ID,Diff_File,Analysis_Status,Should_Handover,Decision_Reason,Final_Score,Candidate_Count,Strong_Power_Words,Power_Word_Score,Top_Candidate_UDIDs,Packets_Generated
-2026-02-27T03:35:34.604339,IP Australia - What are trade marks?,Medium,"""69a01a2b-2fa44""",20260227_033532_IP_Australia_-_What_are_trade_marks.diff,success,True,Primary score 0.587 >= medium threshold 0.450,0.5871372983956116,40,0,0.0,"C1004, C1007, B1005, E1009, D1039, 101-8, D1005, C1006, D1016, D1001",1
