@@ -1755,8 +1755,29 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
 
 
 
-def run_llm_verification_for_packets(handover_paths: List[str]) -> List[str]:
-    """Runs LLM verification for each packet (prototype) and links results back into audit_log.csv."""
+def run_llm_verification_for_packets(
+    handover_paths: List[str],
+    prefer_test_files: bool = True,
+    top_n_candidates: Optional[int] = None
+) -> List[str]:
+    """
+    Runs LLM verification for each packet (prototype) and links results back into audit_log.csv.
+
+    Args:
+        handover_paths: List of handover packet JSON paths.
+        prefer_test_files: If True, verification will prefer *_test.md fixtures when resolving IPFR archive pages.
+        top_n_candidates: Optional override for TOP_N_VERIFICATION_CANDIDATES (used to limit candidates passed to LLM).
+    Returns:
+        List of verification result JSON paths created.
+    """
+    global TOP_N_VERIFICATION_CANDIDATES
+
+    if top_n_candidates is not None:
+        try:
+            TOP_N_VERIFICATION_CANDIDATES = int(top_n_candidates)
+        except Exception:
+            logger.warning(f"Ignoring invalid top_n_candidates={top_n_candidates!r}")
+
     if not handover_paths:
         return []
 
@@ -1778,7 +1799,10 @@ def run_llm_verification_for_packets(handover_paths: List[str]) -> List[str]:
             packet_id = packet.get("packet_id", "") or ""
 
             # Verify via single LLM call (two-pass internal method)
-            result_path = verify_handover_packet_with_llm(packet_path)
+            result_path = verify_handover_packet_with_llm(
+                packet_path,
+                prefer_test_files=prefer_test_files
+            )
             if not result_path:
                 continue
 
@@ -1839,7 +1863,12 @@ def run_llm_verification_for_packets(handover_paths: List[str]) -> List[str]:
             }
 
             # Update the most recent matching audit row for this change event.
-            updated = update_audit_row_by_key(source_name=source_name, version_id=version_id, diff_file=diff_file, updates=updates)
+            updated = update_audit_row_by_key(
+                source_name=source_name,
+                version_id=version_id,
+                diff_file=diff_file,
+                updates=updates
+            )
             if not updated:
                 # If not found, append a minimal linking row rather than losing the verification.
                 append_audit_row({
