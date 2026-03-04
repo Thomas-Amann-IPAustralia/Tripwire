@@ -73,7 +73,7 @@ def _extract_sentence_for_diff(markdown_text: str) -> str:
 
 def run_eval():
     # Ensure Stage 4 can find the test fixtures in the repo
-    tripwire.IPFR_CONTENT_ARCHIVE_DIR = "ipfr_content_archive"
+    tripwire.IPFR_CONTENT_ARCHIVE_DIR = "IPFR_content_archive"
 
     # Prefer *_test.* fixtures
     prefer_test_files = True
@@ -82,7 +82,7 @@ def run_eval():
     resolved = tripwire.resolve_ipfr_content_files("101-2", prefer_test_files=prefer_test_files)
     md_path = resolved.get("markdown_path")
     if not md_path:
-        raise RuntimeError("Could not resolve 101-2 markdown fixture in ipfr_content_archive")
+        raise RuntimeError("Could not resolve 101-2 markdown fixture in IPFR_content_archive")
 
     md_text = Path(md_path).read_text(encoding="utf-8")
     removed = _extract_sentence_for_diff(md_text)
