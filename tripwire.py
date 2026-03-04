@@ -55,7 +55,6 @@ SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
 # In production, prefer an explicit UDID->file map generated during the IPFR export pipeline.
 IPFR_CONTENT_ARCHIVE_DIR = os.environ.get("IPFR_CONTENT_ARCHIVE_DIR", "ipfr_content_archive")
 LLM_VERIFY_DIR = os.environ.get("LLM_VERIFY_DIR", "llm_verification_results")
-LLM_VERIFICATION_LOG = os.environ.get("LLM_VERIFICATION_LOG", "llm_verification_log.csv")
 
 # Prototype behaviour: only load the top N candidates to keep prompts small.
 # NOTE: This will need to be changed later to load the specific sections needed, not whole pages,
@@ -119,37 +118,251 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     return None
 
 
+
+# --- Audit log schema (human-friendly, prototype) ---
+
+AUDIT_HEADERS = [
+    'Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected',
+    'Version_ID', 'Diff_File', 'Similarity_Score', 'Power_Words',
+    'Matched_UDID', 'Matched_Chunk_ID', 'Outcome', 'Reason',
+
+    # Human-friendly AI verification linkage
+    'AI Verification Run',
+    'AI Verification Time',
+    'AI Model Used',
+    'AI Decision',
+    'AI Confidence',
+    'AI Change Summary',
+    'AI Verification File',
+    'Human Review Needed',
+
+    # Monitoring / performance
+    'Similarity Predicted Pages',
+    'AI Verified Impact Pages',
+    'AI vs Similarity Overlap Score',
+    'AI vs Similarity Precision',
+    'AI vs Similarity Recall',
+    'Overlap Details'
+]
+
+
+def ensure_audit_log_headers() -> None:
+    """Ensures audit_log.csv exists and contains all required headers.
+
+    If the file exists with fewer columns, it is rewritten in-place with the new headers appended,
+    preserving existing data.
+    """
+    if not os.path.exists(AUDIT_LOG):
+        with open(AUDIT_LOG, mode='w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=AUDIT_HEADERS)
+            writer.writeheader()
+        return
+
+    with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        existing_headers = reader.fieldnames or []
+        rows = list(reader)
+
+    if existing_headers == AUDIT_HEADERS:
+        return
+
+    # Build upgraded rows with new columns defaulting to blank
+    upgraded = []
+    for r in rows:
+        nr = {h: '' for h in AUDIT_HEADERS}
+        for k, v in (r or {}).items():
+            if k in nr:
+                nr[k] = v
+        upgraded.append(nr)
+
+    with open(AUDIT_LOG, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=AUDIT_HEADERS)
+        writer.writeheader()
+        writer.writerows(upgraded)
+
+
+def _now_iso() -> str:
+    return datetime.datetime.now().isoformat()
+
+
+def _list_to_semicolon(values) -> str:
+    vals = []
+    for v in (values or []):
+        if v is None:
+            continue
+        s = str(v).strip()
+        if s:
+            vals.append(s)
+    return ';'.join(vals)
+
+
+def append_audit_row(row: dict) -> None:
+    ensure_audit_log_headers()
+    safe = {h: '' for h in AUDIT_HEADERS}
+    for k, v in (row or {}).items():
+        if k in safe:
+            safe[k] = v
+    with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=AUDIT_HEADERS)
+        writer.writerow(safe)
+
+
+def update_audit_row_by_key(source_name: str, version_id: str, diff_file: str, updates: dict) -> bool:
+    """Updates the *most recent* audit row matching (Source_Name, Version_ID, Diff_File)."""
+    ensure_audit_log_headers()
+    with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
+        rows = list(csv.DictReader(f))
+
+    idx = None
+    for i in range(len(rows) - 1, -1, -1):
+        r = rows[i]
+        if (r.get('Source_Name') == (source_name or '') and
+            r.get('Version_ID') == (version_id or '') and
+            r.get('Diff_File') == (diff_file or '')):
+            idx = i
+            break
+
+    if idx is None:
+        return False
+
+    for k, v in (updates or {}).items():
+        if k in AUDIT_HEADERS:
+            rows[idx][k] = v
+
+    with open(AUDIT_LOG, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=AUDIT_HEADERS)
+        writer.writeheader()
+        writer.writerows(rows)
+
+    return True
+
+
+def _decision_to_human(decision: str) -> str:
+    d = (decision or '').strip().lower()
+    if d == 'impact':
+        return 'Impact Confirmed'
+    if d == 'no_impact':
+        return 'No Impact'
+    if d == 'uncertain':
+        return 'Uncertain'
+    return 'Error'
+
+
+def _confidence_to_human(confidence: str) -> str:
+    c = (confidence or '').strip().lower()
+    if c in ('high', 'medium', 'low'):
+        return c.capitalize()
+    return ''
+
+
+def _compute_overlap_metrics(predicted_udids: List[str], verified_udids: List[str]) -> dict:
+    pred = set([u for u in (predicted_udids or []) if u])
+    ver = set([u for u in (verified_udids or []) if u])
+
+    inter = pred.intersection(ver)
+    union = pred.union(ver)
+
+    # Jaccard overlap
+    overlap = (len(inter) / len(union)) if union else 1.0
+
+    # Precision/Recall (handle empty denominators as "n/a" for monitoring clarity)
+    precision = (len(inter) / len(pred)) if pred else None
+    recall = (len(inter) / len(ver)) if ver else None
+
+    details = f"intersection={len(inter)}; predicted={len(pred)}; verified={len(ver)}"
+
+    return {
+        "overlap": overlap,
+        "precision": precision,
+        "recall": recall,
+        "details": details,
+        "pred_set": sorted(pred),
+        "ver_set": sorted(ver),
+        "inter_set": sorted(inter),
+    }
+
+
+def log_stage3_to_audit(source_name: str,
+                        priority: str,
+                        status: str,
+                        change_detected: str,
+                        version_id: str,
+                        diff_file: str,
+                        analysis: dict,
+                        outcome: str,
+                        reason: str) -> None:
+    """Writes the Stage 3 similarity + handover decision into audit_log.csv (prototype).
+
+    NOTE: matched_udid / matched_chunk_id are stored as *candidate lists* (not only the primary).
+    """
+    power = (analysis or {}).get('power_words', {}) or {}
+    candidates = (analysis or {}).get('threshold_passing_candidates', []) or []
+
+    candidate_udids = []
+    candidate_pairs = []
+    for c in candidates:
+        if not isinstance(c, dict):
+            continue
+        u = c.get('udid')
+        b = c.get('best_chunk_id')
+        if u:
+            candidate_udids.append(u)
+            if b:
+                candidate_pairs.append(f"{u}:{b}")
+            else:
+                candidate_pairs.append(f"{u}:")
+
+    # Keep existing schema fields populated for compatibility
+    row = {
+        'Timestamp': _now_iso(),
+        'Source_Name': source_name or '',
+        'Priority': priority or '',
+        'Status': status or '',
+        'Change_Detected': change_detected or '',
+        'Version_ID': version_id or '',
+        'Diff_File': diff_file or '',
+        'Similarity_Score': f"{float((analysis or {}).get('page_final_score') or 0.0):.4f}" if (analysis or {}).get('status') == 'success' else '',
+        'Power_Words': _list_to_semicolon(power.get('power_words_found', power.get('found', []))),
+        'Matched_UDID': _list_to_semicolon(candidate_udids),
+        'Matched_Chunk_ID': _list_to_semicolon(candidate_pairs),
+        'Outcome': outcome or '',
+        'Reason': reason or '',
+
+        # AI columns default
+        'AI Verification Run': 'No',
+        'Human Review Needed': 'No',
+        'Similarity Predicted Pages': _list_to_semicolon(candidate_udids),
+    }
+    append_audit_row(row)
+
+
+
+
 def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None,
                  similarity_score=None, power_words=None, matched_udid=None,
                  matched_chunk_id=None, outcome=None, reason=None):
+    """Backwards-compatible audit append.
+
+    For Stage 3 similarity/LLM-routing, prefer log_stage3_to_audit(...).
     """
-    Appends a new entry to the CSV audit log.
-    """
-    file_exists = os.path.exists(AUDIT_LOG)
-    headers = [
-        'Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected',
-        'Version_ID', 'Diff_File', 'Similarity_Score', 'Power_Words',
-        'Matched_UDID', 'Matched_Chunk_ID', 'Outcome', 'Reason'
-    ]
-    with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(headers)
-        writer.writerow([
-            datetime.datetime.now().isoformat(),
-            name,
-            priority,
-            status,
-            change_detected,
-            version_id or "N/A",
-            diff_file or "N/A",
-            f"{float(similarity_score):.4f}" if similarity_score is not None else "N/A",
-            '; '.join(power_words) if power_words else "N/A",
-            matched_udid or "N/A",
-            matched_chunk_id or "N/A",
-            outcome or "N/A",
-            reason or "N/A"
-        ])
+    row = {
+        'Timestamp': _now_iso(),
+        'Source_Name': name or '',
+        'Priority': priority or '',
+        'Status': status or '',
+        'Change_Detected': change_detected or '',
+        'Version_ID': version_id or '',
+        'Diff_File': diff_file or '',
+        'Similarity_Score': f"{float(similarity_score):.4f}" if similarity_score is not None else '',
+        'Power_Words': _list_to_semicolon(power_words) if isinstance(power_words, list) else (power_words or ''),
+        'Matched_UDID': matched_udid or '',
+        'Matched_Chunk_ID': matched_chunk_id or '',
+        'Outcome': outcome or '',
+        'Reason': reason or '',
+        'AI Verification Run': 'No',
+        'Human Review Needed': 'No',
+    }
+    append_audit_row(row)
 
 
 def fetch_stage0_metadata(session, source) -> Optional[str]:
@@ -1267,64 +1480,114 @@ def verify_handover_packet_with_llm(packet_path: str) -> Optional[str]:
     return out_path
 
 
-def _log_llm_verification(packet_id: str, source_name: str, priority: str, diff_file: str,
-                          top_n: int, decision: str, confidence: str, result_path: str):
-    file_exists = os.path.exists(LLM_VERIFICATION_LOG)
-    headers = [
-        "Timestamp", "Packet_ID", "Source_Name", "Priority", "Diff_File",
-        "Top_N_Candidates_Loaded", "Overall_Decision", "Confidence", "Result_Path"
-    ]
-    row = [
-        datetime.datetime.now().isoformat(),
-        packet_id,
-        source_name,
-        priority,
-        diff_file,
-        top_n,
-        decision,
-        confidence,
-        result_path
-    ]
-    with open(LLM_VERIFICATION_LOG, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(headers)
-        writer.writerow(row)
-
 
 def run_llm_verification_for_packets(handover_paths: List[str]) -> List[str]:
-    """Runs LLM verification for each packet (prototype)."""
+    """Runs LLM verification for each packet (prototype) and links results back into audit_log.csv."""
     if not handover_paths:
         return []
-    results = []
-    for p in handover_paths:
+
+    results: List[str] = []
+
+    for packet_path in handover_paths:
         try:
-            out = verify_handover_packet_with_llm(p)
-            if out:
-                with open(p, "r", encoding="utf-8") as f:
-                    packet = json.load(f)
-                src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+            if not packet_path or not os.path.exists(packet_path):
+                continue
 
-                with open(out, "r", encoding="utf-8") as rf:
-                    res = json.load(rf)
-                llm_res = (res.get("llm_result") or {})
-                decision = llm_res.get("overall_decision") or "unknown"
-                confidence = llm_res.get("confidence") or "unknown"
+            with open(packet_path, "r", encoding="utf-8") as f:
+                packet = json.load(f)
 
-                _log_llm_verification(
-                    packet_id=packet.get("packet_id", ""),
-                    source_name=src.get("name", ""),
-                    priority=src.get("monitoring_priority", ""),
-                    diff_file=(packet.get("source_change_details", {}) or {}).get("diff_file", ""),
-                    top_n=TOP_N_VERIFICATION_CANDIDATES,
-                    decision=decision,
-                    confidence=confidence,
-                    result_path=out
-                )
-                results.append(out)
+            src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+            source_name = src.get("name", "") or ""
+            priority = src.get("monitoring_priority", "") or ""
+            version_id = (packet.get("source_change_details", {}) or {}).get("version_id", "") or ""
+            diff_file = (packet.get("source_change_details", {}) or {}).get("diff_file", "") or ""
+            packet_id = packet.get("packet_id", "") or ""
+
+            # Verify via single LLM call (two-pass internal method)
+            result_path = verify_handover_packet_with_llm(packet_path)
+            if not result_path:
+                continue
+
+            verified_at = _now_iso()
+
+            with open(result_path, "r", encoding="utf-8") as rf:
+                verification_doc = json.load(rf)
+            llm_res = (verification_doc.get("llm_result") or {})
+
+            overall_decision = (llm_res.get("overall_decision") or "uncertain")
+            confidence = (llm_res.get("confidence") or "")
+
+            impacted = llm_res.get("impacted_pages") or []
+            verified_udids = []
+            verified_sections = []
+            for it in impacted:
+                if isinstance(it, dict):
+                    u = it.get("udid")
+                    if u:
+                        verified_udids.append(u)
+                    sid = it.get("section_identifier")
+                    if sid:
+                        verified_sections.append(f"{it.get('udid','')}: {sid}".strip())
+
+            # Predicted set is ALL packet candidates (not just top N loaded) for monitoring retrieval performance.
+            predicted_udids = []
+            for t in (packet.get("llm_verification_targets") or []):
+                if isinstance(t, dict) and t.get("udid"):
+                    predicted_udids.append(t.get("udid"))
+
+            metrics = _compute_overlap_metrics(predicted_udids, verified_udids)
+
+            ai_decision_human = _decision_to_human(overall_decision)
+            ai_conf_human = _confidence_to_human(confidence)
+
+            # Make a short summary that is readable in the audit log.
+            change_summary = (llm_res.get("external_change_summary") or "").strip()
+            if not change_summary:
+                change_summary = "AI verification completed."
+
+            human_review = "Yes" if ai_decision_human in ("Impact Confirmed", "Uncertain", "Error") else "No"
+
+            updates = {
+                "AI Verification Run": "Yes",
+                "AI Verification Time": verified_at,
+                "AI Model Used": LLM_MODEL,
+                "AI Decision": ai_decision_human,
+                "AI Confidence": ai_conf_human,
+                "AI Change Summary": change_summary[:500],
+                "AI Verification File": result_path,
+                "Human Review Needed": human_review,
+
+                "AI Verified Impact Pages": _list_to_semicolon(metrics["ver_set"]),
+                "AI vs Similarity Overlap Score": f"{metrics['overlap']:.3f}" if metrics.get("overlap") is not None else "",
+                "AI vs Similarity Precision": (f"{metrics['precision']:.3f}" if metrics.get("precision") is not None else "n/a"),
+                "AI vs Similarity Recall": (f"{metrics['recall']:.3f}" if metrics.get("recall") is not None else "n/a"),
+                "Overlap Details": metrics.get("details") or "",
+            }
+
+            # Update the most recent matching audit row for this change event.
+            updated = update_audit_row_by_key(source_name=source_name, version_id=version_id, diff_file=diff_file, updates=updates)
+            if not updated:
+                # If not found, append a minimal linking row rather than losing the verification.
+                append_audit_row({
+                    "Timestamp": verified_at,
+                    "Source_Name": source_name,
+                    "Priority": priority,
+                    "Status": "Success",
+                    "Change_Detected": "Yes",
+                    "Version_ID": version_id,
+                    "Diff_File": diff_file,
+                    "Outcome": "verification_only",
+                    "Reason": f"Audit row not found for packet {packet_id}. Linked verification appended.",
+                    **updates
+                })
+
+            results.append(result_path)
+
         except Exception as e:
-            logger.error(f"LLM verification failed for {p}: {e}")
+            logger.error(f"LLM verification failed for {packet_path}: {e}")
+
     return results
+
 
 def write_github_summary(handover_paths: List[str]):
     """
@@ -1373,63 +1636,6 @@ def write_github_summary(handover_paths: List[str]):
         print(output)
 
 
-LLM_HANDOVER_LOG = "llm_handover_log.csv"
-
-
-def log_llm_handover_decision(source_name: str,
-                              priority: str,
-                              version_id: str,
-                              diff_file: str,
-                              analysis: dict,
-                              packets_generated: int):
-    """
-    Records Stage 3 → LLM routing decisions.
-    One row per semantic evaluation event.
-    """
-    file_exists = os.path.exists(LLM_HANDOVER_LOG)
-
-    headers = [
-        "Timestamp",
-        "Source_Name",
-        "Priority",
-        "Version_ID",
-        "Diff_File",
-        "Analysis_Status",
-        "Should_Handover",
-        "Decision_Reason",
-        "Final_Score",
-        "Candidate_Count",
-        "Strong_Power_Words",
-        "Power_Word_Score",
-        "Top_Candidate_UDIDs",
-        "Packets_Generated"
-    ]
-
-    power = analysis.get("power_words", {}) or {}
-    candidates = analysis.get("threshold_passing_candidates", []) or []
-
-    row = [
-        datetime.datetime.now().isoformat(),
-        source_name,
-        priority,
-        version_id or "N/A",
-        diff_file or "N/A",
-        analysis.get("status"),
-        analysis.get("should_handover"),
-        analysis.get("handover_decision_reason"),
-        analysis.get("page_final_score"),
-        analysis.get("candidate_count"),
-        power.get("strong_count"),
-        power.get("score"),
-        ", ".join([c.get("udid", "N/A") for c in candidates[:10] if isinstance(c, dict)]),
-        packets_generated
-    ]
-
-    with open(LLM_HANDOVER_LOG, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(headers)
-        writer.writerow(row)
 
 
 # ---------------------------
@@ -1505,62 +1711,49 @@ def main():
 
                     analysis = calculate_similarity(diff_path, source_priority=priority)
 
-                    s3_success = analysis.get('status') == 'success'
-                    s3_score = analysis.get('page_final_score') if s3_success else None
-                    s3_words = analysis.get('power_words', {}).get('power_words_found') if s3_success else None
-                    s3_udid = analysis.get('primary_udid') if s3_success else None
-                    s3_chunk_id = analysis.get('primary_chunk_id') if s3_success else None
-                    s3_outcome = None
-                    s3_reason = analysis.get('handover_decision_reason') or analysis.get('message') or analysis.get('status')
+                    analysis = calculate_similarity(diff_path, source_priority=priority)
 
-                    if s3_success and analysis.get('should_handover'):
-                        ts = datetime.datetime.now().isoformat()
-                        new_packets = generate_handover_packets(
-                            source_name=name,
-                            priority=priority,
-                            diff_file=diff_file,
-                            analysis=analysis,
-                            timestamp=ts,
-                            version_id=current_id
-                        )
-
-                        handover_paths.extend(new_packets)
-                        s3_outcome = 'handover'
-
-                        log_llm_handover_decision(
-                            source_name=name,
-                            priority=priority,
-                            version_id=current_id,
-                            diff_file=diff_file,
-                            analysis=analysis,
-                            packets_generated=len(new_packets)
-                        )
-                    elif s3_success:
+                    # Stage 3 → write similarity scoring + routing decision into audit_log.csv (no llm_handover_log.csv)
+                    if analysis.get('status') == 'success':
                         s3_outcome = 'filtered'
+                        if analysis.get('should_handover'):
+                            ts = datetime.datetime.now().isoformat()
+                            new_packets = generate_handover_packets(
+                                source_name=name,
+                                priority=priority,
+                                diff_file=diff_file,
+                                analysis=analysis,
+                                timestamp=ts,
+                                version_id=current_id
+                            )
+                            handover_paths.extend(new_packets)
+                            s3_outcome = 'handover'
 
-                        log_llm_handover_decision(
+                        s3_reason = analysis.get('handover_decision_reason') or analysis.get('filter_reason') or 'Stage 3 complete'
+                        log_stage3_to_audit(
                             source_name=name,
                             priority=priority,
-                            version_id=current_id,
+                            status="Success",
+                            change_detected="Yes",
+                            version_id=current_id or "",
                             diff_file=diff_file,
                             analysis=analysis,
-                            packets_generated=0
+                            outcome=s3_outcome,
+                            reason=s3_reason
+                        )
+                    else:
+                        # Similarity stage failed; still record the change event.
+                        log_to_audit(
+                            name=name,
+                            priority=priority,
+                            status="Exception",
+                            change_detected="Yes",
+                            version_id=current_id or "",
+                            diff_file=diff_file,
+                            outcome="similarity_error",
+                            reason=(analysis.get('message') or analysis.get('status') or 'Stage 3 failed')
                         )
 
-                    log_to_audit(
-                        name=name,
-                        priority=priority,
-                        status="Success",
-                        change_detected="Yes",
-                        version_id=current_id,
-                        diff_file=diff_file,
-                        similarity_score=s3_score,
-                        power_words=s3_words,
-                        matched_udid=s3_udid,
-                        matched_chunk_id=s3_chunk_id,
-                        outcome=s3_outcome,
-                        reason=s3_reason
-                    )
 
                 elif repopulate_only:
                     log_to_audit(name, priority, "Success", "Healed", current_id)
