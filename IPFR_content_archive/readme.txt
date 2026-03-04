@@ -84,143 +84,21 @@ These identifiers correspond directly to the JSON-LD section identifiers.
 
 ---
 
-## 3. No chunk IDs added to markdown
+## 3. Chunk markers added to markdown
 
-Chunk IDs remain **external to the content files** and are stored only in the semantic embeddings file.
-
-### Reason
-
-Chunk IDs are artifacts of the embedding pipeline and can change whenever:
-
-* content is edited
-* chunking logic changes
-* embeddings are regenerated
-
-Keeping them out of markdown prevents unnecessary content churn.
-
----
-
-# JSON-LD Changes
-
-## 1. Added `identifier` to each section
-
-Each `WebPageElement` section now includes a short identifier matching the markdown anchor.
+Markdown pages now include **hidden chunk markers** so Tripwire and the LLM can deterministically locate the exact text block that corresponds to the `best_chunk_id` / `relevant_chunk_ids`.
 
 Example:
 
-```json
-{
-  "@type": "WebPageElement",
-  "@id": "https://ipfirstresponse.ipaustralia.gov.au/options/how-avoid-infringing-others-intellectual-property#section-1-avoiding-ip-infringement",
-  "identifier": "section-1-avoiding-ip-infringement",
-  "headline": "Avoiding IP infringement",
-  "text": "..."
-}
-```
+<!-- chunk_id: 101-2-C04 -->
 
-### Purpose
+### Why this is required
 
-Allows the LLM to reference sections using a short ID instead of long URLs.
+Without chunk markers, the LLM must "search" the page for relevant text, which increases uncertainty and makes it hard to generate precise rewrite suggestions.
 
-Example citation:
+### Compatibility and drift
 
-```
-101-1 → section-1-avoiding-ip-infringement
-```
+Chunk markers are **invisible** in the rendered site (HTML comments) and are intended to be stable identifiers for Tripwire’s prototype.
+The semantic embeddings file remains the retrieval index, but the **markdown is the source of truth** for applying updates.
 
 ---
-
-## 2. Added `isPartOf` links
-
-Sections now explicitly reference their parent page:
-
-```json
-"isPartOf": { "@id": "...#webpage" }
-```
-
-### Purpose
-
-Clarifies the relationship between sections and the main WebPage entity.
-
-This improves structured navigation when the LLM reads JSON-LD.
-
----
-
-# How the LLM Uses These Changes
-
-During Tripwire verification the LLM follows this process:
-
-1. **Receive candidate page from the handover packet**
-
-```
-UDID: 101-1
-best_chunk_id: 101-1-C07
-```
-
-2. **Resolve the chunk in the embeddings file**
-
-This returns a text snippet and confirms the page UDID.
-
-3. **Open the markdown page**
-
-```
-101-1 - How to avoid infringing others' intellectual property.md
-```
-
-4. **Navigate to the relevant section**
-
-Using the section identifier:
-
-```
-section-1-avoiding-ip-infringement
-```
-
-5. **Compare the section text with the external change**
-
-6. **Return a decision**
-
-```
-impact
-no impact
-uncertain
-```
-
----
-
-# Files Updated for Prototype
-
-The following files were updated for testing:
-
-### Markdown
-
-* `101-1 - How to avoid infringing others' intellectual property.md`
-* `101-2 - Design infringement.md`
-
-### JSON-LD
-
-* `101-1_how-to-avoid-infringing-others-intellectual-property.json`
-* `101-2_design-infringement.json`
-
----
-
-# Prototype Scope
-
-These changes are intentionally minimal and designed only to support the Tripwire prototype.
-
-Future improvements may include:
-
-* section summaries for faster LLM triage
-* consistent FAQ question identifiers
-* automated section anchor generation during markdown export
-
----
-
-# Summary
-
-The prototype updates introduce **three key capabilities**:
-
-1. **Page identification** via `udid`
-2. **Deterministic section navigation** via `section_id`
-3. **Structured section referencing** via JSON-LD `identifier`
-
-Together these allow the Tripwire LLM verification stage to reliably locate, inspect, and cite IP First Response content when evaluating external changes.
