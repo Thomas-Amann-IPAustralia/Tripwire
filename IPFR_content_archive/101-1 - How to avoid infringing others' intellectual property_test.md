@@ -10,6 +10,7 @@ PageURL: "[https://ipfirstresponse.ipaustralia.gov.au/options/how-avoid-infringi
 
 # How to avoid infringing others' intellectual property
 
+<!-- chunk_id: 101-1-C01 -->
 ### How to avoid infringing others' intellectual property
 
 Running a business or developing new products or services often means creating intellectual property (IP) or encountering IP rights owned by others. Whether it is a brand name, invention, design, or creative work, using something similar to someone else's existing intellectual property may be considered infringement.
@@ -20,6 +21,7 @@ It is crucial to understand that you can infringe on someone's IP rights without
 
 Understanding how to avoid infringing on others' rights from the beginning can save your business from serious consequences. With awareness and careful planning, you can minimise the risk of infringing on others' intellectual property rights.
 
+<!-- chunk_id: 101-1-C02 -->
 <!-- section_id: section-1-avoiding-ip-infringement -->
 ### Avoiding IP infringement
 
@@ -55,6 +57,7 @@ It is a good idea to maintain thorough records of all permissions granted, under
 
 The internet can create a false sense that content is freely available for use. However, just because something appears online does not mean it is free to use, and do not assume that attribution alone makes copying acceptable. Images, text, and videos are typically protected by copyright from the moment they are created. Company names and logos are often registered trade marks, and product designs may be protected by registered design rights. Always search IP databases and seek licences before using online content.
 
+<!-- chunk_id: 101-1-C03 -->
 <!-- section_id: section-2-red-flags-to-watch-for -->
 ### Red flags to watch for
 
@@ -67,6 +70,7 @@ Specific situations should prompt extra caution in your IP practices. For instan
 
 These scenarios frequently lead to infringement disputes and should prompt you to seek advice before proceeding.
 
+<!-- chunk_id: 101-1-C04 -->
 <!-- section_id: section-3-when-to-seek-help -->
 ### When to seek help
 
@@ -78,6 +82,7 @@ Professional advice is especially valuable in specific situations. Seeking early
 
 [![Deciding proactive steps you can take to avoid future IP headaches? Start with our Navigator Tool to see all your options.](/sites/default/files/images/2026-02/Proactive%20Navigator%20button.png)](https://ipfirstresponse.ipaustralia.gov.au/navigator-tool-suspected-infringement?utm_content=from101_button_experiment_v1)
 
+<!-- chunk_id: 101-1-C99 -->
 <!-- section_id: section-99-feedback -->
 ### Want to give us feedback?
 
