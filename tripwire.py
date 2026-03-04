@@ -1,4 +1,3 @@
-
 import json
 import csv
 import requests
@@ -89,11 +88,6 @@ _semantic_cache = None
 def get_last_version_id(source_name: str) -> Optional[str]:
     """
     Retrieves the most recent successful Version_ID for a given source from the audit log.
-    
-    Args:
-        source_name (str): The name of the source to lookup.
-    Returns:
-        Optional[str]: The last recorded Version_ID or None if not found.
     """
     if not os.path.exists(AUDIT_LOG):
         return None
@@ -113,20 +107,6 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
                  matched_chunk_id=None, outcome=None, reason=None):
     """
     Appends a new entry to the CSV audit log.
-    
-    Args:
-        name (str): Source name.
-        priority (str): Source priority level.
-        status (str): Outcome status (Success/Exception).
-        change_detected (str): Yes/No/Initial/Healed.
-        version_id (str): Metadata ID from the source.
-        diff_file (str): Filename of the generated diff hunk, if any.
-        similarity_score (float, optional): Final semantic similarity score.
-        power_words (list, optional): Power words detected in the diff.
-        matched_udid (str, optional): Best-matching UDID from semantic analysis.
-        matched_chunk_id (str, optional): Best-matching Chunk ID from semantic analysis.
-        outcome (str, optional): 'handover' or 'filtered'.
-        reason (str, optional): Explanation of the outcome.
     """
     file_exists = os.path.exists(AUDIT_LOG)
     headers = [
@@ -158,12 +138,6 @@ def log_to_audit(name, priority, status, change_detected, version_id, diff_file=
 def fetch_stage0_metadata(session, source) -> Optional[str]:
     """
     Performs a lightweight check to get the latest metadata ID without downloading full content.
-    
-    Args:
-        session (requests.Session): Active HTTP session.
-        source (dict): Source configuration dictionary.
-    Returns:
-        Optional[str]: RegisterId for legislation, ETag or Content-Length for others.
     """
     stype = source.get('type')
     try:
@@ -187,9 +161,6 @@ def fetch_stage0_metadata(session, source) -> Optional[str]:
 def initialize_driver():
     """
     Initializes a headless Chrome driver with stealth settings to bypass anti-bot detection.
-    
-    Returns:
-        webdriver.Chrome: Configured Selenium driver.
     """
     if webdriver is None:
         raise RuntimeError("Selenium/webdriver dependencies not available in this environment.")
@@ -206,11 +177,6 @@ def initialize_driver():
 def clean_html_content(html: str) -> str:
     """
     Strips non-essential HTML tags (nav, footer, etc.) and removes dynamic timestamps.
-    
-    Args:
-        html (str): Raw HTML string.
-    Returns:
-        str: Cleaned HTML string containing only the body substance.
     """
     soup = BeautifulSoup(html, 'html.parser')
     body = soup.body
@@ -227,12 +193,6 @@ def clean_html_content(html: str) -> str:
 def fetch_webpage_content(driver, url):
     """
     Uses Selenium to fetch a webpage, wait for rendering, and convert to Markdown.
-    
-    Args:
-        driver (webdriver.Chrome): Active Selenium driver.
-        url (str): Target URL.
-    Returns:
-        str: Normalized Markdown content.
     """
     driver.get(url)
     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
@@ -243,11 +203,6 @@ def fetch_webpage_content(driver, url):
 def sanitize_rss(xml_content):
     """
     Normalizes RSS XML by stripping transient channel-level dates and sorting items by GUID.
-    
-    Args:
-        xml_content (bytes/str): Raw RSS XML.
-    Returns:
-        str: Prettified, stable XML string.
     """
     soup = BeautifulSoup(xml_content, 'xml')
     for tag in ['lastBuildDate', 'pubDate', 'generator']:
@@ -268,12 +223,6 @@ def sanitize_rss(xml_content):
 def fetch_legislation_metadata(session, source):
     """
     Fetches latest document metadata from the Federal Legislation OData API.
-    
-    Args:
-        session (requests.Session): Active HTTP session.
-        source (dict): Source configuration.
-    Returns:
-        tuple: (registerId, full_meta_dict)
     """
     params = {"$filter": f"titleid eq '{source['title_id']}'", "$orderby": "start desc", "$top": "1"}
     resp = session.get(source['base_url'], params=params, timeout=30)
@@ -345,12 +294,6 @@ def download_legislation_content(session, base_url, meta):
 def get_diff(old_path, new_content) -> Optional[str]:
     """
     Performs a unified diff (-U10) between the archived file and the new content.
-    
-    Args:
-        old_path (str): Path to the archived version.
-        new_content (str): Newest normalized content.
-    Returns:
-        Optional[str]: The diff hunk if changes exist, otherwise None.
     """
     if not os.path.exists(old_path):
         return "Initial archive creation."
@@ -379,12 +322,6 @@ def save_to_archive(filename, content):
 def save_diff_record(source_name, diff_content):
     """
     Saves a diff hunk to the diff_archive directory with a timestamp.
-    
-    Args:
-        name (str): Source name.
-        diff_content (str): The raw diff text.
-    Returns:
-        str: The generated filename of the diff record.
     """
     safe_name = re.sub(r'[^A-Za-z0-9._-]+', '_', source_name)[:80].strip('_')
     ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -436,8 +373,7 @@ def parse_diff_hunks(diff_file_path: str) -> List[dict]:
 
 def extract_change_content(diff_file_path):
     """
-    Backwards-compatible change extractor. Phase B now parses hunks first and then
-    flattens them into a single overall change context for logging/high-level signals.
+    Backwards-compatible change extractor. Parses hunks then flattens them.
     """
     hunks = parse_diff_hunks(diff_file_path)
     additions, removals = [], []
@@ -496,12 +432,9 @@ def detect_power_words(text):
     }
 
 
-def calculate_final_score(page_base_similarity,  power_word_analysis):
+def calculate_final_score(page_base_similarity, power_word_analysis):
     """
-    Applies a small, bounded uplift based on detected power-words.
-
-    Note: despite the name, this function does *not* compute the final page score.
-    It returns an adjusted similarity score (similarity + uplift), capped at 1.0.
+    Returns an adjusted similarity score (similarity + uplift), capped at 1.0.
     """
     if isinstance(power_word_analysis, dict):
         boost = float(power_word_analysis.get('score', 0.0))
@@ -517,6 +450,8 @@ def calculate_final_score(page_base_similarity,  power_word_analysis):
         boost = float(power_word_analysis or 0.0)
 
     return min(1.0, float(page_base_similarity) + boost)
+
+
 def get_primary_handover_threshold_for_priority(priority: str) -> Optional[float]:
     p = (priority or '').strip().lower()
     if p == 'high':
@@ -552,6 +487,7 @@ def should_generate_handover(primary_score: float,
         f"{p or 'default'} threshold {threshold:.3f}"
     ), threshold
 
+
 def _load_semantic_embeddings(mock_semantic_data=None):
     global _semantic_cache
     if mock_semantic_data:
@@ -565,7 +501,7 @@ def _load_semantic_embeddings(mock_semantic_data=None):
                 chunks_raw.append({
                     'UDID': udid,
                     'Chunk_ID': f"{udid}-C{i+1:02d}",
-                    'Chunk_Text': chunk_texts[i] if i < len(chunk_texts) else '',
+                    'Chunk_Text': chunk_texts[i] if i < len(udids) else '',
                     'Headline_Alt': ''
                 })
         return vectors, udids, chunk_texts, chunks_raw
@@ -611,24 +547,22 @@ def _priority_to_source_weight(priority: str) -> float:
         return 0.6
     return 0.3
 
+
 def _is_administrative_noise(text: str) -> bool:
     """Returns True if the text is purely administrative (Page X, Dates, etc)."""
     t = text.strip().lower()
-    if len(t) < 5: return True
-    # Regex for "Page 1", "Page 2 of 10", etc.
-    if re.match(r'^page \d+( of \d+)?$', t): return True
-    # Regex for standard dates like "25 February 2026"
-    if re.match(r'^\d{1,2} [a-z]+ \d{4}$', t): return True
+    if len(t) < 5:
+        return True
+    if re.match(r'^page \d+( of \d+)?$', t):
+        return True
+    if re.match(r'^\d{1,2} [a-z]+ \d{4}$', t):
+        return True
     return False
+
 
 def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=None):
     """
     Recall-first candidate retrieval with Administrative Noise filtering.
-
-    Key ideas:
-      - Embed only substantive hunks (noise suppressed) to reduce cost and false positives.
-      - Compare each hunk embedding to the corpus chunk embeddings via cosine similarity.
-      - Aggregate evidence per page (UDID) and compute a page candidate chunk_similarity.
     """
     change = extract_change_content(diff_path)
     diff_hunks = change.get('hunks', [])
@@ -653,7 +587,6 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
 
     overall_power = detect_power_words(change.get('change_context', ''))
 
-    # --- NOISE SUPPRESSION GATEKEEPER ---
     substantive_hunks = []
     for h in diff_hunks:
         ctx = h.get('change_context', '')
@@ -666,13 +599,20 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
         h['power_words'] = detect_power_words(ctx)
         substantive_hunks.append(h)
 
-    # If everything was noise (e.g., only page numbers changed), return early with 0 chunk_similarity
     if not substantive_hunks:
         return {
             'status': 'success',
             'change_text': change.get('change_context', ''),
             'change_hunks': [
-                {'hunk_index': h['hunk_index'], 'hunk_text': h.get('change_context', ''), 'is_noise': True}
+                {
+                    'hunk_index': h['hunk_index'],
+                    'hunk_header': h.get('header', ''),
+                    'hunk_text': h.get('change_context', ''),
+                    'is_noise': True,
+                    # Structured fields for downstream packet formatting:
+                    'removed': h.get('removed_lines', []),
+                    'added': h.get('added_lines', [])
+                }
                 for h in diff_hunks
             ],
             'power_words': overall_power,
@@ -685,9 +625,7 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             'impacted_pages': []
         }
 
-    # --- SEMANTIC PROCESSING ---
     try:
-        # Only embed the substantive content to save cost and avoid false positives
         hunk_vectors = _embed_texts([h['change_context'] for h in substantive_hunks])
     except Exception as e:
         return {
@@ -708,7 +646,6 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
         corpus_vectors, udids, chunk_texts, chunks_raw = _load_semantic_embeddings(
             mock_semantic_data=mock_semantic_data
         )
-        # chunk_texts is not used in this function, but is returned by the loader for callers that may need it.
         _ = chunk_texts
     except Exception as e:
         return {
@@ -730,7 +667,6 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
     hunk_matches = []
     page_evidence: Dict[str, dict] = {}
 
-    # Map similarities back to pages (using the row index from substantive_hunks)
     for hunk_row_idx, hunk in enumerate(substantive_hunks):
         chunk_similarities = similarity_matrix[hunk_row_idx]
         passing_chunk_indices = np.where(chunk_similarities >= HUNK_CHUNK_MIN_SIMILARITY)[0].tolist()
@@ -778,7 +714,6 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
                 page_rec['chunk_id_set'].add(chunk_id)
                 page_rec['chunk_ids'].append(chunk_id)
 
-            # page_base_similarity tracks the *highest* chunk_similarity observed for this page (max over passing chunk hits)
             if chunk_similarity > page_rec['page_base_similarity']:
                 page_rec['page_base_similarity'] = chunk_similarity
                 page_rec['best_chunk_id'] = chunk_id
@@ -792,7 +727,6 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             'top_chunks': sorted(chunk_match_summaries, key=lambda x: x['chunk_similarity'], reverse=True)[:5]
         })
 
-    # --- SCORING & BONUSES ---
     impacted_pages = []
     for page_udid, page_rec in page_evidence.items():
         distinct_hunks = len(page_rec['matched_hunks'])
@@ -820,10 +754,9 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
             'chunk_hits': page_rec['chunk_hits'],
             'distinct_hunk_hits': distinct_hunks,
             'matched_hunk_indices': sorted(page_rec['matched_hunks']),
-            'relevant_chunk_ids': page_rec['chunk_ids'][:5],
+            'relevant_chunk_ids': page_rec['chunk_ids'][:MAX_RELEVANT_CHUNK_IDS_PER_CANDIDATE],
             'best_chunk_id': page_rec['best_chunk_id'],
             'best_headline': page_rec['best_headline'],
-            # Useful diagnostics for downstream:
             'coverage_bonus': float(coverage_bonus),
             'density_bonus': float(density_bonus),
             'power_uplift': float(power_uplift),
@@ -831,7 +764,6 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
 
     impacted_pages.sort(key=lambda p: (p['page_final_score'], p['distinct_hunk_hits']), reverse=True)
 
-    # Assign candidate_rank for easier tracing (1-based rank after sorting)
     for rank, p in enumerate(impacted_pages, start=1):
         p['candidate_rank'] = rank
 
@@ -849,35 +781,35 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
         source_priority=source_priority
     )
 
+    # NOTE: Preserve structured hunk info (removed/added arrays) for packet formatting.
+    # This includes ALL hunks (noise + substantive), aligned with existing UI needs.
+    change_hunks_structured = []
+    for h in diff_hunks:
+        change_hunks_structured.append({
+            'hunk_index': h['hunk_index'],
+            'hunk_header': h.get('header', ''),
+            'hunk_text': h.get('change_context', ''),
+            'is_noise': h.get('is_noise', False),
+            'power_words_found': h.get('power_words', {}).get('power_words_found', []),
+            'removed': h.get('removed_lines', []),
+            'added': h.get('added_lines', []),
+        })
+
     return {
         'status': 'success',
         'change_text': change.get('change_context', ''),
-        # Every hunk, including noise, is preserved here for the UI
-        'change_hunks': [
-            {
-                'hunk_index': h['hunk_index'],
-                'hunk_header': h.get('header', ''),
-                'hunk_text': h.get('change_context', ''),
-                'is_noise': h.get('is_noise', False),
-                'power_words_found': h.get('power_words', {}).get('power_words_found', [])
-            }
-            for h in diff_hunks
-        ],
+        'change_hunks': change_hunks_structured,
         'power_words': overall_power,
         'page_base_similarity': float(primary['aggregated_page_base_similarity']) if primary else 0.0,
         'page_final_score': primary_page_final_score,
         'primary_udid': primary['udid'] if primary else None,
         'primary_chunk_id': primary.get('best_chunk_id') if primary else None,
         'primary_headline': primary.get('best_headline') if primary else None,
-
-        # Diagnostics
         'hunk_matches': hunk_matches,
         'threshold_passing_candidates': threshold_passing_candidates,
         'impacted_pages': impacted_pages,
         'candidate_count': candidate_count,
         'multi_impact_likely': candidate_count > 1,
-
-        # Decisions
         'should_handover': should_handover,
         'handover_decision_reason': handover_reason,
         'filter_reason': None if should_handover else handover_reason,
@@ -885,8 +817,9 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
         'candidate_min_score': CANDIDATE_MIN_SCORE,
         'hunk_chunk_min_similarity': HUNK_CHUNK_MIN_SIMILARITY
     }
+
+
 def _derive_packet_priority(priority: str, primary_score: float, power_count: int) -> str:
-    # source priority can dominate urgency but preserve score influence
     p = (priority or '').strip().lower()
     if p == 'high':
         if primary_score >= 0.70 or power_count >= 5:
@@ -899,6 +832,25 @@ def _derive_packet_priority(priority: str, primary_score: float, power_count: in
     return 'Medium'
 
 
+def _clean_diff_text_line(s: str) -> str:
+    """
+    Defensive clean-up in case upstream diff text fragments carry leftover markers.
+    For packet output we want clean human-readable lines.
+    """
+    if s is None:
+        return ""
+    t = str(s).strip()
+
+    # remove common accidental prefixes
+    # "+ - something" or "- - something"
+    t = re.sub(r'^[\+\-]\s*-\s*', '', t)
+
+    # remove leading '+'/'-' if present
+    t = re.sub(r'^[\+\-]\s*', '', t)
+
+    return t.strip()
+
+
 def generate_handover_packets(source_name: str,
                              priority: str,
                              version_id: str,
@@ -906,7 +858,10 @@ def generate_handover_packets(source_name: str,
                              analysis: dict,
                              timestamp: str) -> List[str]:
     """
-    Generates one or more JSON handover packets for downstream LLM impact confirmation.
+    Generates one or more JSON handover packets in the revised, low-noise schema:
+      - audit_summary
+      - source_change_details
+      - llm_verification_targets
 
     Packeting:
       - All threshold-passing candidates (score >= CANDIDATE_MIN_SCORE) are included.
@@ -929,8 +884,29 @@ def generate_handover_packets(source_name: str,
     power_count = int(power.get('count', 0))
     primary_page_final_score = float(analysis.get('page_final_score') or 0.0)
     packet_priority = _derive_packet_priority(priority, primary_page_final_score, power_count)
+
     primary_udid = analysis.get('primary_udid') or 'unknown'
     safe_ts = timestamp.replace(':', '').replace('.', '').replace('-', '')[:14]
+
+    # For audit/debug: keep variable names (and keep numeric thresholds in reason string already).
+    p = (priority or '').strip().lower()
+    threshold_name = None
+    if p == 'medium':
+        threshold_name = "MEDIUM_PRIMARY_HANDOVER_THRESHOLD"
+    elif p == 'low':
+        threshold_name = "LOW_PRIMARY_HANDOVER_THRESHOLD"
+    elif p == 'high':
+        threshold_name = None  # bypass
+
+    # Primary candidate explanation (across *all* candidates, not only this batch)
+    primary_candidate = all_candidates[0] if all_candidates else None
+    primary_explanation = None
+    if isinstance(primary_candidate, dict):
+        primary_explanation = {
+            "best_chunk_id": primary_candidate.get("best_chunk_id"),
+            "matched_hunks": primary_candidate.get("matched_hunk_indices", []),
+            "retrieval_reason": "Highest page_final_score among threshold-passing candidates"
+        }
 
     paths: List[str] = []
 
@@ -938,68 +914,94 @@ def generate_handover_packets(source_name: str,
         packet_id = f"handover_{safe_ts}_{primary_udid}_batch_{idx:02d}_of_{batch_count:02d}"
         filepath = os.path.join(HANDOVER_DIR, f"{packet_id}.json")
 
+        impacted_page_list = [c.get("udid") for c in batch if isinstance(c, dict) and c.get("udid")]
+
+        # Convert analysis hunks to template shape
+        hunks_out = []
+        for h in (analysis.get("change_hunks") or []):
+            if not isinstance(h, dict):
+                continue
+            hunks_out.append({
+                "hunk_id": h.get("hunk_index"),
+                "location_header": h.get("hunk_header", ""),
+                "pre_context": [],
+                "removed": [_clean_diff_text_line(x) for x in (h.get("removed") or []) if _clean_diff_text_line(x)],
+                "added": [_clean_diff_text_line(x) for x in (h.get("added") or []) if _clean_diff_text_line(x)],
+                "post_context": []
+            })
+
+        # Build llm verification targets (reference-first, include evidence_resolution)
+        targets = []
+        for c in batch:
+            if not isinstance(c, dict):
+                continue
+            targets.append({
+                "candidate_rank": c.get("candidate_rank"),
+                "udid": c.get("udid"),
+                "page_name": c.get("best_headline") or c.get("udid") or "",
+                "page_final_score": c.get("page_final_score"),
+                "best_chunk_id": c.get("best_chunk_id"),
+                "matched_hunk_indices": c.get("matched_hunk_indices", []),
+                "relevant_chunk_ids": (c.get("relevant_chunk_ids") or [])[:MAX_RELEVANT_CHUNK_IDS_PER_CANDIDATE],
+                "evidence_resolution": {
+                    "requires_resolution": True,
+                    "resolve_from": [
+                        "Semantic_Embeddings_Output.json",
+                        "ipfr_markdown_archive"
+                    ],
+                    "fail_closed_if_missing": True
+                }
+            })
+
         packet = {
-            'packet_id': packet_id,
-            'generated_at': timestamp,
-            'packet_priority': packet_priority,
-            'source': {
-                'name': source_name,
-                'monitoring_priority': priority,
-                'source_weight': _priority_to_source_weight(priority),
-                'diff_file': diff_file,
-                'diff_file_path': os.path.join(DIFF_DIR, diff_file),
-                'timestamp_from_audit_log': timestamp,
-                'version_id': version_id
+            "packet_id": packet_id,
+            "packet_priority": packet_priority,
+
+            "audit_summary": {
+                "generated_at": timestamp,
+                "primary_target_udid": primary_udid,
+
+                "primary_page_final_score": primary_page_final_score,
+
+                "primary_candidate_explanation": primary_explanation or {
+                    "best_chunk_id": analysis.get("primary_chunk_id"),
+                    "matched_hunks": [],
+                    "retrieval_reason": "Primary candidate explanation unavailable"
+                },
+
+                "routing_decision": {
+                    "decision_logic": analysis.get("handover_decision_reason") or "",
+                    "candidate_min_score": "CANDIDATE_MIN_SCORE",
+                    "primary_handover_threshold_used": threshold_name
+                },
+
+                "batching": {
+                    "total_impacted_pages_across_batches": len(all_candidates),
+                    "candidates_in_this_packet": len(batch),
+                    "candidate_batch_index": idx,
+                    "candidate_batch_count": batch_count,
+                    "candidate_selection_policy": "all_threshold_passing_candidates"
+                },
+
+                "impacted_page_list": impacted_page_list
             },
-            'analysis': {
-                'primary_page_final_score': primary_page_final_score,
-                'primary_page_base_similarity': analysis.get('page_base_similarity'),
-                'candidate_min_score': analysis.get('candidate_min_score', CANDIDATE_MIN_SCORE),
-                'primary_handover_threshold_used': analysis.get('primary_handover_threshold_used'),
-                'power_words_found': power.get('power_words_found', power.get('found', [])),
-                'power_word_count': power_count,
-                'power_word_score': power.get('score', 0.0),
-                'candidate_count': analysis.get('candidate_count', 0),
-                'multi_impact_likely': analysis.get('multi_impact_likely', False),
-                'handover_decision_reason': analysis.get('handover_decision_reason')
+
+            "source_change_details": {
+                "source": {
+                    "name": source_name,
+                    "monitoring_priority": priority
+                },
+                "diff_file": diff_file,
+                "timestamp_from_audit_log": timestamp,
+                "version_id": version_id or "N/A",
+                "power_words_found": power.get("power_words_found", power.get("found", [])),
+                "hunks": hunks_out
             },
-            'change': {
-                'diff_file': diff_file,
-                'preview': (analysis.get('change_text', '') or '')[:400],
-                'hunks': analysis.get('change_hunks', [])
-            },
-            'llm_handover': {
-                'purpose': 'JSON handover packet for the LLM to confirm whether the source change impacts candidate IPFR pages.',
-                'retrieval_mode': 'high_recall_candidate_generation',
-                'packeting_mode': 'candidate_batching_no_truncation_of_threshold_passing_candidates',
-                'primary_udid': analysis.get('primary_udid'),
-                'candidate_min_score': analysis.get('candidate_min_score', CANDIDATE_MIN_SCORE),
-                'candidate_count_total': len(all_candidates),
-                'candidate_count_in_packet': len(batch),
-                'candidate_batch_index': idx,
-                'candidate_batch_count': batch_count,
-                'candidate_start_index': (idx - 1) * batch_size + 1,
-                'candidate_end_index': (idx - 1) * batch_size + len(batch),
-                'candidate_udids': [c.get('udid') for c in batch],
-                'candidates': [
-                    {
-                        'udid': c.get('udid'),
-                        'candidate_rank': c.get('candidate_rank'),
-                        'page_final_score': c.get('page_final_score'),
-                        'page_base_similarity': c.get('page_base_similarity'),
-                        'matched_hunk_indices': c.get('matched_hunk_indices', []),
-                        'relevant_chunk_ids': c.get('relevant_chunk_ids', []),
-                        'best_chunk_id': c.get('best_chunk_id'),
-                        'chunk_hit_count': c.get('chunk_hits'),
-                        'distinct_hunk_hits': c.get('distinct_hunk_hits'),
-                        'coverage_bonus': c.get('coverage_bonus'),
-                        'density_bonus': c.get('density_bonus'),
-                        'power_uplift': c.get('power_uplift'),
-                        'best_headline': c.get('best_headline')
-                    }
-                    for c in batch
-                ],
-                'hunk_matches': analysis.get('hunk_matches', [])
+
+            "llm_verification_targets": targets,
+
+            "llm_consumer_instructions": {
+                "placeholder": "LLM consumer instructions will be defined in a later stage."
             }
         }
 
@@ -1011,10 +1013,13 @@ def generate_handover_packets(source_name: str,
 
     return paths
 
+
 def write_github_summary(handover_paths: List[str]):
     """
     Writes a markdown summary of this run's handover packets to the GitHub Actions
     job summary (GITHUB_STEP_SUMMARY). If unavailable, prints to stdout.
+
+    Updated to match revised packet schema.
     """
     summary_file = os.environ.get('GITHUB_STEP_SUMMARY')
     lines = ["## Tripwire run summary\n"]
@@ -1023,23 +1028,27 @@ def write_github_summary(handover_paths: List[str]):
         lines.append("No handover packets generated this run.\n")
     else:
         lines.append(f"**{len(handover_paths)} handover packet(s) generated this run.**\n")
-        lines.append("| Priority | Score | Source | Primary UDID | Diff file | Batch | Candidates |")
+        lines.append("| Packet Priority | Primary Score | Source | Primary UDID | Diff file | Batch | Candidates |")
         lines.append("|---|---:|---|---|---|---|---:|")
 
         for p in handover_paths:
             try:
                 with open(p, 'r', encoding='utf-8') as f:
                     packet = json.load(f)
+
                 prio = packet.get('packet_priority', '')
-                score = packet.get('analysis', {}).get('primary_similarity_score')
-                src = packet.get('source', {}).get('name', '')
-                udid = packet.get('llm_handover', {}).get('primary_udid', '')
-                diff_file = packet.get('source', {}).get('diff_file', '')
-                lh = packet.get('llm_handover', {})
-                batch = f"{lh.get('candidate_batch_index','?')}/{lh.get('candidate_batch_count','?')}"
-                count = lh.get('candidate_count_in_packet', '')
+                audit = packet.get('audit_summary', {}) or {}
+                score = audit.get('primary_page_final_score')
+                src = (packet.get('source_change_details', {}) or {}).get('source', {}).get('name', '')
+                udid = audit.get('primary_target_udid', '')
+                diff_file = (packet.get('source_change_details', {}) or {}).get('diff_file', '')
+                batching = audit.get('batching', {}) or {}
+                batch = f"{batching.get('candidate_batch_index','?')}/{batching.get('candidate_batch_count','?')}"
+                count = batching.get('candidates_in_this_packet', '')
+
                 score_fmt = f"{float(score):.3f}" if score is not None else ""
                 lines.append(f"| {prio} | {score_fmt} | {src} | {udid} | {diff_file} | {batch} | {count} |")
+
             except Exception as e:
                 lines.append(f"| Error | | | | {os.path.basename(p)} | | ({e}) |")
 
@@ -1051,7 +1060,9 @@ def write_github_summary(handover_paths: List[str]):
     else:
         print(output)
 
+
 LLM_HANDOVER_LOG = "llm_handover_log.csv"
+
 
 def log_llm_handover_decision(source_name: str,
                               priority: str,
@@ -1063,7 +1074,6 @@ def log_llm_handover_decision(source_name: str,
     Records Stage 3 → LLM routing decisions.
     One row per semantic evaluation event.
     """
-
     file_exists = os.path.exists(LLM_HANDOVER_LOG)
 
     headers = [
@@ -1105,10 +1115,8 @@ def log_llm_handover_decision(source_name: str,
 
     with open(LLM_HANDOVER_LOG, mode="a", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-
         if not file_exists:
             writer.writerow(headers)
-
         writer.writerow(row)
 
 
@@ -1203,7 +1211,7 @@ def main():
                             timestamp=ts,
                             version_id=current_id
                         )
-                        
+
                         handover_paths.extend(new_packets)
                         s3_outcome = 'handover'
 
@@ -1217,7 +1225,7 @@ def main():
                         )
                     elif s3_success:
                         s3_outcome = 'filtered'
-                        
+
                         log_llm_handover_decision(
                             source_name=name,
                             priority=priority,
