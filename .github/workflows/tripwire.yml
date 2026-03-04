@@ -3,7 +3,7 @@ name: Tripwire Check
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 20 * * 0-4"   # 6am Sydney (AEST base), weekdays
+    - cron: "0 20 * * 0-4" # 6am Sydney (AEST base), weekdays
 
 permissions:
   contents: write
@@ -66,5 +66,4 @@ jobs:
           name: llm-verification-results-${{ github.run_number }}
           path: llm_verification_results/
           retention-days: 90
-          if-no-files-found: ignore
           if-no-files-found: ignore
