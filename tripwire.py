@@ -1252,31 +1252,69 @@ def generate_handover_packets(source_name: str,
 from pathlib import Path  # local import to keep this file drop-in compatible
 
 
-def _resolve_ipfr_markdown_path(udid: str) -> Optional[str]:
+def _resolve_ipfr_markdown_path(udid: str, prefer_test_files: bool = True) -> Optional[str]:
+    """Resolve an IPFR markdown file for a UDID.
+
+    Prototype support:
+    - prefers *_test.md fixtures when present (for GitHub-based eval runs)
+    - falls back to non-test files for normal operation
+    """
     if not udid:
         return None
     root = Path(IPFR_CONTENT_ARCHIVE_DIR)
-    matches = sorted(root.glob(f"{udid} - *.md"))
-    return str(matches[0]) if matches else None
+
+    patterns = []
+    if prefer_test_files:
+        patterns.extend([
+            f"{udid} - *_test.md",
+            f"{udid} - *test.md",
+        ])
+    patterns.append(f"{udid} - *.md")
+
+    for pat in patterns:
+        matches = sorted(root.glob(pat))
+        if matches:
+            return str(matches[0])
+    return None
 
 
-def _resolve_ipfr_jsonld_path(udid: str) -> Optional[str]:
+def _resolve_ipfr_jsonld_path(udid: str, prefer_test_files: bool = True) -> Optional[str]:
+    """Resolve an IPFR JSON-LD file for a UDID.
+
+    Prototype support:
+    - prefers *_test.json fixtures when present
+    - falls back to non-test files
+    """
     if not udid:
         return None
     root = Path(IPFR_CONTENT_ARCHIVE_DIR)
-    matches = sorted(root.glob(f"{udid}_*.json"))
-    return str(matches[0]) if matches else None
+
+    patterns = []
+    if prefer_test_files:
+        patterns.extend([
+            f"{udid}_*_test.json",
+            f"{udid}_*test.json",
+        ])
+    patterns.append(f"{udid}_*.json")
+
+    for pat in patterns:
+        matches = sorted(root.glob(pat))
+        if matches:
+            return str(matches[0])
+    return None
 
 
-def resolve_ipfr_content_files(udid: str) -> dict:
+def resolve_ipfr_content_files(udid: str, prefer_test_files: bool = True) -> dict:
     """Resolves the prototype IPFR content files for a UDID."""
     missing = []
-    md_path = _resolve_ipfr_markdown_path(udid)
-    js_path = _resolve_ipfr_jsonld_path(udid)
+    md_path = _resolve_ipfr_markdown_path(udid, prefer_test_files=prefer_test_files)
+    js_path = _resolve_ipfr_jsonld_path(udid, prefer_test_files=prefer_test_files)
+
     if not md_path:
         missing.append("markdown")
     if not js_path:
         missing.append("jsonld")
+
     return {
         "udid": udid,
         "markdown_path": md_path,
@@ -1284,6 +1322,66 @@ def resolve_ipfr_content_files(udid: str) -> dict:
         "missing": missing
     }
 
+def parse_markdown_chunks(markdown_text: str) -> List[Dict[str, str]]:
+    """Parse markdown into an ordered list of chunks using <!-- chunk_id: ... --> markers.
+
+    If no chunk markers exist, returns a single FULL_PAGE chunk.
+    """
+    if markdown_text is None:
+        markdown_text = ""
+
+    pattern = r"<!--\s*chunk_id\s*:\s*([^>]+?)\s*-->"  # capture chunk id
+    parts = re.split(pattern, markdown_text)
+
+    # parts: [prelude, chunk_id1, chunk_text1, chunk_id2, chunk_text2, ...]
+    if len(parts) < 3:
+        return [{"chunk_id": "FULL_PAGE", "text": markdown_text.strip()}]
+
+    chunks: List[Dict[str, str]] = []
+    for i in range(1, len(parts), 2):
+        chunk_id = (parts[i] or "").strip()
+        text = (parts[i + 1] if i + 1 < len(parts) else "") or ""
+        chunks.append({"chunk_id": chunk_id, "text": text.strip()})
+
+    return chunks
+
+
+def extract_chunk_window(chunks: List[Dict[str, str]], target_chunk_id: str) -> Dict[str, str]:
+    """Return a deterministic context window: before/current/after for a target chunk id.
+
+    Falls back to FULL_PAGE content if markers are missing or the chunk id is not found.
+    """
+    if not chunks:
+        return {"before": "", "current": "", "after": ""}
+
+    # FULL_PAGE fallback
+    if len(chunks) == 1 and chunks[0].get("chunk_id") == "FULL_PAGE":
+        return {"before": "", "current": chunks[0].get("text", ""), "after": ""}
+
+    for i, c in enumerate(chunks):
+        if c.get("chunk_id") == target_chunk_id:
+            before = chunks[i - 1].get("text", "") if i > 0 else ""
+            current = c.get("text", "")
+            after = chunks[i + 1].get("text", "") if i < (len(chunks) - 1) else ""
+            return {"before": before, "current": current, "after": after}
+
+    # Not found: fall back to concatenated content (still deterministic)
+    joined = "\n\n".join([c.get("text", "") for c in chunks]).strip()
+    return {"before": "", "current": joined, "after": ""}
+
+
+def build_chunk_index(chunks: List[Dict[str, str]], max_snippet_chars: int = 260) -> List[Dict[str, str]]:
+    """Build a compact index of all chunks on a page for Pass 2 scoping.
+
+    We avoid sending full page text; we send chunk_id + a short snippet.
+    """
+    index: List[Dict[str, str]] = []
+    for c in chunks:
+        cid = c.get("chunk_id", "")
+        txt = (c.get("text", "") or "").strip()
+        snippet = txt[:max_snippet_chars]
+        index.append({"chunk_id": cid, "snippet": snippet})
+    return index
 
 def _read_text_file(path: str, max_chars: int = 40_000) -> str:
     if not path or not os.path.exists(path):
@@ -1295,134 +1393,233 @@ def _read_text_file(path: str, max_chars: int = 40_000) -> str:
     return s
 
 
-def _build_llm_verification_prompt(packet: dict, candidates_with_content: List[dict]) -> str:
-    """Builds a single-call (two-pass) prompt for verifying IPFR impact."""
+def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict) -> str:
+    """Pass 1: Verify whether the external change materially impacts the candidate page.
+
+    We intentionally provide a narrow evidence window to keep cost low and reduce ambiguity.
+    """
     packet_id = packet.get("packet_id", "")
-    source = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
-    diff_file = (packet.get("source_change_details", {}) or {}).get("diff_file", "")
+    src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+    source_name = src.get("name", "")
+    priority = src.get("monitoring_priority", "")
+
+    # Include only the hunks this candidate was matched to (if provided), else include all hunks.
     hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
+    matched = set(candidate.get("matched_hunk_indices") or [])
+    if matched:
+        hunks = [h for h in hunks if (h.get("hunk_id") in matched) or (h.get("hunk_index") in matched)]
+    # Render hunks compactly.
+    hunk_text_parts = []
+    for h in hunks:
+        removed = "\n".join([f"- {ln}" for ln in (h.get("removed") or [])])
+        added = "\n".join([f"+ {ln}" for ln in (h.get("added") or [])])
+        header = h.get("location_header") or h.get("hunk_header") or f"hunk {h.get('hunk_id', '')}"
+        hunk_text_parts.append(f"{header}\n{removed}\n{added}".strip())
+    diff_block = "\n\n".join(hunk_text_parts).strip()
 
-    targets = packet.get("llm_verification_targets", []) or []
-    target_summaries = []
-    for t in targets[:TOP_N_VERIFICATION_CANDIDATES]:
-        if not isinstance(t, dict):
-            continue
-        target_summaries.append({
-            "candidate_rank": t.get("candidate_rank"),
-            "udid": t.get("udid"),
-            "page_final_score": t.get("page_final_score"),
-            "best_chunk_id": t.get("best_chunk_id"),
-            "matched_hunk_indices": t.get("matched_hunk_indices", [])
-        })
+    before = (window.get("before") or "").strip()
+    current = (window.get("current") or "").strip()
+    after = (window.get("after") or "").strip()
 
-    system_instructions = '''You are a Technical Content Auditor for the IP First Response (IPFR) platform.
+    return f"""System Role: You are a Technical Content Auditor for the IP First Response (IPFR) platform.
 
-Your task is to determine whether a change detected in an external source materially impacts the accuracy or completeness of IP First Response website guidance.
+Your job is to verify whether the external source update below materially impacts the IPFR content for the candidate page.
 
-Follow a two-pass method inside ONE response:
+External source context:
+- Source: {source_name}
+- Priority: {priority}
+- Packet: {packet_id}
 
-Pass 1 - Change Analysis
-- Read the diff hunks and identify what has semantically changed.
-- Ignore purely formatting, spacing, punctuation, or structural changes that do not alter meaning.
-- Output a short external_change_summary and a change_type.
+External change (unified diff hunks):
+{diff_block}
 
-Pass 2 - IPFR Verification
-- Use the provided IPFR markdown and JSON-LD to verify whether IPFR guidance is now inaccurate, incomplete, or misleading.
-- Use section identifiers in markdown (<!-- section_id: ... -->) and JSON-LD WebPageElement.identifier where possible.
-- Similarity scores and chunk IDs are hints only. The final decision must be based on the diff and IPFR content you inspected.
-- If required content files are missing, fail closed with overall_decision = "uncertain".
+Candidate IPFR page:
+- UDID: {candidate.get('udid')}
+- Target chunk_id: {candidate.get('best_chunk_id')}
 
-Return ONLY valid JSON matching the output schema.
-'''
+IPFR evidence window (from the actual page markdown):
+[Before]
+{before}
 
-    output_schema = {
-        "overall_decision": "impact | no_impact | uncertain",
-        "external_change_summary": "string",
-        "change_type": "formatting | clarification | meaning_change | new_requirement | unknown",
-        "impacted_pages": [
-            {
-                "udid": "string",
-                "section_identifier": "string or null",
-                "impact_type": "outdated | incorrect | missing_guidance",
-                "reason": "string",
-                "evidence_snippet": "string (max 25 words)"
-            }
-        ],
-        "candidate_assessment": {
-            "verified_candidates": [],
-            "missing_candidates": [],
-            "false_positive_candidates": []
-        },
-        "confidence": "high | medium | low"
-    }
+[Current]
+{current}
 
-    user_payload = {
-        "packet_id": packet_id,
-        "source": source,
-        "diff_file": diff_file,
-        "candidate_summaries_top_n": target_summaries,
-        "diff_hunks": hunks,
-        "ipfr_candidates_with_content": candidates_with_content,
-        "output_schema": output_schema
-    }
+[After]
+{after}
 
-    return system_instructions + "\\n\\nINPUT (JSON):\\n" + json.dumps(user_payload, indent=2, ensure_ascii=False)
+Decision rules:
+- Return "impact" if the external change updates, contradicts, or invalidates the meaning of the IPFR content in the evidence window.
+- Return "no_impact" if the change is unrelated to the evidence window, or does not change the meaning relevant to the IPFR content.
+- Return "uncertain" only if you cannot make a decision from the evidence provided.
+- If the external change uses different wording but clearly changes a legal threshold/definition that the IPFR content relies on, treat that as "impact".
+
+Return JSON ONLY with this schema:
+{{
+  "decision": "impact|no_impact|uncertain",
+  "udid": "{candidate.get('udid')}",
+  "chunk_id": "{candidate.get('best_chunk_id')}",
+  "confidence": "high|medium|low",
+  "reason": "brief explanation grounded in the evidence window",
+  "evidence_quote": "a short quote (<=25 words) from the evidence window that supports your decision"
+}}
+"""
+
+
+def _build_llm_pass2_prompt(
+    packet: dict,
+    candidate: dict,
+    pass1_result: dict,
+    chunk_index: List[dict],
+    stage3_relevant_chunk_ids: Optional[List[str]] = None
+) -> str:
+    """Pass 2: confirm which Stage 3 suggested chunks actually need a human update (and allow additional chunks).
+
+    We provide the LLM with:
+      - Confirmed impact summary from Pass 1
+      - A compact chunk index for the whole page (chunk_id + snippet)
+      - Stage 3 'relevant_chunk_ids' (retrieval-suggested candidates) so the model doesn't start from scratch
+
+    Output is used to seed Stage 5 (future) human/LLM authoring.
+    """
+    packet_id = packet.get("packet_id", "")
+    src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+    source_name = src.get("name", "")
+    priority = src.get("monitoring_priority", "")
+
+    hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
+    # Compact diff summary for scoping
+    diff_lines: List[str] = []
+    for h in hunks:
+        for ln in (h.get("removed") or []):
+            diff_lines.append(f"- {ln}")
+        for ln in (h.get("added") or []):
+            diff_lines.append(f"+ {ln}")
+    diff_summary = "\n".join(diff_lines[:120])
+
+    if stage3_relevant_chunk_ids is None:
+        stage3_relevant_chunk_ids = candidate.get("relevant_chunk_ids") or []
+    stage3_relevant_chunk_ids = [str(x) for x in stage3_relevant_chunk_ids][:80]
+
+    # Include the compact index (id + snippet) for all chunks on this page.
+    index_json = json.dumps(chunk_index, ensure_ascii=False)
+
+    # Pass 1 summary (ground truth for Pass 2 scope)
+    pass1_json = json.dumps(pass1_result, ensure_ascii=False)
+
+    return f"""System Role: You are a Technical Content Auditor for the IP First Response (IPFR) platform.
+
+Context:
+- Packet: {packet_id}
+- Source: {source_name}
+- Priority: {priority}
+- Candidate Page UDID: {candidate.get('udid','')}
+- Candidate Best Chunk: {candidate.get('best_chunk_id','')}
+
+You have already CONFIRMED there is a material impact for this candidate page (Pass 1 result below).
+
+Your task now is to help a human update the page by confirming which specific chunks need review.
+
+Inputs:
+1) Confirmed impact (Pass 1):
+{pass1_json}
+
+2) Source change (compact diff):
+{diff_summary}
+
+3) Chunk index for the candidate page (chunk_id + snippet; snippets may be truncated):
+{index_json}
+
+4) Stage 3 retrieval-suggested chunk IDs (NOT confirmed; candidates only):
+{json.dumps(stage3_relevant_chunk_ids, ensure_ascii=False)}
+
+Instructions:
+- Do NOT assume that Stage 3 suggested chunks need updates. They are only candidates.
+- For each Stage 3 suggested chunk_id, decide if it likely requires a HUMAN update due to the confirmed impact.
+- You may also nominate additional chunks not in the Stage 3 list, but ONLY if you can point to a snippet in the chunk index that shows why.
+- Keep reasoning brief and evidence-based.
+- Evidence quotes must be <= 25 words, copied from the chunk snippet where possible.
+
+Return JSON ONLY in this shape:
+
+{{
+  "confirmed_update_chunk_ids": ["chunk_id", ...],
+  "rejected_stage3_chunk_ids": ["chunk_id", ...],
+  "additional_chunks_to_review": [
+    {{
+      "chunk_id": "...",
+      "reason": "short explanation",
+      "evidence_quote": "<=25 words from the snippet"
+    }}
+  ],
+  "notes": "optional short notes for the human editor"
+}}
+
+"""
+
+
+def _build_llm_verification_prompt(packet: dict, candidates_with_content: List[dict]) -> str:
+    """Deprecated (kept for backwards compatibility).
+
+    Stage 4 is now implemented as a two-pass per-candidate workflow:
+    - Pass 1: verify impact using a narrow evidence window
+    - Pass 2: scope additional chunks to review using a compact chunk index
+
+    This function returns a minimal summary only.
+    """
+    packet_id = packet.get("packet_id", "")
+    cand_list = [c.get("udid") for c in candidates_with_content if isinstance(c, dict)]
+    return f"Tripwire Stage 4 uses two-pass verification. Packet {packet_id}. Candidates: {cand_list}"
 
 
 def _call_llm_json(prompt: str) -> dict:
-    """Calls the LLM and returns parsed JSON (fail closed to 'uncertain' on errors)."""
+    """Call the LLM and parse a JSON response.
+
+    Fail-closed behaviour:
+    - If the client is unavailable or response is not parseable JSON, return an 'uncertain' decision.
+    - Includes BOTH keys ('decision' and 'overall_decision') for compatibility with Pass 1/2 and legacy callers.
+    """
+    fallback = {
+        "decision": "uncertain",
+        "overall_decision": "uncertain",
+        "confidence": "low",
+        "reason": "LLM call failed or output was not valid JSON."
+    }
+
     if client is None:
-        return {
-            "overall_decision": "uncertain",
-            "external_change_summary": "LLM client unavailable (missing OPENAI_API_KEY or openai package).",
-            "change_type": "unknown",
-            "impacted_pages": [],
-            "candidate_assessment": {"verified_candidates": [], "missing_candidates": [], "false_positive_candidates": []},
-            "confidence": "low"
-        }
+        fallback["reason"] = "LLM client unavailable (missing OPENAI_API_KEY or OpenAI SDK)."
+        return fallback
 
     try:
-        if hasattr(client, "responses"):
-            resp = client.responses.create(
-                model=LLM_MODEL,
-                input=[
-                    {"role": "system", "content": "Return only JSON."},
-                    {"role": "user", "content": prompt}
-                ],
-                response_format={"type": "json_object"}
-            )
-            raw = getattr(resp, "output_text", None)
-            if raw is None:
-                raw = str(resp)
-            return json.loads(raw)
-    except Exception:
-        pass
-
-    try:
-        chat = client.chat.completions.create(
+        resp = client.responses.create(
             model=LLM_MODEL,
-            messages=[
-                {"role": "system", "content": "Return only JSON."},
-                {"role": "user", "content": prompt}
-            ],
-            response_format={"type": "json_object"}
+            input=prompt
         )
-        raw = chat.choices[0].message.content
-        return json.loads(raw)
+        txt = getattr(resp, "output_text", None)
+        if not txt:
+            return fallback
+
+        # Try strict JSON first
+        try:
+            return json.loads(txt)
+        except Exception:
+            # Try to extract the first JSON object in the response
+            m = re.search(r"\{.*\}", txt, flags=re.S)
+            if m:
+                try:
+                    return json.loads(m.group(0))
+                except Exception:
+                    return fallback
+            return fallback
     except Exception as e:
-        return {
-            "overall_decision": "uncertain",
-            "external_change_summary": "LLM response could not be parsed as JSON.",
-            "change_type": "unknown",
-            "impacted_pages": [],
-            "candidate_assessment": {"verified_candidates": [], "missing_candidates": [], "false_positive_candidates": []},
-            "confidence": "low",
-            "error": str(e)
-        }
+        fallback["reason"] = f"LLM exception: {e}"
+        return fallback
 
+def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = True) -> Optional[str]:
+    """Verify one handover packet using a two-pass LLM workflow (prototype).
 
-def verify_handover_packet_with_llm(packet_path: str) -> Optional[str]:
-    """Prototype: verifies one handover packet via a single LLM call."""
+    Prototype mode: loads TOP_N_VERIFICATION_CANDIDATES candidates from the packet.
+    Note: when productionising, we will switch to verifying EVERY candidate.
+    """
     if not packet_path or not os.path.exists(packet_path):
         return None
 
@@ -1433,38 +1630,115 @@ def verify_handover_packet_with_llm(packet_path: str) -> Optional[str]:
     if not targets:
         return None
 
+    # Select top N candidates (prototype)
     top_targets = [t for t in targets if isinstance(t, dict) and t.get("udid")]
     top_targets.sort(key=lambda x: (x.get("candidate_rank") is None, x.get("candidate_rank", 9999)))
     top_targets = top_targets[:max(1, TOP_N_VERIFICATION_CANDIDATES)]
 
-    candidates_with_content = []
+    per_candidate_results = []
+    impacted_pages = []
+    any_uncertain = False
     missing_any = False
 
     for t in top_targets:
         udid = t.get("udid")
-        resolved = resolve_ipfr_content_files(udid)
+        resolved = resolve_ipfr_content_files(udid, prefer_test_files=prefer_test_files)
         if resolved.get("missing"):
             missing_any = True
 
-        md_path = resolved.get("markdown_path")
-        js_path = resolved.get("jsonld_path")
+        md_text = _read_text_file(resolved.get("markdown_path")) or ""
+        chunks = parse_markdown_chunks(md_text)
+        window = extract_chunk_window(chunks, t.get("best_chunk_id") or "")
 
-        candidates_with_content.append({
+        # ---- PASS 1 ----
+        prompt1 = _build_llm_pass1_prompt(packet, t, window)
+        pass1 = _call_llm_json(prompt1)
+
+        # Normalise expected fields
+        decision = (pass1.get("decision") or "uncertain").strip().lower()
+        confidence = (pass1.get("confidence") or "").strip().lower()
+        reason = (pass1.get("reason") or "").strip()
+
+        if decision not in ("impact", "no_impact", "uncertain"):
+            decision = "uncertain"
+
+        if decision == "uncertain":
+            any_uncertain = True
+
+        pass2 = None
+        review_ids: List[str] = []
+
+        if decision == "impact":
+            # ---- PASS 2 (scope review chunks) ----
+            chunk_index = build_chunk_index(chunks)
+            stage3_ids = t.get("relevant_chunk_ids") or []
+            prompt2 = _build_llm_pass2_prompt(packet, t, pass1, chunk_index, stage3_relevant_chunk_ids=stage3_ids)
+            pass2 = _call_llm_json(prompt2)
+
+            # Backwards/forwards compatible extraction:
+            # - New schema: confirmed_update_chunk_ids + additional_chunks_to_review
+            # - Legacy schema: suggested_review_chunk_ids
+            review_ids: List[str] = []
+
+            legacy = pass2.get("suggested_review_chunk_ids")
+            if isinstance(legacy, list) and legacy:
+                review_ids = [str(x) for x in legacy]
+            else:
+                confirmed = pass2.get("confirmed_update_chunk_ids") or []
+                if isinstance(confirmed, list):
+                    review_ids.extend([str(x) for x in confirmed])
+
+                additional = pass2.get("additional_chunks_to_review") or []
+                if isinstance(additional, list):
+                    for item in additional:
+                        if isinstance(item, dict) and item.get("chunk_id"):
+                            review_ids.append(str(item["chunk_id"]))
+
+            # de-dup while preserving order
+            seen = set()
+            review_ids = [x for x in review_ids if not (x in seen or seen.add(x))]
+
+            # Ensure verified chunk present
+            verified_cid = (pass1.get("chunk_id") or t.get("best_chunk_id") or "").strip()
+            if verified_cid and verified_cid not in review_ids:
+                review_ids.insert(0, verified_cid)
+
+            impacted_pages.append({
+                "udid": udid,
+                "chunk_id": (pass1.get("chunk_id") or t.get("best_chunk_id")),
+                "confidence": confidence or "medium",
+                "reason": reason or "External change impacts IPFR guidance.",
+                "suggested_review_chunk_ids": review_ids
+            })
+
+        per_candidate_results.append({
             "udid": udid,
             "candidate_rank": t.get("candidate_rank"),
-            "page_final_score": t.get("page_final_score"),
             "best_chunk_id": t.get("best_chunk_id"),
             "matched_hunk_indices": t.get("matched_hunk_indices", []),
             "resolved_files": resolved,
-            "markdown": _read_text_file(md_path),
-            "jsonld": _read_text_file(js_path)
+            "chunk_count": len(chunks),
+            "evidence_window": window,
+            "pass1_result": pass1,
+            "pass2_result": pass2,
         })
 
-    prompt = _build_llm_verification_prompt(packet, candidates_with_content)
+    # ---- Aggregate overall decision ----
     if missing_any:
-        prompt += "\\n\\nNOTE: One or more candidate content files are missing. Return overall_decision='uncertain'.\\n"
+        overall_decision = "uncertain"
+    elif impacted_pages:
+        overall_decision = "impact"
+    elif any_uncertain:
+        overall_decision = "uncertain"
+    else:
+        overall_decision = "no_impact"
 
-    llm_result = _call_llm_json(prompt)
+    llm_result = {
+        "overall_decision": overall_decision,
+        "confidence": ("high" if impacted_pages else ("low" if any_uncertain else "high")),
+        "impacted_pages": impacted_pages,
+        "note": "Prototype: verified top N candidates only. Production will verify every candidate."
+    }
 
     os.makedirs(LLM_VERIFY_DIR, exist_ok=True)
     out_path = os.path.join(LLM_VERIFY_DIR, f"verification_{packet.get('packet_id','packet')}.json")
@@ -1473,8 +1747,8 @@ def verify_handover_packet_with_llm(packet_path: str) -> Optional[str]:
             "packet_id": packet.get("packet_id"),
             "verified_at": datetime.datetime.now().isoformat(),
             "top_n_candidates_loaded": TOP_N_VERIFICATION_CANDIDATES,
-            "note": "Prototype: loads top N candidates and includes full markdown/JSON-LD content. Optimise later to load only needed sections.",
-            "llm_result": llm_result
+            "llm_result": llm_result,
+            "per_candidate": per_candidate_results
         }, f, indent=2, ensure_ascii=False)
 
     return out_path
