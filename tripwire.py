@@ -49,6 +49,23 @@ DIFF_DIR = 'diff_archive'
 HANDOVER_DIR = 'handover_packets'
 SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
 
+
+# --- IPFR content archive for LLM verification (prototype) ---
+# NOTE: Prototype only. We resolve UDIDs to content files by filename patterns within IPFR_CONTENT_ARCHIVE_DIR.
+# In production, prefer an explicit UDID->file map generated during the IPFR export pipeline.
+IPFR_CONTENT_ARCHIVE_DIR = os.environ.get("IPFR_CONTENT_ARCHIVE_DIR", "ipfr_content_archive")
+LLM_VERIFY_DIR = os.environ.get("LLM_VERIFY_DIR", "llm_verification_results")
+LLM_VERIFICATION_LOG = os.environ.get("LLM_VERIFICATION_LOG", "llm_verification_log.csv")
+
+# Prototype behaviour: only load the top N candidates to keep prompts small.
+# NOTE: This will need to be changed later to load the specific sections needed, not whole pages,
+# and to support explicit per-candidate section targets.
+TOP_N_VERIFICATION_CANDIDATES = int(os.environ.get("TOP_N_VERIFICATION_CANDIDATES", "3"))
+
+# LLM verification execution
+# Prototype requirement: always run verification after handover packets are generated.
+# (If OPENAI_API_KEY is missing, verification will fail closed to overall_decision="uncertain".)
+LLM_MODEL = os.environ.get("TRIPWIRE_LLM_MODEL", "gpt-4.1-mini")
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
 
 # Semantic scoring config
@@ -1014,6 +1031,301 @@ def generate_handover_packets(source_name: str,
     return paths
 
 
+
+# ---------------------------
+# Stage 4 helpers (prototype): LLM verification (single-call, two-pass prompt)
+# ---------------------------
+
+from pathlib import Path  # local import to keep this file drop-in compatible
+
+
+def _resolve_ipfr_markdown_path(udid: str) -> Optional[str]:
+    if not udid:
+        return None
+    root = Path(IPFR_CONTENT_ARCHIVE_DIR)
+    matches = sorted(root.glob(f"{udid} - *.md"))
+    return str(matches[0]) if matches else None
+
+
+def _resolve_ipfr_jsonld_path(udid: str) -> Optional[str]:
+    if not udid:
+        return None
+    root = Path(IPFR_CONTENT_ARCHIVE_DIR)
+    matches = sorted(root.glob(f"{udid}_*.json"))
+    return str(matches[0]) if matches else None
+
+
+def resolve_ipfr_content_files(udid: str) -> dict:
+    """Resolves the prototype IPFR content files for a UDID."""
+    missing = []
+    md_path = _resolve_ipfr_markdown_path(udid)
+    js_path = _resolve_ipfr_jsonld_path(udid)
+    if not md_path:
+        missing.append("markdown")
+    if not js_path:
+        missing.append("jsonld")
+    return {
+        "udid": udid,
+        "markdown_path": md_path,
+        "jsonld_path": js_path,
+        "missing": missing
+    }
+
+
+def _read_text_file(path: str, max_chars: int = 40_000) -> str:
+    if not path or not os.path.exists(path):
+        return ""
+    with open(path, "r", encoding="utf-8") as f:
+        s = f.read()
+    if max_chars and len(s) > max_chars:
+        return s[:max_chars] + "\\n\\n[TRUNCATED]\\n"
+    return s
+
+
+def _build_llm_verification_prompt(packet: dict, candidates_with_content: List[dict]) -> str:
+    """Builds a single-call (two-pass) prompt for verifying IPFR impact."""
+    packet_id = packet.get("packet_id", "")
+    source = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+    diff_file = (packet.get("source_change_details", {}) or {}).get("diff_file", "")
+    hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
+
+    targets = packet.get("llm_verification_targets", []) or []
+    target_summaries = []
+    for t in targets[:TOP_N_VERIFICATION_CANDIDATES]:
+        if not isinstance(t, dict):
+            continue
+        target_summaries.append({
+            "candidate_rank": t.get("candidate_rank"),
+            "udid": t.get("udid"),
+            "page_final_score": t.get("page_final_score"),
+            "best_chunk_id": t.get("best_chunk_id"),
+            "matched_hunk_indices": t.get("matched_hunk_indices", [])
+        })
+
+    system_instructions = '''You are a Technical Content Auditor for the IP First Response (IPFR) platform.
+
+Your task is to determine whether a change detected in an external source materially impacts the accuracy or completeness of IP First Response website guidance.
+
+Follow a two-pass method inside ONE response:
+
+Pass 1 - Change Analysis
+- Read the diff hunks and identify what has semantically changed.
+- Ignore purely formatting, spacing, punctuation, or structural changes that do not alter meaning.
+- Output a short external_change_summary and a change_type.
+
+Pass 2 - IPFR Verification
+- Use the provided IPFR markdown and JSON-LD to verify whether IPFR guidance is now inaccurate, incomplete, or misleading.
+- Use section identifiers in markdown (<!-- section_id: ... -->) and JSON-LD WebPageElement.identifier where possible.
+- Similarity scores and chunk IDs are hints only. The final decision must be based on the diff and IPFR content you inspected.
+- If required content files are missing, fail closed with overall_decision = "uncertain".
+
+Return ONLY valid JSON matching the output schema.
+'''
+
+    output_schema = {
+        "overall_decision": "impact | no_impact | uncertain",
+        "external_change_summary": "string",
+        "change_type": "formatting | clarification | meaning_change | new_requirement | unknown",
+        "impacted_pages": [
+            {
+                "udid": "string",
+                "section_identifier": "string or null",
+                "impact_type": "outdated | incorrect | missing_guidance",
+                "reason": "string",
+                "evidence_snippet": "string (max 25 words)"
+            }
+        ],
+        "candidate_assessment": {
+            "verified_candidates": [],
+            "missing_candidates": [],
+            "false_positive_candidates": []
+        },
+        "confidence": "high | medium | low"
+    }
+
+    user_payload = {
+        "packet_id": packet_id,
+        "source": source,
+        "diff_file": diff_file,
+        "candidate_summaries_top_n": target_summaries,
+        "diff_hunks": hunks,
+        "ipfr_candidates_with_content": candidates_with_content,
+        "output_schema": output_schema
+    }
+
+    return system_instructions + "\\n\\nINPUT (JSON):\\n" + json.dumps(user_payload, indent=2, ensure_ascii=False)
+
+
+def _call_llm_json(prompt: str) -> dict:
+    """Calls the LLM and returns parsed JSON (fail closed to 'uncertain' on errors)."""
+    if client is None:
+        return {
+            "overall_decision": "uncertain",
+            "external_change_summary": "LLM client unavailable (missing OPENAI_API_KEY or openai package).",
+            "change_type": "unknown",
+            "impacted_pages": [],
+            "candidate_assessment": {"verified_candidates": [], "missing_candidates": [], "false_positive_candidates": []},
+            "confidence": "low"
+        }
+
+    try:
+        if hasattr(client, "responses"):
+            resp = client.responses.create(
+                model=LLM_MODEL,
+                input=[
+                    {"role": "system", "content": "Return only JSON."},
+                    {"role": "user", "content": prompt}
+                ],
+                response_format={"type": "json_object"}
+            )
+            raw = getattr(resp, "output_text", None)
+            if raw is None:
+                raw = str(resp)
+            return json.loads(raw)
+    except Exception:
+        pass
+
+    try:
+        chat = client.chat.completions.create(
+            model=LLM_MODEL,
+            messages=[
+                {"role": "system", "content": "Return only JSON."},
+                {"role": "user", "content": prompt}
+            ],
+            response_format={"type": "json_object"}
+        )
+        raw = chat.choices[0].message.content
+        return json.loads(raw)
+    except Exception as e:
+        return {
+            "overall_decision": "uncertain",
+            "external_change_summary": "LLM response could not be parsed as JSON.",
+            "change_type": "unknown",
+            "impacted_pages": [],
+            "candidate_assessment": {"verified_candidates": [], "missing_candidates": [], "false_positive_candidates": []},
+            "confidence": "low",
+            "error": str(e)
+        }
+
+
+def verify_handover_packet_with_llm(packet_path: str) -> Optional[str]:
+    """Prototype: verifies one handover packet via a single LLM call."""
+    if not packet_path or not os.path.exists(packet_path):
+        return None
+
+    with open(packet_path, "r", encoding="utf-8") as f:
+        packet = json.load(f)
+
+    targets = packet.get("llm_verification_targets", []) or []
+    if not targets:
+        return None
+
+    top_targets = [t for t in targets if isinstance(t, dict) and t.get("udid")]
+    top_targets.sort(key=lambda x: (x.get("candidate_rank") is None, x.get("candidate_rank", 9999)))
+    top_targets = top_targets[:max(1, TOP_N_VERIFICATION_CANDIDATES)]
+
+    candidates_with_content = []
+    missing_any = False
+
+    for t in top_targets:
+        udid = t.get("udid")
+        resolved = resolve_ipfr_content_files(udid)
+        if resolved.get("missing"):
+            missing_any = True
+
+        md_path = resolved.get("markdown_path")
+        js_path = resolved.get("jsonld_path")
+
+        candidates_with_content.append({
+            "udid": udid,
+            "candidate_rank": t.get("candidate_rank"),
+            "page_final_score": t.get("page_final_score"),
+            "best_chunk_id": t.get("best_chunk_id"),
+            "matched_hunk_indices": t.get("matched_hunk_indices", []),
+            "resolved_files": resolved,
+            "markdown": _read_text_file(md_path),
+            "jsonld": _read_text_file(js_path)
+        })
+
+    prompt = _build_llm_verification_prompt(packet, candidates_with_content)
+    if missing_any:
+        prompt += "\\n\\nNOTE: One or more candidate content files are missing. Return overall_decision='uncertain'.\\n"
+
+    llm_result = _call_llm_json(prompt)
+
+    os.makedirs(LLM_VERIFY_DIR, exist_ok=True)
+    out_path = os.path.join(LLM_VERIFY_DIR, f"verification_{packet.get('packet_id','packet')}.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "packet_id": packet.get("packet_id"),
+            "verified_at": datetime.datetime.now().isoformat(),
+            "top_n_candidates_loaded": TOP_N_VERIFICATION_CANDIDATES,
+            "note": "Prototype: loads top N candidates and includes full markdown/JSON-LD content. Optimise later to load only needed sections.",
+            "llm_result": llm_result
+        }, f, indent=2, ensure_ascii=False)
+
+    return out_path
+
+
+def _log_llm_verification(packet_id: str, source_name: str, priority: str, diff_file: str,
+                          top_n: int, decision: str, confidence: str, result_path: str):
+    file_exists = os.path.exists(LLM_VERIFICATION_LOG)
+    headers = [
+        "Timestamp", "Packet_ID", "Source_Name", "Priority", "Diff_File",
+        "Top_N_Candidates_Loaded", "Overall_Decision", "Confidence", "Result_Path"
+    ]
+    row = [
+        datetime.datetime.now().isoformat(),
+        packet_id,
+        source_name,
+        priority,
+        diff_file,
+        top_n,
+        decision,
+        confidence,
+        result_path
+    ]
+    with open(LLM_VERIFICATION_LOG, mode="a", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        if not file_exists:
+            writer.writerow(headers)
+        writer.writerow(row)
+
+
+def run_llm_verification_for_packets(handover_paths: List[str]) -> List[str]:
+    """Runs LLM verification for each packet (prototype)."""
+    if not handover_paths:
+        return []
+    results = []
+    for p in handover_paths:
+        try:
+            out = verify_handover_packet_with_llm(p)
+            if out:
+                with open(p, "r", encoding="utf-8") as f:
+                    packet = json.load(f)
+                src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+
+                with open(out, "r", encoding="utf-8") as rf:
+                    res = json.load(rf)
+                llm_res = (res.get("llm_result") or {})
+                decision = llm_res.get("overall_decision") or "unknown"
+                confidence = llm_res.get("confidence") or "unknown"
+
+                _log_llm_verification(
+                    packet_id=packet.get("packet_id", ""),
+                    source_name=src.get("name", ""),
+                    priority=src.get("monitoring_priority", ""),
+                    diff_file=(packet.get("source_change_details", {}) or {}).get("diff_file", ""),
+                    top_n=TOP_N_VERIFICATION_CANDIDATES,
+                    decision=decision,
+                    confidence=confidence,
+                    result_path=out
+                )
+                results.append(out)
+        except Exception as e:
+            logger.error(f"LLM verification failed for {p}: {e}")
+    return results
+
 def write_github_summary(handover_paths: List[str]):
     """
     Writes a markdown summary of this run's handover packets to the GitHub Actions
@@ -1267,9 +1579,17 @@ def main():
         except Exception:
             pass
 
+    # Stage 4 (prototype): always verify packets via a single LLM call
+    if handover_paths:
+        logger.info(
+            f"Running LLM verification on {len(handover_paths)} handover packet(s) "
+            f"(top N candidates per packet = {TOP_N_VERIFICATION_CANDIDATES})."
+        )
+        verification_paths = run_llm_verification_for_packets(handover_paths)
+        if verification_paths:
+            logger.info(f"Wrote {len(verification_paths)} LLM verification result file(s) to {LLM_VERIFY_DIR}.")
+
     write_github_summary(handover_paths)
-
-
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == '--test-stage3':
         if len(sys.argv) < 3:
