@@ -199,3 +199,50 @@ def test_handover_batching_limit(tmp_path):
             batching = packet0["audit_summary"]["batching"]
             assert batching["candidate_batch_count"] == 3
             assert batching["candidates_in_this_packet"] == 2
+
+
+
+
+def test_resolve_ipfr_content_files_for_known_test_pages():
+    """Validates UDID->file resolution against the repo's ipfr_content_archive test fixtures."""
+    archive = Path("ipfr_content_archive")
+    assert archive.exists(), "Expected ipfr_content_archive/ folder to exist in repo root for tests."
+
+    # These are the known test pages you added to the repo for prototype verification.
+    for udid in ["101-1", "101-2"]:
+        resolved = tripwire.resolve_ipfr_content_files(udid)
+        assert resolved["markdown_path"] is not None, f"Missing markdown for {udid} in ipfr_content_archive/"
+        assert resolved["jsonld_path"] is not None, f"Missing JSON-LD for {udid} in ipfr_content_archive/"
+        assert Path(resolved["markdown_path"]).exists()
+        assert Path(resolved["jsonld_path"]).exists()
+
+
+def test_build_llm_verification_prompt_includes_section_id_marker(tmp_path):
+    """Ensures the prompt contains the section_id marker string for deterministic navigation."""
+    # Minimal packet and candidate inputs (we don't call the LLM here)
+    packet = {
+        "packet_id": "handover_TEST_101-1_batch_01_of_01",
+        "source_change_details": {
+            "source": {"name": "Test", "monitoring_priority": "High"},
+            "diff_file": "x.diff",
+            "hunks": [{"hunk_id": 1, "location_header": "@@ -1 +1 @@", "removed": ["old"], "added": ["new"]}]
+        },
+        "llm_verification_targets": [
+            {"candidate_rank": 1, "udid": "101-1", "page_final_score": 0.9, "best_chunk_id": "101-1-C01", "matched_hunk_indices": [1]}
+        ]
+    }
+
+    candidates_with_content = [{
+        "udid": "101-1",
+        "candidate_rank": 1,
+        "page_final_score": 0.9,
+        "best_chunk_id": "101-1-C01",
+        "matched_hunk_indices": [1],
+        "resolved_files": {"udid": "101-1", "markdown_path": "ipfr_content_archive/101-1.md", "jsonld_path": "ipfr_content_archive/101-1.json", "missing": []},
+        "markdown": "<!-- section_id: section-1-example -->\n### Example\nText",
+        "jsonld": "{\"@type\":\"WebPage\"}"
+    }]
+
+    prompt = tripwire._build_llm_verification_prompt(packet, candidates_with_content)
+    assert "section_id" in prompt
+    assert packet["packet_id"] in prompt
