@@ -1594,6 +1594,7 @@ def _call_llm_json(prompt: str) -> dict:
     - If the client is unavailable or response is not parseable JSON, return an 'uncertain' decision.
     - Includes BOTH keys ('decision' and 'overall_decision') for compatibility with Pass 1/2 and legacy callers.
     """
+    global client
     fallback = {
         "decision": "uncertain",
         "overall_decision": "uncertain",
@@ -1601,6 +1602,9 @@ def _call_llm_json(prompt: str) -> dict:
         "reason": "LLM call failed or output was not valid JSON."
     }
 
+    if client is None:
+        client = get_client()
+        
     if client is None:
         fallback["reason"] = "LLM client unavailable (missing OPENAI_API_KEY or OpenAI SDK)."
         return fallback
