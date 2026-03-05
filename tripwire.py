@@ -34,30 +34,34 @@ import docx
 # --- Optional OpenAI import ---
 try:
     from openai import OpenAI
-except Exception:
+except ImportError:
     OpenAI = None
+
+# --- OpenAI client (lazy init; avoids missing bearer header in CI) ---
+_client = None
+
+def get_openai_client():
+    """Lazily create and cache an OpenAI client.
+
+    Ensures OPENAI_API_KEY is read at the moment the client is needed.
+    """
+    global _client
+
+    if OpenAI is None:
+        raise RuntimeError("OpenAI SDK not available. Ensure 'openai' is installed.")
+
+    if _client is None:
+        api_key = (os.getenv("OPENAI_API_KEY") or "").strip()
+        if not api_key:
+            raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
+        # Explicit is fine and avoids any ambiguity.
+        _client = OpenAI(api_key=api_key)
+
+    return _client
 
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import pandas as pd  # kept if used elsewhere / future compatibility
-
-# --- Improved OpenAI Client Initialization ---
-def get_openai_client():
-    """Ensures the API key is read at the moment the client is needed."""
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        logger.error("CRITICAL: OPENAI_API_KEY environment variable is missing.")
-        raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
-    
-    # Passing the key explicitly avoids reliance on internal SDK timing
-    return OpenAI(api_key=api_key)
-
-# Initialize the global client securely
-try:
-    client = get_openai_client()
-except Exception as e:
-    logger.warning(f"Client initialization deferred: {e}")
-    client = None
 
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv'
@@ -87,6 +91,9 @@ TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.nopr
 
 # Semantic scoring config
 SEMANTIC_MODEL = 'text-embedding-3-small'
+OPENAI_KEY = (os.environ.get("OPENAI_API_KEY") or "").strip()
+# NOTE: OpenAI client is created lazily via get_openai_client() to avoid missing auth headers in CI.
+client = None
 
 # Candidate / packet policy
 CANDIDATE_MIN_SCORE = 0.35  # all page candidates >= this are "relevant" and must be handed over (across batches) if handover triggers
@@ -779,8 +786,7 @@ def _load_semantic_embeddings(mock_semantic_data=None):
 def _embed_texts(texts: List[str]) -> np.ndarray:
     if not texts:
         return np.zeros((0, 1536))
-    if client is None:
-        raise RuntimeError("OpenAI client unavailable. Set OPENAI_API_KEY and install openai package.")
+    client = get_openai_client()
     response = client.embeddings.create(input=texts, model=SEMANTIC_MODEL)
     return np.array([d.embedding for d in response.data])
 
@@ -1594,19 +1600,16 @@ def _call_llm_json(prompt: str) -> dict:
     - If the client is unavailable or response is not parseable JSON, return an 'uncertain' decision.
     - Includes BOTH keys ('decision' and 'overall_decision') for compatibility with Pass 1/2 and legacy callers.
     """
-    global client
     fallback = {
         "decision": "uncertain",
         "overall_decision": "uncertain",
         "confidence": "low",
         "reason": "LLM call failed or output was not valid JSON."
     }
-
-    if client is None:
-        client = get_client()
-        
-    if client is None:
-        fallback["reason"] = "LLM client unavailable (missing OPENAI_API_KEY or OpenAI SDK)."
+    try:
+        client = get_openai_client()
+    except Exception as e:
+        fallback["reason"] = f"LLM client unavailable: {e}"
         return fallback
 
     try:
