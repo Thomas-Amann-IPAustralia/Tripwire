@@ -41,6 +41,24 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import pandas as pd  # kept if used elsewhere / future compatibility
 
+# --- Improved OpenAI Client Initialization ---
+def get_openai_client():
+    """Ensures the API key is read at the moment the client is needed."""
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        logger.error("CRITICAL: OPENAI_API_KEY environment variable is missing.")
+        raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
+    
+    # Passing the key explicitly avoids reliance on internal SDK timing
+    return OpenAI(api_key=api_key)
+
+# Initialize the global client securely
+try:
+    client = get_openai_client()
+except Exception as e:
+    logger.warning(f"Client initialization deferred: {e}")
+    client = None
+
 # --- Configuration ---
 AUDIT_LOG = 'audit_log.csv'
 SOURCES_FILE = 'sources.json'
@@ -69,14 +87,6 @@ TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.nopr
 
 # Semantic scoring config
 SEMANTIC_MODEL = 'text-embedding-3-small'
-# Let the SDK read OPENAI_API_KEY directly from environment
-client = OpenAI() if OpenAI else None
-
-if client is None:
-    raise RuntimeError("OpenAI client unavailable. Ensure openai package installed.")
-
-if not os.getenv("OPENAI_API_KEY"):
-    raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
 
 # Candidate / packet policy
 CANDIDATE_MIN_SCORE = 0.35  # all page candidates >= this are "relevant" and must be handed over (across batches) if handover triggers
