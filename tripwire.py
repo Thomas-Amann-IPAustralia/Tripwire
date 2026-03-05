@@ -33,7 +33,7 @@ import docx
 
 # --- Optional OpenAI import ---
 try:
-    from openai import OpenAI
+    from  import 
 except Exception:
     OpenAI = None
 
@@ -69,8 +69,14 @@ TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.nopr
 
 # Semantic scoring config
 SEMANTIC_MODEL = 'text-embedding-3-small'
-OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-client = OpenAI(api_key=OPENAI_KEY) if (OpenAI and OPENAI_KEY) else None
+# Let the SDK read OPENAI_API_KEY directly from environment
+client = OpenAI() if OpenAI else None
+
+if client is None:
+    raise RuntimeError("OpenAI client unavailable. Ensure openai package installed.")
+
+if not os.getenv("OPENAI_API_KEY"):
+    raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
 
 # Candidate / packet policy
 CANDIDATE_MIN_SCORE = 0.35  # all page candidates >= this are "relevant" and must be handed over (across batches) if handover triggers
