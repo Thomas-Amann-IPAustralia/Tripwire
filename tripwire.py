@@ -33,7 +33,7 @@ import docx
 
 # --- Optional OpenAI import ---
 try:
-    from  import 
+    from openai import OpenAI
 except Exception:
     OpenAI = None
 
