@@ -23,17 +23,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Sanity check eval file and env (safe)
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          echo "=== Which eval file exists? ==="
-          ls -la evaluate_tripwire_llm.py || true
-          echo "=== Print first 40 lines of eval script ==="
-          sed -n '1,40p' evaluate_tripwire_llm.py
-          echo "=== Key present? (safe) ==="
-          python -c "import os; k=os.getenv('OPENAI_API_KEY',''); print('OPENAI_API_KEY present:', bool(k)); print('length:', len(k))"
-
       - name: Run LLM evaluation
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
