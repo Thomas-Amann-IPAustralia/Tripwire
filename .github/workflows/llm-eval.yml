@@ -28,7 +28,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "=== Which eval file exists? ==="
-          ls -la evaluate_tripwire_llm.py evaluate_tripwire_llm_DROPIN.py || true
+          ls -la evaluate_tripwire_llm.py || true
           echo "=== Print first 40 lines of eval script ==="
           sed -n '1,40p' evaluate_tripwire_llm.py
           echo "=== Key present? (safe) ==="
