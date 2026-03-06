@@ -1347,10 +1347,24 @@ def resolve_ipfr_content_files(udid: str, prefer_test_files: bool = True) -> dic
 def parse_markdown_chunks(markdown_text: str) -> List[Dict[str, str]]:
     """Parse markdown into an ordered list of chunks using <!-- chunk_id: ... --> markers.
 
-    If no chunk markers exist, returns a single FULL_PAGE chunk.
+    Prototype behaviour:
+    - Strip YAML frontmatter before parsing chunk markers so page metadata is not
+      silently treated as chunk content.
+    - If no chunk markers exist after frontmatter removal, return a single
+      FULL_PAGE chunk.
     """
     if markdown_text is None:
         markdown_text = ""
+
+    # Remove leading YAML frontmatter (--- ... ---) so page metadata like UDID,
+    # URL, and title do not become implicit prelude content for Stage 4.
+    markdown_text = re.sub(
+        r"^---\s*\n.*?\n---\s*(?:\n|$)",
+        "",
+        markdown_text,
+        count=1,
+        flags=re.DOTALL,
+    )
 
     pattern = r"<!--\s*chunk_id\s*:\s*([^>]+?)\s*-->"  # capture chunk id
     parts = re.split(pattern, markdown_text)
@@ -1368,29 +1382,56 @@ def parse_markdown_chunks(markdown_text: str) -> List[Dict[str, str]]:
     return chunks
 
 
-def extract_chunk_window(chunks: List[Dict[str, str]], target_chunk_id: str) -> Dict[str, str]:
-    """Return a deterministic context window: before/current/after for a target chunk id.
+def extract_chunk_window(
+    chunks: List[Dict[str, str]],
+    target_chunk_id: str,
+    fallback_max_chars: int = 3000,
+    side_max_chars: int = 800
+) -> Dict[str, str]:
+    """Return a markdown-sourced local evidence window for a target chunk id.
 
-    Falls back to FULL_PAGE content if markers are missing or the chunk id is not found.
+    Source of truth:
+    - The markdown archive remains authoritative.
+    - best_chunk_id is used only as a locator into the markdown chunk markers.
+
+    Behaviour:
+    - If the exact chunk_id is found, return the previous chunk as "before"
+      (if any), the matched chunk as "current", and the next chunk as "after"
+      (if any).
+    - If the page has no chunk markers (FULL_PAGE), return the page text, truncated.
+    - If the chunk_id is missing, fall back to concatenated page text, truncated.
     """
     if not chunks:
         return {"before": "", "current": "", "after": ""}
 
-    # FULL_PAGE fallback
+    def _clip(text: str, limit: int) -> str:
+        text = (text or "").strip()
+        if limit and len(text) > limit:
+            return text[:limit].rstrip() + "\n\n[TRUNCATED]"
+        return text
+
+    # FULL_PAGE fallback when the markdown has no explicit chunk markers.
     if len(chunks) == 1 and chunks[0].get("chunk_id") == "FULL_PAGE":
-        return {"before": "", "current": chunks[0].get("text", ""), "after": ""}
+        return {
+            "before": "",
+            "current": _clip(chunks[0].get("text", ""), fallback_max_chars),
+            "after": ""
+        }
 
     for i, c in enumerate(chunks):
         if c.get("chunk_id") == target_chunk_id:
-            before = chunks[i - 1].get("text", "") if i > 0 else ""
-            current = c.get("text", "")
-            after = chunks[i + 1].get("text", "") if i < (len(chunks) - 1) else ""
-            return {"before": before, "current": current, "after": after}
+            before_text = chunks[i - 1].get("text", "") if i > 0 else ""
+            current_text = c.get("text", "")
+            after_text = chunks[i + 1].get("text", "") if i + 1 < len(chunks) else ""
+            return {
+                "before": _clip(before_text, side_max_chars),
+                "current": _clip(current_text, fallback_max_chars),
+                "after": _clip(after_text, side_max_chars)
+            }
 
-    # Not found: fall back to concatenated content (still deterministic)
+    # Exact chunk id not found: fall back deterministically.
     joined = "\n\n".join([c.get("text", "") for c in chunks]).strip()
-    return {"before": "", "current": joined, "after": ""}
-
+    return {"before": "", "current": _clip(joined, fallback_max_chars), "after": ""}
 
 def build_chunk_index(chunks: List[Dict[str, str]], max_snippet_chars: int = 260) -> List[Dict[str, str]]:
     """Build a compact index of all chunks on a page for Pass 2 scoping.
@@ -1418,7 +1459,8 @@ def _read_text_file(path: str, max_chars: int = 40_000) -> str:
 def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict) -> str:
     """Pass 1: Verify whether the external change materially impacts the candidate page.
 
-    We intentionally provide a narrow evidence window to keep cost low and reduce ambiguity.
+    We intentionally provide a local evidence window centred on the target chunk
+    to keep cost low while still giving the model nearby context.
     """
     packet_id = packet.get("packet_id", "")
     src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
@@ -1459,7 +1501,14 @@ Candidate IPFR page:
 - UDID: {candidate.get('udid')}
 - Target chunk_id: {candidate.get('best_chunk_id')}
 
-IPFR evidence window (from the actual page markdown):
+IPFR local evidence window contains (from the actual page markdown):
+[Before] – the preceding section of the page (if any)
+[Current] – the target section that may require updating
+[After] – the following section of the page (if any).
+
+Treat [Current] as the only section that can trigger an update decision, and use [Before] and [After] for context if needed. 
+[Before] and [After] must not be marked as impacted unless the change clearly alters the meaning of [Current].
+
 [Before]
 {before}
 
@@ -1747,10 +1796,11 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
         })
 
     # ---- Aggregate overall decision ----
-    if missing_any:
-        overall_decision = "uncertain"
-    elif impacted_pages:
+    # Confirmed impacts take precedence over unrelated missing candidates.
+    if impacted_pages:
         overall_decision = "impact"
+    elif missing_any:
+        overall_decision = "uncertain"
     elif any_uncertain:
         overall_decision = "uncertain"
     else:
