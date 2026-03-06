@@ -110,10 +110,10 @@ def test_generate_handover_packets_data_integrity(tmp_path):
         assert len(paths) > 0
         with open(paths[0], 'r', encoding='utf-8') as f:
             packet = json.load(f)
-            assert packet['candidates'][0]['udid'] == "udid-1"
-        assert "candidates" in packet
-        assert isinstance(packet["candidates"], list)
-        assert packet["candidates"][0]["udid"] == "udid-1"
+            assert packet['llm_verification_targets'][0]['udid'] == "udid-1"
+        assert "llm_verification_targets" in packet
+        assert isinstance(packet["llm_verification_targets"], list)
+        assert packet["llm_verification_targets"][0]["udid"] == "udid-1"
 
 
 def test_noise_suppression_logic(tmp_path, mock_embeddings_file):
