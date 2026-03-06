@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import tripwire
+import evaluate_tripwire_llm
 
 
 @pytest.fixture
@@ -230,8 +231,8 @@ def test_resolve_ipfr_content_files_for_known_test_pages(tmp_path):
             assert Path(resolved["jsonld_path"]).exists()
 
 
-def test_build_llm_verification_prompt_includes_section_id_marker():
-    """Ensures the prompt contains the section_id marker string for deterministic navigation."""
+def test_build_llm_verification_prompt_returns_two_pass_summary():
+    """Ensures the compatibility wrapper still identifies the packet and candidates."""
     packet = {
         "packet_id": "handover_TEST_101-1_batch_01_of_01",
         "source_change_details": {
@@ -239,25 +240,13 @@ def test_build_llm_verification_prompt_includes_section_id_marker():
             "diff_file": "x.diff",
             "version_id": "v1",
             "hunks": [{"hunk_id": 1, "location_header": "@@ -1 +1 @@", "removed": ["old"], "added": ["new"]}]
-        },
-        "llm_verification_targets": [
-            {"candidate_rank": 1, "udid": "101-1", "page_final_score": 0.9, "best_chunk_id": "101-1-C01", "matched_hunk_indices": [1]}
-        ]
+        }
     }
 
-    candidates_with_content = [{
-        "udid": "101-1",
-        "candidate_rank": 1,
-        "page_final_score": 0.9,
-        "best_chunk_id": "101-1-C01",
-        "matched_hunk_indices": [1],
-        "resolved_files": {"udid": "101-1", "markdown_path": "ipfr_content_archive/101-1.md", "jsonld_path": "ipfr_content_archive/101-1.json", "missing": []},
-        "markdown": "<!-- section_id: section-1-example -->\n### Example\nText",
-        "jsonld": "{\"@type\":\"WebPage\"}"
-    }]
+    candidates_with_content = [{"udid": "101-1"}]
 
     prompt = tripwire._build_llm_verification_prompt(packet, candidates_with_content)
-    assert "section_id" in prompt
+    assert "two-pass verification" in prompt
     assert packet["packet_id"] in prompt
 
 
@@ -409,25 +398,32 @@ def test_end_to_end_llm_verification_pipeline(tmp_path):
         # --- mock LLM response ---
         with patch("tripwire._call_llm_json") as mock_llm:
 
-            mock_llm.return_value = {
-                "overall_decision":"impact",
-                "change_type":"meaning_change",
-                "confidence":"high",
-                "impacted_pages":[
-                    {
-                        "udid":"101-2",
-                        "section_identifier":"design-infringement-example",
-                        "impact_type":"outdated",
-                        "reason":"Source change modifies infringement definition."
+            def fake_llm(prompt: str):
+                if '"decision": "impact|no_impact|uncertain"' in prompt:
+                    return {
+                        "decision": "impact",
+                        "udid": "101-2",
+                        "chunk_id": "101-2-C01",
+                        "confidence": "high",
+                        "reason": "Source change modifies infringement definition.",
+                        "evidence_quote": "copies a registered design"
                     }
-                ]
-            }
+                return {
+                    "confirmed_update_chunk_ids": ["101-2-C01"],
+                    "rejected_stage3_chunk_ids": [],
+                    "additional_chunks_to_review": [],
+                    "notes": ""
+                }
+
+            mock_llm.side_effect = fake_llm
 
             with patch("tripwire.AUDIT_LOG", str(audit_log)), \
                  patch("tripwire.HANDOVER_DIR", str(handover_dir)), \
                  patch("tripwire.LLM_VERIFY_DIR", str(verify_dir)), \
                  patch("tripwire.SEMANTIC_EMBEDDINGS_FILE", str(embeddings_file)), \
                  patch("tripwire.IPFR_CONTENT_ARCHIVE_DIR", str(archive_dir)):
+
+                tripwire._semantic_cache = None
 
                 analysis = tripwire.calculate_similarity(str(diff_file), "High")
 
@@ -453,3 +449,130 @@ def test_end_to_end_llm_verification_pipeline(tmp_path):
     assert row["AI Verification Run"] == "Yes"
     assert row["AI Decision"] == "Impact Confirmed"
     assert "101-2" in row["AI Verified Impact Pages"]
+
+
+def test_eval_generated_diff_is_materially_different():
+    removed = (
+        "Design infringement can occur when someone uses a design that is identical or "
+        "similar to a registered design without obtaining permission from the owner."
+    )
+    added = evaluate_tripwire_llm._build_materially_different_added_line(removed)
+
+    assert added != removed
+    assert "only when" in added.lower()
+    assert "identical to the registered design" in added.lower()
+
+
+def test_extract_chunk_window_returns_exact_markdown_chunk_only():
+    markdown = """
+<!-- chunk_id: 101-2_01 -->
+### What is design infringement?
+
+Exact target chunk text.
+
+<!-- chunk_id: 101-2_02 -->
+### What do registered designs protect?
+
+This should not be included.
+""".strip()
+
+    chunks = tripwire.parse_markdown_chunks(markdown)
+    window = tripwire.extract_chunk_window(chunks, "101-2_01")
+
+    assert window["before"] == ""
+    assert window["after"] == ""
+    assert "Exact target chunk text." in window["current"]
+    assert "This should not be included." not in window["current"]
+
+
+def test_verify_handover_packet_impact_takes_precedence_over_missing_candidates(tmp_path):
+    handover_dir = tmp_path / "handover"
+    verify_dir = tmp_path / "verify"
+    archive_dir = tmp_path / "archive"
+
+    handover_dir.mkdir()
+    verify_dir.mkdir()
+    archive_dir.mkdir()
+
+    # Existing page for the first candidate
+    (archive_dir / "101-2 - Design infringement_test.md").write_text(
+        """
+<!-- chunk_id: 101-2_01 -->
+### What is design infringement?
+
+Design infringement can occur when someone uses a design that is identical or similar to a registered design.
+""".strip(),
+        encoding="utf-8"
+    )
+    (archive_dir / "101-2_design-infringement_test.json").write_text(
+        '{"@type":"WebPage","name":"Design infringement"}',
+        encoding="utf-8"
+    )
+
+    packet = {
+        "packet_id": "handover_eval_101-2_batch_01_of_01",
+        "source_change_details": {
+            "source": {"name": "TestSource", "monitoring_priority": "High"},
+            "diff_file": "design_update.diff",
+            "version_id": "v1",
+            "hunks": [
+                {
+                    "hunk_id": 1,
+                    "location_header": "@@ -1 +1 @@",
+                    "removed": ["Design infringement can occur when someone uses a design that is identical or similar to a registered design."],
+                    "added": ["Design infringement can occur only when someone uses a design that is identical to the registered design."]
+                }
+            ]
+        },
+        "llm_verification_targets": [
+            {
+                "candidate_rank": 1,
+                "udid": "101-2",
+                "page_final_score": 0.9,
+                "best_chunk_id": "101-2_01",
+                "matched_hunk_indices": [1],
+                "relevant_chunk_ids": ["101-2_01"]
+            },
+            {
+                "candidate_rank": 2,
+                "udid": "999-9",
+                "page_final_score": 0.7,
+                "best_chunk_id": "999-9_01",
+                "matched_hunk_indices": [1],
+                "relevant_chunk_ids": ["999-9_01"]
+            }
+        ]
+    }
+
+    packet_path = handover_dir / "packet.json"
+    packet_path.write_text(json.dumps(packet), encoding="utf-8")
+
+    def fake_llm(prompt: str):
+        if '"decision": "impact|no_impact|uncertain"' in prompt:
+            return {
+                "decision": "impact",
+                "udid": "101-2",
+                "chunk_id": "101-2_01",
+                "confidence": "high",
+                "reason": "Source change modifies the legal threshold in the matching chunk.",
+                "evidence_quote": "identical or similar to a registered design"
+            }
+        return {
+            "confirmed_update_chunk_ids": ["101-2_01"],
+            "rejected_stage3_chunk_ids": [],
+            "additional_chunks_to_review": [],
+            "notes": ""
+        }
+
+    with patch("tripwire.IPFR_CONTENT_ARCHIVE_DIR", str(archive_dir)), \
+         patch("tripwire.LLM_VERIFY_DIR", str(verify_dir)), \
+         patch("tripwire._call_llm_json", side_effect=fake_llm):
+
+        result_path = tripwire.verify_handover_packet_with_llm(
+            str(packet_path),
+            prefer_test_files=True
+        )
+
+    doc = json.loads(Path(result_path).read_text(encoding="utf-8"))
+    assert doc["llm_result"]["overall_decision"] == "impact"
+    assert doc["llm_result"]["impacted_pages"][0]["udid"] == "101-2"
