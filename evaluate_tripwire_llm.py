@@ -1,7 +1,6 @@
 import json
 import tempfile
 from pathlib import Path
-import re
 
 import tripwire
 import os
@@ -60,17 +59,15 @@ def compute_chunk_metrics(stage3_suggested_chunk_ids, llm_confirmed_chunk_ids):
     }
 
 
-def _extract_sentence_for_diff(markdown_text: str) -> str:
-    # Find a stable sentence early in the 101-2 test markdown to use as diff content.
-    m = re.search(r"(Design infringement can occur[^.]{20,400}\.)", markdown_text)
-    if m:
-        return m.group(1).strip()
-    # fallback: first non-empty paragraph line
-    for line in markdown_text.splitlines():
-        line = line.strip()
-        if line and not line.startswith("---") and not line.startswith("udid:"):
-            return line[:240]
-    return "Design infringement can occur when someone uses a design without permission."
+HARDCODED_REMOVED_LINE = (
+    "Design infringement can occur when someone uses a design that is identical or similar "
+    "to a registered design without obtaining permission from the owner."
+)
+
+HARDCODED_ADDED_LINE = (
+    "Design infringement can occur only when someone uses a design that is identical "
+    "to the registered design without obtaining permission from the owner."
+)
 
 
 def run_eval():
@@ -80,19 +77,16 @@ def run_eval():
     # Prefer *_test.* fixtures
     prefer_test_files = True
 
-    # Read the 101-2 markdown so the diff is guaranteed to be verifiable by exact text match.
+    # Resolve the 101-2 markdown fixture so Stage 4 can still verify against the
+    # page content in IPFR_content_archive, but use a hardcoded diff payload so the
+    # evaluation is deterministic and never depends on sentence extraction.
     resolved = tripwire.resolve_ipfr_content_files("101-2", prefer_test_files=prefer_test_files)
     md_path = resolved.get("markdown_path")
     if not md_path:
         raise RuntimeError("Could not resolve 101-2 markdown fixture in IPFR_content_archive")
 
-    md_text = Path(md_path).read_text(encoding="utf-8")
-    removed = _extract_sentence_for_diff(md_text)
-
-    # Ensure the added line is meaningfully different but still likely to appear in-page.
-    added = removed
-    if "registered design" not in added:
-        added = added.replace("a design", "a registered design", 1)
+    removed = HARDCODED_REMOVED_LINE
+    added = HARDCODED_ADDED_LINE
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir)
