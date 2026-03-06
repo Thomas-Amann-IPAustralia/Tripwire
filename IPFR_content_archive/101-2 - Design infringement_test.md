@@ -10,13 +10,13 @@ PageURL: "[https://ipfirstresponse.ipaustralia.gov.au/options/design-infringemen
 
 # Design infringement
 
-<!-- chunk_id: 101-2-C01 -->
+<!-- chunk_id: 101-2-01 -->
 <!-- section_id: faq -->
 ### What is design infringement?
 
 Design infringement can occur when someone uses a design that is identical or similar to a registered design without obtaining permission from the owner.1 In Australia, a registered design provides designers protection for up to 10 years. Importantly, the law does not require exact copying. If the overall visual impression of the suspected infringing design is substantially similar to the registered design, it may be considered infringement.2
 
-<!-- chunk_id: 101-2-C02 -->
+<!-- chunk_id: 101-2-02 -->
 ### What do registered designs protect?
 
 In Australia, new and distinctive designs are afforded protection with owners registering with IP Australia.3 A registered design protects the visual appearance of a product.4 The law protects visual features such as shape, configuration, pattern, or ornamentation.5 It does not protect how the product works or what it is made from.6 Designs are tied to physical products that have a tangible form.7 Products must also be manufactured or handmade and are produced on a commercial scale.8 For example, the shape of a bottle, the pattern on fabric, or the combined features of shape and patterns on furniture.
@@ -29,7 +29,7 @@ When it comes to design infringement, it is essential to understand what a regis
 
 **What is shown with the registered design is what is protected**. The images and descriptions of a registered design define what is protected. Registration not only protects the design but also designs that are substantially similar. However, it does not protect every possible variation. Additionally, if a unique feature is not clearly shown or described, it may not be protected.
 
-<!-- chunk_id: 101-2-C03 -->
+<!-- chunk_id: 101-2-03 -->
 ### How does design infringement happen?
 
 Where a design is registered and certified with IP Australia, the following combined events may constitute infringement, provided they occur during the term of protection and without the permission of the owner:
@@ -56,7 +56,7 @@ Infringement occurs when someone uses a design that looks too similar to a regis
 * **Design options**. Courts will consider how many different ways a designer could create a design for the product.22
 * **Statement of Newness and Distinctiveness**. A registered design can include a statement that highlights the new and distinctive aspects of a design, helping to focus protection on crucial elements. Comparisons between designs will then focus on these features.23
 
-<!-- chunk_id: 101-2-C04 -->
+<!-- chunk_id: 101-2-04 -->
 <!-- section_id: section-1-examples-of-design-infringement -->
 ### Examples of design infringement
 
@@ -76,7 +76,7 @@ Infringement occurs when someone uses a design that looks too similar to a regis
 
 *Probably not infringement*: A competitor makes a bottle *(Bottle C)* with a completely different shape but uses a texture that is somewhat similar. 
 
-<!-- chunk_id: 101-2-C05 -->
+<!-- chunk_id: 101-2-05 -->
 <!-- section_id: section-2-what-is-not-design-infringement -->
 ### What is not design infringement
 
