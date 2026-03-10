@@ -77,20 +77,20 @@ def _normalise_chunk_id(chunk_id):
 
 
 def compute_chunk_metrics(stage3_suggested_chunk_ids, llm_confirmed_chunk_ids):
-    stage3 = {
+    predicted = {
         _normalise_chunk_id(chunk_id)
         for chunk_id in (stage3_suggested_chunk_ids or [])
         if _normalise_chunk_id(chunk_id)
     }
-    confirmed = {
+    expected = {
         _normalise_chunk_id(chunk_id)
         for chunk_id in (llm_confirmed_chunk_ids or [])
         if _normalise_chunk_id(chunk_id)
     }
-    overlap = stage3 & confirmed
+    overlap = predicted & expected
 
-    precision = len(overlap) / len(stage3) if stage3 else 0.0
-    recall = len(overlap) / len(confirmed) if confirmed else 0.0
+    precision = len(overlap) / len(predicted) if predicted else 0.0
+    recall = len(overlap) / len(expected) if expected else 0.0
 
     return {
         "chunk_precision": precision,
@@ -133,10 +133,15 @@ def _collect_verification_outcomes(verification_files):
             if chunk_id:
                 verified_chunk_ids_pass1.append(chunk_id)
 
-        for candidate in llm.get("per_candidate", []) or []:
+        # FIX: per_candidate is top-level in the verification JSON, not inside llm_result
+        for candidate in doc.get("per_candidate", []) or []:
             if not isinstance(candidate, dict):
                 continue
-            pass2_result = candidate.get("pass2_result", {}) or {}
+
+            pass2_result = candidate.get("pass2_result")
+            if not isinstance(pass2_result, dict):
+                pass2_result = {}
+
             confirmed_update_chunk_ids_pass2.extend(
                 pass2_result.get("confirmed_update_chunk_ids", []) or []
             )
