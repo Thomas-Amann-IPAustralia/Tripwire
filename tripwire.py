@@ -34,8 +34,30 @@ import docx
 # --- Optional OpenAI import ---
 try:
     from openai import OpenAI
-except Exception:
+except ImportError:
     OpenAI = None
+
+# --- OpenAI client (lazy init; avoids missing bearer header in CI) ---
+_client = None
+
+def get_openai_client():
+    """Lazily create and cache an OpenAI client.
+
+    Ensures OPENAI_API_KEY is read at the moment the client is needed.
+    """
+    global _client
+
+    if OpenAI is None:
+        raise RuntimeError("OpenAI SDK not available. Ensure 'openai' is installed.")
+
+    if _client is None:
+        api_key = (os.getenv("OPENAI_API_KEY") or "").strip()
+        if not api_key:
+            raise RuntimeError("OPENAI_API_KEY environment variable is not set.")
+        # Explicit is fine and avoids any ambiguity.
+        _client = OpenAI(api_key=api_key)
+
+    return _client
 
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
@@ -49,12 +71,29 @@ DIFF_DIR = 'diff_archive'
 HANDOVER_DIR = 'handover_packets'
 SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
 
+
+# --- IPFR content archive for LLM verification (prototype) ---
+# NOTE: Prototype only. We resolve UDIDs to content files by filename patterns within IPFR_CONTENT_ARCHIVE_DIR.
+# In production, prefer an explicit UDID->file map generated during the IPFR export pipeline.
+IPFR_CONTENT_ARCHIVE_DIR = os.environ.get("IPFR_CONTENT_ARCHIVE_DIR", "ipfr_content_archive")
+LLM_VERIFY_DIR = os.environ.get("LLM_VERIFY_DIR", "llm_verification_results")
+
+# Prototype behaviour: only load the top N candidates to keep prompts small.
+# NOTE: This will need to be changed later to load the specific sections needed, not whole pages,
+# and to support explicit per-candidate section targets.
+TOP_N_VERIFICATION_CANDIDATES = int(os.environ.get("TOP_N_VERIFICATION_CANDIDATES", "3"))
+
+# LLM verification execution
+# Prototype requirement: always run verification after handover packets are generated.
+# (If OPENAI_API_KEY is missing, verification will fail closed to overall_decision="uncertain".)
+LLM_MODEL = os.environ.get("TRIPWIRE_LLM_MODEL", "gpt-4.1-mini")
 TAGS_TO_EXCLUDE = ['nav', 'footer', 'header', 'script', 'style', 'aside', '.noprint', '#sidebar', 'iframe']
 
 # Semantic scoring config
 SEMANTIC_MODEL = 'text-embedding-3-small'
-OPENAI_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-client = OpenAI(api_key=OPENAI_KEY) if (OpenAI and OPENAI_KEY) else None
+OPENAI_KEY = (os.environ.get("OPENAI_API_KEY") or "").strip()
+# NOTE: OpenAI client is created lazily via get_openai_client() to avoid missing auth headers in CI.
+client = None
 
 # Candidate / packet policy
 CANDIDATE_MIN_SCORE = 0.35  # all page candidates >= this are "relevant" and must be handed over (across batches) if handover triggers
@@ -102,37 +141,251 @@ def get_last_version_id(source_name: str) -> Optional[str]:
     return None
 
 
+
+# --- Audit log schema (human-friendly, prototype) ---
+
+AUDIT_HEADERS = [
+    'Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected',
+    'Version_ID', 'Diff_File', 'Similarity_Score', 'Power_Words',
+    'Matched_UDID', 'Matched_Chunk_ID', 'Outcome', 'Reason',
+
+    # Human-friendly AI verification linkage
+    'AI Verification Run',
+    'AI Verification Time',
+    'AI Model Used',
+    'AI Decision',
+    'AI Confidence',
+    'AI Change Summary',
+    'AI Verification File',
+    'Human Review Needed',
+
+    # Monitoring / performance
+    'Similarity Predicted Pages',
+    'AI Verified Impact Pages',
+    'AI vs Similarity Overlap Score',
+    'AI vs Similarity Precision',
+    'AI vs Similarity Recall',
+    'Overlap Details'
+]
+
+
+def ensure_audit_log_headers() -> None:
+    """Ensures audit_log.csv exists and contains all required headers.
+
+    If the file exists with fewer columns, it is rewritten in-place with the new headers appended,
+    preserving existing data.
+    """
+    if not os.path.exists(AUDIT_LOG):
+        with open(AUDIT_LOG, mode='w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=AUDIT_HEADERS)
+            writer.writeheader()
+        return
+
+    with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        existing_headers = reader.fieldnames or []
+        rows = list(reader)
+
+    if existing_headers == AUDIT_HEADERS:
+        return
+
+    # Build upgraded rows with new columns defaulting to blank
+    upgraded = []
+    for r in rows:
+        nr = {h: '' for h in AUDIT_HEADERS}
+        for k, v in (r or {}).items():
+            if k in nr:
+                nr[k] = v
+        upgraded.append(nr)
+
+    with open(AUDIT_LOG, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=AUDIT_HEADERS)
+        writer.writeheader()
+        writer.writerows(upgraded)
+
+
+def _now_iso() -> str:
+    return datetime.datetime.now().isoformat()
+
+
+def _list_to_semicolon(values) -> str:
+    vals = []
+    for v in (values or []):
+        if v is None:
+            continue
+        s = str(v).strip()
+        if s:
+            vals.append(s)
+    return ';'.join(vals)
+
+
+def append_audit_row(row: dict) -> None:
+    ensure_audit_log_headers()
+    safe = {h: '' for h in AUDIT_HEADERS}
+    for k, v in (row or {}).items():
+        if k in safe:
+            safe[k] = v
+    with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=AUDIT_HEADERS)
+        writer.writerow(safe)
+
+
+def update_audit_row_by_key(source_name: str, version_id: str, diff_file: str, updates: dict) -> bool:
+    """Updates the *most recent* audit row matching (Source_Name, Version_ID, Diff_File)."""
+    ensure_audit_log_headers()
+    with open(AUDIT_LOG, mode='r', encoding='utf-8') as f:
+        rows = list(csv.DictReader(f))
+
+    idx = None
+    for i in range(len(rows) - 1, -1, -1):
+        r = rows[i]
+        if (r.get('Source_Name') == (source_name or '') and
+            r.get('Version_ID') == (version_id or '') and
+            r.get('Diff_File') == (diff_file or '')):
+            idx = i
+            break
+
+    if idx is None:
+        return False
+
+    for k, v in (updates or {}).items():
+        if k in AUDIT_HEADERS:
+            rows[idx][k] = v
+
+    with open(AUDIT_LOG, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=AUDIT_HEADERS)
+        writer.writeheader()
+        writer.writerows(rows)
+
+    return True
+
+
+def _decision_to_human(decision: str) -> str:
+    d = (decision or '').strip().lower()
+    if d == 'impact':
+        return 'Impact Confirmed'
+    if d == 'no_impact':
+        return 'No Impact'
+    if d == 'uncertain':
+        return 'Uncertain'
+    return 'Error'
+
+
+def _confidence_to_human(confidence: str) -> str:
+    c = (confidence or '').strip().lower()
+    if c in ('high', 'medium', 'low'):
+        return c.capitalize()
+    return ''
+
+
+def _compute_overlap_metrics(predicted_udids: List[str], verified_udids: List[str]) -> dict:
+    pred = set([u for u in (predicted_udids or []) if u])
+    ver = set([u for u in (verified_udids or []) if u])
+
+    inter = pred.intersection(ver)
+    union = pred.union(ver)
+
+    # Jaccard overlap
+    overlap = (len(inter) / len(union)) if union else 1.0
+
+    # Precision/Recall (handle empty denominators as "n/a" for monitoring clarity)
+    precision = (len(inter) / len(pred)) if pred else None
+    recall = (len(inter) / len(ver)) if ver else None
+
+    details = f"intersection={len(inter)}; predicted={len(pred)}; verified={len(ver)}"
+
+    return {
+        "overlap": overlap,
+        "precision": precision,
+        "recall": recall,
+        "details": details,
+        "pred_set": sorted(pred),
+        "ver_set": sorted(ver),
+        "inter_set": sorted(inter),
+    }
+
+
+def log_stage3_to_audit(source_name: str,
+                        priority: str,
+                        status: str,
+                        change_detected: str,
+                        version_id: str,
+                        diff_file: str,
+                        analysis: dict,
+                        outcome: str,
+                        reason: str) -> None:
+    """Writes the Stage 3 similarity + handover decision into audit_log.csv (prototype).
+
+    NOTE: matched_udid / matched_chunk_id are stored as *candidate lists* (not only the primary).
+    """
+    power = (analysis or {}).get('power_words', {}) or {}
+    candidates = (analysis or {}).get('threshold_passing_candidates', []) or []
+
+    candidate_udids = []
+    candidate_pairs = []
+    for c in candidates:
+        if not isinstance(c, dict):
+            continue
+        u = c.get('udid')
+        b = c.get('best_chunk_id')
+        if u:
+            candidate_udids.append(u)
+            if b:
+                candidate_pairs.append(f"{u}:{b}")
+            else:
+                candidate_pairs.append(f"{u}:")
+
+    # Keep existing schema fields populated for compatibility
+    row = {
+        'Timestamp': _now_iso(),
+        'Source_Name': source_name or '',
+        'Priority': priority or '',
+        'Status': status or '',
+        'Change_Detected': change_detected or '',
+        'Version_ID': version_id or '',
+        'Diff_File': diff_file or '',
+        'Similarity_Score': f"{float((analysis or {}).get('page_final_score') or 0.0):.4f}" if (analysis or {}).get('status') == 'success' else '',
+        'Power_Words': _list_to_semicolon(power.get('power_words_found', power.get('found', []))),
+        'Matched_UDID': _list_to_semicolon(candidate_udids),
+        'Matched_Chunk_ID': _list_to_semicolon(candidate_pairs),
+        'Outcome': outcome or '',
+        'Reason': reason or '',
+
+        # AI columns default
+        'AI Verification Run': 'No',
+        'Human Review Needed': 'No',
+        'Similarity Predicted Pages': _list_to_semicolon(candidate_udids),
+    }
+    append_audit_row(row)
+
+
+
+
 def log_to_audit(name, priority, status, change_detected, version_id, diff_file=None,
                  similarity_score=None, power_words=None, matched_udid=None,
                  matched_chunk_id=None, outcome=None, reason=None):
+    """Backwards-compatible audit append.
+
+    For Stage 3 similarity/LLM-routing, prefer log_stage3_to_audit(...).
     """
-    Appends a new entry to the CSV audit log.
-    """
-    file_exists = os.path.exists(AUDIT_LOG)
-    headers = [
-        'Timestamp', 'Source_Name', 'Priority', 'Status', 'Change_Detected',
-        'Version_ID', 'Diff_File', 'Similarity_Score', 'Power_Words',
-        'Matched_UDID', 'Matched_Chunk_ID', 'Outcome', 'Reason'
-    ]
-    with open(AUDIT_LOG, mode='a', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(headers)
-        writer.writerow([
-            datetime.datetime.now().isoformat(),
-            name,
-            priority,
-            status,
-            change_detected,
-            version_id or "N/A",
-            diff_file or "N/A",
-            f"{float(similarity_score):.4f}" if similarity_score is not None else "N/A",
-            '; '.join(power_words) if power_words else "N/A",
-            matched_udid or "N/A",
-            matched_chunk_id or "N/A",
-            outcome or "N/A",
-            reason or "N/A"
-        ])
+    row = {
+        'Timestamp': _now_iso(),
+        'Source_Name': name or '',
+        'Priority': priority or '',
+        'Status': status or '',
+        'Change_Detected': change_detected or '',
+        'Version_ID': version_id or '',
+        'Diff_File': diff_file or '',
+        'Similarity_Score': f"{float(similarity_score):.4f}" if similarity_score is not None else '',
+        'Power_Words': _list_to_semicolon(power_words) if isinstance(power_words, list) else (power_words or ''),
+        'Matched_UDID': matched_udid or '',
+        'Matched_Chunk_ID': matched_chunk_id or '',
+        'Outcome': outcome or '',
+        'Reason': reason or '',
+        'AI Verification Run': 'No',
+        'Human Review Needed': 'No',
+    }
+    append_audit_row(row)
 
 
 def fetch_stage0_metadata(session, source) -> Optional[str]:
@@ -533,8 +786,7 @@ def _load_semantic_embeddings(mock_semantic_data=None):
 def _embed_texts(texts: List[str]) -> np.ndarray:
     if not texts:
         return np.zeros((0, 1536))
-    if client is None:
-        raise RuntimeError("OpenAI client unavailable. Set OPENAI_API_KEY and install openai package.")
+    client = get_openai_client()
     response = client.embeddings.create(input=texts, model=SEMANTIC_MODEL)
     return np.array([d.embedding for d in response.data])
 
@@ -1014,6 +1266,705 @@ def generate_handover_packets(source_name: str,
     return paths
 
 
+
+# ---------------------------
+# Stage 4 helpers (prototype): LLM verification (single-call, two-pass prompt)
+# ---------------------------
+
+from pathlib import Path  # local import to keep this file drop-in compatible
+
+
+def _resolve_ipfr_markdown_path(udid: str, prefer_test_files: bool = True) -> Optional[str]:
+    """Resolve an IPFR markdown file for a UDID.
+
+    Prototype support:
+    - prefers *_test.md fixtures when present (for GitHub-based eval runs)
+    - falls back to non-test files for normal operation
+    """
+    if not udid:
+        return None
+    root = Path(IPFR_CONTENT_ARCHIVE_DIR)
+
+    patterns = []
+    if prefer_test_files:
+        patterns.extend([
+            f"{udid} - *_test.md",
+            f"{udid} - *test.md",
+        ])
+    patterns.append(f"{udid} - *.md")
+
+    for pat in patterns:
+        matches = sorted(root.glob(pat))
+        if matches:
+            return str(matches[0])
+    return None
+
+
+def _resolve_ipfr_jsonld_path(udid: str, prefer_test_files: bool = True) -> Optional[str]:
+    """Resolve an IPFR JSON-LD file for a UDID.
+
+    Prototype support:
+    - prefers *_test.json fixtures when present
+    - falls back to non-test files
+    """
+    if not udid:
+        return None
+    root = Path(IPFR_CONTENT_ARCHIVE_DIR)
+
+    patterns = []
+    if prefer_test_files:
+        patterns.extend([
+            f"{udid}_*_test.json",
+            f"{udid}_*test.json",
+        ])
+    patterns.append(f"{udid}_*.json")
+
+    for pat in patterns:
+        matches = sorted(root.glob(pat))
+        if matches:
+            return str(matches[0])
+    return None
+
+
+def resolve_ipfr_content_files(udid: str, prefer_test_files: bool = True) -> dict:
+    """Resolves the prototype IPFR content files for a UDID."""
+    missing = []
+    md_path = _resolve_ipfr_markdown_path(udid, prefer_test_files=prefer_test_files)
+    js_path = _resolve_ipfr_jsonld_path(udid, prefer_test_files=prefer_test_files)
+
+    if not md_path:
+        missing.append("markdown")
+    if not js_path:
+        missing.append("jsonld")
+
+    return {
+        "udid": udid,
+        "markdown_path": md_path,
+        "jsonld_path": js_path,
+        "missing": missing
+    }
+
+def parse_markdown_chunks(markdown_text: str) -> List[Dict[str, str]]:
+    """Parse markdown into an ordered list of chunks using <!-- chunk_id: ... --> markers.
+
+    Prototype behaviour:
+    - Strip YAML frontmatter before parsing chunk markers so page metadata is not
+      silently treated as chunk content.
+    - If no chunk markers exist after frontmatter removal, return a single
+      FULL_PAGE chunk.
+    """
+    if markdown_text is None:
+        markdown_text = ""
+
+    # Remove leading YAML frontmatter (--- ... ---) so page metadata like UDID,
+    # URL, and title do not become implicit prelude content for Stage 4.
+    markdown_text = re.sub(
+        r"^---\s*\n.*?\n---\s*(?:\n|$)",
+        "",
+        markdown_text,
+        count=1,
+        flags=re.DOTALL,
+    )
+
+    pattern = r"<!--\s*chunk_id\s*:\s*([^>]+?)\s*-->"  # capture chunk id
+    parts = re.split(pattern, markdown_text)
+
+    # parts: [prelude, chunk_id1, chunk_text1, chunk_id2, chunk_text2, ...]
+    if len(parts) < 3:
+        return [{"chunk_id": "FULL_PAGE", "text": markdown_text.strip()}]
+
+    chunks: List[Dict[str, str]] = []
+    for i in range(1, len(parts), 2):
+        chunk_id = (parts[i] or "").strip()
+        text = (parts[i + 1] if i + 1 < len(parts) else "") or ""
+        chunks.append({"chunk_id": chunk_id, "text": text.strip()})
+
+    return chunks
+
+
+def extract_chunk_window(
+    chunks: List[Dict[str, str]],
+    target_chunk_id: str,
+    fallback_max_chars: int = 3000,
+    side_max_chars: int = 800
+) -> Dict[str, str]:
+    """Return a markdown-sourced local evidence window for a target chunk id.
+
+    Source of truth:
+    - The markdown archive remains authoritative.
+    - best_chunk_id is used only as a locator into the markdown chunk markers.
+
+    Behaviour:
+    - If the exact chunk_id is found, return the previous chunk as "before"
+      (if any), the matched chunk as "current", and the next chunk as "after"
+      (if any).
+    - If the page has no chunk markers (FULL_PAGE), return the page text, truncated.
+    - If the chunk_id is missing, fall back to concatenated page text, truncated.
+    """
+    if not chunks:
+        return {"before": "", "current": "", "after": ""}
+
+    def _clip(text: str, limit: int) -> str:
+        text = (text or "").strip()
+        if limit and len(text) > limit:
+            return text[:limit].rstrip() + "\n\n[TRUNCATED]"
+        return text
+
+    # FULL_PAGE fallback when the markdown has no explicit chunk markers.
+    if len(chunks) == 1 and chunks[0].get("chunk_id") == "FULL_PAGE":
+        return {
+            "before": "",
+            "current": _clip(chunks[0].get("text", ""), fallback_max_chars),
+            "after": ""
+        }
+
+    for i, c in enumerate(chunks):
+        if c.get("chunk_id") == target_chunk_id:
+            before_text = chunks[i - 1].get("text", "") if i > 0 else ""
+            current_text = c.get("text", "")
+            after_text = chunks[i + 1].get("text", "") if i + 1 < len(chunks) else ""
+            return {
+                "before": _clip(before_text, side_max_chars),
+                "current": _clip(current_text, fallback_max_chars),
+                "after": _clip(after_text, side_max_chars)
+            }
+
+    # Exact chunk id not found: fall back deterministically.
+    joined = "\n\n".join([c.get("text", "") for c in chunks]).strip()
+    return {"before": "", "current": _clip(joined, fallback_max_chars), "after": ""}
+
+def build_chunk_index(chunks: List[Dict[str, str]], max_snippet_chars: int = 260) -> List[Dict[str, str]]:
+    """Build a compact index of all chunks on a page for Pass 2 scoping.
+
+    We avoid sending full page text; we send chunk_id + a short snippet.
+    """
+    index: List[Dict[str, str]] = []
+    for c in chunks:
+        cid = c.get("chunk_id", "")
+        txt = (c.get("text", "") or "").strip()
+        snippet = txt[:max_snippet_chars]
+        index.append({"chunk_id": cid, "snippet": snippet})
+    return index
+
+def _read_text_file(path: str, max_chars: int = 40_000) -> str:
+    if not path or not os.path.exists(path):
+        return ""
+    with open(path, "r", encoding="utf-8") as f:
+        s = f.read()
+    if max_chars and len(s) > max_chars:
+        return s[:max_chars] + "\\n\\n[TRUNCATED]\\n"
+    return s
+
+
+def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict) -> str:
+    """Pass 1: Verify whether the external change materially impacts the candidate page.
+
+    We intentionally provide a local evidence window centred on the target chunk
+    to keep cost low while still giving the model nearby context.
+    """
+    packet_id = packet.get("packet_id", "")
+    src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+    source_name = src.get("name", "")
+    priority = src.get("monitoring_priority", "")
+
+    # Include only the hunks this candidate was matched to (if provided), else include all hunks.
+    hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
+    matched = set(candidate.get("matched_hunk_indices") or [])
+    if matched:
+        hunks = [h for h in hunks if (h.get("hunk_id") in matched) or (h.get("hunk_index") in matched)]
+    # Render hunks compactly.
+    hunk_text_parts = []
+    for h in hunks:
+        removed = "\n".join([f"- {ln}" for ln in (h.get("removed") or [])])
+        added = "\n".join([f"+ {ln}" for ln in (h.get("added") or [])])
+        header = h.get("location_header") or h.get("hunk_header") or f"hunk {h.get('hunk_id', '')}"
+        hunk_text_parts.append(f"{header}\n{removed}\n{added}".strip())
+    diff_block = "\n\n".join(hunk_text_parts).strip()
+
+    before = (window.get("before") or "").strip()
+    current = (window.get("current") or "").strip()
+    after = (window.get("after") or "").strip()
+
+    return f"""System Role: You are a Technical Content Auditor for the IP First Response (IPFR) platform.
+
+Your job is to verify whether the external source update below materially impacts the IPFR content for the candidate page.
+
+External source context:
+- Source: {source_name}
+- Priority: {priority}
+- Packet: {packet_id}
+
+External change (unified diff hunks):
+{diff_block}
+
+Candidate IPFR page:
+- UDID: {candidate.get('udid')}
+- Target chunk_id: {candidate.get('best_chunk_id')}
+
+IPFR local evidence window contains (from the actual page markdown):
+[Before] – the preceding section of the page (if any)
+[Current] – the target section that may require updating
+[After] – the following section of the page (if any).
+
+Treat [Current] as the only section that can trigger an update decision, and use [Before] and [After] for context if needed. 
+[Before] and [After] must not be marked as impacted unless the change clearly alters the meaning of [Current].
+
+[Before]
+{before}
+
+[Current]
+{current}
+
+[After]
+{after}
+
+Decision rules:
+- Return "impact" if the external change updates, contradicts, or invalidates the meaning of the IPFR content in the evidence window.
+- Return "no_impact" if the change is unrelated to the evidence window, or does not change the meaning relevant to the IPFR content.
+- Return "uncertain" only if you cannot make a decision from the evidence provided.
+- If the external change uses different wording but clearly changes a legal threshold/definition that the IPFR content relies on, treat that as "impact".
+
+Return JSON ONLY with this schema:
+{{
+  "decision": "impact|no_impact|uncertain",
+  "udid": "{candidate.get('udid')}",
+  "chunk_id": "{candidate.get('best_chunk_id')}",
+  "confidence": "high|medium|low",
+  "reason": "brief explanation grounded in the evidence window",
+  "evidence_quote": "a short quote (<=25 words) from the evidence window that supports your decision"
+}}
+"""
+
+
+def _build_llm_pass2_prompt(
+    packet: dict,
+    candidate: dict,
+    pass1_result: dict,
+    chunk_index: List[dict],
+    stage3_relevant_chunk_ids: Optional[List[str]] = None
+) -> str:
+    """Pass 2: confirm which Stage 3 suggested chunks actually need a human update (and allow additional chunks).
+
+    We provide the LLM with:
+      - Confirmed impact summary from Pass 1
+      - A compact chunk index for the whole page (chunk_id + snippet)
+      - Stage 3 'relevant_chunk_ids' (retrieval-suggested candidates) so the model doesn't start from scratch
+
+    Output is used to seed Stage 5 (future) human/LLM authoring.
+    """
+    packet_id = packet.get("packet_id", "")
+    src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+    source_name = src.get("name", "")
+    priority = src.get("monitoring_priority", "")
+
+    hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
+    # Compact diff summary for scoping
+    diff_lines: List[str] = []
+    for h in hunks:
+        for ln in (h.get("removed") or []):
+            diff_lines.append(f"- {ln}")
+        for ln in (h.get("added") or []):
+            diff_lines.append(f"+ {ln}")
+    diff_summary = "\n".join(diff_lines[:120])
+
+    if stage3_relevant_chunk_ids is None:
+        stage3_relevant_chunk_ids = candidate.get("relevant_chunk_ids") or []
+    stage3_relevant_chunk_ids = [str(x) for x in stage3_relevant_chunk_ids][:80]
+
+    # Include the compact index (id + snippet) for all chunks on this page.
+    index_json = json.dumps(chunk_index, ensure_ascii=False)
+
+    # Pass 1 summary (ground truth for Pass 2 scope)
+    pass1_json = json.dumps(pass1_result, ensure_ascii=False)
+
+    return f"""System Role: You are a Technical Content Auditor for the IP First Response (IPFR) platform.
+
+Context:
+- Packet: {packet_id}
+- Source: {source_name}
+- Priority: {priority}
+- Candidate Page UDID: {candidate.get('udid','')}
+- Candidate Best Chunk: {candidate.get('best_chunk_id','')}
+
+You have already CONFIRMED there is a material impact for this candidate page (Pass 1 result below).
+
+Your task now is to help a human update the page by confirming which specific chunks need review.
+
+Inputs:
+1) Confirmed impact (Pass 1):
+{pass1_json}
+
+2) Source change (compact diff):
+{diff_summary}
+
+3) Chunk index for the candidate page (chunk_id + snippet; snippets may be truncated):
+{index_json}
+
+4) Stage 3 retrieval-suggested chunk IDs (NOT confirmed; candidates only):
+{json.dumps(stage3_relevant_chunk_ids, ensure_ascii=False)}
+
+Instructions:
+- Do NOT assume that Stage 3 suggested chunks need updates. They are only candidates.
+- For each Stage 3 suggested chunk_id, decide if it likely requires a HUMAN update due to the confirmed impact.
+- You may also nominate additional chunks not in the Stage 3 list, but ONLY if you can point to a snippet in the chunk index that shows why.
+- Keep reasoning brief and evidence-based.
+- Evidence quotes must be <= 25 words, copied from the chunk snippet where possible.
+
+Return JSON ONLY in this shape:
+
+{{
+  "confirmed_update_chunk_ids": ["chunk_id", ...],
+  "rejected_stage3_chunk_ids": ["chunk_id", ...],
+  "additional_chunks_to_review": [
+    {{
+      "chunk_id": "...",
+      "reason": "short explanation",
+      "evidence_quote": "<=25 words from the snippet"
+    }}
+  ],
+  "notes": "optional short notes for the human editor"
+}}
+
+"""
+
+
+def _build_llm_verification_prompt(packet: dict, candidates_with_content: List[dict]) -> str:
+    """Deprecated (kept for backwards compatibility).
+
+    Stage 4 is now implemented as a two-pass per-candidate workflow:
+    - Pass 1: verify impact using a narrow evidence window
+    - Pass 2: scope additional chunks to review using a compact chunk index
+
+    This function returns a minimal summary only.
+    """
+    packet_id = packet.get("packet_id", "")
+    cand_list = [c.get("udid") for c in candidates_with_content if isinstance(c, dict)]
+    return f"Tripwire Stage 4 uses two-pass verification. Packet {packet_id}. Candidates: {cand_list}"
+
+
+def _call_llm_json(prompt: str) -> dict:
+    """Call the LLM and parse a JSON response.
+
+    Fail-closed behaviour:
+    - If the client is unavailable or response is not parseable JSON, return an 'uncertain' decision.
+    - Includes BOTH keys ('decision' and 'overall_decision') for compatibility with Pass 1/2 and legacy callers.
+    """
+    fallback = {
+        "decision": "uncertain",
+        "overall_decision": "uncertain",
+        "confidence": "low",
+        "reason": "LLM call failed or output was not valid JSON."
+    }
+    try:
+        client = get_openai_client()
+    except Exception as e:
+        fallback["reason"] = f"LLM client unavailable: {e}"
+        return fallback
+
+    try:
+        resp = client.responses.create(
+            model=LLM_MODEL,
+            input=prompt
+        )
+        txt = getattr(resp, "output_text", None)
+        if not txt:
+            return fallback
+
+        # Try strict JSON first
+        try:
+            return json.loads(txt)
+        except Exception:
+            # Try to extract the first JSON object in the response
+            m = re.search(r"\{.*\}", txt, flags=re.S)
+            if m:
+                try:
+                    return json.loads(m.group(0))
+                except Exception:
+                    return fallback
+            return fallback
+    except Exception as e:
+        fallback["reason"] = f"LLM exception: {e}"
+        return fallback
+
+def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = True) -> Optional[str]:
+    """Verify one handover packet using a two-pass LLM workflow (prototype).
+
+    Prototype mode: loads TOP_N_VERIFICATION_CANDIDATES candidates from the packet.
+    Note: when productionising, we will switch to verifying EVERY candidate.
+    """
+    if not packet_path or not os.path.exists(packet_path):
+        return None
+
+    with open(packet_path, "r", encoding="utf-8") as f:
+        packet = json.load(f)
+
+    targets = packet.get("llm_verification_targets", []) or []
+    if not targets:
+        return None
+
+    # Select top N candidates (prototype)
+    top_targets = [t for t in targets if isinstance(t, dict) and t.get("udid")]
+    top_targets.sort(key=lambda x: (x.get("candidate_rank") is None, x.get("candidate_rank", 9999)))
+    top_targets = top_targets[:max(1, TOP_N_VERIFICATION_CANDIDATES)]
+
+    per_candidate_results = []
+    impacted_pages = []
+    any_uncertain = False
+    missing_any = False
+
+    for t in top_targets:
+        udid = t.get("udid")
+        resolved = resolve_ipfr_content_files(udid, prefer_test_files=prefer_test_files)
+        if resolved.get("missing"):
+            missing_any = True
+
+        md_text = _read_text_file(resolved.get("markdown_path")) or ""
+        chunks = parse_markdown_chunks(md_text)
+        window = extract_chunk_window(chunks, t.get("best_chunk_id") or "")
+
+        # ---- PASS 1 ----
+        prompt1 = _build_llm_pass1_prompt(packet, t, window)
+        pass1 = _call_llm_json(prompt1)
+
+        # Normalise expected fields
+        decision = (pass1.get("decision") or "uncertain").strip().lower()
+        confidence = (pass1.get("confidence") or "").strip().lower()
+        reason = (pass1.get("reason") or "").strip()
+
+        if decision not in ("impact", "no_impact", "uncertain"):
+            decision = "uncertain"
+
+        if decision == "uncertain":
+            any_uncertain = True
+
+        pass2 = None
+        review_ids: List[str] = []
+
+        if decision == "impact":
+            # ---- PASS 2 (scope review chunks) ----
+            chunk_index = build_chunk_index(chunks)
+            stage3_ids = t.get("relevant_chunk_ids") or []
+            prompt2 = _build_llm_pass2_prompt(packet, t, pass1, chunk_index, stage3_relevant_chunk_ids=stage3_ids)
+            pass2 = _call_llm_json(prompt2)
+
+            # Backwards/forwards compatible extraction:
+            # - New schema: confirmed_update_chunk_ids + additional_chunks_to_review
+            # - Legacy schema: suggested_review_chunk_ids
+            review_ids: List[str] = []
+
+            legacy = pass2.get("suggested_review_chunk_ids")
+            if isinstance(legacy, list) and legacy:
+                review_ids = [str(x) for x in legacy]
+            else:
+                confirmed = pass2.get("confirmed_update_chunk_ids") or []
+                if isinstance(confirmed, list):
+                    review_ids.extend([str(x) for x in confirmed])
+
+                additional = pass2.get("additional_chunks_to_review") or []
+                if isinstance(additional, list):
+                    for item in additional:
+                        if isinstance(item, dict) and item.get("chunk_id"):
+                            review_ids.append(str(item["chunk_id"]))
+
+            # de-dup while preserving order
+            seen = set()
+            review_ids = [x for x in review_ids if not (x in seen or seen.add(x))]
+
+            # Ensure verified chunk present
+            verified_cid = (pass1.get("chunk_id") or t.get("best_chunk_id") or "").strip()
+            if verified_cid and verified_cid not in review_ids:
+                review_ids.insert(0, verified_cid)
+
+            impacted_pages.append({
+                "udid": udid,
+                "chunk_id": (pass1.get("chunk_id") or t.get("best_chunk_id")),
+                "confidence": confidence or "medium",
+                "reason": reason or "External change impacts IPFR guidance.",
+                "suggested_review_chunk_ids": review_ids
+            })
+
+        per_candidate_results.append({
+            "udid": udid,
+            "candidate_rank": t.get("candidate_rank"),
+            "best_chunk_id": t.get("best_chunk_id"),
+            "matched_hunk_indices": t.get("matched_hunk_indices", []),
+            "resolved_files": resolved,
+            "chunk_count": len(chunks),
+            "evidence_window": window,
+            "pass1_result": pass1,
+            "pass2_result": pass2,
+        })
+
+    # ---- Aggregate overall decision ----
+    # Confirmed impacts take precedence over unrelated missing candidates.
+    if impacted_pages:
+        overall_decision = "impact"
+    elif missing_any:
+        overall_decision = "uncertain"
+    elif any_uncertain:
+        overall_decision = "uncertain"
+    else:
+        overall_decision = "no_impact"
+
+    llm_result = {
+        "overall_decision": overall_decision,
+        "confidence": ("high" if impacted_pages else ("low" if any_uncertain else "high")),
+        "impacted_pages": impacted_pages,
+        "note": "Prototype: verified top N candidates only. Production will verify every candidate."
+    }
+
+    os.makedirs(LLM_VERIFY_DIR, exist_ok=True)
+    out_path = os.path.join(LLM_VERIFY_DIR, f"verification_{packet.get('packet_id','packet')}.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump({
+            "packet_id": packet.get("packet_id"),
+            "verified_at": datetime.datetime.now().isoformat(),
+            "top_n_candidates_loaded": TOP_N_VERIFICATION_CANDIDATES,
+            "llm_result": llm_result,
+            "per_candidate": per_candidate_results
+        }, f, indent=2, ensure_ascii=False)
+
+    return out_path
+
+
+
+def run_llm_verification_for_packets(
+    handover_paths: List[str],
+    prefer_test_files: bool = True,
+    top_n_candidates: Optional[int] = None
+) -> List[str]:
+    """
+    Runs LLM verification for each packet (prototype) and links results back into audit_log.csv.
+
+    Args:
+        handover_paths: List of handover packet JSON paths.
+        prefer_test_files: If True, verification will prefer *_test.md fixtures when resolving IPFR archive pages.
+        top_n_candidates: Optional override for TOP_N_VERIFICATION_CANDIDATES (used to limit candidates passed to LLM).
+    Returns:
+        List of verification result JSON paths created.
+    """
+    global TOP_N_VERIFICATION_CANDIDATES
+
+    if top_n_candidates is not None:
+        try:
+            TOP_N_VERIFICATION_CANDIDATES = int(top_n_candidates)
+        except Exception:
+            logger.warning(f"Ignoring invalid top_n_candidates={top_n_candidates!r}")
+
+    if not handover_paths:
+        return []
+
+    results: List[str] = []
+
+    for packet_path in handover_paths:
+        try:
+            if not packet_path or not os.path.exists(packet_path):
+                continue
+
+            with open(packet_path, "r", encoding="utf-8") as f:
+                packet = json.load(f)
+
+            src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
+            source_name = src.get("name", "") or ""
+            priority = src.get("monitoring_priority", "") or ""
+            version_id = (packet.get("source_change_details", {}) or {}).get("version_id", "") or ""
+            diff_file = (packet.get("source_change_details", {}) or {}).get("diff_file", "") or ""
+            packet_id = packet.get("packet_id", "") or ""
+
+            # Verify via single LLM call (two-pass internal method)
+            result_path = verify_handover_packet_with_llm(
+                packet_path,
+                prefer_test_files=prefer_test_files
+            )
+            if not result_path:
+                continue
+
+            verified_at = _now_iso()
+
+            with open(result_path, "r", encoding="utf-8") as rf:
+                verification_doc = json.load(rf)
+            llm_res = (verification_doc.get("llm_result") or {})
+
+            overall_decision = (llm_res.get("overall_decision") or "uncertain")
+            confidence = (llm_res.get("confidence") or "")
+
+            impacted = llm_res.get("impacted_pages") or []
+            verified_udids = []
+            verified_sections = []
+            for it in impacted:
+                if isinstance(it, dict):
+                    u = it.get("udid")
+                    if u:
+                        verified_udids.append(u)
+                    sid = it.get("section_identifier")
+                    if sid:
+                        verified_sections.append(f"{it.get('udid','')}: {sid}".strip())
+
+            # Predicted set is ALL packet candidates (not just top N loaded) for monitoring retrieval performance.
+            predicted_udids = []
+            for t in (packet.get("llm_verification_targets") or []):
+                if isinstance(t, dict) and t.get("udid"):
+                    predicted_udids.append(t.get("udid"))
+
+            metrics = _compute_overlap_metrics(predicted_udids, verified_udids)
+
+            ai_decision_human = _decision_to_human(overall_decision)
+            ai_conf_human = _confidence_to_human(confidence)
+
+            # Make a short summary that is readable in the audit log.
+            change_summary = (llm_res.get("external_change_summary") or "").strip()
+            if not change_summary:
+                change_summary = "AI verification completed."
+
+            human_review = "Yes" if ai_decision_human in ("Impact Confirmed", "Uncertain", "Error") else "No"
+
+            updates = {
+                "AI Verification Run": "Yes",
+                "AI Verification Time": verified_at,
+                "AI Model Used": LLM_MODEL,
+                "AI Decision": ai_decision_human,
+                "AI Confidence": ai_conf_human,
+                "AI Change Summary": change_summary[:500],
+                "AI Verification File": result_path,
+                "Human Review Needed": human_review,
+
+                "AI Verified Impact Pages": _list_to_semicolon(metrics["ver_set"]),
+                "AI vs Similarity Overlap Score": f"{metrics['overlap']:.3f}" if metrics.get("overlap") is not None else "",
+                "AI vs Similarity Precision": (f"{metrics['precision']:.3f}" if metrics.get("precision") is not None else "n/a"),
+                "AI vs Similarity Recall": (f"{metrics['recall']:.3f}" if metrics.get("recall") is not None else "n/a"),
+                "Overlap Details": metrics.get("details") or "",
+            }
+
+            # Update the most recent matching audit row for this change event.
+            updated = update_audit_row_by_key(
+                source_name=source_name,
+                version_id=version_id,
+                diff_file=diff_file,
+                updates=updates
+            )
+            if not updated:
+                # If not found, append a minimal linking row rather than losing the verification.
+                append_audit_row({
+                    "Timestamp": verified_at,
+                    "Source_Name": source_name,
+                    "Priority": priority,
+                    "Status": "Success",
+                    "Change_Detected": "Yes",
+                    "Version_ID": version_id,
+                    "Diff_File": diff_file,
+                    "Outcome": "verification_only",
+                    "Reason": f"Audit row not found for packet {packet_id}. Linked verification appended.",
+                    **updates
+                })
+
+            results.append(result_path)
+
+        except Exception as e:
+            logger.error(f"LLM verification failed for {packet_path}: {e}")
+
+    return results
+
+
 def write_github_summary(handover_paths: List[str]):
     """
     Writes a markdown summary of this run's handover packets to the GitHub Actions
@@ -1061,63 +2012,6 @@ def write_github_summary(handover_paths: List[str]):
         print(output)
 
 
-LLM_HANDOVER_LOG = "llm_handover_log.csv"
-
-
-def log_llm_handover_decision(source_name: str,
-                              priority: str,
-                              version_id: str,
-                              diff_file: str,
-                              analysis: dict,
-                              packets_generated: int):
-    """
-    Records Stage 3 → LLM routing decisions.
-    One row per semantic evaluation event.
-    """
-    file_exists = os.path.exists(LLM_HANDOVER_LOG)
-
-    headers = [
-        "Timestamp",
-        "Source_Name",
-        "Priority",
-        "Version_ID",
-        "Diff_File",
-        "Analysis_Status",
-        "Should_Handover",
-        "Decision_Reason",
-        "Final_Score",
-        "Candidate_Count",
-        "Strong_Power_Words",
-        "Power_Word_Score",
-        "Top_Candidate_UDIDs",
-        "Packets_Generated"
-    ]
-
-    power = analysis.get("power_words", {}) or {}
-    candidates = analysis.get("threshold_passing_candidates", []) or []
-
-    row = [
-        datetime.datetime.now().isoformat(),
-        source_name,
-        priority,
-        version_id or "N/A",
-        diff_file or "N/A",
-        analysis.get("status"),
-        analysis.get("should_handover"),
-        analysis.get("handover_decision_reason"),
-        analysis.get("page_final_score"),
-        analysis.get("candidate_count"),
-        power.get("strong_count"),
-        power.get("score"),
-        ", ".join([c.get("udid", "N/A") for c in candidates[:10] if isinstance(c, dict)]),
-        packets_generated
-    ]
-
-    with open(LLM_HANDOVER_LOG, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        if not file_exists:
-            writer.writerow(headers)
-        writer.writerow(row)
 
 
 # ---------------------------
@@ -1193,62 +2087,49 @@ def main():
 
                     analysis = calculate_similarity(diff_path, source_priority=priority)
 
-                    s3_success = analysis.get('status') == 'success'
-                    s3_score = analysis.get('page_final_score') if s3_success else None
-                    s3_words = analysis.get('power_words', {}).get('power_words_found') if s3_success else None
-                    s3_udid = analysis.get('primary_udid') if s3_success else None
-                    s3_chunk_id = analysis.get('primary_chunk_id') if s3_success else None
-                    s3_outcome = None
-                    s3_reason = analysis.get('handover_decision_reason') or analysis.get('message') or analysis.get('status')
+                    analysis = calculate_similarity(diff_path, source_priority=priority)
 
-                    if s3_success and analysis.get('should_handover'):
-                        ts = datetime.datetime.now().isoformat()
-                        new_packets = generate_handover_packets(
-                            source_name=name,
-                            priority=priority,
-                            diff_file=diff_file,
-                            analysis=analysis,
-                            timestamp=ts,
-                            version_id=current_id
-                        )
-
-                        handover_paths.extend(new_packets)
-                        s3_outcome = 'handover'
-
-                        log_llm_handover_decision(
-                            source_name=name,
-                            priority=priority,
-                            version_id=current_id,
-                            diff_file=diff_file,
-                            analysis=analysis,
-                            packets_generated=len(new_packets)
-                        )
-                    elif s3_success:
+                    # Stage 3 → write similarity scoring + routing decision into audit_log.csv (no llm_handover_log.csv)
+                    if analysis.get('status') == 'success':
                         s3_outcome = 'filtered'
+                        if analysis.get('should_handover'):
+                            ts = datetime.datetime.now().isoformat()
+                            new_packets = generate_handover_packets(
+                                source_name=name,
+                                priority=priority,
+                                diff_file=diff_file,
+                                analysis=analysis,
+                                timestamp=ts,
+                                version_id=current_id
+                            )
+                            handover_paths.extend(new_packets)
+                            s3_outcome = 'handover'
 
-                        log_llm_handover_decision(
+                        s3_reason = analysis.get('handover_decision_reason') or analysis.get('filter_reason') or 'Stage 3 complete'
+                        log_stage3_to_audit(
                             source_name=name,
                             priority=priority,
-                            version_id=current_id,
+                            status="Success",
+                            change_detected="Yes",
+                            version_id=current_id or "",
                             diff_file=diff_file,
                             analysis=analysis,
-                            packets_generated=0
+                            outcome=s3_outcome,
+                            reason=s3_reason
+                        )
+                    else:
+                        # Similarity stage failed; still record the change event.
+                        log_to_audit(
+                            name=name,
+                            priority=priority,
+                            status="Exception",
+                            change_detected="Yes",
+                            version_id=current_id or "",
+                            diff_file=diff_file,
+                            outcome="similarity_error",
+                            reason=(analysis.get('message') or analysis.get('status') or 'Stage 3 failed')
                         )
 
-                    log_to_audit(
-                        name=name,
-                        priority=priority,
-                        status="Success",
-                        change_detected="Yes",
-                        version_id=current_id,
-                        diff_file=diff_file,
-                        similarity_score=s3_score,
-                        power_words=s3_words,
-                        matched_udid=s3_udid,
-                        matched_chunk_id=s3_chunk_id,
-                        outcome=s3_outcome,
-                        reason=s3_reason
-                    )
 
                 elif repopulate_only:
                     log_to_audit(name, priority, "Success", "Healed", current_id)
@@ -1267,9 +2148,17 @@ def main():
         except Exception:
             pass
 
+    # Stage 4 (prototype): always verify packets via a single LLM call
+    if handover_paths:
+        logger.info(
+            f"Running LLM verification on {len(handover_paths)} handover packet(s) "
+            f"(top N candidates per packet = {TOP_N_VERIFICATION_CANDIDATES})."
+        )
+        verification_paths = run_llm_verification_for_packets(handover_paths)
+        if verification_paths:
+            logger.info(f"Wrote {len(verification_paths)} LLM verification result file(s) to {LLM_VERIFY_DIR}.")
+
     write_github_summary(handover_paths)
-
-
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == '--test-stage3':
         if len(sys.argv) < 3:

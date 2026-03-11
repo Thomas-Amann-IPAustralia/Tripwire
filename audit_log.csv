@@ -168,10 +168,3 @@ Timestamp,Source_Name,Priority,Status,Change_Detected,Version_ID,Diff_File,Simil
 2026-03-03T20:40:54.197194,Thomas Amann Website,Medium,Success,No,"W/""0c202805ce29c596afc7a4597aba422f""",N/A,N/A,N/A,N/A,N/A,N/A,N/A
 2026-03-03T20:40:58.410545,IP Australia - What are trade marks?,Medium,Success,No,"""69a01a2b-2fa44""",N/A,N/A,N/A,N/A,N/A,N/A,N/A
 2026-03-04T00:35:48.525763,Thomas Amann Website,Medium,Success,No,"W/""4b47b8adc328afbec76140c8416dca35""",N/A,N/A,N/A,N/A,N/A,N/A,N/A
-2026-03-04T20:40:49.926553,Thomas Amann Website,Medium,Success,No,"W/""0c202805ce29c596afc7a4597aba422f""",N/A,N/A,N/A,N/A,N/A,N/A,N/A
-2026-03-05T20:47:25.049930,Thomas Amann Website,Medium,Success,No,"W/""b22538c63b99b6e1a2d61bb79ae63a1c""",N/A,N/A,N/A,N/A,N/A,N/A,N/A
-2026-03-05T20:47:28.749212,IP Australia - What are trade marks?,Medium,Success,Yes,"""69a01a2e-2fa44""",20260305_204728_IP_Australia_-_What_are_trade_marks.diff,N/A,N/A,N/A,N/A,N/A,No substantive hunks parsed
-2026-03-08T20:36:31.827111,WIPO Press Room,Low,Success,Yes,7350,20260308_203629_WIPO_Press_Room.diff,0.4890,N/A,D1018,D1018_12,filtered,Primary score 0.489 < low threshold 0.500
-2026-03-08T20:36:42.292888,Thomas Amann Website,Medium,Success,No,"W/""2b6d257806611d60297e70d0f6d254d9""",N/A,N/A,N/A,N/A,N/A,N/A,N/A
-2026-03-09T20:43:54.251744,IP Australia - What are trade marks?,Medium,Success,Yes,"""69a01a2b-2fa44""",20260309_204354_IP_Australia_-_What_are_trade_marks.diff,N/A,N/A,N/A,N/A,N/A,No substantive hunks parsed
-2026-03-10T20:42:50.651163,Thomas Amann Website,Medium,Success,No,"W/""045b9856644cef37b3e5484b631c43d2""",N/A,N/A,N/A,N/A,N/A,N/A,N/A
