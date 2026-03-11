@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 
-MODULE_PATH = "/mnt/data/tripwire.py"
+MODULE_PATH = Path(__file__).with_name("tripwire.py")
 spec = importlib.util.spec_from_file_location("tripwire_stage5_under_test", MODULE_PATH)
 tripwire = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(tripwire)
