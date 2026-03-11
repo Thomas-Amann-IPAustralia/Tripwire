@@ -21,14 +21,12 @@ The LLM answers:
 Tripwire operates as a staged pipeline:
 
 ```
-Stage 0 → Source metadata detection
-Stage 1 → Content normalization & archive management
-Stage 2 → Diff generation
-Stage 3 → Semantic impact estimation & routing decision
-Stage 4 → LLM confirmation
+Stage 0 → Source metadata detection (ETag/registerId)
+Stage 1 → Content normalization (Cleaning & Markdown conversion)
+Stage 2 → Diff generation (Unified diff vs. Archive)
+Stage 3 → Semantic impact estimation & Routing
+Stage 4 → Two-Pass LLM Verification & Review Scoping
 ```
-
-Tripwire does not determine truth.  Tripwire determines what deserves LLM attention.
 
 ---
 
@@ -93,7 +91,12 @@ Substantive hunks are:
 2. Compared against semantic chunk corpus  
 3. Aggregated into page-level candidates  
 
-Scoring model:
+#### Scoring and handover policy:
+The `page_final_score` is calculated using a base similarity with additive bonuses:
+* **Base Similarity**: The maximum chunk_similarity observed for a page.
+* **Coverage Bonus**: +0.04 per unique hunk matched (capped at +0.12).
+* **Density Bonus**: +0.01 per additional chunk hit (capped at +0.06).
+* **Power Word Uplift**: Boosts based on legal imperatives (e.g., "must", "penalty", "Archives Act").
 
 ```
 page_final_score =
@@ -103,41 +106,7 @@ page_final_score =
   + power_word_uplift
 ```
 
----
-## Tiered Processing Scenarios
-
-| Priority | Strategy | Rationale | Workflow Detail |
-| :--- | :--- | :--- | :--- |
-| **High** | **Maximum Recall** | Never suppress high-risk sources. | **1. Summarize:** Detail the update immediately.<br>**2. Identify:** Map to all potentially influenced IPFR content.<br>**3. Verify:** Confirm actual influence with zero noise filtering. |
-| **Medium** | **Balanced Filter** | Balance recall & cost. | **1. Filter:** Remove minor noise (formatting/boilerplate).<br>**2. Summarize:** Extract substantive changes.<br>**3. Map & Verify:** Identify and confirm content influence. |
-| **Low** | **Efficiency First** | Suppress low-impact chatter. | **1. Extensive Filter:** Isolate only major textual or legal shifts.<br>**2. Summarize:** Brief overview of the core change.<br>**3. Map & Verify:** Identify and confirm impact only if thresholds are met. |
-
-### Example
-```mermaid
-graph TD
-    %% Node Definitions
-    A[Detected Change] --> B{Check Priority}
-
-    %% High Priority Path
-    B -- High Priority: Trade Marks Act --> C[Calculate Cosine Similarity]
-    C --> D{Score > CANDIDATE_MIN_SCORE?}
-    D -- Yes: 0.68 --> E[GENERATE HANDOVER PACKET]
-    E --> F[LLM Impact Analysis]
-
-    %% Low Priority Path
-    B -- Low Priority: WIPO Press Room --> G[Calculate Cosine Similarity]
-    G --> H{Score > CANDIDATE_MIN_SCORE & LOW_PRIMARY_HANDOVER_THRESHOLD?}
-    H -- No: 0.72 --> I[SUPPRESS CHANGE]
-    I --> J[Log to Audit: No Impact]
-
-    %% Styling
-    style E fill:#d4edda,stroke:#28a745,stroke-width:2px
-    style I fill:#f8d7da,stroke:#dc3545,stroke-width:2px
-    style F fill:#fff3cd,stroke:#ffc107,stroke-width:2px
-```
-
-## LLM Handover Design
-
+#### Routing Thresholds
 When Stage 3 triggers handover:
 
 - Candidates ≥ candidate_min_score retained  
@@ -149,37 +118,84 @@ Purpose:
 
 - Minimize prompt tokens  
 - Preserve evidence traceability  
-- Enable deterministic batching  
+- Enable deterministic batching
+  
+Handover is triggered based on source priority and the `CANDIDATE_MIN_SCORE` (0.35):
+
+| Priority | Handover Trigger | Threshold Type |
+| :--- | :--- | :--- |
+| **High** | Any candidate ≥ 0.35 | Maximum Recall |
+| **Medium** | Primary Score ≥ 0.45 | Balanced Filter |
+| **Low** | Primary Score ≥ 0.50 | Efficiency First |
+
+
+### Stage 4 - Two-Pass LLM Verification
+Stage 4 executes a deterministic verification workflow to ensure high-fidelity results while minimizing token usage:
+
+### Pass 1: Impact Confirmation
+* **Input**: A "Local Evidence Window" from the IPFR markdown archive including Before, Current, and After context.
+* **Task**: Verify if the external change materially impacts the specific IPFR section.
+* **Output**: A structured decision (`impact`, `no_impact`, or `uncertain`) with grounded reasoning and evidence quotes.
+
+### Pass 2: Review Scoping
+* **Input**: A compact "Chunk Index" (IDs + snippets) of the entire candidate page.
+* **Task**: Identify all other sections of the page that require human review based on the confirmed impact.
+* **Output**: A list of `confirmed_update_chunk_ids` and `additional_chunks_to_review` to seed the human editing workflow.
 
 ---
+## Stage 3 Tiered Processing Scenarios
 
-## LLM Responsibilities (Downstream)
+| Priority | Strategy | Rationale | Workflow Detail |
+| :--- | :--- | :--- | :--- |
+| **High** | **Maximum Recall** | Never suppress high-risk sources. | **1. Summarize:** Detail the update immediately.<br>**2. Identify:** Map to all potentially influenced IPFR content.<br>**3. Verify:** Confirm actual influence with zero noise filtering. |
+| **Medium** | **Balanced Filter** | Balance recall & cost. | **1. Filter:** Remove minor noise (formatting/boilerplate).<br>**2. Summarize:** Extract substantive changes.<br>**3. Map & Verify:** Identify and confirm content influence. |
+| **Low** | **Efficiency First** | Suppress low-impact chatter. | **1. Extensive Filter:** Isolate only major textual or legal shifts.<br>**2. Summarize:** Brief overview of the core change.<br>**3. Map & Verify:** Identify and confirm impact only if thresholds are met. |
 
-Curently, Tripwire provides hypotheses + evidence.
+### Example
+```mermaid
+graph TD
+    subgraph Stage_3 [Stage 3: Semantic Retrieval]
+        A[Substantive Hunks] --> B[Embedding & Cosine Similarity]
+        B --> C{Score Check}
+        C -- Pass --> D[Generate Handover Packet]
+    end
 
-The LLM will need to perform:
+    subgraph Stage_4 [Stage 4: LLM Verification]
+        D --> E[Pass 1: Impact Confirmation]
+        E --> |Evidence Window| F{Material Impact?}
+        
+        F -- Yes --> G[Pass 2: Review Scoping]
+        F -- No/Uncertain --> H[Log as No Impact/Uncertain]
+        
+        G --> |Chunk Index| I[Identify All Affected Chunks]
+        I --> J[Seed Human Review Workflow]
+    end
 
-- Final impact confirmation  
-- Change interpretation  
-- Suggested updates  
+    subgraph Audit_and_Metrics [Monitoring]
+        J --> K[Update audit_log.csv]
+        H --> K
+        K --> L[Compute Precision/Recall Metrics]
+    end
 
-Important notes for LLM interpretation:
-
-- Scores are probabilistic signals  
-- Thresholds are cost controls  
-- Power words influence ranking, not truth  
-- Multiple pages may legitimately be impacted
-
----
+    style F fill:#f96,stroke:#333,stroke-width:2px
+    style G fill:#bbf,stroke:#333,stroke-width:2px
+```
 
 ## Logs & Artifacts
 
 | File | Role |
-|------|------|
-| audit_log.csv | Source/version ledger |
-| llm_handover_log.csv | Semantic routing decisions |
-| diff_archive/*.diff | Change evidence |
-| handover_packets/*.json | LLM payloads |
+| :--- | :--- |
+| `audit_log.csv` | Master ledger including Stage 0-3 metadata and **Stage 4 AI Verification results** (Decision, Confidence, and Overlap metrics). |
+| `handover_packets/*.json` | Structured payloads containing evidence-ready hunks and verification targets. |
+| `llm_verification_results/*.json` | Detailed per-candidate logs of the Pass 1/Pass 2 verification workflow. |
+| `diff_archive/*.diff` | Raw change evidence. |
 
 ---
+
+## Evaluation & Metrics
+
+The system includes an evaluation suite (`evaluate_tripwire_llm.py`) to track pipeline performance:
+* **Retrieval Precision/Recall**: Measures Stage 3's ability to find the correct candidate pages.
+* **Verifier Precision/Recall**: Measures Stage 4's accuracy in confirming impacts.
+* **Chunk Metrics**: Tracks the accuracy of Pass 2 in identifying specific sections for review.
 
