@@ -1,0 +1,215 @@
+--- content_archive/ABC_News.xml	2026-02-12 19:00:06.041710094 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-12 19:00:32.495085254 +0000
+@@ -32,20 +32,52 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
++    UK police vow speedy decision over Andrew-Epstein trade documents
++   </title>
++   <link>
++    https://www.abc.net.au/news/2026-02-12/andrew-mountbatten-windsor-police-epstein-files-investigation/106334742
++   </link>
++   <description>
++    British police say they are "making progress as quickly as possible" on whether to launch a full investigation into allegations that Andrew Mountbatten-Windsor shared confidential trade documents with late financier and sex offender Jeffrey Epstein.
++   </description>
++   <pubDate>
++    Thu, 12 Feb 2026 01:34:20 +0000
++   </pubDate>
++   <guid isPermaLink="true">
++    https://www.abc.net.au/news/2026-02-12/andrew-mountbatten-windsor-police-epstein-files-investigation/106334742
++   </guid>
++   <category>
++    Royalty
++   </category>
++   <media:group>
++    <media:description>
++     Andrew Mountbatten-Windsor has not spoken publicly since the latest Epstein files were released.
++    </media:description>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=1063&amp;cropW=1889&amp;xPos=0&amp;yPos=629&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=1889&amp;cropW=1889&amp;xPos=0&amp;yPos=216&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=1259&amp;cropW=1889&amp;xPos=0&amp;yPos=531&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=2519&amp;cropW=1889&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=1417&amp;cropW=1889&amp;xPos=0&amp;yPos=452&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=2849&amp;cropW=1603&amp;xPos=98&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=2519&amp;cropW=1889&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++   </media:group>
++  </item>
++  <item>
++   <title>
+     Bougainville mine that sparked a civil war on rapid path to reopening
+    </title>
+    <link>
+     https://www.abc.net.au/news/2026-02-12/bougainville-signs-secretive-deal-to-reopen-panguna-mine/106331778
+    </link>
+    <description>
+     The Autonomous Bougainville Government signs a secretive deal to reopen the huge Panguna gold and copper mine that sparked a catastrophic civil war three decades ago.
+    </description>
+    <dc:creator>
+     Marian Faa and Theckla Gunga
+@@ -79,124 +111,89 @@
+     <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2245&amp;xPos=873&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+     <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=3368&amp;xPos=312&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+     <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+     <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2993&amp;xPos=499&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+     <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1262&amp;xPos=1365&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+     <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    FBI combs desert terrain for clues in Nancy Guthrie's disappearance
++    'No way negotiable': Iran draws a red line on its ballistic missiles
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-12/fbi-search-for-nancy-guthrie-continues-suspect-released/106334272
++    https://www.abc.net.au/news/2026-02-12/iran-ballistic-missile-program-weapons-us-talks-trump/106307798
+    </link>
+    <description>
+-    The man detained for questioning in the investigation into the disappearance of a US TV show host's mother has been released and the search continues.
++    Iran has spent decades building the largest and most diverse ballistic missile stockpile in the Middle East and is refusing US demands to put limits on the weapons program.
+    </description>
++   <dc:creator>
++    Annika Burgess
++   </dc:creator>
+    <pubDate>
+-    Wed, 11 Feb 2026 23:38:11 +0000
++    Wed, 11 Feb 2026 19:28:41 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-12/fbi-search-for-nancy-guthrie-continues-suspect-released/106334272
++    https://www.abc.net.au/news/2026-02-12/iran-ballistic-missile-program-weapons-us-talks-trump/106307798
+    </guid>
+    <category>
+-    Crime
++    Weapons
+    </category>
+    <category>
+-    Missing Person
++    World Politics
+    </category>
+    <category>
+-    Law, Crime and Justice
++    Unrest, Conflict and War
+    </category>
+    <media:group>
+     <media:description>
+-     Detectives are continuing to search for clues related to Nancy Guthrie's disappearance.
++     Iran has reportedly already replenished a lot of its missile stocks depleted in the 12-day war.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=492&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=909&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1221&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=909&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=521&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=366&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=783&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1095&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=783&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    James Van Der Beek, star of Dawson's Creek, dies aged 48
++    IOC disqualifies Ukrainian skeleton racer over tribute helmet
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-12/james-van-der-beek-dawsons-creek-star-obituary/105821848
++    https://www.abc.net.au/news/2026-02-12/olympics-ukrainian-vladyslav-heraskevych-disqualified-helmet/106338586
+    </link>
+    <description>
+-    The American actor was best known for his starring role as Dawson Leery in Dawson's Creek from 1998 to 2003.
++    Vladyslav Heraskevych is disqualified over his customised helmet featuring the faces of Ukrainian athletes and coaches killed in the Russia-Ukraine war.
+    </description>
+    <pubDate>
+-    Wed, 11 Feb 2026 19:57:38 +0000
++    Thu, 12 Feb 2026 09:55:51 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-12/james-van-der-beek-dawsons-creek-star-obituary/105821848
++    https://www.abc.net.au/news/2026-02-12/olympics-ukrainian-vladyslav-heraskevych-disqualified-helmet/106338586
+    </guid>
+    <category>
+-    Celebrities
+-   </category>
+-   <category>
+-    Actor
+-   </category>
+-   <category>
+-    Television
++    Winter Olympic Games
+    </category>
+    <category>
+-    Cancer
++    Skeleton
+    </category>
+    <category>
+-    Arts, Culture and Entertainment
+-   </category>
+-   <media:group>
+-    <media:description>
+-     James Van Der Beek starred alongside Katie Holmes in Dawson's Creek.
+-    </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f000c0cf4fa6c4e70c744fa5fed5a898?impolicy=wcms_crop_resize&amp;cropH=892&amp;cropW=1586&amp;xPos=74&amp;yPos=101&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f000c0cf4fa6c4e70c744fa5fed5a898?impolicy=wcms_crop_resize&amp;cropH=1689&amp;cropW=1689&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f000c0cf4fa6c4e70c744fa5fed5a898?impolicy=wcms_crop_resize&amp;cropH=1142&amp;cropW=1713&amp;xPos=0&amp;yPos=101&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f000c0cf4fa6c4e70c744fa5fed5a898?impolicy=wcms_crop_resize&amp;cropH=2142&amp;cropW=1606&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f000c0cf4fa6c4e70c744fa5fed5a898?impolicy=wcms_crop_resize&amp;cropH=1277&amp;cropW=1703&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f000c0cf4fa6c4e70c744fa5fed5a898?impolicy=wcms_crop_resize&amp;cropH=2142&amp;cropW=1205&amp;xPos=359&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/f000c0cf4fa6c4e70c744fa5fed5a898?impolicy=wcms_crop_resize&amp;cropH=2142&amp;cropW=1606&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-   </media:group>
+-  </item>
+-  <item>
+-   <title>
+-    China's president makes rare acknowledgement of corruption in army
+-   </title>
+-   <link>
+-    https://www.abc.net.au/news/2026-02-12/xi-jinping-acknowledges-army-corruption-crackdown/106333834
+-   </link>
+-   <description>
+-    Xi Jinping's comments were the first public admission of issues in China's armed forces since an investigation was launched into senior members of the body that overseas the country's military.
+-   </description>
+-   <pubDate>
+-    Wed, 11 Feb 2026 15:53:47 +0000
+-   </pubDate>
+-   <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-12/xi-jinping-acknowledges-army-corruption-crackdown/106333834
+-   </guid>
+-   <category>
+-    World Politics
++    Unrest, Conflict and War
+    </category>
+    <media:group>
+     <media:description>
+-     Xi Jinping has spearheaded a corruption crackdown in China since becoming president.
++     Ukraine's Vladyslav Heraskevych has been disqualified from the Winter Olympics.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=1890&amp;cropW=3360&amp;xPos=0&amp;yPos=154&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=2240&amp;xPos=560&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=3360&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=1680&amp;xPos=477&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2236&amp;cropW=2981&amp;xPos=379&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=1260&amp;xPos=694&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=1680&amp;xPos=477&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1296&amp;cropW=2304&amp;xPos=0&amp;yPos=43&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=1536&amp;xPos=418&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=2304&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=1152&amp;xPos=616&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=2048&amp;xPos=128&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=864&amp;xPos=750&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=1152&amp;xPos=616&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>

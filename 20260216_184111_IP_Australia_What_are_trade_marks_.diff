@@ -1,0 +1,128 @@
+--- content_archive/ABC_News.xml	2026-02-16 12:58:50.669419048 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-16 12:59:33.218111326 +0000
+@@ -102,80 +102,95 @@
+     <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=656&amp;xPos=197&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+     <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=984&amp;xPos=33&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+     <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=492&amp;xPos=279&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+     <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=875&amp;xPos=88&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+     <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=369&amp;xPos=341&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+     <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/821b7d9a77b6ea3583ea1ceea3ea53b0?impolicy=wcms_crop_resize&amp;cropH=656&amp;cropW=492&amp;xPos=279&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Obama deplores lack of shame after Trump shares monkey clip
++    As high-speed rail plans gather pace, Britain's HS2 offers hard lessons
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-15/obama-trump-racist-monkey-clip-podcast/106346866
++    https://www.abc.net.au/news/2026-02-16/australia-high-speed-rail-uk-hs2-delays-cost-blow-outs/106075750
+    </link>
+    <description>
+-    Former US president Barack Obama has criticised a lack of shame and decorum in the country's political discourse, responding for the first time to a post on Donald Trump's social media account that depicted him and first lady Michelle as monkeys.
++    While the federal government considers an ambitious plan, a similar project in the UK has seen its fair share of controversies.
+    </description>
++   <dc:creator>
++    Thomas Morgan
++   </dc:creator>
+    <pubDate>
+-    Sun, 15 Feb 2026 03:53:45 +0000
++    Sun, 15 Feb 2026 18:57:40 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-15/obama-trump-racist-monkey-clip-podcast/106346866
++    https://www.abc.net.au/news/2026-02-16/australia-high-speed-rail-uk-hs2-delays-cost-blow-outs/106075750
+    </guid>
+    <category>
+-    World Politics
++    Rail Transport Industry
++   </category>
++   <category>
++    Transport Industry
++   </category>
++   <category>
++    Urban Development and Planning
+    </category>
+    <category>
+-    Racism
++    Government and Politics
++   </category>
++   <category>
++    Business, Economics and Finance
++   </category>
++   <category>
++    Community and Society
+    </category>
+    <media:group>
+     <media:description>
+-     Barack Obama and Donald Trump before the state funeral service for former US president Jimmy Carter in 2025.
++     The High Speed Rail Authority wants to build fast rail linking Sydney with Newcastle.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/9300cec33a805dcc816ae48d509aab66?impolicy=wcms_crop_resize&amp;cropH=2444&amp;cropW=4345&amp;xPos=0&amp;yPos=236&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/9300cec33a805dcc816ae48d509aab66?impolicy=wcms_crop_resize&amp;cropH=4345&amp;cropW=4345&amp;xPos=0&amp;yPos=157&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/9300cec33a805dcc816ae48d509aab66?impolicy=wcms_crop_resize&amp;cropH=2897&amp;cropW=4345&amp;xPos=0&amp;yPos=236&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/9300cec33a805dcc816ae48d509aab66?impolicy=wcms_crop_resize&amp;cropH=4827&amp;cropW=3620&amp;xPos=252&amp;yPos=173&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/9300cec33a805dcc816ae48d509aab66?impolicy=wcms_crop_resize&amp;cropH=3259&amp;cropW=4345&amp;xPos=0&amp;yPos=189&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/9300cec33a805dcc816ae48d509aab66?impolicy=wcms_crop_resize&amp;cropH=4953&amp;cropW=2786&amp;xPos=787&amp;yPos=47&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/9300cec33a805dcc816ae48d509aab66?impolicy=wcms_crop_resize&amp;cropH=4827&amp;cropW=3620&amp;xPos=252&amp;yPos=173&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=4999&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=2812&amp;xPos=1094&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=4218&amp;xPos=391&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=2109&amp;xPos=1446&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=3749&amp;xPos=625&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=1582&amp;xPos=1709&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/75cfaabba5eb88b0cfd529b67842a2cb?impolicy=wcms_crop_resize&amp;cropH=2812&amp;cropW=2109&amp;xPos=1446&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Glove appearing to match Guthrie footage found as DNA tested
++    Israel launches air strikes at Gaza days before Trump's Board of Peace meeting
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-16/fbi-says-dna-recovered-from-glove-found-near-guthrie-home/106348058
++    https://www.abc.net.au/news/2026-02-16/israeli-air-strikes-days-before-board-of-peace-meeting/106348162
+    </link>
+    <description>
+-    The FBI says a glove containing DNA was found near the home of US TV show host Savannah Guthrie's mother and appears to match those worn by a masked person outside her front door the night she vanished.
++    US President Donald Trump says the first meeting of his newly created Board of Peace will take place on Thursday, with over $7 billion to be pledged for reconstruction and humanitarian efforts in Gaza.
+    </description>
+    <pubDate>
+-    Sun, 15 Feb 2026 20:57:47 +0000
++    Sun, 15 Feb 2026 22:58:55 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-16/fbi-says-dna-recovered-from-glove-found-near-guthrie-home/106348058
++    https://www.abc.net.au/news/2026-02-16/israeli-air-strikes-days-before-board-of-peace-meeting/106348162
+    </guid>
+    <category>
+-    Law, Crime and Justice
++    Unrest, Conflict and War
+    </category>
+    <category>
+-    Missing Person
++    World Politics
+    </category>
+    <media:group>
+     <media:description>
+-     The FBI has shared surveillance footage at the home of Nancy Guthrie the night she went missing in Tucson.
++     Delegations from more than 20 countries are expected to attend Donald Trump's first Board of Peace meeting.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f0be1f1257c4ab2d23b76797d4954849?impolicy=wcms_crop_resize&amp;cropH=830&amp;cropW=1476&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f0be1f1257c4ab2d23b76797d4954849?impolicy=wcms_crop_resize&amp;cropH=732&amp;cropW=732&amp;xPos=744&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f0be1f1257c4ab2d23b76797d4954849?impolicy=wcms_crop_resize&amp;cropH=984&amp;cropW=1476&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f0be1f1257c4ab2d23b76797d4954849?impolicy=wcms_crop_resize&amp;cropH=984&amp;cropW=738&amp;xPos=738&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f0be1f1257c4ab2d23b76797d4954849?impolicy=wcms_crop_resize&amp;cropH=984&amp;cropW=1312&amp;xPos=149&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f0be1f1257c4ab2d23b76797d4954849?impolicy=wcms_crop_resize&amp;cropH=984&amp;cropW=554&amp;xPos=797&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/f0be1f1257c4ab2d23b76797d4954849?impolicy=wcms_crop_resize&amp;cropH=984&amp;cropW=738&amp;xPos=738&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2470&amp;cropW=4390&amp;xPos=417&amp;yPos=346&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2701&amp;cropW=2701&amp;xPos=1092&amp;yPos=115&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2407&amp;cropW=3611&amp;xPos=613&amp;yPos=409&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2816&amp;cropW=2112&amp;xPos=1288&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2425&amp;cropW=3234&amp;xPos=622&amp;yPos=391&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2816&amp;cropW=1584&amp;xPos=1581&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/d85bbde3b2019c55e0e5f26de4d10ed1?impolicy=wcms_crop_resize&amp;cropH=2816&amp;cropW=2112&amp;xPos=1288&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>

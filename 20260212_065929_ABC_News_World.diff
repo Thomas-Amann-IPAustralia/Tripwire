@@ -1,0 +1,253 @@
+--- content_archive/ABC_News.xml	2026-02-12 02:01:42.232755996 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-12 02:02:24.631220678 +0000
+@@ -32,177 +32,174 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
+-    A month on from Iran's protests, reports emerge of security forces 'refusing orders'
++    Australian dollar and yen at a level not seen since the 80s
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-11/amid-us-iran-nuclear-talks-will-defections-spark-regime-change/106323120
++    https://www.abc.net.au/news/2026-02-11/australian-dollar-japanese-yen-currency-exchange-rate-tourism/106332346
+    </link>
+    <description>
+-    As talks between Washington and Tehran over a nuclear deal continue, fractures within the regime are starting to emerge.
++    Australia's exchange rate with Japan has grown increasingly favourable to tourists, which have surged to record numbers and topped more than one million visitors in 2025.
+    </description>
+    <dc:creator>
+-    Nassim Khadem
++    Doug Dingwall
+    </dc:creator>
+    <pubDate>
+-    Tue, 10 Feb 2026 18:53:54 +0000
++    Wed, 11 Feb 2026 07:05:07 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-11/amid-us-iran-nuclear-talks-will-defections-spark-regime-change/106323120
++    https://www.abc.net.au/news/2026-02-11/australian-dollar-japanese-yen-currency-exchange-rate-tourism/106332346
+    </guid>
+    <category>
+-    World Politics
++    Travel and Tourism
++   </category>
++   <category>
++    Tourism and Leisure Industry
++   </category>
++   <category>
++    Currency
+    </category>
+    <category>
+-    Unrest, Conflict and War
++    Economy
+    </category>
+    <media:group>
+     <media:description>
+-     In the last few weeks, attention has turned to the tensions between the United States and Iran.
++     Japanese tourism destinations including Kyoto are growing increasingly popular.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2117&amp;cropW=3764&amp;xPos=964&amp;yPos=503&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2809&amp;cropW=2809&amp;xPos=1363&amp;yPos=524&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2337&amp;cropW=3506&amp;xPos=933&amp;yPos=618&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2945&amp;cropW=2209&amp;xPos=1677&amp;yPos=273&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2599&amp;cropW=3466&amp;xPos=1153&amp;yPos=650&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2830&amp;cropW=1592&amp;xPos=1845&amp;yPos=503&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/992b09752e72b909227ac2a1e7bfdcd8?impolicy=wcms_crop_resize&amp;cropH=2945&amp;cropW=2209&amp;xPos=1677&amp;yPos=273&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=521&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=849&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1266&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=294&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1578&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1266&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Chinese flotilla sailed to edge of Australia's exclusive economic zone, says chief
++    Bougainville mine that sparked a civil war on rapid path to reopening
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-11/chinese-flotilla-edge-australian-exclusive-economic-zone/106333020
++    https://www.abc.net.au/news/2026-02-12/bougainville-signs-secretive-deal-to-reopen-panguna-mine/106331778
+    </link>
+    <description>
+-    Under questioning in Senate estimates, the chief of the Australian Defence Force reveals that a Chinese flotilla sailed within seven nautical miles of Australia's 200 nautical mile exclusive economic zone.
++    The Autonomous Bougainville Government signs a secretive deal to reopen the huge Panguna gold and copper mine that sparked a catastrophic civil war three decades ago.
+    </description>
+    <dc:creator>
+-    Stephen Dziedzic and Olivia Caisley
++    Marian Faa and Theckla Gunga
+    </dc:creator>
+    <pubDate>
+-    Wed, 11 Feb 2026 07:55:04 +0000
++    Wed, 11 Feb 2026 18:52:41 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-11/chinese-flotilla-edge-australian-exclusive-economic-zone/106333020
++    https://www.abc.net.au/news/2026-02-12/bougainville-signs-secretive-deal-to-reopen-panguna-mine/106331778
+    </guid>
+    <category>
+-    Defence and National Security
++    Mining and Metals Industry
+    </category>
+    <category>
+-    Government and Politics
++    Gold
+    </category>
+    <category>
+-    World Politics
++    Civil Unrest
+    </category>
+    <category>
+-    Foreign Affairs
++    Political Leadership
++   </category>
++   <category>
++    Copper
+    </category>
+    <media:group>
+     <media:description>
+-     David Johnston says a Chinese flotilla stayed "just clear" of Australia's 200 nautical mile exclusive economic zone.
++     A secretive deal has been signed to fast-track the reopening of the Panguna copper and gold mine.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d1ed91915abefdee519420125d0f850a?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=137&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d1ed91915abefdee519420125d0f850a?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=834&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d1ed91915abefdee519420125d0f850a?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d1ed91915abefdee519420125d0f850a?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1176&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d1ed91915abefdee519420125d0f850a?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=278&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d1ed91915abefdee519420125d0f850a?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1563&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/d1ed91915abefdee519420125d0f850a?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1176&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=3991&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2245&amp;xPos=873&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=3368&amp;xPos=312&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2993&amp;xPos=499&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1262&amp;xPos=1365&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Indonesia to send up to 8,000 troops to Gaza under Trump's Board of Peace
++    US officials say cartel drones behind sudden closure of Texas airport
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-11/indonesia-to-send-8000-troops-to-gaza-idf-peacekeeping/106330718
++    https://www.abc.net.au/news/2026-02-12/faa-closes-airspace-around-el-paso-airport/106333810
+    </link>
+    <description>
+-    The move makes Indonesia the first country to clearly commit troops to a multinational peacekeeping effort in the war-torn enclave.
++    US officials say a sudden 10-day ban came into effect around El Paso International Airport after cartel drones from nearby Mexico breached American airspace.
+    </description>
+-   <dc:creator>
+-    Tim Swanston and Hellena Souisa
+-   </dc:creator>
+    <pubDate>
+-    Wed, 11 Feb 2026 03:29:05 +0000
++    Wed, 11 Feb 2026 16:16:41 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-11/indonesia-to-send-8000-troops-to-gaza-idf-peacekeeping/106330718
++    https://www.abc.net.au/news/2026-02-12/faa-closes-airspace-around-el-paso-airport/106333810
+    </guid>
+    <category>
+-    Unrest, Conflict and War
+-   </category>
+-   <category>
+-    World Politics
+-   </category>
+-   <category>
+-    Foreign Affairs
++    Air Incidents
+    </category>
+    <category>
+-    Defence Forces
++    Defence and National Security
+    </category>
+    <category>
+-    Territorial Disputes
++    World Politics
+    </category>
+    <category>
+-    Foreign Aid
++    Air Transport Industry
+    </category>
+    <media:group>
+     <media:description>
+-     A spokesperson for Indonesia's President Prabowo Subianto (right) says the country is willing to send up to 8,000 troops.
++     Airspace 16 kilometres around El Paso International Airport was closed for several hours until the FAA rescinded its notice.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/416195a1d35d9fdba9aaa85eaa8a1ba0?impolicy=wcms_crop_resize&amp;cropH=514&amp;cropW=914&amp;xPos=317&amp;yPos=135&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/416195a1d35d9fdba9aaa85eaa8a1ba0?impolicy=wcms_crop_resize&amp;cropH=775&amp;cropW=775&amp;xPos=383&amp;yPos=16&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/416195a1d35d9fdba9aaa85eaa8a1ba0?impolicy=wcms_crop_resize&amp;cropH=514&amp;cropW=771&amp;xPos=374&amp;yPos=129&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/416195a1d35d9fdba9aaa85eaa8a1ba0?impolicy=wcms_crop_resize&amp;cropH=775&amp;cropW=581&amp;xPos=480&amp;yPos=16&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/416195a1d35d9fdba9aaa85eaa8a1ba0?impolicy=wcms_crop_resize&amp;cropH=576&amp;cropW=768&amp;xPos=385&amp;yPos=121&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/416195a1d35d9fdba9aaa85eaa8a1ba0?impolicy=wcms_crop_resize&amp;cropH=775&amp;cropW=436&amp;xPos=552&amp;yPos=16&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/416195a1d35d9fdba9aaa85eaa8a1ba0?impolicy=wcms_crop_resize&amp;cropH=775&amp;cropW=581&amp;xPos=480&amp;yPos=16&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/4b2e07e2358cf5e014646e8648144d07?impolicy=wcms_crop_resize&amp;cropH=2415&amp;cropW=4293&amp;xPos=353&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/4b2e07e2358cf5e014646e8648144d07?impolicy=wcms_crop_resize&amp;cropH=2415&amp;cropW=2415&amp;xPos=1293&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/4b2e07e2358cf5e014646e8648144d07?impolicy=wcms_crop_resize&amp;cropH=2415&amp;cropW=3623&amp;xPos=689&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/4b2e07e2358cf5e014646e8648144d07?impolicy=wcms_crop_resize&amp;cropH=2415&amp;cropW=1811&amp;xPos=1594&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/4b2e07e2358cf5e014646e8648144d07?impolicy=wcms_crop_resize&amp;cropH=2415&amp;cropW=3220&amp;xPos=890&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/4b2e07e2358cf5e014646e8648144d07?impolicy=wcms_crop_resize&amp;cropH=2415&amp;cropW=1358&amp;xPos=1821&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/4b2e07e2358cf5e014646e8648144d07?impolicy=wcms_crop_resize&amp;cropH=2415&amp;cropW=1811&amp;xPos=1594&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    US statement accuses Palau senate president of taking bribes from China
++    China's president makes rare acknowledgement of corruption in army
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-11/us-bars-palau-marshall-islands-officials-for-alleged-corruption/106329288
++    https://www.abc.net.au/news/2026-02-12/xi-jinping-acknowledges-army-corruption-crackdown/106333834
+    </link>
+    <description>
+-    A senior Palau politician rejects accusations from the United States Department of State that he accepted bribes from "government, business, and criminal interests from China".
++    Xi Jinping's comments were the first public admission of issues in China's armed forces since an investigation was launched into senior members of the body that overseas the country's military.
+    </description>
+-   <dc:creator>
+-    Patrick Martin and Evan Wasuka
+-   </dc:creator>
+    <pubDate>
+-    Wed, 11 Feb 2026 07:30:57 +0000
++    Wed, 11 Feb 2026 15:53:47 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-11/us-bars-palau-marshall-islands-officials-for-alleged-corruption/106329288
++    https://www.abc.net.au/news/2026-02-12/xi-jinping-acknowledges-army-corruption-crackdown/106333834
+    </guid>
+    <category>
+     World Politics
+    </category>
+    <media:group>
+     <media:description>
+-     Palau has a Compact of Free Association with the United States.
++     Xi Jinping has spearheaded a corruption crackdown in China since becoming president.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f8f4f552b68f46d6ad839b3dd2c9f5ef?impolicy=wcms_crop_resize&amp;cropH=1407&amp;cropW=2501&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f8f4f552b68f46d6ad839b3dd2c9f5ef?impolicy=wcms_crop_resize&amp;cropH=1751&amp;cropW=1751&amp;xPos=375&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f8f4f552b68f46d6ad839b3dd2c9f5ef?impolicy=wcms_crop_resize&amp;cropH=1668&amp;cropW=2501&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f8f4f552b68f46d6ad839b3dd2c9f5ef?impolicy=wcms_crop_resize&amp;cropH=1751&amp;cropW=1312&amp;xPos=594&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f8f4f552b68f46d6ad839b3dd2c9f5ef?impolicy=wcms_crop_resize&amp;cropH=1751&amp;cropW=2334&amp;xPos=83&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/f8f4f552b68f46d6ad839b3dd2c9f5ef?impolicy=wcms_crop_resize&amp;cropH=1751&amp;cropW=984&amp;xPos=759&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/f8f4f552b68f46d6ad839b3dd2c9f5ef?impolicy=wcms_crop_resize&amp;cropH=1751&amp;cropW=1312&amp;xPos=594&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=1890&amp;cropW=3360&amp;xPos=0&amp;yPos=154&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=2240&amp;xPos=560&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=3360&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=1680&amp;xPos=477&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2236&amp;cropW=2981&amp;xPos=379&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=1260&amp;xPos=694&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/620c842e08db824a72b46c3762efc927?impolicy=wcms_crop_resize&amp;cropH=2240&amp;cropW=1680&amp;xPos=477&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>

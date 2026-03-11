@@ -1,0 +1,225 @@
+--- content_archive/ABC_News.xml	2026-02-14 01:53:27.081719797 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-14 01:54:08.052304224 +0000
+@@ -32,165 +32,144 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
+-    Hundreds of Australians warned after personal details found in scam compound
++    Japan seizes Chinese fishing boat, arrests captain
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-13/australians-targeted-by-cambodian-scam-compound/106335866
++    https://www.abc.net.au/news/2026-02-13/japan-seizes-chinese-fishing-boat-amid-dispute-between-countries/106343816
+    </link>
+    <description>
+-    Australia's National Anti-Scam Centre says documents seized in a raid on a Cambodian scam compound contained the phone numbers, names and addresses of 300 Australians.
++    Japanese authorities have seized a Chinese fishing vessel for the first time since 2022 and it comes against the backdrop of a major diplomatic dispute between the countries.
+    </description>
+-   <dc:creator>
+-    Doug Dingwall
+-   </dc:creator>
+    <pubDate>
+-    Thu, 12 Feb 2026 20:47:20 +0000
++    Fri, 13 Feb 2026 10:35:38 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-13/australians-targeted-by-cambodian-scam-compound/106335866
++    https://www.abc.net.au/news/2026-02-13/japan-seizes-chinese-fishing-boat-amid-dispute-between-countries/106343816
+    </guid>
+    <category>
+-    Scams and Fraud
+-   </category>
+-   <category>
+-    Crime
++    Foreign Affairs
+    </category>
+    <media:group>
+     <media:description>
+-     Work stations in the scam compound had wooden phone booths lined with foam for soundproofing.
++     Japan's Fisheries Agency patrol vessel Hakuo Maru next to the Chinese vessel Qiong Dong Yu which was seized by Japanese authorities.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=336&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=2742&amp;cropW=2742&amp;xPos=2258&amp;yPos=263&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=2500&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=556&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3324&amp;cropW=1870&amp;xPos=3130&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=2500&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/cecf02e4d4f08eb159f2e92e5268ac2f?impolicy=wcms_crop_resize&amp;cropH=1688&amp;cropW=3000&amp;xPos=0&amp;yPos=156&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/cecf02e4d4f08eb159f2e92e5268ac2f?impolicy=wcms_crop_resize&amp;cropH=2000&amp;cropW=2000&amp;xPos=500&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/cecf02e4d4f08eb159f2e92e5268ac2f?impolicy=wcms_crop_resize&amp;cropH=2000&amp;cropW=3000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/cecf02e4d4f08eb159f2e92e5268ac2f?impolicy=wcms_crop_resize&amp;cropH=2000&amp;cropW=1500&amp;xPos=750&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/cecf02e4d4f08eb159f2e92e5268ac2f?impolicy=wcms_crop_resize&amp;cropH=2000&amp;cropW=2667&amp;xPos=167&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/cecf02e4d4f08eb159f2e92e5268ac2f?impolicy=wcms_crop_resize&amp;cropH=2000&amp;cropW=1125&amp;xPos=938&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/cecf02e4d4f08eb159f2e92e5268ac2f?impolicy=wcms_crop_resize&amp;cropH=2000&amp;cropW=1500&amp;xPos=750&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    FBI focuses on backpack clue as Savannah Guthrie shares montage of kidnapped mother
++    US aircraft carrier redeployed from Caribbean as Iran tensions rise
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-13/fbi-raises-reward-releases-new-images-for-nancy-guthrie/106340336
++    https://www.abc.net.au/news/2026-02-13/us-aircraft-carrier-carribbean-middle-east-iran/106342830
+    </link>
+    <description>
+-    The FBI increases its reward and releases new images as part of its investigation into the suspected abduction of US television host Savannah Guthrie's mother, Nancy, from her southern Arizona home.
++    The United States will send the USS Gerald R. Ford aircraft carrier to the Middle East amid escalating tensions with Iran, according to US media outlets.
+    </description>
+-   <dc:creator>
+-    Shari Hams
+-   </dc:creator>
+    <pubDate>
+-    Fri, 13 Feb 2026 01:22:04 +0000
++    Fri, 13 Feb 2026 08:14:31 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-13/fbi-raises-reward-releases-new-images-for-nancy-guthrie/106340336
++    https://www.abc.net.au/news/2026-02-13/us-aircraft-carrier-carribbean-middle-east-iran/106342830
+    </guid>
+    <category>
+-    Missing Person
+-   </category>
+-   <category>
+-    Police
++    Unrest, Conflict and War
+    </category>
+    <media:group>
+     <media:description>
+-     Community members rally behind the search for Nancy Guthrie.
++     The USS Gerald R. Ford, the world's largest aircraft carrier, is on the move from the Caribbean.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=260&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=834&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=278&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1563&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/676dbcfadfb792d73241654225c05e53?impolicy=wcms_crop_resize&amp;cropH=2382&amp;cropW=4234&amp;xPos=0&amp;yPos=221&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/676dbcfadfb792d73241654225c05e53?impolicy=wcms_crop_resize&amp;cropH=2823&amp;cropW=2823&amp;xPos=706&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/676dbcfadfb792d73241654225c05e53?impolicy=wcms_crop_resize&amp;cropH=2823&amp;cropW=4234&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/676dbcfadfb792d73241654225c05e53?impolicy=wcms_crop_resize&amp;cropH=2823&amp;cropW=2117&amp;xPos=1058&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/676dbcfadfb792d73241654225c05e53?impolicy=wcms_crop_resize&amp;cropH=2823&amp;cropW=3764&amp;xPos=235&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/676dbcfadfb792d73241654225c05e53?impolicy=wcms_crop_resize&amp;cropH=2823&amp;cropW=1588&amp;xPos=1323&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/676dbcfadfb792d73241654225c05e53?impolicy=wcms_crop_resize&amp;cropH=2823&amp;cropW=2117&amp;xPos=1058&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Norway's former PM accused of aggravated corruption ties with Epstein
++    Pair who plotted attack on Jews in northern England jailed for life
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-13/norway-former-prime-minister-ties-with-jeffrey-epstein/106339852
++    https://www.abc.net.au/news/2026-02-14/men-who-plotted-gun-attack-on-uk-jews-jailed-for-life/106344876
+    </link>
+    <description>
+-    The files indicate that Thorbjoern Jagland and Jeffrey Epstein's assistants made detailed plans in 2014 for the politician to visit the American in Palm Beach, Florida.
++    A UK court jails two men for life for planning an Islamic State-inspired gun attack on a Jewish gathering in northern England.
+    </description>
+    <pubDate>
+-    Thu, 12 Feb 2026 23:39:12 +0000
++    Sat, 14 Feb 2026 01:38:46 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-13/norway-former-prime-minister-ties-with-jeffrey-epstein/106339852
++    https://www.abc.net.au/news/2026-02-14/men-who-plotted-gun-attack-on-uk-jews-jailed-for-life/106344876
+    </guid>
+    <category>
+-    Police
++    Terrorism
+    </category>
+    <category>
+     Law, Crime and Justice
+    </category>
+    <category>
+-    World Politics
++    Courts
+    </category>
+    <media:group>
+     <media:description>
+-     Norwegian police have searched the homes of Thorbjoern Jagland during an Epstein probe.
++     Amar Hussein (left) and Walid Saadaoui (right) were arrested in May 2024.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1458&amp;cropW=2592&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=1728&amp;xPos=59&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=2592&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=1296&amp;xPos=275&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=2304&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=972&amp;xPos=437&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=1296&amp;xPos=275&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=960&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=540&amp;xPos=209&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=810&amp;xPos=74&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=405&amp;xPos=277&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=720&amp;xPos=119&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=304&amp;xPos=327&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3e90c979f214860b7f37216fd373d2d8?impolicy=wcms_crop_resize&amp;cropH=540&amp;cropW=405&amp;xPos=277&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Trump repeals landmark climate finding
++    New crew launched to International Space Station after medical evacuation
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-13/trump-revokes-basis-of-us-climate-regulation-ends-vehicle-emissi/106339598
++    https://www.abc.net.au/news/2026-02-14/new-crew-launch-towards-international-space-tation/106343980
+    </link>
+    <description>
+-    President Donald Trump's administration has revoked a scientific determination that has been the central basis for US action to fight climate change.
++    The US, French and Russian astronauts are expected to complete the mission in eight to nine months.
+    </description>
+    <pubDate>
+-    Thu, 12 Feb 2026 21:45:46 +0000
++    Fri, 13 Feb 2026 14:11:20 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-13/trump-revokes-basis-of-us-climate-regulation-ends-vehicle-emissi/106339598
++    https://www.abc.net.au/news/2026-02-14/new-crew-launch-towards-international-space-tation/106343980
+    </guid>
+    <category>
+-    Climate Change
+-   </category>
+-   <category>
+-    World Politics
+-   </category>
+-   <category>
+-    Environmental Impact
+-   </category>
+-   <category>
+-    Science and Technology
++    Space
+    </category>
+    <media:group>
+     <media:description>
+-     Donald Trump has revoked the determination that underpinned the country's fight against climate change.
++     From left, pilot Jack Hathaway, Russian cosmonaut Andrei Fedyaev, commander Jessica Meir and ESA astronaut Sophia Adenot, of France, before heading to pad 40 at the Cape Canaveral Space Force Station
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ede4e89ac0ef265155a6640f011b9768?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ede4e89ac0ef265155a6640f011b9768?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=1667&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ede4e89ac0ef265155a6640f011b9768?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ede4e89ac0ef265155a6640f011b9768?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=2321&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ede4e89ac0ef265155a6640f011b9768?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=556&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/ede4e89ac0ef265155a6640f011b9768?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=2605&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/ede4e89ac0ef265155a6640f011b9768?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=2321&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1618&amp;cropW=2877&amp;xPos=0&amp;yPos=150&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=1918&amp;xPos=480&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=2877&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=1439&amp;xPos=496&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=2557&amp;xPos=160&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=1079&amp;xPos=899&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/d0ba7a7273b8498c75b6e065710761ed?impolicy=wcms_crop_resize&amp;cropH=1918&amp;cropW=1439&amp;xPos=496&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>

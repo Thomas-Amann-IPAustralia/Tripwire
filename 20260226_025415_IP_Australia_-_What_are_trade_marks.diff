@@ -1,0 +1,19 @@
+--- content_archive/WIPO_Press.xml	2026-02-18 02:14:20.200127520 +0000
++++ content_archive/WIPO_Press.xml.tmp	2026-02-18 02:14:57.920450077 +0000
+@@ -203,15 +203,15 @@
+    <link>
+     https://www.wipo.int/pressroom/en/articles/2026/article_0002.html
+    </link>
+    <guid>
+     https://www.wipo.int/pressroom/en/articles/2026/article_0002.html
+    </guid>
+    <description>
+     New technologies are spreading across borders at unprecedented pace and gaps are narrowing in how intensively countries are using the innovations, the latest World Intellectual Property Report (WIPR) 2026, Technology on the Move finds.
+    </description>
+    <pubDate>
+-    Thu, 12 Feb 2026 09:00:00 +0100
++    Tue, 17 Feb 2026 09:00:00 +0100
+    </pubDate>
+   </item>
+  </channel>
+ </rss>

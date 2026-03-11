@@ -1,0 +1,147 @@
+--- content_archive/ABC_News.xml	2026-02-12 13:03:21.335373233 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-12 13:03:51.536532093 +0000
+@@ -32,107 +32,101 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
+-    Australian dollar and yen at a level not seen since the 80s
++    Bougainville mine that sparked a civil war on rapid path to reopening
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-11/australian-dollar-japanese-yen-currency-exchange-rate-tourism/106332346
++    https://www.abc.net.au/news/2026-02-12/bougainville-signs-secretive-deal-to-reopen-panguna-mine/106331778
+    </link>
+    <description>
+-    Australia's exchange rate with Japan has grown increasingly favourable to tourists, which have surged to record numbers and topped more than one million visitors in 2025.
++    The Autonomous Bougainville Government signs a secretive deal to reopen the huge Panguna gold and copper mine that sparked a catastrophic civil war three decades ago.
+    </description>
+    <dc:creator>
+-    Doug Dingwall
++    Marian Faa and Theckla Gunga
+    </dc:creator>
+    <pubDate>
+-    Wed, 11 Feb 2026 07:05:07 +0000
++    Wed, 11 Feb 2026 18:52:41 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-11/australian-dollar-japanese-yen-currency-exchange-rate-tourism/106332346
++    https://www.abc.net.au/news/2026-02-12/bougainville-signs-secretive-deal-to-reopen-panguna-mine/106331778
+    </guid>
+    <category>
+-    Travel and Tourism
++    Mining and Metals Industry
+    </category>
+    <category>
+-    Tourism and Leisure Industry
++    Gold
+    </category>
+    <category>
+-    Currency
++    Civil Unrest
+    </category>
+    <category>
+-    Economy
++    Political Leadership
++   </category>
++   <category>
++    Copper
+    </category>
+    <media:group>
+     <media:description>
+-     Japanese tourism destinations including Kyoto are growing increasingly popular.
++     A secretive deal has been signed to fast-track the reopening of the Panguna copper and gold mine.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=521&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=849&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1266&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=294&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1578&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/6a9ac4a6bbfb60b9085d91f59601a707?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1266&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=3991&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2245&amp;xPos=873&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=3368&amp;xPos=312&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2993&amp;xPos=499&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1262&amp;xPos=1365&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    Bougainville mine that sparked a civil war on rapid path to reopening
++    FBI combs desert terrain for clues in Nancy Guthrie's disappearance
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-12/bougainville-signs-secretive-deal-to-reopen-panguna-mine/106331778
++    https://www.abc.net.au/news/2026-02-12/fbi-search-for-nancy-guthrie-continues-suspect-released/106334272
+    </link>
+    <description>
+-    The Autonomous Bougainville Government signs a secretive deal to reopen the huge Panguna gold and copper mine that sparked a catastrophic civil war three decades ago.
++    The man detained for questioning in the investigation into the disappearance of a US TV show host's mother has been released and the search continues.
+    </description>
+-   <dc:creator>
+-    Marian Faa and Theckla Gunga
+-   </dc:creator>
+    <pubDate>
+-    Wed, 11 Feb 2026 18:52:41 +0000
++    Wed, 11 Feb 2026 23:38:11 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-12/bougainville-signs-secretive-deal-to-reopen-panguna-mine/106331778
++    https://www.abc.net.au/news/2026-02-12/fbi-search-for-nancy-guthrie-continues-suspect-released/106334272
+    </guid>
+    <category>
+-    Mining and Metals Industry
+-   </category>
+-   <category>
+-    Gold
++    Crime
+    </category>
+    <category>
+-    Civil Unrest
++    Missing Person
+    </category>
+    <category>
+-    Political Leadership
+-   </category>
+-   <category>
+-    Copper
++    Law, Crime and Justice
+    </category>
+    <media:group>
+     <media:description>
+-     A secretive deal has been signed to fast-track the reopening of the Panguna copper and gold mine.
++     Detectives are continuing to search for clues related to Nancy Guthrie's disappearance.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=3991&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2245&amp;xPos=873&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=3368&amp;xPos=312&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2993&amp;xPos=499&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1262&amp;xPos=1365&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=492&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=909&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1221&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3f21de2a288d6aa35743f8b53f0d68fb?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=909&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+     James Van Der Beek, star of Dawson's Creek, dies aged 48
+    </title>
+    <link>
+     https://www.abc.net.au/news/2026-02-12/james-van-der-beek-dawsons-creek-star-obituary/105821848
+    </link>
+    <description>

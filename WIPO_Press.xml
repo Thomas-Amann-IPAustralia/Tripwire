@@ -1,0 +1,68 @@
+name: Tripwire Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 20 * * 0-4" # 6am Sydney (AEST base), weekdays
+
+permissions:
+  contents: write
+
+jobs:
+  run-tripwire:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for git diff logic
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+          cache: "pip"
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Tripwire Script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python tripwire.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "Tripwire Bot"
+          git config --global user.email "actions@github.com"
+
+          git add audit_log.csv content_archive/ diff_archive/ handover_packets/ llm_verification_results/ 2>/dev/null || true
+
+          if git diff --cached --quiet; then
+            echo "No substantive changes."
+          else
+            git commit -m "Tripwire: Detected changes & recorded diffs [skip ci]"
+            git push
+          fi
+
+      - name: Upload handover packets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: handover-packets-${{ github.run_number }}
+          path: handover_packets/
+          retention-days: 90
+          if-no-files-found: ignore
+
+      - name: Upload LLM verification results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: llm-verification-results-${{ github.run_number }}
+          path: llm_verification_results/
+          retention-days: 90
+          if-no-files-found: ignore

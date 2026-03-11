@@ -1,201 +1,21 @@
-import os
-import sys
-import json
-import numpy as np
-import pytest
-from pathlib import Path
-from unittest.mock import patch
+MIT License
 
-import tripwire
+Copyright (c) 2026 Thomas-Amann-IPAustralia
 
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-@pytest.fixture
-def mock_embeddings_file(tmp_path):
-    """Creates a dummy semantic embeddings file in the correct flat-list format."""
-    file_path = tmp_path / "Semantic_Embeddings_Output.json"
-    data = [
-        {
-            "UDID": "udid-1",
-            "Chunk_ID": "U1_C1",
-            "Chunk_Text": "The penalty for late fees is $250,000.",
-            "Headline_Alt": "Fees and penalties",
-            "Chunk_Embedding": [0.1] * 1536
-        }
-    ]
-    file_path.write_text(json.dumps(data))
-    return file_path
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-
-@pytest.fixture
-def sample_diff(tmp_path):
-    """Creates a sample unified diff file for parsing tests."""
-    diff_path = tmp_path / "test_update.diff"
-    content = (
-        "--- old.txt\n"
-        "+++ new.txt\n"
-        "@@ -1,1 +1,1 @@\n"
-        "-The fee is $100.\n"
-        "+The Penalty is $250,000.\n"
-    )
-    diff_path.write_text(content)
-    return diff_path
-
-
-def test_parse_diff_hunks_logic(sample_diff):
-    """Verifies diff parser using the correct 'added_lines' key."""
-    hunks = tripwire.parse_diff_hunks(str(sample_diff))
-    assert len(hunks) == 1
-    assert any("Penalty" in line for line in hunks[0]['added_lines'])
-
-
-def test_power_words_detection():
-    """Verifies triggers using 'strong_count' and 'score' keys."""
-    text = "A penalty of $250,000 is mandatory."
-    results = tripwire.detect_power_words(text)
-    assert results['strong_count'] > 0
-    assert results['score'] > 0.10
-
-
-def test_calculate_similarity_structure(mock_embeddings_file, sample_diff):
-    """Tests the full analysis pipeline return keys (updated schema)."""
-    with patch('tripwire._embed_texts') as mock_embed:
-        mock_embed.return_value = np.array([[0.1] * 1536])
-
-        with patch('tripwire.SEMANTIC_EMBEDDINGS_FILE', str(mock_embeddings_file)):
-            result = tripwire.calculate_similarity(str(sample_diff), source_priority="High")
-
-            assert result['status'] == 'success'
-            assert 'page_final_score' in result
-            assert 'candidate_count' in result
-
-            # New: change_hunks should carry structured fields for packet output
-            assert 'change_hunks' in result
-            assert isinstance(result['change_hunks'], list)
-            assert 'removed' in result['change_hunks'][0]
-            assert 'added' in result['change_hunks'][0]
-
-
-def test_generate_handover_packets_data_integrity(tmp_path):
-    """Tests packet generation matches revised packet schema (template-based)."""
-    temp_handover = tmp_path / "handover"
-    temp_handover.mkdir()
-
-    with patch('tripwire.HANDOVER_DIR', str(temp_handover)):
-        analysis = {
-            "status": "success",
-            "page_final_score": 0.75,
-            "page_base_similarity": 0.70,
-            "primary_udid": "udid-1",
-            "primary_chunk_id": "U1_C1",
-            "candidate_min_score": tripwire.CANDIDATE_MIN_SCORE,
-            "handover_decision_reason": "High priority source: handover triggered when threshold-passing candidates exist",
-            "power_words": {"found": [], "power_words_found": [], "count": 0},
-            "change_hunks": [
-                {
-                    "hunk_index": 1,
-                    "hunk_header": "@@ -1,1 +1,1 @@",
-                    "removed": ["- The fee is $100."],  # intentionally noisy to test cleaner
-                    "added": ["+ The Penalty is $250,000."],
-                    "hunk_text": "The fee is $100. The Penalty is $250,000.",
-                    "is_noise": False,
-                    "power_words_found": []
-                }
-            ],
-            "threshold_passing_candidates": [
-                {
-                    "udid": "udid-1",
-                    "candidate_rank": 1,
-                    "page_final_score": 0.75,
-                    "page_base_similarity": 0.70,
-                    "relevant_chunk_ids": ["U1_C1"],
-                    "best_chunk_id": "U1_C1",
-                    "best_headline": "Fees and penalties",
-                    "matched_hunk_indices": [1]
-                }
-            ]
-        }
-
-        paths = tripwire.generate_handover_packets(
-            source_name="Test Source",
-            priority="High",
-            version_id="v1",
-            diff_file="test.diff",
-            analysis=analysis,
-            timestamp="2026-03-04T09:15:12Z"
-        )
-
-        assert len(paths) == 1
-        with open(paths[0], 'r', encoding='utf-8') as f:
-            packet = json.load(f)
-
-        # Top-level keys
-        assert "audit_summary" in packet
-        assert "source_change_details" in packet
-        assert "llm_verification_targets" in packet
-
-        # Required additions
-        assert "primary_candidate_explanation" in packet["audit_summary"]
-        assert packet["audit_summary"]["primary_candidate_explanation"]["best_chunk_id"] == "U1_C1"
-
-        targets = packet["llm_verification_targets"]
-        assert len(targets) == 1
-        assert targets[0]["udid"] == "udid-1"
-        assert "page_final_score" in targets[0]
-        assert "evidence_resolution" in targets[0]
-        assert targets[0]["evidence_resolution"]["requires_resolution"] is True
-
-        # Hunk cleaner should remove +/-
-        hunks = packet["source_change_details"]["hunks"]
-        assert hunks[0]["removed"][0].startswith("-") is False
-        assert hunks[0]["added"][0].startswith("+") is False
-
-
-def test_handover_batching_limit(tmp_path):
-    """Ensures large candidate lists are split into multiple files (revised schema)."""
-    temp_handover = tmp_path / "batches"
-    temp_handover.mkdir()
-
-    with patch('tripwire.HANDOVER_DIR', str(temp_handover)):
-        with patch('tripwire.MAX_CANDIDATES_PER_PACKET', 2):
-            analysis = {
-                "status": "success",
-                "page_final_score": 0.8,
-                "page_base_similarity": 0.8,
-                "primary_udid": "U0",
-                "primary_chunk_id": "U0_C0",
-                "candidate_min_score": tripwire.CANDIDATE_MIN_SCORE,
-                "handover_decision_reason": "High priority source: handover triggered when threshold-passing candidates exist",
-                "power_words": {"found": [], "power_words_found": [], "count": 0},
-                "change_hunks": [],
-                "threshold_passing_candidates": [
-                    {
-                        "udid": f"U{i}",
-                        "candidate_rank": i + 1,
-                        "page_final_score": 0.8,
-                        "page_base_similarity": 0.8,
-                        "best_chunk_id": f"U{i}_C1",
-                        "relevant_chunk_ids": [f"U{i}_C1"],
-                        "matched_hunk_indices": []
-                    }
-                    for i in range(5)
-                ]
-            }
-
-            paths = tripwire.generate_handover_packets(
-                source_name="Big Bill",
-                priority="High",
-                version_id="v1",
-                diff_file="big.diff",
-                analysis=analysis,
-                timestamp="2026-03-04T09:15:12Z"
-            )
-
-            # 5 candidates / 2 per packet = 3 packets
-            assert len(paths) == 3
-
-            # Validate batching metadata in one packet
-            with open(paths[0], 'r', encoding='utf-8') as f:
-                packet0 = json.load(f)
-            batching = packet0["audit_summary"]["batching"]
-            assert batching["candidate_batch_count"] == 3
-            assert batching["candidates_in_this_packet"] == 2
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

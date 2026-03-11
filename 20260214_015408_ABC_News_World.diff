@@ -1,0 +1,84 @@
+--- content_archive/ABC_News.xml	2026-02-13 18:44:11.645485897 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-13 18:45:04.441793410 +0000
+@@ -70,63 +70,54 @@
+     <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=2742&amp;cropW=2742&amp;xPos=2258&amp;yPos=263&amp;width=862&amp;height=862" width="862"/>
+     <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+     <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=2500&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+     <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=556&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+     <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3324&amp;cropW=1870&amp;xPos=3130&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+     <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/01c69143d42cfac9e8af7dd6ac405fd6?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=2500&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    ICE to withdraw from Minnesota, Trump's border tsar announces
++    FBI focuses on backpack clue as Savannah Guthrie shares montage of kidnapped mother
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-13/ice-withdrawal-minnesota-homan-trump-tsar/106339228
++    https://www.abc.net.au/news/2026-02-13/fbi-raises-reward-releases-new-images-for-nancy-guthrie/106340336
+    </link>
+    <description>
+-    An immigration crackdown in the Midwestern state has been marred by protests and public anger after the shooting of two US citizens by federal agents.
++    The FBI increases its reward and releases new images as part of its investigation into the suspected abduction of US television host Savannah Guthrie's mother, Nancy, from her southern Arizona home.
+    </description>
++   <dc:creator>
++    Shari Hams
++   </dc:creator>
+    <pubDate>
+-    Thu, 12 Feb 2026 15:58:00 +0000
++    Fri, 13 Feb 2026 01:22:04 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-13/ice-withdrawal-minnesota-homan-trump-tsar/106339228
++    https://www.abc.net.au/news/2026-02-13/fbi-raises-reward-releases-new-images-for-nancy-guthrie/106340336
+    </guid>
+    <category>
+-    Immigration
++    Missing Person
+    </category>
+    <category>
+-    World Politics
+-   </category>
+-   <category>
+-    Government and Politics
+-   </category>
+-   <category>
+-    Law, Crime and Justice
+-   </category>
+-   <category>
+-    Community and Society
+-   </category>
+-   <category>
+-    Refugees
++    Police
+    </category>
+    <media:group>
+     <media:description>
+-     Two fatal shootings of US citizens during the Minnesota crackdown have triggered widespread backlash.
++     Community members rally behind the search for Nancy Guthrie.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=260&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=834&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=278&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1563&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=260&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=834&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=278&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1563&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/92ffae1f7b98d2a1902b5e822708b234?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+     Norway's former PM accused of aggravated corruption ties with Epstein
+    </title>
+    <link>
+     https://www.abc.net.au/news/2026-02-13/norway-former-prime-minister-ties-with-jeffrey-epstein/106339852
+    </link>
+    <description>

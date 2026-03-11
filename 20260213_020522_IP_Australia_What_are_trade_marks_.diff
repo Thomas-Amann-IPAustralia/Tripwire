@@ -1,0 +1,221 @@
+--- content_archive/ABC_News.xml	2026-02-13 02:04:46.745090281 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-13 02:05:10.551470665 +0000
+@@ -32,52 +32,20 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
+-    UK police vow speedy decision over Andrew-Epstein trade documents
+-   </title>
+-   <link>
+-    https://www.abc.net.au/news/2026-02-12/andrew-mountbatten-windsor-police-epstein-files-investigation/106334742
+-   </link>
+-   <description>
+-    British police say they are "making progress as quickly as possible" on whether to launch a full investigation into allegations that Andrew Mountbatten-Windsor shared confidential trade documents with late financier and sex offender Jeffrey Epstein.
+-   </description>
+-   <pubDate>
+-    Thu, 12 Feb 2026 01:34:20 +0000
+-   </pubDate>
+-   <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-12/andrew-mountbatten-windsor-police-epstein-files-investigation/106334742
+-   </guid>
+-   <category>
+-    Royalty
+-   </category>
+-   <media:group>
+-    <media:description>
+-     Andrew Mountbatten-Windsor has not spoken publicly since the latest Epstein files were released.
+-    </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=1063&amp;cropW=1889&amp;xPos=0&amp;yPos=629&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=1889&amp;cropW=1889&amp;xPos=0&amp;yPos=216&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=1259&amp;cropW=1889&amp;xPos=0&amp;yPos=531&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=2519&amp;cropW=1889&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=1417&amp;cropW=1889&amp;xPos=0&amp;yPos=452&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=2849&amp;cropW=1603&amp;xPos=98&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/a90462b0f54e8ee696b0378386b6e3b3?impolicy=wcms_crop_resize&amp;cropH=2519&amp;cropW=1889&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-   </media:group>
+-  </item>
+-  <item>
+-   <title>
+     Bougainville mine that sparked a civil war on rapid path to reopening
+    </title>
+    <link>
+     https://www.abc.net.au/news/2026-02-12/bougainville-signs-secretive-deal-to-reopen-panguna-mine/106331778
+    </link>
+    <description>
+     The Autonomous Bougainville Government signs a secretive deal to reopen the huge Panguna gold and copper mine that sparked a catastrophic civil war three decades ago.
+    </description>
+    <dc:creator>
+     Marian Faa and Theckla Gunga
+@@ -111,89 +79,133 @@
+     <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2245&amp;xPos=873&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+     <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=3368&amp;xPos=312&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+     <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+     <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=2993&amp;xPos=499&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+     <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1262&amp;xPos=1365&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+     <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/32234a42238bb36d8eddc2fae37114c2?impolicy=wcms_crop_resize&amp;cropH=2245&amp;cropW=1684&amp;xPos=1154&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    'No way negotiable': Iran draws a red line on its ballistic missiles
++    Former PM's son leads party to victory in post-uprising Bangladeshi election
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-12/iran-ballistic-missile-program-weapons-us-talks-trump/106307798
++    https://www.abc.net.au/news/2026-02-13/bangladesh-nationalist-party-wins-first-election-since-uprising/106338732
+    </link>
+    <description>
+-    Iran has spent decades building the largest and most diverse ballistic missile stockpile in the Middle East and is refusing US demands to put limits on the weapons program.
++    The Bangladesh Nationalist Party has won a landmark parliamentary election, according to local TV stations, securing a resounding mandate in a pivotal vote.
+    </description>
+    <dc:creator>
+-    Annika Burgess
++    Allyson Horn
+    </dc:creator>
+    <pubDate>
+-    Wed, 11 Feb 2026 19:28:41 +0000
++    Fri, 13 Feb 2026 01:41:45 +0000
++   </pubDate>
++   <guid isPermaLink="true">
++    https://www.abc.net.au/news/2026-02-13/bangladesh-nationalist-party-wins-first-election-since-uprising/106338732
++   </guid>
++   <category>
++    National Elections
++   </category>
++   <category>
++    World Politics
++   </category>
++   <media:group>
++    <media:description>
++     Tarique Rahman will become the country's prime minister.
++    </media:description>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/b24ba06395630e77be2fbd47ca7a713a?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=261&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/b24ba06395630e77be2fbd47ca7a713a?impolicy=wcms_crop_resize&amp;cropH=3334&amp;cropW=3334&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/b24ba06395630e77be2fbd47ca7a713a?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/b24ba06395630e77be2fbd47ca7a713a?impolicy=wcms_crop_resize&amp;cropH=3334&amp;cropW=2501&amp;xPos=400&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/b24ba06395630e77be2fbd47ca7a713a?impolicy=wcms_crop_resize&amp;cropH=3334&amp;cropW=4445&amp;xPos=4&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/b24ba06395630e77be2fbd47ca7a713a?impolicy=wcms_crop_resize&amp;cropH=3334&amp;cropW=1875&amp;xPos=853&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/b24ba06395630e77be2fbd47ca7a713a?impolicy=wcms_crop_resize&amp;cropH=3334&amp;cropW=2501&amp;xPos=400&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++   </media:group>
++  </item>
++  <item>
++   <title>
++    ICE to withdraw from Minnesota, Trump's border tsar announces
++   </title>
++   <link>
++    https://www.abc.net.au/news/2026-02-13/ice-withdrawal-minnesota-homan-trump-tsar/106339228
++   </link>
++   <description>
++    An immigration crackdown in the Midwestern state has been marred by protests and public anger after the shooting of two US citizens by federal agents.
++   </description>
++   <pubDate>
++    Thu, 12 Feb 2026 15:58:00 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-12/iran-ballistic-missile-program-weapons-us-talks-trump/106307798
++    https://www.abc.net.au/news/2026-02-13/ice-withdrawal-minnesota-homan-trump-tsar/106339228
+    </guid>
+    <category>
+-    Weapons
++    Immigration
+    </category>
+    <category>
+     World Politics
+    </category>
+    <category>
+-    Unrest, Conflict and War
++    Government and Politics
++   </category>
++   <category>
++    Law, Crime and Justice
++   </category>
++   <category>
++    Community and Society
++   </category>
++   <category>
++    Refugees
+    </category>
+    <media:group>
+     <media:description>
+-     Iran has reportedly already replenished a lot of its missile stocks depleted in the 12-day war.
++     Two fatal shootings of US citizens during the Minnesota crackdown have triggered widespread backlash.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=521&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=366&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=783&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1095&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/791049da0bf8cd3e41021010c39682db?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=783&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=2813&amp;cropW=5000&amp;xPos=0&amp;yPos=260&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=3333&amp;xPos=834&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=5000&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=4444&amp;xPos=278&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=1875&amp;xPos=1563&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/0303a628e26925dd3e5831056b03ec62?impolicy=wcms_crop_resize&amp;cropH=3333&amp;cropW=2500&amp;xPos=1250&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+   <item>
+    <title>
+-    IOC disqualifies Ukrainian skeleton racer over tribute helmet
++    Norway's former PM accused of aggravated corruption ties with Epstein
+    </title>
+    <link>
+-    https://www.abc.net.au/news/2026-02-12/olympics-ukrainian-vladyslav-heraskevych-disqualified-helmet/106338586
++    https://www.abc.net.au/news/2026-02-13/norway-former-prime-minister-ties-with-jeffrey-epstein/106339852
+    </link>
+    <description>
+-    Vladyslav Heraskevych is disqualified over his customised helmet featuring the faces of Ukrainian athletes and coaches killed in the Russia-Ukraine war.
++    The files indicate that Thorbjoern Jagland and Jeffrey Epstein's assistants made detailed plans in 2014 for the politician to visit the American in Palm Beach, Florida.
+    </description>
+    <pubDate>
+-    Thu, 12 Feb 2026 09:55:51 +0000
++    Thu, 12 Feb 2026 23:39:12 +0000
+    </pubDate>
+    <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-12/olympics-ukrainian-vladyslav-heraskevych-disqualified-helmet/106338586
++    https://www.abc.net.au/news/2026-02-13/norway-former-prime-minister-ties-with-jeffrey-epstein/106339852
+    </guid>
+    <category>
+-    Winter Olympic Games
++    Police
+    </category>
+    <category>
+-    Skeleton
++    Law, Crime and Justice
+    </category>
+    <category>
+-    Unrest, Conflict and War
++    World Politics
+    </category>
+    <media:group>
+     <media:description>
+-     Ukraine's Vladyslav Heraskevych has been disqualified from the Winter Olympics.
++     Norwegian police have searched the homes of Thorbjoern Jagland during an Epstein probe.
+     </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1296&amp;cropW=2304&amp;xPos=0&amp;yPos=43&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=1536&amp;xPos=418&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=2304&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=1152&amp;xPos=616&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=2048&amp;xPos=128&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=864&amp;xPos=750&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3402d171472a59128bfbd9f896d32cfd?impolicy=wcms_crop_resize&amp;cropH=1536&amp;cropW=1152&amp;xPos=616&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1458&amp;cropW=2592&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=1728&amp;xPos=59&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=2592&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=1296&amp;xPos=275&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=2304&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=972&amp;xPos=437&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/99d610daa7ca4111115a393ac4cef055?impolicy=wcms_crop_resize&amp;cropH=1728&amp;cropW=1296&amp;xPos=275&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
+  </channel>
+ </rss>

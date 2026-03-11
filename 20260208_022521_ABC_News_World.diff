@@ -1,0 +1,115 @@
+--- content_archive/ABC_News.xml	2026-02-07 12:43:12.623680448 +0000
++++ content_archive/ABC_News.xml.tmp	2026-02-07 12:43:59.173765986 +0000
+@@ -32,61 +32,20 @@
+    </title>
+    <url>
+     https://live-production.wcms.abc-cdn.net.au/6f61ef606af0bbbcbdaa7c6173a677e2?impolicy=wcms_crop_resize&amp;cropH=144&amp;cropW=144&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=862
+    </url>
+    <link>
+     https://www.abc.net.au/news/world/
+    </link>
+   </image>
+   <item>
+    <title>
+-    US senators reportedly want SpaceX probed for potential Chinese ownership
+-   </title>
+-   <link>
+-    https://www.abc.net.au/news/2026-02-06/pentagon-asked-to-probe-spacex-chinese-ownership/106311868
+-   </link>
+-   <description>
+-    Chinese investment in Elon Musk's company SpaceX has been cited as a "national security threat", according to senators Elizabeth Warren and Andy Kim.
+-   </description>
+-   <dc:creator>
+-    Lewis Wiseman
+-   </dc:creator>
+-   <pubDate>
+-    Fri, 06 Feb 2026 09:14:31 +0000
+-   </pubDate>
+-   <guid isPermaLink="true">
+-    https://www.abc.net.au/news/2026-02-06/pentagon-asked-to-probe-spacex-chinese-ownership/106311868
+-   </guid>
+-   <category>
+-    World Politics
+-   </category>
+-   <category>
+-    Security Intelligence
+-   </category>
+-   <category>
+-    Space Exploration
+-   </category>
+-   <media:group>
+-    <media:description>
+-     SpaceX currently has deals for 28 planned National Security Space Launch missions.
+-    </media:description>
+-    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/2b33673804dfcbfe28b41212a438099e?impolicy=wcms_crop_resize&amp;cropH=1969&amp;cropW=3500&amp;xPos=0&amp;yPos=77&amp;width=862&amp;height=485" width="862"/>
+-    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/2b33673804dfcbfe28b41212a438099e?impolicy=wcms_crop_resize&amp;cropH=2074&amp;cropW=2074&amp;xPos=1426&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+-    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/2b33673804dfcbfe28b41212a438099e?impolicy=wcms_crop_resize&amp;cropH=2074&amp;cropW=3111&amp;xPos=389&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+-    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/2b33673804dfcbfe28b41212a438099e?impolicy=wcms_crop_resize&amp;cropH=2074&amp;cropW=1555&amp;xPos=1765&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/2b33673804dfcbfe28b41212a438099e?impolicy=wcms_crop_resize&amp;cropH=2074&amp;cropW=2765&amp;xPos=735&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+-    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/2b33673804dfcbfe28b41212a438099e?impolicy=wcms_crop_resize&amp;cropH=2074&amp;cropW=1167&amp;xPos=1960&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+-    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/2b33673804dfcbfe28b41212a438099e?impolicy=wcms_crop_resize&amp;cropH=2074&amp;cropW=1555&amp;xPos=1765&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+-   </media:group>
+-  </item>
+-  <item>
+-   <title>
+     How Epstein's ties to the 'Prince of Darkness' could bring down Britain's PM
+    </title>
+    <link>
+     https://www.abc.net.au/news/2026-02-07/starmer-uk-pm-mandelson-epstein-files-calls-to-resign/106315470
+    </link>
+    <description>
+     Sir Keir Starmer led Labour to a landslide election victory two years ago, but in the past week, things have unravelled for the British prime minister. What went wrong?
+    </description>
+    <dc:creator>
+     Cason Ho
+@@ -176,12 +135,50 @@
+     </media:description>
+     <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/afe304ecf3685136b7a0a81bc8bc0ddf?impolicy=wcms_crop_resize&amp;cropH=2350&amp;cropW=4178&amp;xPos=0&amp;yPos=1&amp;width=862&amp;height=485" width="862"/>
+     <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/afe304ecf3685136b7a0a81bc8bc0ddf?impolicy=wcms_crop_resize&amp;cropH=2352&amp;cropW=2352&amp;xPos=913&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
+     <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/afe304ecf3685136b7a0a81bc8bc0ddf?impolicy=wcms_crop_resize&amp;cropH=2352&amp;cropW=3528&amp;xPos=325&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
+     <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/afe304ecf3685136b7a0a81bc8bc0ddf?impolicy=wcms_crop_resize&amp;cropH=2352&amp;cropW=1764&amp;xPos=1207&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+     <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/afe304ecf3685136b7a0a81bc8bc0ddf?impolicy=wcms_crop_resize&amp;cropH=2352&amp;cropW=3136&amp;xPos=521&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
+     <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/afe304ecf3685136b7a0a81bc8bc0ddf?impolicy=wcms_crop_resize&amp;cropH=2352&amp;cropW=1323&amp;xPos=1428&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
+     <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/afe304ecf3685136b7a0a81bc8bc0ddf?impolicy=wcms_crop_resize&amp;cropH=2352&amp;cropW=1764&amp;xPos=1207&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
+    </media:group>
+   </item>
++  <item>
++   <title>
++    Jeers, cheers and pleas for peace kick off Milano Cortina 2026
++   </title>
++   <link>
++    https://www.abc.net.au/news/2026-02-07/winter-olympics-2026-opening-ceremony-chilly-global-outlook/106316092
++   </link>
++   <description>
++    As the Milano Cortina 2026 Winter Olympics Opening ceremony pleads a message of peace, the world outside the Olympic bubble burns.
++   </description>
++   <dc:creator>
++    Simon Smale
++   </dc:creator>
++   <pubDate>
++    Fri, 06 Feb 2026 23:59:27 +0000
++   </pubDate>
++   <guid isPermaLink="true">
++    https://www.abc.net.au/news/2026-02-07/winter-olympics-2026-opening-ceremony-chilly-global-outlook/106316092
++   </guid>
++   <category>
++    Winter Olympic Games
++   </category>
++   <category>
++    Sport
++   </category>
++   <media:group>
++    <media:description>
++     The 25th Winter Olympic Games have begun.
++    </media:description>
++    <media:content height="485" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f3513f01bd205ce0ae4184f41d68359?impolicy=wcms_crop_resize&amp;cropH=1747&amp;cropW=3106&amp;xPos=261&amp;yPos=0&amp;width=862&amp;height=485" width="862"/>
++    <media:content height="862" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f3513f01bd205ce0ae4184f41d68359?impolicy=wcms_crop_resize&amp;cropH=2360&amp;cropW=2360&amp;xPos=617&amp;yPos=0&amp;width=862&amp;height=862" width="862"/>
++    <media:content height="575" isDefault="true" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f3513f01bd205ce0ae4184f41d68359?impolicy=wcms_crop_resize&amp;cropH=2360&amp;cropW=3540&amp;xPos=0&amp;yPos=0&amp;width=862&amp;height=575" width="862"/>
++    <media:content height="1149" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f3513f01bd205ce0ae4184f41d68359?impolicy=wcms_crop_resize&amp;cropH=2360&amp;cropW=1770&amp;xPos=930&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++    <media:content height="647" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f3513f01bd205ce0ae4184f41d68359?impolicy=wcms_crop_resize&amp;cropH=2360&amp;cropW=3147&amp;xPos=201&amp;yPos=0&amp;width=862&amp;height=647" width="862"/>
++    <media:content height="1533" medium="image" type="image/jpeg" url="https://live-production.wcms.abc-cdn.net.au/3f3513f01bd205ce0ae4184f41d68359?impolicy=wcms_crop_resize&amp;cropH=2360&amp;cropW=1328&amp;xPos=1110&amp;yPos=0&amp;width=862&amp;height=1533" width="862"/>
++    <media:thumbnail height="1149" url="https://live-production.wcms.abc-cdn.net.au/3f3513f01bd205ce0ae4184f41d68359?impolicy=wcms_crop_resize&amp;cropH=2360&amp;cropW=1770&amp;xPos=930&amp;yPos=0&amp;width=862&amp;height=1149" width="862"/>
++   </media:group>
++  </item>
+  </channel>
+ </rss>
