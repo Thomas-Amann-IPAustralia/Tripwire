@@ -1,3 +1,0 @@
-Timestamp,Source_Name,Priority,Version_ID,Diff_File,Analysis_Status,Should_Handover,Decision_Reason,Final_Score,Candidate_Count,Strong_Power_Words,Power_Word_Score,Top_Candidate_UDIDs,Packets_Generated
-2026-02-27T03:35:34.604339,IP Australia - What are trade marks?,Medium,"""69a01a2b-2fa44""",20260227_033532_IP_Australia_-_What_are_trade_marks.diff,success,True,Primary score 0.587 >= medium threshold 0.450,0.5871372983956116,40,0,0.0,"C1004, C1007, B1005, E1009, D1039, 101-8, D1005, C1006, D1016, D1001",1
-2026-03-08T20:36:31.826943,WIPO Press Room,Low,7350,20260308_203629_WIPO_Press_Room.diff,success,False,Primary score 0.489 < low threshold 0.500,0.48904806547876273,35,0,0.0,"D1018, E1020, C1003, D1017, D1022, C1007, E1021, B1009, D1005, E1006",0
