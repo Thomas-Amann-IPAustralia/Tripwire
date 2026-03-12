@@ -35,7 +35,8 @@ jobs:
         with:
           name: llm-eval-results-${{ github.run_number }}
           path: |
-            llm_verification_results/
             handover_packets/
+            llm_verification_results/
+            llm_update_suggestions/
           retention-days: 30
           if-no-files-found: ignore
