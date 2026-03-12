@@ -75,7 +75,7 @@ SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
 # --- IPFR content archive for LLM verification (prototype) ---
 # NOTE: Prototype only. We resolve UDIDs to content files by filename patterns within IPFR_CONTENT_ARCHIVE_DIR.
 # In production, prefer an explicit UDID->file map generated during the IPFR export pipeline.
-IPFR_CONTENT_ARCHIVE_DIR = os.environ.get("IPFR_CONTENT_ARCHIVE_DIR", "ipfr_content_archive")
+IPFR_CONTENT_ARCHIVE_DIR = os.environ.get("IPFR_CONTENT_ARCHIVE_DIR", "IPFR_content_archive")
 LLM_VERIFY_DIR = os.environ.get("LLM_VERIFY_DIR", "llm_verification_results")
 UPDATE_SUGGESTIONS_DIR = os.environ.get("UPDATE_SUGGESTIONS_DIR", "llm_update_suggestions")
 
