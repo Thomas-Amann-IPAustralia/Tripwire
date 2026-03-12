@@ -8,6 +8,7 @@ import logging
 import re
 import difflib
 from typing import List, Dict, Optional, Tuple
+import unicodedata
 
 # --- Optional Web/Doc imports ---
 try:
@@ -120,6 +121,115 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger("Tripwire")
 
 _semantic_cache = None
+
+
+def canonical_chunk_id(value: Optional[str]) -> str:
+    """Return a tolerant canonical form for chunk_id comparisons.
+
+    Minimum Stage 5 fix:
+    - normalise unicode
+    - replace non-breaking spaces with normal spaces
+    - trim outer whitespace
+    - collapse internal whitespace
+    - compare case-insensitively
+    """
+    if value is None:
+        return ""
+    s = unicodedata.normalize("NFKC", str(value))
+    s = s.replace("\u00A0", " ").replace("\u200B", "")
+    s = re.sub(r"\s+", " ", s).strip()
+    return s.lower()
+
+
+def format_relevant_diff_text(relevant_hunks: List[dict]) -> str:
+    """Flatten matched diff hunks into a reviewer-friendly text block."""
+    blocks: List[str] = []
+    for idx, h in enumerate(relevant_hunks or [], start=1):
+        removed = "\n".join([f"- {ln}" for ln in (h.get("removed") or []) if str(ln).strip()])
+        added = "\n".join([f"+ {ln}" for ln in (h.get("added") or []) if str(ln).strip()])
+        header = (h.get("location_header") or h.get("hunk_header") or f"hunk {h.get('hunk_id', idx)}").strip()
+        body = "\n".join([part for part in [removed, added] if part.strip()]).strip()
+        blocks.append(f"[{header}]\n{body}" if body else f"[{header}]")
+    return "\n\n".join([b for b in blocks if b.strip()]).strip()
+
+
+def build_update_review_queue_rows_from_payload(payload: dict, suggestion_file: str = "") -> List[dict]:
+    """Flatten a Stage 5 suggestion payload into one review row per suggested change."""
+    rows: List[dict] = []
+    source_name = str(payload.get("source_name") or "")
+    version_id = str(payload.get("version_id") or "")
+    diff_file = str(payload.get("diff_file") or "")
+    generated_at = str(payload.get("generated_at") or "")
+    model_used = str(payload.get("model_used") or "")
+    overall_status = str(payload.get("status") or "")
+
+    for page in payload.get("pages", []) or []:
+        if not isinstance(page, dict):
+            continue
+        udid = str(page.get("udid") or "")
+
+        for suggestion in page.get("confirmed_update_suggestions", []) or []:
+            if not isinstance(suggestion, dict):
+                continue
+            rows.append({
+                "Run Timestamp": generated_at,
+                "Source Name": source_name,
+                "Version ID": version_id,
+                "Diff File": diff_file,
+                "UDID": udid,
+                "Chunk ID": str(suggestion.get("chunk_id") or ""),
+                "Suggestion Status": str(suggestion.get("status") or overall_status),
+                "Update Required": str(suggestion.get("update_required", "")),
+                "Relevant Diff Text": str(suggestion.get("relevant_diff_text") or ""),
+                "Reason For Change": str(suggestion.get("reason") or ""),
+                "Suggested Text": str(suggestion.get("proposed_replacement_text") or ""),
+                "Model Used": model_used,
+                "Update Suggestion File": suggestion_file or "",
+            })
+
+        for review_item in page.get("additional_chunks_to_review", []) or []:
+            if not isinstance(review_item, dict):
+                continue
+            rows.append({
+                "Run Timestamp": generated_at,
+                "Source Name": source_name,
+                "Version ID": version_id,
+                "Diff File": diff_file,
+                "UDID": udid,
+                "Chunk ID": str(review_item.get("chunk_id") or ""),
+                "Suggestion Status": "review_only",
+                "Update Required": "",
+                "Relevant Diff Text": "",
+                "Reason For Change": str(review_item.get("reason") or review_item.get("evidence_quote") or ""),
+                "Suggested Text": "",
+                "Model Used": model_used,
+                "Update Suggestion File": suggestion_file or "",
+            })
+    return rows
+
+
+def write_update_review_queue_csv_from_suggestion_files(suggestion_paths: List[str], output_path: str = "update_review_queue.csv") -> str:
+    """Write a flat, human-readable review queue from Stage 5 suggestion files."""
+    headers = [
+        "Run Timestamp", "Source Name", "Version ID", "Diff File", "UDID", "Chunk ID",
+        "Suggestion Status", "Update Required", "Relevant Diff Text", "Reason For Change",
+        "Suggested Text", "Model Used", "Update Suggestion File"
+    ]
+    rows: List[dict] = []
+    for suggestion_path in suggestion_paths or []:
+        if not suggestion_path or not os.path.exists(suggestion_path):
+            continue
+        with open(suggestion_path, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+        rows.extend(build_update_review_queue_rows_from_payload(payload, suggestion_file=suggestion_path))
+
+    with open(output_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=headers)
+        writer.writeheader()
+        for row in rows:
+            safe = {h: row.get(h, "") for h in headers}
+            writer.writerow(safe)
+    return output_path
 
 
 # ---------------------------
@@ -2227,20 +2337,32 @@ def run_llm_update_suggestions_for_verification_files(
             resolved = resolve_ipfr_content_files(udid, prefer_test_files=prefer_test_files)
             md_text = _read_text_file(resolved.get("markdown_path")) or ""
             chunks = parse_markdown_chunks(md_text)
-            chunk_map = {c.get("chunk_id"): (c.get("text") or "").strip() for c in chunks if c.get("chunk_id")}
+            chunk_map = {
+                canonical_chunk_id(c.get("chunk_id")): {
+                    "chunk_id": c.get("chunk_id"),
+                    "text": (c.get("text") or "").strip(),
+                }
+                for c in chunks
+                if c.get("chunk_id")
+            }
 
             confirmed_update_suggestions = []
             additional_review_out = sorted(page.get("additional_chunks_to_review", {}).values(), key=lambda x: x.get("chunk_id", ""))
 
             for chunk_id, chunk_meta in sorted((page.get("confirmed_chunks") or {}).items()):
                 total_confirmed_chunks += 1
-                current_chunk_text = chunk_map.get(chunk_id, "").strip()
+                canonical_id = canonical_chunk_id(chunk_id)
+                resolved_chunk = chunk_map.get(canonical_id) or {}
+                current_chunk_text = str(resolved_chunk.get("text") or "").strip()
+                relevant_diff_text = format_relevant_diff_text(chunk_meta.get("relevant_hunks") or [])
                 if not current_chunk_text:
                     failure_count += 1
                     confirmed_update_suggestions.append({
                         "chunk_id": chunk_id,
+                        "resolved_markdown_chunk_id": str(resolved_chunk.get("chunk_id") or ""),
                         "update_required": False,
                         "reason": "Could not resolve authoritative markdown chunk text for this chunk_id.",
+                        "relevant_diff_text": relevant_diff_text,
                         "proposed_replacement_text": "",
                         "status": "unresolved_chunk"
                     })
@@ -2264,8 +2386,10 @@ def run_llm_update_suggestions_for_verification_files(
 
                 confirmed_update_suggestions.append({
                     "chunk_id": chunk_id,
+                    "resolved_markdown_chunk_id": str(resolved_chunk.get("chunk_id") or chunk_id),
                     "update_required": update_required,
                     "reason": reason,
+                    "relevant_diff_text": relevant_diff_text,
                     "proposed_replacement_text": replacement,
                     "status": "suggested" if reason else "suggested",
                 })
