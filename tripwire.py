@@ -2573,9 +2573,7 @@ def main():
 
                     analysis = calculate_similarity(diff_path, source_priority=priority)
 
-                    analysis = calculate_similarity(diff_path, source_priority=priority)
-
-                    # Stage 3 → write similarity scoring + routing decision into audit_log.csv (no llm_handover_log.csv)
+                    # Stage 3 → write similarity scoring + routing decision into audit_log.csv
                     if analysis.get('status') == 'success':
                         s3_outcome = 'filtered'
                         if analysis.get('should_handover'):
@@ -2604,7 +2602,6 @@ def main():
                             reason=s3_reason
                         )
                     else:
-                        # Similarity stage failed; still record the change event.
                         log_to_audit(
                             name=name,
                             priority=priority,
@@ -2615,7 +2612,6 @@ def main():
                             outcome="similarity_error",
                             reason=(analysis.get('message') or analysis.get('status') or 'Stage 3 failed')
                         )
-
 
                 elif repopulate_only:
                     log_to_audit(name, priority, "Success", "Healed", current_id)
@@ -2634,20 +2630,30 @@ def main():
         except Exception:
             pass
 
-    # Stage 4 (prototype): always verify packets via a single LLM call
+    # --- Stages 4 & 5 (LLM Verification and Suggestions) ---
     if handover_paths:
         logger.info(
             f"Running LLM verification on {len(handover_paths)} handover packet(s) "
             f"(top N candidates per packet = {TOP_N_VERIFICATION_CANDIDATES})."
         )
         verification_paths = run_llm_verification_for_packets(handover_paths)
+        
         if verification_paths:
             logger.info(f"Wrote {len(verification_paths)} LLM verification result file(s) to {LLM_VERIFY_DIR}.")
+            
+            # Generate the draft content updates
             suggestion_paths = run_llm_update_suggestions_for_verification_files(verification_paths)
+            
             if suggestion_paths:
                 logger.info(f"Wrote {len(suggestion_paths)} Stage 5 update suggestion file(s) to {UPDATE_SUGGESTIONS_DIR}.")
+                
+                # NEW: Generate the consolidated human-readable review queue CSV
+                queue_file = "update_review_queue.csv"
+                write_update_review_queue_csv_from_suggestion_files(suggestion_paths, output_path=queue_file)
+                logger.info(f"Consolidated human review queue written to {queue_file}")
 
     write_github_summary(handover_paths)
+    
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == '--test-stage3':
         if len(sys.argv) < 3:
