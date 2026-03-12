@@ -2,6 +2,7 @@ import json
 import os
 import re
 import tempfile
+import csv
 from pathlib import Path
 
 import tripwire
@@ -10,14 +11,12 @@ from tripwire import IPFR_CONTENT_ARCHIVE_DIR
 print("API KEY PRESENT:", bool(os.getenv("OPENAI_API_KEY")))
 
 """
-Tripwire LLM Evaluation Script (Prototype end-to-end)
-
-Runs in GitHub Actions (not pytest) to avoid flaky CI.
+Tripwire LLM Evaluation Script (Updated for Stage 5 Review Queue)
 
 Evaluates the intended prototype chain:
 1) Stage 3 retrieval
 2) Stage 4 LLM verification
-3) Stage 5 LLM content update suggestions
+3) Stage 5 LLM content update suggestions & Human Review Queue
 
 This scenario uses a hardcoded multi-hunk diff designed to impact both:
 - 101-1 How to avoid infringing others' intellectual property
@@ -61,7 +60,6 @@ HARDCODED_HUNKS = [
     },
 ]
 
-
 def compute_metrics(predicted, verified, expected):
     predicted = set(predicted or [])
     verified = set(verified or [])
@@ -80,32 +78,17 @@ def compute_metrics(predicted, verified, expected):
         "verifier_recall": verifier_recall,
     }
 
-
-def _normalise_chunk_id(chunk_id):
-    if not chunk_id or not isinstance(chunk_id, str):
-        return None
-
-    value = chunk_id.strip()
-    if not value:
-        return None
-
-    match = re.fullmatch(r"(\d+-\d+)[_-](\d+)", value)
-    if match:
-        return f"{match.group(1)}-{match.group(2).zfill(2)}"
-
-    return value
-
-
+# NEW: Using the production normalization logic directly from the tripwire module
 def compute_chunk_metrics(stage3_suggested_chunk_ids, llm_confirmed_chunk_ids):
     predicted = {
-        _normalise_chunk_id(chunk_id)
+        tripwire.canonical_chunk_id(chunk_id)
         for chunk_id in (stage3_suggested_chunk_ids or [])
-        if _normalise_chunk_id(chunk_id)
+        if tripwire.canonical_chunk_id(chunk_id)
     }
     expected = {
-        _normalise_chunk_id(chunk_id)
+        tripwire.canonical_chunk_id(chunk_id)
         for chunk_id in (llm_confirmed_chunk_ids or [])
-        if _normalise_chunk_id(chunk_id)
+        if tripwire.canonical_chunk_id(chunk_id)
     }
     overlap = predicted & expected
 
@@ -117,7 +100,6 @@ def compute_chunk_metrics(stage3_suggested_chunk_ids, llm_confirmed_chunk_ids):
         "chunk_recall": recall,
     }
 
-
 def _dedupe_preserve_order(values):
     seen = set()
     out = []
@@ -127,7 +109,6 @@ def _dedupe_preserve_order(values):
         seen.add(value)
         out.append(value)
     return out
-
 
 def _collect_verification_outcomes(verification_files):
     verified_udids = []
@@ -198,7 +179,6 @@ def _collect_verification_outcomes(verification_files):
         "per_candidate_debug": per_candidate_debug,
     }
 
-
 def _parse_stage5_outputs(suggestion_files):
     statuses = []
     excerpts = []
@@ -235,8 +215,7 @@ def _parse_stage5_outputs(suggestion_files):
         "suggested_chunk_pairs": _dedupe_preserve_order(suggested_chunk_pairs),
     }
 
-
-def _determine_end_state(predicted_udids, verified_udids, confirmed_update_chunk_ids_pass2, stage5_statuses):
+def _determine_end_state(predicted_udids, verified_udids, confirmed_update_chunk_ids_pass2, stage5_statuses, queue_exists):
     predicted_set = set(predicted_udids or [])
     verified_set = set(verified_udids or [])
     expected_set = set(EXPECTED_IMPACTED_UDIDS)
@@ -250,12 +229,15 @@ def _determine_end_state(predicted_udids, verified_udids, confirmed_update_chunk
         return "PASS 2 CONFIRMATION MISS"
     if not stage5_status_values:
         return "UPDATE SUGGESTION MISS"
+    if not queue_exists:
+        return "REVIEW QUEUE GENERATION MISS"
+    
     if any(status == "Partial Suggestion Generated" for status in stage5_status_values):
-        return "PARTIAL UPDATE SUGGESTION"
+        return "PARTIAL UPDATE SUCCESS (REVIEW QUEUE GENERATED)"
     if not any(status == "Suggestion Generated" for status in stage5_status_values):
         return "UPDATE SUGGESTION MISS"
+        
     return "END-TO-END PROTOTYPE SUCCESS"
-
 
 def _build_multihunk_diff_text():
     lines = ["--- old", "+++ new"]
@@ -267,24 +249,19 @@ def _build_multihunk_diff_text():
         ])
     return "\n".join(lines) + "\n"
 
-
 def run_eval():
     tripwire.IPFR_CONTENT_ARCHIVE_DIR = REPO_ARCHIVE_DIR
-
     prefer_test_files = True
     top_n = getattr(tripwire, "TOP_N_VERIFICATION_CANDIDATES", None)
 
-    # Fail early if the expected repo archive fixtures cannot be resolved.
+    # Fail early if archive fixtures are missing
     missing_pages = []
     for udid in sorted(EXPECTED_IMPACTED_UDIDS):
         resolved = tripwire.resolve_ipfr_content_files(udid, prefer_test_files=prefer_test_files)
         if not resolved.get("markdown_path") or not resolved.get("jsonld_path"):
             missing_pages.append({"udid": udid, **resolved})
     if missing_pages:
-        raise RuntimeError(
-            "Could not resolve required test fixtures under "
-            f"{REPO_ARCHIVE_DIR}: {missing_pages}"
-        )
+        raise RuntimeError(f"Missing test fixtures under {REPO_ARCHIVE_DIR}: {missing_pages}")
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir)
@@ -292,7 +269,6 @@ def run_eval():
         diff_file.write_text(_build_multihunk_diff_text(), encoding="utf-8")
 
         analysis = tripwire.calculate_similarity(str(diff_file), source_priority=TEST_PRIORITY)
-
         candidates = analysis.get("threshold_passing_candidates", []) or []
         predicted_udids = [c.get("udid") for c in candidates if isinstance(c, dict) and c.get("udid")]
 
@@ -306,13 +282,6 @@ def run_eval():
         print("-----------------------")
         print("Repo archive path:", tripwire.IPFR_CONTENT_ARCHIVE_DIR)
         print("Expected impacted pages:", sorted(EXPECTED_IMPACTED_UDIDS))
-        print("Top-N verification candidates:", top_n)
-        print("Diff hunks:", len(HARDCODED_HUNKS))
-
-        print("\nStage 3 retrieval")
-        print("-----------------")
-        print("Retrieved pages:", predicted_udids)
-        print("Stage 3 suggested chunk IDs:", predicted_chunk_ids)
 
         packets = tripwire.generate_handover_packets(
             source_name=TEST_SOURCE_NAME,
@@ -322,73 +291,33 @@ def run_eval():
             analysis=analysis,
             timestamp="eval",
         )
-        print("Handover packets:", packets)
 
         verification_files = tripwire.run_llm_verification_for_packets(
             packets,
             prefer_test_files=prefer_test_files,
             top_n_candidates=top_n,
         )
-        print("\nStage 4 verification")
-        print("--------------------")
-        print("Verification files:", verification_files)
 
         verification_outcomes = _collect_verification_outcomes(verification_files)
-        llm_decision = verification_outcomes["overall_decision"]
-        verified_udids = verification_outcomes["verified_udids"]
-        verified_chunk_ids_pass1 = verification_outcomes["verified_chunk_ids_pass1"]
         confirmed_update_chunk_ids_pass2 = verification_outcomes["confirmed_update_chunk_ids_pass2"]
-        additional_chunks_to_review = verification_outcomes["additional_chunks_to_review"]
-
-        print("LLM decision:", llm_decision)
-        print("Verified pages:", verified_udids)
-        print("Verified chunks (Pass 1):", verified_chunk_ids_pass1)
-        print("Confirmed Pass 2 chunks:", confirmed_update_chunk_ids_pass2)
-        print("Additional review chunks:", additional_chunks_to_review)
-
-        if verification_outcomes["per_candidate_debug"]:
-            print("Per-candidate verification summary:")
-            for row in verification_outcomes["per_candidate_debug"]:
-                print(
-                    " -",
-                    {
-                        "file": row["file"],
-                        "udid": row["udid"],
-                        "candidate_rank": row["candidate_rank"],
-                        "best_chunk_id": row["best_chunk_id"],
-                        "pass1_decision": row["pass1_decision"],
-                        "pass2_confirmed_update_chunk_ids": row["pass2_confirmed_update_chunk_ids"],
-                    },
-                )
 
         suggestion_files = tripwire.run_llm_update_suggestions_for_verification_files(
             verification_files,
             prefer_test_files=prefer_test_files,
         )
-        print("\nStage 5 update suggestions")
-        print("--------------------------")
-        print("Update suggestion files:", suggestion_files)
+
+        # Trigger Review Queue Generation
+        queue_file = "update_review_queue.csv"
+        queue_exists = False
+        if suggestion_files:
+            tripwire.write_update_review_queue_csv_from_suggestion_files(suggestion_files, output_path=queue_file)
+            queue_exists = os.path.exists(queue_file)
+            print(f"\nReview Queue Check: {queue_file} exists: {queue_exists}")
 
         stage5 = _parse_stage5_outputs(suggestion_files)
         print("Update suggestion statuses:", stage5["statuses"])
-        print("Suggested update chunks:", stage5["suggested_chunk_pairs"])
-        print("Short excerpts of suggested updates:")
-        if stage5["excerpts"]:
-            for row in stage5["excerpts"]:
-                print(
-                    " -",
-                    {
-                        "file": row["file"],
-                        "udid": row["udid"],
-                        "chunk_id": row["chunk_id"],
-                        "status": row["status"],
-                        "excerpt": row["excerpt"],
-                    },
-                )
-        else:
-            print(" - []")
 
-        metrics = compute_metrics(predicted_udids, verified_udids, EXPECTED_IMPACTED_UDIDS)
+        metrics = compute_metrics(predicted_udids, verification_outcomes["verified_udids"], EXPECTED_IMPACTED_UDIDS)
         chunk_metrics = compute_chunk_metrics(predicted_chunk_ids, confirmed_update_chunk_ids_pass2)
 
         print("\nEvaluation metrics")
@@ -403,12 +332,12 @@ def run_eval():
 
         end_state = _determine_end_state(
             predicted_udids=predicted_udids,
-            verified_udids=verified_udids,
+            verified_udids=verification_outcomes["verified_udids"],
             confirmed_update_chunk_ids_pass2=confirmed_update_chunk_ids_pass2,
             stage5_statuses=stage5["statuses"],
+            queue_exists=queue_exists
         )
         print(f"\nFinal status: {end_state}")
-
 
 if __name__ == "__main__":
     run_eval()
