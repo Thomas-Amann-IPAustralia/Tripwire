@@ -5,6 +5,7 @@ import tempfile
 from pathlib import Path
 
 import tripwire
+from tripwire import IPFR_CONTENT_ARCHIVE_DIR
 
 print("API KEY PRESENT:", bool(os.getenv("OPENAI_API_KEY")))
 
@@ -27,7 +28,7 @@ TEST_SOURCE_NAME = "LLM_EVAL_TEST"
 TEST_PRIORITY = "High"
 TEST_VERSION = "eval_v2_end_to_end"
 EXPECTED_IMPACTED_UDIDS = {"101-1", "101-2"}
-REPO_ARCHIVE_DIR = "Tripwire/IPFR_content_archive"
+REPO_ARCHIVE_DIR = str(Path(IPFR_CONTENT_ARCHIVE_DIR))
 
 # Hardcoded multi-hunk diff deliberately crafted to hit both test pages.
 HARDCODED_HUNKS = [
