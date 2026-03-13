@@ -1079,6 +1079,7 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
                 'best_chunk_id': chunk_id,
                 'best_headline': headline,
                 'page_base_similarity': 0.0,
+                'per_chunk': {},
             })
 
             page_rec['chunk_hits'] += 1
@@ -1088,10 +1089,17 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
                 page_rec['chunk_id_set'].add(chunk_id)
                 page_rec['chunk_ids'].append(chunk_id)
 
-            if chunk_similarity > page_rec['page_base_similarity']:
-                page_rec['page_base_similarity'] = chunk_similarity
-                page_rec['best_chunk_id'] = chunk_id
-                page_rec['best_headline'] = headline
+            chunk_rec = page_rec['per_chunk'].setdefault(chunk_id, {
+                'chunk_id': chunk_id,
+                'headline': headline,
+                'max_similarity': 0.0,
+                'sum_similarity': 0.0,
+                'matched_hunks': set(),
+            })
+            chunk_rec['headline'] = headline or chunk_rec.get('headline') or ''
+            chunk_rec['max_similarity'] = max(chunk_rec['max_similarity'], chunk_similarity)
+            chunk_rec['sum_similarity'] += chunk_similarity
+            chunk_rec['matched_hunks'].add(hunk['hunk_index'])
 
         hunk_matches.append({
             'hunk_index': hunk['hunk_index'],
@@ -1103,6 +1111,20 @@ def calculate_similarity(diff_path, source_priority='Low', mock_semantic_data=No
 
     impacted_pages = []
     for page_udid, page_rec in page_evidence.items():
+        per_chunk = page_rec.get('per_chunk') or {}
+        if per_chunk:
+            best_chunk = max(
+                per_chunk.values(),
+                key=lambda c: (
+                    len(c.get('matched_hunks') or []),
+                    float(c.get('sum_similarity') or 0.0),
+                    float(c.get('max_similarity') or 0.0),
+                )
+            )
+            page_rec['best_chunk_id'] = best_chunk.get('chunk_id') or page_rec.get('best_chunk_id')
+            page_rec['best_headline'] = best_chunk.get('headline') or page_rec.get('best_headline') or ''
+            page_rec['page_base_similarity'] = float(best_chunk.get('max_similarity') or 0.0)
+
         distinct_hunks = len(page_rec['matched_hunks'])
         coverage_bonus = min(
             MAX_PAGE_COVERAGE_BONUS,
@@ -1824,19 +1846,37 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
     if not targets:
         return None
 
-    # Select top N candidates (prototype)
-    top_targets = [t for t in targets if isinstance(t, dict) and t.get("udid")]
-    top_targets.sort(key=lambda x: (x.get("candidate_rank") is None, x.get("candidate_rank", 9999)))
-    top_targets = top_targets[:max(1, TOP_N_VERIFICATION_CANDIDATES)]
+    # Select top N resolvable candidates (prototype)
+    ranked_targets = [t for t in targets if isinstance(t, dict) and t.get("udid")]
+    ranked_targets.sort(key=lambda x: (x.get("candidate_rank") is None, x.get("candidate_rank", 9999)))
+
+    resolvable_targets = []
+    unresolved_targets = []
+    for t in ranked_targets:
+        udid = t.get("udid")
+        resolved = resolve_ipfr_content_files(udid, prefer_test_files=prefer_test_files)
+        if resolved.get("missing"):
+            unresolved_targets.append({
+                "udid": udid,
+                "candidate_rank": t.get("candidate_rank"),
+                "resolved_files": resolved,
+            })
+            continue
+
+        t_copy = dict(t)
+        t_copy["_pre_resolved_files"] = resolved
+        resolvable_targets.append(t_copy)
+
+    top_targets = resolvable_targets[:max(1, TOP_N_VERIFICATION_CANDIDATES)]
 
     per_candidate_results = []
     impacted_pages = []
     any_uncertain = False
-    missing_any = False
+    missing_any = bool(unresolved_targets)
 
     for t in top_targets:
         udid = t.get("udid")
-        resolved = resolve_ipfr_content_files(udid, prefer_test_files=prefer_test_files)
+        resolved = t.get("_pre_resolved_files") or resolve_ipfr_content_files(udid, prefer_test_files=prefer_test_files)
         if resolved.get("missing"):
             missing_any = True
 
@@ -1943,7 +1983,8 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
             "verified_at": datetime.datetime.now().isoformat(),
             "top_n_candidates_loaded": TOP_N_VERIFICATION_CANDIDATES,
             "llm_result": llm_result,
-            "per_candidate": per_candidate_results
+            "per_candidate": per_candidate_results,
+            "skipped_unresolved_candidates": unresolved_targets
         }, f, indent=2, ensure_ascii=False)
 
     return out_path
