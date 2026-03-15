@@ -1,0 +1,106 @@
+{
+  "packet_id": "handover_20260315T20392_C1014_batch_01_of_01",
+  "verified_at": "2026-03-15T20:39:48.822692",
+  "top_n_candidates_loaded": 3,
+  "llm_result": {
+    "overall_decision": "uncertain",
+    "confidence": "high",
+    "impacted_pages": [],
+    "note": "Prototype: verified top N candidates only. Production will verify every candidate."
+  },
+  "per_candidate": [
+    {
+      "udid": "C1014",
+      "candidate_rank": 1,
+      "best_chunk_id": "C1014_01",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "C1014",
+        "markdown_path": null,
+        "jsonld_path": null,
+        "missing": [
+          "markdown",
+          "jsonld"
+        ]
+      },
+      "chunk_count": 1,
+      "evidence_window": {
+        "before": "",
+        "current": "",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "C1014",
+        "chunk_id": "C1014_01",
+        "confidence": "high",
+        "reason": "The IPFR candidate page section is empty and contains no information about the Riyadh Design Law Treaty or Albania's accession; thus, the external update does not affect it.",
+        "evidence_quote": "\"\" (empty [Current] section)"
+      },
+      "pass2_result": null
+    },
+    {
+      "udid": "D1022",
+      "candidate_rank": 2,
+      "best_chunk_id": "D1022_01",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "D1022",
+        "markdown_path": null,
+        "jsonld_path": null,
+        "missing": [
+          "markdown",
+          "jsonld"
+        ]
+      },
+      "chunk_count": 1,
+      "evidence_window": {
+        "before": "",
+        "current": "",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "D1022",
+        "chunk_id": "D1022_01",
+        "confidence": "high",
+        "reason": "The [Current] evidence window is empty and does not contain content related to the Riyadh Design Law Treaty or Albania's accession, so the external update does not update or contradict the IPFR content.",
+        "evidence_quote": "[Current] section is empty; no relevant content present"
+      },
+      "pass2_result": null
+    },
+    {
+      "udid": "101-2",
+      "candidate_rank": 3,
+      "best_chunk_id": "101-2_05",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "101-2",
+        "markdown_path": "IPFR_content_archive/101-2 - Design infringement_test.md",
+        "jsonld_path": "IPFR_content_archive/101-2_design-infringement_test.json",
+        "missing": []
+      },
+      "chunk_count": 6,
+      "evidence_window": {
+        "before": "",
+        "current": "<!-- section_id: faq -->\n### What is design infringement?\n\nDesign infringement can occur when someone uses a design that is identical or similar to a registered design without obtaining permission from the owner.1 In Australia, a registered design provides designers protection for up to 10 years. Importantly, the law does not require exact copying. If the overall visual impression of the suspected infringing design is substantially similar to the registered design, it may be considered infringement.2\n\n### What do registered designs protect?\n\nIn Australia, new and distinctive designs are afforded protection with owners registering with IP Australia.3 A registered design protects the visual appearance of a product.4 The law protects visual features such as shape, configuration, pattern, or ornamentation.5 It does not protect how the product works or what it is made from.6 Designs are tied to physical products that have a tangible form.7 Products must also be manufactured or handmade and are produced on a commercial scale.8 For example, the shape of a bottle, the pattern on fabric, or the combined features of shape and patterns on furniture.\n\n**Protecting a design involves a two-part process.** To gain the legal right to take action against someone who uses a design without permission, owners must first register and then certify it with IP Australia. In Australia, this two-part process to apply for a design right is crucial to enforce the right against another person. See more information here '[How to apply for a design right](https://www.ipaustralia.gov.au/design-rights/how-to-apply-for-a-design-right) '.\n\nWhen it comes to design infringement, it is essential to understand what a registered design protects. \n\n**Designs are tied to specific products**. Designs are registered for a particular product (like \"a chair\" or \"a bottle\"). Protection only covers the appearance of that product. If someone uses the exact design on a completely different product, this may not be infringement. For example, a chair design is used as a pattern on a t-shirt.\n\n**What is shown with the registered design is what is protected**. The images and descriptions of a registered design define what is protected. Registration not only protects the design but also designs that are substantially similar. However, it does not protect every possible variation. Additionally, if a unique feature is not clearly shown or described, it may not be protected.\n\n### How does design infringement happen?\n\nWhere a design is registered and certified with IP Australia, the following combined events may constitute infringement, provided they occur during the term of protection and without the permission of the owner:\n\n**1. Someone uses the design**\n\nAustralian law gives designers exclusive control over their registered designs.9 Infringement occurs when a person uses a design that closely resembles a registered design in a way that only the owner is allowed to do so and without permission.10 Som\n\n[TRUNCATED]",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "101-2",
+        "chunk_id": "101-2_05",
+        "confidence": "high",
+        "reason": "The external update about Albania joining the Riyadh Design Law Treaty does not alter or contradict the definitions or explanations about design infringement or registered design protection in Australia shown in the current section.",
+        "evidence_quote": "Design infringement can occur when someone uses a design that is identical or similar to a registered design without obtaining permission"
+      },
+      "pass2_result": null
+    }
+  ]
+}
