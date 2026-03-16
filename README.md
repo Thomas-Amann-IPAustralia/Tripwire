@@ -153,32 +153,77 @@ Stage 4 executes a deterministic verification workflow to ensure high-fidelity r
 
 ### Example
 ```mermaid
+flowchart LR
+    A[Monitored sources] --> B[Stage 0<br/>Version detection]
+    B --> C[Stage 1<br/>Fetch + normalise]
+    C --> D[Stage 2<br/>Diff generation]
+    D --> E[Stage 3<br/>Semantic retrieval]
+    E --> F[Handover packets]
+    F --> G[Stage 4<br/>LLM verification]
+    G --> H[Stage 5<br/>LLM update suggestions]
+    H --> I[Review queue]
+    I --> J[Monitoring outputs]
+
+    J --> J1[audit_log.csv]
+    J --> J2[diff artifacts]
+    J --> J3[verification JSON]
+    J --> J4[update suggestion JSON]
+    J --> J5[update_review_queue.csv]
+    J --> J6[GitHub summary]
+
+    classDef stage0 fill:#E8F1FB,stroke:#4A90E2,color:#0B2545,stroke-width:2px;
+    classDef stage1 fill:#EAF7EE,stroke:#34A853,color:#123524,stroke-width:2px;
+    classDef stage2 fill:#FFF4E5,stroke:#FB8C00,color:#5D3200,stroke-width:2px;
+    classDef stage3 fill:#F3E8FF,stroke:#8E44AD,color:#3D1A52,stroke-width:2px;
+    classDef stage4 fill:#FCE8E6,stroke:#DB4437,color:#5C1F1A,stroke-width:2px;
+    classDef stage5 fill:#E6F4EA,stroke:#188038,color:#16351F,stroke-width:2px;
+    classDef output fill:#EEF3F7,stroke:#7B8A97,color:#23313F,stroke-width:1.5px;
+
+    class B stage0;
+    class C stage1;
+    class D stage2;
+    class E,F stage3;
+    class G stage4;
+    class H,I stage5;
+    class J,J1,J2,J3,J4,J5,J6 output;
+```
+
+```mermaid
 graph TD
-    subgraph Stage_3 [Stage 3: Semantic Retrieval]
-        A[Substantive Hunks] --> B[Embedding & Cosine Similarity]
-        B --> C{Score Check}
-        C -- Pass --> D[Generate Handover Packet]
+    subgraph Stage0 [Stage 0, 1 & 2: Detection and Change Generation]
+        A[fetch_stage0_metadata] --> B{Version Changed?}
+        B -- No --> C[Log Success: No Change]
+        B -- Yes --> D[download_legislation_content / fetch_webpage_content]
+        D --> E[get_diff: Generate .diff Hunks]
     end
 
-    subgraph Stage_4 [Stage 4: LLM Verification]
-        D --> E[Pass 1: Impact Confirmation]
-        E --> |Evidence Window| F{Material Impact?}
-        
-        F -- Yes --> G[Pass 2: Review Scoping]
-        F -- No/Uncertain --> H[Log as No Impact/Uncertain]
-        
-        G --> |Chunk Index| I[Identify All Affected Chunks]
-        I --> J[Seed Human Review Workflow]
+    subgraph Stage3 [Stage 3: Semantic Routing]
+        E --> F[calculate_similarity]
+        F --> G[detect_power_words: Must/Shall/Penalty]
+        G --> H[Vector Search: Hunk vs. Semantic_Embeddings_Output.json]
+        H --> I{should_handover?}
+        I -- No --> J[Log Filtered in audit_log.csv]
+        I -- Yes --> K[generate_handover_packets: JSON to handover_packets/]
     end
 
-    subgraph Audit_and_Metrics [Monitoring]
-        J --> K[Update audit_log.csv]
-        H --> K
-        K --> L[Compute Precision/Recall Metrics]
+    subgraph Stage4 [Stage 4: Two-Pass LLM Verification]
+        J --> K[Pass 1: Verify Page Impact]
+        K -- "No Impact / Uncertain" --> K_Exit[Log to Audit: No Action]
+        K -- "Impact Confirmed" --> L[Pass 2: Adjudicate Chunks: AI acts as a high-precision judge to decide which specific parts of an IPFR page actually need to be changed.]
+        L --> O[Save result to llm_verification_results]
     end
 
-    style F fill:#f96,stroke:#333,stroke-width:2px
-    style G fill:#bbf,stroke:#333,stroke-width:2px
+    subgraph Stage5 [Stage 5: Content Drafting]
+        O --> P[run_llm_update_suggestions: LLM Content Update]
+        P --> Q[Draft Proposed Replacement Text for confirmed chunks]
+        Q --> R[write_update_review_queue_csv: Human Review Queue]
+    end
+
+    %% Styles
+    style Stage0 fill:#f9f9f9,stroke:#333
+    style Stage3 fill:#e1f5fe,stroke:#01579b
+    style Stage4 fill:#fff4dd,stroke:#d4a017
+    style Stage5 fill:#ccffcc,stroke:#2e7d32
 ```
 
 ## Logs & Artifacts
