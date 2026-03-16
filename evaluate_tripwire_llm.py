@@ -248,14 +248,17 @@ def _render_html_like_tripwire(html_text):
 
 
 def _write_diff_from_texts(old_text, new_text, diff_path):
-    diff_lines = difflib.unified_diff(
-        old_text.splitlines(keepends=True),
-        new_text.splitlines(keepends=True),
+    old_lines = old_text.splitlines()
+    new_lines = new_text.splitlines()
+    diff_lines = list(difflib.unified_diff(
+        old_lines,
+        new_lines,
         fromfile="old_rendered.md",
         tofile="new_rendered.md",
         lineterm="",
-    )
-    diff_text = "".join(diff_lines)
+        n=3,
+    ))
+    diff_text = "\n".join(diff_lines) + ("\n" if diff_lines else "")
     Path(diff_path).write_text(diff_text, encoding="utf-8")
     return diff_text
 
@@ -374,7 +377,7 @@ def run_eval():
             verification_files, prefer_test_files=True
         )
 
-        queue_file = str(tmp / "update_review_queue.csv")
+        queue_file = str(Path.cwd() / "update_review_queue.csv")
         tripwire.write_update_review_queue_csv_from_suggestion_files(suggestion_files, output_path=queue_file)
 
         suggestion_summary = _summarise_suggestion_files(suggestion_files)
