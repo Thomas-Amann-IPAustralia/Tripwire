@@ -153,6 +153,7 @@ def format_relevant_diff_text(relevant_hunks: List[dict]) -> str:
     return "\n\n".join([b for b in blocks if b.strip()]).strip()
 
 
+
 def build_update_review_queue_rows_from_payload(payload: dict, suggestion_file: str = "") -> List[dict]:
     """Flatten a Stage 5 suggestion payload into one review row per suggested change."""
     rows: List[dict] = []
@@ -199,14 +200,13 @@ def build_update_review_queue_rows_from_payload(payload: dict, suggestion_file: 
                 "Chunk ID": str(review_item.get("chunk_id") or ""),
                 "Suggestion Status": "review_only",
                 "Update Required": "",
-                "Relevant Diff Text": "",
+                "Relevant Diff Text": format_relevant_diff_text(review_item.get("relevant_hunks") or []),
                 "Reason For Change": str(review_item.get("reason") or review_item.get("evidence_quote") or ""),
                 "Suggested Text": "",
                 "Model Used": model_used,
                 "Update Suggestion File": suggestion_file or "",
             })
     return rows
-
 
 def write_update_review_queue_csv_from_suggestion_files(suggestion_paths: List[str], output_path: str = "update_review_queue.csv") -> str:
     """Write a flat, human-readable review queue from Stage 5 suggestion files."""
@@ -1753,6 +1753,7 @@ Return JSON ONLY with this schema:
 """
 
 
+
 def _build_llm_pass2_prompt(
     packet: dict,
     candidate: dict,
@@ -1767,7 +1768,7 @@ def _build_llm_pass2_prompt(
       - A compact chunk index for the whole page (chunk_id + snippet)
       - Stage 3 'relevant_chunk_ids' (retrieval-suggested candidates) so the model doesn't start from scratch
 
-    Output is used to seed Stage 5 (future) human/LLM authoring.
+    Output is used to seed Stage 5 human/LLM authoring.
     """
     packet_id = packet.get("packet_id", "")
     src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
@@ -1775,23 +1776,21 @@ def _build_llm_pass2_prompt(
     priority = src.get("monitoring_priority", "")
 
     hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
-    # Compact diff summary for scoping
     diff_lines: List[str] = []
     for h in hunks:
+        header = h.get("location_header") or h.get("hunk_header") or f"hunk {h.get('hunk_id', '')}"
+        diff_lines.append(f"[HUNK {h.get('hunk_id') or h.get('hunk_index')}] {header}")
         for ln in (h.get("removed") or []):
             diff_lines.append(f"- {ln}")
         for ln in (h.get("added") or []):
             diff_lines.append(f"+ {ln}")
-    diff_summary = "\n".join(diff_lines[:120])
+    diff_summary = "\n".join(diff_lines[:160])
 
     if stage3_relevant_chunk_ids is None:
         stage3_relevant_chunk_ids = candidate.get("relevant_chunk_ids") or []
     stage3_relevant_chunk_ids = [str(x) for x in stage3_relevant_chunk_ids][:80]
 
-    # Include the compact index (id + snippet) for all chunks on this page.
     index_json = json.dumps(chunk_index, ensure_ascii=False)
-
-    # Pass 1 summary (ground truth for Pass 2 scope)
     pass1_json = json.dumps(pass1_result, ensure_ascii=False)
 
     return f"""System Role: You are a Technical Content Auditor for the IP First Response (IPFR) platform.
@@ -1822,6 +1821,11 @@ Inputs:
 
 Instructions:
 - Do NOT assume that Stage 3 suggested chunks need updates. They are only candidates.
+- Confirm chunk impacts at HUNK level, not page level.
+- A chunk should only be confirmed if at least one specific diff hunk materially affects that chunk.
+- Include matched_hunk_ids for every confirmed chunk and any additional chunk to review.
+- If different hunks affect different chunks on the same page, keep them separate.
+- Do not collapse multiple impacted chunks into one chunk just because they are on the same page.
 - For each Stage 3 suggested chunk_id, decide if it likely requires a HUMAN update due to the confirmed impact.
 - You may also nominate additional chunks not in the Stage 3 list, but ONLY if you can point to a snippet in the chunk index that shows why.
 - Keep reasoning brief and evidence-based.
@@ -1830,11 +1834,19 @@ Instructions:
 Return JSON ONLY in this shape:
 
 {{
-  "confirmed_update_chunk_ids": ["chunk_id", ...],
+  "confirmed_updates": [
+    {{
+      "chunk_id": "chunk_id",
+      "matched_hunk_ids": [1, 2],
+      "reason": "short explanation",
+      "evidence_quote": "<=25 words from the snippet"
+    }}
+  ],
   "rejected_stage3_chunk_ids": ["chunk_id", ...],
   "additional_chunks_to_review": [
     {{
       "chunk_id": "...",
+      "matched_hunk_ids": [3],
       "reason": "short explanation",
       "evidence_quote": "<=25 words from the snippet"
     }}
@@ -1843,7 +1855,6 @@ Return JSON ONLY in this shape:
 }}
 
 """
-
 
 def _build_llm_verification_prompt(packet: dict, candidates_with_content: List[dict]) -> str:
     """Deprecated (kept for backwards compatibility).
@@ -1989,15 +2000,22 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
             if isinstance(legacy, list) and legacy:
                 review_ids = [str(x) for x in legacy]
             else:
-                confirmed = pass2.get("confirmed_update_chunk_ids") or []
-                if isinstance(confirmed, list):
-                    review_ids.extend([str(x) for x in confirmed])
+                confirmed_updates = _extract_confirmed_updates(
+                    pass2,
+                    fallback_chunk_id=(pass1.get("chunk_id") or pass1_target_chunk_id or t.get("best_chunk_id") or "")
+                )
+                review_ids.extend([
+                    str(item.get("chunk_id")).strip()
+                    for item in confirmed_updates
+                    if str(item.get("chunk_id") or "").strip()
+                ])
 
-                additional = pass2.get("additional_chunks_to_review") or []
-                if isinstance(additional, list):
-                    for item in additional:
-                        if isinstance(item, dict) and item.get("chunk_id"):
-                            review_ids.append(str(item["chunk_id"]))
+                additional = _extract_additional_chunks_to_review(pass2)
+                review_ids.extend([
+                    str(item.get("chunk_id")).strip()
+                    for item in additional
+                    if str(item.get("chunk_id") or "").strip()
+                ])
 
             seen = set()
             review_ids = [x for x in review_ids if not (x in seen or seen.add(x))]
@@ -2195,20 +2213,76 @@ def run_llm_verification_for_packets(
     return results
 
 
-def _extract_confirmed_update_chunk_ids(pass2_result: Optional[dict], fallback_chunk_id: str = "") -> List[str]:
-    """Return deduplicated confirmed update chunk ids from a Pass 2 result."""
-    out: List[str] = []
-    if isinstance(pass2_result, dict):
-        confirmed = pass2_result.get("confirmed_update_chunk_ids") or []
-        if isinstance(confirmed, list):
-            out.extend([str(x).strip() for x in confirmed if str(x).strip()])
+
+def _extract_confirmed_updates(pass2_result: Optional[dict], fallback_chunk_id: str = "") -> List[dict]:
+    """Return deduplicated confirmed chunk records from a Pass 2 result."""
+    if not isinstance(pass2_result, dict):
+        return [{"chunk_id": fallback_chunk_id, "matched_hunk_ids": [], "reason": "", "evidence_quote": ""}] if fallback_chunk_id else []
+
+    confirmed_updates = pass2_result.get("confirmed_updates") or []
+    out: List[dict] = []
+
+    if isinstance(confirmed_updates, list) and confirmed_updates:
+        for item in confirmed_updates:
+            if not isinstance(item, dict):
+                continue
+            cid = str(item.get("chunk_id") or "").strip()
+            if not cid:
+                continue
+            matched_hunk_ids = [
+                int(x) for x in (item.get("matched_hunk_ids") or [])
+                if isinstance(x, int) or (isinstance(x, str) and str(x).strip().isdigit())
+            ]
+            out.append({
+                "chunk_id": cid,
+                "matched_hunk_ids": matched_hunk_ids,
+                "reason": str(item.get("reason") or "").strip(),
+                "evidence_quote": str(item.get("evidence_quote") or "").strip(),
+            })
+
+    if out:
+        seen = set()
+        deduped = []
+        for item in out:
+            cid = item.get("chunk_id")
+            if cid and cid not in seen:
+                deduped.append(item)
+                seen.add(cid)
+        return deduped
+
+    # Backward compatibility with older pass2 payloads
+    confirmed = pass2_result.get("confirmed_update_chunk_ids") or []
+    if isinstance(confirmed, list):
+        legacy = []
+        seen = set()
+        for cid in confirmed:
+            cid = str(cid).strip()
+            if cid and cid not in seen:
+                legacy.append({
+                    "chunk_id": cid,
+                    "matched_hunk_ids": [],
+                    "reason": "",
+                    "evidence_quote": "",
+                })
+                seen.add(cid)
+        if legacy:
+            return legacy
 
     fallback_chunk_id = (fallback_chunk_id or "").strip()
-    if fallback_chunk_id and fallback_chunk_id not in out:
-        out.insert(0, fallback_chunk_id)
+    if fallback_chunk_id:
+        return [{
+            "chunk_id": fallback_chunk_id,
+            "matched_hunk_ids": [],
+            "reason": "",
+            "evidence_quote": "",
+        }]
 
-    seen = set()
-    return [x for x in out if not (x in seen or seen.add(x))]
+    return []
+
+
+def _extract_confirmed_update_chunk_ids(pass2_result: Optional[dict], fallback_chunk_id: str = "") -> List[str]:
+    """Backward-compatible list-only accessor for confirmed chunk ids."""
+    return [item.get("chunk_id", "") for item in _extract_confirmed_updates(pass2_result, fallback_chunk_id) if item.get("chunk_id")]
 
 
 def _extract_additional_chunks_to_review(pass2_result: Optional[dict]) -> List[dict]:
@@ -2218,18 +2292,30 @@ def _extract_additional_chunks_to_review(pass2_result: Optional[dict]) -> List[d
     additional = pass2_result.get("additional_chunks_to_review") or []
     if not isinstance(additional, list):
         return out
+
+    seen = set()
     for item in additional:
         if isinstance(item, dict) and item.get("chunk_id"):
+            cid = str(item.get("chunk_id")).strip()
+            if not cid or cid in seen:
+                continue
+            matched_hunk_ids = [
+                int(x) for x in (item.get("matched_hunk_ids") or [])
+                if isinstance(x, int) or (isinstance(x, str) and str(x).strip().isdigit())
+            ]
             out.append({
-                "chunk_id": str(item.get("chunk_id")).strip(),
+                "chunk_id": cid,
+                "matched_hunk_ids": matched_hunk_ids,
                 "reason": str(item.get("reason") or "").strip(),
                 "evidence_quote": str(item.get("evidence_quote") or "").strip(),
             })
+            seen.add(cid)
         elif item:
-            out.append({"chunk_id": str(item).strip(), "reason": "", "evidence_quote": ""})
+            cid = str(item).strip()
+            if cid and cid not in seen:
+                out.append({"chunk_id": cid, "matched_hunk_ids": [], "reason": "", "evidence_quote": ""})
+                seen.add(cid)
     return out
-
-
 
 def _extract_pass1_confirmed_chunk_ids(pass1_result: Optional[dict], fallback_chunk_id: str = "") -> List[str]:
     """Return deduplicated Pass 1 confirmed chunk ids from a Pass 1 result."""
@@ -2510,15 +2596,33 @@ def run_llm_update_suggestions_for_verification_files(
 
                 best_chunk_id = str(candidate.get("best_chunk_id") or pass1.get("chunk_id") or "").strip()
                 pass2 = candidate.get("pass2_result") or {}
-                confirmed_ids = _extract_confirmed_update_chunk_ids(pass2, fallback_chunk_id=best_chunk_id)
+
+                confirmed_updates = _extract_confirmed_updates(
+                    pass2,
+                    fallback_chunk_id=best_chunk_id
+                )
                 additional_review = _extract_additional_chunks_to_review(pass2)
-                matched_hunks = set(candidate.get("matched_hunk_indices") or [])
-                relevant_hunks = [
-                    h for h in packet_hunks
-                    if not matched_hunks or (h.get("hunk_id") in matched_hunks or h.get("hunk_index") in matched_hunks)
-                ]
-                if not relevant_hunks:
-                    relevant_hunks = packet_hunks
+
+                candidate_level_hunks = set(candidate.get("matched_hunk_indices") or [])
+
+                def _select_hunks_for_ids(hunk_ids):
+                    hunk_ids = set(hunk_ids or [])
+                    selected = [
+                        h for h in packet_hunks
+                        if (
+                            (h.get("hunk_id") in hunk_ids)
+                            or (h.get("hunk_index") in hunk_ids)
+                        )
+                    ]
+                    if selected:
+                        return selected
+
+                    fallback = [
+                        h for h in packet_hunks
+                        if not candidate_level_hunks
+                        or (h.get("hunk_id") in candidate_level_hunks or h.get("hunk_index") in candidate_level_hunks)
+                    ]
+                    return fallback or packet_hunks
 
                 page = group["pages"].setdefault(udid, {
                     "udid": udid,
@@ -2526,18 +2630,35 @@ def run_llm_update_suggestions_for_verification_files(
                     "additional_chunks_to_review": {},
                 })
 
-                for cid in confirmed_ids:
+                for item in confirmed_updates:
+                    cid = str(item.get("chunk_id") or "").strip()
+                    if not cid:
+                        continue
+
+                    relevant_hunks = _select_hunks_for_ids(item.get("matched_hunk_ids") or [])
+
                     rec = page["confirmed_chunks"].setdefault(cid, {
                         "chunk_id": cid,
                         "relevant_hunks": [],
+                        "reason": "",
+                        "evidence_quote": "",
                     })
+
                     if not rec["relevant_hunks"]:
                         rec["relevant_hunks"] = relevant_hunks
+                    if item.get("reason") and not rec.get("reason"):
+                        rec["reason"] = item.get("reason")
+                    if item.get("evidence_quote") and not rec.get("evidence_quote"):
+                        rec["evidence_quote"] = item.get("evidence_quote")
 
                 for item in additional_review:
-                    cid = item.get("chunk_id")
-                    if cid:
-                        page["additional_chunks_to_review"].setdefault(cid, item)
+                    cid = str(item.get("chunk_id") or "").strip()
+                    if not cid:
+                        continue
+
+                    review_item = dict(item)
+                    review_item["relevant_hunks"] = _select_hunks_for_ids(item.get("matched_hunk_ids") or [])
+                    page["additional_chunks_to_review"].setdefault(cid, review_item)
 
         except Exception as e:
             logger.error(f"Stage 5 aggregation failed for {verification_path}: {e}")
