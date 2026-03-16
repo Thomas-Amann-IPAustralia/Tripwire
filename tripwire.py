@@ -1591,6 +1591,128 @@ def build_chunk_index(chunks: List[Dict[str, str]], max_snippet_chars: int = 260
     return index
 
 
+def _normalise_chunk_id_list(chunk_ids: Optional[List[str]]) -> List[str]:
+    """Return deduplicated chunk ids preserving original order."""
+    out: List[str] = []
+    seen = set()
+    for raw in chunk_ids or []:
+        cid = str(raw or "").strip()
+        canon = canonical_chunk_id(cid)
+        if not cid or not canon or canon in seen:
+            continue
+        out.append(cid)
+        seen.add(canon)
+    return out
+
+
+def _format_diff_block_for_candidate(packet: dict, candidate: dict) -> str:
+    """Return the compact diff block most relevant to this candidate page."""
+    hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
+    matched = set(candidate.get("matched_hunk_indices") or [])
+    if matched:
+        hunks = [h for h in hunks if (h.get("hunk_id") in matched) or (h.get("hunk_index") in matched)]
+
+    hunk_text_parts = []
+    for h in hunks:
+        removed = "\n".join([f"- {ln}" for ln in (h.get("removed") or []) if str(ln).strip()])
+        added = "\n".join([f"+ {ln}" for ln in (h.get("added") or []) if str(ln).strip()])
+        header = h.get("location_header") or h.get("hunk_header") or f"hunk {h.get('hunk_id', '')}"
+        hunk_text_parts.append(f"{header}\n{removed}\n{added}".strip())
+    return "\n\n".join(hunk_text_parts).strip()
+
+
+def _select_chunk_matched_hunks(chunk: Dict[str, str], packet: dict, candidate: dict) -> List[int]:
+    """Estimate which matched diff hunks most likely affect a specific chunk."""
+    candidate_hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
+    allowed_hunks = set(candidate.get("matched_hunk_indices") or [])
+    if allowed_hunks:
+        candidate_hunks = [
+            h for h in candidate_hunks
+            if (h.get("hunk_id") in allowed_hunks) or (h.get("hunk_index") in allowed_hunks)
+        ]
+
+    chunk_text = (chunk.get("text") or "").strip()
+    if not chunk_text:
+        return sorted(int(x) for x in allowed_hunks if isinstance(x, int))
+
+    scored: List[tuple] = []
+    for h in candidate_hunks:
+        hunk_id = h.get("hunk_id") if h.get("hunk_id") is not None else h.get("hunk_index")
+        if hunk_id is None:
+            continue
+        diff_text = []
+        diff_text.extend([str(x) for x in (h.get("removed") or []) if str(x).strip()])
+        diff_text.extend([str(x) for x in (h.get("added") or []) if str(x).strip()])
+        score = _score_chunk_for_pass1(
+            chunk_text=chunk_text,
+            diff_text="\n".join(diff_text),
+            preferred_chunk_id=str(candidate.get("best_chunk_id") or ""),
+            chunk_id=str(chunk.get("chunk_id") or ""),
+        )
+        scored.append((float(score), int(hunk_id)))
+
+    positive = sorted({hid for score, hid in scored if score > 0.0})
+    if positive:
+        return positive
+
+    if scored:
+        scored.sort(reverse=True)
+        best_score = scored[0][0]
+        if best_score >= 0.0:
+            return sorted({hid for score, hid in scored if score == best_score})
+
+    return sorted(int(x) for x in allowed_hunks if isinstance(x, int))
+
+
+def _build_chunk_verification_targets(
+    packet: dict,
+    candidate: dict,
+    chunks: List[Dict[str, str]],
+    max_current_chars: int = 420,
+    side_max_chars: int = 120,
+) -> List[Dict[str, object]]:
+    """Build compact chunk-level verification targets for Pass 2."""
+    if not chunks:
+        return []
+
+    chunk_lookup = {
+        canonical_chunk_id(c.get("chunk_id")): c
+        for c in chunks
+        if c.get("chunk_id")
+    }
+
+    stage3_ids = _normalise_chunk_id_list(candidate.get("relevant_chunk_ids") or [])
+    preferred_chunk_id = str(candidate.get("best_chunk_id") or "").strip()
+    existing_canons = {canonical_chunk_id(x) for x in stage3_ids}
+    if preferred_chunk_id and canonical_chunk_id(preferred_chunk_id) not in existing_canons:
+        stage3_ids.insert(0, preferred_chunk_id)
+
+    out: List[Dict[str, object]] = []
+    seen = set()
+    for cid in stage3_ids:
+        canon = canonical_chunk_id(cid)
+        if not canon or canon in seen:
+            continue
+        seen.add(canon)
+        chunk = chunk_lookup.get(canon)
+        if not chunk:
+            continue
+        window = extract_chunk_window(
+            chunks,
+            chunk.get("chunk_id", ""),
+            fallback_max_chars=max_current_chars,
+            side_max_chars=side_max_chars,
+        )
+        matched_hunk_ids = _select_chunk_matched_hunks(chunk, packet, candidate)
+        out.append({
+            "chunk_id": chunk.get("chunk_id", ""),
+            "matched_hunk_ids": matched_hunk_ids,
+            "current_snippet": (window.get("current") or "").strip(),
+            "before_snippet": (window.get("before") or "").strip(),
+            "after_snippet": (window.get("after") or "").strip(),
+        })
+    return out
+
 
 def _score_chunk_for_pass1(chunk_text: str, diff_text: str, preferred_chunk_id: str = "", chunk_id: str = "") -> float:
     """Cheap lexical scorer to pick the best Stage 4 Pass 1 chunk from Stage 3 candidates.
@@ -1676,26 +1798,17 @@ def _read_text_file(path: str, max_chars: int = 40_000) -> str:
 def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict, target_chunk_id: str = "") -> str:
     """Pass 1: Verify whether the external change materially impacts the candidate page.
 
-    We intentionally provide a local evidence window centred on the selected target chunk
-    to keep cost low while still giving the model nearby context.
+    Prototype purpose:
+    - detect all materially impacted IPFR pages
+    - keep Stage 4 token efficient by using a narrow markdown evidence window
+    - do not treat the selected chunk as the only chunk that can later be updated
     """
     packet_id = packet.get("packet_id", "")
     src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
     source_name = src.get("name", "")
     priority = src.get("monitoring_priority", "")
 
-    hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
-    matched = set(candidate.get("matched_hunk_indices") or [])
-    if matched:
-        hunks = [h for h in hunks if (h.get("hunk_id") in matched) or (h.get("hunk_index") in matched)]
-    hunk_text_parts = []
-    for h in hunks:
-        removed = "\n".join([f"- {ln}" for ln in (h.get("removed") or [])])
-        added = "\n".join([f"+ {ln}" for ln in (h.get("added") or [])])
-        header = h.get("location_header") or h.get("hunk_header") or f"hunk {h.get('hunk_id', '')}"
-        hunk_text_parts.append(f"{header}\n{removed}\n{added}".strip())
-    diff_block = "\n\n".join(hunk_text_parts).strip()
-
+    diff_block = _format_diff_block_for_candidate(packet, candidate)
     before = (window.get("before") or "").strip()
     current = (window.get("current") or "").strip()
     after = (window.get("after") or "").strip()
@@ -1703,27 +1816,33 @@ def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict, target_
 
     return f"""System Role: You are a Technical Content Auditor for the IP First Response (IPFR) platform.
 
-Your job is to verify whether the external source update below materially impacts the IPFR content for the candidate page.
+Your job is to verify whether the external source update below materially impacts this candidate IPFR page.
+
+Prototype purpose:
+- detect all materially impacted IPFR pages
+- keep Stage 4 snippet-based for token efficiency
+- use this local evidence window to decide PAGE impact only
+- do not assume only the target chunk can be impacted later
 
 External source context:
 - Source: {source_name}
 - Priority: {priority}
 - Packet: {packet_id}
 
-External change (unified diff hunks):
+External change (candidate-relevant diff hunks):
 {diff_block}
 
 Candidate IPFR page:
 - UDID: {candidate.get('udid')}
-- Target chunk_id: {target_chunk_id}
+- Local target chunk_id used for this page-level check: {target_chunk_id}
 
-IPFR local evidence window contains (from the actual page markdown):
-[Before] – the preceding section of the page (if any)
-[Current] – the target section that may require updating
-[After] – the following section of the page (if any).
+IPFR local evidence window from the actual page markdown:
+[Before] preceding chunk for context only
+[Current] local target chunk used to test whether the page is impacted
+[After] following chunk for context only
 
-Treat [Current] as the primary section under assessment, and use [Before] and [After] for context if needed.
-[Before] and [After] must not be marked as impacted unless the external change clearly changes the meaning of [Current] in a way that requires those surrounding sections to be updated too.
+Use [Before] and [After] to understand whether the page guidance around [Current] has shifted.
+You are deciding PAGE impact here, not final chunk scope.
 
 [Before]
 {before}
@@ -1735,11 +1854,11 @@ Treat [Current] as the primary section under assessment, and use [Before] and [A
 {after}
 
 Decision rules:
-- Return "impact" if the external change updates, contradicts, invalidates, materially expands, or materially narrows the meaning of the IPFR content in the evidence window.
-- Treat additions to the scope of guidance as "impact" when the current IPFR text would become incomplete or misleading without that added scope.
-- Return "no_impact" if the change is unrelated to the evidence window, or does not change the meaning relevant to the IPFR content.
-- Return "uncertain" only if you cannot make a decision from the evidence provided.
-- If the external change uses different wording but clearly changes a legal threshold, legal precondition, scope of recommended action, or definition that the IPFR content relies on, treat that as "impact".
+- Return "impact" if the external change updates, contradicts, invalidates, materially expands, or materially narrows the meaning of the IPFR guidance on this page.
+- Return "impact" if the page would become incomplete or misleading without reflecting the external change, even if multiple chunks may later need review.
+- Return "no_impact" if the change is unrelated to this page's guidance.
+- Return "uncertain" only if the evidence window is insufficient to decide whether the page is impacted.
+- If legal thresholds, legal preconditions, scope of protection, scope of infringement, or required actions have changed, treat that as impact.
 
 Return JSON ONLY with this schema:
 {{
@@ -1753,45 +1872,29 @@ Return JSON ONLY with this schema:
 """
 
 
-
 def _build_llm_pass2_prompt(
     packet: dict,
     candidate: dict,
     pass1_result: dict,
-    chunk_index: List[dict],
+    chunk_targets: List[dict],
+    page_chunk_index: Optional[List[dict]] = None,
     stage3_relevant_chunk_ids: Optional[List[str]] = None
 ) -> str:
-    """Pass 2: confirm which Stage 3 suggested chunks actually need a human update (and allow additional chunks).
-
-    We provide the LLM with:
-      - Confirmed impact summary from Pass 1
-      - A compact chunk index for the whole page (chunk_id + snippet)
-      - Stage 3 'relevant_chunk_ids' (retrieval-suggested candidates) so the model doesn't start from scratch
-
-    Output is used to seed Stage 5 human/LLM authoring.
-    """
+    """Pass 2: adjudicate Stage 3 candidate chunks individually after page impact is confirmed."""
     packet_id = packet.get("packet_id", "")
     src = (packet.get("source_change_details", {}) or {}).get("source", {}) or {}
     source_name = src.get("name", "")
     priority = src.get("monitoring_priority", "")
 
-    hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
-    diff_lines: List[str] = []
-    for h in hunks:
-        header = h.get("location_header") or h.get("hunk_header") or f"hunk {h.get('hunk_id', '')}"
-        diff_lines.append(f"[HUNK {h.get('hunk_id') or h.get('hunk_index')}] {header}")
-        for ln in (h.get("removed") or []):
-            diff_lines.append(f"- {ln}")
-        for ln in (h.get("added") or []):
-            diff_lines.append(f"+ {ln}")
-    diff_summary = "\n".join(diff_lines[:160])
+    diff_summary = _format_diff_block_for_candidate(packet, candidate)
 
     if stage3_relevant_chunk_ids is None:
         stage3_relevant_chunk_ids = candidate.get("relevant_chunk_ids") or []
-    stage3_relevant_chunk_ids = [str(x) for x in stage3_relevant_chunk_ids][:80]
+    stage3_relevant_chunk_ids = _normalise_chunk_id_list(stage3_relevant_chunk_ids)[:80]
 
-    index_json = json.dumps(chunk_index, ensure_ascii=False)
     pass1_json = json.dumps(pass1_result, ensure_ascii=False)
+    targets_json = json.dumps(chunk_targets, ensure_ascii=False)
+    page_index_json = json.dumps((page_chunk_index or [])[:80], ensure_ascii=False)
 
     return f"""System Role: You are a Technical Content Auditor for the IP First Response (IPFR) platform.
 
@@ -1802,34 +1905,38 @@ Context:
 - Candidate Page UDID: {candidate.get('udid','')}
 - Candidate Best Chunk: {candidate.get('best_chunk_id','')}
 
-You have already CONFIRMED there is a material impact for this candidate page (Pass 1 result below).
-
-Your task now is to help a human update the page by confirming which specific chunks need review.
+Pass 1 already CONFIRMED that this candidate page is materially impacted.
+Your task now is to identify ALL materially impacted chunks on this page from the Stage 3 candidate set.
 
 Inputs:
-1) Confirmed impact (Pass 1):
+1) Confirmed page impact (Pass 1):
 {pass1_json}
 
-2) Source change (compact diff):
+2) Candidate-relevant source diff hunks:
 {diff_summary}
 
-3) Chunk index for the candidate page (chunk_id + snippet; snippets may be truncated):
-{index_json}
+3) Chunk-level verification targets for this page.
+Each target is one Stage 3 candidate chunk with its own local snippet window and matched_hunk_ids.
+These are the ONLY Stage 3 chunks you may reject.
+{targets_json}
 
-4) Stage 3 retrieval-suggested chunk IDs (NOT confirmed; candidates only):
+4) Full page chunk index for optional follow-up only (chunk_id + snippet):
+{page_index_json}
+
+5) Stage 3 retrieval-suggested chunk IDs:
 {json.dumps(stage3_relevant_chunk_ids, ensure_ascii=False)}
 
 Instructions:
-- Do NOT assume that Stage 3 suggested chunks need updates. They are only candidates.
-- Confirm chunk impacts at HUNK level, not page level.
-- A chunk should only be confirmed if at least one specific diff hunk materially affects that chunk.
-- Include matched_hunk_ids for every confirmed chunk and any additional chunk to review.
+- Adjudicate every chunk in the chunk-level verification targets list individually.
+- Confirm a chunk only if at least one matched diff hunk materially affects that chunk's snippet.
+- Reject a Stage 3 chunk only if its own snippet shows it is not materially affected.
+- If you are not confident enough to reject a chunk after assessing its own snippet, do NOT reject it. Put it in additional_chunks_to_review instead.
+- Include matched_hunk_ids for every confirmed chunk and every additional chunk to review.
 - If different hunks affect different chunks on the same page, keep them separate.
 - Do not collapse multiple impacted chunks into one chunk just because they are on the same page.
-- For each Stage 3 suggested chunk_id, decide if it likely requires a HUMAN update due to the confirmed impact.
-- You may also nominate additional chunks not in the Stage 3 list, but ONLY if you can point to a snippet in the chunk index that shows why.
-- Keep reasoning brief and evidence-based.
-- Evidence quotes must be <= 25 words, copied from the chunk snippet where possible.
+- You may nominate additional chunks not in the Stage 3 list, but only if the page chunk index shows why.
+- Keep reasons short and evidence-based.
+- Evidence quotes must be <= 25 words and copied from the relevant snippet where possible.
 
 Return JSON ONLY in this shape:
 
@@ -1853,8 +1960,8 @@ Return JSON ONLY in this shape:
   ],
   "notes": "optional short notes for the human editor"
 }}
-
 """
+
 
 def _build_llm_verification_prompt(packet: dict, candidates_with_content: List[dict]) -> str:
     """Deprecated (kept for backwards compatibility).
@@ -1989,12 +2096,28 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
 
         pass2 = None
         review_ids = []
+        chunk_targets = []
+        page_chunk_index = []
 
         if decision == "impact":
-            chunk_index = build_chunk_index(chunks)
+            page_chunk_index = build_chunk_index(chunks)
+            chunk_targets = _build_chunk_verification_targets(packet, t, chunks)
             stage3_ids = t.get("relevant_chunk_ids") or []
-            prompt2 = _build_llm_pass2_prompt(packet, t, pass1, chunk_index, stage3_relevant_chunk_ids=stage3_ids)
+            prompt2 = _build_llm_pass2_prompt(
+                packet,
+                t,
+                pass1,
+                chunk_targets,
+                page_chunk_index=page_chunk_index,
+                stage3_relevant_chunk_ids=stage3_ids,
+            )
             pass2 = _call_llm_json(prompt2)
+
+            assessed_chunk_ids = {
+                canonical_chunk_id(item.get("chunk_id"))
+                for item in chunk_targets
+                if isinstance(item, dict) and item.get("chunk_id")
+            }
 
             legacy = pass2.get("suggested_review_chunk_ids")
             if isinstance(legacy, list) and legacy:
@@ -2002,7 +2125,7 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
             else:
                 confirmed_updates = _extract_confirmed_updates(
                     pass2,
-                    fallback_chunk_id=(pass1.get("chunk_id") or pass1_target_chunk_id or t.get("best_chunk_id") or "")
+                    fallback_chunk_id=(pass1.get("chunk_id") or pass1_target_chunk_id or t.get("best_chunk_id") or "") if not chunk_targets else ""
                 )
                 review_ids.extend([
                     str(item.get("chunk_id")).strip()
@@ -2017,11 +2140,28 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
                     if str(item.get("chunk_id") or "").strip()
                 ])
 
+                rejected = []
+                for cid in (pass2.get("rejected_stage3_chunk_ids") or []):
+                    canon = canonical_chunk_id(cid)
+                    if canon and canon in assessed_chunk_ids:
+                        rejected.append(str(cid).strip())
+                if isinstance(pass2, dict):
+                    pass2["rejected_stage3_chunk_ids"] = rejected
+
+                confirmed_ids = {canonical_chunk_id(x) for x in review_ids}
+                rejected_ids = {canonical_chunk_id(x) for x in rejected}
+                for target in chunk_targets:
+                    cid = str(target.get("chunk_id") or "").strip()
+                    canon = canonical_chunk_id(cid)
+                    if cid and canon not in confirmed_ids and canon not in rejected_ids:
+                        review_ids.append(cid)
+                        confirmed_ids.add(canon)
+
             seen = set()
-            review_ids = [x for x in review_ids if not (x in seen or seen.add(x))]
+            review_ids = [x for x in review_ids if x and not (x in seen or seen.add(x))]
 
             verified_cid = (pass1.get("chunk_id") or pass1_target_chunk_id or t.get("best_chunk_id") or "").strip()
-            if verified_cid and verified_cid not in review_ids:
+            if verified_cid and verified_cid not in review_ids and not chunk_targets:
                 review_ids.insert(0, verified_cid)
 
             impacted_pages.append({
@@ -2041,6 +2181,8 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
             "resolved_files": resolved,
             "chunk_count": len(chunks),
             "evidence_window": window,
+            "chunk_verification_targets": chunk_targets,
+            "page_chunk_index": page_chunk_index,
             "pass1_result": pass1,
             "pass2_result": pass2,
         })
