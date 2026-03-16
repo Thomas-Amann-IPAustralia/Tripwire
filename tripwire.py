@@ -1590,6 +1590,77 @@ def build_chunk_index(chunks: List[Dict[str, str]], max_snippet_chars: int = 260
         index.append({"chunk_id": cid, "snippet": snippet})
     return index
 
+
+
+def _score_chunk_for_pass1(chunk_text: str, diff_text: str, preferred_chunk_id: str = "", chunk_id: str = "") -> float:
+    """Cheap lexical scorer to pick the best Stage 4 Pass 1 chunk from Stage 3 candidates.
+
+    Prototype intent:
+    - prefer chunks whose text overlaps with the matched diff hunks
+    - keep the prompt narrow (top 1 chunk window), not whole-page concatenation
+    - preserve the original best_chunk_id as a light tie-breaker only
+    """
+    chunk_text = (chunk_text or "").strip().lower()
+    diff_text = (diff_text or "").strip().lower()
+    if not chunk_text:
+        return -1.0
+
+    token_pattern = r"[a-z0-9][a-z0-9'_-]{2,}"
+    chunk_tokens = set(re.findall(token_pattern, chunk_text))
+    diff_tokens = set(re.findall(token_pattern, diff_text))
+    overlap = len(chunk_tokens & diff_tokens)
+
+    diff_phrases = [p.strip().lower() for p in re.split(r"[\n\.]+", diff_text) if len(p.strip()) >= 12]
+    phrase_hits = sum(1 for phrase in diff_phrases if phrase and phrase in chunk_text)
+
+    score = float(overlap) + (phrase_hits * 4.0)
+    if preferred_chunk_id and chunk_id and chunk_id == preferred_chunk_id:
+        score += 0.5
+    return score
+
+
+def _select_pass1_target_chunk_id(packet: dict, candidate: dict, chunks: List[Dict[str, str]]) -> str:
+    """Pick the best chunk for Pass 1 from Stage 3 relevant_chunk_ids."""
+    if not chunks:
+        return str(candidate.get("best_chunk_id") or "").strip()
+
+    chunk_lookup = {
+        canonical_chunk_id(c.get("chunk_id")): c
+        for c in chunks
+        if c.get("chunk_id")
+    }
+
+    preferred_chunk_id = str(candidate.get("best_chunk_id") or "").strip()
+    stage3_ids = [str(x).strip() for x in (candidate.get("relevant_chunk_ids") or []) if str(x).strip()]
+    if preferred_chunk_id and preferred_chunk_id not in stage3_ids:
+        stage3_ids.insert(0, preferred_chunk_id)
+    if not stage3_ids:
+        return preferred_chunk_id
+
+    hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
+    matched = set(candidate.get("matched_hunk_indices") or [])
+    if matched:
+        hunks = [h for h in hunks if (h.get("hunk_id") in matched) or (h.get("hunk_index") in matched)]
+    diff_text = format_relevant_diff_text(hunks)
+
+    scored = []
+    for cid in stage3_ids:
+        resolved = chunk_lookup.get(canonical_chunk_id(cid))
+        if not resolved:
+            continue
+        score = _score_chunk_for_pass1(
+            chunk_text=resolved.get("text", ""),
+            diff_text=diff_text,
+            preferred_chunk_id=preferred_chunk_id,
+            chunk_id=resolved.get("chunk_id", ""),
+        )
+        scored.append((score, resolved.get("chunk_id", "")))
+
+    if not scored:
+        return preferred_chunk_id
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return scored[0][1] or preferred_chunk_id
+
 def _read_text_file(path: str, max_chars: int = 40_000) -> str:
     if not path or not os.path.exists(path):
         return ""
@@ -1600,10 +1671,12 @@ def _read_text_file(path: str, max_chars: int = 40_000) -> str:
     return s
 
 
-def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict) -> str:
+
+
+def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict, target_chunk_id: str = "") -> str:
     """Pass 1: Verify whether the external change materially impacts the candidate page.
 
-    We intentionally provide a local evidence window centred on the target chunk
+    We intentionally provide a local evidence window centred on the selected target chunk
     to keep cost low while still giving the model nearby context.
     """
     packet_id = packet.get("packet_id", "")
@@ -1611,12 +1684,10 @@ def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict) -> str:
     source_name = src.get("name", "")
     priority = src.get("monitoring_priority", "")
 
-    # Include only the hunks this candidate was matched to (if provided), else include all hunks.
     hunks = (packet.get("source_change_details", {}) or {}).get("hunks", []) or []
     matched = set(candidate.get("matched_hunk_indices") or [])
     if matched:
         hunks = [h for h in hunks if (h.get("hunk_id") in matched) or (h.get("hunk_index") in matched)]
-    # Render hunks compactly.
     hunk_text_parts = []
     for h in hunks:
         removed = "\n".join([f"- {ln}" for ln in (h.get("removed") or [])])
@@ -1628,6 +1699,7 @@ def _build_llm_pass1_prompt(packet: dict, candidate: dict, window: dict) -> str:
     before = (window.get("before") or "").strip()
     current = (window.get("current") or "").strip()
     after = (window.get("after") or "").strip()
+    target_chunk_id = (target_chunk_id or candidate.get('best_chunk_id') or "").strip()
 
     return f"""System Role: You are a Technical Content Auditor for the IP First Response (IPFR) platform.
 
@@ -1643,15 +1715,15 @@ External change (unified diff hunks):
 
 Candidate IPFR page:
 - UDID: {candidate.get('udid')}
-- Target chunk_id: {candidate.get('best_chunk_id')}
+- Target chunk_id: {target_chunk_id}
 
 IPFR local evidence window contains (from the actual page markdown):
 [Before] – the preceding section of the page (if any)
 [Current] – the target section that may require updating
 [After] – the following section of the page (if any).
 
-Treat [Current] as the only section that can trigger an update decision, and use [Before] and [After] for context if needed. 
-[Before] and [After] must not be marked as impacted unless the change clearly alters the meaning of [Current].
+Treat [Current] as the primary section under assessment, and use [Before] and [After] for context if needed.
+[Before] and [After] must not be marked as impacted unless the external change clearly changes the meaning of [Current] in a way that requires those surrounding sections to be updated too.
 
 [Before]
 {before}
@@ -1663,16 +1735,17 @@ Treat [Current] as the only section that can trigger an update decision, and use
 {after}
 
 Decision rules:
-- Return "impact" if the external change updates, contradicts, or invalidates the meaning of the IPFR content in the evidence window.
+- Return "impact" if the external change updates, contradicts, invalidates, materially expands, or materially narrows the meaning of the IPFR content in the evidence window.
+- Treat additions to the scope of guidance as "impact" when the current IPFR text would become incomplete or misleading without that added scope.
 - Return "no_impact" if the change is unrelated to the evidence window, or does not change the meaning relevant to the IPFR content.
 - Return "uncertain" only if you cannot make a decision from the evidence provided.
-- If the external change uses different wording but clearly changes a legal threshold/definition that the IPFR content relies on, treat that as "impact".
+- If the external change uses different wording but clearly changes a legal threshold, legal precondition, scope of recommended action, or definition that the IPFR content relies on, treat that as "impact".
 
 Return JSON ONLY with this schema:
 {{
   "decision": "impact|no_impact|uncertain",
   "udid": "{candidate.get('udid')}",
-  "chunk_id": "{candidate.get('best_chunk_id')}",
+  "chunk_id": "{target_chunk_id}",
   "confidence": "high|medium|low",
   "reason": "brief explanation grounded in the evidence window",
   "evidence_quote": "a short quote (<=25 words) from the evidence window that supports your decision"
@@ -1830,6 +1903,8 @@ def _call_llm_json(prompt: str) -> dict:
         fallback["reason"] = f"LLM exception: {e}"
         return fallback
 
+
+
 def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = True) -> Optional[str]:
     """Verify one handover packet using a two-pass LLM workflow (prototype).
 
@@ -1846,7 +1921,6 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
     if not targets:
         return None
 
-    # Select top N resolvable candidates (prototype)
     ranked_targets = [t for t in targets if isinstance(t, dict) and t.get("udid")]
     ranked_targets.sort(key=lambda x: (x.get("candidate_rank") is None, x.get("candidate_rank", 9999)))
 
@@ -1882,13 +1956,13 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
 
         md_text = _read_text_file(resolved.get("markdown_path")) or ""
         chunks = parse_markdown_chunks(md_text)
-        window = extract_chunk_window(chunks, t.get("best_chunk_id") or "")
 
-        # ---- PASS 1 ----
-        prompt1 = _build_llm_pass1_prompt(packet, t, window)
+        pass1_target_chunk_id = _select_pass1_target_chunk_id(packet, t, chunks)
+        window = extract_chunk_window(chunks, pass1_target_chunk_id or (t.get("best_chunk_id") or ""))
+
+        prompt1 = _build_llm_pass1_prompt(packet, t, window, target_chunk_id=pass1_target_chunk_id)
         pass1 = _call_llm_json(prompt1)
 
-        # Normalise expected fields
         decision = (pass1.get("decision") or "uncertain").strip().lower()
         confidence = (pass1.get("confidence") or "").strip().lower()
         reason = (pass1.get("reason") or "").strip()
@@ -1896,23 +1970,20 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
         if decision not in ("impact", "no_impact", "uncertain"):
             decision = "uncertain"
 
+        if not str(pass1.get("chunk_id") or "").strip() and pass1_target_chunk_id:
+            pass1["chunk_id"] = pass1_target_chunk_id
+
         if decision == "uncertain":
             any_uncertain = True
 
         pass2 = None
-        review_ids: List[str] = []
+        review_ids = []
 
         if decision == "impact":
-            # ---- PASS 2 (scope review chunks) ----
             chunk_index = build_chunk_index(chunks)
             stage3_ids = t.get("relevant_chunk_ids") or []
             prompt2 = _build_llm_pass2_prompt(packet, t, pass1, chunk_index, stage3_relevant_chunk_ids=stage3_ids)
             pass2 = _call_llm_json(prompt2)
-
-            # Backwards/forwards compatible extraction:
-            # - New schema: confirmed_update_chunk_ids + additional_chunks_to_review
-            # - Legacy schema: suggested_review_chunk_ids
-            review_ids: List[str] = []
 
             legacy = pass2.get("suggested_review_chunk_ids")
             if isinstance(legacy, list) and legacy:
@@ -1928,18 +1999,16 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
                         if isinstance(item, dict) and item.get("chunk_id"):
                             review_ids.append(str(item["chunk_id"]))
 
-            # de-dup while preserving order
             seen = set()
             review_ids = [x for x in review_ids if not (x in seen or seen.add(x))]
 
-            # Ensure verified chunk present
-            verified_cid = (pass1.get("chunk_id") or t.get("best_chunk_id") or "").strip()
+            verified_cid = (pass1.get("chunk_id") or pass1_target_chunk_id or t.get("best_chunk_id") or "").strip()
             if verified_cid and verified_cid not in review_ids:
                 review_ids.insert(0, verified_cid)
 
             impacted_pages.append({
                 "udid": udid,
-                "chunk_id": (pass1.get("chunk_id") or t.get("best_chunk_id")),
+                "chunk_id": (pass1.get("chunk_id") or pass1_target_chunk_id or t.get("best_chunk_id")),
                 "confidence": confidence or "medium",
                 "reason": reason or "External change impacts IPFR guidance.",
                 "suggested_review_chunk_ids": review_ids
@@ -1949,6 +2018,7 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
             "udid": udid,
             "candidate_rank": t.get("candidate_rank"),
             "best_chunk_id": t.get("best_chunk_id"),
+            "pass1_target_chunk_id": pass1_target_chunk_id,
             "matched_hunk_indices": t.get("matched_hunk_indices", []),
             "resolved_files": resolved,
             "chunk_count": len(chunks),
@@ -1957,8 +2027,6 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
             "pass2_result": pass2,
         })
 
-    # ---- Aggregate overall decision ----
-    # Confirmed impacts take precedence over unrelated missing candidates.
     if impacted_pages:
         overall_decision = "impact"
     elif missing_any:
@@ -1988,7 +2056,6 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
         }, f, indent=2, ensure_ascii=False)
 
     return out_path
-
 
 
 def run_llm_verification_for_packets(
