@@ -118,6 +118,7 @@ def _summarise_suggestion_files(suggestion_files):
     }
 
 
+
 def _summarise_review_queue(queue_file):
     rows = []
     if not os.path.exists(queue_file):
@@ -130,19 +131,31 @@ def _summarise_review_queue(queue_file):
     summarised = []
     for row in rows:
         diff_text = str(row.get("Relevant Diff Text") or "")
-        hunk_headers = [h for h in HARDCODED_HUNKS if f"[{h['location_header']}]" in diff_text]
+
+        matched_headers = []
+        for h in HARDCODED_HUNKS:
+            header = str(h.get("location_header") or "").strip()
+            if not header:
+                continue
+
+            if (
+                f"[{header}]" in diff_text
+                or f"@@ -1,1 +1,1 @@ {header}" in diff_text
+                or header in diff_text
+            ):
+                matched_headers.append(header)
+
         summarised.append({
             "udid": row.get("UDID") or "",
             "chunk_id": row.get("Chunk ID") or "",
             "status": row.get("Suggestion Status") or "",
-            "matched_hunk_headers": [h["location_header"] for h in hunk_headers],
+            "matched_hunk_headers": matched_headers,
             "relevant_diff_text": diff_text[:250],
         })
     return {
         "row_count": len(rows),
         "rows": summarised,
     }
-
 
 def _build_multihunk_diff_text():
     lines = ["--- old", "+++ new"]
