@@ -2113,6 +2113,42 @@ def verify_handover_packet_with_llm(packet_path: str, prefer_test_files: bool = 
             )
             pass2 = _call_llm_json(prompt2)
 
+            # Detect Pass 2 failure: if the LLM call failed or returned invalid JSON,
+            # _call_llm_json returns the fallback dict with decision="uncertain".
+            # In that case, we must NOT silently discard the valid signal from Pass 1.
+            # Instead, promote Pass 1's suggested_review_chunk_ids into
+            # additional_chunks_to_review so the human review queue still captures them.
+            # This is the intended fail-open behaviour for Pass 2: preserve Pass 1 signal.
+            pass2_failed = (
+                isinstance(pass2, dict)
+                and (pass2.get("decision") == "uncertain" or pass2.get("overall_decision") == "uncertain")
+                and "LLM" in str(pass2.get("reason") or "")
+            )
+            if pass2_failed:
+                logger.warning(
+                    f"Pass 2 failed for {udid} (reason: {pass2.get('reason')}). "
+                    f"Promoting Pass 1 suggested_review_chunk_ids to additional_chunks_to_review."
+                )
+                p1_review_ids = pass1.get("suggested_review_chunk_ids") or []
+                pass2 = {
+                    "decision": "uncertain",
+                    "overall_decision": "uncertain",
+                    "confidence": "low",
+                    "reason": pass2.get("reason", "Pass 2 LLM call failed."),
+                    "confirmed_updates": [],
+                    "rejected_stage3_chunk_ids": [],
+                    # Carry forward Pass 1's suggestions so Stage 5 can still act on them.
+                    "additional_chunks_to_review": [
+                        {
+                            "chunk_id": cid,
+                            "reason": "Pass 2 failed; promoted from Pass 1 suggested_review_chunk_ids for human review.",
+                        }
+                        for cid in p1_review_ids
+                        if str(cid or "").strip()
+                    ],
+                    "_pass2_fallback": True,
+                }
+
             assessed_chunk_ids = {
                 canonical_chunk_id(item.get("chunk_id"))
                 for item in chunk_targets
