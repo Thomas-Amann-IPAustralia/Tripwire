@@ -66,25 +66,43 @@ def compute_metrics(predicted, verified, expected):
     }
 
 
-def compute_chunk_metrics(stage3_suggested_chunk_ids, llm_confirmed_chunk_ids):
+def compute_chunk_metrics(stage3_suggested_chunk_ids, llm_confirmed_chunk_ids, additional_review_chunk_ids=None):
+    """Compare Stage 3 chunk predictions against LLM-identified chunks.
+
+    'expected' is the union of Pass 2 confirmed chunks and additional_review chunks
+    promoted by the Pass 2 fallback. This ensures that when Pass 2 fails and the fix
+    promotes Pass 1 suggestions into additional_chunks_to_review, those chunks are
+    counted as correctly surfaced rather than silently missing from metrics.
+    """
     predicted = {
         tripwire.canonical_chunk_id(cid)
         for cid in (stage3_suggested_chunk_ids or [])
         if cid
     }
-    expected = {
+    confirmed = {
         tripwire.canonical_chunk_id(cid)
         for cid in (llm_confirmed_chunk_ids or [])
         if cid
     }
+    additional = {
+        tripwire.canonical_chunk_id(cid)
+        for cid in (additional_review_chunk_ids or [])
+        if cid
+    }
+    # Combined: what the LLM pipeline surfaced via either path
+    expected = confirmed | additional
     overlap = predicted & expected
     return {
         "chunk_precision": len(overlap) / len(predicted) if predicted else 0.0,
         "chunk_recall": len(overlap) / len(expected) if expected else 0.0,
         "predicted_chunk_count": len(predicted),
-        "confirmed_chunk_count": len(expected),
+        "confirmed_chunk_count": len(confirmed),
+        "additional_review_chunk_count": len(additional),
+        "total_surfaced_chunk_count": len(expected),
         "overlap_chunk_count": len(overlap),
         "overlap_chunk_ids": sorted(overlap),
+        "confirmed_chunk_ids": sorted(confirmed),
+        "additional_review_chunk_ids": sorted(additional),
     }
 
 
@@ -484,6 +502,7 @@ def run_eval():
         chunk_metrics = compute_chunk_metrics(
             stage3_chunk_ids,
             outcomes["confirmed_update_chunk_ids_pass2"],
+            outcomes["additional_review_chunk_ids"],
         )
 
         print("\nEvaluation metrics")
@@ -495,12 +514,30 @@ def run_eval():
             else:
                 print(f"{k}: {v}")
 
+        # Detect whether the Pass 2 fallback fired for any candidate
+        pass2_fallback_fired = any(
+            cand.get("pass2_result", {}).get("_pass2_fallback")
+            for vf in verification_files
+            if os.path.exists(vf)
+            for cand in json.loads(open(vf, encoding="utf-8").read()).get("per_candidate", [])
+            if isinstance(cand, dict)
+        )
+
+        has_confirmed = bool(outcomes["confirmed_update_chunk_ids_pass2"])
+        has_additional = bool(outcomes["additional_review_chunk_ids"])
+
         if not predicted_udids:
             print("\nEND STATE: RETRIEVAL MISS")
         elif not outcomes["verified_udids"]:
             print("\nEND STATE: LLM VERIFICATION MISS")
-        elif not outcomes["confirmed_update_chunk_ids_pass2"]:
+        elif not has_confirmed and not has_additional:
             print("\nEND STATE: PASS 2 CONFIRMATION MISS")
+        elif pass2_fallback_fired and has_additional and not has_confirmed:
+            # Pass 2 failed for at least one candidate; chunks preserved via fallback
+            print("\nEND STATE: PASS 2 FALLBACK — chunks in additional_review, no confirmed updates")
+        elif pass2_fallback_fired and has_additional and has_confirmed:
+            # Mixed: some candidates confirmed by Pass 2, others fell back
+            print("\nEND STATE: PASS 2 PARTIAL FALLBACK — some chunks confirmed, some in additional_review")
         elif not suggestion_files:
             print("\nEND STATE: UPDATE SUGGESTION MISS")
         elif any(
