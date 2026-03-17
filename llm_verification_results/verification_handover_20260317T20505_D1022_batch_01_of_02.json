@@ -1,0 +1,109 @@
+{
+  "packet_id": "handover_20260317T20505_D1022_batch_01_of_02",
+  "verified_at": "2026-03-17T20:51:22.712245",
+  "top_n_candidates_loaded": 3,
+  "llm_result": {
+    "overall_decision": "uncertain",
+    "confidence": "high",
+    "impacted_pages": [],
+    "note": "Prototype: verified top N candidates only. Production will verify every candidate."
+  },
+  "per_candidate": [
+    {
+      "udid": "D1022",
+      "candidate_rank": 1,
+      "best_chunk_id": "D1022_02",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "D1022",
+        "markdown_path": null,
+        "jsonld_path": null,
+        "missing": [
+          "markdown",
+          "jsonld"
+        ]
+      },
+      "chunk_count": 1,
+      "evidence_window": {
+        "before": "",
+        "current": "",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "D1022",
+        "chunk_id": "D1022_02",
+        "confidence": "high",
+        "reason": "The candidate page content is empty, so the new WIPO AI Infrastructure Interchange information does not alter or contradict it.",
+        "evidence_quote": "[Current] section is empty"
+      },
+      "pass2_result": null
+    },
+    {
+      "udid": "D1029",
+      "candidate_rank": 2,
+      "best_chunk_id": "D1029_11",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "D1029",
+        "markdown_path": null,
+        "jsonld_path": null,
+        "missing": [
+          "markdown",
+          "jsonld"
+        ]
+      },
+      "chunk_count": 1,
+      "evidence_window": {
+        "before": "",
+        "current": "",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "D1029",
+        "chunk_id": "D1029_11",
+        "confidence": "high",
+        "reason": "The external change adds a new WIPO initiative on AI and IP but does not update or contradict the empty target section or any IPFR content in the evidence window.",
+        "evidence_quote": "[Current] is empty, no content to update or contradict"
+      },
+      "pass2_result": null
+    },
+    {
+      "udid": "E1021",
+      "candidate_rank": 3,
+      "best_chunk_id": "E1021_03",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "E1021",
+        "markdown_path": null,
+        "jsonld_path": null,
+        "missing": [
+          "markdown",
+          "jsonld"
+        ]
+      },
+      "chunk_count": 1,
+      "evidence_window": {
+        "before": "",
+        "current": "",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "E1021",
+        "chunk_id": "E1021_03",
+        "confidence": "high",
+        "reason": "The candidate page section is empty and does not contain any relevant content that is updated or contradicted by the external source on WIPO's AI initiative.",
+        "evidence_quote": "[Current] (empty section)"
+      },
+      "pass2_result": null
+    }
+  ]
+}

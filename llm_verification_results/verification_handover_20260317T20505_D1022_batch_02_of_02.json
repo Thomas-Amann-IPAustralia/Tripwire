@@ -1,0 +1,109 @@
+{
+  "packet_id": "handover_20260317T20505_D1022_batch_02_of_02",
+  "verified_at": "2026-03-17T20:51:28.384117",
+  "top_n_candidates_loaded": 3,
+  "llm_result": {
+    "overall_decision": "uncertain",
+    "confidence": "high",
+    "impacted_pages": [],
+    "note": "Prototype: verified top N candidates only. Production will verify every candidate."
+  },
+  "per_candidate": [
+    {
+      "udid": "B1001",
+      "candidate_rank": 51,
+      "best_chunk_id": "B1001_01",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "B1001",
+        "markdown_path": null,
+        "jsonld_path": null,
+        "missing": [
+          "markdown",
+          "jsonld"
+        ]
+      },
+      "chunk_count": 1,
+      "evidence_window": {
+        "before": "",
+        "current": "",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "B1001",
+        "chunk_id": "B1001_01",
+        "confidence": "high",
+        "reason": "The external update introduces a new WIPO initiative on AI and IP, but the candidate IPFR page section is empty, so there's no conflicting or updated content to impact.",
+        "evidence_quote": "[Current] (empty content)"
+      },
+      "pass2_result": null
+    },
+    {
+      "udid": "B1020",
+      "candidate_rank": 52,
+      "best_chunk_id": "B1020_12",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "B1020",
+        "markdown_path": null,
+        "jsonld_path": null,
+        "missing": [
+          "markdown",
+          "jsonld"
+        ]
+      },
+      "chunk_count": 1,
+      "evidence_window": {
+        "before": "",
+        "current": "",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "B1020",
+        "chunk_id": "B1020_12",
+        "confidence": "high",
+        "reason": "The candidate page section is empty, so new WIPO announcements about AI infrastructure do not alter or contradict the current content.",
+        "evidence_quote": "[Current] (empty section)"
+      },
+      "pass2_result": null
+    },
+    {
+      "udid": "B1014",
+      "candidate_rank": 53,
+      "best_chunk_id": "B1014_01",
+      "matched_hunk_indices": [
+        1
+      ],
+      "resolved_files": {
+        "udid": "B1014",
+        "markdown_path": null,
+        "jsonld_path": null,
+        "missing": [
+          "markdown",
+          "jsonld"
+        ]
+      },
+      "chunk_count": 1,
+      "evidence_window": {
+        "before": "",
+        "current": "",
+        "after": ""
+      },
+      "pass1_result": {
+        "decision": "no_impact",
+        "udid": "B1014",
+        "chunk_id": "B1014_01",
+        "confidence": "high",
+        "reason": "The candidate IPFR page's current section is empty, so the newly added WIPO announcement about AI Infrastructure Interchange does not update or contradict any existing content.",
+        "evidence_quote": "[Current] section is empty"
+      },
+      "pass2_result": null
+    }
+  ]
+}

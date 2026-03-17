@@ -1,7 +1,5 @@
 top of page
 
-Skip to Main Content
-
 # Biography
 
 Thomas Amann is a contemporary artist engaged primarily with digital sculpture, 3D modelling, and texturing tools used in game and film production. Thomas’s works have involved the use of photogrammetry, 3D simulation and modelling, visual scripting, algorithm-based fractals, animation, 3D printing, and real-time motion-tracking technology.
