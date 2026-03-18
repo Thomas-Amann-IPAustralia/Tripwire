@@ -71,6 +71,7 @@ OUTPUT_DIR = 'content_archive'
 DIFF_DIR = 'diff_archive'
 HANDOVER_DIR = 'handover_packets'
 SEMANTIC_EMBEDDINGS_FILE = 'Semantic_Embeddings_Output.json'
+CURRENT_RUN_MANIFEST = 'current_run_manifest.json'
 
 
 # --- IPFR content archive for LLM verification (prototype) ---
@@ -2979,6 +2980,31 @@ def run_llm_update_suggestions_for_verification_files(
     return written_paths
 
 
+def write_current_run_manifest(
+    handover_paths: List[str],
+    verification_paths: List[str],
+    suggestion_paths: List[str],
+) -> None:
+    """Write an ephemeral manifest of files generated in this run.
+
+    Used by the GitHub Actions workflow to upload only current-run artifacts
+    rather than the entire historical folder contents.
+    The manifest is excluded from git via .gitignore.
+    """
+    manifest = {
+        "run_timestamp": datetime.datetime.now().isoformat(),
+        "handover_packets": handover_paths or [],
+        "verification_results": verification_paths or [],
+        "update_suggestions": suggestion_paths or [],
+    }
+    with open(CURRENT_RUN_MANIFEST, 'w', encoding='utf-8') as f:
+        json.dump(manifest, f, indent=2)
+    logger.info(f"Wrote current run manifest to {CURRENT_RUN_MANIFEST} "
+                f"({len(handover_paths or [])} handover, "
+                f"{len(verification_paths or [])} verification, "
+                f"{len(suggestion_paths or [])} suggestion file(s)).")
+
+
 def write_github_summary(handover_paths: List[str]):
     """
     Writes a markdown summary of this run's handover packets to the GitHub Actions
@@ -3159,26 +3185,33 @@ def main():
             pass
 
     # --- Stages 4 & 5 (LLM Verification and Suggestions) ---
+    verification_paths: List[str] = []
+    suggestion_paths: List[str] = []
+
     if handover_paths:
         logger.info(
             f"Running LLM verification on {len(handover_paths)} handover packet(s) "
             f"(top N candidates per packet = {TOP_N_VERIFICATION_CANDIDATES})."
         )
         verification_paths = run_llm_verification_for_packets(handover_paths)
-        
+
         if verification_paths:
             logger.info(f"Wrote {len(verification_paths)} LLM verification result file(s) to {LLM_VERIFY_DIR}.")
-            
+
             # Generate the draft content updates
             suggestion_paths = run_llm_update_suggestions_for_verification_files(verification_paths)
-            
+
             if suggestion_paths:
                 logger.info(f"Wrote {len(suggestion_paths)} Stage 5 update suggestion file(s) to {UPDATE_SUGGESTIONS_DIR}.")
-                
-                # NEW: Generate the consolidated human-readable review queue CSV
+
+                # Generate the consolidated human-readable review queue CSV
                 queue_file = "update_review_queue.csv"
                 write_update_review_queue_csv_from_suggestion_files(suggestion_paths, output_path=queue_file)
                 logger.info(f"Consolidated human review queue written to {queue_file}")
+
+    # Write ephemeral manifest of this run's outputs for GitHub Actions artifact upload.
+    # The manifest is excluded from git via .gitignore.
+    write_current_run_manifest(handover_paths, verification_paths, suggestion_paths)
 
     write_github_summary(handover_paths)
     
