@@ -1,0 +1,5 @@
+# Ephemeral Tripwire run artifacts — not for version control
+# The manifest is written each run and consumed by GitHub Actions for artifact uploads only.
+# Historical outputs are preserved in handover_packets/, llm_verification_results/, etc.
+current_run_manifest.json
+staging/
