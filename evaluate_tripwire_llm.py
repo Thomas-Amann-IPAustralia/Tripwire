@@ -1,308 +1,556 @@
+import csv
+import difflib
 import json
 import os
-import re
 import tempfile
+from collections import defaultdict
 from pathlib import Path
 
+from markdownify import markdownify as md
+
 import tripwire
+from tripwire import IPFR_CONTENT_ARCHIVE_DIR
 
 print("API KEY PRESENT:", bool(os.getenv("OPENAI_API_KEY")))
 
-"""
-Tripwire LLM Evaluation Script (Stage 3 + Stage 4)
-
-Runs in GitHub Actions (not pytest) to avoid flaky CI.
-
-Evaluates:
-1) Similarity scoring (retrieval): did the expected page appear in threshold_passing_candidates?
-2) LLM verification (verifier): given the Top-N candidate pages, did the LLM confirm impact on the expected page?
-3) Chunk confirmation (Pass 2): did the LLM confirm Stage 3 suggested chunks?
-"""
-
 TEST_SOURCE_NAME = "LLM_EVAL_TEST"
 TEST_PRIORITY = "High"
-TEST_VERSION = "eval_v1"
+TEST_VERSION = "eval_v2_end_to_end"
+EXPECTED_IMPACTED_UDIDS = {"101-1", "101-2"}
+REPO_ARCHIVE_DIR = str(Path(IPFR_CONTENT_ARCHIVE_DIR))
 
-# Ground truth for this eval: the diff we generate is crafted from the 101-2 test markdown,
-# so 101-2 should be verified as impacted.
-EXPECTED_IMPACTED_UDIDS = {"101-2"}
-
-
-HARDCODED_REMOVED_LINE = (
-    "Design infringement can occur when someone uses a design that is identical or similar "
-    "to a registered design without obtaining permission from the owner."
-)
-
-HARDCODED_ADDED_LINE = (
-    "Design infringement can occur only when someone uses a design that is identical "
-    "to the registered design without obtaining permission from the owner."
-)
+# Hardcoded multi-hunk diff for controlled end-to-end evaluation.
+HARDCODED_HUNKS = [
+    {
+        "hunk_id": 1,
+        "location_header": "design certification before enforcement",
+        "removed": [
+            "In Australia, a registered design provides designers protection for up to 10 years."
+        ],
+        "added": [
+            "In Australia, a design owner generally needs both registration and certification before they can enforce the design against another party."
+        ],
+    },
+    {
+        "hunk_id": 2,
+        "location_header": "searching before launch",
+        "removed": [
+            "One of the most effective ways to avoid IP infringement is to check for existing rights before committing to a new venture."
+        ],
+        "added": [
+            "One of the most effective ways to avoid IP infringement is to search relevant registers and key market signals before launching a new product, brand, service, or design."
+        ],
+    },
+    {
+        "hunk_id": 3,
+        "location_header": "exact design on different product may not infringe",
+        "removed": [
+            "Protection only covers the appearance of that product."
+        ],
+        "added": [
+            "Protection generally covers the appearance of the specific product for which the design is registered, so using the same visual features on a different product may not amount to infringement."
+        ],
+    },
+]
 
 
 def compute_metrics(predicted, verified, expected):
     predicted = set(predicted or [])
     verified = set(verified or [])
     expected = set(expected or [])
-
-    retrieval_recall = len(predicted & expected) / len(expected) if expected else 0.0
-    retrieval_precision = len(predicted & expected) / len(predicted) if predicted else 0.0
-
-    verifier_recall = len(verified & expected) / len(expected) if expected else 0.0
-    verifier_precision = len(verified & expected) / len(verified) if verified else 0.0
-
     return {
-        "retrieval_precision": retrieval_precision,
-        "retrieval_recall": retrieval_recall,
-        "verifier_precision": verifier_precision,
-        "verifier_recall": verifier_recall,
+        "retrieval_precision": len(predicted & expected) / len(predicted) if predicted else 0.0,
+        "retrieval_recall": len(predicted & expected) / len(expected) if expected else 0.0,
+        "verifier_precision": len(verified & expected) / len(verified) if verified else 0.0,
+        "verifier_recall": len(verified & expected) / len(expected) if expected else 0.0,
     }
 
 
-def _normalise_chunk_id(chunk_id):
-    if not chunk_id or not isinstance(chunk_id, str):
-        return None
+def compute_chunk_metrics(stage3_suggested_chunk_ids, llm_confirmed_chunk_ids, additional_review_chunk_ids=None):
+    """Compare Stage 3 chunk predictions against LLM-identified chunks.
 
-    value = chunk_id.strip()
-    if not value:
-        return None
-
-    # Normalise common prototype variants such as:
-    #   101-2_01  -> 101-2-01
-    #   101-2-01  -> 101-2-01
-    match = re.fullmatch(r"(\d+-\d+)[_-](\d+)", value)
-    if match:
-        return f"{match.group(1)}-{match.group(2).zfill(2)}"
-
-    return value
-
-
-def compute_chunk_metrics(stage3_suggested_chunk_ids, llm_confirmed_chunk_ids):
+    'expected' is the union of Pass 2 confirmed chunks and additional_review chunks
+    promoted by the Pass 2 fallback. This ensures that when Pass 2 fails and the fix
+    promotes Pass 1 suggestions into additional_chunks_to_review, those chunks are
+    counted as correctly surfaced rather than silently missing from metrics.
+    """
     predicted = {
-        _normalise_chunk_id(chunk_id)
-        for chunk_id in (stage3_suggested_chunk_ids or [])
-        if _normalise_chunk_id(chunk_id)
+        tripwire.canonical_chunk_id(cid)
+        for cid in (stage3_suggested_chunk_ids or [])
+        if cid
     }
-    expected = {
-        _normalise_chunk_id(chunk_id)
-        for chunk_id in (llm_confirmed_chunk_ids or [])
-        if _normalise_chunk_id(chunk_id)
+    confirmed = {
+        tripwire.canonical_chunk_id(cid)
+        for cid in (llm_confirmed_chunk_ids or [])
+        if cid
     }
+    additional = {
+        tripwire.canonical_chunk_id(cid)
+        for cid in (additional_review_chunk_ids or [])
+        if cid
+    }
+    # Combined: what the LLM pipeline surfaced via either path
+    expected = confirmed | additional
     overlap = predicted & expected
-
-    precision = len(overlap) / len(predicted) if predicted else 0.0
-    recall = len(overlap) / len(expected) if expected else 0.0
-
     return {
-        "chunk_precision": precision,
-        "chunk_recall": recall,
+        "chunk_precision": len(overlap) / len(predicted) if predicted else 0.0,
+        "chunk_recall": len(overlap) / len(expected) if expected else 0.0,
+        "predicted_chunk_count": len(predicted),
+        "confirmed_chunk_count": len(confirmed),
+        "additional_review_chunk_count": len(additional),
+        "total_surfaced_chunk_count": len(expected),
+        "overlap_chunk_count": len(overlap),
+        "overlap_chunk_ids": sorted(overlap),
+        "confirmed_chunk_ids": sorted(confirmed),
+        "additional_review_chunk_ids": sorted(additional),
     }
 
 
-def _dedupe_preserve_order(values):
-    seen = set()
-    out = []
-    for value in values or []:
-        if not value or value in seen:
-            continue
-        seen.add(value)
-        out.append(value)
-    return out
+def _dedupe(items):
+    return list(dict.fromkeys([x for x in items if x]))
 
 
-def _collect_verification_outcomes(verification_files):
-    verified_udids = []
-    verified_chunk_ids_pass1 = []
-    confirmed_update_chunk_ids_pass2 = []
-    additional_chunks_to_review = []
-    llm_decisions = []
-    per_candidate_debug = []
+def _collect_stage3_chunk_predictions(analysis):
+    page_to_chunks = {}
+    all_chunk_ids = []
+    for cand in analysis.get("threshold_passing_candidates", []) or []:
+        udid = cand.get("udid")
+        chunk_ids = [c for c in (cand.get("relevant_chunk_ids") or []) if c]
+        page_to_chunks[udid] = chunk_ids
+        all_chunk_ids.extend(chunk_ids)
+    return page_to_chunks, _dedupe(all_chunk_ids)
 
-    for verification_file in verification_files or []:
-        doc = json.loads(Path(verification_file).read_text(encoding="utf-8"))
-        llm = doc.get("llm_result", {}) or {}
-        llm_decisions.append(llm.get("overall_decision", "uncertain"))
 
-        impacted_pages = llm.get("impacted_pages", []) or []
-        for page in impacted_pages:
-            if not isinstance(page, dict):
+def _summarise_suggestion_files(suggestion_files):
+    statuses = []
+    excerpts = []
+    page_to_chunks = defaultdict(list)
+
+    for s_file in suggestion_files or []:
+        doc = json.loads(Path(s_file).read_text(encoding="utf-8"))
+        statuses.append(
+            {
+                "file": os.path.basename(s_file),
+                "status": doc.get("status"),
+            }
+        )
+
+        # Reuse Tripwire's own row-flattening helper instead of custom Stage 5 parsing.
+        flattened_rows = tripwire.build_update_review_queue_rows_from_payload(
+            doc,
+            suggestion_file=s_file,
+        )
+
+        for row in flattened_rows:
+            udid = row.get("UDID") or ""
+            chunk_id = row.get("Chunk ID") or ""
+            status = row.get("Suggestion Status") or ""
+            suggested_text = str(row.get("Suggested Text") or "").strip().replace("\n", " ")
+
+            if status == "review_only":
                 continue
-            udid = page.get("udid")
-            chunk_id = page.get("chunk_id")
-            if udid:
-                verified_udids.append(udid)
-            if chunk_id:
-                verified_chunk_ids_pass1.append(chunk_id)
 
-        # FIX: per_candidate is top-level in the verification JSON, not inside llm_result
-        for candidate in doc.get("per_candidate", []) or []:
-            if not isinstance(candidate, dict):
-                continue
+            if udid and chunk_id:
+                page_to_chunks[udid].append(chunk_id)
 
-            pass2_result = candidate.get("pass2_result")
-            if not isinstance(pass2_result, dict):
-                pass2_result = {}
-
-            confirmed_update_chunk_ids_pass2.extend(
-                pass2_result.get("confirmed_update_chunk_ids", []) or []
-            )
-            additional_chunks_to_review.extend(
-                pass2_result.get("additional_chunks_to_review", []) or []
-            )
-            per_candidate_debug.append(
+            excerpts.append(
                 {
-                    "file": verification_file,
-                    "udid": candidate.get("udid"),
-                    "candidate_rank": candidate.get("candidate_rank"),
-                    "best_chunk_id": candidate.get("best_chunk_id"),
-                    "pass1_decision": (candidate.get("pass1_result", {}) or {}).get("decision"),
-                    "pass2_confirmed_update_chunk_ids": pass2_result.get("confirmed_update_chunk_ids", []) or [],
+                    "udid": udid,
+                    "chunk_id": chunk_id,
+                    "status": status,
+                    "excerpt": suggested_text[:180],
                 }
             )
 
-    verified_udids = _dedupe_preserve_order(verified_udids)
-    verified_chunk_ids_pass1 = _dedupe_preserve_order(verified_chunk_ids_pass1)
-    confirmed_update_chunk_ids_pass2 = _dedupe_preserve_order(confirmed_update_chunk_ids_pass2)
-    additional_chunks_to_review = _dedupe_preserve_order(additional_chunks_to_review)
-
-    overall_decision = "uncertain"
-    if "impact" in llm_decisions:
-        overall_decision = "impact"
-    elif llm_decisions and all(decision == "no_impact" for decision in llm_decisions):
-        overall_decision = "no_impact"
-
     return {
-        "overall_decision": overall_decision,
-        "verified_udids": verified_udids,
-        "verified_chunk_ids_pass1": verified_chunk_ids_pass1,
-        "confirmed_update_chunk_ids_pass2": confirmed_update_chunk_ids_pass2,
-        "additional_chunks_to_review": additional_chunks_to_review,
-        "per_candidate_debug": per_candidate_debug,
+        "statuses": statuses,
+        "page_to_chunks": {k: _dedupe(v) for k, v in page_to_chunks.items()},
+        "excerpts": excerpts,
     }
 
 
-def run_eval():
-    # Ensure Stage 4 can find the test fixtures in the repo
-    tripwire.IPFR_CONTENT_ARCHIVE_DIR = "IPFR_content_archive"
+def _summarise_review_queue(queue_file):
+    rows = []
+    if not os.path.exists(queue_file):
+        return {"row_count": 0, "rows": []}
 
-    # Prefer *_test.* fixtures
-    prefer_test_files = True
+    with open(queue_file, "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            rows.append(row)
 
-    # Resolve the 101-2 markdown fixture so Stage 4 can still verify against the
-    # page content in IPFR_content_archive, but use a hardcoded diff payload so the
-    # evaluation is deterministic and never depends on sentence extraction.
-    resolved = tripwire.resolve_ipfr_content_files("101-2", prefer_test_files=prefer_test_files)
-    md_path = resolved.get("markdown_path")
-    if not md_path:
-        raise RuntimeError("Could not resolve 101-2 markdown fixture in IPFR_content_archive")
+    summarised = []
+    for row in rows:
+        diff_text = str(row.get("Relevant Diff Text") or "")
+        matched_headers = []
 
-    removed = HARDCODED_REMOVED_LINE
-    added = HARDCODED_ADDED_LINE
+        for h in HARDCODED_HUNKS:
+            header = str(h.get("location_header") or "").strip()
+            if not header:
+                continue
+            if (
+                f"[{header}]" in diff_text
+                or f"@@ -1,1 +1,1 @@ {header}" in diff_text
+                or header in diff_text
+            ):
+                matched_headers.append(header)
+
+        summarised.append(
+            {
+                "udid": row.get("UDID") or "",
+                "chunk_id": row.get("Chunk ID") or "",
+                "status": row.get("Suggestion Status") or "",
+                "matched_hunk_headers": matched_headers,
+                "relevant_diff_text": diff_text[:250],
+            }
+        )
+
+    return {
+        "row_count": len(rows),
+        "rows": summarised,
+    }
+
+
+def _build_multihunk_diff_text():
+    lines = ["--- old", "+++ new"]
+    for hunk in HARDCODED_HUNKS:
+        lines.extend(
+            [
+                f"@@ -1,1 +1,1 @@ {hunk['location_header']}",
+                f"-{hunk['removed'][0]}",
+                f"+{hunk['added'][0]}",
+            ]
+        )
+    return "\n".join(lines) + "\n"
+
+
+HTML_NOISE_OLD = """
+<!doctype html>
+<html>
+  <body>
+    <header>
+      <nav>
+        <a href="/home">Home</a>
+        <a href="/contact">Contact us</a>
+      </nav>
+      <div class="breadcrumbs">Home > Guidance > Designs</div>
+    </header>
+    <main>
+      <article>
+        <h1>Design infringement</h1>
+        <p>In Australia, a registered design provides designers protection for up to 10 years.</p>
+        <p>Protection only covers the appearance of that product.</p>
+      </article>
+    </main>
+    <aside>Share this page</aside>
+    <footer>
+      <p>Page 1 of 1</p>
+      <p>Generated on: 01/01/2026 10:15am</p>
+    </footer>
+  </body>
+</html>
+"""
+
+HTML_NOISE_ONLY_NEW = """
+<!doctype html>
+<html>
+  <body>
+    <header>
+      <nav>
+        <a href="/home">Home</a>
+        <a href="/contact">Contact the team</a>
+        <a href="/news">Latest news</a>
+      </nav>
+      <div class="breadcrumbs">Home > Guidance > Designs > Design infringement</div>
+    </header>
+    <main>
+      <article>
+        <h1>Design infringement</h1>
+        <p>In Australia, a registered design provides designers protection for up to 10 years.</p>
+        <p>Protection only covers the appearance of that product.</p>
+      </article>
+    </main>
+    <aside>Share this page</aside>
+    <footer>
+      <p>Page 2 of 2</p>
+      <p>Generated on: 15/03/2026 9:47am</p>
+      <p>Last updated: 15 March 2026</p>
+    </footer>
+  </body>
+</html>
+"""
+
+HTML_MIXED_NEW = """
+<!doctype html>
+<html>
+  <body>
+    <header>
+      <nav>
+        <a href="/home">Home</a>
+        <a href="/contact">Contact the team</a>
+        <a href="/news">Latest news</a>
+      </nav>
+      <div class="breadcrumbs">Home > Guidance > Designs > Design infringement</div>
+    </header>
+    <main>
+      <article>
+        <h1>Design infringement</h1>
+        <p>In Australia, a design owner generally needs both registration and certification before they can enforce the design against another party.</p>
+        <p>Protection generally covers the appearance of the specific product for which the design is registered, so using the same visual features on a different product may not amount to infringement.</p>
+      </article>
+    </main>
+    <aside>Share this page</aside>
+    <footer>
+      <p>Page 2 of 2</p>
+      <p>Generated on: 15/03/2026 9:47am</p>
+      <p>Last updated: 15 March 2026</p>
+    </footer>
+  </body>
+</html>
+"""
+
+
+def _render_html_like_tripwire(html_text):
+    cleaned_html = tripwire.clean_html_content(html_text)
+    return md(cleaned_html, heading_style="ATX").strip() + "\n"
+
+
+def _write_diff_from_texts(old_text, new_text, diff_path):
+    old_lines = old_text.splitlines()
+    new_lines = new_text.splitlines()
+    diff_lines = list(
+        difflib.unified_diff(
+            old_lines,
+            new_lines,
+            fromfile="old_rendered.md",
+            tofile="new_rendered.md",
+            lineterm="",
+            n=3,
+        )
+    )
+    diff_text = "\n".join(diff_lines) + ("\n" if diff_lines else "")
+    Path(diff_path).write_text(diff_text, encoding="utf-8")
+    return diff_text
+
+
+def run_noise_filter_eval():
+    print("\n=== HTML noise filtering evaluation ===")
+    print("TAGS_TO_EXCLUDE:", tripwire.TAGS_TO_EXCLUDE)
+
+    old_rendered = _render_html_like_tripwire(HTML_NOISE_OLD)
+    noise_only_rendered = _render_html_like_tripwire(HTML_NOISE_ONLY_NEW)
+    mixed_rendered = _render_html_like_tripwire(HTML_MIXED_NEW)
+
+    print("\nRendered HTML after Tripwire cleaning")
+    print("Old rendered excerpt:", old_rendered[:220].replace("\n", " "))
+    print("Noise-only rendered excerpt:", noise_only_rendered[:220].replace("\n", " "))
+    print("Mixed rendered excerpt:", mixed_rendered[:220].replace("\n", " "))
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir)
-        diff_file = tmp / "design_change.diff"
 
-        diff_file.write_text(
-            "--- old\n"
-            "+++ new\n"
-            "@@ -1 +1 @@\n"
-            f"-{removed}\n"
-            f"+{added}\n",
-            encoding="utf-8",
+        noise_diff_path = tmp / "noise_only_html.diff"
+        noise_diff_text = _write_diff_from_texts(old_rendered, noise_only_rendered, noise_diff_path)
+        noise_analysis = tripwire.calculate_similarity(str(noise_diff_path), source_priority=TEST_PRIORITY)
+        noise_hunks = tripwire.parse_diff_hunks(str(noise_diff_path))
+
+        mixed_diff_path = tmp / "mixed_html.diff"
+        mixed_diff_text = _write_diff_from_texts(old_rendered, mixed_rendered, mixed_diff_path)
+        mixed_analysis = tripwire.calculate_similarity(str(mixed_diff_path), source_priority=TEST_PRIORITY)
+        mixed_hunks = tripwire.parse_diff_hunks(str(mixed_diff_path))
+
+        print("\nNoise-only scenario")
+        print("Raw diff has content:", bool(noise_diff_text.strip()))
+        print("Parsed hunks:", len(noise_hunks))
+        print(
+            "Noise classification:",
+            [
+                {
+                    "hunk_index": h.get("hunk_index"),
+                    "is_noise": tripwire._is_administrative_noise(h.get("change_context", "")),
+                    "change_context": h.get("change_context", "")[:140],
+                }
+                for h in noise_hunks
+            ],
         )
+        print("Similarity status:", noise_analysis.get("status"))
+        print("Should handover:", noise_analysis.get("should_handover"))
+        print("Candidate count:", noise_analysis.get("candidate_count"))
+        print("Decision reason:", noise_analysis.get("handover_decision_reason"))
 
-        # ---- RUN SIMILARITY (Stage 3) ----
-        analysis = tripwire.calculate_similarity(str(diff_file), source_priority=TEST_PRIORITY)
+        print("\nMixed HTML scenario")
+        print("Raw diff has content:", bool(mixed_diff_text.strip()))
+        print("Parsed hunks:", len(mixed_hunks))
+        print(
+            "Noise classification:",
+            [
+                {
+                    "hunk_index": h.get("hunk_index"),
+                    "is_noise": tripwire._is_administrative_noise(h.get("change_context", "")),
+                    "change_context": h.get("change_context", "")[:140],
+                }
+                for h in mixed_hunks
+            ],
+        )
+        print("Similarity status:", mixed_analysis.get("status"))
+        print("Should handover:", mixed_analysis.get("should_handover"))
+        print("Candidate count:", mixed_analysis.get("candidate_count"))
+        print(
+            "Retrieved pages:",
+            [c.get("udid") for c in mixed_analysis.get("threshold_passing_candidates", [])],
+        )
+        print("Retrieved chunk candidates by page:")
+        for cand in mixed_analysis.get("threshold_passing_candidates", []) or []:
+            print(f"  {cand.get('udid')}: {cand.get('relevant_chunk_ids')}")
 
-        candidates = analysis.get("threshold_passing_candidates", []) or []
-        predicted_udids = [c.get("udid") for c in candidates if isinstance(c, dict) and c.get("udid")]
+        if noise_analysis.get("candidate_count", 0) == 0 and not noise_analysis.get("should_handover"):
+            print("Noise-only result: PASS")
+        else:
+            print("Noise-only result: FAIL")
 
-        # Stage 3 suggested chunk IDs
-        predicted_chunk_ids = []
-        for candidate in candidates:
-            if isinstance(candidate, dict):
-                predicted_chunk_ids.extend(candidate.get("relevant_chunk_ids", []) or [])
+        if mixed_analysis.get("candidate_count", 0) > 0 and mixed_analysis.get("should_handover"):
+            print("Mixed-content result: PASS")
+        else:
+            print("Mixed-content result: FAIL")
 
-        predicted_chunk_ids = _dedupe_preserve_order(predicted_chunk_ids)
 
-        print("\nSimilarity results")
-        print("------------------")
-        print("Candidate pages:", predicted_udids)
-        print("Stage 3 suggested chunk IDs:", predicted_chunk_ids)
-        print("Tripwire TOP_N_VERIFICATION_CANDIDATES:", getattr(tripwire, "TOP_N_VERIFICATION_CANDIDATES", None))
+def run_eval():
+    tripwire.IPFR_CONTENT_ARCHIVE_DIR = REPO_ARCHIVE_DIR
 
-        # Force handover packet generation for eval (prototype)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp = Path(tmpdir)
+        diff_path = tmp / "eval.diff"
+        diff_path.write_text(_build_multihunk_diff_text(), encoding="utf-8")
+
+        analysis = tripwire.calculate_similarity(str(diff_path), source_priority=TEST_PRIORITY)
+
+        print("\nStage 3 retrieval")
+        predicted_udids = [c.get("udid") for c in analysis.get("threshold_passing_candidates", [])]
+        print("Retrieved pages:", predicted_udids)
+
+        stage3_page_chunks, stage3_chunk_ids = _collect_stage3_chunk_predictions(analysis)
+        print("Retrieved chunk candidates by page:")
+        for udid, chunk_ids in stage3_page_chunks.items():
+            print(f"  {udid}: {chunk_ids}")
+
         packets = tripwire.generate_handover_packets(
-            source_name=TEST_SOURCE_NAME,
-            priority=TEST_PRIORITY,
-            version_id=TEST_VERSION,
-            diff_file=str(diff_file),
-            analysis=analysis,
-            timestamp="eval",
+            TEST_SOURCE_NAME,
+            TEST_PRIORITY,
+            TEST_VERSION,
+            str(diff_path),
+            analysis,
+            "eval",
         )
 
-        print("Packets generated:", len(packets))
-
-        # ---- RUN LLM VERIFICATION (Stage 4) ----
-        # Prototype mode: verify Top-N candidates only.
         verification_files = tripwire.run_llm_verification_for_packets(
             packets,
-            prefer_test_files=prefer_test_files,
-            top_n_candidates=getattr(tripwire, "TOP_N_VERIFICATION_CANDIDATES", None),
+            prefer_test_files=True,
+        )
+        outcomes = tripwire.summarise_verification_files(verification_files)
+
+        print("\nStage 4 verification")
+        print("Verified pages:", outcomes["verified_udids"])
+        print("Per-candidate verification summary:")
+        for item in outcomes["per_candidate_summary"]:
+            print(
+                f"  {item['udid']} | pass1={item['pass1_decision']} | "
+                f"pass1_chunks={item['pass1_chunks']} | pass2_chunks={item['pass2_chunks']} | "
+                f"additional_review={item['additional_review_chunks']}"
+            )
+        print("Pass 1 confirmed chunks:", outcomes["pass1_confirmed_chunk_ids"])
+        print("Pass 2 confirmed chunks:", outcomes["confirmed_update_chunk_ids_pass2"])
+        print("Additional review chunks:", outcomes["additional_review_chunk_ids"])
+
+        suggestion_files = tripwire.run_llm_update_suggestions_for_verification_files(
+            verification_files,
+            prefer_test_files=True,
         )
 
-        print("Verification files:", verification_files)
+        queue_file = str(Path.cwd() / "update_review_queue.csv")
+        tripwire.write_update_review_queue_csv_from_suggestion_files(
+            suggestion_files,
+            output_path=queue_file,
+        )
 
-        verification_outcomes = _collect_verification_outcomes(verification_files)
-        llm_decision = verification_outcomes["overall_decision"]
-        verified_udids = verification_outcomes["verified_udids"]
-        verified_chunk_ids_pass1 = verification_outcomes["verified_chunk_ids_pass1"]
-        confirmed_update_chunk_ids_pass2 = verification_outcomes["confirmed_update_chunk_ids_pass2"]
-        additional_chunks_to_review = verification_outcomes["additional_chunks_to_review"]
+        suggestion_summary = _summarise_suggestion_files(suggestion_files)
+        queue_summary = _summarise_review_queue(queue_file)
 
-        print("LLM decision:", llm_decision)
-        print("Verified pages:", verified_udids)
-        print("Verified chunks (Pass 1):", verified_chunk_ids_pass1)
-        print("Confirmed update chunks (Pass 2):", confirmed_update_chunk_ids_pass2)
-        print("Additional chunks to review (Pass 2):", additional_chunks_to_review)
+        print("\nStage 5 update suggestions")
+        print("Suggestion files:", [os.path.basename(p) for p in suggestion_files])
+        print("Update suggestion statuses:", suggestion_summary["statuses"])
+        print("Suggested update chunks by page:", suggestion_summary["page_to_chunks"])
+        print("Short excerpts of suggested updates:")
+        for item in suggestion_summary["excerpts"]:
+            print(
+                f"  {item['udid']} | {item['chunk_id']} | "
+                f"{item['status']} | {item['excerpt']}"
+            )
 
-        if verification_outcomes["per_candidate_debug"]:
-            print("Per-candidate verification summary:")
-            for row in verification_outcomes["per_candidate_debug"]:
-                print(
-                    " -",
-                    {
-                        "file": row["file"],
-                        "udid": row["udid"],
-                        "candidate_rank": row["candidate_rank"],
-                        "best_chunk_id": row["best_chunk_id"],
-                        "pass1_decision": row["pass1_decision"],
-                        "pass2_confirmed_update_chunk_ids": row["pass2_confirmed_update_chunk_ids"],
-                    },
-                )
+        print("\nReview queue summary")
+        print("Row count:", queue_summary["row_count"])
+        for row in queue_summary["rows"]:
+            print(
+                f"  {row['udid']} | {row['chunk_id']} | {row['status']} | "
+                f"hunks={row['matched_hunk_headers']}"
+            )
 
-        # ---- METRICS ----
-        metrics = compute_metrics(predicted_udids, verified_udids, EXPECTED_IMPACTED_UDIDS)
-        chunk_metrics = compute_chunk_metrics(predicted_chunk_ids, confirmed_update_chunk_ids_pass2)
+        metrics = compute_metrics(
+            predicted_udids,
+            outcomes["verified_udids"],
+            EXPECTED_IMPACTED_UDIDS,
+        )
+        chunk_metrics = compute_chunk_metrics(
+            stage3_chunk_ids,
+            outcomes["confirmed_update_chunk_ids_pass2"],
+            outcomes["additional_review_chunk_ids"],
+        )
 
         print("\nEvaluation metrics")
-        print("------------------")
-        for key, value in metrics.items():
-            print(f"{key}: {value:.3f}")
+        for k, v in metrics.items():
+            print(f"{k}: {v:.3f}")
+        for k, v in chunk_metrics.items():
+            if isinstance(v, float):
+                print(f"{k}: {v:.3f}")
+            else:
+                print(f"{k}: {v}")
 
-        print("\nChunk evaluation metrics")
-        print("------------------------")
-        for key, value in chunk_metrics.items():
-            print(f"{key}: {value:.3f}")
+        # Detect whether the Pass 2 fallback fired for any candidate
+        pass2_fallback_fired = any(
+            cand.get("pass2_result", {}).get("_pass2_fallback")
+            for vf in verification_files
+            if os.path.exists(vf)
+            for cand in json.loads(open(vf, encoding="utf-8").read()).get("per_candidate", [])
+            if isinstance(cand, dict)
+        )
 
-        # ---- INTERPRETATION ----
-        if EXPECTED_IMPACTED_UDIDS - set(predicted_udids):
-            print("\nFailure type: RETRIEVAL MISS")
-        elif EXPECTED_IMPACTED_UDIDS - set(verified_udids):
-            print("\nFailure type: LLM VERIFICATION MISS")
+        has_confirmed = bool(outcomes["confirmed_update_chunk_ids_pass2"])
+        has_additional = bool(outcomes["additional_review_chunk_ids"])
+
+        if not predicted_udids:
+            print("\nEND STATE: RETRIEVAL MISS")
+        elif not outcomes["verified_udids"]:
+            print("\nEND STATE: LLM VERIFICATION MISS")
+        elif not has_confirmed and not has_additional:
+            print("\nEND STATE: PASS 2 CONFIRMATION MISS")
+        elif pass2_fallback_fired and has_additional and not has_confirmed:
+            # Pass 2 failed for at least one candidate; chunks preserved via fallback
+            print("\nEND STATE: PASS 2 FALLBACK — chunks in additional_review, no confirmed updates")
+        elif pass2_fallback_fired and has_additional and has_confirmed:
+            # Mixed: some candidates confirmed by Pass 2, others fell back
+            print("\nEND STATE: PASS 2 PARTIAL FALLBACK — some chunks confirmed, some in additional_review")
+        elif not suggestion_files:
+            print("\nEND STATE: UPDATE SUGGESTION MISS")
+        elif any(
+            status.get("status") == "Partial Suggestion Generated"
+            for status in suggestion_summary["statuses"]
+        ):
+            print("\nEND STATE: PARTIAL UPDATE SUGGESTION")
         else:
-            print("\nPipeline result: SUCCESS")
+            print("\nEND STATE: UPDATE SUGGESTION GENERATED")
+
+        print(f"\nReview queue file: {queue_file}")
 
 
 if __name__ == "__main__":
     run_eval()
+    run_noise_filter_eval()
