@@ -304,3 +304,128 @@ The system includes an evaluation suite (`evaluate_tripwire_llm.py`) to track pi
 * **Retrieval Precision/Recall**: Measures Stage 3's ability to find the correct candidate pages.
 * **Verifier Precision/Recall**: Measures Stage 4's accuracy in confirming impacts.
 * **Chunk Metrics**: Tracks the accuracy of Pass 2 in identifying specific sections for review.
+
+---
+
+## Repository Structure
+
+```
+Tripwire/
+├── tripwire/                        # Main package (17 modules)
+│   ├── __main__.py                  # CLI entry point; routes --test-stage3 or runs main()
+│   ├── pipeline.py                  # Top-level orchestrator; calls Stages 0–5 in order
+│   ├── config.py                    # All constants and env-var overrides
+│   ├── stage0_detect.py             # ETag / registerId metadata probing
+│   ├── stage1_fetch.py              # Download, clean, and normalise content
+│   ├── stage2_diff.py               # Unified diff generation vs. content archive
+│   ├── stage3_score.py              # Semantic embedding, scoring, and routing
+│   ├── stage4_verify.py             # Two-pass LLM verification (largest module)
+│   ├── stage5_suggest.py            # LLM draft update suggestions
+│   ├── handover.py                  # Structured JSON packet generation for Stage 4
+│   ├── ipfr_content.py              # IPFR markdown parsing and chunk windowing
+│   ├── llm_client.py                # OpenAI client wrapper with fail-closed behaviour
+│   ├── audit.py                     # audit_log.csv read/write
+│   ├── review_queue.py              # update_review_queue.csv generation
+│   ├── manifest.py                  # Run manifest and GitHub Actions summary
+│   ├── utils.py                     # Shared helpers (chunk IDs, overlap metrics)
+│   └── __init__.py                  # Re-exports all public names (backwards-compat shim)
+├── sources.json                     # Monitored source definitions (name, type, url, priority)
+├── Semantic_Embeddings_Output.json  # Pre-computed IPFR chunk embeddings (~25 MB, not committed)
+├── IPFR_content_archive/            # IPFR markdown pages used by Stage 4 verification
+├── content_archive/                 # Normalised source snapshots (pipeline output)
+├── diff_archive/                    # Unified diffs by timestamp (pipeline output)
+├── handover_packets/                # Stage 3 → Stage 4 evidence packets
+├── llm_verification_results/        # Stage 4 per-candidate verification logs
+├── llm_update_suggestions/          # Stage 5 draft replacement text
+├── audit_log.csv                    # Master append-only run ledger
+├── update_review_queue.csv          # Flat human review queue (Stage 5 output)
+├── test_stage3.py                   # Stage 3 unit tests (pytest)
+├── test_stage5.py                   # Stage 5 unit tests (pytest)
+├── test_fixtures/diffs/             # Sample diff files used by test_stage3.py
+├── evaluate_tripwire_llm.py         # End-to-end evaluation with precision/recall metrics
+├── generate_mock_data.py            # Generates mock embedding data for tests
+└── requirements.txt                 # Python dependencies
+```
+
+---
+
+## Setup & Installation
+
+**Requirements:** Python 3.10+, Google Chrome (for Stage 1 headless web scraping).
+
+```bash
+# 1. Clone the repo
+git clone <repo-url> && cd Tripwire
+
+# 2. Install dependencies
+pip install -r requirements.txt
+# webdriver-manager will download the matching ChromeDriver automatically on first run
+
+# 3. Place the embeddings file
+# Obtain Semantic_Embeddings_Output.json from the project data store and place it at:
+# ./Semantic_Embeddings_Output.json
+# Stage 3 will abort if this file is missing.
+
+# 4. Set the OpenAI API key (required for Stage 4 and Stage 5 only)
+export OPENAI_API_KEY=sk-...
+# Stages 0–3 run without it; Stage 4 will fail closed to overall_decision="uncertain" if absent.
+```
+
+---
+
+## Running the Pipeline
+
+All commands must be run from the **repo root** — all path constants in `config.py` are relative.
+
+```bash
+# Run the full pipeline (Stages 0–5)
+python -m tripwire
+
+# Test Stage 3 in isolation against a specific diff file
+python -m tripwire --test-stage3 path/to/file.diff
+```
+
+The `--test-stage3` mode loads the embeddings corpus, scores one diff file, prints a JSON summary, and exits — useful for validating scoring changes without a full pipeline run.
+
+---
+
+## Testing
+
+```bash
+# Run unit tests (no API key or network access required)
+pytest test_stage3.py test_stage5.py
+
+# Regenerate mock embeddings used by test_stage3.py
+python generate_mock_data.py
+
+# Run end-to-end evaluation against a labelled dataset (requires OPENAI_API_KEY)
+python evaluate_tripwire_llm.py
+```
+
+`test_stage3.py` covers the scoring pipeline with mock embedding data and fixtures from `test_fixtures/diffs/`. `test_stage5.py` covers update suggestion logic with mocked LLM responses. No network calls are made during unit tests.
+
+---
+
+## CI/CD
+
+| Workflow | Trigger | Purpose |
+| :--- | :--- | :--- |
+| `tripwire.yml` | Cron (6am AEST weekdays) + manual dispatch | Full pipeline run; commits diffs and artifacts to the repo |
+| `test_stage3.yml` | Pull request | Stage 3 unit tests |
+| `test_stage5.yml` | Pull request | Stage 5 unit tests |
+| `llm-eval.yml` | Manual dispatch | End-to-end evaluation with precision/recall metrics |
+
+Stages 0–3 are cost-free (no API calls) and safe to run frequently. Stages 4 and 5 incur OpenAI costs proportional to the number of candidates that clear the Stage 3 thresholds.
+
+---
+
+## Prototype Status
+
+The following behaviours are explicitly marked as prototypes in the code and are intended for production replacement:
+
+| Prototype behaviour | Location | Production replacement |
+| :--- | :--- | :--- |
+| UDID → file resolved by filename pattern matching | `ipfr_content.py` | Explicit UDID→file map generated by the IPFR export pipeline |
+| `TOP_N_VERIFICATION_CANDIDATES` cap (default: 3) | `config.py` | Load only specific section windows needed per candidate, not whole pages |
+| Headless Chrome via Selenium + `selenium-stealth` | `stage1_fetch.py` | Dedicated scraping service or managed browser pool |
+| Flat CSV audit log schema | `audit.py` / `config.py` | SQLite or structured database (see retired `Future_SQLite/` schema exploration) |
