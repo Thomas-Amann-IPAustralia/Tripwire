@@ -37,7 +37,7 @@ calls, no side effects on output directories.
 pytest test_stage3.py test_stage5.py
 ```
 
-**Regenerate mock embeddings** for tests:
+**Regenerate mock embeddings** for tests (requires `OPENAI_API_KEY` — it calls the real embeddings API):
 ```bash
 python generate_mock_data.py
 ```
@@ -279,3 +279,7 @@ proportional to the number of candidates that clear the Stage 3 thresholds.
 5. **Restructuring `__init__.py` re-exports without checking tests.** The shim
    at the bottom of `__init__.py` and the `monkeypatch.setattr(tripwire.config, ...)`
    calls in both test files depend on the current flat export structure.
+
+6. **Stage 4 uses the OpenAI Responses API** (`client.responses.create()`), not
+   `client.chat.completions.create()`. The model must support this endpoint.
+   `gpt-4.1-mini` does; older models (e.g. `gpt-3.5-turbo`) do not.
