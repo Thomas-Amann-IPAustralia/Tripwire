@@ -415,7 +415,7 @@ def run_noise_filter_eval():
 
 
 def run_eval():
-    tripwire.IPFR_CONTENT_ARCHIVE_DIR = REPO_ARCHIVE_DIR
+    tripwire.config.IPFR_CONTENT_ARCHIVE_DIR = REPO_ARCHIVE_DIR
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmp = Path(tmpdir)

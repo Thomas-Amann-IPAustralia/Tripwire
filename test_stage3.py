@@ -62,10 +62,10 @@ def test_power_words_detection():
 def test_calculate_similarity_structure(mock_embeddings_file, sample_diff):
     """Tests the full analysis pipeline return keys (updated schema)."""
     # Avoid dependency on OpenAI client / env by patching the embedder directly
-    with patch('tripwire._embed_texts') as mock_embed:
+    with patch('tripwire.stage3_score._embed_texts') as mock_embed:
         mock_embed.return_value = np.array([[0.1] * 1536])  # one substantive hunk vector
 
-        with patch('tripwire.SEMANTIC_EMBEDDINGS_FILE', str(mock_embeddings_file)):
+        with patch('tripwire.config.SEMANTIC_EMBEDDINGS_FILE', str(mock_embeddings_file)):
             result = tripwire.calculate_similarity(str(sample_diff), source_priority="High")
 
             assert result['status'] == 'success'
@@ -78,7 +78,7 @@ def test_generate_handover_packets_data_integrity(tmp_path):
     temp_handover = tmp_path / "handover"
     temp_handover.mkdir()
 
-    with patch('tripwire.HANDOVER_DIR', str(temp_handover)):
+    with patch('tripwire.config.HANDOVER_DIR', str(temp_handover)):
         analysis = {
             "status": "success",
             # Primary metrics in updated tripwire
@@ -122,12 +122,12 @@ def test_noise_suppression_logic(tmp_path, mock_embeddings_file):
     # A typical administrative noise string
     noise_diff.write_text("@@ -1,1 +1,1 @@\n-Page 54 of 102\n+Page 55 of 103\n")
     
-    with patch('tripwire._embed_texts') as mock_embed:
+    with patch('tripwire.stage3_score._embed_texts') as mock_embed:
         # FIX: Use a vector that does NOT match the [0.1]*1536 in the fixture.
         # This simulates a 'dissimilar' semantic meaning.
-        mock_embed.return_value = [[-0.1] * 1536] 
-        
-        with patch('tripwire.SEMANTIC_EMBEDDINGS_FILE', str(mock_embeddings_file)):
+        mock_embed.return_value = [[-0.1] * 1536]
+
+        with patch('tripwire.config.SEMANTIC_EMBEDDINGS_FILE', str(mock_embeddings_file)):
             result = tripwire.calculate_similarity(str(noise_diff), source_priority="Low")
             
             # Now the base_similarity will be low, and final_score will stay < 0.45
@@ -138,8 +138,8 @@ def test_handover_batching_limit(tmp_path):
     temp_handover = tmp_path / "batches"
     temp_handover.mkdir()
 
-    with patch('tripwire.HANDOVER_DIR', str(temp_handover)):
-        with patch('tripwire.MAX_CANDIDATES_PER_PACKET', 2):
+    with patch('tripwire.config.HANDOVER_DIR', str(temp_handover)):
+        with patch('tripwire.config.MAX_CANDIDATES_PER_PACKET', 2):
             analysis = {
                 "status": "success",
                 "page_final_score": 0.8,

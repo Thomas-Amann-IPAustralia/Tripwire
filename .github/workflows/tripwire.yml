@@ -33,7 +33,7 @@ jobs:
       - name: Run Tripwire Script
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python tripwire.py
+        run: python -m tripwire
 
       - name: Commit and Push Changes
         run: |
