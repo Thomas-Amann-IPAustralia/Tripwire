@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "tripwire_stage5.py"
+      - "tripwire/**"
       - "test_stage5.py"
   pull_request:
     paths:
-      - "tripwire_stage5.py"
+      - "tripwire/**"
       - "test_stage5.py"
 
 permissions:

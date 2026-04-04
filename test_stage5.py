@@ -1,15 +1,10 @@
 import csv
 import json
-import importlib.util
 from pathlib import Path
 
 import pytest
 
-
-MODULE_PATH = Path(__file__).with_name("tripwire.py")
-spec = importlib.util.spec_from_file_location("tripwire_stage5_under_test", MODULE_PATH)
-tripwire = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(tripwire)
+import tripwire
 
 
 @pytest.fixture
@@ -20,10 +15,10 @@ def stage5_env(tmp_path, monkeypatch):
     handover_dir.mkdir()
     update_dir.mkdir()
 
-    monkeypatch.setattr(tripwire, "HANDOVER_DIR", str(handover_dir))
-    monkeypatch.setattr(tripwire, "UPDATE_SUGGESTIONS_DIR", str(update_dir))
-    monkeypatch.setattr(tripwire, "AUDIT_LOG", str(audit_log))
-    monkeypatch.setattr(tripwire, "STAGE5_LLM_MODEL", "test-stage5-model")
+    monkeypatch.setattr(tripwire.config, "HANDOVER_DIR", str(handover_dir))
+    monkeypatch.setattr(tripwire.config, "UPDATE_SUGGESTIONS_DIR", str(update_dir))
+    monkeypatch.setattr(tripwire.config, "AUDIT_LOG", str(audit_log))
+    monkeypatch.setattr(tripwire.config, "STAGE5_LLM_MODEL", "test-stage5-model")
 
     return {
         "tmp_path": tmp_path,
@@ -110,12 +105,12 @@ def _patch_markdown_resolution(monkeypatch, markdown_by_udid: dict[str, str], tm
             "missing": [],
         }
 
-    monkeypatch.setattr(tripwire, "resolve_ipfr_content_files", fake_resolve)
-    monkeypatch.setattr(tripwire, "_read_text_file", lambda path, max_chars=40000: Path(path).read_text(encoding="utf-8"))
+    monkeypatch.setattr(tripwire.stage5_suggest, "resolve_ipfr_content_files", fake_resolve)
+    monkeypatch.setattr(tripwire.stage5_suggest, "_read_text_file", lambda path, max_chars=40000: Path(path).read_text(encoding="utf-8"))
 
 
 def _patch_llm(monkeypatch):
-    def fake_llm(prompt: str, model: str):
+    def fake_llm(prompt: str, model=None, fallback=None):
         chunk_id = prompt.split("Chunk ID:", 1)[1].splitlines()[0].strip()
         return {
             "update_required": True,
@@ -123,7 +118,7 @@ def _patch_llm(monkeypatch):
             "proposed_replacement_text": f"Updated content for {chunk_id}",
         }
 
-    monkeypatch.setattr(tripwire, "_call_llm_json_with_model", fake_llm)
+    monkeypatch.setattr(tripwire.stage5_suggest, "_call_llm_json", fake_llm)
 
 
 def _read_json(path: Path):
