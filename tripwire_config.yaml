@@ -1,0 +1,100 @@
+# ==============================================================
+# tripwire_config.yaml
+# All tuneable parameters for the Tripwire pipeline.
+# This file is version-controlled so every parameter change is
+# tracked as a commit. Loaded and validated at pipeline start.
+# ==============================================================
+
+# --- Pipeline behaviour ---
+pipeline:
+  observation_mode: true             # true = log everything, trigger nothing
+  run_frequency_hours: 24
+  max_retries: 3
+  retry_base_delay_seconds: 2.0
+  llm_temperature: 0.2
+  llm_model: "gpt-4o"
+  deferred_trigger_max_age_days: 7
+
+# --- Stage 2: Change detection ---
+change_detection:
+  significance_fingerprint: true
+
+# --- Stage 4: Relevance scoring ---
+relevance_scoring:
+  rrf_k: 60
+  rrf_weight_bm25: 1.0
+  rrf_weight_semantic: 2.0
+  top_n_candidates: 5
+  min_score_threshold: null            # calibrated during observation period
+  source_importance_floor: 0.5
+  fast_pass:
+    source_importance_min: 1.0
+  yake:
+    keyphrases_per_80_words: 1
+    min_keyphrases: 5
+    max_keyphrases: 15
+    short_diff_word_threshold: 50      # supplement with NER entities below this length
+
+# --- Stages 5–6: Semantic scoring ---
+semantic_scoring:
+  biencoder:
+    model: "BAAI/bge-base-en-v1.5"
+    high_threshold: 0.75
+    low_medium_threshold: 0.45
+    low_medium_min_chunks: 3
+  crossencoder:
+    model: "gte-reranker-modernbert-base"
+    threshold: 0.60
+    max_context_tokens: 8192
+
+# --- Stage 6: Graph propagation ---
+graph:
+  enabled: true
+  max_hops: 3
+  decay_per_hop: 0.45
+  propagation_threshold: 0.05
+  edge_types:
+    embedding_similarity:
+      enabled: true
+      weight: 1.0
+      top_k: 5
+      min_similarity: 0.40
+    entity_overlap:
+      enabled: true
+      weight: 0.8
+      min_jaccard: 0.30
+    internal_links:
+      enabled: false
+      weight: 0.6
+
+# --- Storage ---
+storage:
+  content_versions_retained: 6
+  sqlite_wal_mode: true
+  git_persistence:
+    enabled: true
+    commit_snapshots: true            # commit data/influencer_sources/snapshots/ after each run
+    commit_database: true             # commit data/ipfr_corpus/ipfr.sqlite after each ingestion run
+    commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+
+# --- Notifications ---
+notifications:
+  content_owner_email: "content-owner@example.gov.au"
+  health_alert_email: "admin@example.gov.au"
+  health_alert_conditions:
+    error_rate_threshold: 0.30
+    consecutive_failures_threshold: 3
+    pipeline_timeout_minutes: 30
+
+# --- Normalisation ---
+normalisation:
+  tool: "trafilatura"
+
+# --- Paths (relative to repo root) ---
+paths:
+  sqlite_db: "data/ipfr_corpus/ipfr.sqlite"
+  sitemap_csv: "data/ipfr_corpus/sitemap.csv"
+  source_registry_csv: "data/influencer_sources/source_registry.csv"
+  influencer_snapshots_dir: "data/influencer_sources/snapshots"
+  ipfr_snapshots_dir: "data/ipfr_corpus/snapshots"
+  feedback_log: "data/logs/feedback.jsonl"

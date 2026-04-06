@@ -1,0 +1,121 @@
+name: IPFR Corpus Ingestion
+
+on:
+  schedule:
+    # Run at 01:00 UTC daily. This must complete before the main Tripwire
+    # pipeline (which runs at 02:00 UTC).
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+    inputs:
+      force_all:
+        description: "Re-ingest all pages regardless of change detection"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+# Only one ingestion run at a time — prevents concurrent writes to ipfr.sqlite.
+concurrency:
+  group: ipfr-ingestion
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    name: Ingest IPFR Corpus
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write        # required to commit ipfr.sqlite back to the repo
+
+    steps:
+      # ------------------------------------------------------------------
+      # 1. Checkout — pull latest committed state to avoid push conflicts.
+      # ------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Pull latest committed state
+        run: git pull --rebase origin ${{ github.ref_name }}
+
+      # ------------------------------------------------------------------
+      # 2. Python environment
+      # ------------------------------------------------------------------
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements-ingestion.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements-ingestion.txt
+
+      # ------------------------------------------------------------------
+      # 3. Cache Hugging Face model weights (lazy-load means we pay once).
+      # ------------------------------------------------------------------
+      - name: Cache Hugging Face models
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-models-bge-base-v1-5
+          restore-keys: |
+            hf-models-bge-base-
+
+      # ------------------------------------------------------------------
+      # 4. Download spaCy model (cached via pip cache above if re-run).
+      # ------------------------------------------------------------------
+      - name: Download spaCy model
+        run: python -m spacy download en_core_web_sm
+
+      # ------------------------------------------------------------------
+      # 5. Run ingestion pipeline
+      # ------------------------------------------------------------------
+      - name: Run IPFR ingestion
+        env:
+          FORCE_ALL: ${{ github.event.inputs.force_all || 'false' }}
+        run: |
+          FORCE_FLAG=""
+          if [ "$FORCE_ALL" = "true" ]; then
+            FORCE_FLAG="--force-all"
+          fi
+          python -m ingestion.ingest \
+            --config tripwire_config.yaml \
+            --db data/ipfr_corpus/ipfr.sqlite \
+            $FORCE_FLAG
+
+      # ------------------------------------------------------------------
+      # 6. Commit updated database and sitemap back to the repository.
+      # ------------------------------------------------------------------
+      - name: Commit updated database and sitemap
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/ipfr_corpus/ipfr.sqlite
+          git add data/ipfr_corpus/sitemap.csv
+          git add data/ipfr_corpus/snapshots/
+          git diff --cached --quiet || git commit -m "chore: update IPFR corpus [run ${{ github.run_id }}]"
+          git push origin ${{ github.ref_name }}
+
+      # ------------------------------------------------------------------
+      # 7. Upload run artifact (90-day retention).
+      # ------------------------------------------------------------------
+      - name: Upload ingestion run log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ingestion-run-${{ github.run_id }}
+          path: data/logs/
+          retention-days: 90

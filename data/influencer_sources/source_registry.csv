@@ -1,0 +1,9 @@
+source_id,url,title,source_type,importance,check_frequency,structural_markers,notes
+frl_trademarks,https://www.legislation.gov.au/Series/C2004A00913,Trade Marks Act 1995,frl,1.0,weekly,"Act,Trade Marks,registration",Federal Register of Legislation — Trade Marks Act 1995
+frl_patents,https://www.legislation.gov.au/Series/C2004A00652,Patents Act 1990,frl,1.0,weekly,"Act,Patents,application",Federal Register of Legislation — Patents Act 1990
+frl_designs,https://www.legislation.gov.au/Series/C2003A01445,Designs Act 2003,frl,0.9,fortnightly,"Act,Designs,registration",Federal Register of Legislation — Designs Act 2003
+frl_copyright,https://www.legislation.gov.au/Series/C1968A00063,Copyright Act 1968,frl,0.9,fortnightly,"Act,Copyright,works",Federal Register of Legislation — Copyright Act 1968
+frl_pbr,https://www.legislation.gov.au/Series/C2004A04714,Plant Breeder's Rights Act 1994,frl,0.7,monthly,"Act,Plant Breeder,variety",Federal Register of Legislation — Plant Breeder's Rights Act 1994
+ipaustralia_news,https://www.ipaustralia.gov.au/about-us/news-and-community/news,IP Australia News,rss,0.8,daily,"IP Australia,trade mark,patent,news",IP Australia news and announcements RSS/webpage
+wipo_lex,https://www.wipo.int/wipolex/en/legislation/countries/au,WIPO Lex — Australia,webpage,0.7,monthly,"Australia,legislation,intellectual property",WIPO Lex Australian IP legislation listings
+apph_ip_committee,https://www.aph.gov.au/Parliamentary_Business/Committees/House/Industry_Innovation_Science_and_Resources,APH IP Committee,webpage,0.6,monthly,"committee,inquiry,intellectual property,report",Australian Parliament House — relevant committee publications

@@ -1,0 +1,28 @@
+# Ingestion pipeline dependencies
+# Install torch CPU separately before this file:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# YAML config loading
+PyYAML>=6.0
+
+# Web scraping and normalisation
+trafilatura>=1.8
+requests>=2.31
+
+# DOCX processing
+mammoth>=1.6
+
+# NLP / NER
+spacy>=3.7
+
+# Keyphrase extraction
+yake>=0.4
+
+# Bi-encoder embeddings
+sentence-transformers>=2.7
+
+# Numerical operations
+numpy>=1.26
+
+# Testing
+pytest>=8.0
