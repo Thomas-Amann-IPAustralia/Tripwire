@@ -1,56 +1,58 @@
 ## Summary
 
-This PR introduces Phase 2 of the Tripwire influencer source pipeline, implementing change detection (Stage 2), diff generation (Stage 3), content validation, and comprehensive test coverage. These modules enable the system to determine whether scraped content has meaningfully changed and to produce precise diffs for downstream processing.
+This PR implements Stages 4, 5, and 6 of the document relevance and semantic matching pipeline, along with comprehensive test coverage. These stages determine whether incoming changes are relevant to the IPFR corpus and identify candidate pages for further processing.
 
 ## Key Changes
 
-### New Core Modules
+### New Source Modules
 
-- **`src/scraper.py`**: Web scraping with trafilatura-based HTML extraction and text normalisation. Provides `scrape_url()`, `extract_plain_text()`, `normalise_text()`, and `compute_sha256()` utilities. Handles CAPTCHA detection and raises appropriate error types for retry logic.
+- **`src/stage4_relevance.py`** — Relevance scoring via weighted RRF fusion
+  - Extracts keyphrases from diffs using YAKE
+  - Scores pages using BM25 (keyword-based) and bi-encoder (semantic) signals
+  - Fuses scores via Reciprocal Rank Fusion with configurable weights
+  - Applies source importance multiplier and fast-pass override logic
+  - Selects top-N candidates or those above a configurable threshold
 
-- **`src/validation.py`**: Content validation with four checks: minimum length (200 chars), CAPTCHA detection, optional structural markers, and dramatic size changes (outside 30%–300% of previous). Provides both hard validation (`validate_scraped_content()`) that raises `PermanentError` and soft validation (`validate_content()`) that returns warnings.
+- **`src/stage5_biencoder.py`** — Coarse-grained semantic matching
+  - Chunks incoming change documents using fixed-size overlap strategy
+  - Encodes chunks with BAAI/bge-base-en-v1.5 bi-encoder
+  - Computes cosine similarity against precomputed corpus chunk embeddings
+  - Identifies candidates via two decision rules: single high-scoring chunk or multiple medium-scoring chunks
+  - Lazy model loading with process-lifetime caching
 
-- **`src/stage2_change_detection.py`**: Three-pass change detection system:
-  - **Pass 1**: SHA-256 hash comparison (stops if match).
-  - **Pass 2**: Word-level unified diff (stops if empty after normalisation).
-  - **Pass 3**: Significance fingerprinting—extracts defined terms, numerical values, dates, cross-references, and modal verbs from changed lines to tag as `high` or `standard` significance.
-  - Applies only to webpage sources; FRL and RSS bypass this stage.
+- **`src/stage6_crossencoder.py`** — Precise semantic reranking and graph propagation
+  - Scores candidate pages using gte-reranker-modernbert-base cross-encoder
+  - Blends cross-encoder scores with lexical relevance from Stage 4
+  - Implements graph-based signal propagation (up to 3 hops with decay)
+  - Applies additive-only propagation to avoid demoting pages
+  - Includes token budget checks and truncation warnings
+  - Lazy model loading with process-lifetime caching
 
-- **`src/stage3_diff.py`**: Diff generation with source-type routing:
-  - **Webpage**: Unified diff of old vs new snapshot.
-  - **FRL**: Retrieves change explainer from FRL OData API; falls back to webpage diff if unavailable.
-  - **RSS**: Extracts new and mutated items from feed state.
-  - Manages snapshot rotation (keeps up to 6 previous versions by default).
-  - Normalises diffs (decodes HTML entities, collapses whitespace, applies NFC).
+### Test Coverage
 
-### Test Suite
+- **`tests/test_relevance_scoring.py`** — 673 lines covering Stage 4
+  - Tests for tokenization, ranking, score distribution, RRF fusion, and candidate selection
+  - Mocked YAKE and bi-encoder dependencies
+  - In-memory SQLite databases for all tests
 
-- **`tests/test_change_detection.py`**: 822 lines of comprehensive pytest tests covering:
-  - Text normalisation, SHA-256 hashing, HTML extraction.
-  - Scraping with mocked sessions, HTTP error handling, CAPTCHA detection.
-  - Content validation (length, CAPTCHA, structural markers, size changes).
-  - Change detection (hash matching, cosmetic vs significant changes, fingerprinting).
-  - Diff generation (webpage, FRL, RSS workflows).
-  - Snapshot rotation and file management.
+- **`tests/test_semantic_matching.py`** — 806 lines covering Stages 5 and 6
+  - Tests for text chunking, encoding, corpus loading, and page scoring
+  - Cross-encoder scoring, reranking, and graph propagation logic
+  - Observation mode data collection
+  - All tests use mocked ML models and in-memory databases
 
-### Test Fixtures
+### Dependencies
 
-- **`tests/fixtures/`**: Curated snapshot files for threshold testing:
-  - `webpage_base.txt`, `webpage_identical.txt`, `webpage_cosmetic_change.txt`
-  - `webpage_numerical_change.txt`, `webpage_modal_verb_change.txt`, `webpage_cross_reference_change.txt`
-  - `webpage_high_significance_combined.txt`, `webpage_standard_change.txt`
-  - `webpage_deletion.txt`, `webpage_too_short.txt`, `webpage_date_change.txt`, `webpage_new_section.txt`
-  - RSS feed fixtures: `rss_feed_new_item.xml`, `rss_feed_mutated_item.xml`, `rss_snapshot_base.json`
-  - `README.md` documenting fixture purposes.
-
-### Documentation Updates
-
-- **`LatestPR.md`**: Updated to reflect Phase 2 additions and overall pipeline architecture.
+- Added `rank-bm25>=0.2` for BM25 keyword scoring
+- Existing `sentence-transformers>=2.7` used for both bi-encoder and cross-encoder
 
 ## Notable Implementation Details
 
-- **Error handling**: Consistent use of `RetryableError` (transient failures) and `PermanentError` (permanent failures) across scraper and validation modules.
-- **Normalisation**: Text normalisation is applied consistently across stages (NFC, whitespace collapse, HTML entity decoding) but preserves case and punctuation for downstream NER/YAKE processing.
-- **Snapshot management**: Automatic rotation of old snapshots with configurable retention (default 6 versions); snapshots are committed to Git by the pipeline
+- **Lazy model loading**: Both bi-encoder and cross-encoder use process-lifetime caches to avoid redundant model loads
+- **Observation mode**: All stages capture score distributions and metadata for pipeline logging when enabled
+- **Graph propagation**: Implements additive-only signal propagation with configurable decay and hop limits
+- **Token budget awareness**: Stage 6 logs warnings when combined input exceeds the cross-encoder's context window
+- **Configurable thresholds**: All decision rules (high/medium chunk scores, RRF thresholds, cross-encoder threshold) are configurable
+- **Fast-pass override**: Stage 4 can bypass candidate selection entirely when source importance meets a threshold
 
-https://claude.ai/code/session_01GXuZk7JzcjJhDqj7pqK44U
+https://claude.ai/code/session_01RcuuGHTa6AXihBUHFoFaAC
