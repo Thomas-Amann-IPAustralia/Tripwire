@@ -254,6 +254,16 @@ def _run_pipeline(config_path: str, run_id: str) -> int:
         )
         _write_observation_summary(aggregation_result, run_log_rows, run_id)
         _log_run_entries(conn, run_log_rows)
+        # Health alerting still runs in observation mode (error rate / consecutive failures).
+        from src.health import evaluate_and_alert
+        evaluate_and_alert(
+            run_id=run_id,
+            run_log_rows=run_log_rows,
+            llm_failed_count=0,
+            crossencoder_truncation_pairs=_collect_truncation_pairs(run_log_rows),
+            conn=conn,
+            config=config,
+        )
         conn.close()
         _write_github_summary(run_id, observation_mode=True, bundles=bundles, assessments=[])
         return 0
@@ -289,6 +299,22 @@ def _run_pipeline(config_path: str, run_id: str) -> int:
     # 9. Log all run entries to SQLite.
     # ------------------------------------------------------------------
     _log_run_entries(conn, run_log_rows)
+
+    # ------------------------------------------------------------------
+    # 9a. Health alerting (Section 6.6, Phase 5 task 5.1).
+    # ------------------------------------------------------------------
+    from src.health import evaluate_and_alert
+
+    crossencoder_truncation_pairs = _collect_truncation_pairs(run_log_rows)
+    evaluate_and_alert(
+        run_id=run_id,
+        run_log_rows=run_log_rows,
+        llm_failed_count=llm_result.failed_count,
+        crossencoder_truncation_pairs=crossencoder_truncation_pairs,
+        conn=conn,
+        config=config,
+    )
+
     conn.close()
 
     # ------------------------------------------------------------------
@@ -849,6 +875,20 @@ def _write_github_summary(
 def _sha256(text: str) -> str:
     import hashlib
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _collect_truncation_pairs(run_log_rows: list[dict]) -> list[tuple[str, str]]:
+    """Return (source_id, page_id) pairs where cross-encoder truncation was logged."""
+    pairs: list[tuple[str, str]] = []
+    for row in run_log_rows:
+        source_id = row.get("source_id", "")
+        stages = row.get("details", {}).get("stages", {})
+        crossencoder = stages.get("crossencoder", {})
+        for entry in crossencoder.get("truncation_warnings", []):
+            page_id = entry if isinstance(entry, str) else entry.get("page_id", "")
+            if page_id:
+                pairs.append((source_id, page_id))
+    return pairs
 
 
 if __name__ == "__main__":

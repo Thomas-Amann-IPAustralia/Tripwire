@@ -1,33 +1,32 @@
 # Tripwire
 
-## Objective
-
-**Tripwire must maximize recall of plausible downstream impacts and minimize LLM prompt cost through evidence filtering, batching, and structured payloads. Final impact confirmation is to be performed by the LLM.**
-
-Autonomous monitoring system for tracking substantive changes in authoritative Intellectual Property sources—such as Australian legislation and WIPO feeds—to detect updates that may impact IP First Response (IPFR) content. 
-
-Tripwire is a recall‑first early warning system.
-
-It asks:
-**What might be impacted?**
-
-The LLM answers:
-**What is actually impacted?**
+Autonomous IP monitoring pipeline that detects substantive changes in authoritative Intellectual Property sources — Australian legislation, WIPO feeds, government agency webpages — and determines whether those changes require amendments to content published on the IP First Response (IPFR) website.
 
 ---
 
-## System Overview
+## Architecture
 
-Tripwire operates as a staged pipeline:
+Tripwire is a nine-stage filter-funnel pipeline. Each stage acts as a gate; only changes that pass one stage proceed to the next. Expensive operations (semantic scoring, LLM calls) are reserved for the small fraction of changes that survive cheaper upstream checks.
 
 ```
-Stage 0 → Source metadata detection (ETag/registerId)
-Stage 1 → Content normalization (Cleaning & Markdown conversion)
-Stage 2 → Diff generation (Unified diff vs. Archive)
-Stage 3 → Semantic impact estimation & Routing
-Stage 4 → Two-Pass LLM Verification & Review Scoping
-Stage 5 → LLM Update Suggestions & Human Review Queue
+Stage 1  Metadata Probe       — Has the source changed at all? (ETag, version ID, content length)
+Stage 2  Change Detection     — Was the change meaningful? (SHA-256, word diff, significance tagger)
+Stage 3  Diff Generation      — What exactly is different? (diff file / FRL explainer / RSS items)
+Stage 4  Relevance Scoring    — Is this change relevant to IPFR? (YAKE-BM25 + bi-encoder RRF)
+Stage 5  Bi-Encoder           — Which IPFR pages might be affected? (coarse semantic pass)
+Stage 6  Cross-Encoder        — Which IPFR pages are affected? (precise re-ranking + graph propagation)
+Stage 7  Trigger Aggregation  — Group all triggers per IPFR page for this run
+Stage 8  LLM Assessment       — Should the page be amended? (one LLM call per IPFR page)
+Stage 9  Notification         — Consolidated email to content owner with feedback links
 ```
+
+Three source types are handled differently through the pipeline:
+
+| Source Type | Stage 2 | Stage 3 |
+|-------------|---------|---------|
+| Webpage | Scrape → SHA-256 hash, word diff, significance tagger | `.diff` file (old vs new snapshot) |
+| Federal Register of Legislation | Skipped | FRL change explainer document |
+| RSS Feed | Skipped | New items since last check |
 
 ---
 
@@ -35,397 +34,224 @@ Stage 5 → LLM Update Suggestions & Human Review Queue
 
 ```
 Tripwire/
-├── tripwire/                        # Main package (17 modules)
-│   ├── __main__.py                  # CLI entry point; routes --test-stage3 or runs main()
-│   ├── pipeline.py                  # Top-level orchestrator; calls Stages 0–5 in order
-│   ├── config.py                    # All constants and env-var overrides
-│   ├── stage0_detect.py             # ETag / registerId metadata probing
-│   ├── stage1_fetch.py              # Download, clean, and normalise content
-│   ├── stage2_diff.py               # Unified diff generation vs. content archive
-│   ├── stage3_score.py              # Semantic embedding, scoring, and routing
-│   ├── stage4_verify.py             # Two-pass LLM verification (largest module)
-│   ├── stage5_suggest.py            # LLM draft update suggestions
-│   ├── handover.py                  # Structured JSON packet generation for Stage 4
-│   ├── ipfr_content.py              # IPFR markdown parsing and chunk windowing
-│   ├── llm_client.py                # OpenAI client wrapper with fail-closed behaviour
-│   ├── audit.py                     # audit_log.csv read/write
-│   ├── review_queue.py              # update_review_queue.csv generation
-│   ├── manifest.py                  # Run manifest and GitHub Actions summary
-│   ├── utils.py                     # Shared helpers (chunk IDs, overlap metrics)
-│   └── __init__.py                  # Re-exports all public names (backwards-compat shim)
-├── sources.json                     # Monitored source definitions (name, type, url, priority)
-├── Semantic_Embeddings_Output.json  # Pre-computed IPFR chunk embeddings (~25 MB, not committed)
-├── IPFR_content_archive/            # IPFR markdown pages used by Stage 4 verification
-├── content_archive/                 # Normalised source snapshots (pipeline output)
-├── diff_archive/                    # Unified diffs by timestamp (pipeline output)
-├── handover_packets/                # Stage 3 → Stage 4 evidence packets
-├── llm_verification_results/        # Stage 4 per-candidate verification logs
-├── llm_update_suggestions/          # Stage 5 draft replacement text
-├── audit_log.csv                    # Master append-only run ledger
-├── update_review_queue.csv          # Flat human review queue (Stage 5 output)
-├── test_stage3.py                   # Stage 3 unit tests (pytest)
-├── test_stage5.py                   # Stage 5 unit tests (pytest)
-├── test_fixtures/diffs/             # Sample diff files used by test_stage3.py
-├── evaluate_tripwire_llm.py         # End-to-end evaluation with precision/recall metrics
-├── generate_mock_data.py            # Generates mock embedding data for tests
-└── requirements.txt                 # Python dependencies
+├── src/
+│   ├── pipeline.py              # Main orchestrator (Stages 1–9)
+│   ├── config.py                # Config loading and validation
+│   ├── errors.py                # Error hierarchy (RetryableError, PermanentError)
+│   ├── retry.py                 # Exponential-backoff retry decorator
+│   ├── scraper.py               # Web scraping with trafilatura
+│   ├── validation.py            # Content validation (CAPTCHA, size, markers)
+│   ├── stage1_metadata.py       # Stage 1: metadata probe
+│   ├── stage2_change_detection.py # Stage 2: hash, diff, significance
+│   ├── stage3_diff.py           # Stage 3: diff generation
+│   ├── stage4_relevance.py      # Stage 4: YAKE-BM25 + bi-encoder RRF
+│   ├── stage5_biencoder.py      # Stage 5: bi-encoder chunking
+│   ├── stage6_crossencoder.py   # Stage 6: cross-encoder reranking + graph
+│   ├── stage7_aggregation.py    # Stage 7: trigger aggregation
+│   ├── stage8_llm.py            # Stage 8: LLM assessment
+│   ├── stage9_notification.py   # Stage 9: email notification
+│   ├── feedback_ingestion.py    # Gmail IMAP polling for feedback replies
+│   ├── health.py                # Health alerting (error rate, consecutive failures)
+│   └── observability.py         # Weekly score distribution report
+├── ingestion/                   # IPFR corpus ingestion pipeline
+├── data/
+│   ├── ipfr_corpus/
+│   │   └── ipfr.sqlite          # SQLite database (IPFR pages + pipeline run log)
+│   ├── influencer_sources/
+│   │   ├── source_registry.csv  # All monitored sources
+│   │   └── snapshots/           # Per-source state and content snapshots
+│   └── logs/                    # Observation summaries, feedback, health alerts
+├── tests/                       # pytest test suite
+├── docs/                        # Operational runbooks
+│   ├── runbook-failure-response.md
+│   ├── runbook-add-source.md
+│   └── runbook-adjust-thresholds.md
+├── tripwire_config.yaml         # Single configuration file (all thresholds and parameters)
+└── requirements.txt
 ```
 
 ---
 
-## Setup & Installation
+## Setup
 
-**Requirements:** Python 3.10+, Google Chrome (for Stage 1 headless web scraping).
+**Requirements:** Python 3.11+, a Gmail account with an App Password (for SMTP and IMAP), and an OpenAI API key.
 
 ```bash
-# 1. Clone the repo
-git clone <repo-url> && cd Tripwire
+# 1. Clone the repository
+git clone https://github.com/thomas-amann-ipaustralia/tripwire.git
+cd tripwire
 
-# 2. Install dependencies
+# 2. Create and activate a virtual environment
+python3.11 -m venv .venv
+source .venv/bin/activate
+
+# 3. Install dependencies (CPU-only PyTorch for GitHub Actions compatibility)
+pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
-# webdriver-manager will download the matching ChromeDriver automatically on first run
 
-# 3. Place the embeddings file
-# Obtain Semantic_Embeddings_Output.json from the project data store and place it at:
-# ./Semantic_Embeddings_Output.json
-# Stage 3 will abort if this file is missing.
+# 4. Configure the pipeline
+cp tripwire_config.yaml.example tripwire_config.yaml   # if not already present
+# Edit tripwire_config.yaml — set emails, adjust thresholds as needed
 
-# 4. Set the OpenAI API key (required for Stage 4 and Stage 5 only)
+# 5. Set required environment variables (or store as GitHub Actions secrets)
 export OPENAI_API_KEY=sk-...
-# Stages 0–3 run without it; Stage 4 will fail closed to overall_decision="uncertain" if absent.
+export SMTP_PASSWORD=...        # Gmail App Password for sending notifications
+export SMTP_USER=sender@gmail.com
+export IMAP_PASSWORD=...        # Gmail App Password for reading feedback replies
+export IMAP_USER=feedback@gmail.com
 ```
+
+### Hugging Face model downloads
+
+On first run, the pipeline downloads two models (~1 GB total):
+
+- `BAAI/bge-base-en-v1.5` (~400 MB) — bi-encoder (Stage 5)
+- `gte-reranker-modernbert-base` (~600 MB) — cross-encoder (Stage 6)
+
+Models are cached in `~/.cache/huggingface/`. GitHub Actions caches this directory
+between runs via `actions/cache@v4` to avoid re-downloading on every run.
+
+---
+
+## Configuration
+
+All tuneable parameters live in `tripwire_config.yaml`. Key sections:
+
+```yaml
+pipeline:
+  observation_mode: true    # true = log everything, trigger nothing (use during calibration)
+  llm_model: "gpt-4o"
+
+relevance_scoring:
+  top_n_candidates: 5       # Maximum candidates forwarded from Stage 4 to Stage 5
+
+semantic_scoring:
+  biencoder:
+    high_threshold: 0.75    # Any chunk ≥ this passes Stage 5
+  crossencoder:
+    threshold: 0.60         # Final reranked score needed to reach Stage 7
+
+notifications:
+  content_owner_email: "content-owner@example.gov.au"
+  health_alert_email: "admin@example.gov.au"
+  health_alert_conditions:
+    error_rate_threshold: 0.30
+    consecutive_failures_threshold: 3
+```
+
+See [docs/runbook-adjust-thresholds.md](docs/runbook-adjust-thresholds.md) for a full
+calibration guide.
 
 ---
 
 ## Running the Pipeline
 
-All commands must be run from the **repo root** — all path constants in `config.py` are relative.
+All commands run from the repository root.
 
 ```bash
-# Run the full pipeline (Stages 0–5)
-python -m tripwire
+# Full pipeline run (Stages 1–9)
+python -m src.pipeline
 
-# Test Stage 3 in isolation against a specific diff file
-python -m tripwire --test-stage3 path/to/file.diff
+# With explicit config path and debug logging
+python -m src.pipeline --config tripwire_config.yaml --log-level DEBUG
+
+# Override the auto-generated run ID
+python -m src.pipeline --run-id 2026-04-06-manual
+
+# Generate the weekly observability report
+python -m src.observability --days 30
+
+# Run feedback ingestion (poll Gmail for feedback replies)
+python -m src.feedback_ingestion
 ```
 
-The `--test-stage3` mode loads the embeddings corpus, scores one diff file, prints a JSON summary, and exits — useful for validating scoring changes without a full pipeline run.
+---
+
+## Observation Mode
+
+On initial deployment, run in **observation mode** (`pipeline.observation_mode: true`).
+In this mode:
+
+- Stages 1–7 run fully and all scores are logged to SQLite.
+- Stage 8 (LLM) and Stage 9 (email) are skipped (no cost, no alerts).
+- Per-run summaries are written to `data/logs/observation_summary_<run_id>.json`.
+
+After 4–8 weeks, generate the observability report and calibrate thresholds before
+disabling observation mode. See [docs/runbook-adjust-thresholds.md](docs/runbook-adjust-thresholds.md).
 
 ---
 
 ## Testing
 
 ```bash
-# Run unit tests (no API key or network access required)
-pytest test_stage3.py test_stage5.py
+# Run the full test suite
+pytest tests/
 
-# Regenerate mock embeddings used by test_stage3.py (requires OPENAI_API_KEY)
-python generate_mock_data.py
+# Run a specific test file
+pytest tests/test_llm_assessment.py -v
 
-# Run end-to-end evaluation against a labelled dataset (requires OPENAI_API_KEY)
-python evaluate_tripwire_llm.py
+# Run without network access (all tests are offline by design)
+pytest tests/ --no-header -q
 ```
 
-`test_stage3.py` covers the scoring pipeline with mock embedding data and fixtures from `test_fixtures/diffs/`. `test_stage5.py` covers update suggestion logic with mocked LLM responses. No network calls are made during unit tests.
+Tests use `pytest` with `tmp_path` and `monkeypatch`. No network calls are made.
 
 ---
 
 ## CI/CD
 
 | Workflow | Trigger | Purpose |
-| :--- | :--- | :--- |
-| `tripwire.yml` | Cron (6am AEST weekdays) + manual dispatch | Full pipeline run; commits diffs and artifacts to the repo |
-| `test_stage3.yml` | Manual dispatch | Stage 3 unit tests |
-| `test_stage5.yml` | Push / PR touching `tripwire/**` or `test_stage5.py` | Stage 5 unit tests |
-| `llm-eval.yml` | Manual dispatch | End-to-end evaluation with precision/recall metrics |
+|----------|---------|---------|
+| `tripwire.yml` | Daily cron 02:00 UTC + manual dispatch | Full pipeline run |
+| `feedback_ingestion.yml` | Every 6 hours | Poll Gmail for feedback replies |
 
-Stages 0–3 are cost-free (no API calls) and safe to run frequently. Stages 4 and 5 incur OpenAI costs proportional to the number of candidates that clear the Stage 3 thresholds.
+The pipeline runs at 02:00 UTC (after the IPFR corpus ingestion workflow at 01:00 UTC).
+A 30-minute `timeout-minutes` budget provides ~23 minutes of headroom on a typical run.
 
----
+After each run, updated snapshots and the SQLite database are committed back to the
+repository (`data/influencer_sources/snapshots/` and `data/ipfr_corpus/ipfr.sqlite`).
 
-## Prototype Status
+GitHub Actions secrets required:
 
-The following behaviours are explicitly marked as prototypes in the code and are intended for production replacement:
-
-| Prototype behaviour | Location | Production replacement |
-| :--- | :--- | :--- |
-| UDID → file resolved by filename pattern matching | `ipfr_content.py` | Explicit UDID→file map generated by the IPFR export pipeline |
-| `TOP_N_VERIFICATION_CANDIDATES` cap (default: 3) | `config.py` | Load only specific section windows needed per candidate, not whole pages |
-| Headless Chrome via Selenium + `selenium-stealth` | `stage1_fetch.py` | Dedicated scraping service or managed browser pool |
-| Flat CSV audit log schema | `audit.py` / `config.py` | SQLite or structured database |
-
----
-
-## Architecture Diagram
-
-![Tripwire Semantic Monitoring Workflow](an_infographic_style_flowchart_titled_tripwire_se.png)
+| Secret | Purpose |
+|--------|---------|
+| `OPENAI_API_KEY` | LLM calls (Stage 8) |
+| `SMTP_PASSWORD` | Gmail App Password for sending notification emails |
+| `SMTP_USER` | Gmail address for sending |
+| `IMAP_PASSWORD` | Gmail App Password for reading feedback replies |
+| `IMAP_USER` | Gmail address for reading |
 
 ---
 
-## End-to-End Pipeline Diagram
+## Adding Sources
 
-```mermaid
-flowchart TD
-
-    %% ── STAGE 0 ──────────────────────────────────────────────────
-    subgraph S0["🔍 Stage 0 — Has the source changed?"]
-        direction TB
-        SRC(["📋 Monitored sources\nLegislation · Web pages · RSS feeds"])
-        PROBE["Check for a new version\nLegislation → register ID\nWeb / RSS → ETag or Content-Length"]
-        CHK{"New version?"}
-        SKIP(["⏭ No change — skip"])
-        HEAL(["🩹 Archive missing — rebuild\nwithout generating a diff"])
-        SRC --> PROBE --> CHK
-        CHK -- "No" --> SKIP
-        CHK -- "Yes" --> FETCH
-        CHK -- "File missing" --> HEAL
-    end
-
-    %% ── STAGE 1 ──────────────────────────────────────────────────
-    subgraph S1["🧹 Stage 1 — Fetch & normalise the content"]
-        direction TB
-        FETCH["Download the changed source"]
-        subgraph S1_TYPES[" "]
-            direction LR
-            LEG["Legislation\n.docx or .html\n→ plain text"]
-            WEB["Web page\nHeadless Chrome\n→ strip nav/footer/dates\n→ Markdown"]
-            RSS["RSS feed\nSort items by GUID\nStrip transient dates"]
-        end
-        SAVE(["💾 Save normalised content\nto content archive"])
-        FETCH --> S1_TYPES --> SAVE
-    end
-
-    %% ── STAGE 2 ──────────────────────────────────────────────────
-    subgraph S2["📄 Stage 2 — What actually changed?"]
-        direction TB
-        DIFF["Compare new content\nagainst the archived version\n(unified diff)"]
-        DIFFCHK{"Any\nsubstantive\nchanges?"}
-        NOCHANGE(["No meaningful diff\n— log and stop"])
-        SAVEDIFF(["💾 Save diff file\ndiff_archive/"])
-        DIFF --> DIFFCHK
-        DIFFCHK -- "No" --> NOCHANGE
-        DIFFCHK -- "Yes" --> SAVEDIFF
-    end
-
-    %% ── STAGE 3 ──────────────────────────────────────────────────
-    subgraph S3["🧠 Stage 3 — Which IPFR pages might be affected?"]
-        direction TB
-        HUNKS["Split the diff into\nindividual change hunks"]
-        FILTER["Remove noise\ndates · page numbers · boilerplate"]
-        SCORE["Score each hunk against\nevery IPFR content chunk\nusing semantic embeddings"]
-        BOOST["Boost scores for\nlegal power words\nmust · shall · penalty · Archives Act"]
-        RANK["Roll up to page-level scores\nand rank candidate pages"]
-        GATE{"Score above\npriority threshold?"}
-        GATEINFO["High  → any hit ≥ 0.35\nMedium → top score ≥ 0.45\nLow   → top score ≥ 0.50"]
-        FILTERED(["Filtered — log and stop\nno LLM cost incurred"])
-        PACKET(["📦 Package evidence\ninto handover packet\nhandover_packets/"])
-        HUNKS --> FILTER --> SCORE --> BOOST --> RANK --> GATE
-        GATEINFO -. "threshold policy" .-> GATE
-        GATE -- "Below threshold" --> FILTERED
-        GATE -- "Passes" --> PACKET
-    end
-
-    %% ── STAGE 4 ──────────────────────────────────────────────────
-    subgraph S4["🤖 Stage 4 — Does this change actually impact IPFR?"]
-        direction TB
-
-        subgraph P1["Pass 1 — Page impact confirmation"]
-            direction TB
-            WINDOW["Load the best-matching chunk\nplus its neighbours as context\n[Before] · [Current] · [After]"]
-            P1Q["Ask the LLM:\nDoes this change materially\naffect this IPFR page?"]
-            P1D{"Decision"}
-            P1NO(["No impact\n— stop here"])
-            P1UNC(["Uncertain\n— flag for review\nno further LLM cost"])
-            P1YES["✅ Impact confirmed\npage is affected"]
-            WINDOW --> P1Q --> P1D
-            P1D -- "No impact" --> P1NO
-            P1D -- "Uncertain" --> P1UNC
-            P1D -- "Impact" --> P1YES
-        end
-
-        subgraph P2["Pass 2 — Chunk scoping"]
-            direction TB
-            TARGETS["Show the LLM every candidate chunk\nwith its own snippet and matched hunks"]
-            P2Q["Ask the LLM:\nWhich specific chunks need updating?\nAre there any others on the page?"]
-            P2OUT["Output:\n✅ Confirmed chunks — need updating\n🔁 Additional chunks — human review\n❌ Rejected chunks — not affected"]
-            FALLBACK["If LLM fails:\nkeep Pass 1 chunk\nas a safe fallback"]
-            TARGETS --> P2Q --> P2OUT
-            P2Q -- "LLM error" --> FALLBACK
-        end
-
-        P1YES --> TARGETS
-        SAVERESULT(["💾 Save verification result\nllm_verification_results/"])
-        P2OUT & FALLBACK --> SAVERESULT
-    end
-
-    %% ── STAGE 5 ──────────────────────────────────────────────────
-    subgraph S5["✏️ Stage 5 — Draft the content updates"]
-        direction TB
-        SUGGEN["For each confirmed chunk,\nask the LLM to draft\nproposed replacement text\nbased on the diff and current content"]
-        SUGOUT["Output per chunk:\n• Proposed replacement text\n• Reason for the change\n• Relevant diff excerpt\n• Update required flag"]
-        SAVESUG(["💾 Save update suggestions\nllm_update_suggestions/"])
-        SUGGEN --> SUGOUT --> SAVESUG
-    end
-
-    %% ── REVIEW QUEUE ─────────────────────────────────────────────
-    subgraph RQ["📋 Human Review Queue"]
-        direction TB
-        CSV["Flatten all suggestions\ninto a single CSV\none row per chunk"]
-        COLS["Each row contains:\nSource · UDID · Chunk ID\nSuggested replacement text\nReason · Relevant diff · Status"]
-        EDITOR[/"👤 Human editor\nreviews update_review_queue.csv\nand applies approved changes to IPFR"/]
-        CSV --> COLS --> EDITOR
-    end
-
-    %% ── AUDIT LOG ────────────────────────────────────────────────
-    AUDIT(["📊 audit_log.csv\nContinuous ledger across all stages\nversion IDs · scores · AI decisions\nverification files · overlap metrics"])
-
-    %% ── STAGE CONNECTIONS ────────────────────────────────────────
-    SAVE --> DIFF
-    SAVEDIFF --> HUNKS
-    PACKET --> WINDOW
-    SAVERESULT --> SUGGEN
-    SAVESUG --> CSV
-    S0 & S2 & S3 & S4 & S5 -.-> AUDIT
-
-    %% ── STYLES ───────────────────────────────────────────────────
-    classDef stage0 fill:#E8F1FB,stroke:#4A90E2,color:#0B2545
-    classDef stage1 fill:#EAF7EE,stroke:#34A853,color:#123524
-    classDef stage2 fill:#FFF4E5,stroke:#FB8C00,color:#5D3200
-    classDef stage3 fill:#F3E8FF,stroke:#8E44AD,color:#3D1A52
-    classDef stage4 fill:#FCE8E6,stroke:#DB4437,color:#5C1F1A
-    classDef stage5 fill:#E6F4EA,stroke:#188038,color:#16351F
-    classDef review fill:#FDF6E3,stroke:#C9A800,color:#3D2E00
-    classDef audit fill:#EEF3F7,stroke:#7B8A97,color:#23313F
-
-    class S0 stage0
-    class S1 stage1
-    class S2 stage2
-    class S3 stage3
-    class S4 stage4
-    class S5 stage5
-    class RQ review
-    class AUDIT audit
-```
+See [docs/runbook-add-source.md](docs/runbook-add-source.md).
 
 ---
 
-## Stage Logic Summary
+## Responding to Failures
 
-### Stage 0 – Version Detection
-
-Sources are probed using lightweight metadata:
-
-- Legislation → registerId
-- WebPage / RSS → ETag / Content-Length
-
-Purpose:
-
-- Avoid unnecessary downloads  
-- Detect objective source changes  
-- Preserve auditability  
+See [docs/runbook-failure-response.md](docs/runbook-failure-response.md).
 
 ---
 
-### Stage 1 – Content Normalization
+## SQLite Schema
 
-Changed sources are fetched and cleaned:
+The pipeline writes to `data/ipfr_corpus/ipfr.sqlite`. Key tables:
 
-- Remove navigation & layout artifacts  
-- Normalize into Markdown / stable XML  
-
-Purpose:
-
-- Reduce diff volatility  
-- Prevent false semantic triggers  
-
----
-
-### Stage 2 – Diff Generation
-
-Unified diffs are generated against archived content.
-
-Tripwire reasons over changes, not full documents.
+| Table | Purpose |
+|-------|---------|
+| `pages` | IPFR page metadata and content (populated by ingestion pipeline) |
+| `page_chunks` | Pre-chunked IPFR content with bi-encoder embeddings |
+| `pipeline_runs` | Per-source log entry for every run (used by health and observability) |
+| `deferred_triggers` | Trigger bundles queued for LLM retry after API failures |
 
 ---
 
-### Stage 3 – Semantic Impact Estimation
+## Design Principles
 
-Diffs are parsed into semantic hunks.
-
-Noise suppression removes:
-
-- Page numbers  
-- Standalone dates  
-- Trivial fragments  
-
-Substantive hunks are:
-
-1. Embedded  
-2. Compared against semantic chunk corpus  
-3. Aggregated into page-level candidates  
-
-#### Scoring and handover policy:
-The `page_final_score` is calculated using a base similarity with additive bonuses:
-* **Base Similarity**: The maximum chunk_similarity observed for a page.
-* **Coverage Bonus**: +0.04 per unique hunk matched (capped at +0.12).
-* **Density Bonus**: +0.01 per additional chunk hit (capped at +0.06).
-* **Power Word Uplift**: Boosts based on legal imperatives (e.g., "must", "penalty", "Archives Act").
-
-```
-page_final_score =
-    page_base_similarity # max chunk_similarity observed for a page before bonuses/uplift
-  + coverage_bonus # which unique hunks contributed matches, captured with matched_hunks
-  + density_bonus # how many passing chunk matches hit this page, captured with chunk_hits
-  + power_word_uplift
-```
-
-#### Routing Thresholds
-When Stage 3 triggers handover:
-
-- Candidates ≥ candidate_min_score retained  
-- No truncation of qualifying candidates  
-- Batched via MAX_CANDIDATES_PER_PACKET  
-- Structured JSON payloads generated  
-
-Handover is triggered based on source priority and the `CANDIDATE_MIN_SCORE` (0.35):
-
-| Priority | Handover Trigger | Threshold Type |
-| :--- | :--- | :--- |
-| **High** | Any candidate ≥ 0.35 | Maximum Recall |
-| **Medium** | Primary Score ≥ 0.45 | Balanced Filter |
-| **Low** | Primary Score ≥ 0.50 | Efficiency First |
-
-
-### Stage 4 - Two-Pass LLM Verification
-Stage 4 executes a deterministic two-pass verification workflow to ensure high-fidelity results while minimising token usage.
-
-### Pass 1: Page Impact Confirmation
-* **Input**: A narrow 3-chunk "Local Evidence Window" — the best-scoring Stage 3 candidate chunk (`[Current]`), plus its immediate predecessor (`[Before]`) and successor (`[After]`) for context. The target chunk is selected by a lexical scorer (`_select_pass1_target_chunk_id`) that picks the Stage 3 candidate chunk with the highest token overlap and phrase hit rate against the diff.
-* **Task**: Decide whether the external change materially impacts the **candidate IPFR page as a whole**. The target chunk is used as a probe to test page-level impact — it is not treated as the final or only impacted chunk. Pass 1 does not scope which chunks need updating; that is deferred entirely to Pass 2.
-* **Decision**: `impact` / `no_impact` / `uncertain`. Impact is confirmed if the external change updates, contradicts, invalidates, or materially expands or narrows the page's guidance, or if the page would become incomplete or misleading without reflecting the change.
-* **Output**: A structured JSON decision with `udid`, `chunk_id` (the probe chunk), `confidence`, `reason`, and a short `evidence_quote` grounded in the evidence window.
-
-### Pass 2: Chunk Scoping
-* **Input**: Per-chunk verification targets — each Stage 3 candidate chunk with its own local snippet window and matched hunk IDs — plus a full page chunk index (all chunk IDs and snippets) for optional nominations beyond the Stage 3 set.
-* **Task**: Adjudicate every Stage 3 candidate chunk individually to determine which chunks are materially affected. The LLM may also nominate additional chunks not in the Stage 3 set if the page chunk index justifies it. Stage 3 chunks may only be rejected if their own snippet clearly shows no material impact; when in doubt they are preserved in `additional_chunks_to_review`.
-* **Output**: `confirmed_updates` (chunk ID + matched hunk IDs + reason + evidence quote), `additional_chunks_to_review` (same structure, for human review), and `rejected_stage3_chunk_ids`. If Pass 2 fails or returns invalid JSON, a fallback promotes the Pass 1 probe chunk into `additional_chunks_to_review` so no signal is lost.
-
-## Logs & Artifacts
-
-| File | Role |
-| :--- | :--- |
-| `audit_log.csv` | Master ledger including Stage 0-3 metadata and **Stage 4 AI Verification results** (Decision, Confidence, and Overlap metrics). |
-| `handover_packets/*.json` | Structured payloads containing evidence-ready hunks and verification targets. |
-| `llm_verification_results/*.json` | Detailed per-candidate logs of the Pass 1/Pass 2 verification workflow. |
-| `llm_update_suggestions/*.json` | Draft proposed replacement text per confirmed chunk, including reason and relevant diff. |
-| `diff_archive/*.diff` | Raw change evidence. |
-| `update_review_queue.csv` | Flat, human-readable queue consolidating all suggested updates and review-only chunks across all sources. |
-
----
-
-## Evaluation & Metrics
-
-The system includes an evaluation suite (`evaluate_tripwire_llm.py`) to track pipeline performance:
-* **Retrieval Precision/Recall**: Measures Stage 3's ability to find the correct candidate pages.
-* **Verifier Precision/Recall**: Measures Stage 4's accuracy in confirming impacts.
-* **Chunk Metrics**: Tracks the accuracy of Pass 2 in identifying specific sections for review.
+- **Fail-closed**: uncertain → escalate, never silently drop signals.
+- **Single config file**: all thresholds and parameters in `tripwire_config.yaml`, version-controlled.
+- **No async**: synchronous Python throughout (one source at a time, predictable resource use).
+- **No web frameworks**: SQLite is the only database; standard library + well-audited packages only.
+- **Modular**: one file per stage. Fork the repo, replace sources and corpus, adjust config — done.

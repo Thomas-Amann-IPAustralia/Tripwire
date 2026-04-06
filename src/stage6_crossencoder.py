@@ -43,6 +43,17 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+# TODO(5.3): Threshold calibration — the crossencoder threshold (default: 0.60)
+# should be calibrated once 4–8 weeks of feedback data is available. Compare
+# the distribution of cross-encoder final_scores for alerts rated "useful" vs
+# "not_significant" / "wrong_page" to find the optimal decision boundary.
+# See docs/runbook-adjust-thresholds.md for the interim manual procedure.
+
+# TODO(5.5): Internal-link graph edges — enable link_graph.edge_types.internal_links
+# in tripwire_config.yaml once link extraction from the IPFR corpus is implemented
+# in the ingestion pipeline. The scoring logic in _propagate_graph() already
+# handles arbitrary edge types; only the edge data needs to be populated in SQLite.
+
 # Lazy model cache.
 _crossencoder_cache: dict[str, Any] = {}
 
