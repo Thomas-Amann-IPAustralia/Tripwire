@@ -37,6 +37,21 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+# TODO(5.3): Threshold calibration — once 4–8 weeks of feedback data has been
+# accumulated in data/logs/feedback.jsonl, use the feedback labels to calibrate
+# min_score_threshold and rrf_weight_* via the grid-search approach in task 5.4.
+# See docs/runbook-adjust-thresholds.md for the manual procedure in the interim.
+
+# TODO(5.4): Grid search over relevance weights — evaluate alternative
+# rrf_weight_bm25 / rrf_weight_semantic combinations against the accumulated
+# feedback log. Implement as an offline evaluation script (not in this module).
+
+# TODO(5.6): BM25 positional/proximity extensions — if standard BM25 proves
+# insufficient for distinguishing close-proximity keyword matches from
+# scattered matches, evaluate BM25+ or BM25L variants, or a positional BM25
+# implementation. Requires live data to assess marginal value before adding
+# complexity here.
+
 # ---------------------------------------------------------------------------
 # Lazy bi-encoder cache (shared within this module's process lifetime)
 # ---------------------------------------------------------------------------
