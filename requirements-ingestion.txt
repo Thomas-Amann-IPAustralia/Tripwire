@@ -18,8 +18,11 @@ spacy>=3.7
 # Keyphrase extraction
 yake>=0.4
 
-# Bi-encoder embeddings
+# Bi-encoder and cross-encoder embeddings
 sentence-transformers>=2.7
+
+# BM25 keyword scoring
+rank-bm25>=0.2
 
 # Numerical operations
 numpy>=1.26
