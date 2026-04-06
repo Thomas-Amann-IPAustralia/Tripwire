@@ -1,44 +1,56 @@
 ## Summary
 
-This PR introduces the complete IPFR corpus ingestion pipeline and supporting infrastructure for the Tripwire system. It includes database schema and CRUD operations, multi-stage ingestion workflow, configuration management, error handling, and retry logic.
+This PR introduces Phase 2 of the Tripwire influencer source pipeline, implementing change detection (Stage 2), diff generation (Stage 3), content validation, and comprehensive test coverage. These modules enable the system to determine whether scraped content has meaningfully changed and to produce precise diffs for downstream processing.
 
 ## Key Changes
 
-### Core Infrastructure
-- **`src/config.py`**: Configuration loading, validation, and snapshotting from `tripwire_config.yaml`. Validates all pipeline parameters at startup with clear error messages.
-- **`src/errors.py`**: Error hierarchy (`TripwireError`, `RetryableError`, `PermanentError`) with context tracking and convenience constructors for common failure modes.
-- **`src/retry.py`**: Exponential backoff retry decorator with jitter. Retries only on `RetryableError`; `PermanentError` propagates immediately.
+### New Core Modules
 
-### Database Layer
-- **`ingestion/db.py`**: SQLite schema (8 tables) and CRUD operations for pages, chunks, entities, keyphrases, graph edges, sections, pipeline runs, and deferred triggers. Supports WAL mode for concurrent read/write access.
-- **`ingestion/sitemap.py`**: Step 1 of ingestion—loads/updates the IPFR sitemap CSV with page metadata (ID, URL, title, last-modified date).
+- **`src/scraper.py`**: Web scraping with trafilatura-based HTML extraction and text normalisation. Provides `scrape_url()`, `extract_plain_text()`, `normalise_text()`, and `compute_sha256()` utilities. Handles CAPTCHA detection and raises appropriate error types for retry logic.
 
-### Ingestion Pipeline
-- **`ingestion/scrape_ipfr.py`**: Step 2—fetches and normalizes IPFR pages using trafilatura. Validates content (minimum length, CAPTCHA detection, size-change bounds).
-- **`ingestion/enrich.py`**: Step 4—enriches pages with precomputed assets: document/chunk embeddings (BAAI/bge-base-en-v1.5), section-aware chunking, named entity recognition (spaCy), and keyphrase extraction (YAKE).
-- **`ingestion/graph.py`**: Computes quasi-graph edges between pages via embedding similarity, entity overlap, and (deferred) internal links.
-- **`ingestion/ingest.py`**: Orchestrates the full ingestion cycle: loads sitemap, checks for changes, scrapes/enriches pages, upserts to database, rebuilds graph, and logs runs.
+- **`src/validation.py`**: Content validation with four checks: minimum length (200 chars), CAPTCHA detection, optional structural markers, and dramatic size changes (outside 30%–300% of previous). Provides both hard validation (`validate_scraped_content()`) that raises `PermanentError` and soft validation (`validate_content()`) that returns warnings.
 
-### Configuration & Workflows
-- **`tripwire_config.yaml`**: Centralized configuration file with all tuneable parameters (retry settings, model names, scoring thresholds, graph parameters, storage options).
-- **`.github/workflows/ipfr_ingestion.yml`**: GitHub Actions workflow that runs ingestion daily at 01:00 UTC with optional manual `force_all` trigger. Commits updated database and snapshots back to the repository.
+- **`src/stage2_change_detection.py`**: Three-pass change detection system:
+  - **Pass 1**: SHA-256 hash comparison (stops if match).
+  - **Pass 2**: Word-level unified diff (stops if empty after normalisation).
+  - **Pass 3**: Significance fingerprinting—extracts defined terms, numerical values, dates, cross-references, and modal verbs from changed lines to tag as `high` or `standard` significance.
+  - Applies only to webpage sources; FRL and RSS bypass this stage.
 
-### Testing
-- **`tests/test_db.py`**: Comprehensive tests for database schema, connection management, and all CRUD operations (pages, chunks, entities, keyphrases, edges, sections, pipeline runs, deferred triggers).
-- **`tests/test_config_validation.py`**: Tests for config loading, validation, and snapshot functionality.
-- **`tests/test_retry.py`**: Tests for retry logic, backoff delays, and error classification.
-- **`tests/test_errors.py`**: Tests for error hierarchy and convenience constructors.
+- **`src/stage3_diff.py`**: Diff generation with source-type routing:
+  - **Webpage**: Unified diff of old vs new snapshot.
+  - **FRL**: Retrieves change explainer from FRL OData API; falls back to webpage diff if unavailable.
+  - **RSS**: Extracts new and mutated items from feed state.
+  - Manages snapshot rotation (keeps up to 6 previous versions by default).
+  - Normalises diffs (decodes HTML entities, collapses whitespace, applies NFC).
 
-### Supporting Files
-- **`ingestion/__init__.py`**, **`src/__init__.py`**, **`tests/__init__.py`**: Package markers.
-- **`requirements-ingestion.txt`**: Dependencies for ingestion (PyYAML, trafilatura, spaCy, YAKE, sentence-transformers, numpy).
-- **`.gitattributes`**: Marks SQLite database as binary to prevent text diffs.
-- **`data/influencer_sources/source_registry.csv`**: Sample source registry with FRL Trademarks Act as initial entry.
+### Test Suite
+
+- **`tests/test_change_detection.py`**: 822 lines of comprehensive pytest tests covering:
+  - Text normalisation, SHA-256 hashing, HTML extraction.
+  - Scraping with mocked sessions, HTTP error handling, CAPTCHA detection.
+  - Content validation (length, CAPTCHA, structural markers, size changes).
+  - Change detection (hash matching, cosmetic vs significant changes, fingerprinting).
+  - Diff generation (webpage, FRL, RSS workflows).
+  - Snapshot rotation and file management.
+
+### Test Fixtures
+
+- **`tests/fixtures/`**: Curated snapshot files for threshold testing:
+  - `webpage_base.txt`, `webpage_identical.txt`, `webpage_cosmetic_change.txt`
+  - `webpage_numerical_change.txt`, `webpage_modal_verb_change.txt`, `webpage_cross_reference_change.txt`
+  - `webpage_high_significance_combined.txt`, `webpage_standard_change.txt`
+  - `webpage_deletion.txt`, `webpage_too_short.txt`, `webpage_date_change.txt`, `webpage_new_section.txt`
+  - RSS feed fixtures: `rss_feed_new_item.xml`, `rss_feed_mutated_item.xml`, `rss_snapshot_base.json`
+  - `README.md` documenting fixture purposes.
+
+### Documentation Updates
+
+- **`LatestPR.md`**: Updated to reflect Phase 2 additions and overall pipeline architecture.
 
 ## Notable Implementation Details
 
-- **Lazy model loading**: ML models (embeddings, NER, YAKE) are imported on first use so tests can run without heavy dependencies.
-- **Section-aware chunking**: Content is split into overlapping chunks while respecting section boundaries extracted from trafilatura XML.
-- **Concurrent read/write**: SQLite WAL mode allows the main Tripwire pipeline to read while ingestion writes.
+- **Error handling**: Consistent use of `RetryableError` (transient failures) and `PermanentError` (permanent failures) across scraper and validation modules.
+- **Normalisation**: Text normalisation is applied consistently across stages (NFC, whitespace collapse, HTML entity decoding) but preserves case and punctuation for downstream NER/YAKE processing.
+- **Snapshot management**: Automatic rotation of old snapshots with configurable retention (default 6 versions); snapshots are committed to Git by the pipeline
 
-https://claude.ai/code/session_01WiSS6XcoHwDcb5JcQw2a6e
+https://claude.ai/code/session_01GXuZk7JzcjJhDqj7pqK44U
