@@ -418,3 +418,12 @@ def _distribution(values: list[float]) -> dict[str, float]:
         "p75": _percentile(0.75),
         "max": round(sorted_vals[-1], 6),
     }
+
+
+def release_biencoder() -> None:
+    """Release the cached bi-encoder model from memory.
+
+    Called by the pipeline orchestrator between Stage 5 and Stage 6 to free
+    RAM before loading the cross-encoder (Section 7.4).
+    """
+    _biencoder_cache.clear()
