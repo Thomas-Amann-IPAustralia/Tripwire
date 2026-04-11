@@ -127,18 +127,22 @@ def _run_pipeline(config_path: str, run_id: str) -> int:
     logger.info("Run ID: %s  |  Observation mode: %s", run_id, observation_mode)
 
     # ------------------------------------------------------------------
-    # 2. Open SQLite database.
+    # 2. Open SQLite database (create with empty schema if not present).
     # ------------------------------------------------------------------
+    from ingestion.db import init_db
+
     config_dir = Path(config_path).parent if Path(config_path).is_absolute() else Path.cwd()
     db_path = config_dir / cfg_get(config, "paths", "sqlite_db", default="data/ipfr_corpus/ipfr.sqlite")
     if not db_path.exists():
-        logger.error("SQLite database not found: %s", db_path)
-        return 1
+        logger.warning(
+            "SQLite database not found at %s — initialising empty database. "
+            "Run the IPFR ingestion pipeline to populate the corpus.",
+            db_path,
+        )
 
     try:
-        conn = sqlite3.connect(str(db_path))
-        if cfg_get(config, "storage", "sqlite_wal_mode", default=True):
-            conn.execute("PRAGMA journal_mode=WAL;")
+        wal_mode: bool = cfg_get(config, "storage", "sqlite_wal_mode", default=True)
+        conn = init_db(db_path, wal_mode=wal_mode)
     except sqlite3.Error as exc:
         logger.critical("Cannot open SQLite database %s: %s", db_path, exc)
         return 1
