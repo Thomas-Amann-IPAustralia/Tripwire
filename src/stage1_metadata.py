@@ -18,7 +18,7 @@ proceed to Stage 2.  Only skip if signals are present AND all indicate no change
 
 Source registry: data/influencer_sources/source_registry.csv
 Columns: source_id, url, title, source_type, importance, check_frequency,
-         structural_markers, notes.
+         structural_markers, notes, force_selenium.
 
 All network calls are wrapped with RetryableError / PermanentError so the
 retry layer in src/retry.py handles transient failures.
@@ -48,6 +48,7 @@ _REGISTRY_FIELDNAMES = [
     "check_frequency",
     "structural_markers",
     "notes",
+    "force_selenium",
 ]
 
 # Check frequencies mapped to days.
