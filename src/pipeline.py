@@ -398,7 +398,10 @@ def _process_source(
     # ---- Scrape / fetch new content -------------------------------------
     log_entry["stage_reached"] = "scrape"
     from src.scraper import scrape_and_normalise
-    new_text = scrape_and_normalise(source_url, source_type, session)
+    new_text = scrape_and_normalise(
+        source_url, source_type, session,
+        force_selenium=source.get("force_selenium", False),
+    )
     previous_text = source_state.get("previous_text")
     previous_hash = source_state.get("previous_hash")
 

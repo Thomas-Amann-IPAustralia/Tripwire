@@ -33,15 +33,28 @@ logger = logging.getLogger(__name__)
 # Minimum acceptable content length (characters).
 _MIN_CONTENT_LENGTH = 200
 
-# Phrases that indicate a CAPTCHA or bot-detection page.
+# Block-detection signatures checked against raw HTML (case-insensitive).
+# Kept in sync with src/scraper._BLOCK_SIGNATURES.
 _CAPTCHA_PHRASES = [
+    # Cloudflare challenges
+    "just a moment",
+    "ddos protection by cloudflare",
+    "checking if the site connection is secure",
+    "verifying you are human",
+    # Generic JS-gate / CAPTCHA pages
+    "enable javascript and cookies to continue",
+    "please enable javascript",
+    "enable cookies",
+    # Access control
+    "access denied",
+    "checking your browser",
+    # Legacy CAPTCHA indicators
     "captcha",
     "verify you are human",
     "robot check",
-    "access denied",
-    "please enable javascript",
-    "enable cookies",
-    "checking your browser",
+    # Transport / network error pages served as HTML
+    "this site can't be reached",
+    "err_http2_protocol_error",
 ]
 
 # Size-change bounds: flag if new content is outside [30%, 300%] of old.
