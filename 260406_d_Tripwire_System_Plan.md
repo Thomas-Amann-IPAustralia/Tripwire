@@ -154,7 +154,7 @@ During the initial calibration period (4–8 weeks recommended), the operator sh
 
 - HTTP `ETag` or `Last-Modified` header comparison against stored values
 - Content-Length header comparison
-- Version identifier (if the source publishes one, e.g. FRL compilation numbers)
+- Version identifier (FRL sources: `registerId` of the latest compiled version, obtained via `GET /v1/Versions/Find(titleId='{titleId}',asAtSpecification='Latest')` on `api.prod.legislation.gov.au`)
 - RSS feed: presence of items with publication dates newer than the last-checked timestamp
 
 **Decision rule:** If any probe signal indicates a change, proceed to Stage 2. If no signals are available (e.g. the server doesn't return useful headers), always proceed to Stage 2 — the cost of an unnecessary scrape is low.
@@ -193,7 +193,11 @@ Tag the change as either `significance: high` (fingerprint matched — defined t
 
 **Webpage sources:** Generate a unified `.diff` file comparing the previous normalised snapshot against the new normalised snapshot. Store the diff file in the run's working directory. Update the stored snapshot to the new version. Retain the previous 6 versions of the snapshot for audit purposes. The current snapshot (and any version files still within the retention window) are committed to the repository at the end of each run — see Section 7.2 for the Git persistence mechanism.
 
-**FRL sources:** Retrieve the change explainer document associated with the new compilation or amendment. FRL publishes these as companion documents to legislative changes. If the explainer document is unavailable, fall back to treating the FRL source like a webpage (diff the legislation text directly) and log a warning.
+**FRL sources:** Retrieve the Explanatory Statement (ES) Word document for the latest compiled version using the official FRL REST API documents endpoint:
+```
+GET https://api.prod.legislation.gov.au/v1/documents/find(titleid='{titleId}',asatspecification='Latest',type='ES',format='Word',uniqueTypeNumber=0,volumeNumber=0,rectificationVersionNumber=0)
+```
+A metadata check (`Accept: application/json`) is performed first to confirm the document exists before downloading the binary. If `type='ES'` returns HTTP 404, `type='SupplementaryES'` is tried as a fallback. The binary DOCX is extracted to plain text via mammoth → trafilatura. If neither ES document type is available, fall back to treating the FRL source like a webpage (diff the legislation text directly) and log a warning.
 
 **RSS sources:** Persist the feed state as a keyed JSON structure mapping each item's `guid` (or `link` as fallback if no GUID is present) to the full item payload: title, description, pubDate, link, and any `content:encoded` extension. On each run, fetch the current feed, compare keys against the stored snapshot to find new GUIDs, and compare payloads for existing GUIDs to detect mutations. The diff for a new item is its full content; for a mutated item it is the field-level delta. Snapshots are stored per feed URL with a stable filename derived from a hash of the URL.
 

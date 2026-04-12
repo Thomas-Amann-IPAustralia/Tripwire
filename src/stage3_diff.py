@@ -52,6 +52,12 @@ logger = logging.getLogger(__name__)
 _DEFAULT_SNAPSHOT_DIR = Path("data/influencer_sources/snapshots")
 _DEFAULT_VERSIONS_RETAINED = 6
 
+# Official FRL REST API base URL and Explanatory Statement document types to try.
+_FRL_API_BASE = "https://api.prod.legislation.gov.au"
+# ES is tried first; SupplementaryES is the fallback for instruments that only
+# have a supplementary explanatory statement rather than a standalone one.
+_FRL_ES_TYPES = ("ES", "SupplementaryES")
+
 
 # ---------------------------------------------------------------------------
 # Data structures
@@ -276,50 +282,89 @@ def _generate_frl_diff(
 
 
 def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | None, str | None]:
-    """Attempt to retrieve the FRL change explainer document.
+    """Retrieve the FRL Explanatory Statement (ES) document as plain text.
 
-    Returns (text, error_message).  If retrieval succeeds, error_message is None.
+    Queries the official FRL REST API documents endpoint for the latest
+    compiled version of the title.  The ES document type (``ES``) is tried
+    first; ``SupplementaryES`` is tried as a fallback for instruments that
+    only have a supplementary explanatory statement.
+
+    Downloads the Word (.docx) binary and extracts plain text via mammoth
+    (through ``src.scraper.extract_plain_text_from_docx``).
+
+    Returns ``(text, error_message)``.  On success ``error_message`` is None.
+
+    API reference:
+        Step 1 — confirm the document exists (metadata only):
+            GET /v1/documents/find(titleid='{titleId}',asatspecification='Latest',
+                type='ES',format='Word',uniqueTypeNumber=0,volumeNumber=0,
+                rectificationVersionNumber=0)
+            Accept: application/json  →  Document metadata; 404 means no ES.
+
+        Step 2 — download binary DOCX (omit Accept header):
+            Same URL without Accept: application/json  →  binary DOCX content.
+
+        Base URL: https://api.prod.legislation.gov.au
+        Auth: none required for public read.
+
+    The titleId is extracted from the source URL:
+        https://www.legislation.gov.au/Series/<titleId>
     """
     url = source.get("url", "")
-    series_id = url.rstrip("/").split("/")[-1]
+    title_id = url.rstrip("/").split("/")[-1]
 
-    # FRL OData: get the latest compilation and its associated explainer.
-    odata_base = "https://www.legislation.gov.au/api/Compilations/TimePoint"
+    def _doc_endpoint(doc_type: str) -> str:
+        return (
+            f"{_FRL_API_BASE}/v1/documents/find("
+            f"titleid='{title_id}',"
+            f"asatspecification='Latest',"
+            f"type='{doc_type}',"
+            f"format='Word',"
+            f"uniqueTypeNumber=0,"
+            f"volumeNumber=0,"
+            f"rectificationVersionNumber=0)"
+        )
+
+    # Step 1: find the first available ES document type.
+    chosen_type: str | None = None
+    for doc_type in _FRL_ES_TYPES:
+        try:
+            meta_resp = session.get(
+                _doc_endpoint(doc_type),
+                headers={"Accept": "application/json"},
+                timeout=20,
+            )
+            if meta_resp.status_code == 404:
+                continue  # This type does not exist; try the next.
+            meta_resp.raise_for_status()
+            chosen_type = doc_type
+            break
+        except Exception as exc:
+            return None, (
+                f"FRL API metadata check failed for {title_id} ({doc_type}): {exc}"
+            )
+
+    if chosen_type is None:
+        return None, (
+            f"No ES or SupplementaryES Word document found for title {title_id}."
+        )
+
+    # Step 2: download the binary DOCX.
     try:
-        resp = session.get(
-            odata_base,
-            params={
-                "$filter": f"seriesId eq '{series_id}'",
-                "$orderby": "registeredDate desc",
-                "$top": "1",
-            },
-            timeout=20,
-        )
-        resp.raise_for_status()
-        items = resp.json().get("value", [])
-        if not items:
-            return None, f"No FRL compilations found for series {series_id}."
+        bin_resp = session.get(_doc_endpoint(chosen_type), timeout=60)
+        bin_resp.raise_for_status()
+    except Exception as exc:
+        return None, f"FRL ES binary download failed for {title_id}: {exc}"
 
-        meta = items[0]
-        # Look for an explainer/amending document link.
-        explainer_url = (
-            meta.get("explanatoryStatementUrl")
-            or meta.get("ExplanatoryStatementUrl")
-            or meta.get("amendingDocumentUrl")
-        )
-        if not explainer_url:
-            return None, f"No explainer URL found in FRL metadata for {series_id}."
-
-        er = session.get(explainer_url, timeout=30)
-        er.raise_for_status()
-        from src.scraper import extract_plain_text
-        text = extract_plain_text(er.text)
+    # Step 3: extract plain text from the DOCX via mammoth → trafilatura.
+    try:
+        from src.scraper import extract_plain_text_from_docx
+        text = extract_plain_text_from_docx(bin_resp.content)
         if text:
             return text, None
-        return None, f"FRL explainer at {explainer_url} yielded empty text."
-
+        return None, f"FRL ES for {title_id} yielded empty text after extraction."
     except Exception as exc:
-        return None, f"FRL explainer retrieval failed for {series_id}: {exc}"
+        return None, f"FRL ES text extraction failed for {title_id}: {exc}"
 
 
 # ---------------------------------------------------------------------------
