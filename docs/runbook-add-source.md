@@ -110,9 +110,31 @@ git push
 ## 5. Step-by-Step: Adding a Federal Register of Legislation (FRL) Source
 
 1. Set `source_type = frl`.
-2. The `url` should be the canonical FRL series URL for the instrument.
-3. The pipeline probes the FRL registerId to detect new compilations, then retrieves the change explainer document automatically.
-4. No snapshot is stored — Stage 2 is skipped for FRL sources.
+2. The `url` must be the canonical FRL Series URL for the title, in the form:
+   ```
+   https://www.legislation.gov.au/Series/<titleId>
+   ```
+   The `titleId` (e.g. `C2004A00913`) is extracted automatically from this URL path.
+
+3. **Stage 1 — Change detection** uses the official FRL REST API:
+   ```
+   GET https://api.prod.legislation.gov.au/v1/Versions/Find(titleId='<titleId>',asAtSpecification='Latest')
+   Accept: application/json
+   ```
+   The `registerId` field of the returned `Version` object is stored as the change signal. A new compilation is detected when this value changes. If the API is unreachable, the probe falls back to an HTTP `HEAD` request against the Series URL.
+
+4. **Stage 3 — Explainer retrieval** downloads the Explanatory Statement (ES) Word document via the FRL documents endpoint:
+   ```
+   GET https://api.prod.legislation.gov.au/v1/documents/find(titleid='<titleId>',asatspecification='Latest',type='ES',format='Word',uniqueTypeNumber=0,volumeNumber=0,rectificationVersionNumber=0)
+   ```
+   - A metadata check (`Accept: application/json`) is performed first to confirm the document exists.
+   - If `type='ES'` returns HTTP 404, `type='SupplementaryES'` is tried as a fallback.
+   - The binary DOCX is downloaded and text is extracted via **mammoth**.
+   - If neither ES type is available, the pipeline falls back to diffing the legislation Series page directly and logs a warning.
+
+5. **Stage 2 is skipped** for FRL sources — the ES document captures the change intent directly.
+
+> **No authentication required.** The FRL REST API is publicly accessible for all read operations.
 
 ---
 

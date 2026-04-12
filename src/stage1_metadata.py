@@ -10,7 +10,7 @@ immediately skipped — no scraping, no diff, no scoring.
 Probe signals (checked in order of cheapness):
   1. HTTP ETag or Last-Modified header comparison
   2. Content-Length header comparison
-  3. Version identifier (FRL OData: registerId / compilationId)
+  3. Version identifier (FRL API: registerId of latest compiled version)
   4. RSS feed: presence of items newer than the last-checked timestamp
 
 Decision rule: if ANY signal indicates a change (or no signals are available),
@@ -252,6 +252,10 @@ def _probe_webpage(
     return ProbeResult(source_id=source_id, url=url, decision=decision, signals=new_signals)
 
 
+# Base URL of the official Federal Register of Legislation REST API.
+_FRL_API_BASE = "https://api.prod.legislation.gov.au"
+
+
 def _probe_frl(
     source: dict[str, Any],
     stored: dict[str, Any] | None,
@@ -259,43 +263,54 @@ def _probe_frl(
 ) -> ProbeResult:
     """Probe an FRL (Federal Register of Legislation) source.
 
-    Uses the OData API to get the latest compilationId / registerId without
-    downloading the full legislation text.  Adapted from the prototype's
-    stage0_detect.py fetch_stage0_metadata.
+    Uses the official FRL REST API to retrieve the latest compiled Version for
+    the title without downloading the full legislation text.
+
+    The change signal is the ``registerId`` of the latest compiled version —
+    a stable, semantically meaningful identifier that changes only when a new
+    compilation is registered (e.g. ``F2024C00123``).
+
+    API reference:
+        GET /v1/Versions/Find(titleId='{titleId}',asAtSpecification='Latest')
+        Base URL: https://api.prod.legislation.gov.au
+        Auth: none required for public read
+
+    The titleId is extracted from the source URL, which follows the pattern:
+        https://www.legislation.gov.au/Series/<titleId>
+    e.g. https://www.legislation.gov.au/Series/C2004A00913  →  titleId=C2004A00913
     """
-    from src.errors import RetryableError
     source_id = source["source_id"]
     url = source["url"]
 
-    # FRL OData endpoint for compilation metadata.
-    # URL pattern: https://www.legislation.gov.au/Series/<series_id>
-    # We probe the OData API using the series path component.
-    series_id = url.rstrip("/").split("/")[-1]
-    odata_base = "https://www.legislation.gov.au/api/Compilations/TimePoint"
+    # Extract the titleId from the Series URL path component.
+    title_id = url.rstrip("/").split("/")[-1]
+    endpoint = (
+        f"{_FRL_API_BASE}/v1/Versions/Find("
+        f"titleId='{title_id}',asAtSpecification='Latest')"
+    )
 
     try:
-        params = {
-            "$filter": f"seriesId eq '{series_id}'",
-            "$orderby": "registeredDate desc",
-            "$top": "1",
-            "$select": "compilationId,registeredDate,inForceDetails",
-        }
-        resp = session.get(odata_base, params=params, timeout=20)
+        resp = session.get(
+            endpoint,
+            headers={"Accept": "application/json"},
+            timeout=20,
+        )
         resp.raise_for_status()
-        items = resp.json().get("value", [])
-        if not items:
-            # Fall back to HEAD probe.
+        version = resp.json()
+        register_id = version.get("registerId", "")
+        if not register_id:
+            # API returned a valid response but no registerId — fall back.
             return _probe_webpage(source, stored, session)
 
-        compilation_id = items[0].get("compilationId") or items[0].get("registerId", "")
-        registered_date = items[0].get("registeredDate", "")
-
         new_signals: dict[str, Any] = {
-            "compilation_id": compilation_id,
-            "registered_date": registered_date,
+            "register_id": register_id,
+            "compilation_number": version.get("compilationNumber", ""),
+            "start": version.get("start", ""),
         }
     except Exception as exc:
-        logger.warning("FRL OData probe failed for %s, falling back to HEAD: %s", url, exc)
+        logger.warning(
+            "FRL API probe failed for %s, falling back to HEAD: %s", url, exc
+        )
         return _probe_webpage(source, stored, session)
 
     decision = _compare_signals(new_signals, stored or {})
