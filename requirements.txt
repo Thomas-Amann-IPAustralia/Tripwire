@@ -8,6 +8,8 @@ pyyaml>=6.0
 # --- HTTP and web scraping ---
 requests>=2.31
 trafilatura>=1.8
+selenium>=4.6
+selenium-stealth>=1.0
 
 # --- NLP and keyword extraction ---
 spacy>=3.7

@@ -64,8 +64,9 @@ def load_source_registry(csv_path: str | Path) -> list[dict[str, Any]]:
     """Load the influencer source registry CSV.
 
     Returns a list of source dicts with typed fields:
-      importance — float
+      importance       — float
       structural_markers — list[str]
+      force_selenium   — bool
     """
     path = Path(csv_path)
     if not path.exists():
@@ -87,6 +88,8 @@ def load_source_registry(csv_path: str | Path) -> list[dict[str, Any]]:
                 row["structural_markers"] = [m.strip() for m in markers_raw.split(",")]
             else:
                 row["structural_markers"] = []
+            # Parse force_selenium as bool (accepts "true"/"false", case-insensitive).
+            row["force_selenium"] = str(row.get("force_selenium", "false")).strip().lower() == "true"
             sources.append(row)
 
     return sources
