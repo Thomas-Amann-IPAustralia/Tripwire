@@ -212,7 +212,6 @@ def validate_content(
     content: str,
     url: str,
     previous_length: int | None = None,
-    structural_markers: list[str] | None = None,
 ) -> list[str]:
     """Run all content validation checks and return a list of warning strings.
 
@@ -229,12 +228,6 @@ def validate_content(
         if phrase in lower:
             warnings.append(f"Possible CAPTCHA/bot-detection phrase found: '{phrase}'.")
             break
-
-    if structural_markers:
-        if not any(marker in content for marker in structural_markers):
-            warnings.append(
-                f"None of the expected structural markers found: {structural_markers}"
-            )
 
     if previous_length is not None and previous_length > 0:
         ratio = len(content) / previous_length

@@ -18,7 +18,7 @@ proceed to Stage 2.  Only skip if signals are present AND all indicate no change
 
 Source registry: data/influencer_sources/source_registry.csv
 Columns: source_id, url, title, source_type, importance, check_frequency,
-         structural_markers, notes, force_selenium.
+         notes, force_selenium.
 
 All network calls are wrapped with RetryableError / PermanentError so the
 retry layer in src/retry.py handles transient failures.
@@ -46,7 +46,6 @@ _REGISTRY_FIELDNAMES = [
     "source_type",
     "importance",
     "check_frequency",
-    "structural_markers",
     "notes",
     "force_selenium",
 ]
@@ -65,9 +64,8 @@ def load_source_registry(csv_path: str | Path) -> list[dict[str, Any]]:
     """Load the influencer source registry CSV.
 
     Returns a list of source dicts with typed fields:
-      importance       — float
-      structural_markers — list[str]
-      force_selenium   — bool
+      importance     — float
+      force_selenium — bool
     """
     path = Path(csv_path)
     if not path.exists():
@@ -83,12 +81,6 @@ def load_source_registry(csv_path: str | Path) -> list[dict[str, Any]]:
                 row["importance"] = float(row.get("importance", 0.5))
             except (ValueError, TypeError):
                 row["importance"] = 0.5
-            # Parse structural_markers as list.
-            markers_raw = row.get("structural_markers", "")
-            if markers_raw:
-                row["structural_markers"] = [m.strip() for m in markers_raw.split(",")]
-            else:
-                row["structural_markers"] = []
             # Parse force_selenium as bool (accepts "true"/"false", case-insensitive).
             row["force_selenium"] = str(row.get("force_selenium", "false")).strip().lower() == "true"
             sources.append(row)
@@ -106,8 +98,6 @@ def save_source_registry(sources: list[dict[str, Any]], csv_path: str | Path) ->
     for s in sources:
         row = dict(s)
         row["importance"] = str(row.get("importance", 0.5))
-        markers = row.get("structural_markers", [])
-        row["structural_markers"] = ",".join(markers) if isinstance(markers, list) else markers
         rows.append(row)
 
     with path.open("w", newline="", encoding="utf-8") as fh:
