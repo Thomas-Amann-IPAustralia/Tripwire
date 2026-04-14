@@ -8,12 +8,10 @@ accepted by the pipeline.  Four checks are applied:
 
   1. Minimum length  — content shorter than 200 characters is rejected.
   2. CAPTCHA detection — common bot-detection phrases trigger rejection.
-  3. Structural marker check — optional per-source expected markers.
-  4. Dramatic size change — new length outside [30%, 300%] of previous.
+  3. Dramatic size change — new length outside [30%, 300%] of previous.
 
 Checks 1 and 2 raise PermanentError (retrying will not fix them).
-Check 3 returns a warning (structural_markers are advisory only).
-Check 4 raises PermanentError (suspicious content should not be silently accepted).
+Check 3 raises PermanentError (suspicious content should not be silently accepted).
 
 The module also provides a soft validate_content() path that returns
 warnings without raising, for callers that want to inspect issues
@@ -57,7 +55,6 @@ def validate_scraped_content(
     content: str,
     url: str,
     previous_length: int | None = None,
-    structural_markers: list[str] | None = None,
 ) -> list[str]:
     """Validate scraped content and raise PermanentError on hard failures.
 
@@ -69,14 +66,12 @@ def validate_scraped_content(
         Source URL (used in error messages and logging).
     previous_length:
         Length in characters of the previous snapshot, or None on first run.
-    structural_markers:
-        Optional list of strings that must appear in the content.
 
     Returns
     -------
     list[str]
-        Advisory warnings (structural marker failures).  Hard failures raise
-        rather than appearing in this list.
+        Empty list on success.  Hard failures raise rather than appearing
+        in this list.
 
     Raises
     ------
@@ -106,25 +101,13 @@ def validate_scraped_content(
         if ratio < _SIZE_CHANGE_MIN_RATIO or ratio > _SIZE_CHANGE_MAX_RATIO:
             raise dramatic_size_change_error(url, previous_length, len(content))
 
-    # Check 3: structural markers (advisory warning only).
-    warnings: list[str] = []
-    if structural_markers:
-        if not any(marker in content for marker in structural_markers):
-            msg = (
-                f"None of the expected structural markers found in {url}: "
-                f"{structural_markers}"
-            )
-            logger.warning(msg)
-            warnings.append(msg)
-
-    return warnings
+    return []
 
 
 def validate_content(
     content: str,
     url: str,
     previous_length: int | None = None,
-    structural_markers: list[str] | None = None,
 ) -> list[str]:
     """Soft validation — return all issues as warning strings without raising.
 
@@ -139,8 +122,6 @@ def validate_content(
         Source URL.
     previous_length:
         Length of the previous snapshot, or None.
-    structural_markers:
-        Optional list of expected markers.
 
     Returns
     -------
@@ -159,12 +140,6 @@ def validate_content(
         if phrase in lower:
             warnings.append(f"Possible CAPTCHA/bot-detection phrase found: '{phrase}'.")
             break
-
-    if structural_markers:
-        if not any(marker in content for marker in structural_markers):
-            warnings.append(
-                f"None of the expected structural markers found: {structural_markers}"
-            )
 
     if previous_length is not None and previous_length > 0:
         ratio = len(content) / previous_length

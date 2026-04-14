@@ -186,24 +186,6 @@ class TestValidateContent:
         warnings = validate_content(content, "https://example.com")
         assert any("captcha" in w.lower() or "bot" in w.lower() for w in warnings)
 
-    def test_missing_structural_marker_returns_warning(self):
-        from src.validation import validate_content
-        content = "x" * 300
-        warnings = validate_content(
-            content, "https://example.com",
-            structural_markers=["Act", "Regulation"]
-        )
-        assert any("marker" in w.lower() for w in warnings)
-
-    def test_structural_marker_present_no_warning(self):
-        from src.validation import validate_content
-        content = "This is about the Trade Marks Act 1995. " + "x" * 300
-        warnings = validate_content(
-            content, "https://example.com",
-            structural_markers=["Act"]
-        )
-        assert not any("marker" in w.lower() for w in warnings)
-
     def test_dramatic_shrinkage_returns_warning(self):
         from src.validation import validate_content
         warnings = validate_content(
@@ -252,22 +234,10 @@ class TestValidateScrapedContent:
                 previous_length=10000
             )
 
-    def test_returns_warnings_for_structural_markers(self):
-        from src.validation import validate_scraped_content
-        content = "x" * 300
-        warnings = validate_scraped_content(
-            content, "https://example.com",
-            structural_markers=["Act"]
-        )
-        assert len(warnings) == 1
-
     def test_passes_valid_content(self):
         from src.validation import validate_scraped_content
         content = "The Trade Marks Act 1995 governs trade mark registration in Australia. " * 10
-        warnings = validate_scraped_content(
-            content, "https://example.com",
-            structural_markers=["Act"]
-        )
+        warnings = validate_scraped_content(content, "https://example.com")
         assert warnings == []
 
 
