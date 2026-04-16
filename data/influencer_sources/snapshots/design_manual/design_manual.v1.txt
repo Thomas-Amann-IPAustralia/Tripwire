@@ -40,6 +40,14 @@ Recent updates
 |
 | 8.15. Examination and certification: Examination hearings | Republished to remove fixed font-size styles for accessibility |
 |
+| 20.2. Convention priority: Convention countries | Accessibility fix - remove empty headings |
+|
+| 25.4. Ownership disputes: Disputes where some designs have been registered or published | Accessibility fix - remove empty headings |
+|
+| 26.6. Production of documents under s 61(1): Access in ownership disputes | Accessibility fix - remove empty headings |
+|
+| 28.4. Hearings: Interface with court proceedings | Accessibility fix - remove empty headings |
+|
 | 6.2. Representations: General requirements | Accessibility fix - remove empty headings |
 |
 | 6.5. Representations: Consistency | Accessibility fix - remove empty headings |
@@ -58,20 +66,12 @@ Recent updates
 |
 | 27.5. Publication and file access: Prohibition orders | Accessibility fix - remove empty headings |
 |
-| 20.2. Convention priority: Convention countries | Accessibility fix - remove empty headings |
-|
-| 25.4. Ownership disputes: Disputes where some designs have been registered or published | Accessibility fix - remove empty headings |
-|
-| 26.6. Production of documents under s 61(1): Access in ownership disputes | Accessibility fix - remove empty headings |
-|
-| 28.4. Hearings: Interface with court proceedings | Accessibility fix - remove empty headings |
-|
 | 11.4. Excluded designs: Amendments | Changed URL from"Designs-that-cannot-be-excluded" |
-|
-| 11. Excluded designs | Hyperlink now stretches across the complete title and URL has been updated to reflect the changes approved earlier |
 |
 | 11.3. Excluded designs: Extensions of time | Updated URL from "Checking-the-priority-status-of-an-excluded-design" to "excluded-designs-extension-of-time" |
 |
-| 20.5. Convention priority for excluded designs and applications that include more than one design | Include referral to Part 11. |
+| 11. Excluded designs | Hyperlink now stretches across the complete title and URL has been updated to reflect the changes approved earlier |
 |
-| 11.1. Excluded designs: overview | Updated to include detailed requirements for an excluded design. |
+| 19.6. Priority date: Excluded designs | Remove requirements and redirect to Part 11. |
+|
+| 11.2. Excluded designs: Priority date of excluded designs | Reviewed with significant changes to wording. |
