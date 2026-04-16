@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Datafile Editor</title>
+<title>Tripwire Data Viewer</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.2/sql-wasm.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Sono:wght@300;400;500;600;700&family=Epilogue:wght@300;400;500;600&display=swap');
@@ -603,8 +603,14 @@ textarea#sql-input {
   </div>
   <div class="field">
     <label>File Path (.db / .jsonl / .csv)</label>
-    <input id="cfg-path" placeholder="data/rules.db">
+    <input id="cfg-path" placeholder="data/ipfr_corpus/ipfr.sqlite">
     <div class="hint">The file type is detected automatically from the extension.</div>
+  </div>
+  <div class="modal-section-title">Quick Open</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+    <button class="btn" onclick="quickOpen('data/ipfr_corpus/ipfr.sqlite')" type="button">ipfr.sqlite</button>
+    <button class="btn" onclick="quickOpen('data/influencer_sources/source_registry.csv')" type="button">source_registry.csv</button>
+    <button class="btn" onclick="quickOpen('audit_log.csv')" type="button">audit_log.csv</button>
   </div>
   <div class="modal-section-title">Authentication</div>
   <div class="field">
@@ -627,8 +633,8 @@ textarea#sql-input {
 <!-- Header -->
 <header>
   <div class="logo">
-    <div class="logo-mark">D</div>
-    DATAFILE EDITOR
+    <div class="logo-mark">TW</div>
+    TRIPWIRE DATA VIEWER
   </div>
   <div class="file-tabs" id="file-tabs"></div>
   <button class="add-file-btn" id="btn-add-file" title="Open file">+</button>
@@ -655,7 +661,7 @@ textarea#sql-input {
     <div class="empty-state" id="empty-state">
       <div class="empty-glyph">⬡</div>
       <div class="empty-title">No file open</div>
-      <div class="empty-sub">Open a .db, .jsonl, or .csv file from your GitHub repository to start editing.</div>
+      <div class="empty-sub">Open a Tripwire data file (SQLite DB, JSONL, or CSV) from GitHub to inspect and edit.</div>
       <button class="btn primary" id="btn-open-first">+ Open File</button>
     </div>
   </div>
@@ -1531,8 +1537,8 @@ let editingFileId = null;
 function openConfigModal(fileId = null) {
   editingFileId = fileId;
   const f = fileId ? files.find(x => x.id === fileId) : null;
-  document.getElementById('cfg-repo').value = f?.repo || '';
-  document.getElementById('cfg-branch').value = f?.branch || 'main';
+  document.getElementById('cfg-repo').value = f?.repo || 'Thomas-Amann-IPAustralia/Tripwire';
+  document.getElementById('cfg-branch').value = f?.branch || 'claude/universal-file-viewer-tIPr5';
   document.getElementById('cfg-path').value = f?.path || '';
   document.getElementById('cfg-token').value = f?.token || localStorage.getItem('de_token') || '';
   document.getElementById('cfg-name').value = f?.name || localStorage.getItem('de_name') || '';
@@ -1540,6 +1546,10 @@ function openConfigModal(fileId = null) {
   document.getElementById('modal-config').classList.add('open');
 }
 function closeConfigModal() { document.getElementById('modal-config').classList.remove('open'); }
+
+function quickOpen(path) {
+  document.getElementById('cfg-path').value = path;
+}
 
 async function connectFile() {
   const repo = document.getElementById('cfg-repo').value.trim();
