@@ -586,6 +586,8 @@ textarea#sql-input {
 </head>
 <body>
 
+<input type="file" id="local-file-input" accept=".sqlite,.db,.sqlite3,.csv,.tsv,.jsonl,.ndjson" style="display:none">
+
 <!-- Config Modal -->
 <div class="modal-overlay" id="modal-config">
 <div class="modal">
@@ -611,6 +613,11 @@ textarea#sql-input {
     <button class="btn" onclick="quickOpen('data/ipfr_corpus/ipfr.sqlite')" type="button">ipfr.sqlite</button>
     <button class="btn" onclick="quickOpen('data/influencer_sources/source_registry.csv')" type="button">source_registry.csv</button>
     <button class="btn" onclick="quickOpen('audit_log.csv')" type="button">audit_log.csv</button>
+  </div>
+  <div class="modal-section-title">Local File</div>
+  <div style="margin-bottom:8px">
+    <button class="btn" onclick="openLocalFilePicker()" type="button">Browse local file...</button>
+    <div class="hint" style="margin-top:6px">Open a .sqlite, .csv, or .jsonl file from your computer. No token needed.</div>
   </div>
   <div class="modal-section-title">Authentication</div>
   <div class="field">
@@ -661,8 +668,11 @@ textarea#sql-input {
     <div class="empty-state" id="empty-state">
       <div class="empty-glyph">⬡</div>
       <div class="empty-title">No file open</div>
-      <div class="empty-sub">Open a Tripwire data file (SQLite DB, JSONL, or CSV) from GitHub to inspect and edit.</div>
-      <button class="btn primary" id="btn-open-first">+ Open File</button>
+      <div class="empty-sub">Open a Tripwire data file (SQLite DB, JSONL, or CSV) from GitHub or your local machine.</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn primary" id="btn-open-first">+ Open from GitHub</button>
+        <button class="btn" id="btn-open-local-first" onclick="openLocalFilePicker()">Open Local File</button>
+      </div>
     </div>
   </div>
 </div>
@@ -700,7 +710,7 @@ function fmt(f) { return f?.fmt || ''; }
 // ═══════════════════════════════════════════════════════
 const LS_FILES = 'de_files_v2';
 function persistFileMeta() {
-  const meta = files.map(f => ({
+  const meta = files.filter(f => !f.local).map(f => ({
     id: f.id, repo: f.repo, branch: f.branch, path: f.path,
     token: f.token, name: f.name, email: f.email
   }));
@@ -902,6 +912,63 @@ function dbRowCount(db, tbl) {
 }
 
 // ═══════════════════════════════════════════════════════
+// LOCAL FILE SUPPORT
+// ═══════════════════════════════════════════════════════
+function openLocalFilePicker() {
+  closeConfigModal();
+  document.getElementById('local-file-input').click();
+}
+
+async function handleLocalFile(browserFile) {
+  const path = browserFile.name;
+  const fmtType = detectFmt(path);
+
+  const id = 'f_' + Date.now();
+  const fileObj = {
+    id, repo: '(local)', branch: '', path, token: '', name: '', email: '',
+    fmt: fmtType, local: true,
+    pendingEdits: {}, deletedRows: new Set(), newRows: [],
+    sortCol: null, sortDir: 'asc', filter: '', view: 'table',
+    loaded: false, rawRows: [], columns: [], sections: []
+  };
+  files.push(fileObj);
+  activeFileId = id;
+  render();
+
+  setStatus('loading', `Loading ${path}...`);
+  setSpinner(true);
+
+  try {
+    if (fmtType === 'db') {
+      await ensureSQL();
+      const buf = await browserFile.arrayBuffer();
+      fileObj.db = new SQL.Database(new Uint8Array(buf));
+      fileObj.sections = getDBTables(fileObj.db);
+      fileObj.activeSection = fileObj.sections[0] || null;
+    } else {
+      const text = await browserFile.text();
+      const parsed = fmtType === 'csv' ? parseCSV(text) : parseJSONL(text);
+      fileObj.rawRows = parsed.rows;
+      fileObj.columns = parsed.columns;
+      fileObj.sections = ['(all rows)'];
+      fileObj.activeSection = '(all rows)';
+    }
+    fileObj.view = fmtType === 'jsonl' ? 'json' : 'table';
+    fileObj.loaded = true;
+    setStatus('ok', `Loaded local file: ${path}`);
+  } catch(e) {
+    setStatus('err', `Failed to load: ${e.message}`);
+    fileObj.loaded = false;
+    console.error(e);
+  } finally {
+    setSpinner(false);
+  }
+
+  if (fileObj.fmt === 'db' && fileObj.activeSection) reloadSection(fileObj);
+  render();
+}
+
+// ═══════════════════════════════════════════════════════
 // RENDER EVERYTHING
 // ═══════════════════════════════════════════════════════
 function render() {
@@ -915,14 +982,17 @@ function render() {
   renderStatusBar(f);
 }
 
-function renderEmpty(msg = 'Open a .db, .jsonl, or .csv file from your GitHub repository.') {
+function renderEmpty(msg = 'Open a .db, .jsonl, or .csv file from GitHub or your local machine.') {
   const panel = document.getElementById('main-panel');
   panel.innerHTML = `
     <div class="empty-state">
       <div class="empty-glyph">⬡</div>
       <div class="empty-title">No file open</div>
       <div class="empty-sub">${msg}</div>
-      <button class="btn primary" onclick="openConfigModal()">+ Open File</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn primary" onclick="openConfigModal()">+ Open from GitHub</button>
+        <button class="btn" onclick="openLocalFilePicker()">Open Local File</button>
+      </div>
     </div>`;
   document.getElementById('btn-sql').style.display = 'none';
   document.getElementById('btn-add-row').disabled = true;
@@ -1017,7 +1087,7 @@ function renderToolbar(f) {
   const sqlBtn = document.getElementById('btn-sql');
   sqlBtn.style.display = f.fmt === 'db' ? 'inline-flex' : 'none';
   document.getElementById('btn-add-row').disabled = !f.loaded;
-  document.getElementById('btn-commit').disabled = !hasDirty(f);
+  document.getElementById('btn-commit').disabled = !hasDirty(f) || !!f.local;
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1455,7 +1525,7 @@ function addRow() {
 // COMMIT
 // ═══════════════════════════════════════════════════════
 async function commitChanges() {
-  const f = activeFile(); if (!f || !hasDirty(f)) return;
+  const f = activeFile(); if (!f || !hasDirty(f) || f.local) return;
   const editC = Object.keys(f.pendingEdits).length;
   const delC = f.deletedRows.size;
   const addC = f.newRows.length;
@@ -1520,7 +1590,7 @@ function applyDBEdits(f) {
 // STATUS BAR
 // ═══════════════════════════════════════════════════════
 function renderStatusBar(f) {
-  document.getElementById('status-file').textContent = `${f.repo} / ${f.path}`;
+  document.getElementById('status-file').textContent = f.local ? `local: ${f.path}` : `${f.repo} / ${f.path}`;
   document.getElementById('status-fmt').textContent = f.fmt.toUpperCase();
 }
 function setStatus(state, msg) {
@@ -1588,6 +1658,12 @@ async function connectFile() {
 // ═══════════════════════════════════════════════════════
 document.getElementById('btn-add-file').onclick = () => openConfigModal();
 document.getElementById('btn-open-first')?.onclick = () => openConfigModal();
+document.getElementById('local-file-input').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  await handleLocalFile(file);
+  e.target.value = '';
+});
 document.getElementById('cfg-cancel').onclick = closeConfigModal;
 document.getElementById('cfg-connect').onclick = connectFile;
 document.getElementById('btn-add-row').onclick = addRow;
