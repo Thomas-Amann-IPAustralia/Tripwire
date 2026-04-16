@@ -14,6 +14,7 @@ import pytest
 
 from src.stage1_metadata import (
     _compare_signals,
+    _extract_frl_title_id,
     _probe_frl,
     is_due_for_check,
     probe_source,
@@ -115,13 +116,58 @@ class TestProbeFrl:
         assert headers_called.get("Accept") == "application/json"
 
     def test_title_id_extracted_from_series_url(self):
-        """titleId is correctly parsed from the /Series/<id> URL."""
+        """titleId is correctly parsed from the legacy /Series/<id> URL."""
         url = "https://www.legislation.gov.au/Series/C2004A00652"
         session = _make_session(json_body={**_LATEST_VERSION, "titleId": "C2004A00652"})
         _probe_frl(_make_source(url=url), stored=None, session=session)
 
         url_called = session.get.call_args[0][0]
         assert "C2004A00652" in url_called
+
+    def test_title_id_extracted_from_current_url(self):
+        """titleId is correctly parsed from the current /<id>/latest/text URL."""
+        url = "https://www.legislation.gov.au/C2004A04969/latest/text"
+        session = _make_session(json_body={**_LATEST_VERSION, "titleId": "C2004A04969"})
+        _probe_frl(_make_source(url=url), stored=None, session=session)
+
+        url_called = session.get.call_args[0][0]
+        assert "C2004A04969" in url_called
+        # The legacy bug sent 'text' as the titleId; guard against regression.
+        assert "titleId='text'" not in url_called
+
+    def test_title_id_extracted_from_asmade_url(self):
+        """titleId is correctly parsed from the /<id>/asmade/text URL variant."""
+        url = "https://www.legislation.gov.au/C2021A00013/asmade/text"
+        session = _make_session(json_body={**_LATEST_VERSION, "titleId": "C2021A00013"})
+        _probe_frl(_make_source(url=url), stored=None, session=session)
+
+        url_called = session.get.call_args[0][0]
+        assert "C2021A00013" in url_called
+
+
+class TestExtractFrlTitleId:
+    def test_current_url_format(self):
+        assert _extract_frl_title_id(
+            "https://www.legislation.gov.au/C2004A04969/latest/text"
+        ) == "C2004A04969"
+
+    def test_asmade_url_format(self):
+        assert _extract_frl_title_id(
+            "https://www.legislation.gov.au/C2021A00013/asmade/text"
+        ) == "C2021A00013"
+
+    def test_f_prefixed_id(self):
+        assert _extract_frl_title_id(
+            "https://www.legislation.gov.au/F1996B00084/latest/text"
+        ) == "F1996B00084"
+
+    def test_legacy_series_format(self):
+        assert _extract_frl_title_id(
+            "https://www.legislation.gov.au/Series/C2004A00913"
+        ) == "C2004A00913"
+
+    def test_empty_path_returns_none(self):
+        assert _extract_frl_title_id("https://www.legislation.gov.au/") is None
 
 
 # ---------------------------------------------------------------------------

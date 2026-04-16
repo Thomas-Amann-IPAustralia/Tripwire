@@ -246,6 +246,40 @@ def _probe_webpage(
 # Base URL of the official Federal Register of Legislation REST API.
 _FRL_API_BASE = "https://api.prod.legislation.gov.au"
 
+# Matches an FRL titleId such as C2004A04969, F1996B00084, F2024L01179, C2025Q00003.
+_FRL_TITLE_ID_RE = re.compile(r"^[A-Z]\d{4}[A-Z]\w+$")
+
+
+def _extract_frl_title_id(url: str) -> str | None:
+    """Extract the FRL titleId from a legislation.gov.au URL.
+
+    Handles both the current URL convention (titleId as the first path
+    segment after the host, followed by a version specifier such as
+    ``latest`` or ``asmade`` and a format suffix) and the legacy
+    ``/Series/<titleId>`` form.
+
+    Returns ``None`` if no plausible titleId is found.
+    """
+    from urllib.parse import urlparse
+
+    parsed = urlparse(url)
+    segments = [s for s in parsed.path.split("/") if s]
+    if not segments:
+        return None
+
+    # Legacy form: /Series/<titleId>
+    if segments[0].lower() == "series" and len(segments) >= 2:
+        return segments[1]
+
+    # Current form: the first segment is the titleId when it matches the
+    # expected FRL identifier shape; otherwise scan for the first match.
+    for seg in segments:
+        if _FRL_TITLE_ID_RE.match(seg):
+            return seg
+
+    # Fall back to the first segment for URLs we don't recognise.
+    return segments[0]
+
 
 def _probe_frl(
     source: dict[str, Any],
@@ -266,15 +300,25 @@ def _probe_frl(
         Base URL: https://api.prod.legislation.gov.au
         Auth: none required for public read
 
-    The titleId is extracted from the source URL, which follows the pattern:
-        https://www.legislation.gov.au/Series/<titleId>
-    e.g. https://www.legislation.gov.au/Series/C2004A00913  →  titleId=C2004A00913
+    Source URLs in the registry follow the current FRL convention, where the
+    titleId is the first path segment after the host, e.g.:
+        https://www.legislation.gov.au/C2004A04969/latest/text  →  C2004A04969
+        https://www.legislation.gov.au/F1996B00084/latest/text  →  F1996B00084
+        https://www.legislation.gov.au/C2021A00013/asmade/text  →  C2021A00013
+
+    The legacy ``/Series/<titleId>`` form is also tolerated for backward
+    compatibility.
     """
     source_id = source["source_id"]
     url = source["url"]
 
-    # Extract the titleId from the Series URL path component.
-    title_id = url.rstrip("/").split("/")[-1]
+    title_id = _extract_frl_title_id(url)
+    if not title_id:
+        logger.warning(
+            "FRL URL %s has no extractable titleId, falling back to HEAD.", url
+        )
+        return _probe_webpage(source, stored, session)
+
     endpoint = (
         f"{_FRL_API_BASE}/v1/Versions/Find("
         f"titleId='{title_id}',asAtSpecification='Latest')"

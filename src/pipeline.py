@@ -459,7 +459,6 @@ def _process_source(
     log_entry["stage_reached"] = "stage4"
     relevance_result = score_relevance(
         diff_text=normalised_diff,
-        source_type=source_type,
         source_importance=source_importance,
         conn=conn,
         config=config,
