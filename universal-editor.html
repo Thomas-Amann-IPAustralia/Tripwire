@@ -704,7 +704,7 @@ function persistFileMeta() {
     id: f.id, repo: f.repo, branch: f.branch, path: f.path,
     token: f.token, name: f.name, email: f.email
   }));
-  localStorage.setItem(LS_FILES, JSON.stringify(meta));
+  try { localStorage.setItem(LS_FILES, JSON.stringify(meta)); } catch { /* storage blocked */ }
 }
 function loadPersistedMeta() {
   try { return JSON.parse(localStorage.getItem(LS_FILES) || '[]'); } catch { return []; }
@@ -1534,15 +1534,16 @@ function setSpinner(on) { document.getElementById('spinner').classList.toggle('a
 // CONFIG MODAL
 // ═══════════════════════════════════════════════════════
 let editingFileId = null;
+function lsGet(key) { try { return localStorage.getItem(key); } catch { return null; } }
 function openConfigModal(fileId = null) {
   editingFileId = fileId;
   const f = fileId ? files.find(x => x.id === fileId) : null;
   document.getElementById('cfg-repo').value = f?.repo || 'Thomas-Amann-IPAustralia/Tripwire';
-  document.getElementById('cfg-branch').value = f?.branch || 'claude/universal-file-viewer-tIPr5';
+  document.getElementById('cfg-branch').value = f?.branch || 'WIP_Version';
   document.getElementById('cfg-path').value = f?.path || '';
-  document.getElementById('cfg-token').value = f?.token || localStorage.getItem('de_token') || '';
-  document.getElementById('cfg-name').value = f?.name || localStorage.getItem('de_name') || '';
-  document.getElementById('cfg-email').value = f?.email || localStorage.getItem('de_email') || '';
+  document.getElementById('cfg-token').value = f?.token || lsGet('de_token') || '';
+  document.getElementById('cfg-name').value = f?.name || lsGet('de_name') || '';
+  document.getElementById('cfg-email').value = f?.email || lsGet('de_email') || '';
   document.getElementById('modal-config').classList.add('open');
 }
 function closeConfigModal() { document.getElementById('modal-config').classList.remove('open'); }
@@ -1560,9 +1561,7 @@ async function connectFile() {
   const email = document.getElementById('cfg-email').value.trim();
   if (!repo || !path || !token) { alert('Repository, path, and token are required.'); return; }
 
-  localStorage.setItem('de_token', token);
-  localStorage.setItem('de_name', name);
-  localStorage.setItem('de_email', email);
+  try { localStorage.setItem('de_token', token); localStorage.setItem('de_name', name); localStorage.setItem('de_email', email); } catch { /* storage blocked */ }
 
   closeConfigModal();
 
