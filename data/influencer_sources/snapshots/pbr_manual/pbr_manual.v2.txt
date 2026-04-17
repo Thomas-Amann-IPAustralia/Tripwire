@@ -20,13 +20,13 @@ Recent updates
 |
 | 5.8 Offer to Surrender | Updated content to include further guidance on surrenders. |
 |
+| 8.4 Change of QP | Accessibility fix – alternative text for images |
+|
 | 3.1 PBR Process Overview | Accessibility fix – alternative text for images |
 |
 | 10.2 IVDS | Accessibility fix – alternative text for images |
 |
 | 3.2 PBR Objections Process | Accessibility fix – alternative text for images |
-|
-| 8.4 Change of QP | Accessibility fix – alternative text for images |
 |
 | 10.3 PBR Search | Accessibility fix – alternative text for images |
 |
