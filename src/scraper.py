@@ -445,22 +445,26 @@ def _fetch_with_selenium(url: str) -> str | None:
 def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | None:
     """Fetch a URL and return the raw response body as text.
 
-    Unlike ``_fetch_with_selenium``, which returns the rendered DOM, this helper
-    issues a JavaScript ``fetch()`` from within the browser context and returns
-    the response text verbatim.  This is necessary for non-HTML resources (e.g.
-    XML sitemaps) where Chrome's built-in viewer would otherwise wrap the
-    payload in view-source markup.
+    Used for non-HTML resources (e.g. XML sitemaps) where Chrome's built-in
+    viewer would otherwise wrap the payload in view-source markup.
 
-    The browser is still stealth-patched, so cookies/UA/headers match a real
-    session — which is the point of using Selenium at all for sources that
-    reject bare ``requests`` calls.
+    Strategy (mirrors the working approach from check_sitemap.py):
+    1. Navigate to the URL so the WAF can run its JS challenge and set session
+       cookies.  Starting from ``about:blank`` and issuing a bare ``fetch()``
+       fails because no WAF session tokens exist in that context.
+    2. Wait for the page body to appear, giving the WAF challenge time to
+       complete.
+    3. Issue a synchronous XHR *within the established browser context* so the
+       WAF session cookies are included.  Synchronous XHR is used (not async
+       ``fetch()``) because it reliably returns the raw response text before
+       Chrome can render it into its shadow-DOM XML viewer.
 
     Parameters
     ----------
     url:
         The URL to fetch.
     timeout_seconds:
-        Maximum time to wait for the fetch to complete.
+        Maximum seconds to wait for the page body after navigation.
 
     Returns
     -------
@@ -476,24 +480,33 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
         return None
 
     try:
-        driver.set_script_timeout(timeout_seconds)
-        driver.get("about:blank")
-        script = """
-            const callback = arguments[arguments.length - 1];
-            fetch(arguments[0], {credentials: 'include'})
-                .then(r => r.text())
-                .then(text => callback({ok: true, text: text}))
-                .catch(err => callback({ok: false, error: String(err)}));
-        """
-        result = driver.execute_async_script(script, url)
-        if not isinstance(result, dict) or not result.get("ok"):
-            logger.warning(
-                "Selenium raw fetch failed for %s: %s",
-                url,
-                (result or {}).get("error", "unknown error"),
-            )
+        from selenium.webdriver.common.by import By
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.webdriver.support import expected_conditions as EC
+
+        # Step 1 + 2: navigate to establish WAF session, wait for challenge.
+        driver.get(url)
+        WebDriverWait(driver, timeout_seconds).until(
+            EC.presence_of_element_located((By.TAG_NAME, "body"))
+        )
+
+        # Step 3: synchronous XHR in the authenticated browser context.
+        raw_text = driver.execute_script(
+            """
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', arguments[0], false);
+            xhr.send(null);
+            return xhr.responseText;
+            """,
+            url,
+        )
+
+        if not raw_text:
+            logger.warning("Selenium raw fetch returned empty response for %s", url)
             return None
-        return result.get("text")
+
+        return raw_text
+
     except Exception as exc:
         logger.warning("Selenium raw fetch failed for %s: %s", url, exc)
         return None
