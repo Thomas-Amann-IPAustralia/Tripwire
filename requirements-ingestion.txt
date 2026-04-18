@@ -9,6 +9,11 @@ PyYAML>=6.0
 trafilatura>=1.8
 requests>=2.31
 
+# Browser-based fallback for sitemap / pages that block bare requests
+# (IP-based rate limiting, JS gates, Cloudflare challenges, etc.).
+selenium>=4.6
+selenium-stealth>=1.0
+
 # DOCX processing
 mammoth>=1.6
 

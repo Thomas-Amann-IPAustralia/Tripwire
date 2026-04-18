@@ -33,6 +33,20 @@ from typing import Any
 
 logger = logging.getLogger(__name__)
 
+# Browser-like User-Agent applied to ingestion requests.  The IPFR site rejects
+# / slow-walks connections that identify themselves as non-browser clients, so
+# we present a standard desktop Chrome string.  The real Tripwire identity is
+# logged server-side by the GitHub Actions environment anyway.
+BROWSER_USER_AGENT = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/124.0.0.0 Safari/537.36"
+)
+
+# Default timeout for the sitemap fetch.  The IPFR sitemap can take >30 s from
+# GitHub Actions runners; keep it generous because this is a one-shot bootstrap.
+_SITEMAP_DEFAULT_TIMEOUT = 60
+
 # Column order for the CSV file.
 _CSV_FIELDNAMES = [
     "page_id",
@@ -144,6 +158,121 @@ def update_row(
     if last_checked is not None:
         updated["last_checked"] = last_checked
     return updated
+
+
+def fetch_sitemap_xml(
+    url: str,
+    session: Any,
+    *,
+    timeout: int = _SITEMAP_DEFAULT_TIMEOUT,
+    force_selenium: bool = False,
+) -> str:
+    """Fetch the IPFR sitemap XML, falling back to Selenium on failure.
+
+    Strategy (mirrors ``src.scraper.scrape_and_normalise``):
+
+    1. Attempt a ``requests.Session.get`` with a browser-like User-Agent and
+       generous timeout.
+    2. If the request raises, returns non-200, or the response body trips a
+       known bot-detection block signature, retry the fetch through a fresh
+       Selenium Chrome driver using a JavaScript ``fetch()`` call — this
+       returns the raw XML verbatim (Chrome's XML viewer would otherwise wrap
+       it in view-source HTML).
+
+    Parameters
+    ----------
+    url:
+        Sitemap XML URL (e.g. ``https://.../sitemap.xml``).
+    session:
+        A ``requests.Session`` configured by the caller.  If it does not
+        already advertise a browser User-Agent, one is applied for the
+        duration of the call.
+    timeout:
+        Read timeout for the initial requests-based attempt.
+    force_selenium:
+        Skip the requests attempt entirely and go straight to Selenium.
+
+    Returns
+    -------
+    str
+        Raw sitemap XML document.
+
+    Raises
+    ------
+    src.errors.RetryableError
+        If both requests and Selenium fetches fail.
+    src.errors.PermanentError
+        If the response is a known block / CAPTCHA page after Selenium.
+    """
+    from src.errors import RetryableError, PermanentError, http_error, captcha_error
+
+    xml_text: str | None = None
+    requests_err: str | None = None
+
+    if not force_selenium:
+        try:
+            resp = session.get(
+                url,
+                timeout=timeout,
+                headers={"User-Agent": BROWSER_USER_AGENT, "Accept": "application/xml, text/xml, */*"},
+            )
+            if resp.status_code == 200:
+                xml_text = resp.text
+            else:
+                # Non-200 — record the reason and try Selenium.
+                requests_err = f"HTTP {resp.status_code}"
+                logger.warning(
+                    "Sitemap requests fetch returned %s for %s; will try Selenium fallback.",
+                    resp.status_code,
+                    url,
+                )
+        except Exception as exc:
+            requests_err = str(exc)
+            logger.warning(
+                "Sitemap requests fetch failed for %s: %s; will try Selenium fallback.",
+                url,
+                exc,
+            )
+
+    if xml_text is not None and _looks_like_block_page(xml_text):
+        logger.info(
+            "Block signature detected in requests response for sitemap %s; "
+            "falling back to Selenium.",
+            url,
+        )
+        xml_text = None
+
+    if xml_text is None:
+        try:
+            from src.scraper import fetch_raw_with_selenium
+        except ImportError as exc:
+            raise RetryableError(
+                f"Sitemap fetch failed for {url} "
+                f"(requests error: {requests_err}; Selenium unavailable: {exc})"
+            ) from exc
+
+        selenium_text = fetch_raw_with_selenium(url, timeout_seconds=timeout)
+        if selenium_text is None:
+            raise RetryableError(
+                f"Sitemap fetch failed for {url} via both requests "
+                f"({requests_err or 'blocked'}) and Selenium."
+            )
+
+        if _looks_like_block_page(selenium_text):
+            raise captcha_error(url)
+
+        xml_text = selenium_text
+
+    return xml_text
+
+
+def _looks_like_block_page(text: str) -> bool:
+    """Return True if *text* contains a known bot-detection block signature."""
+    try:
+        from src.scraper import _has_block_signature
+        return _has_block_signature(text)
+    except ImportError:
+        return False
 
 
 def parse_sitemap_xml(xml_text: str) -> list[str]:

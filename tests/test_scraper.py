@@ -267,7 +267,7 @@ def test_normalise_text_preserves_case():
 
 def test_fetch_with_selenium_returns_none_when_driver_fails():
     """If driver initialisation raises, _fetch_with_selenium returns None."""
-    with patch("src.scraper._build_selenium_driver", side_effect=Exception("Chrome not found")):
+    with patch("src.scraper.build_selenium_driver", side_effect=Exception("Chrome not found")):
         from src.scraper import _fetch_with_selenium
         result = _fetch_with_selenium("https://example.com")
     assert result is None
@@ -278,7 +278,7 @@ def test_fetch_with_selenium_returns_none_on_page_load_error():
     mock_driver = MagicMock()
     mock_driver.get.side_effect = Exception("page load timeout")
 
-    with patch("src.scraper._build_selenium_driver", return_value=mock_driver):
+    with patch("src.scraper.build_selenium_driver", return_value=mock_driver):
         from src.scraper import _fetch_with_selenium
         result = _fetch_with_selenium("https://example.com")
 

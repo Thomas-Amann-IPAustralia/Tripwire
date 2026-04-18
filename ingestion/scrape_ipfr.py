@@ -70,14 +70,24 @@ _SIZE_CHANGE_MAX_RATIO = 3.00
 def scrape_page(url: str, session: Any) -> tuple[str, list[dict[str, Any]]]:
     """Fetch and normalise a single IPFR page.
 
+    Strategy:
+
+    1. Try a ``requests`` GET with a 30 s timeout.
+    2. If that fails (connection error, non-200, or the response body contains
+       a known bot-detection signature), fall back to a fresh Selenium Chrome
+       driver via ``src.scraper._fetch_with_selenium``.  This is the same
+       two-tier approach used by the influencer-source scraper and keeps the
+       IPFR ingestion resilient to IP-based or JS-gate blocks on GitHub
+       Actions runners.
+
     Parameters
     ----------
     url:
         The HTTPS URL to fetch.
     session:
-        A requests.Session (or compatible) object.  Must be provided by the
-        caller so that connection pooling and retry wrappers are applied at
-        the call site.
+        A ``requests.Session`` (or compatible) object.  Must be provided by
+        the caller so that connection pooling and retry wrappers are applied
+        at the call site.
 
     Returns
     -------
@@ -89,21 +99,12 @@ def scrape_page(url: str, session: Any) -> tuple[str, list[dict[str, Any]]]:
     Raises
     ------
     src.errors.RetryableError
-        On HTTP 5xx / connection timeouts.
+        On HTTP 5xx / connection timeouts when both requests and Selenium fail.
     src.errors.PermanentError
         On HTTP 4xx (except 429), CAPTCHA detected, or content too short.
     """
-    from src.errors import RetryableError, PermanentError, http_error, captcha_error, content_too_short_error
+    html = _fetch_page_html(url, session)
 
-    try:
-        resp = session.get(url, timeout=30)
-    except Exception as exc:
-        raise RetryableError(f"Connection error fetching {url}: {exc}") from exc
-
-    if resp.status_code != 200:
-        raise http_error(resp.status_code, url)
-
-    html = resp.text
     plain_text = extract_plain_text(html)
     sections = extract_sections(html)
 
@@ -112,6 +113,83 @@ def scrape_page(url: str, session: Any) -> tuple[str, list[dict[str, Any]]]:
     _validate_length(plain_text, url)
 
     return plain_text, sections
+
+
+def _fetch_page_html(url: str, session: Any) -> str:
+    """Return raw HTML for *url*, using Selenium as a fallback.
+
+    Raises
+    ------
+    src.errors.RetryableError
+        If both requests and Selenium fail to return a non-blocked page.
+    src.errors.PermanentError
+        On HTTP 4xx or when a block page is returned by Selenium as well.
+    """
+    from src.errors import RetryableError, http_error, captcha_error
+
+    html: str | None = None
+    requests_err: str | None = None
+
+    try:
+        resp = session.get(url, timeout=30)
+    except Exception as exc:
+        requests_err = str(exc)
+        logger.warning("Requests fetch failed for %s: %s", url, exc)
+    else:
+        if resp.status_code == 200:
+            html = resp.text
+        elif resp.status_code in (429,) or resp.status_code >= 500:
+            # Transient — try Selenium before giving up.
+            requests_err = f"HTTP {resp.status_code}"
+            logger.warning(
+                "Transient HTTP %s for %s; will try Selenium fallback.",
+                resp.status_code,
+                url,
+            )
+        else:
+            # 4xx (non-429) — permanent.
+            raise http_error(resp.status_code, url)
+
+    if html is not None and _looks_like_block_page(html):
+        logger.info(
+            "Block signature detected in requests response for %s; "
+            "falling back to Selenium.",
+            url,
+        )
+        html = None
+
+    if html is None:
+        try:
+            from src.scraper import _fetch_with_selenium
+        except ImportError as exc:
+            raise RetryableError(
+                f"Page fetch failed for {url} "
+                f"(requests: {requests_err}; Selenium unavailable: {exc})"
+            ) from exc
+
+        selenium_html = _fetch_with_selenium(url)
+        if selenium_html is None:
+            raise RetryableError(
+                f"Page fetch failed for {url} via both requests "
+                f"({requests_err or 'blocked'}) and Selenium."
+            )
+
+        if _looks_like_block_page(selenium_html):
+            raise captcha_error(url)
+
+        html = selenium_html
+
+    return html
+
+
+def _looks_like_block_page(text: str) -> bool:
+    """Return True if *text* contains a known bot-detection block signature."""
+    try:
+        from src.scraper import _has_block_signature
+        return _has_block_signature(text)
+    except ImportError:
+        lower = text.lower()
+        return any(phrase in lower for phrase in _CAPTCHA_PHRASES)
 
 
 def extract_plain_text(html: str) -> str:

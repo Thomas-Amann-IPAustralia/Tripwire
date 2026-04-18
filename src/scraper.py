@@ -311,7 +311,7 @@ def _fetch_with_requests(url: str, session: Any) -> str | None:
 # ---------------------------------------------------------------------------
 
 
-def _build_selenium_driver():
+def build_selenium_driver():
     """Create a fresh, stealth-patched Chrome WebDriver.
 
     Chrome flags applied:
@@ -404,7 +404,7 @@ def _fetch_with_selenium(url: str) -> str | None:
     """
     driver = None
     try:
-        driver = _build_selenium_driver()
+        driver = build_selenium_driver()
     except Exception as exc:
         logger.warning("Selenium driver initialisation failed: %s", exc)
         return None
@@ -433,6 +433,69 @@ def _fetch_with_selenium(url: str) -> str | None:
 
     except Exception as exc:
         logger.warning("Selenium fetch failed for %s: %s", url, exc)
+        return None
+    finally:
+        if driver is not None:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+
+
+def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | None:
+    """Fetch a URL and return the raw response body as text.
+
+    Unlike ``_fetch_with_selenium``, which returns the rendered DOM, this helper
+    issues a JavaScript ``fetch()`` from within the browser context and returns
+    the response text verbatim.  This is necessary for non-HTML resources (e.g.
+    XML sitemaps) where Chrome's built-in viewer would otherwise wrap the
+    payload in view-source markup.
+
+    The browser is still stealth-patched, so cookies/UA/headers match a real
+    session — which is the point of using Selenium at all for sources that
+    reject bare ``requests`` calls.
+
+    Parameters
+    ----------
+    url:
+        The URL to fetch.
+    timeout_seconds:
+        Maximum time to wait for the fetch to complete.
+
+    Returns
+    -------
+    str | None
+        Raw response body, or ``None`` if the driver could not start or the
+        fetch raised an exception.
+    """
+    driver = None
+    try:
+        driver = build_selenium_driver()
+    except Exception as exc:
+        logger.warning("Selenium driver initialisation failed: %s", exc)
+        return None
+
+    try:
+        driver.set_script_timeout(timeout_seconds)
+        driver.get("about:blank")
+        script = """
+            const callback = arguments[arguments.length - 1];
+            fetch(arguments[0], {credentials: 'include'})
+                .then(r => r.text())
+                .then(text => callback({ok: true, text: text}))
+                .catch(err => callback({ok: false, error: String(err)}));
+        """
+        result = driver.execute_async_script(script, url)
+        if not isinstance(result, dict) or not result.get("ok"):
+            logger.warning(
+                "Selenium raw fetch failed for %s: %s",
+                url,
+                (result or {}).get("error", "unknown error"),
+            )
+            return None
+        return result.get("text")
+    except Exception as exc:
+        logger.warning("Selenium raw fetch failed for %s: %s", url, exc)
         return None
     finally:
         if driver is not None:
