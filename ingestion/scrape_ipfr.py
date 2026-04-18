@@ -67,12 +67,18 @@ _SIZE_CHANGE_MAX_RATIO = 3.00
 # ---------------------------------------------------------------------------
 
 
-def scrape_page(url: str, session: Any) -> tuple[str, list[dict[str, Any]]]:
+def scrape_page(
+    url: str,
+    session: Any,
+    *,
+    force_selenium: bool = False,
+) -> tuple[str, list[dict[str, Any]]]:
     """Fetch and normalise a single IPFR page.
 
     Strategy:
 
-    1. Try a ``requests`` GET with a 30 s timeout.
+    1. Try a ``requests`` GET with a 30 s timeout (skipped when
+       *force_selenium* is True).
     2. If that fails (connection error, non-200, or the response body contains
        a known bot-detection signature), fall back to a fresh Selenium Chrome
        driver via ``src.scraper._fetch_with_selenium``.  This is the same
@@ -88,6 +94,10 @@ def scrape_page(url: str, session: Any) -> tuple[str, list[dict[str, Any]]]:
         A ``requests.Session`` (or compatible) object.  Must be provided by
         the caller so that connection pooling and retry wrappers are applied
         at the call site.
+    force_selenium:
+        If True, skip the requests-based attempt and go straight to Selenium.
+        Use when the target host reliably blocks direct connections from the
+        environment running this code (e.g. GitHub Actions runner IPs).
 
     Returns
     -------
@@ -103,7 +113,7 @@ def scrape_page(url: str, session: Any) -> tuple[str, list[dict[str, Any]]]:
     src.errors.PermanentError
         On HTTP 4xx (except 429), CAPTCHA detected, or content too short.
     """
-    html = _fetch_page_html(url, session)
+    html = _fetch_page_html(url, session, force_selenium=force_selenium)
 
     plain_text = extract_plain_text(html)
     sections = extract_sections(html)
@@ -115,7 +125,7 @@ def scrape_page(url: str, session: Any) -> tuple[str, list[dict[str, Any]]]:
     return plain_text, sections
 
 
-def _fetch_page_html(url: str, session: Any) -> str:
+def _fetch_page_html(url: str, session: Any, force_selenium: bool = False) -> str:
     """Return raw HTML for *url*, using Selenium as a fallback.
 
     Raises
@@ -130,25 +140,26 @@ def _fetch_page_html(url: str, session: Any) -> str:
     html: str | None = None
     requests_err: str | None = None
 
-    try:
-        resp = session.get(url, timeout=30)
-    except Exception as exc:
-        requests_err = str(exc)
-        logger.warning("Requests fetch failed for %s: %s", url, exc)
-    else:
-        if resp.status_code == 200:
-            html = resp.text
-        elif resp.status_code in (429,) or resp.status_code >= 500:
-            # Transient — try Selenium before giving up.
-            requests_err = f"HTTP {resp.status_code}"
-            logger.warning(
-                "Transient HTTP %s for %s; will try Selenium fallback.",
-                resp.status_code,
-                url,
-            )
+    if not force_selenium:
+        try:
+            resp = session.get(url, timeout=30)
+        except Exception as exc:
+            requests_err = str(exc)
+            logger.warning("Requests fetch failed for %s: %s", url, exc)
         else:
-            # 4xx (non-429) — permanent.
-            raise http_error(resp.status_code, url)
+            if resp.status_code == 200:
+                html = resp.text
+            elif resp.status_code in (429,) or resp.status_code >= 500:
+                # Transient — try Selenium before giving up.
+                requests_err = f"HTTP {resp.status_code}"
+                logger.warning(
+                    "Transient HTTP %s for %s; will try Selenium fallback.",
+                    resp.status_code,
+                    url,
+                )
+            else:
+                # 4xx (non-429) — permanent.
+                raise http_error(resp.status_code, url)
 
     if html is not None and _looks_like_block_page(html):
         logger.info(

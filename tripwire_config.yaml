@@ -93,6 +93,7 @@ normalisation:
 # --- Ingestion ---
 ingestion:
   sitemap_url: "https://ipfirstresponse.ipaustralia.gov.au/sitemap.xml"
+  force_selenium: true          # IPFR host blocks GHA runner IPs on direct requests
 
 # --- Paths (relative to repo root) ---
 paths:
