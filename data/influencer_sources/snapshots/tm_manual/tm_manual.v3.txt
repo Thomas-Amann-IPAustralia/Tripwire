@@ -57,10 +57,6 @@
 Recent updates
 | Item amended | Date Amended | Amended Reason |
 |---|---|---|
-| F | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
-|
-| Word Constituents | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
-|
 | I | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
 |
 | A | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
@@ -77,19 +73,23 @@ Recent updates
 |
 | T | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
 |
+| F | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+|
+| Word Constituents | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+|
 | 30. Annex A5 - Examples regarding Geneva Conventions Act 1957 s 15(1) | Examples updated. |
 |
-| 30.3. Use contrary to law | Updated 30.3.5.7 - Defence Regulation 2016, Part 14. |
-|
 | Part 46.4. Grounds for opposition to registration of national trade marks | Minor updates to 60.4.5 and 60.4.5.1 based on Taylor v Killer Queen LLC [2026] HCA 5. |
+|
+| 30.3. Use contrary to law | Updated 30.3.5.7 - Defence Regulation 2016, Part 14. |
 |
 | 29.11. European Union Geographical indications (GIs) | Updated content in relation to European Union Geographical indications information |
 |
 | 30.2. Scandalous signs | Update to 2.6 Obscene and course language in trade marks |
 |
-| Part 49.4. Notice of intention to defend | Minor change in line with IRHO Regulations |
-|
 | Part 47.3. Filing a notice of intention to defend | Minor change in line with IRHO Regulations |
+|
+| Part 49.4. Notice of intention to defend | Minor change in line with IRHO Regulations |
 |
 | 35.12. Rectification of the Register and variation of rules by order of the court | Links to legislation added. |
 |

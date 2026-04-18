@@ -1,0 +1,30 @@
+--- previous+++ current@@ -28,15 +28,11 @@ |
+ | 3.2 PBR Objections Process | Accessibility fix – alternative text for images |
+ |
+-| 10.1 Online Services | Accessibility fix – alternative text for images |
+-|
+ | 10.3 PBR Search | Accessibility fix – alternative text for images |
+ |
+ | 9.4.1 Fees and Discounts | Accessibility fix – alternative text for images |
+ |
+-| 5.7 Revocation of PBR | Fixed On this Page links. |
+-|
+-| 5.5.2 Compulsory Withdrawals | Fixed On this Page links. |
++| 10.1 Online Services | Accessibility fix – alternative text for images |
+ |
+ | 4.7.3 Breeding Process of the New Variety | Fixed link to Chapter 4.7.2 |
+ |
+@@ -46,8 +42,12 @@ |
+ | 5.6 Grant or Refusal | Fixed On this Page links. |
+ |
+-| 4.2.1 Applicant | Fixed links to chapters 4.2.3 and 4.2.4 |
++| 5.7 Revocation of PBR | Fixed On this Page links. |
+ |
+-| 4.7.1 Prima Facie Case for Breeding of the New Variety | Fixed link to chapter 4.7.2 |
++| 5.5.2 Compulsory Withdrawals | Fixed On this Page links. |
+ |
+-| 5.3.4 Ceasing of Provisional Protection | Fixed link to chapter 5.6 in Related Chapters. |+| 4.3 Form an application must take | Fixed links to chapters 4.2.1 - 4.2.4 in Related Chapters and content |
++|
++| 5.1 DUS Test Growing in Australia | Fixed internal link to Intelledox form. |
++|
++| 4.7 Acceptance or Rejection of PBR Application | Fixed link to chapter 4.7.2 |
