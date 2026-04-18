@@ -265,7 +265,6 @@ def _build_chunk_records(
         embedding = compute_embedding(chunk["text"], model_name)
         if embedding is None:
             # Still store the chunk — embedding may be computed later.
-            import numpy as np
             embedding = bytes(0)  # empty placeholder
         records.append({
             "chunk_id": chunk_id,
