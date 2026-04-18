@@ -90,6 +90,10 @@ notifications:
 normalisation:
   tool: "trafilatura"
 
+# --- Ingestion ---
+ingestion:
+  sitemap_url: "https://ipfirstresponse.ipaustralia.gov.au/sitemap.xml"
+
 # --- Paths (relative to repo root) ---
 paths:
   sqlite_db: "data/ipfr_corpus/ipfr.sqlite"

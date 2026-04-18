@@ -84,9 +84,29 @@ def run_ingestion(
     # Open database.
     conn = db.init_db(_db_path, wal_mode=wal_mode)
 
-    # Load sitemap.
+    import requests
+    session = requests.Session()
+    session.headers.update({"User-Agent": "Tripwire/1.0 (IPFR ingestion)"})
+
+    # Load sitemap; bootstrap from XML sitemap on first run if CSV is absent/empty.
     existing_rows = sitemap_mod.load_sitemap(sitemap_csv)
     logger.info("Sitemap: %d existing rows", len(existing_rows))
+    if not existing_rows:
+        sitemap_url = get(config, "ingestion", "sitemap_url", default=None)
+        if sitemap_url:
+            logger.info("No existing sitemap — bootstrapping from %s", sitemap_url)
+            try:
+                resp = session.get(sitemap_url, timeout=30)
+                resp.raise_for_status()
+                urls = sitemap_mod.parse_sitemap_xml(resp.text)
+                existing_rows = sitemap_mod.build_sitemap_from_urls(
+                    urls, [], snapshots_dir
+                )
+                logger.info("Bootstrap discovered %d URLs", len(existing_rows))
+            except Exception as exc:
+                logger.error("Sitemap bootstrap failed: %s", exc)
+        else:
+            logger.warning("ingestion.sitemap_url not configured; cannot bootstrap sitemap")
 
     stats = {
         "run_id": run_id,
@@ -96,10 +116,6 @@ def run_ingestion(
         "errors": 0,
         "pages": [],
     }
-
-    import requests
-    session = requests.Session()
-    session.headers.update({"User-Agent": "Tripwire/1.0 (IPFR ingestion)"})
 
     updated_rows: list[dict[str, str]] = []
 
