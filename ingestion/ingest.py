@@ -114,6 +114,8 @@ def run_ingestion(
         else:
             logger.warning("ingestion.sitemap_url not configured; cannot bootstrap sitemap")
 
+    force_selenium = get(config, "ingestion", "force_selenium", default=False)
+
     stats = {
         "run_id": run_id,
         "total": len(existing_rows),
@@ -138,6 +140,7 @@ def run_ingestion(
             config=config,
             snapshots_dir=snapshots_dir,
             force=force_all,
+            force_selenium=force_selenium,
         )
 
         updated_rows.append(page_result["updated_row"])
@@ -194,6 +197,7 @@ def _process_page(
     config: dict[str, Any],
     snapshots_dir: Path,
     force: bool,
+    force_selenium: bool = False,
 ) -> dict[str, Any]:
     page_id = row.get("page_id", "")
     url = row.get("url", "")
@@ -209,7 +213,7 @@ def _process_page(
 
     try:
         # Scrape and normalise.
-        plain_text, sections = scrape_ipfr.scrape_page(url, session)
+        plain_text, sections = scrape_ipfr.scrape_page(url, session, force_selenium=force_selenium)
         version_hash = scrape_ipfr.compute_version_hash(plain_text)
 
         # Save snapshot to disk.
