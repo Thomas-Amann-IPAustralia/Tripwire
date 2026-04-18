@@ -284,3 +284,75 @@ def test_fetch_with_selenium_returns_none_on_page_load_error():
 
     assert result is None
     mock_driver.quit.assert_called_once()
+
+
+# ---------------------------------------------------------------------------
+# fetch_raw_with_selenium — WAF-aware XHR approach
+# ---------------------------------------------------------------------------
+
+
+def test_fetch_raw_with_selenium_returns_none_when_driver_fails():
+    """If driver initialisation raises, fetch_raw_with_selenium returns None."""
+    with patch("src.scraper.build_selenium_driver", side_effect=Exception("Chrome not found")):
+        from src.scraper import fetch_raw_with_selenium
+        result = fetch_raw_with_selenium("https://example.com/sitemap.xml")
+    assert result is None
+
+
+def test_fetch_raw_with_selenium_navigates_then_uses_xhr():
+    """Navigates to URL first (WAF session), then fetches via synchronous XHR."""
+    import sys
+
+    mock_driver = MagicMock()
+    mock_driver.execute_script.return_value = (
+        "<urlset><url><loc>https://example.com/</loc></url></urlset>"
+    )
+
+    # Selenium may not be installed in the test environment; mock the local imports
+    # that happen inside fetch_raw_with_selenium so the function body can run.
+    selenium_mocks = {
+        "selenium": MagicMock(),
+        "selenium.webdriver": MagicMock(),
+        "selenium.webdriver.common": MagicMock(),
+        "selenium.webdriver.common.by": MagicMock(),
+        "selenium.webdriver.support": MagicMock(),
+        "selenium.webdriver.support.ui": MagicMock(),
+        "selenium.webdriver.support.expected_conditions": MagicMock(),
+    }
+
+    with patch("src.scraper.build_selenium_driver", return_value=mock_driver):
+        with patch.dict(sys.modules, selenium_mocks):
+            from src.scraper import fetch_raw_with_selenium
+            result = fetch_raw_with_selenium("https://example.com/sitemap.xml")
+
+    # Must navigate to the URL (not about:blank) to establish WAF session.
+    mock_driver.get.assert_called_once_with("https://example.com/sitemap.xml")
+    assert result is not None
+    assert "<urlset>" in result
+    mock_driver.quit.assert_called_once()
+
+
+def test_fetch_raw_with_selenium_returns_none_on_empty_xhr_response():
+    """If XHR returns empty string, returns None (not empty string)."""
+    mock_driver = MagicMock()
+    mock_driver.execute_script.return_value = ""
+
+    with patch("src.scraper.build_selenium_driver", return_value=mock_driver):
+        from src.scraper import fetch_raw_with_selenium
+        result = fetch_raw_with_selenium("https://example.com/sitemap.xml")
+
+    assert result is None
+    mock_driver.quit.assert_called_once()
+
+
+def test_fetch_raw_with_selenium_returns_none_on_get_exception():
+    """If driver.get() raises, fetch_raw_with_selenium returns None and quits."""
+    mock_driver = MagicMock()
+    mock_driver.get.side_effect = Exception("navigation timeout")
+
+    with patch("src.scraper.build_selenium_driver", return_value=mock_driver):
+        from src.scraper import fetch_raw_with_selenium
+        result = fetch_raw_with_selenium("https://example.com/sitemap.xml")
+
+    assert result is None
+    mock_driver.quit.assert_called_once()
