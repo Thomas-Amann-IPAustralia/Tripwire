@@ -86,7 +86,10 @@ def run_ingestion(
 
     import requests
     session = requests.Session()
-    session.headers.update({"User-Agent": "Tripwire/1.0 (IPFR ingestion)"})
+    # Use a browser User-Agent: the IPFR site and many government hosts block
+    # or slow-walk unknown UAs.  The Selenium fallback in sitemap_mod /
+    # scrape_ipfr uses the same string so cookie-gated content is consistent.
+    session.headers.update({"User-Agent": sitemap_mod.BROWSER_USER_AGENT})
 
     # Load sitemap; bootstrap from XML sitemap on first run if CSV is absent/empty.
     existing_rows = sitemap_mod.load_sitemap(sitemap_csv)
@@ -96,13 +99,16 @@ def run_ingestion(
         if sitemap_url:
             logger.info("No existing sitemap — bootstrapping from %s", sitemap_url)
             try:
-                resp = session.get(sitemap_url, timeout=30)
-                resp.raise_for_status()
-                urls = sitemap_mod.parse_sitemap_xml(resp.text)
+                xml_text = sitemap_mod.fetch_sitemap_xml(sitemap_url, session)
+                urls = sitemap_mod.parse_sitemap_xml(xml_text)
                 existing_rows = sitemap_mod.build_sitemap_from_urls(
                     urls, [], snapshots_dir
                 )
                 logger.info("Bootstrap discovered %d URLs", len(existing_rows))
+                # Persist the freshly-discovered sitemap immediately so that a
+                # subsequent scrape failure does not force us to re-bootstrap
+                # on the next run.
+                sitemap_mod.save_sitemap(existing_rows, sitemap_csv)
             except Exception as exc:
                 logger.error("Sitemap bootstrap failed: %s", exc)
         else:
