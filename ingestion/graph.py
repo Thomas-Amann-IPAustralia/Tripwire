@@ -23,8 +23,6 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-import numpy as np
-
 from ingestion import db
 
 logger = logging.getLogger(__name__)
@@ -84,6 +82,15 @@ def rebuild_graph(conn: Any, config: dict[str, Any]) -> dict[str, int]:
 
 def _build_embedding_edges(conn: Any, cfg: dict[str, Any]) -> int:
     """Compute cosine similarities between all doc-level embeddings and store edges."""
+    try:
+        import numpy as np
+    except ImportError:
+        logger.warning(
+            "numpy not installed. Embedding similarity edges will be skipped. "
+            "Install with: pip install numpy"
+        )
+        return 0
+
     top_k: int = int(cfg.get("top_k", 5))
     min_sim: float = float(cfg.get("min_similarity", 0.40))
     weight_scale: float = float(cfg.get("weight", 1.0))
