@@ -72,7 +72,7 @@ def scrape_page(
     session: Any,
     *,
     force_selenium: bool = False,
-) -> tuple[str, list[dict[str, Any]]]:
+) -> tuple[str, list[dict[str, Any]], str]:
     """Fetch and normalise a single IPFR page.
 
     Strategy:
@@ -101,10 +101,11 @@ def scrape_page(
 
     Returns
     -------
-    (plain_text, sections)
+    (plain_text, sections, title)
         plain_text — normalised plain text (trafilatura output).
         sections   — list of section dicts with keys:
                      heading_text, heading_level, char_start, char_end.
+        title      — page title from trafilatura metadata, or "" if not found.
 
     Raises
     ------
@@ -117,12 +118,13 @@ def scrape_page(
 
     plain_text = extract_plain_text(html)
     sections = extract_sections(html)
+    title = extract_title(html)
 
     # Content validation
     _validate_captcha(plain_text, url)
     _validate_length(plain_text, url)
 
-    return plain_text, sections
+    return plain_text, sections, title
 
 
 def _fetch_page_html(url: str, session: Any, force_selenium: bool = False) -> str:
@@ -250,7 +252,7 @@ def extract_sections(html: str) -> list[dict[str, Any]]:
         return []
 
 
-def extract_plain_text_from_docx(docx_bytes: bytes) -> tuple[str, list[dict[str, Any]]]:
+def extract_plain_text_from_docx(docx_bytes: bytes) -> tuple[str, list[dict[str, Any]], str]:
     """Extract plain text from a DOCX file via Mammoth → HTML → trafilatura.
 
     Parameters
@@ -260,16 +262,40 @@ def extract_plain_text_from_docx(docx_bytes: bytes) -> tuple[str, list[dict[str,
 
     Returns
     -------
-    (plain_text, sections)
+    (plain_text, sections, title)
     """
     try:
         import io
         import mammoth
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
         html = result.value
-        return extract_plain_text(html), extract_sections(html)
+        return extract_plain_text(html), extract_sections(html), extract_title(html)
     except ImportError:
         raise RuntimeError("mammoth is required to process DOCX files: pip install mammoth")
+
+
+def extract_title(html: str) -> str:
+    """Return the page title from trafilatura metadata, falling back to <title>.
+
+    Returns an empty string if no title is recoverable.
+    """
+    try:
+        import trafilatura
+        meta = trafilatura.extract_metadata(html)
+        if meta is not None:
+            title = getattr(meta, "title", None)
+            if title:
+                return normalise_text(title)
+    except ImportError:
+        pass
+    except Exception as exc:
+        logger.warning("trafilatura title extraction failed: %s", exc)
+
+    match = re.search(r"<title[^>]*>(.*?)</title>", html, flags=re.IGNORECASE | re.DOTALL)
+    if match:
+        raw = re.sub(r"<[^>]+>", "", match.group(1))
+        return normalise_text(raw)
+    return ""
 
 
 def compute_version_hash(text: str) -> str:

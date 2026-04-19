@@ -94,6 +94,26 @@ normalisation:
 ingestion:
   sitemap_url: "https://ipfirstresponse.ipaustralia.gov.au/sitemap.xml"
   force_selenium: true          # IPFR host blocks GHA runner IPs on direct requests
+  chunking:
+    chunk_size: 512             # maximum characters per chunk
+    chunk_overlap: 64           # overlap between consecutive chunks
+    boundary_lookback: 80       # max chars to walk back for a word/sentence boundary
+  enrichment:
+    keyphrase_min_length: 3
+    yake_dedup_threshold: 0.7   # lower = stricter YAKE deduplication
+    keyphrase_blocklist: []     # phrases to drop (site chrome, boilerplate, etc.)
+    entity_min_length: 3
+    entity_allowed_types:       # spaCy labels persisted to the DB
+      - ORG
+      - PERSON
+      - GPE
+      - LOC
+      - DATE
+      - MONEY
+      - PERCENT
+      - LAW
+      - NORP
+      - EVENT
 
 # --- Paths (relative to repo root) ---
 paths:
