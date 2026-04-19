@@ -99,7 +99,7 @@ def _build_embedding_edges(conn: Any, cfg: dict[str, Any]) -> int:
     pages_with_embeddings = [
         (r["page_id"], r["doc_embedding"])
         for r in rows
-        if r["doc_embedding"]
+        if r["doc_embedding"] and _is_active(r)
     ]
 
     if len(pages_with_embeddings) < 2:
@@ -163,7 +163,7 @@ def _build_entity_overlap_edges(conn: Any, cfg: dict[str, Any]) -> int:
     weight_scale: float = float(cfg.get("weight", 0.8))
 
     rows = db.get_all_pages(conn)
-    page_ids = [r["page_id"] for r in rows]
+    page_ids = [r["page_id"] for r in rows if _is_active(r)]
 
     if len(page_ids) < 2:
         return 0
@@ -208,3 +208,15 @@ def _jaccard(a: set, b: set) -> float:
     if union == 0:
         return 0.0
     return len(a & b) / union
+
+
+def _is_active(row: Any) -> bool:
+    """Return True if *row* represents an active page (not stub / duplicate).
+
+    Tolerates rows from older schemas that pre-date the status column.
+    """
+    try:
+        status = row["status"]
+    except (IndexError, KeyError):
+        return True
+    return status == "active" or status is None

@@ -95,9 +95,12 @@ ingestion:
   sitemap_url: "https://ipfirstresponse.ipaustralia.gov.au/sitemap.xml"
   force_selenium: true          # IPFR host blocks GHA runner IPs on direct requests
   chunking:
-    chunk_size: 512             # maximum characters per chunk
-    chunk_overlap: 64           # overlap between consecutive chunks
-    boundary_lookback: 80       # max chars to walk back for a word/sentence boundary
+    units: "chars"              # "chars" or "tokens" (tokens multiplies sizes by chars_per_token)
+    chars_per_token: 4          # approximate char:token ratio for bge-base
+    chunk_size: 1400            # ≈ 350 tokens — well under the 512-token bi-encoder ceiling
+    chunk_overlap: 200          # ≈ 50 tokens
+    boundary_lookback: 160      # max chars to walk back for a clean boundary
+    chunk_min_size: 200         # coalesce trailing chunks smaller than this into their predecessor
   enrichment:
     keyphrase_min_length: 3
     yake_dedup_threshold: 0.7   # lower = stricter YAKE deduplication
@@ -114,6 +117,37 @@ ingestion:
       - LAW
       - NORP
       - EVENT
+    entity_aliases:             # canonicalise entity surface forms (case-insensitive keys)
+      "IPTA": "Institute of Patent and Trade Mark Attorneys Australia"
+      "IP Australia First Response": "IP First Response"
+  boilerplate:
+    repetition_detection_enabled: true
+    frequency_threshold: 0.7    # drop lines appearing on ≥ this fraction of pages
+    min_documents: 5            # skip detection if the corpus is smaller
+    blocklist:                  # always strip these exact lines / inline phrases
+      - "Skip to main content"
+      - "Menu"
+      - "Close"
+      - "Home"
+      - "About IPA"
+      - "Ventures"
+      - "(Opens in a new tab/window)"
+      - "Learn about enforcement"
+      - "Blog"
+      - "Search"
+  stub_detection:
+    min_content_length: 500     # content shorter than this is marked status=stub
+    phrases:                    # case-insensitive substrings that flag a page as a stub
+      - "This page is coming soon"
+      - "We are working on this page"
+      - "This page will explain your options in simple words"
+  dedup:
+    enabled: true
+    near_duplicate_threshold: 0.98   # doc-embedding cosine similarity cutoff
+  keyphrase_idf:
+    enabled: true
+    df_threshold: 0.7           # drop keyphrases appearing on > this fraction of active pages
+    min_pages: 5                # skip sweep if fewer active pages exist
 
 # --- Paths (relative to repo root) ---
 paths:

@@ -28,9 +28,17 @@ logger = logging.getLogger(__name__)
 # Chunk configuration
 # ---------------------------------------------------------------------------
 
-_DEFAULT_CHUNK_SIZE = 512       # maximum characters per chunk
-_DEFAULT_CHUNK_OVERLAP = 64     # overlap between consecutive chunks
-_DEFAULT_BOUNDARY_LOOKBACK = 80  # max chars to walk back looking for a word/sentence boundary
+# Defaults are sized for BAAI/bge-base-en-v1.5 (512-token ceiling).  English
+# prose averages roughly 4 characters per token, so 1400 chars ≈ 350 tokens —
+# well under the model's context limit while giving each embedding ~3–4× the
+# semantic payload of the previous 512-char setting.  Chunking still runs in
+# character space for speed and deterministic test behaviour; tokeniser-backed
+# accounting can be enabled via `ingestion.chunking.units: "tokens"`.
+_DEFAULT_CHUNK_SIZE = 1400      # ≈ 350 tokens
+_DEFAULT_CHUNK_OVERLAP = 200    # ≈ 50 tokens
+_DEFAULT_BOUNDARY_LOOKBACK = 160  # max chars to walk back for a clean break
+_DEFAULT_CHUNK_MIN_SIZE = 200   # tail chunks smaller than this merge into the predecessor
+_DEFAULT_CHARS_PER_TOKEN = 4    # char→token ratio when units == "tokens"
 
 # YAKE extraction rate: one keyphrase per N words of text.
 _YAKE_KEYPHRASES_PER_80_WORDS = 1
@@ -125,6 +133,14 @@ def enrich_page(
     chunk_size = int(chunking_cfg.get("chunk_size", _DEFAULT_CHUNK_SIZE))
     chunk_overlap = int(chunking_cfg.get("chunk_overlap", _DEFAULT_CHUNK_OVERLAP))
     boundary_lookback = int(chunking_cfg.get("boundary_lookback", _DEFAULT_BOUNDARY_LOOKBACK))
+    chunk_min_size = int(chunking_cfg.get("chunk_min_size", _DEFAULT_CHUNK_MIN_SIZE))
+    units = str(chunking_cfg.get("units", "chars")).lower()
+    if units == "tokens":
+        chars_per_token = int(chunking_cfg.get("chars_per_token", _DEFAULT_CHARS_PER_TOKEN))
+        chunk_size *= chars_per_token
+        chunk_overlap *= chars_per_token
+        boundary_lookback *= chars_per_token
+        chunk_min_size *= chars_per_token
 
     allowed_entity_types = frozenset(
         enrichment_cfg.get("entity_allowed_types") or _DEFAULT_ALLOWED_ENTITY_TYPES
@@ -132,9 +148,17 @@ def enrich_page(
     entity_min_length = int(
         enrichment_cfg.get("entity_min_length", _DEFAULT_ENTITY_MIN_LENGTH)
     )
+    entity_alias_map = _build_alias_map(enrichment_cfg.get("entity_aliases"))
 
-    # 1. Section-aware chunking.
-    chunks_text = chunk_content(content, sections, chunk_size, chunk_overlap, boundary_lookback)
+    # 1. Section-aware chunking (with tail coalescing + heading dedup).
+    chunks_text = chunk_content(
+        content,
+        sections,
+        chunk_size,
+        chunk_overlap,
+        boundary_lookback,
+        chunk_min_size=chunk_min_size,
+    )
 
     # 2. Compute embeddings.
     doc_embedding = compute_embedding(content, biencoder_model)
@@ -145,6 +169,7 @@ def enrich_page(
         content,
         allowed_types=allowed_entity_types,
         min_length=entity_min_length,
+        alias_map=entity_alias_map,
     )
 
     # 4. Keyphrase extraction.
@@ -170,6 +195,7 @@ def chunk_content(
     chunk_size: int = _DEFAULT_CHUNK_SIZE,
     overlap: int = _DEFAULT_CHUNK_OVERLAP,
     boundary_lookback: int = _DEFAULT_BOUNDARY_LOOKBACK,
+    chunk_min_size: int = _DEFAULT_CHUNK_MIN_SIZE,
 ) -> list[dict[str, Any]]:
     """Split *content* into overlapping chunks, respecting section boundaries.
 
@@ -178,14 +204,26 @@ def chunk_content(
     *boundary_lookback* characters of the target end, so chunks rarely start or
     end mid-word.
 
+    Trailing chunks shorter than *chunk_min_size* are merged into the preceding
+    chunk from the same section, preventing the fragmented "tail" chunks that
+    arise when a section segment's length is just over a chunk boundary.
+
+    If a chunk's plain text begins with its section heading, the heading is
+    stripped from the chunk body — it is already carried in the
+    ``section_heading`` column and the duplication wastes embedding capacity.
+
     Returns a list of dicts with keys:
         text           — chunk plain text
         chunk_index    — positional index (0-based)
         section_heading — nearest heading above this chunk (or None)
     """
     if sections:
-        return _section_aware_chunks(content, sections, chunk_size, overlap, boundary_lookback)
-    return _fixed_size_chunks(content, chunk_size, overlap, boundary_lookback)
+        chunks = _section_aware_chunks(content, sections, chunk_size, overlap, boundary_lookback)
+    else:
+        chunks = _fixed_size_chunks(content, chunk_size, overlap, boundary_lookback)
+    chunks = _coalesce_tail_chunks(chunks, chunk_min_size, chunk_size)
+    chunks = _strip_leading_heading(chunks)
+    return chunks
 
 
 def _section_aware_chunks(
@@ -230,6 +268,68 @@ def _section_aware_chunks(
                 chunks.append(sub)
                 idx += 1
 
+    return chunks
+
+
+def _coalesce_tail_chunks(
+    chunks: list[dict[str, Any]],
+    min_size: int,
+    max_size: int,
+) -> list[dict[str, Any]]:
+    """Merge undersized tail chunks into their predecessor when it's safe to do so.
+
+    A chunk is merged if:
+      * it is shorter than *min_size*, AND
+      * the predecessor shares its ``section_heading`` (so we don't cross section
+        boundaries), AND
+      * the combined length stays within 1.5 × *max_size* (keeps embeddings below
+        the bi-encoder's token ceiling even with the char-to-token estimate).
+
+    Chunk indices are re-numbered after coalescing so the sequence is dense.
+    """
+    if not chunks:
+        return chunks
+
+    merged: list[dict[str, Any]] = []
+    ceiling = int(max_size * 1.5)
+
+    for chunk in chunks:
+        if (
+            merged
+            and len(chunk["text"]) < min_size
+            and merged[-1].get("section_heading") == chunk.get("section_heading")
+            and len(merged[-1]["text"]) + 1 + len(chunk["text"]) <= ceiling
+        ):
+            merged[-1]["text"] = (merged[-1]["text"].rstrip() + "\n" + chunk["text"].lstrip()).strip()
+            continue
+        merged.append(dict(chunk))
+
+    for new_idx, chunk in enumerate(merged):
+        chunk["chunk_index"] = new_idx
+
+    return merged
+
+
+def _strip_leading_heading(chunks: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Remove a chunk's section heading from the start of its text, if present.
+
+    Trafilatura renders headings into the plain-text stream, so section-aware
+    chunks often begin with their own heading (already captured in
+    ``section_heading``).  Dropping the duplicate reclaims embedding capacity
+    without losing context.
+    """
+    for chunk in chunks:
+        heading = chunk.get("section_heading")
+        if not heading:
+            continue
+        heading = heading.strip()
+        if not heading:
+            continue
+        stripped = chunk["text"].lstrip()
+        if stripped.startswith(heading):
+            remainder = stripped[len(heading):].lstrip(" \t\n\r-–—:.")
+            if remainder:
+                chunk["text"] = remainder
     return chunks
 
 
@@ -422,6 +522,7 @@ def extract_entities(
     text: str,
     allowed_types: frozenset[str] | set[str] | None = None,
     min_length: int = _DEFAULT_ENTITY_MIN_LENGTH,
+    alias_map: dict[str, str] | None = None,
 ) -> list[dict[str, str]]:
     """Extract named entities from *text* using spaCy.
 
@@ -430,9 +531,13 @@ def extract_entities(
     MONEY, PERCENT, LAW, NORP, EVENT). CARDINAL, ORDINAL, QUANTITY, TIME,
     WORK_OF_ART, FAC, LANGUAGE, and PRODUCT are dropped as low-signal.
 
-    Entities are further filtered to remove: strings shorter than
-    *min_length*, URL fragments, and letters-followed-by-digits scraping
-    artefacts (e.g. "review33"). Duplicates are removed by (text, type).
+    Post-extraction:
+      * Trailing possessive ``'s`` / ``’s`` is stripped.
+      * Surface forms are canonicalised via *alias_map* (keys are matched
+        case-insensitively; the mapped value is the persisted form).
+      * Case-folded duplicates collapse to the first-seen surface form.
+      * URL fragments and letters-followed-by-digits scraping artefacts are
+        dropped.
 
     Returns a list of dicts with keys: entity_text, entity_type.
     If spaCy is unavailable, returns an empty list and logs a warning.
@@ -442,28 +547,82 @@ def extract_entities(
         return []
 
     allowed = frozenset(allowed_types) if allowed_types else _DEFAULT_ALLOWED_ENTITY_TYPES
+    alias_map = alias_map or {}
 
     try:
         doc = nlp(text[:100_000])  # spaCy has a practical limit; truncate for safety
-        seen: set[tuple[str, str]] = set()
-        entities: list[dict[str, str]] = []
-        for ent in doc.ents:
-            entity_text = ent.text.strip()
-            entity_type = ent.label_
-            if not _is_valid_entity(entity_text, entity_type, allowed, min_length):
-                continue
-            key = (entity_text, entity_type)
-            if key in seen:
-                continue
-            seen.add(key)
-            entities.append({
-                "entity_text": entity_text,
-                "entity_type": entity_type,
-            })
-        return entities
     except Exception as exc:
         logger.warning("NER extraction failed: %s", exc)
         return []
+
+    seen: dict[tuple[str, str], str] = {}
+    ordered: list[tuple[str, str]] = []
+    for ent in doc.ents:
+        entity_text = canonicalise_entity(ent.text, alias_map)
+        entity_type = ent.label_
+        if not _is_valid_entity(entity_text, entity_type, allowed, min_length):
+            continue
+        key = (entity_text.casefold(), entity_type)
+        if key in seen:
+            continue
+        seen[key] = entity_text
+        ordered.append(key)
+
+    return [
+        {"entity_text": seen[key], "entity_type": key[1]}
+        for key in ordered
+    ]
+
+
+# Trailing possessive endings stripped before dedup / alias lookup.
+_POSSESSIVE_SUFFIXES = ("'s", "\u2019s", "'S", "\u2019S")
+
+
+def canonicalise_entity(text: str, alias_map: dict[str, str] | None = None) -> str:
+    """Normalise an entity string for dedup and alias resolution.
+
+    Strips whitespace and trailing possessive forms, collapses internal runs of
+    whitespace, and applies *alias_map* (case-insensitive keys).
+    """
+    cleaned = " ".join(text.split()).strip()
+    for suffix in _POSSESSIVE_SUFFIXES:
+        if cleaned.endswith(suffix):
+            cleaned = cleaned[: -len(suffix)].rstrip()
+            break
+    if alias_map:
+        mapped = alias_map.get(cleaned.casefold())
+        if mapped:
+            cleaned = mapped
+    return cleaned
+
+
+def _build_alias_map(raw: Any) -> dict[str, str]:
+    """Normalise config entity aliases into a case-insensitive lookup table.
+
+    Accepted forms:
+        {"IPTA": "Institute of Patent and Trade Mark Attorneys Australia"}
+        [{"canonical": "X", "aliases": ["x", "X Co"]}, ...]
+    """
+    if not raw:
+        return {}
+    lookup: dict[str, str] = {}
+    if isinstance(raw, dict):
+        for alias, canonical in raw.items():
+            if isinstance(alias, str) and isinstance(canonical, str):
+                lookup[alias.strip().casefold()] = canonical.strip()
+    elif isinstance(raw, list):
+        for entry in raw:
+            if not isinstance(entry, dict):
+                continue
+            canonical = entry.get("canonical")
+            if not isinstance(canonical, str) or not canonical.strip():
+                continue
+            canonical = canonical.strip()
+            lookup[canonical.casefold()] = canonical
+            for alias in entry.get("aliases", []) or []:
+                if isinstance(alias, str) and alias.strip():
+                    lookup[alias.strip().casefold()] = canonical
+    return lookup
 
 
 def _is_valid_entity(

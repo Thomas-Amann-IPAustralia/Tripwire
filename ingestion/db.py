@@ -44,7 +44,9 @@ CREATE TABLE IF NOT EXISTS pages (
     last_modified   TEXT,
     last_checked    TEXT,
     last_ingested   TEXT,
-    doc_embedding   BLOB
+    doc_embedding   BLOB,
+    status          TEXT NOT NULL DEFAULT 'active',
+    duplicate_of    TEXT
 );
 
 -- Chunks table: one row per chunk of each page
@@ -122,6 +124,28 @@ CREATE TABLE IF NOT EXISTS deferred_triggers (
     processed    INTEGER DEFAULT 0
 );
 
+-- Ingestion run audit log: one row per page per ingestion run
+CREATE TABLE IF NOT EXISTS ingestion_runs (
+    id                INTEGER PRIMARY KEY AUTOINCREMENT,
+    run_id            TEXT NOT NULL,
+    page_id           TEXT,
+    url               TEXT NOT NULL,
+    timestamp         TEXT NOT NULL,
+    outcome           TEXT NOT NULL,
+    status            TEXT,
+    error_type        TEXT,
+    error_message     TEXT,
+    chunk_count       INTEGER,
+    section_count     INTEGER,
+    entity_count      INTEGER,
+    keyphrase_count   INTEGER,
+    content_length    INTEGER,
+    boilerplate_bytes_stripped INTEGER,
+    duplicate_of      TEXT,
+    warnings          TEXT,
+    duration_seconds  REAL
+);
+
 -- Indices for common query patterns
 CREATE INDEX IF NOT EXISTS idx_chunks_page_id ON chunks(page_id);
 CREATE INDEX IF NOT EXISTS idx_entities_page_id ON entities(page_id);
@@ -132,7 +156,22 @@ CREATE INDEX IF NOT EXISTS idx_sections_page_id ON sections(page_id);
 CREATE INDEX IF NOT EXISTS idx_pipeline_runs_run_id ON pipeline_runs(run_id);
 CREATE INDEX IF NOT EXISTS idx_pipeline_runs_source_id ON pipeline_runs(source_id);
 CREATE INDEX IF NOT EXISTS idx_deferred_triggers_processed ON deferred_triggers(processed);
+CREATE INDEX IF NOT EXISTS idx_ingestion_runs_run_id ON ingestion_runs(run_id);
+CREATE INDEX IF NOT EXISTS idx_ingestion_runs_page_id ON ingestion_runs(page_id);
 """
+
+
+# Indices that depend on columns added via migration run after _apply_migrations.
+_POST_MIGRATION_INDICES: list[str] = [
+    "CREATE INDEX IF NOT EXISTS idx_pages_status ON pages(status)",
+    "CREATE INDEX IF NOT EXISTS idx_pages_duplicate_of ON pages(duplicate_of)",
+]
+
+# Columns added after the initial schema; applied via ALTER TABLE for existing DBs.
+_PAGES_MIGRATIONS: list[tuple[str, str]] = [
+    ("status", "ALTER TABLE pages ADD COLUMN status TEXT NOT NULL DEFAULT 'active'"),
+    ("duplicate_of", "ALTER TABLE pages ADD COLUMN duplicate_of TEXT"),
+]
 
 
 # ---------------------------------------------------------------------------
@@ -167,8 +206,19 @@ def init_db(db_path: str | Path, wal_mode: bool = True) -> sqlite3.Connection:
     conn.execute("PRAGMA foreign_keys = ON;")
 
     conn.executescript(_SCHEMA_SQL)
+    _apply_migrations(conn)
     conn.commit()
     return conn
+
+
+def _apply_migrations(conn: sqlite3.Connection) -> None:
+    """Add columns introduced after the initial schema to existing databases."""
+    existing = {row[1] for row in conn.execute("PRAGMA table_info(pages)").fetchall()}
+    for col_name, ddl in _PAGES_MIGRATIONS:
+        if col_name not in existing:
+            conn.execute(ddl)
+    for ddl in _POST_MIGRATION_INDICES:
+        conn.execute(ddl)
 
 
 @contextmanager
@@ -190,16 +240,19 @@ def upsert_page(conn: sqlite3.Connection, page: dict[str, Any]) -> None:
     """Insert or replace a page record.
 
     Required keys: page_id, url, title, content, version_hash.
-    Optional keys: last_modified, last_checked, last_ingested, doc_embedding.
+    Optional keys: last_modified, last_checked, last_ingested, doc_embedding,
+                   status, duplicate_of.
     """
     conn.execute(
         """
         INSERT INTO pages
             (page_id, url, title, content, version_hash,
-             last_modified, last_checked, last_ingested, doc_embedding)
+             last_modified, last_checked, last_ingested, doc_embedding,
+             status, duplicate_of)
         VALUES
             (:page_id, :url, :title, :content, :version_hash,
-             :last_modified, :last_checked, :last_ingested, :doc_embedding)
+             :last_modified, :last_checked, :last_ingested, :doc_embedding,
+             :status, :duplicate_of)
         ON CONFLICT(page_id) DO UPDATE SET
             url           = excluded.url,
             title         = excluded.title,
@@ -208,7 +261,9 @@ def upsert_page(conn: sqlite3.Connection, page: dict[str, Any]) -> None:
             last_modified = excluded.last_modified,
             last_checked  = excluded.last_checked,
             last_ingested = excluded.last_ingested,
-            doc_embedding = excluded.doc_embedding
+            doc_embedding = excluded.doc_embedding,
+            status        = excluded.status,
+            duplicate_of  = excluded.duplicate_of
         """,
         {
             "page_id": page["page_id"],
@@ -220,8 +275,31 @@ def upsert_page(conn: sqlite3.Connection, page: dict[str, Any]) -> None:
             "last_checked": page.get("last_checked"),
             "last_ingested": page.get("last_ingested"),
             "doc_embedding": page.get("doc_embedding"),
+            "status": page.get("status", "active"),
+            "duplicate_of": page.get("duplicate_of"),
         },
     )
+
+
+def set_page_status(
+    conn: sqlite3.Connection,
+    page_id: str,
+    *,
+    status: str,
+    duplicate_of: str | None = None,
+) -> None:
+    """Update the status/duplicate_of markers for an existing page."""
+    conn.execute(
+        "UPDATE pages SET status = ?, duplicate_of = ? WHERE page_id = ?",
+        (status, duplicate_of, page_id),
+    )
+
+
+def get_active_pages(conn: sqlite3.Connection) -> list[sqlite3.Row]:
+    """Return pages marked as active (excludes stubs and duplicates)."""
+    return conn.execute(
+        "SELECT * FROM pages WHERE status = 'active' ORDER BY page_id"
+    ).fetchall()
 
 
 def get_page(conn: sqlite3.Connection, page_id: str) -> sqlite3.Row | None:
@@ -489,3 +567,65 @@ def mark_deferred_trigger_processed(conn: sqlite3.Connection, trigger_id: int) -
     conn.execute(
         "UPDATE deferred_triggers SET processed = 1 WHERE id = ?", (trigger_id,)
     )
+
+
+# ---------------------------------------------------------------------------
+# Ingestion audit log
+# ---------------------------------------------------------------------------
+
+
+def log_ingestion_run(conn: sqlite3.Connection, entry: dict[str, Any]) -> int:
+    """Insert an ingestion-run audit row.
+
+    Required keys: run_id, url, timestamp, outcome.
+    Optional keys: page_id, status, error_type, error_message, chunk_count,
+                   section_count, entity_count, keyphrase_count, content_length,
+                   boilerplate_bytes_stripped, duplicate_of, warnings (list/str),
+                   duration_seconds.
+    """
+    warnings = entry.get("warnings")
+    if isinstance(warnings, (list, dict)):
+        warnings_str = json.dumps(warnings)
+    else:
+        warnings_str = warnings
+
+    cursor = conn.execute(
+        """
+        INSERT INTO ingestion_runs
+            (run_id, page_id, url, timestamp, outcome, status,
+             error_type, error_message, chunk_count, section_count,
+             entity_count, keyphrase_count, content_length,
+             boilerplate_bytes_stripped, duplicate_of, warnings, duration_seconds)
+        VALUES
+            (:run_id, :page_id, :url, :timestamp, :outcome, :status,
+             :error_type, :error_message, :chunk_count, :section_count,
+             :entity_count, :keyphrase_count, :content_length,
+             :boilerplate_bytes_stripped, :duplicate_of, :warnings, :duration_seconds)
+        """,
+        {
+            "run_id": entry["run_id"],
+            "page_id": entry.get("page_id"),
+            "url": entry["url"],
+            "timestamp": entry["timestamp"],
+            "outcome": entry["outcome"],
+            "status": entry.get("status"),
+            "error_type": entry.get("error_type"),
+            "error_message": entry.get("error_message"),
+            "chunk_count": entry.get("chunk_count"),
+            "section_count": entry.get("section_count"),
+            "entity_count": entry.get("entity_count"),
+            "keyphrase_count": entry.get("keyphrase_count"),
+            "content_length": entry.get("content_length"),
+            "boilerplate_bytes_stripped": entry.get("boilerplate_bytes_stripped"),
+            "duplicate_of": entry.get("duplicate_of"),
+            "warnings": warnings_str,
+            "duration_seconds": entry.get("duration_seconds"),
+        },
+    )
+    return cursor.lastrowid
+
+
+def get_ingestion_runs(conn: sqlite3.Connection, run_id: str) -> list[sqlite3.Row]:
+    return conn.execute(
+        "SELECT * FROM ingestion_runs WHERE run_id = ? ORDER BY id", (run_id,)
+    ).fetchall()
