@@ -117,7 +117,7 @@ def scrape_page(
     html = _fetch_page_html(url, session, force_selenium=force_selenium)
 
     plain_text = extract_plain_text(html)
-    sections = extract_sections(html)
+    sections = extract_sections(html, plain_text=plain_text)
     title = extract_title(html)
 
     # Content validation
@@ -228,13 +228,29 @@ def extract_plain_text(html: str) -> str:
     return normalise_text(_strip_html_basic(html))
 
 
-def extract_sections(html: str) -> list[dict[str, Any]]:
+def extract_sections(
+    html: str,
+    plain_text: str | None = None,
+) -> list[dict[str, Any]]:
     """Extract section headings and their character offsets from HTML.
 
-    Uses trafilatura's XML output to find <head> tags, then maps them to
-    character positions in the plain-text output.  Returns an empty list
-    if trafilatura is unavailable or produces no headings.
+    Strategy:
+      1. Parse trafilatura's XML output with ``lxml`` to pull ``<head>`` nodes
+         (robust against attribute ordering, nested inline markup, and self-
+         closing tags that the previous regex approach missed).
+      2. If that produces no headings — or if trafilatura/lxml is unavailable —
+         fall back to a heuristic scan over *plain_text*: short standalone lines
+         that look like titles ("What is it?", "See also", "Who's involved?")
+         are promoted to level-2 headings.
+
+    Char offsets are computed by locating each heading string inside the plain
+    text produced by :func:`extract_plain_text`.  Pass *plain_text* explicitly
+    when available so the offsets align with the content actually stored in the
+    database.
     """
+    if plain_text is None:
+        plain_text = extract_plain_text(html)
+
     try:
         import trafilatura
         xml_output = trafilatura.extract(
@@ -242,14 +258,25 @@ def extract_sections(html: str) -> list[dict[str, Any]]:
             output_format="xml",
             include_comments=False,
         )
-        if not xml_output:
-            return []
-        return _parse_sections_from_xml(xml_output)
     except ImportError:
-        return []
+        xml_output = None
     except Exception as exc:
-        logger.warning("Section extraction failed: %s", exc)
-        return []
+        logger.warning("Section XML extraction failed: %s", exc)
+        xml_output = None
+
+    sections: list[dict[str, Any]] = []
+    if xml_output:
+        try:
+            sections = _parse_sections_from_xml_lxml(xml_output, plain_text)
+        except ImportError:
+            sections = _parse_sections_from_xml(xml_output)
+        except Exception as exc:
+            logger.warning("lxml section parse failed: %s — using regex fallback.", exc)
+            sections = _parse_sections_from_xml(xml_output)
+
+    if not sections:
+        sections = _heuristic_sections(plain_text)
+    return sections
 
 
 def extract_plain_text_from_docx(docx_bytes: bytes) -> tuple[str, list[dict[str, Any]], str]:
@@ -301,6 +328,161 @@ def extract_title(html: str) -> str:
 def compute_version_hash(text: str) -> str:
     """Return the SHA-256 hex digest of the normalised plain text."""
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+# ---------------------------------------------------------------------------
+# Boilerplate stripping
+# ---------------------------------------------------------------------------
+
+
+def detect_frequent_lines(
+    documents: list[str],
+    *,
+    frequency_threshold: float = 0.7,
+    min_documents: int = 3,
+    min_line_length: int = 3,
+) -> set[str]:
+    """Return lines that appear on more than *frequency_threshold* of documents.
+
+    Used to auto-detect site chrome (navigation, disclaimers) that leaks
+    through trafilatura.  A line is considered boilerplate when it occurs
+    verbatim (trimmed, case-sensitive) on at least *frequency_threshold* × N
+    distinct documents, where N is the input corpus size.  If fewer than
+    *min_documents* are supplied the detector bails out — we need a corpus
+    large enough for statistical repetition to be meaningful.
+
+    The returned set is case-sensitive stripped line content.
+    """
+    n = len(documents)
+    if n < min_documents:
+        return set()
+
+    counts: dict[str, int] = {}
+    for doc in documents:
+        if not doc:
+            continue
+        # Dedup within a single document so a repeated line counts once.
+        seen: set[str] = set()
+        for raw_line in doc.split("\n"):
+            line = raw_line.strip()
+            if len(line) < min_line_length:
+                continue
+            if line in seen:
+                continue
+            seen.add(line)
+            counts[line] = counts.get(line, 0) + 1
+
+    cutoff = max(2, int(frequency_threshold * n))
+    return {line for line, count in counts.items() if count >= cutoff}
+
+
+def strip_boilerplate(
+    content: str,
+    sections: list[dict[str, Any]] | None = None,
+    *,
+    blocklist: list[str] | set[str] | None = None,
+    frequent_lines: set[str] | None = None,
+) -> tuple[str, list[dict[str, Any]], int]:
+    """Drop lines that match *blocklist* or *frequent_lines* and re-offset sections.
+
+    Parameters
+    ----------
+    content:
+        Plain text produced by :func:`extract_plain_text`.
+    sections:
+        Section dicts from :func:`extract_sections`.  Char offsets are
+        recomputed against the stripped content; headings that no longer appear
+        in the stripped text (because they were part of the removed boilerplate)
+        are discarded.
+    blocklist:
+        User-supplied phrases to drop.  Matched case-insensitively against
+        stripped lines.  A blocklist phrase that appears *inside* a longer
+        line is also stripped — useful for inline chrome like ``Skip to main
+        content``.
+    frequent_lines:
+        Auto-detected repeated lines (from :func:`detect_frequent_lines`).
+        Matched case-sensitively against stripped lines (exact equality only —
+        we never strip substrings here to avoid eating legitimate content).
+
+    Returns
+    -------
+    (stripped_content, adjusted_sections, bytes_stripped)
+    """
+    blocklist_lc = {b.strip().lower() for b in (blocklist or []) if b and b.strip()}
+    frequent = set(frequent_lines or [])
+
+    kept_lines: list[str] = []
+    for raw_line in content.split("\n"):
+        stripped = raw_line.strip()
+        if not stripped:
+            kept_lines.append(raw_line)
+            continue
+        if stripped in frequent:
+            continue
+        if stripped.lower() in blocklist_lc:
+            continue
+        # Inline blocklist phrases (leave frequent-line detection to exact match only).
+        cleaned = raw_line
+        for phrase in blocklist_lc:
+            if phrase and phrase in cleaned.lower():
+                pattern = re.compile(re.escape(phrase), re.IGNORECASE)
+                cleaned = pattern.sub("", cleaned)
+        cleaned = cleaned.strip()
+        if cleaned:
+            kept_lines.append(cleaned)
+
+    stripped_content = "\n".join(kept_lines)
+    stripped_content = re.sub(r"\n{3,}", "\n\n", stripped_content).strip()
+    bytes_stripped = max(0, len(content) - len(stripped_content))
+
+    adjusted_sections = _reindex_sections(stripped_content, sections or [])
+    return stripped_content, adjusted_sections, bytes_stripped
+
+
+def _reindex_sections(
+    content: str, sections: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Re-anchor section char offsets against *content* by searching for heading_text."""
+    adjusted: list[dict[str, Any]] = []
+    cursor = 0
+    for section in sections:
+        heading = section.get("heading_text", "")
+        if not heading:
+            continue
+        idx = content.find(heading, cursor)
+        if idx < 0:
+            idx = content.find(heading)
+        if idx < 0:
+            continue
+        cursor = idx + len(heading)
+        adjusted.append({
+            "heading_text": heading,
+            "heading_level": section.get("heading_level", 2),
+            "char_start": idx,
+            "char_end": idx + len(heading),
+        })
+    return adjusted
+
+
+def is_stub_page(
+    content: str,
+    *,
+    min_length: int = 500,
+    stub_phrases: list[str] | set[str] | None = None,
+) -> bool:
+    """Return True if *content* looks like a placeholder / stub page.
+
+    A page is a stub when its length falls below *min_length* OR it contains
+    any of the configured *stub_phrases* (case-insensitive substring match)
+    such as "This page is coming soon" or "Coming April 2026".
+    """
+    if not content or len(content) < min_length:
+        return True
+    lower = content.lower()
+    for phrase in stub_phrases or []:
+        if phrase and phrase.lower() in lower:
+            return True
+    return False
 
 
 def normalise_text(text: str) -> str:
@@ -388,42 +570,141 @@ def _strip_html_basic(html: str) -> str:
     return re.sub(r"<[^>]+>", " ", html)
 
 
-def _parse_sections_from_xml(xml_text: str) -> list[dict[str, Any]]:
-    """Parse trafilatura XML output to extract heading hierarchy.
+def _parse_sections_from_xml_lxml(
+    xml_text: str, plain_text: str,
+) -> list[dict[str, Any]]:
+    """Extract heading hierarchy via lxml + offset-lookup in *plain_text*.
 
-    Trafilatura's XML uses <head rend="hN"> tags for headings.  We extract
-    heading text, level, and approximate character offsets into the plain text
-    (computed by accumulating text content up to each heading).
+    Trafilatura's XML uses ``<head rend="hN">`` for headings and may nest
+    inline markup (``<hi>``, ``<ref>``) that the regex-based parser misses.
+    ``lxml`` gives us the full text content of each heading regardless of the
+    inline children, and we then locate that text inside the caller's plain
+    text to get accurate character offsets.  Headings that don't appear in the
+    plain text (rare edge case, typically when trafilatura emits them but the
+    text extractor dropped them) are skipped.
     """
-    import re as _re
+    from lxml import etree  # type: ignore
+
+    # Trafilatura emits ``<doc>`` as the root; wrap defensively to tolerate
+    # documents that already include or omit an XML prolog.
+    try:
+        root = etree.fromstring(xml_text.encode("utf-8"))
+    except etree.XMLSyntaxError as exc:
+        logger.debug("lxml parse error, retrying wrapped: %s", exc)
+        wrapped = f"<doc>{xml_text}</doc>".encode("utf-8")
+        root = etree.fromstring(wrapped)
+
+    sections: list[dict[str, Any]] = []
+    seen_spans: list[tuple[int, int]] = []
+    search_cursor = 0
+
+    for node in root.iter("head"):
+        heading_text = " ".join((node.xpath("string(.)") or "").split()).strip()
+        if not heading_text:
+            continue
+
+        rend = node.get("rend", "")
+        match = re.match(r"h(\d)", rend or "")
+        level = int(match.group(1)) if match else 2
+
+        # Find the heading in the plain text, starting from the last known
+        # match so repeated headings within a document map to the correct span.
+        idx = plain_text.find(heading_text, search_cursor)
+        if idx < 0 and search_cursor > 0:
+            idx = plain_text.find(heading_text)
+        if idx < 0:
+            continue
+        span = (idx, idx + len(heading_text))
+        if span in seen_spans:
+            continue
+        seen_spans.append(span)
+        search_cursor = span[1]
+
+        sections.append({
+            "heading_text": heading_text,
+            "heading_level": level,
+            "char_start": span[0],
+            "char_end": span[1],
+        })
+
+    sections.sort(key=lambda s: s["char_start"])
+    return sections
+
+
+def _parse_sections_from_xml(xml_text: str) -> list[dict[str, Any]]:
+    """Legacy regex-based parser, retained as a fallback when lxml is absent."""
     sections: list[dict[str, Any]] = []
     # Extract all text-bearing elements in order to estimate char offsets.
-    elements = _re.findall(
-        r'<(head|p|list)[^>]*>(.*?)</(head|p|list)>',
+    elements = re.findall(
+        r'<(head|p|list)\b([^>]*)>(.*?)</\1>',
         xml_text,
-        flags=_re.DOTALL,
+        flags=re.DOTALL,
     )
 
     char_pos = 0
-    for tag, content, _ in elements:
+    for tag, attrs, content in elements:
         # Strip nested tags from content to get plain text.
-        text = _re.sub(r"<[^>]+>", "", content).strip()
+        text = re.sub(r"<[^>]+>", "", content).strip()
 
         if tag == "head":
-            # Try to extract heading level from rend="hN" attribute.
-            level_match = _re.search(r'rend="h(\d)"', xml_text[
-                xml_text.find(f"<head"): xml_text.find(f"<head") + 50
-            ])
+            level_match = re.search(r'rend="h(\d)"', attrs)
             level = int(level_match.group(1)) if level_match else 2
-            sections.append(
-                {
-                    "heading_text": text,
-                    "heading_level": level,
-                    "char_start": char_pos,
-                    "char_end": char_pos + len(text),
-                }
-            )
+            sections.append({
+                "heading_text": text,
+                "heading_level": level,
+                "char_start": char_pos,
+                "char_end": char_pos + len(text),
+            })
 
         char_pos += len(text) + 1  # +1 for newline separator
 
+    return sections
+
+
+# Regex for heuristic heading detection: short standalone lines that end in
+# question mark, colon, or look like a title (Title Case, no terminal period).
+_HEADING_MAX_CHARS = 80
+_TITLE_CASE_RE = re.compile(r"^(?:[A-Z][\w’'-]*(?:\s+|$)){1,8}[?!:]?$")
+_QUESTION_OR_COLON_RE = re.compile(r".{3,%d}[?:]$" % _HEADING_MAX_CHARS)
+
+
+def _heuristic_sections(plain_text: str) -> list[dict[str, Any]]:
+    """Fall back to heuristic heading detection when trafilatura XML is empty.
+
+    A line is promoted to a level-2 heading when ALL of the following hold:
+      * length between 3 and ``_HEADING_MAX_CHARS`` characters,
+      * does not end in a period (periods indicate prose),
+      * either ends in ``?`` or ``:``, OR is Title Case and has no terminal
+        punctuation, AND
+      * the following line is non-empty (headings precede content).
+    """
+    sections: list[dict[str, Any]] = []
+    if not plain_text:
+        return sections
+
+    lines = plain_text.split("\n")
+    offsets: list[int] = []
+    cursor = 0
+    for line in lines:
+        offsets.append(cursor)
+        cursor += len(line) + 1  # +1 for the newline
+
+    for i, line in enumerate(lines):
+        candidate = line.strip()
+        if not (3 <= len(candidate) <= _HEADING_MAX_CHARS):
+            continue
+        if candidate.endswith("."):
+            continue
+        # Require a content line below.
+        next_line = lines[i + 1].strip() if i + 1 < len(lines) else ""
+        if not next_line:
+            continue
+        if _QUESTION_OR_COLON_RE.match(candidate) or _TITLE_CASE_RE.match(candidate):
+            start = offsets[i] + line.index(candidate) if candidate in line else offsets[i]
+            sections.append({
+                "heading_text": candidate,
+                "heading_level": 2,
+                "char_start": start,
+                "char_end": start + len(candidate),
+            })
     return sections

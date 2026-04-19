@@ -17,7 +17,9 @@ from ingestion.db import (
     upsert_page,
     get_page,
     get_all_pages,
+    get_active_pages,
     get_page_version_hash,
+    set_page_status,
     replace_chunks,
     get_chunks_for_page,
     get_all_chunks,
@@ -33,6 +35,8 @@ from ingestion.db import (
     get_sections_for_page,
     log_pipeline_run,
     get_pipeline_runs,
+    log_ingestion_run,
+    get_ingestion_runs,
     store_deferred_trigger,
     get_pending_deferred_triggers,
     mark_deferred_trigger_processed,
@@ -494,3 +498,89 @@ def test_deferred_trigger_data_stored_as_json(conn):
     pending = get_pending_deferred_triggers(conn, max_age_days=365)
     data = json.loads(pending[0]["trigger_data"])
     assert data["rrf_score"] == pytest.approx(0.04)
+
+
+# ---------------------------------------------------------------------------
+# Pages: status / duplicate_of and active-only queries
+# ---------------------------------------------------------------------------
+
+
+def test_upsert_page_defaults_status_to_active(conn):
+    upsert_page(conn, _sample_page("A"))
+    row = get_page(conn, "A")
+    assert row["status"] == "active"
+    assert row["duplicate_of"] is None
+
+
+def test_set_page_status_marks_duplicate(conn):
+    upsert_page(conn, _sample_page("A"))
+    upsert_page(conn, _sample_page("B"))
+    set_page_status(conn, "B", status="duplicate", duplicate_of="A")
+    row = get_page(conn, "B")
+    assert row["status"] == "duplicate"
+    assert row["duplicate_of"] == "A"
+
+
+def test_get_active_pages_excludes_stubs_and_duplicates(conn):
+    upsert_page(conn, _sample_page("A"))
+    upsert_page(conn, _sample_page("B"))
+    upsert_page(conn, _sample_page("C"))
+    set_page_status(conn, "B", status="stub")
+    set_page_status(conn, "C", status="duplicate", duplicate_of="A")
+    active = get_active_pages(conn)
+    assert [r["page_id"] for r in active] == ["A"]
+
+
+# ---------------------------------------------------------------------------
+# Ingestion-run audit log
+# ---------------------------------------------------------------------------
+
+
+def _sample_ingestion_entry(run_id="run-1", page_id="A"):
+    return {
+        "run_id": run_id,
+        "page_id": page_id,
+        "url": f"https://example.com/{page_id}",
+        "timestamp": "2026-04-10T00:00:00+00:00",
+        "outcome": "ingested",
+        "status": "active",
+        "chunk_count": 5,
+        "section_count": 3,
+        "entity_count": 4,
+        "keyphrase_count": 8,
+        "content_length": 1500,
+        "boilerplate_bytes_stripped": 120,
+        "warnings": ["sample warning"],
+        "duration_seconds": 1.23,
+    }
+
+
+def test_log_ingestion_run_roundtrip(conn):
+    row_id = log_ingestion_run(conn, _sample_ingestion_entry())
+    conn.commit()
+    assert row_id > 0
+
+    rows = get_ingestion_runs(conn, "run-1")
+    assert len(rows) == 1
+    assert rows[0]["page_id"] == "A"
+    assert rows[0]["outcome"] == "ingested"
+    assert rows[0]["chunk_count"] == 5
+    # Warnings serialised as JSON.
+    assert json.loads(rows[0]["warnings"]) == ["sample warning"]
+
+
+def test_log_ingestion_run_accepts_minimal_payload(conn):
+    log_ingestion_run(conn, {
+        "run_id": "run-2",
+        "url": "https://example.com/x",
+        "timestamp": "2026-04-10T00:00:00+00:00",
+        "outcome": "error",
+        "error_type": "PermanentError",
+        "error_message": "404 Not Found",
+    })
+    conn.commit()
+    rows = get_ingestion_runs(conn, "run-2")
+    assert len(rows) == 1
+    assert rows[0]["outcome"] == "error"
+    assert rows[0]["page_id"] is None
+    assert rows[0]["chunk_count"] is None
