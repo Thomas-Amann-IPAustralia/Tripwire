@@ -213,7 +213,9 @@ def _process_page(
 
     try:
         # Scrape and normalise.
-        plain_text, sections = scrape_ipfr.scrape_page(url, session, force_selenium=force_selenium)
+        plain_text, sections, scraped_title = scrape_ipfr.scrape_page(
+            url, session, force_selenium=force_selenium,
+        )
         version_hash = scrape_ipfr.compute_version_hash(plain_text)
 
         # Save snapshot to disk.
@@ -230,12 +232,15 @@ def _process_page(
             config=config,
         )
 
+        # Prefer the scraped title; fall back to any title already on the sitemap row.
+        title = scraped_title or row.get("title", "") or ""
+
         # Upsert page record.
         now_iso = datetime.now(tz=timezone.utc).isoformat()
         db.upsert_page(conn, {
             "page_id": page_id,
             "url": url,
-            "title": row.get("title", ""),
+            "title": title,
             "content": plain_text,
             "version_hash": version_hash,
             "last_modified": row.get("last_modified"),
@@ -251,8 +256,10 @@ def _process_page(
         db.replace_sections(conn, page_id, enriched["sections"])
 
         updated_row = sitemap_mod.update_row(
-            row, last_checked=today,
+            row,
+            last_checked=today,
             last_modified=row.get("last_modified", ""),
+            title=title or None,
         )
         return {"updated_row": updated_row, "outcome": "ingested"}
 
