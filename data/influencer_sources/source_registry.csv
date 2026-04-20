@@ -152,6 +152,6 @@ ttiap_find_an_attorney,https://www.ttipattorney.gov.au/for-clients/how-to-engage
 ttiap_reasons_to_make_a_complaint,https://www.ttipattorney.gov.au/for-clients/how-to-lodge-a-complaint/reasons-to-make-a-complaint,Reasons to Make a Complaint,webpage,0.2,fortnightly,Null,FALSE
 federal_court_practice_notes,Sign up to IP National Practice Area and the RSS feed,Federal Court Practice notes,rss,0.2,daily,Null,FALSE
 federal_court_notice_to_the_profession,Sign up to IP National Practice Area and the RSS feed,Federal Court Notice to the Profession,rss,0.2,daily,Null,FALSE
-wipo_news,https://www.wipo.int/en/web/news,WIPO News,rss,0.2,daily,Null,FALSE
-wipo_arbitration_mediation_center_news,RSS Feed,WIPO Arbitration & Mediation Center News,rss,0.8,daily,Null,FALSE
+wipo_news,https://www.wipo.int/pressroom/en/rss.xml,WIPO News,rss,0.2,daily,Null,FALSE
+wipo_arbitration_mediation_center_news,https://www.wipo.int/amc/en/rss.xml,WIPO Arbitration & Mediation Center News,rss,0.8,daily,Null,FALSE
 euipo_enforcement_news,https://www.euipo.europa.eu/en/enforce-ip/news,EUIPO Enforcement News,rss,0.2,daily,Null,FALSE
