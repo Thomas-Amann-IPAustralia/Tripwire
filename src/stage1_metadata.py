@@ -106,7 +106,11 @@ def save_source_registry(sources: list[dict[str, Any]], csv_path: str | Path) ->
         writer.writerows(rows)
 
 
-def is_due_for_check(source: dict[str, Any], last_checked: str | None) -> bool:
+def is_due_for_check(
+    source: dict[str, Any],
+    last_checked: str | None,
+    frequency_override: str | None = None,
+) -> bool:
     """Return True if the source is due for a check based on its frequency.
 
     Parameters
@@ -115,11 +119,17 @@ def is_due_for_check(source: dict[str, Any], last_checked: str | None) -> bool:
         Source registry row.
     last_checked:
         ISO 8601 date of the last check, or None if never checked.
+    frequency_override:
+        If provided, replaces the per-source CSV frequency. Pass ``"all"`` to
+        force every source to run regardless of last_checked.
     """
+    if frequency_override and frequency_override.lower() == "all":
+        return True
+
     if not last_checked:
         return True
 
-    frequency = source.get("check_frequency", "weekly").lower()
+    frequency = (frequency_override or source.get("check_frequency", "weekly")).lower()
     interval_days = _FREQUENCY_DAYS.get(frequency, 7)
 
     try:
