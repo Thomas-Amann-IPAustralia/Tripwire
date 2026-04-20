@@ -23,6 +23,10 @@ on:
           - DEBUG
           - INFO
           - WARNING
+      check_frequency_override:
+        description: "Force check frequency override — use 'all' to check every source regardless of schedule, or a frequency string (daily, weekly, fortnightly, monthly, quarterly) to treat all sources as if they are on that schedule"
+        required: false
+        default: ""
 
 # Only one pipeline run at a time — prevents concurrent writes to ipfr.sqlite.
 concurrency:
@@ -112,10 +116,15 @@ jobs:
             RUN_ID_ARG="--run-id ${{ github.event.inputs.run_id_override }}"
           fi
           LOG_LEVEL="${{ github.event.inputs.log_level || 'INFO' }}"
+          FREQ_ARG=""
+          if [ -n "${{ github.event.inputs.check_frequency_override }}" ]; then
+            FREQ_ARG="--check-frequency ${{ github.event.inputs.check_frequency_override }}"
+          fi
           python -m src.pipeline \
             --config tripwire_config.yaml \
             --log-level "$LOG_LEVEL" \
-            $RUN_ID_ARG
+            $RUN_ID_ARG \
+            $FREQ_ARG
 
       # ------------------------------------------------------------------
       # 6. Commit updated snapshots back to the repository (Section 7.2).
