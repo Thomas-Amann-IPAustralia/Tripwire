@@ -58,6 +58,27 @@ _FRL_API_BASE = "https://api.prod.legislation.gov.au"
 # have a supplementary explanatory statement rather than a standalone one.
 _FRL_ES_TYPES = ("ES", "SupplementaryES")
 
+# Matches an FRL titleId such as C2004A04969, F1996B00084, F2024L01179.
+_FRL_TITLE_ID_RE = re.compile(r"^[A-Z]\d{4}[A-Z]\w+$")
+
+
+def _extract_frl_title_id(url: str) -> str | None:
+    """Extract the FRL titleId from a legislation.gov.au URL.
+
+    Handles the current convention (``/<titleId>/latest/text``) and the legacy
+    ``/Series/<titleId>`` form.  Returns None if no plausible titleId is found.
+    """
+    from urllib.parse import urlparse
+    segments = [s for s in urlparse(url).path.split("/") if s]
+    if not segments:
+        return None
+    if segments[0].lower() == "series" and len(segments) >= 2:
+        return segments[1]
+    for seg in segments:
+        if _FRL_TITLE_ID_RE.match(seg):
+            return seg
+    return segments[0]
+
 
 # ---------------------------------------------------------------------------
 # Data structures
@@ -307,11 +328,14 @@ def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | No
         Base URL: https://api.prod.legislation.gov.au
         Auth: none required for public read.
 
-    The titleId is extracted from the source URL:
-        https://www.legislation.gov.au/Series/<titleId>
+    The titleId is extracted from the source URL using _extract_frl_title_id,
+    which handles both the current form (/<titleId>/latest/text) and the legacy
+    /Series/<titleId> form.
     """
     url = source.get("url", "")
-    title_id = url.rstrip("/").split("/")[-1]
+    title_id = _extract_frl_title_id(url)
+    if not title_id:
+        return None, f"Could not extract FRL titleId from URL: {url!r}"
 
     def _doc_endpoint(doc_type: str) -> str:
         return (

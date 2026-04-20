@@ -15,6 +15,7 @@ from unittest.mock import MagicMock, patch, call
 import pytest
 
 from src.stage3_diff import (
+    _extract_frl_title_id,
     _fetch_frl_explainer,
     _FRL_API_BASE,
     _FRL_ES_TYPES,
@@ -58,6 +59,33 @@ def _binary_response(content: bytes = b"fake-docx-bytes") -> MagicMock:
     resp.raise_for_status.return_value = None
     resp.content = content
     return resp
+
+
+# ---------------------------------------------------------------------------
+# _extract_frl_title_id
+# ---------------------------------------------------------------------------
+
+
+class TestExtractFrlTitleId:
+    def test_extracts_from_latest_text_url(self):
+        """Real registry URL format: /<titleId>/latest/text."""
+        assert _extract_frl_title_id(
+            "https://www.legislation.gov.au/F1996B00084/latest/text"
+        ) == "F1996B00084"
+
+    def test_extracts_from_asmade_text_url(self):
+        assert _extract_frl_title_id(
+            "https://www.legislation.gov.au/C2015A00040/asmade/text"
+        ) == "C2015A00040"
+
+    def test_extracts_from_series_url(self):
+        """Legacy /Series/<titleId> form."""
+        assert _extract_frl_title_id(
+            "https://www.legislation.gov.au/Series/C2004A00913"
+        ) == "C2004A00913"
+
+    def test_returns_none_for_empty_url(self):
+        assert _extract_frl_title_id("") is None
 
 
 # ---------------------------------------------------------------------------
@@ -106,8 +134,9 @@ class TestFetchFrlExplainerEndpoints:
         assert headers.get("Accept") != "application/json"
 
     def test_endpoint_contains_title_id(self):
-        """The document endpoint must embed the titleId from the source URL."""
-        url = "https://www.legislation.gov.au/Series/C2004A00652"
+        """The document endpoint must embed the titleId extracted from the source URL."""
+        # Use the real registry URL format (/<titleId>/latest/text), not the legacy Series form.
+        url = "https://www.legislation.gov.au/C2004A00652/latest/text"
         session = _make_session_with_responses(
             _meta_response(200),
             _binary_response(),
