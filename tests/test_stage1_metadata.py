@@ -267,6 +267,29 @@ class TestIsDueForCheck:
         source = {"check_frequency": "weekly"}
         assert is_due_for_check(source, "not-a-date") is True
 
+    def test_frequency_override_all_forces_check(self):
+        from datetime import datetime, timezone
+        today = datetime.now(tz=timezone.utc).date().isoformat()
+        source = {"check_frequency": "monthly"}
+        assert is_due_for_check(source, today, frequency_override="all") is True
+
+    def test_frequency_override_shortens_interval(self):
+        from datetime import datetime, timedelta, timezone
+        two_days_ago = (
+            datetime.now(tz=timezone.utc).date() - timedelta(days=2)
+        ).isoformat()
+        source = {"check_frequency": "weekly"}
+        # weekly would not be due, but daily override should trigger
+        assert is_due_for_check(source, two_days_ago, frequency_override="daily") is True
+
+    def test_frequency_override_none_uses_csv_value(self):
+        from datetime import datetime, timedelta, timezone
+        two_days_ago = (
+            datetime.now(tz=timezone.utc).date() - timedelta(days=2)
+        ).isoformat()
+        source = {"check_frequency": "weekly"}
+        assert is_due_for_check(source, two_days_ago, frequency_override=None) is False
+
 
 # ---------------------------------------------------------------------------
 # probe_source — routing

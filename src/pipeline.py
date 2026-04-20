@@ -68,6 +68,16 @@ def main(argv: list[str] | None = None) -> int:
         default="INFO",
         choices=["DEBUG", "INFO", "WARNING", "ERROR"],
     )
+    parser.add_argument(
+        "--check-frequency",
+        default=None,
+        metavar="FREQ",
+        help=(
+            "Override per-source check frequency for this run. "
+            "Accepts: daily, weekly, fortnightly, monthly, quarterly, or 'all' "
+            "to force every source to run regardless of last-check date."
+        ),
+    )
     args = parser.parse_args(argv)
 
     logging.basicConfig(
@@ -79,7 +89,7 @@ def main(argv: list[str] | None = None) -> int:
     t_start = time.monotonic()
 
     try:
-        exit_code = _run_pipeline(args.config, run_id)
+        exit_code = _run_pipeline(args.config, run_id, args.check_frequency)
     except Exception as exc:
         logger.critical("Pipeline aborted with unhandled exception: %s", exc, exc_info=True)
         exit_code = 1
@@ -102,7 +112,7 @@ def _generate_run_id() -> str:
 # ---------------------------------------------------------------------------
 
 
-def _run_pipeline(config_path: str, run_id: str) -> int:
+def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str | None = None) -> int:
     from src.config import load_config, snapshot_config, get as cfg_get
     from src.stage1_metadata import load_source_registry, probe_source, is_due_for_check
     from src.stage7_aggregation import aggregate_triggers, SourceTriggerRecord
@@ -226,6 +236,7 @@ def _run_pipeline(config_path: str, run_id: str) -> int:
                 source_records=source_records,
                 rejected_candidates=rejected_candidates,
                 log_entry=log_entry,
+                check_frequency_override=check_frequency_override,
             )
         except Exception as exc:
             logger.error(
@@ -359,6 +370,7 @@ def _process_source(
     source_records: list,
     rejected_candidates: list,
     log_entry: dict[str, Any],
+    check_frequency_override: str | None = None,
 ) -> None:
     """Run Stages 1–6 for a single source."""
     from src.stage1_metadata import probe_source, is_due_for_check
@@ -378,7 +390,7 @@ def _process_source(
     stored_signals = source_state.get("probe_signals")
     last_checked = source_state.get("last_checked")
 
-    if not is_due_for_check(source, last_checked):
+    if not is_due_for_check(source, last_checked, check_frequency_override):
         log_entry["outcome"] = "no_change"
         stages["metadata_probe"] = {"decision": "not_due"}
         return
