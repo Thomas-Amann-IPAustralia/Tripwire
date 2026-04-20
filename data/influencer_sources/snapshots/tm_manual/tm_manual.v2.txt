@@ -57,42 +57,42 @@
 Recent updates
 | Item amended | Date Amended | Amended Reason |
 |---|---|---|
-| F | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.4.3 Filing/Data Capture/Allocation of Australian Trade Mark Number | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| Word Constituents | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.4.6 Classification of Goods and Services | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| I | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.4.9 Provisional Refusal | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| A | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.4.14 Acceptance | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 5.2. Data Capture | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.4.16 Extension of Time to File Notice of Opposition to Protection | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| Device Constituents | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.4.21 Opposition to Cessation of Protection because of Non-Use | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 5.1. Background | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.4.19 Cessation or Limitation of Protection | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| List of Top Level Terms | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60. Glossary | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 5.3. Indexing | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.4.26 Replacement | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| T | Part reviewed: IK-related indexing terms updated, links to legislation updated, minor typographical corrections. |
+| 60.2.4 Certifying Process | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 30. Annex A5 - Examples regarding Geneva Conventions Act 1957 s 15(1) | Examples updated. |
+| 60.3. The Basic Application or Basic Registration (Basic Trade Mark) | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 30.3. Use contrary to law | Updated 30.3.5.7 - Defence Regulation 2016, Part 14. |
+| 60.4.2 Record of International Registrations | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| Part 46.4. Grounds for opposition to registration of national trade marks | Minor updates to 60.4.5 and 60.4.5.1 based on Taylor v Killer Queen LLC [2026] HCA 5. |
+| 60.4.4 Indexing | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 29.11. European Union Geographical indications (GIs) | Updated content in relation to European Union Geographical indications information |
+| 60.4.10 Amendments | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 30.2. Scandalous signs | Update to 2.6 Obscene and course language in trade marks |
+| 60.4.11 Deferment of Acceptance | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| Part 49.4. Notice of intention to defend | Minor change in line with IRHO Regulations |
+| 60.4.17 Opposition to Protection | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| Part 47.3. Filing a notice of intention to defend | Minor change in line with IRHO Regulations |
+| 60.4.13 Final decision on provisional refusal based on examination | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 35.12. Rectification of the Register and variation of rules by order of the court | Links to legislation added. |
+| 60.4.20 Cessation of Protection because of Non-Use | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 35.9. Assignment of registered certification trade marks | Links to legislation added. |
+| 60.4.23 Claim to Interest in, or Right in Respect of a Trade Mark | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 35.6. Assessment by the Australian Competition and Consumer Commission | Links to legislation added. |
+| 60.2.2 International Application Form | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
