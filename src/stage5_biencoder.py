@@ -92,6 +92,7 @@ def score_biencoder(
     change_text: str,
     conn: sqlite3.Connection,
     config: dict[str, Any],
+    candidate_page_ids: list[str] | None = None,
     model: Any | None = None,
 ) -> BiEncoderResult:
     """Run Stage 5 bi-encoder scoring.
@@ -144,6 +145,9 @@ def score_biencoder(
 
     # ---- 3. Load corpus chunks from DB ----------------------------------
     corpus_chunks = _load_corpus_chunks(conn)
+    if candidate_page_ids is not None:
+        candidate_set = set(candidate_page_ids)
+        corpus_chunks = [c for c in corpus_chunks if c["page_id"] in candidate_set]
     if not corpus_chunks:
         logger.warning("Stage 5: No corpus chunks found in database.")
         return BiEncoderResult(

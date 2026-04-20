@@ -637,6 +637,13 @@ def _assess_single_bundle(
         # Validate schema.
         try:
             parsed = validate_llm_response(raw_response)
+            logger.info(
+                "Stage 8 [%s]: verdict=%s confidence=%.0f%%%s",
+                bundle.ipfr_page_id,
+                parsed["verdict"],
+                parsed["confidence"] * 100,
+                f" (retry {attempt})" if attempt > 0 else "",
+            )
             return LLMAssessment(
                 ipfr_page_id=bundle.ipfr_page_id,
                 verdict=parsed["verdict"],

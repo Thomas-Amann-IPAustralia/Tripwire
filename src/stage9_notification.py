@@ -177,7 +177,12 @@ def send_notification(
     uncertain = [a for a in assessments if a.verdict == "UNCERTAIN"]
 
     if not change_required and not uncertain:
-        logger.info("Stage 9: no pages flagged — email not sent.")
+        no_change_count = sum(1 for a in assessments if a.verdict == "NO_CHANGE")
+        logger.info(
+            "Stage 9: no pages flagged (%d NO_CHANGE, %d total assessments) — email not sent.",
+            no_change_count,
+            len(assessments),
+        )
         return NotificationResult(
             sent=False,
             change_required_count=0,
@@ -233,7 +238,8 @@ def send_notification(
                     recipient=recipient,
                 )
             logger.info(
-                "Stage 9: email sent to %s (subject: %s)", recipient, subject
+                "Stage 9: email sent → %s | subject: %s | %d CHANGE_REQUIRED, %d UNCERTAIN",
+                recipient, subject, len(change_required), len(uncertain),
             )
             return NotificationResult(
                 sent=True,
@@ -263,7 +269,8 @@ def send_notification(
     # All retries exhausted — save to fallback file.
     fallback = _write_fallback(body_text, run_id)
     logger.error(
-        "Stage 9: all SMTP attempts failed. Email saved to %s. Last error: %s",
+        "Stage 9: SMTP FAILED after %d attempt(s) — FALLBACK email saved → %s | error: %s",
+        max_retries + 1,
         fallback,
         last_error,
     )

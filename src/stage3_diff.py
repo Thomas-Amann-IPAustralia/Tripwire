@@ -218,11 +218,13 @@ def _generate_webpage_diff(
 
     # Write diff file (even if empty, for audit trail on first run).
     diff_path.write_text(diff_text, encoding="utf-8")
+    logger.info("Stage 3 [%s]: diff saved → %s (%d chars)", source_id, diff_path, len(diff_text))
 
     # Rotate snapshots: rename current → versioned, write new current.
     _rotate_snapshots(snap_dir, source_id, versions_retained)
     current_snap = snap_dir / f"{source_id}.txt"
     current_snap.write_text(new_text, encoding="utf-8")
+    logger.info("Stage 3 [%s]: snapshot saved → %s", source_id, current_snap)
 
     if previous_text is None:
         diff_type = "first_run"
@@ -275,6 +277,10 @@ def _generate_frl_diff(
         ts = datetime.now(tz=timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         explainer_path = snap_dir / f"{source_id}_explainer_{ts}.txt"
         explainer_path.write_text(explainer_text, encoding="utf-8")
+        logger.info(
+            "Stage 3 [%s]: FRL explainer saved → %s (%d chars)",
+            source_id, explainer_path, len(explainer_text),
+        )
 
         return DiffResult(
             source_id=source_id,
@@ -291,7 +297,10 @@ def _generate_frl_diff(
     warnings.append(
         f"FRL explainer unavailable for {source_id}; falling back to text diff."
     )
-    logger.warning(warnings[-1])
+    logger.warning(
+        "Stage 3 [%s]: FALLBACK — FRL explainer unavailable, using unified text diff",
+        source_id,
+    )
     result = _generate_webpage_diff(
         source, new_text, previous_text, diff_lines,
         snap_base, versions_retained, run_id
