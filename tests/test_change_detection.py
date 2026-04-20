@@ -257,7 +257,7 @@ class TestDetectChange:
             new_text="anything", previous_text="old", previous_hash="oldhash"
         )
         assert result.decision == "skipped"
-        assert not result.should_proceed
+        assert result.should_proceed
 
     def test_rss_source_skipped(self):
         from src.stage2_change_detection import detect_change
@@ -266,6 +266,7 @@ class TestDetectChange:
             new_text="anything", previous_text="old", previous_hash="oldhash"
         )
         assert result.decision == "skipped"
+        assert result.should_proceed
 
     def test_first_run_no_previous(self):
         from src.stage2_change_detection import detect_change
