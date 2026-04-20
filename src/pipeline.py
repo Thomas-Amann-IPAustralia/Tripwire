@@ -384,6 +384,8 @@ def _process_source(
 
     stages = log_entry["details"]["stages"]
 
+    logger.info(">>> Source %s (%s): starting check", source_id, source_type)
+
     # ---- Stage 1: Metadata Probe ----------------------------------------
     log_entry["stage_reached"] = "stage1"
     source_state = _load_source_state(snapshot_dir, source_id)
@@ -391,6 +393,7 @@ def _process_source(
     last_checked = source_state.get("last_checked")
 
     if not is_due_for_check(source, last_checked, check_frequency_override):
+        logger.info("Source %s: SKIP — not yet due for check", source_id)
         log_entry["outcome"] = "no_change"
         stages["metadata_probe"] = {"decision": "not_due"}
         return
@@ -404,7 +407,9 @@ def _process_source(
     }
     _save_source_state(snapshot_dir, source_id, source_state)
 
+    logger.info("Source %s: Stage 1 probe=%s", source_id, probe.decision)
     if not probe.should_proceed:
+        logger.info("Source %s: FILTERED after Stage 1 — %s, no change detected", source_id, probe.decision)
         log_entry["outcome"] = "no_change"
         return
 
@@ -434,6 +439,7 @@ def _process_source(
     stages["change_detection"] = change_result.to_dict()
 
     if not change_result.should_proceed:
+        logger.info("Source %s: FILTERED after Stage 2 — %s", source_id, change_result.decision)
         log_entry["outcome"] = "no_change"
         _save_source_state(snapshot_dir, source_id, {
             **source_state,
@@ -461,6 +467,11 @@ def _process_source(
     )
     stages["diff"] = diff_result.to_dict()
     normalised_diff = diff_result.normalised_diff
+    if diff_result.diff_path:
+        logger.info(
+            "Source %s: Stage 3 — %s saved → %s",
+            source_id, diff_result.diff_type, diff_result.diff_path,
+        )
 
     _save_source_state(snapshot_dir, source_id, {
         **source_state,
@@ -486,7 +497,14 @@ def _process_source(
         ],
     }
 
+    logger.info(
+        "Source %s: Stage 4 — %d candidate(s)%s",
+        source_id,
+        len(relevance_result.candidates),
+        " [fast-pass]" if relevance_result.fast_pass_triggered else "",
+    )
     if not relevance_result.candidates:
+        logger.info("Source %s: FILTERED after Stage 4 — no relevant IPFR pages found", source_id)
         log_entry["outcome"] = "no_change"
         return
 
@@ -514,7 +532,12 @@ def _process_source(
         "candidates_out": len(biencoder_result.candidate_pages),
     }
 
+    logger.info(
+        "Source %s: Stage 5 — %d/%d candidates passed bi-encoder",
+        source_id, len(biencoder_result.candidate_pages), len(candidate_ids),
+    )
     if not biencoder_result.candidate_pages:
+        logger.info("Source %s: FILTERED after Stage 5 — no pages passed bi-encoder threshold", source_id)
         for page_id in candidate_ids:
             rejected_candidates.append(RejectedCandidate(
                 source_id=source_id,
@@ -564,7 +587,15 @@ def _process_source(
                 reranked_score=p.reranked_score,
             ))
 
+    logger.info(
+        "Source %s: Stage 6 — %d/%d confirmed by cross-encoder%s",
+        source_id,
+        len(ce_result.confirmed_pages),
+        len(stage5_candidate_ids),
+        f" (+{len(ce_result.graph_propagated_pages)} graph-propagated)" if ce_result.graph_propagated_pages else "",
+    )
     if not ce_result.confirmed_pages:
+        logger.info("Source %s: FILTERED after Stage 6 — no pages confirmed by cross-encoder", source_id)
         log_entry["outcome"] = "no_change"
         return
 
@@ -594,6 +625,10 @@ def _process_source(
         stage5_scores=stage5_page_scores,
         stage6_confirmed=confirmed_dicts,
     ))
+    logger.info(
+        "Source %s: TRIGGER — %d confirmed IPFR page(s): %s",
+        source_id, len(confirmed_ids), sorted(confirmed_ids),
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -821,9 +856,12 @@ def _git_commit_snapshots(
                 capture_output=True,
             )
             subprocess.run(["git", "push", "origin", "HEAD"], check=True, capture_output=True)
-            logger.info("Committed and pushed updated snapshots (run %s).", run_id)
+            logger.info(
+                "Snapshots committed and pushed → %s (run %s).",
+                snapshot_dir, run_id,
+            )
         else:
-            logger.info("No snapshot changes to commit.")
+            logger.info("No snapshot changes to commit — nothing to push.")
     except subprocess.CalledProcessError as exc:
         logger.warning(
             "Git commit/push failed: %s",

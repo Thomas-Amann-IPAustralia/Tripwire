@@ -207,13 +207,14 @@ def probe_source(
 
     try:
         if source_type == "frl":
-            return _probe_frl(source, stored_signals, session)
+            result = _probe_frl(source, stored_signals, session)
         elif source_type == "rss":
-            return _probe_rss(source, stored_signals, session)
+            result = _probe_rss(source, stored_signals, session)
         else:
-            return _probe_webpage(source, stored_signals, session)
+            result = _probe_webpage(source, stored_signals, session)
+        return result
     except Exception as exc:
-        logger.error("Probe failed for %s: %s", source_id, exc)
+        logger.error("Stage 1 [%s]: probe failed — %s", source_id, exc)
         return ProbeResult(
             source_id=source_id,
             url=url,
@@ -325,7 +326,8 @@ def _probe_frl(
     title_id = _extract_frl_title_id(url)
     if not title_id:
         logger.warning(
-            "FRL URL %s has no extractable titleId, falling back to HEAD.", url
+            "Stage 1 [%s]: FRL URL has no extractable titleId — FALLBACK to HTTP HEAD probe",
+            source_id,
         )
         return _probe_webpage(source, stored, session)
 
@@ -344,7 +346,10 @@ def _probe_frl(
         version = resp.json()
         register_id = version.get("registerId", "")
         if not register_id:
-            # API returned a valid response but no registerId — fall back.
+            logger.warning(
+                "Stage 1 [%s]: FRL API returned no registerId — FALLBACK to HTTP HEAD probe",
+                source_id,
+            )
             return _probe_webpage(source, stored, session)
 
         new_signals: dict[str, Any] = {
@@ -354,7 +359,8 @@ def _probe_frl(
         }
     except Exception as exc:
         logger.warning(
-            "FRL API probe failed for %s, falling back to HEAD: %s", url, exc
+            "Stage 1 [%s]: FRL API unreachable — FALLBACK to HTTP HEAD probe: %s",
+            source_id, exc,
         )
         return _probe_webpage(source, stored, session)
 
