@@ -385,11 +385,12 @@ def _process_source(
 
     probe = probe_source(source, stored_signals, session)
     stages["metadata_probe"] = probe.to_dict()
-    _save_source_state(snapshot_dir, source_id, {
+    source_state = {
         **source_state,
         "probe_signals": probe.signals,
         "last_checked": datetime.now(timezone.utc).isoformat(),
-    })
+    }
+    _save_source_state(snapshot_dir, source_id, source_state)
 
     if not probe.should_proceed:
         log_entry["outcome"] = "no_change"
