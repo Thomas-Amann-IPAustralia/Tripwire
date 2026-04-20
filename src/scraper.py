@@ -117,6 +117,9 @@ def scrape_and_normalise(
     if source_type == "docx":
         return _scrape_docx(url, session)
 
+    if source_type == "rss":
+        return _fetch_raw_rss(url, session)
+
     # --- HTML-based fetch ---
     html: str | None = None
 
@@ -516,6 +519,32 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
                 driver.quit()
             except Exception:
                 pass
+
+
+# ---------------------------------------------------------------------------
+# Private helpers — RSS
+# ---------------------------------------------------------------------------
+
+
+def _fetch_raw_rss(url: str, session: Any) -> str:
+    """Fetch an RSS feed and return the raw XML text.
+
+    Stage 3 (_generate_rss_diff) re-fetches and parses the XML itself; this
+    call exists only so that pipeline.py has a non-empty new_text for
+    source-state bookkeeping.  Trafilatura is intentionally bypassed — it is
+    an HTML extractor and produces garbled output on XML feeds.
+    """
+    from src.errors import RetryableError, http_error
+
+    try:
+        resp = session.get(url, timeout=20)
+    except Exception as exc:
+        raise RetryableError(f"Connection error fetching RSS {url}: {exc}") from exc
+
+    if resp.status_code != 200:
+        raise http_error(resp.status_code, url)
+
+    return resp.text
 
 
 # ---------------------------------------------------------------------------

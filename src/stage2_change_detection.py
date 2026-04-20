@@ -66,7 +66,7 @@ class ChangeDetectionResult:
     @property
     def should_proceed(self) -> bool:
         """Return True if Stage 3 should process this source."""
-        return self.decision in ("significant", "standard")
+        return self.decision in ("significant", "standard", "skipped")
 
     def to_dict(self) -> dict[str, Any]:
         return {
