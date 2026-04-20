@@ -150,8 +150,13 @@ higher_education_research_commercialisation_intellectual_property_hercip,https:/
 protecting_your_intellectual_property_internationally_ebook,https://www.exportfinance.gov.au/media/dfqlxv3g/protecting-your-intellectual-property-internationally-ebook.pdf,Protecting Your Intellectual Property Internationally (eBook),webpage,0.2,fortnightly,Null,FALSE
 ttiap_find_an_attorney,https://www.ttipattorney.gov.au/for-clients/how-to-engage-an-attorney#find-an-attorney,Find an Attorney,webpage,0.2,fortnightly,Null,FALSE
 ttiap_reasons_to_make_a_complaint,https://www.ttipattorney.gov.au/for-clients/how-to-lodge-a-complaint/reasons-to-make-a-complaint,Reasons to Make a Complaint,webpage,0.2,fortnightly,Null,FALSE
-federal_court_practice_notes,Sign up to IP National Practice Area and the RSS feed,Federal Court Practice notes,rss,0.2,daily,Null,FALSE
-federal_court_notice_to_the_profession,Sign up to IP National Practice Area and the RSS feed,Federal Court Notice to the Profession,rss,0.2,daily,Null,FALSE
-wipo_news,https://www.wipo.int/pressroom/en/rss.xml,WIPO News,rss,0.2,daily,Null,FALSE
+fedcourt_news,fedcourt.gov.au/rss/news-and-events-rss,Federal Court news feed,rss,0,fortnightly,Null,FALSE
+fedcourt_judgments,judgments.fedcourt.gov.au/rss/fca-judgments,Federal Court judgments feed,rss,0,fortnightly,Null,FALSE
+disr_news,industry.gov.au/news.xml,DISR - News,rss,0.4,daily,Null,FALSE
+wto_news,wto.org/library/rss/latest_news_e.xml,WTO - News,rss,0.2,weekly,Null,FALSE
+tga_guidance,tga.gov.au/feeds/guidance.xml,TGA - Guidance,rss,0,weekly,Null,FALSE
+tga_resources,tga.gov.au/feeds/resource.xml,TGA - Resources,rss,0,weekly,Null,FALSE
+tga_article,tga.gov.au/feeds/article.xml,TGA - News Articles,rss,0,weekly,Null,FALSE
 wipo_arbitration_mediation_center_news,https://www.wipo.int/amc/en/rss.xml,WIPO Arbitration & Mediation Center News,rss,0.8,daily,Null,FALSE
-euipo_enforcement_news,https://www.euipo.europa.eu/en/enforce-ip/news,EUIPO Enforcement News,rss,0.2,daily,Null,FALSE
+wipo_news,https://www.wipo.int/pressroom/en/rss.xml,WIPO News,rss,0.2,daily,Null,FALSE
+euipo_enforcement_news,https://www.euipo.europa.eu/en/enforce-ip/news,EUIPO Enforcement News,webpage,0,daily,Null,FALSE
