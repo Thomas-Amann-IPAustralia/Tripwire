@@ -58,6 +58,12 @@ _FRL_API_BASE = "https://api.prod.legislation.gov.au"
 # have a supplementary explanatory statement rather than a standalone one.
 _FRL_ES_TYPES = ("ES", "SupplementaryES")
 
+# Standalone heading text that marks the end of the substantive ES content.
+# Any line ≤100 chars (stripped) that contains one of these phrases triggers truncation.
+_FRL_STOP_HEADINGS = ("Attachment A", "Schedule 1", "Notes on sections")
+# Minimum word count for a parlinfo bill summary before falling back to Bills Digest.
+_PARLINFO_MIN_WORDS = 100
+
 # Matches an FRL titleId such as C2004A04969, F1996B00084, F2024L01179.
 _FRL_TITLE_ID_RE = re.compile(r"^[A-Z]\d{4}[A-Z]\w+$")
 
@@ -311,45 +317,95 @@ def _generate_frl_diff(
     return result
 
 
-def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | None, str | None]:
-    """Retrieve the FRL Explanatory Statement (ES) document as plain text.
+def _truncate_at_es_stop_heading(text: str) -> str:
+    """Truncate ES text at the first standalone heading matching a stop phrase.
 
-    Queries the official FRL REST API documents endpoint for the latest
-    compiled version of the title.  The ES document type (``ES``) is tried
-    first; ``SupplementaryES`` is tried as a fallback for instruments that
-    only have a supplementary explanatory statement.
+    A "standalone heading" is a non-empty line whose stripped length is ≤100 chars
+    and which contains one of _FRL_STOP_HEADINGS (case-insensitive).  The heading
+    line itself is excluded; everything before it is returned stripped.
 
-    Downloads the Word (.docx) binary and extracts plain text via mammoth
-    (through ``src.scraper.extract_plain_text_from_docx``).
+    If no matching heading is found the full text is returned unchanged.
+    """
+    lines = text.split("\n")
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped and len(stripped) <= 100:
+            if any(phrase.lower() in stripped.lower() for phrase in _FRL_STOP_HEADINGS):
+                return "\n".join(lines[:i]).strip()
+    return text
+
+
+def _fetch_frl_version_with_reasons(title_id: str, session: Any) -> dict[str, Any]:
+    """Fetch the latest compiled Version for *title_id*, expanding the Reasons array.
+
+    API reference:
+        GET /v1/Versions/Find(titleId='{titleId}',asAtSpecification='Latest')?$expand=Reasons
+        Accept: application/json
+        Base URL: https://api.prod.legislation.gov.au
+        Auth: none required for public read.
+
+    Raises on HTTP error or connection failure; caller is responsible for handling.
+    """
+    endpoint = (
+        f"{_FRL_API_BASE}/v1/Versions/Find("
+        f"titleId='{title_id}',asAtSpecification='Latest')?$expand=Reasons"
+    )
+    resp = session.get(endpoint, headers={"Accept": "application/json"}, timeout=20)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def _extract_amending_instruments(version_data: dict[str, Any]) -> list[dict[str, Any]]:
+    """Extract amending instrument info from a Version's reasons array.
+
+    Returns a list of ``{"title_id": str, "series_type": str}`` dicts — one per
+    ``affect="Amend"`` reason.  ``series_type`` is "Act", "SR", "SLI", or "" if
+    the API did not return it.
+    """
+    instruments: list[dict[str, Any]] = []
+    for reason in version_data.get("reasons", []):
+        if reason.get("affect") != "Amend":
+            continue
+        # affectedByTitle = the title that affected (amended) the monitored source.
+        # amendedByTitle is a secondary fallback field used in some API responses.
+        for field in ("affectedByTitle", "amendedByTitle"):
+            ref = reason.get(field) or {}
+            amending_id = ref.get("titleId")
+            if amending_id:
+                instruments.append({
+                    "title_id": amending_id,
+                    "series_type": ref.get("seriesType", ""),
+                })
+                break
+    return instruments
+
+
+def _fetch_regulation_explainer(
+    amending_title_id: str,
+    session: Any,
+) -> tuple[str | None, str | None]:
+    """Fetch and truncate the ES DOCX for a regulation amending instrument.
+
+    Tries ES then SupplementaryES.  Downloads the Word document via the FRL API,
+    extracts plain text (mammoth → trafilatura), then truncates at the first
+    standalone heading in _FRL_STOP_HEADINGS.
 
     Returns ``(text, error_message)``.  On success ``error_message`` is None.
 
     API reference:
-        Step 1 — confirm the document exists (metadata only):
-            GET /v1/documents/find(titleid='{titleId}',asatspecification='Latest',
+        Step 1 — confirm document exists (metadata check):
+            GET /v1/documents/find(titleid='{amendingTitleId}',asatspecification='Latest',
                 type='ES',format='Word',uniqueTypeNumber=0,volumeNumber=0,
                 rectificationVersionNumber=0)
-            Accept: application/json  →  Document metadata; 404 means no ES.
+            Accept: application/json  →  metadata; 404 means type unavailable.
 
         Step 2 — download binary DOCX (omit Accept header):
             Same URL without Accept: application/json  →  binary DOCX content.
-
-        Base URL: https://api.prod.legislation.gov.au
-        Auth: none required for public read.
-
-    The titleId is extracted from the source URL using _extract_frl_title_id,
-    which handles both the current form (/<titleId>/latest/text) and the legacy
-    /Series/<titleId> form.
     """
-    url = source.get("url", "")
-    title_id = _extract_frl_title_id(url)
-    if not title_id:
-        return None, f"Could not extract FRL titleId from URL: {url!r}"
-
-    def _doc_endpoint(doc_type: str) -> str:
-        return (
+    for doc_type in _FRL_ES_TYPES:
+        endpoint = (
             f"{_FRL_API_BASE}/v1/documents/find("
-            f"titleid='{title_id}',"
+            f"titleid='{amending_title_id}',"
             f"asatspecification='Latest',"
             f"type='{doc_type}',"
             f"format='Word',"
@@ -357,47 +413,220 @@ def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | No
             f"volumeNumber=0,"
             f"rectificationVersionNumber=0)"
         )
-
-    # Step 1: find the first available ES document type.
-    chosen_type: str | None = None
-    for doc_type in _FRL_ES_TYPES:
         try:
             meta_resp = session.get(
-                _doc_endpoint(doc_type),
+                endpoint,
                 headers={"Accept": "application/json"},
                 timeout=20,
             )
             if meta_resp.status_code == 404:
-                continue  # This type does not exist; try the next.
+                continue  # This document type is unavailable; try next.
             meta_resp.raise_for_status()
-            chosen_type = doc_type
-            break
         except Exception as exc:
             return None, (
-                f"FRL API metadata check failed for {title_id} ({doc_type}): {exc}"
+                f"FRL ES metadata check failed for {amending_title_id} ({doc_type}): {exc}"
             )
 
-    if chosen_type is None:
+        try:
+            bin_resp = session.get(endpoint, timeout=60)
+            bin_resp.raise_for_status()
+        except Exception as exc:
+            return None, f"FRL ES download failed for {amending_title_id}: {exc}"
+
+        try:
+            from src.scraper import extract_plain_text_from_docx
+            text = extract_plain_text_from_docx(bin_resp.content)
+            if text:
+                return _truncate_at_es_stop_heading(text), None
+            return None, f"FRL ES for {amending_title_id} yielded empty text after extraction."
+        except Exception as exc:
+            return None, f"FRL ES extraction failed for {amending_title_id}: {exc}"
+
+    return None, f"No ES or SupplementaryES Word document found for {amending_title_id}."
+
+
+def _extract_bill_id(originating_bill_uri: str) -> str | None:
+    """Extract the parlinfo billId from an originatingBillUri.
+
+    Example input (URL-encoded):
+        https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;
+        query=Id%3A%22legislation%2Fbillhome%2Fr7421"
+    Returns: "r7421"
+    """
+    from urllib.parse import unquote
+    decoded = unquote(originating_bill_uri)
+    m = re.search(r'billhome/([^"&\s]+)', decoded)
+    return m.group(1) if m else None
+
+
+def _scrape_text_between(text: str, start_marker: str, end_marker: str) -> str:
+    """Extract the substring of *text* between *start_marker* and *end_marker*.
+
+    Both markers are matched case-insensitively.  The markers themselves are
+    excluded.  If *end_marker* is not found, everything after *start_marker* is
+    returned.  Returns "" if *start_marker* is not found.
+    """
+    lower = text.lower()
+    start_idx = lower.find(start_marker.lower())
+    if start_idx == -1:
+        return ""
+    start_idx += len(start_marker)
+    end_idx = lower.find(end_marker.lower(), start_idx)
+    if end_idx != -1:
+        return text[start_idx:end_idx].strip()
+    return text[start_idx:].strip()
+
+
+def _scrape_parlinfo_page(url: str, session: Any) -> str:
+    """Fetch a parlinfo page and return normalised plain text.
+
+    Attempts a requests-based GET first.  If the extracted text is too short
+    (< 200 chars, indicating a JS-gated page), falls back to Selenium.
+    """
+    from src.scraper import extract_plain_text, _fetch_with_selenium
+    try:
+        resp = session.get(
+            url,
+            timeout=30,
+            headers={"User-Agent": "Mozilla/5.0"},
+        )
+        if resp.status_code == 200:
+            text = extract_plain_text(resp.text)
+            if len(text) >= 200:
+                return text
+    except Exception:
+        pass
+    html = _fetch_with_selenium(url)
+    if html:
+        return extract_plain_text(html)
+    return ""
+
+
+def _fetch_act_bill_summary(
+    amending_title_id: str,
+    session: Any,
+) -> tuple[str | None, str | None]:
+    """Retrieve a plain-English summary for an amending Act via parlinfo.
+
+    Steps:
+    1. GET /v1/Titles('{amendingTitleId}') → originatingBillUri (FRL API).
+    2. Scrape the parlinfo bill page: extract text between "Summary" and
+       "Progress of bill".
+    3. If the summary is < _PARLINFO_MIN_WORDS words, fall back to the Bills
+       Digest: extract text between "Key points" and "Contents".
+
+    Returns ``(text, error_message)``.  On success ``error_message`` is None.
+
+    API reference:
+        GET /v1/Titles('{titleId}')
+        Accept: application/json
+        Response field: originatingBillUri (null for non-Acts)
+        Base URL: https://api.prod.legislation.gov.au
+    """
+    titles_endpoint = f"{_FRL_API_BASE}/v1/Titles('{amending_title_id}')"
+    try:
+        resp = session.get(
+            titles_endpoint,
+            headers={"Accept": "application/json"},
+            timeout=20,
+        )
+        resp.raise_for_status()
+        title_data = resp.json()
+    except Exception as exc:
+        return None, f"FRL Titles API failed for {amending_title_id}: {exc}"
+
+    bill_uri = title_data.get("originatingBillUri")
+    if not bill_uri:
+        return None, f"No originatingBillUri for Act {amending_title_id}."
+
+    bill_id = _extract_bill_id(bill_uri)
+
+    # Scrape parlinfo bill home page; extract the Summary section.
+    page_text = _scrape_parlinfo_page(bill_uri, session)
+    summary_raw = _scrape_text_between(page_text, "Summary", "Progress of bill")
+    summary = _normalise_diff_text(summary_raw) if summary_raw else ""
+
+    if summary and len(summary.split()) >= _PARLINFO_MIN_WORDS:
+        return summary, None
+
+    # Bills Digest fallback when summary is absent or too short.
+    if bill_id:
+        digest_url = (
+            f"https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;"
+            f"query=BillId_Phrase%3A%22{bill_id}%22%20Dataset%3Abillsdgs;rec=0"
+        )
+        digest_raw = _scrape_parlinfo_page(digest_url, session)
+        digest_text = _scrape_text_between(digest_raw, "Key points", "Contents")
+        digest_text = _normalise_diff_text(digest_text) if digest_text else ""
+        if digest_text:
+            return digest_text, None
+
+    if summary:
+        return summary, None
+    return None, f"No bill summary found for Act {amending_title_id} (bill ID: {bill_id})."
+
+
+def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | None, str | None]:
+    """Retrieve the FRL change explainer for the latest compilation.
+
+    Identifies the amending instrument(s) that caused the new compilation via
+    the FRL Versions API reasons array, then retrieves the appropriate document:
+
+    - Regulations (seriesType SR or SLI): fetches the amending instrument's
+      Explanatory Statement DOCX via the FRL API; truncates at the first
+      standalone heading in _FRL_STOP_HEADINGS.
+
+    - Acts (seriesType Act): retrieves the amending Act's originatingBillUri
+      from the FRL Titles API, then scrapes the parlinfo bill summary.  Falls
+      back to the Bills Digest if the summary is < _PARLINFO_MIN_WORDS words.
+
+    API-first: all metadata is retrieved via the FRL API.  Scraping is used
+    only for parlinfo content (no FRL API equivalent exists).
+
+    Returns ``(text, error_message)``.  On success ``error_message`` is None.
+    When multiple amending instruments are found their explainers are
+    concatenated with a ``\\n\\n---\\n\\n`` separator.
+    """
+    url = source.get("url", "")
+    title_id = _extract_frl_title_id(url)
+    if not title_id:
+        return None, f"Could not extract FRL titleId from URL: {url!r}"
+
+    # Step 1: get the latest Version with its reasons to find amending instrument(s).
+    try:
+        version_data = _fetch_frl_version_with_reasons(title_id, session)
+    except Exception as exc:
+        return None, f"FRL Versions API failed for {title_id}: {exc}"
+
+    amending_instruments = _extract_amending_instruments(version_data)
+
+    if not amending_instruments:
         return None, (
-            f"No ES or SupplementaryES Word document found for title {title_id}."
+            f"No amending instruments found in version reasons for {title_id}. "
+            f"This may be the first (as-made) version with no amendment history."
         )
 
-    # Step 2: download the binary DOCX.
-    try:
-        bin_resp = session.get(_doc_endpoint(chosen_type), timeout=60)
-        bin_resp.raise_for_status()
-    except Exception as exc:
-        return None, f"FRL ES binary download failed for {title_id}: {exc}"
+    # Step 2: fetch explainer for each amending instrument and concatenate.
+    texts: list[str] = []
+    errors: list[str] = []
+    for instrument in amending_instruments:
+        amending_id = instrument["title_id"]
+        series_type = instrument["series_type"]
 
-    # Step 3: extract plain text from the DOCX via mammoth → trafilatura.
-    try:
-        from src.scraper import extract_plain_text_from_docx
-        text = extract_plain_text_from_docx(bin_resp.content)
+        if series_type == "Act":
+            text, err = _fetch_act_bill_summary(amending_id, session)
+        else:
+            # SR, SLI, or unknown → try regulation ES path.
+            text, err = _fetch_regulation_explainer(amending_id, session)
+
         if text:
-            return text, None
-        return None, f"FRL ES for {title_id} yielded empty text after extraction."
-    except Exception as exc:
-        return None, f"FRL ES text extraction failed for {title_id}: {exc}"
+            texts.append(text)
+        if err:
+            errors.append(err)
+
+    if texts:
+        return "\n\n---\n\n".join(texts), None
+    return None, "; ".join(errors) if errors else "No explainer found."
 
 
 # ---------------------------------------------------------------------------
