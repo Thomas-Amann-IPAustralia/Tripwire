@@ -245,6 +245,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
             log_entry["outcome"] = "error"
             log_entry["error_type"] = type(exc).__name__
             log_entry["error_message"] = str(exc)
+            _record_source_failure(snapshot_dir, source_id, exc)
 
         log_entry["duration_seconds"] = time.monotonic() - t_source
         run_log_rows.append(log_entry)
@@ -278,6 +279,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
             crossencoder_truncation_pairs=_collect_truncation_pairs(run_log_rows),
             conn=conn,
             config=config,
+            snapshot_dir=snapshot_dir,
         )
         conn.close()
         _write_github_summary(run_id, observation_mode=True, bundles=bundles, assessments=[])
@@ -328,6 +330,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
         crossencoder_truncation_pairs=crossencoder_truncation_pairs,
         conn=conn,
         config=config,
+        snapshot_dir=snapshot_dir,
     )
 
     conn.close()
@@ -400,20 +403,24 @@ def _process_source(
 
     probe = probe_source(source, stored_signals, session)
     stages["metadata_probe"] = probe.to_dict()
+    # Build the prospective post-probe state in memory only.  It is only
+    # persisted once we know the downstream scrape/validation will not fail,
+    # otherwise a failed run leaves `last_checked` and `probe_signals` updated
+    # against a baseline that was never captured — the frequency gate then
+    # skips retries and the probe falsely reports "unchanged" on the next run.
     source_state = {
         **source_state,
         "probe_signals": probe.signals,
         "last_checked": datetime.now(timezone.utc).isoformat(),
     }
-    _save_source_state(snapshot_dir, source_id, source_state)
 
     logger.info("Source %s: Stage 1 probe=%s", source_id, probe.decision)
     if not probe.should_proceed:
         # Even when Stage 1 signals no change, we must scrape once to
         # establish a content baseline.  Without one, future changes will
         # produce a "first_run" diff with no before/after context.  This
-        # situation arises when a prior scrape attempt failed after Stage 1
-        # had already persisted the probe signals.
+        # situation arises when a prior scrape attempt failed before a
+        # baseline was ever captured.
         if source_state.get("previous_text") is None:
             logger.info(
                 "Source %s: Stage 1 says %s but no content baseline found — "
@@ -429,6 +436,7 @@ def _process_source(
                 probe.decision,
             )
             log_entry["outcome"] = "no_change"
+            _save_source_state_success(snapshot_dir, source_id, source_state)
             return
 
     # ---- Scrape / fetch new content -------------------------------------
@@ -471,7 +479,7 @@ def _process_source(
     if not change_result.should_proceed:
         logger.info("Source %s: FILTERED after Stage 2 — %s", source_id, change_result.decision)
         log_entry["outcome"] = "no_change"
-        _save_source_state(snapshot_dir, source_id, {
+        _save_source_state_success(snapshot_dir, source_id, {
             **source_state,
             "previous_hash": _sha256(new_text),
             "previous_text": new_text,
@@ -503,7 +511,7 @@ def _process_source(
             source_id, diff_result.diff_type, diff_result.diff_path,
         )
 
-    _save_source_state(snapshot_dir, source_id, {
+    _save_source_state_success(snapshot_dir, source_id, {
         **source_state,
         "previous_hash": _sha256(new_text),
         "previous_text": new_text,
@@ -821,6 +829,42 @@ def _save_source_state(
     path = _source_state_path(snapshot_dir, source_id)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(state, indent=2), encoding="utf-8")
+
+
+def _save_source_state_success(
+    snapshot_dir: Path, source_id: str, state: dict[str, Any]
+) -> None:
+    """Persist state on a successful run.
+
+    Clears any prior failure markers and resets the consecutive-failure
+    counter so the health alert resets as soon as the source recovers.
+    """
+    clean = {k: v for k, v in state.items()
+             if k not in ("last_error", "last_error_at", "consecutive_failures")}
+    _save_source_state(snapshot_dir, source_id, clean)
+
+
+def _record_source_failure(
+    snapshot_dir: Path, source_id: str, exc: BaseException
+) -> None:
+    """Record a per-source failure without poisoning the probe baseline.
+
+    Loads the existing state from disk and writes back only the failure
+    metadata.  ``last_checked`` and ``probe_signals`` are intentionally
+    preserved as they were before this run so the frequency gate does not
+    skip retries and Stage 1 still compares against the last known-good
+    baseline.
+    """
+    try:
+        state = _load_source_state(snapshot_dir, source_id)
+        state["last_error"] = f"{type(exc).__name__}: {exc}"
+        state["last_error_at"] = datetime.now(timezone.utc).isoformat()
+        state["consecutive_failures"] = int(state.get("consecutive_failures", 0)) + 1
+        _save_source_state(snapshot_dir, source_id, state)
+    except Exception as record_exc:
+        logger.warning(
+            "Could not record failure metadata for %s: %s", source_id, record_exc
+        )
 
 
 # ---------------------------------------------------------------------------

@@ -80,6 +80,19 @@ jobs:
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install -r requirements.txt
 
+      # Selenium smoke test — fails the run early if Chrome or
+      # selenium-stealth cannot launch headlessly.  Without this, a broken
+      # driver is only visible after every force_selenium source reports a
+      # failure in its state.json.
+      - name: Selenium smoke test
+        run: |
+          python - <<'PY'
+          from src.scraper import build_selenium_driver
+          d = build_selenium_driver()
+          print("Chrome:", d.capabilities.get("browserVersion"))
+          d.quit()
+          PY
+
       # ------------------------------------------------------------------
       # 3. Cache Hugging Face model weights (lazy-load means we pay once).
       #    Both models are cached together since the bi-encoder is a subset

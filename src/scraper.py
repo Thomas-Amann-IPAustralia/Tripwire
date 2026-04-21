@@ -118,7 +118,7 @@ def scrape_and_normalise(
         return _scrape_docx(url, session)
 
     if source_type == "rss":
-        return _fetch_raw_rss(url, session)
+        return _fetch_raw_rss(url, session, force_selenium=force_selenium)
 
     # --- HTML-based fetch ---
     html: str | None = None
@@ -343,9 +343,25 @@ def build_selenium_driver():
     selenium.webdriver.Chrome
         A freshly initialised WebDriver.  The caller MUST call ``driver.quit()``
         in a ``finally`` block.
+
+    Raises
+    ------
+    src.errors.PermanentError
+        If the ``selenium`` package is missing, Chrome/chromedriver cannot be
+        launched, or ``selenium-stealth`` is not importable.  All three are
+        environment-configuration problems that will not resolve on retry, so
+        they surface as ``PermanentError`` rather than silent warnings.
     """
-    from selenium import webdriver
-    from selenium.webdriver.chrome.options import Options
+    from src.errors import PermanentError
+
+    try:
+        from selenium import webdriver
+        from selenium.webdriver.chrome.options import Options
+    except ImportError as exc:
+        raise PermanentError(
+            f"Selenium is required but not installed: {exc}. "
+            "Install with: pip install selenium>=4.10"
+        ) from exc
 
     options = Options()
     options.add_argument("--headless=new")
@@ -362,24 +378,36 @@ def build_selenium_driver():
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
 
-    driver = webdriver.Chrome(options=options)
+    try:
+        driver = webdriver.Chrome(options=options)
+    except Exception as exc:
+        raise PermanentError(
+            f"Chrome WebDriver failed to launch: {exc}. "
+            "Ensure google-chrome-stable is installed and selenium>=4.10 is "
+            "available (Selenium Manager auto-downloads a compatible chromedriver)."
+        ) from exc
 
     try:
         from selenium_stealth import stealth
-        stealth(
-            driver,
-            languages=["en-US", "en"],
-            vendor="Google Inc.",
-            platform="Win32",
-            webgl_vendor="Intel Inc.",
-            renderer="Intel Iris OpenGL Engine",
-            fix_hairline=True,
-        )
-    except ImportError:
-        logger.warning(
-            "selenium-stealth not installed; JS-layer fingerprint patches skipped. "
+    except ImportError as exc:
+        try:
+            driver.quit()
+        except Exception:
+            pass
+        raise PermanentError(
+            f"selenium-stealth is required for stealth patches but is not installed: {exc}. "
             "Install with: pip install selenium-stealth"
-        )
+        ) from exc
+
+    stealth(
+        driver,
+        languages=["en-US", "en"],
+        vendor="Google Inc.",
+        platform="Win32",
+        webgl_vendor="Intel Inc.",
+        renderer="Intel Iris OpenGL Engine",
+        fix_hairline=True,
+    )
 
     return driver
 
@@ -405,12 +433,11 @@ def _fetch_with_selenium(url: str) -> str | None:
         Raw HTML of the rendered page, or ``None`` if the driver could not
         be initialised (e.g. Chrome not installed) or an exception occurred.
     """
-    driver = None
-    try:
-        driver = build_selenium_driver()
-    except Exception as exc:
-        logger.warning("Selenium driver initialisation failed: %s", exc)
-        return None
+    # build_selenium_driver raises PermanentError on environment-level
+    # problems (missing Chrome, missing selenium-stealth).  Let those
+    # propagate so the pipeline records them against the source rather than
+    # silently falling through to a generic "all fetch attempts failed".
+    driver = build_selenium_driver()
 
     try:
         from selenium.webdriver.common.by import By
@@ -438,11 +465,10 @@ def _fetch_with_selenium(url: str) -> str | None:
         logger.warning("Selenium fetch failed for %s: %s", url, exc)
         return None
     finally:
-        if driver is not None:
-            try:
-                driver.quit()
-            except Exception:
-                pass
+        try:
+            driver.quit()
+        except Exception:
+            pass
 
 
 def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | None:
@@ -475,12 +501,9 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
         Raw response body, or ``None`` if the driver could not start or the
         fetch raised an exception.
     """
-    driver = None
-    try:
-        driver = build_selenium_driver()
-    except Exception as exc:
-        logger.warning("Selenium driver initialisation failed: %s", exc)
-        return None
+    # build_selenium_driver raises PermanentError on environment-level
+    # problems; let it propagate so callers can record the real cause.
+    driver = build_selenium_driver()
 
     try:
         from selenium.webdriver.common.by import By
@@ -514,11 +537,10 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
         logger.warning("Selenium raw fetch failed for %s: %s", url, exc)
         return None
     finally:
-        if driver is not None:
-            try:
-                driver.quit()
-            except Exception:
-                pass
+        try:
+            driver.quit()
+        except Exception:
+            pass
 
 
 # ---------------------------------------------------------------------------
@@ -526,25 +548,49 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
 # ---------------------------------------------------------------------------
 
 
-def _fetch_raw_rss(url: str, session: Any) -> str:
+def _fetch_raw_rss(url: str, session: Any, *, force_selenium: bool = False) -> str:
     """Fetch an RSS feed and return the raw XML text.
 
     Stage 3 (_generate_rss_diff) re-fetches and parses the XML itself; this
     call exists only so that pipeline.py has a non-empty new_text for
     source-state bookkeeping.  Trafilatura is intentionally bypassed — it is
     an HTML extractor and produces garbled output on XML feeds.
+
+    Fetch strategy mirrors the HTML path:
+      1. If ``force_selenium`` is False, try plain ``requests``.
+      2. If ``requests`` fails with a connection error or the response body
+         contains a block-page signature, fall back to
+         ``fetch_raw_with_selenium`` which runs a synchronous XHR inside an
+         authenticated browser context (required for WAF-protected feeds such
+         as fedcourt.gov.au).
     """
     from src.errors import RetryableError, http_error
 
-    try:
-        resp = session.get(url, timeout=20)
-    except Exception as exc:
-        raise RetryableError(f"Connection error fetching RSS {url}: {exc}") from exc
+    if not force_selenium:
+        try:
+            resp = session.get(url, timeout=20)
+        except Exception as exc:
+            logger.warning(
+                "Requests fetch failed for RSS %s: %s — falling back to Selenium.",
+                url, exc,
+            )
+        else:
+            if resp.status_code != 200:
+                raise http_error(resp.status_code, url)
+            if not _has_block_signature(resp.text):
+                return resp.text
+            logger.info(
+                "Block signature detected in RSS response for %s — falling back to Selenium.",
+                url,
+            )
 
-    if resp.status_code != 200:
-        raise http_error(resp.status_code, url)
-
-    return resp.text
+    raw = fetch_raw_with_selenium(url)
+    if raw is None:
+        raise RetryableError(f"All fetch attempts failed for RSS {url}")
+    if _has_block_signature(raw):
+        from src.errors import captcha_error
+        raise captcha_error(url)
+    return raw
 
 
 # ---------------------------------------------------------------------------
