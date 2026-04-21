@@ -350,7 +350,9 @@ def _fetch_frl_version_with_reasons(title_id: str, session: Any) -> dict[str, An
         f"{_FRL_API_BASE}/v1/Versions/Find("
         f"titleId='{title_id}',asAtSpecification='Latest')?$expand=Reasons"
     )
+    logger.debug("FRL Versions API: GET %s", endpoint)
     resp = session.get(endpoint, headers={"Accept": "application/json"}, timeout=20)
+    logger.debug("FRL Versions API: status=%s", resp.status_code)
     resp.raise_for_status()
     return resp.json()
 
@@ -392,15 +394,29 @@ def _fetch_regulation_explainer(
 
     Returns ``(text, error_message)``.  On success ``error_message`` is None.
 
-    API reference:
-        Step 1 — confirm document exists (metadata check):
-            GET /v1/documents/find(titleid='{amendingTitleId}',asatspecification='Latest',
-                type='ES',format='Word',uniqueTypeNumber=0,volumeNumber=0,
-                rectificationVersionNumber=0)
-            Accept: application/json  →  metadata; 404 means type unavailable.
+    UI ↔ API mapping (auditable alignment):
+        UI URL:
+            https://www.legislation.gov.au/{amendingTitleId}/latest/text/explanatory-statement
+        API equivalent:
+            GET {_FRL_API_BASE}/v1/documents/find(
+                titleid='{amendingTitleId}',
+                asatspecification='Latest',    # UI "/latest/"
+                type='ES',                     # UI ".../explanatory-statement"
+                format='Word',                 # downloadable DOCX (mammoth-friendly)
+                uniqueTypeNumber=0, volumeNumber=0, rectificationVersionNumber=0)
 
-        Step 2 — download binary DOCX (omit Accept header):
-            Same URL without Accept: application/json  →  binary DOCX content.
+        Verified against docs/FRL-API/FRL_Instructions.json:
+            type   ∈ {Primary, ES, SupportingMaterial, IncorporatedByReference, SupplementaryES}
+            format ∈ {Word, Pdf, Epub, NameOnly}
+
+    API call sequence:
+        Step 1 — confirm document exists (metadata check):
+            GET ...find(...)  with  Accept: application/json
+            → Document metadata; HTTP 404 means that type is unavailable.
+
+        Step 2 — download binary DOCX:
+            GET ...find(...)  with Accept header omitted
+            → binary DOCX content (application/octet-stream).
     """
     for doc_type in _FRL_ES_TYPES:
         endpoint = (
@@ -413,11 +429,19 @@ def _fetch_regulation_explainer(
             f"volumeNumber=0,"
             f"rectificationVersionNumber=0)"
         )
+        logger.debug(
+            "FRL ES [%s]: attempting type=%s format=Word → %s",
+            amending_title_id, doc_type, endpoint,
+        )
         try:
             meta_resp = session.get(
                 endpoint,
                 headers={"Accept": "application/json"},
                 timeout=20,
+            )
+            logger.debug(
+                "FRL ES [%s]: metadata status=%s",
+                amending_title_id, meta_resp.status_code,
             )
             if meta_resp.status_code == 404:
                 continue  # This document type is unavailable; try next.
@@ -432,6 +456,11 @@ def _fetch_regulation_explainer(
             bin_resp.raise_for_status()
         except Exception as exc:
             return None, f"FRL ES download failed for {amending_title_id}: {exc}"
+
+        logger.debug(
+            "FRL ES [%s]: downloaded type=%s bytes=%d",
+            amending_title_id, doc_type, len(bin_resp.content or b""),
+        )
 
         try:
             from src.scraper import extract_plain_text_from_docx
@@ -502,51 +531,77 @@ def _scrape_parlinfo_page(url: str, session: Any) -> str:
     return ""
 
 
+def _fetch_frl_title(title_id: str, session: Any) -> dict[str, Any]:
+    """Fetch the Title resource for *title_id* from the FRL API.
+
+    API reference:
+        GET /v1/Titles('{titleId}')
+        Accept: application/json
+        Base URL: https://api.prod.legislation.gov.au
+
+    Returns the parsed JSON body.  Raises on HTTP/connection failure; caller
+    is responsible for error handling.  The returned object contains (among
+    other fields) ``seriesType`` (Act | SR | SLI, nullable) and, for Acts,
+    ``originatingBillUri``.
+    """
+    endpoint = f"{_FRL_API_BASE}/v1/Titles('{title_id}')"
+    logger.debug("FRL Titles API: GET %s", endpoint)
+    resp = session.get(
+        endpoint,
+        headers={"Accept": "application/json"},
+        timeout=20,
+    )
+    resp.raise_for_status()
+    return resp.json()
+
+
 def _fetch_act_bill_summary(
     amending_title_id: str,
     session: Any,
+    prefetched_title: dict[str, Any] | None = None,
 ) -> tuple[str | None, str | None]:
     """Retrieve a plain-English summary for an amending Act via parlinfo.
 
     Steps:
     1. GET /v1/Titles('{amendingTitleId}') → originatingBillUri (FRL API).
+       If *prefetched_title* is supplied (e.g. when the caller already fetched
+       it for series-type routing), reuse it instead of re-calling the API.
     2. Scrape the parlinfo bill page: extract text between "Summary" and
        "Progress of bill".
     3. If the summary is < _PARLINFO_MIN_WORDS words, fall back to the Bills
        Digest: extract text between "Key points" and "Contents".
 
     Returns ``(text, error_message)``.  On success ``error_message`` is None.
-
-    API reference:
-        GET /v1/Titles('{titleId}')
-        Accept: application/json
-        Response field: originatingBillUri (null for non-Acts)
-        Base URL: https://api.prod.legislation.gov.au
     """
-    titles_endpoint = f"{_FRL_API_BASE}/v1/Titles('{amending_title_id}')"
-    try:
-        resp = session.get(
-            titles_endpoint,
-            headers={"Accept": "application/json"},
-            timeout=20,
-        )
-        resp.raise_for_status()
-        title_data = resp.json()
-    except Exception as exc:
-        return None, f"FRL Titles API failed for {amending_title_id}: {exc}"
+    if prefetched_title is not None:
+        title_data = prefetched_title
+    else:
+        try:
+            title_data = _fetch_frl_title(amending_title_id, session)
+        except Exception as exc:
+            return None, f"FRL Titles API failed for {amending_title_id}: {exc}"
 
     bill_uri = title_data.get("originatingBillUri")
     if not bill_uri:
         return None, f"No originatingBillUri for Act {amending_title_id}."
 
     bill_id = _extract_bill_id(bill_uri)
+    logger.debug(
+        "FRL Act path [%s]: originatingBillUri=%s billId=%s",
+        amending_title_id, bill_uri, bill_id,
+    )
 
     # Scrape parlinfo bill home page; extract the Summary section.
     page_text = _scrape_parlinfo_page(bill_uri, session)
     summary_raw = _scrape_text_between(page_text, "Summary", "Progress of bill")
     summary = _normalise_diff_text(summary_raw) if summary_raw else ""
+    summary_word_count = len(summary.split()) if summary else 0
+    logger.debug(
+        "FRL Act path [%s]: parlinfo summary words=%d (threshold=%d)",
+        amending_title_id, summary_word_count, _PARLINFO_MIN_WORDS,
+    )
 
-    if summary and len(summary.split()) >= _PARLINFO_MIN_WORDS:
+    if summary and summary_word_count >= _PARLINFO_MIN_WORDS:
         return summary, None
 
     # Bills Digest fallback when summary is absent or too short.
@@ -554,6 +609,10 @@ def _fetch_act_bill_summary(
         digest_url = (
             f"https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;"
             f"query=BillId_Phrase%3A%22{bill_id}%22%20Dataset%3Abillsdgs;rec=0"
+        )
+        logger.debug(
+            "FRL Act path [%s]: Bills Digest fallback URL=%s",
+            amending_title_id, digest_url,
         )
         digest_raw = _scrape_parlinfo_page(digest_url, session)
         digest_text = _scrape_text_between(digest_raw, "Key points", "Contents")
@@ -582,6 +641,14 @@ def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | No
 
     API-first: all metadata is retrieved via the FRL API.  Scraping is used
     only for parlinfo content (no FRL API equivalent exists).
+
+    Series-type resolution: ``reasons[].affectedByTitle.seriesType`` is
+    nullable in the FRL API; when it's absent, route via an authoritative
+    ``/v1/Titles('{id}')`` lookup instead of silently defaulting to the
+    regulation path (which 404s for Acts).  The fetched Title is reused in
+    ``_fetch_act_bill_summary`` so we make at most one Titles call per
+    instrument.  If the Titles lookup itself fails, we default to the
+    regulation path to preserve historical behaviour for SR/SLI cases.
 
     Returns ``(text, error_message)``.  On success ``error_message`` is None.
     When multiple amending instruments are found their explainers are
@@ -612,11 +679,40 @@ def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | No
     for instrument in amending_instruments:
         amending_id = instrument["title_id"]
         series_type = instrument["series_type"]
+        prefetched_title: dict[str, Any] | None = None
+
+        # If seriesType is missing from the reasons array, fetch the Title to
+        # determine it authoritatively.  Reuse the fetched Title for the Act
+        # path to avoid a second Titles API call.
+        if not series_type:
+            try:
+                prefetched_title = _fetch_frl_title(amending_id, session)
+                series_type = (prefetched_title.get("seriesType") or "").strip()
+                logger.debug(
+                    "FRL routing [%s]: seriesType resolved via Titles API → %r",
+                    amending_id, series_type or "(still empty)",
+                )
+            except Exception as exc:
+                errors.append(
+                    f"Titles API fallback failed for {amending_id}: {exc}; "
+                    f"defaulting to regulation ES path."
+                )
+                logger.debug(
+                    "FRL routing [%s]: Titles API fallback failed (%s); "
+                    "defaulting to regulation path", amending_id, exc,
+                )
 
         if series_type == "Act":
-            text, err = _fetch_act_bill_summary(amending_id, session)
+            logger.debug("FRL routing [%s]: Act path", amending_id)
+            text, err = _fetch_act_bill_summary(
+                amending_id, session, prefetched_title=prefetched_title
+            )
         else:
             # SR, SLI, or unknown → try regulation ES path.
+            logger.debug(
+                "FRL routing [%s]: regulation ES path (seriesType=%r)",
+                amending_id, series_type,
+            )
             text, err = _fetch_regulation_explainer(amending_id, session)
 
         if text:

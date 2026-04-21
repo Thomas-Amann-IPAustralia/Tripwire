@@ -9,6 +9,7 @@ side-effects outside of tmp_path.
 from __future__ import annotations
 
 import json
+import logging
 from pathlib import Path
 from unittest.mock import MagicMock, patch, call
 
@@ -555,6 +556,24 @@ class TestFetchActBillSummary:
         assert text is None
         assert err is not None
 
+    def test_prefetched_title_skips_titles_api(self):
+        """Passing prefetched_title must avoid a fresh /v1/Titles call."""
+        with patch(
+            "src.stage3_diff._scrape_parlinfo_page",
+            return_value=_parlinfo_html(_LONG_SUMMARY_TEXT),
+        ):
+            s = MagicMock()
+            s.get.side_effect = AssertionError(
+                "session.get must not be called when prefetched_title is supplied"
+            )
+            text, err = _fetch_act_bill_summary(
+                _AMENDING_ACT_TITLE_ID,
+                s,
+                prefetched_title=_TITLES_RESPONSE_WITH_BILL_URI,
+            )
+        assert err is None
+        assert text is not None
+
     def test_bills_digest_url_contains_bill_id(self):
         digest_content = " ".join(["digestword"] * 150)
         digest_calls = []
@@ -620,7 +639,9 @@ class TestFetchFrlExplainer:
 
         assert err is None
         assert text == bill_text
-        mock_act.assert_called_once_with(_AMENDING_ACT_TITLE_ID, s)
+        mock_act.assert_called_once_with(
+            _AMENDING_ACT_TITLE_ID, s, prefetched_title=None
+        )
 
     def test_returns_error_when_no_amending_instruments(self):
         with patch(
@@ -681,8 +702,8 @@ class TestFetchFrlExplainer:
         assert "Text from instrument 2." in text
         assert "---" in text
 
-    def test_unknown_series_type_uses_regulation_path(self):
-        """Empty seriesType should fall through to regulation ES path."""
+    def test_missing_series_type_routes_via_titles_api_to_regulation(self):
+        """Empty seriesType triggers a Titles API lookup; SLI routes to regulation."""
         version = {
             "reasons": [
                 {
@@ -697,6 +718,86 @@ class TestFetchFrlExplainer:
                 return_value=version,
             ),
             patch(
+                "src.stage3_diff._fetch_frl_title",
+                return_value={"id": "F2024L00099", "seriesType": "SLI"},
+            ) as mock_title,
+            patch(
+                "src.stage3_diff._fetch_regulation_explainer",
+                return_value=("Regulation text.", None),
+            ) as mock_reg,
+            patch("src.stage3_diff._fetch_act_bill_summary") as mock_act,
+        ):
+            text, err = _fetch_frl_explainer(_make_source(), MagicMock())
+
+        mock_title.assert_called_once()
+        mock_reg.assert_called_once()
+        mock_act.assert_not_called()
+        assert text == "Regulation text."
+
+    def test_missing_series_type_routes_via_titles_api_to_act(self):
+        """Empty seriesType resolved to 'Act' via Titles API routes to the Act path."""
+        version = {
+            "reasons": [
+                {
+                    "affect": "Amend",
+                    "affectedByTitle": {"titleId": "C2099A00001", "seriesType": None},
+                }
+            ]
+        }
+        title_payload = {
+            "id": "C2099A00001",
+            "seriesType": "Act",
+            "originatingBillUri": (
+                "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;"
+                "query=Id%3A%22legislation%2Fbillhome%2Fr9999\""
+            ),
+        }
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_version_with_reasons",
+                return_value=version,
+            ),
+            patch(
+                "src.stage3_diff._fetch_frl_title",
+                return_value=title_payload,
+            ) as mock_title,
+            patch(
+                "src.stage3_diff._fetch_act_bill_summary",
+                return_value=("Bill summary text.", None),
+            ) as mock_act,
+            patch("src.stage3_diff._fetch_regulation_explainer") as mock_reg,
+        ):
+            text, err = _fetch_frl_explainer(_make_source(), MagicMock())
+
+        mock_title.assert_called_once()
+        mock_reg.assert_not_called()
+        mock_act.assert_called_once()
+        # The prefetched Title must be forwarded so _fetch_act_bill_summary
+        # does not re-call the Titles API.
+        _, kwargs = mock_act.call_args
+        assert kwargs.get("prefetched_title") is title_payload
+        assert text == "Bill summary text."
+
+    def test_titles_api_failure_defaults_to_regulation_path(self):
+        """If Titles API fallback raises, routing defaults to the regulation path."""
+        version = {
+            "reasons": [
+                {
+                    "affect": "Amend",
+                    "affectedByTitle": {"titleId": "F2024L00099", "seriesType": ""},
+                }
+            ]
+        }
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_version_with_reasons",
+                return_value=version,
+            ),
+            patch(
+                "src.stage3_diff._fetch_frl_title",
+                side_effect=Exception("Titles API down"),
+            ),
+            patch(
                 "src.stage3_diff._fetch_regulation_explainer",
                 return_value=("Regulation text.", None),
             ) as mock_reg,
@@ -707,6 +808,46 @@ class TestFetchFrlExplainer:
         mock_reg.assert_called_once()
         mock_act.assert_not_called()
         assert text == "Regulation text."
+
+    def test_regulation_path_emits_debug_logs(self, caplog):
+        """DEBUG logs must surface routing and endpoint detail for FRL regulations."""
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_version_with_reasons",
+                return_value=_VERSION_WITH_REGULATION_REASON,
+            ),
+            patch(
+                "src.stage3_diff._fetch_regulation_explainer",
+                return_value=("ES text.", None),
+            ),
+            caplog.at_level(logging.DEBUG, logger="src.stage3_diff"),
+        ):
+            _fetch_frl_explainer(_make_source(), MagicMock())
+
+        messages = " ".join(r.getMessage() for r in caplog.records)
+        assert "regulation ES path" in messages
+        assert _AMENDING_REGULATION_TITLE_ID in messages
+
+    def test_populated_series_type_does_not_trigger_titles_api(self):
+        """When seriesType is already populated on the reason, skip the Titles lookup."""
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_version_with_reasons",
+                return_value=_VERSION_WITH_ACT_REASON,
+            ),
+            patch("src.stage3_diff._fetch_frl_title") as mock_title,
+            patch(
+                "src.stage3_diff._fetch_act_bill_summary",
+                return_value=("Bill summary.", None),
+            ) as mock_act,
+        ):
+            _fetch_frl_explainer(_make_source_act(), MagicMock())
+
+        mock_title.assert_not_called()
+        mock_act.assert_called_once()
+        # No prefetched_title is passed because _fetch_frl_explainer did not need one.
+        _, kwargs = mock_act.call_args
+        assert kwargs.get("prefetched_title") is None
 
 
 # ---------------------------------------------------------------------------
