@@ -57,6 +57,17 @@ def _probe_unchanged(source_id: str, url: str = "https://example.com/page") -> o
     )
 
 
+def _probe_changed(source_id: str, url: str = "https://example.com/page") -> object:
+    """Return a ProbeResult that says 'changed' (should_proceed=True)."""
+    from src.stage1_metadata import ProbeResult
+    return ProbeResult(
+        source_id=source_id,
+        url=url,
+        decision="changed",
+        signals={"etag": '"xyz"', "content_length": "9999"},
+    )
+
+
 def _make_log_entry(source_id: str, url: str) -> dict:
     return {
         "run_id": "test",
@@ -102,7 +113,11 @@ class TestBaselineGuard:
             },
         )
 
-        scraped_text = "This is the current page content."
+        scraped_text = (
+            "This is the current page content. Padded to exceed the two-hundred "
+            "character minimum so that content validation passes and Stage 2 is "
+            "reached. The test only cares that scraping was called, not the content."
+        )
         calls = []
 
         def fake_scrape(url, source_type, session, force_selenium=False):
@@ -214,7 +229,11 @@ class TestBaselineGuard:
             },
         )
 
-        scraped_text = "Fresh page content for baseline."
+        scraped_text = (
+            "Fresh page content for baseline. This text is long enough to pass "
+            "content validation and represents a realistic first scrape result. "
+            "Padding added to exceed the two-hundred character minimum threshold."
+        )
         saved_states: list[dict] = []
 
         def capture_save(snapshot_dir, sid, state):
@@ -252,4 +271,241 @@ class TestBaselineGuard:
         final_state = saved_states[-1]
         assert final_state.get("previous_text") == scraped_text, (
             "Expected previous_text to be saved after forced baseline scrape"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Validation wired into _process_source
+# ---------------------------------------------------------------------------
+
+
+class TestValidationInPipeline:
+    """Verify that validate_scraped_content is called for non-RSS sources
+    and that a failed validation preserves the existing snapshot."""
+
+    def _run(self, tmp_path, source, scraped_text, state, **patch_extras):
+        """Helper: run _process_source under standard patches, return log_entry."""
+        from src.pipeline import _process_source
+
+        source_id = source["source_id"]
+        _make_state_file(tmp_path, source_id, state)
+
+        log_entry = _make_log_entry(source_id, source["url"])
+
+        patches = {
+            "src.stage1_metadata.probe_source": _probe_unchanged(source_id, source["url"]),
+            "src.stage1_metadata.is_due_for_check": True,
+            "src.scraper.scrape_and_normalise": scraped_text,
+            **patch_extras,
+        }
+
+        ctx_managers = [
+            patch(target, return_value=val) for target, val in patches.items()
+        ]
+
+        with (
+            patch("src.pipeline._save_source_state"),
+            *ctx_managers,
+        ):
+            _process_source(
+                source=source,
+                source_id=source_id,
+                source_type=source["source_type"],
+                source_url=source["url"],
+                source_importance=float(source.get("importance", 0.5)),
+                session=MagicMock(),
+                conn=MagicMock(),
+                config={},
+                snapshot_dir=tmp_path,
+                run_id="test-run",
+                source_records=[],
+                rejected_candidates=[],
+                log_entry=log_entry,
+            )
+
+        return log_entry
+
+    def test_empty_content_preserves_snapshot(self, tmp_path):
+        """Empty scrape result must raise PermanentError; existing snapshot must not be overwritten."""
+        from src.errors import PermanentError
+        from src.pipeline import _process_source
+
+        source_id = "empty_content_source"
+        source = _make_source(source_id=source_id)
+        existing_text = "A" * 500
+        _make_state_file(
+            tmp_path, source_id,
+            {"previous_text": existing_text, "previous_hash": "oldhash",
+             "probe_signals": {}, "last_checked": "2026-01-01T00:00:00+00:00"},
+        )
+
+        log_entry = _make_log_entry(source_id, source["url"])
+        saved_states: list[dict] = []
+
+        def capture_save(snapshot_dir, sid, state):
+            saved_states.append(state)
+
+        with (
+            patch("src.stage1_metadata.probe_source", return_value=_probe_changed(source_id)),
+            patch("src.stage1_metadata.is_due_for_check", return_value=True),
+            patch("src.scraper.scrape_and_normalise", return_value=""),
+            patch("src.pipeline._save_source_state", side_effect=capture_save),
+        ):
+            with pytest.raises(PermanentError):
+                _process_source(
+                    source=source,
+                    source_id=source_id,
+                    source_type="webpage",
+                    source_url=source["url"],
+                    source_importance=0.5,
+                    session=MagicMock(),
+                    conn=MagicMock(),
+                    config={},
+                    snapshot_dir=tmp_path,
+                    run_id="test-run",
+                    source_records=[],
+                    rejected_candidates=[],
+                    log_entry=log_entry,
+                )
+
+        # Stage 1 may save probe signals, but no save should have written
+        # the empty string as previous_text.
+        for state in saved_states:
+            assert state.get("previous_text") != "", (
+                "Empty content must not overwrite existing snapshot"
+            )
+
+    def test_short_content_preserves_snapshot(self, tmp_path):
+        """Content under 200 chars must raise PermanentError referencing 'too short'."""
+        from src.errors import PermanentError
+        from src.pipeline import _process_source
+
+        source_id = "short_content_source"
+        source = _make_source(source_id=source_id)
+        _make_state_file(
+            tmp_path, source_id,
+            {"previous_text": "B" * 500, "previous_hash": "oldhash",
+             "probe_signals": {}, "last_checked": "2026-01-01T00:00:00+00:00"},
+        )
+
+        log_entry = _make_log_entry(source_id, source["url"])
+        short_text = "This is the current page content."  # 33 chars
+
+        with (
+            patch("src.stage1_metadata.probe_source", return_value=_probe_changed(source_id)),
+            patch("src.stage1_metadata.is_due_for_check", return_value=True),
+            patch("src.scraper.scrape_and_normalise", return_value=short_text),
+            patch("src.pipeline._save_source_state"),
+        ):
+            with pytest.raises(PermanentError) as exc_info:
+                _process_source(
+                    source=source,
+                    source_id=source_id,
+                    source_type="webpage",
+                    source_url=source["url"],
+                    source_importance=0.5,
+                    session=MagicMock(),
+                    conn=MagicMock(),
+                    config={},
+                    snapshot_dir=tmp_path,
+                    run_id="test-run",
+                    source_records=[],
+                    rejected_candidates=[],
+                    log_entry=log_entry,
+                )
+
+        assert "too short" in str(exc_info.value).lower(), (
+            f"Expected 'too short' in error message, got: {exc_info.value}"
+        )
+
+    def test_dramatic_shrinkage_preserves_snapshot(self, tmp_path):
+        """Content at 2% of previous length must raise PermanentError."""
+        from src.errors import PermanentError
+        from src.pipeline import _process_source
+
+        source_id = "shrinkage_source"
+        source = _make_source(source_id=source_id)
+        previous_text = "C" * 10000
+        _make_state_file(
+            tmp_path, source_id,
+            {"previous_text": previous_text, "previous_hash": "oldhash",
+             "probe_signals": {}, "last_checked": "2026-01-01T00:00:00+00:00"},
+        )
+
+        log_entry = _make_log_entry(source_id, source["url"])
+        # 200 chars passes the minimum-length check but is 2% of 10 000.
+        shrunken_text = "D" * 200
+
+        with (
+            patch("src.stage1_metadata.probe_source", return_value=_probe_changed(source_id)),
+            patch("src.stage1_metadata.is_due_for_check", return_value=True),
+            patch("src.scraper.scrape_and_normalise", return_value=shrunken_text),
+            patch("src.pipeline._save_source_state"),
+        ):
+            with pytest.raises(PermanentError) as exc_info:
+                _process_source(
+                    source=source,
+                    source_id=source_id,
+                    source_type="webpage",
+                    source_url=source["url"],
+                    source_importance=0.5,
+                    session=MagicMock(),
+                    conn=MagicMock(),
+                    config={},
+                    snapshot_dir=tmp_path,
+                    run_id="test-run",
+                    source_records=[],
+                    rejected_candidates=[],
+                    log_entry=log_entry,
+                )
+
+        error_msg = str(exc_info.value)
+        assert "10000" in error_msg and "200" in error_msg, (
+            f"Expected both lengths in error message, got: {error_msg}"
+        )
+
+    def test_rss_validation_skipped(self, tmp_path):
+        """RSS sources must skip content validation even when content is empty."""
+        from src.pipeline import _process_source
+        from src.stage2_change_detection import ChangeDetectionResult
+
+        source_id = "rss_source"
+        source = _make_source(source_id=source_id, source_type="rss")
+        _make_state_file(
+            tmp_path, source_id,
+            {"probe_signals": {}, "last_checked": "2026-01-01T00:00:00+00:00"},
+        )
+
+        log_entry = _make_log_entry(source_id, source["url"])
+        log_entry["source_type"] = "rss"
+
+        no_change = ChangeDetectionResult(
+            source_id=source_id, decision="no_change", hash_matched=True
+        )
+
+        with (
+            patch("src.stage1_metadata.probe_source", return_value=_probe_changed(source_id)),
+            patch("src.stage1_metadata.is_due_for_check", return_value=True),
+            patch("src.scraper.scrape_and_normalise", return_value=""),
+            patch("src.stage2_change_detection.detect_change", return_value=no_change),
+            patch("src.pipeline._save_source_state"),
+        ):
+            _process_source(
+                source=source,
+                source_id=source_id,
+                source_type="rss",
+                source_url=source["url"],
+                source_importance=0.5,
+                session=MagicMock(),
+                conn=MagicMock(),
+                config={},
+                snapshot_dir=tmp_path,
+                run_id="test-run",
+                source_records=[],
+                rejected_candidates=[],
+                log_entry=log_entry,
+            )
+
+        assert log_entry["outcome"] == "no_change", (
+            "RSS source with empty content should not raise; expected outcome='no_change'"
         )

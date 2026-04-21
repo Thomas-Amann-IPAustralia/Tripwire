@@ -441,6 +441,18 @@ def _process_source(
     previous_text = source_state.get("previous_text")
     previous_hash = source_state.get("previous_hash")
 
+    # ---- Content Validation (non-RSS sources only) ----------------------
+    # RSS sources are exempt: scrape_and_normalise returns raw XML for RSS,
+    # and Stage 3 re-fetches/parses the feed independently.  Applying length
+    # or CAPTCHA checks to raw XML produces false positives.
+    if source_type != "rss":
+        from src.validation import validate_scraped_content
+        validate_scraped_content(
+            new_text,
+            source_url,
+            previous_length=len(previous_text) if previous_text else None,
+        )
+
     # ---- Stage 2: Change Detection (webpages only) ----------------------
     log_entry["stage_reached"] = "stage2"
     fingerprint_enabled = config.get("change_detection", {}).get(
