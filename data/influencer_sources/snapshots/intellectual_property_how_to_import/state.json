@@ -4,6 +4,6 @@
   },
   "last_checked": "2026-04-21T03:56:39.801706+00:00",
   "last_error": "PermanentError: CAPTCHA or bot-detection page detected at https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property",
-  "last_error_at": "2026-04-21T16:28:52.729074+00:00",
-  "consecutive_failures": 2
+  "last_error_at": "2026-04-21T16:36:26.206998+00:00",
+  "consecutive_failures": 3
 }

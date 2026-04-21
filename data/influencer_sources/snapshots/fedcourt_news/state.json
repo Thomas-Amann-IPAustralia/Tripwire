@@ -2,6 +2,6 @@
   "probe_signals": {},
   "last_checked": "2026-04-21T03:56:49.781467+00:00",
   "last_error": "RetryableError: All fetch attempts failed for RSS https://fedcourt.gov.au/rss/news-and-events-rss",
-  "last_error_at": "2026-04-21T16:29:01.394259+00:00",
-  "consecutive_failures": 2
+  "last_error_at": "2026-04-21T16:36:34.676766+00:00",
+  "consecutive_failures": 3
 }
