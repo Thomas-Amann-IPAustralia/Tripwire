@@ -33,6 +33,7 @@ Usage (called by pipeline.py after every run):
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import smtplib
@@ -40,6 +41,7 @@ import sqlite3
 from dataclasses import dataclass, field
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from pathlib import Path
 from typing import Any
 
 logger = logging.getLogger(__name__)
@@ -95,6 +97,7 @@ def evaluate_and_alert(
     crossencoder_truncation_pairs: list[tuple[str, str]],
     conn: sqlite3.Connection,
     config: dict[str, Any],
+    snapshot_dir: Path | str | None = None,
 ) -> HealthCheckResult:
     """Evaluate all health conditions and send an alert email if any fire.
 
@@ -155,6 +158,13 @@ def evaluate_and_alert(
     )
     if alert:
         result.alerts.append(alert)
+
+    # ------------------------------------------------------------------
+    # Condition 5: Sources with no captured baseline
+    # ------------------------------------------------------------------
+    if snapshot_dir is not None:
+        for alert in _check_no_baseline(run_log_rows, Path(snapshot_dir)):
+            result.alerts.append(alert)
 
     # ------------------------------------------------------------------
     # Send email if any alert fired
@@ -297,6 +307,76 @@ def _check_crossencoder_truncation(
             ),
         )
     return None
+
+
+def _check_no_baseline(
+    run_log_rows: list[dict[str, Any]],
+    snapshot_dir: Path,
+) -> list[HealthAlert]:
+    """Flag sources that have never successfully captured a content baseline.
+
+    A "baseline" is the ``previous_text`` field in the source's ``state.json``.
+    Its absence means Stages 2-6 have nothing to diff or score against — the
+    source is effectively invisible to the pipeline regardless of how often
+    Stage 1 probes succeed.
+
+    Walks every source seen in ``run_log_rows`` (which includes sources that
+    ran, errored, or were skipped for frequency) and reads the corresponding
+    ``state.json``.  A source is alerted if ``previous_text`` is missing and
+    ``last_error`` indicates a prior failure, OR the source has been
+    processed at least once (state.json exists) without ever establishing a
+    baseline.
+    """
+    alerts: list[HealthAlert] = []
+    seen: set[str] = set()
+
+    for row in run_log_rows:
+        source_id = row.get("source_id", "")
+        if not source_id or source_id in seen:
+            continue
+        seen.add(source_id)
+
+        state_path = snapshot_dir / source_id / "state.json"
+        if not state_path.exists():
+            continue
+
+        try:
+            state = json.loads(state_path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+
+        if state.get("previous_text"):
+            continue
+
+        last_error = state.get("last_error")
+        consecutive = int(state.get("consecutive_failures", 0))
+
+        # Only alert once the source has been attempted and failed.  A
+        # brand-new registry entry whose state.json has only probe_signals
+        # (e.g. the first run captured Stage 1 but the baseline will be
+        # scraped next run) is not yet worth alerting on.
+        if not last_error and consecutive == 0:
+            continue
+
+        alerts.append(HealthAlert(
+            condition="no_baseline",
+            severity="warning",
+            summary=(
+                f"Source `{source_id}` has no captured content baseline "
+                f"(consecutive failures: {consecutive})"
+            ),
+            detail=(
+                f"**Source:** `{source_id}`\n\n"
+                f"**Consecutive failures:** {consecutive}\n\n"
+                f"**Last error:** {last_error or 'unknown'}\n\n"
+                "Stages 2-6 cannot run for this source until a baseline is captured. "
+                "Check whether the source URL requires Selenium (set `force_selenium=TRUE` "
+                "in `source_registry.csv`), whether the site is blocking the fetcher, "
+                "or whether validation is rejecting the content as too short."
+            ),
+        ))
+
+    return alerts
 
 
 # ---------------------------------------------------------------------------

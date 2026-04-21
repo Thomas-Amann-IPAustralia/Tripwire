@@ -265,12 +265,23 @@ def test_normalise_text_preserves_case():
 # ---------------------------------------------------------------------------
 
 
-def test_fetch_with_selenium_returns_none_when_driver_fails():
-    """If driver initialisation raises, _fetch_with_selenium returns None."""
-    with patch("src.scraper.build_selenium_driver", side_effect=Exception("Chrome not found")):
+def test_fetch_with_selenium_propagates_driver_init_failure():
+    """Driver init failures are environment-level and must propagate.
+
+    Previously the function swallowed the exception and returned None, which
+    caused force_selenium sources to silently fail with a generic
+    "all fetch attempts failed" error.  After Fix D the underlying cause
+    (e.g. missing Chrome) is surfaced to the pipeline's per-source failure
+    record.
+    """
+    from src.errors import PermanentError
+    with patch(
+        "src.scraper.build_selenium_driver",
+        side_effect=PermanentError("Chrome not found"),
+    ):
         from src.scraper import _fetch_with_selenium
-        result = _fetch_with_selenium("https://example.com")
-    assert result is None
+        with pytest.raises(PermanentError, match="Chrome not found"):
+            _fetch_with_selenium("https://example.com")
 
 
 def test_fetch_with_selenium_returns_none_on_page_load_error():
@@ -291,12 +302,16 @@ def test_fetch_with_selenium_returns_none_on_page_load_error():
 # ---------------------------------------------------------------------------
 
 
-def test_fetch_raw_with_selenium_returns_none_when_driver_fails():
-    """If driver initialisation raises, fetch_raw_with_selenium returns None."""
-    with patch("src.scraper.build_selenium_driver", side_effect=Exception("Chrome not found")):
+def test_fetch_raw_with_selenium_propagates_driver_init_failure():
+    """Driver init failures propagate — see Fix D in plan."""
+    from src.errors import PermanentError
+    with patch(
+        "src.scraper.build_selenium_driver",
+        side_effect=PermanentError("Chrome not found"),
+    ):
         from src.scraper import fetch_raw_with_selenium
-        result = fetch_raw_with_selenium("https://example.com/sitemap.xml")
-    assert result is None
+        with pytest.raises(PermanentError, match="Chrome not found"):
+            fetch_raw_with_selenium("https://example.com/sitemap.xml")
 
 
 def test_fetch_raw_with_selenium_navigates_then_uses_xhr():
