@@ -15,31 +15,105 @@ from unittest.mock import MagicMock, patch, call
 import pytest
 
 from src.stage3_diff import (
+    _extract_bill_id,
+    _extract_amending_instruments,
     _extract_frl_title_id,
+    _fetch_act_bill_summary,
     _fetch_frl_explainer,
+    _fetch_frl_version_with_reasons,
+    _fetch_regulation_explainer,
     _FRL_API_BASE,
     _FRL_ES_TYPES,
+    _FRL_STOP_HEADINGS,
+    _PARLINFO_MIN_WORDS,
     _normalise_diff_text,
+    _scrape_text_between,
+    _truncate_at_es_stop_heading,
     generate_diff,
     load_previous_snapshot,
 )
 
 
 # ---------------------------------------------------------------------------
-# Helpers
+# Shared fixtures / helpers
 # ---------------------------------------------------------------------------
 
+_AMENDING_REGULATION_TITLE_ID = "F2024L01299"
+_AMENDING_ACT_TITLE_ID = "C2026A00001"
 
-def _make_source(source_id: str = "frl_trademarks",
-                 url: str = "https://www.legislation.gov.au/Series/C2004A00913") -> dict:
+_VERSION_WITH_REGULATION_REASON = {
+    "registerId": "F2026C00009",
+    "compilationNumber": "53",
+    "reasons": [
+        {
+            "affect": "Amend",
+            "affectedByTitle": {
+                "titleId": _AMENDING_REGULATION_TITLE_ID,
+                "seriesType": "SLI",
+                "name": "Trade Marks Amendment Regulations 2024",
+            },
+        }
+    ],
+}
+
+_VERSION_WITH_ACT_REASON = {
+    "registerId": "C2026C00071",
+    "compilationNumber": "9",
+    "reasons": [
+        {
+            "affect": "Amend",
+            "affectedByTitle": {
+                "titleId": _AMENDING_ACT_TITLE_ID,
+                "seriesType": "Act",
+                "name": "Combatting Antisemitism Act 2026",
+            },
+        }
+    ],
+}
+
+_VERSION_NO_REASONS = {
+    "registerId": "F2026C00001",
+    "compilationNumber": "1",
+    "reasons": [],
+}
+
+_TITLES_RESPONSE_WITH_BILL_URI = {
+    "id": _AMENDING_ACT_TITLE_ID,
+    "originatingBillUri": (
+        "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;"
+        "query=Id%3A%22legislation%2Fbillhome%2Fr7421\""
+    ),
+}
+
+_TITLES_RESPONSE_NO_BILL_URI = {
+    "id": _AMENDING_ACT_TITLE_ID,
+    "originatingBillUri": None,
+}
+
+
+def _make_source(
+    source_id: str = "frl_trademarks",
+    url: str = "https://www.legislation.gov.au/F1996B00084/latest/text",
+) -> dict:
     return {"source_id": source_id, "url": url, "source_type": "frl"}
 
 
-def _make_session_with_responses(*responses) -> MagicMock:
-    """Return a session whose successive .get() calls return *responses."""
-    session = MagicMock()
-    session.get.side_effect = list(responses)
-    return session
+def _make_source_act(
+    source_id: str = "frl_abf_act",
+    url: str = "https://www.legislation.gov.au/C2015A00040/latest/text",
+) -> dict:
+    return {"source_id": source_id, "url": url, "source_type": "frl"}
+
+
+def _json_resp(body: dict, status_code: int = 200) -> MagicMock:
+    resp = MagicMock()
+    resp.status_code = status_code
+    resp.json.return_value = body
+    if status_code >= 400:
+        resp.raise_for_status.side_effect = Exception(f"HTTP {status_code}")
+    else:
+        resp.raise_for_status.return_value = None
+    return resp
 
 
 def _meta_response(status_code: int = 200) -> MagicMock:
@@ -61,6 +135,40 @@ def _binary_response(content: bytes = b"fake-docx-bytes") -> MagicMock:
     return resp
 
 
+def _session(*responses) -> MagicMock:
+    """Build a session whose successive .get() calls return *responses* in order."""
+    s = MagicMock()
+    s.get.side_effect = list(responses)
+    return s
+
+
+# Long enough parlinfo summary (> _PARLINFO_MIN_WORDS words)
+_LONG_SUMMARY_TEXT = " ".join(["word"] * 120)
+_SHORT_SUMMARY_TEXT = " ".join(["word"] * 50)
+
+# Simulated parlinfo page wrapping a summary section
+def _parlinfo_html(summary_text: str) -> str:
+    return f"""
+    <html><body>
+    <h2>Summary</h2>
+    <p>{summary_text}</p>
+    <h2>Progress of bill</h2>
+    <p>Introduced in Senate...</p>
+    </body></html>
+    """
+
+
+def _bills_digest_html(keypoints_text: str) -> str:
+    return f"""
+    <html><body>
+    <h2>Key points</h2>
+    <p>{keypoints_text}</p>
+    <h2>Contents</h2>
+    <p>Table of contents...</p>
+    </body></html>
+    """
+
+
 # ---------------------------------------------------------------------------
 # _extract_frl_title_id
 # ---------------------------------------------------------------------------
@@ -68,7 +176,6 @@ def _binary_response(content: bytes = b"fake-docx-bytes") -> MagicMock:
 
 class TestExtractFrlTitleId:
     def test_extracts_from_latest_text_url(self):
-        """Real registry URL format: /<titleId>/latest/text."""
         assert _extract_frl_title_id(
             "https://www.legislation.gov.au/F1996B00084/latest/text"
         ) == "F1996B00084"
@@ -79,7 +186,6 @@ class TestExtractFrlTitleId:
         ) == "C2015A00040"
 
     def test_extracts_from_series_url(self):
-        """Legacy /Series/<titleId> form."""
         assert _extract_frl_title_id(
             "https://www.legislation.gov.au/Series/C2004A00913"
         ) == "C2004A00913"
@@ -89,224 +195,518 @@ class TestExtractFrlTitleId:
 
 
 # ---------------------------------------------------------------------------
-# _fetch_frl_explainer — API endpoint correctness
+# _truncate_at_es_stop_heading
 # ---------------------------------------------------------------------------
 
 
-class TestFetchFrlExplainerEndpoints:
-    def test_uses_correct_api_base_url(self):
-        """Calls must go to api.prod.legislation.gov.au, not www.legislation.gov.au."""
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
-            _fetch_frl_explainer(_make_source(), session)
+class TestTruncateAtEsStopHeading:
+    def test_truncates_at_attachment_a(self):
+        text = "Intro text.\n\nMore content here.\n\nAttachment A\nDetail that should be excluded."
+        result = _truncate_at_es_stop_heading(text)
+        assert "Intro text." in result
+        assert "More content here." in result
+        assert "Detail that should be excluded." not in result
+        assert "Attachment A" not in result
 
-        first_url = session.get.call_args_list[0][0][0]
-        assert first_url.startswith(_FRL_API_BASE), (
-            f"Expected API base {_FRL_API_BASE!r}, got {first_url!r}"
-        )
+    def test_truncates_at_schedule_1(self):
+        text = "Preamble.\n\nSchedule 1\nAmendments..."
+        result = _truncate_at_es_stop_heading(text)
+        assert "Preamble." in result
+        assert "Amendments" not in result
 
-    def test_metadata_request_uses_accept_json_header(self):
-        """Metadata (existence check) request must send Accept: application/json."""
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
-            _fetch_frl_explainer(_make_source(), session)
+    def test_truncates_at_notes_on_sections(self):
+        text = "Overview of changes.\n\nNotes on sections\nSection 3: ..."
+        result = _truncate_at_es_stop_heading(text)
+        assert "Overview of changes." in result
+        assert "Section 3" not in result
 
-        meta_call = session.get.call_args_list[0]
-        assert meta_call[1]["headers"]["Accept"] == "application/json"
+    def test_case_insensitive_match(self):
+        text = "Content.\n\nATTACHMENT A\nExcluded."
+        result = _truncate_at_es_stop_heading(text)
+        assert "Content." in result
+        assert "Excluded." not in result
 
-    def test_binary_download_has_no_accept_json_header(self):
-        """Binary download must NOT send Accept: application/json."""
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
-            _fetch_frl_explainer(_make_source(), session)
+    def test_returns_full_text_when_no_stop_heading(self):
+        text = "This document has no stop headings at all. Just content."
+        assert _truncate_at_es_stop_heading(text) == text
 
-        bin_call = session.get.call_args_list[1]
-        headers = bin_call[1].get("headers", {})
-        assert headers.get("Accept") != "application/json"
+    def test_does_not_truncate_on_long_line_with_phrase(self):
+        """A body-text line >100 chars containing 'Attachment A' should not trigger truncation."""
+        long_line = "The amendment inserts a reference to Attachment A of the principal instrument, which sets out the detailed technical specifications for the process."
+        text = f"Intro.\n\n{long_line}\n\nSchedule 1\nExcluded."
+        result = _truncate_at_es_stop_heading(text)
+        # Long line should NOT trigger truncation; "Schedule 1" on its own line should.
+        assert long_line in result
+        assert "Excluded." not in result
 
-    def test_endpoint_contains_title_id(self):
-        """The document endpoint must embed the titleId extracted from the source URL."""
-        # Use the real registry URL format (/<titleId>/latest/text), not the legacy Series form.
-        url = "https://www.legislation.gov.au/C2004A00652/latest/text"
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
-            _fetch_frl_explainer(_make_source(url=url), session)
-
-        first_url = session.get.call_args_list[0][0][0]
-        assert "C2004A00652" in first_url
-
-    def test_endpoint_specifies_type_es(self):
-        """The first attempt must use type='ES'."""
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
-            _fetch_frl_explainer(_make_source(), session)
-
-        first_url = session.get.call_args_list[0][0][0]
-        assert "type='ES'" in first_url
-
-    def test_endpoint_specifies_format_word(self):
-        """The document endpoint must request Word format."""
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
-            _fetch_frl_explainer(_make_source(), session)
-
-        first_url = session.get.call_args_list[0][0][0]
-        assert "format='Word'" in first_url
-
-    def test_endpoint_specifies_asatspecification_latest(self):
-        """The document endpoint must use asatspecification='Latest'."""
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
-            _fetch_frl_explainer(_make_source(), session)
-
-        first_url = session.get.call_args_list[0][0][0]
-        assert "Latest" in first_url
+    def test_handles_heading_with_suffix(self):
+        """Headings like 'Attachment A – Background' should still trigger truncation."""
+        text = "Content.\n\nAttachment A – Background\nExcluded."
+        result = _truncate_at_es_stop_heading(text)
+        assert "Content." in result
+        assert "Excluded." not in result
 
 
 # ---------------------------------------------------------------------------
-# _fetch_frl_explainer — success path
+# _extract_amending_instruments
 # ---------------------------------------------------------------------------
 
 
-class TestFetchFrlExplainerSuccess:
+class TestExtractAmendingInstruments:
+    def test_extracts_regulation_amending_instrument(self):
+        instruments = _extract_amending_instruments(_VERSION_WITH_REGULATION_REASON)
+        assert len(instruments) == 1
+        assert instruments[0]["title_id"] == _AMENDING_REGULATION_TITLE_ID
+        assert instruments[0]["series_type"] == "SLI"
+
+    def test_extracts_act_amending_instrument(self):
+        instruments = _extract_amending_instruments(_VERSION_WITH_ACT_REASON)
+        assert len(instruments) == 1
+        assert instruments[0]["title_id"] == _AMENDING_ACT_TITLE_ID
+        assert instruments[0]["series_type"] == "Act"
+
+    def test_returns_empty_for_no_reasons(self):
+        assert _extract_amending_instruments(_VERSION_NO_REASONS) == []
+
+    def test_ignores_non_amend_reasons(self):
+        version = {
+            "reasons": [
+                {"affect": "AsMade", "affectedByTitle": {"titleId": "X2024A00001", "seriesType": "Act"}},
+                {"affect": "ChangeDate", "affectedByTitle": {"titleId": "Y2024A00001", "seriesType": "Act"}},
+            ]
+        }
+        assert _extract_amending_instruments(version) == []
+
+    def test_handles_multiple_amend_reasons(self):
+        version = {
+            "reasons": [
+                {
+                    "affect": "Amend",
+                    "affectedByTitle": {"titleId": "F2024L00001", "seriesType": "SLI"},
+                },
+                {
+                    "affect": "Amend",
+                    "affectedByTitle": {"titleId": "F2024L00002", "seriesType": "SR"},
+                },
+            ]
+        }
+        instruments = _extract_amending_instruments(version)
+        assert len(instruments) == 2
+        assert instruments[0]["title_id"] == "F2024L00001"
+        assert instruments[1]["title_id"] == "F2024L00002"
+
+    def test_falls_back_to_amendedByTitle_field(self):
+        """If affectedByTitle is absent, amendedByTitle should be used."""
+        version = {
+            "reasons": [
+                {
+                    "affect": "Amend",
+                    "amendedByTitle": {"titleId": "F2024L00099", "seriesType": "SLI"},
+                }
+            ]
+        }
+        instruments = _extract_amending_instruments(version)
+        assert len(instruments) == 1
+        assert instruments[0]["title_id"] == "F2024L00099"
+
+    def test_missing_series_type_returns_empty_string(self):
+        version = {
+            "reasons": [
+                {
+                    "affect": "Amend",
+                    "affectedByTitle": {"titleId": "F2024L00001"},
+                }
+            ]
+        }
+        instruments = _extract_amending_instruments(version)
+        assert instruments[0]["series_type"] == ""
+
+
+# ---------------------------------------------------------------------------
+# _fetch_frl_version_with_reasons — API call structure
+# ---------------------------------------------------------------------------
+
+
+class TestFetchFrlVersionWithReasons:
+    def test_calls_correct_endpoint(self):
+        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
+        _fetch_frl_version_with_reasons("F1996B00084", s)
+        url_called = s.get.call_args[0][0]
+        assert "api.prod.legislation.gov.au" in url_called
+        assert "F1996B00084" in url_called
+        assert "asAtSpecification='Latest'" in url_called
+        assert "$expand=Reasons" in url_called
+
+    def test_sends_accept_json_header(self):
+        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
+        _fetch_frl_version_with_reasons("F1996B00084", s)
+        headers = s.get.call_args[1].get("headers", {})
+        assert headers.get("Accept") == "application/json"
+
+    def test_returns_version_dict(self):
+        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
+        result = _fetch_frl_version_with_reasons("F1996B00084", s)
+        assert result["registerId"] == "F2026C00009"
+        assert "reasons" in result
+
+    def test_raises_on_http_error(self):
+        s = _session(_json_resp({}, status_code=503))
+        with pytest.raises(Exception):
+            _fetch_frl_version_with_reasons("F1996B00084", s)
+
+
+# ---------------------------------------------------------------------------
+# _extract_bill_id
+# ---------------------------------------------------------------------------
+
+
+class TestExtractBillId:
+    def test_extracts_bill_id_from_encoded_uri(self):
+        uri = (
+            "https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;"
+            "query=Id%3A%22legislation%2Fbillhome%2Fr7421\""
+        )
+        assert _extract_bill_id(uri) == "r7421"
+
+    def test_extracts_bill_id_from_decoded_uri(self):
+        uri = 'https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;query=Id:"legislation/billhome/r7137"'
+        assert _extract_bill_id(uri) == "r7137"
+
+    def test_returns_none_when_no_billhome(self):
+        assert _extract_bill_id("https://parlinfo.aph.gov.au/something/else") is None
+
+    def test_returns_none_for_empty_string(self):
+        assert _extract_bill_id("") is None
+
+
+# ---------------------------------------------------------------------------
+# _scrape_text_between
+# ---------------------------------------------------------------------------
+
+
+class TestScrapeTextBetween:
+    def test_extracts_between_markers(self):
+        text = "Intro\nSummary\nThis is the summary content.\nProgress of bill\nRest."
+        result = _scrape_text_between(text, "Summary", "Progress of bill")
+        assert "This is the summary content." in result
+        assert "Intro" not in result
+        assert "Rest." not in result
+
+    def test_case_insensitive(self):
+        text = "SUMMARY\nContent here.\nPROGRESS OF BILL\nAfter."
+        result = _scrape_text_between(text, "Summary", "Progress of bill")
+        assert "Content here." in result
+
+    def test_returns_empty_when_start_not_found(self):
+        assert _scrape_text_between("Some text", "Summary", "Progress of bill") == ""
+
+    def test_returns_rest_when_end_not_found(self):
+        text = "Summary\nContent without end marker."
+        result = _scrape_text_between(text, "Summary", "Progress of bill")
+        assert "Content without end marker." in result
+
+    def test_extracts_key_points_to_contents(self):
+        text = "Header\nKey points\nPoint one.\nPoint two.\nContents\nTable."
+        result = _scrape_text_between(text, "Key points", "Contents")
+        assert "Point one." in result
+        assert "Table." not in result
+
+
+# ---------------------------------------------------------------------------
+# _fetch_regulation_explainer
+# ---------------------------------------------------------------------------
+
+
+class TestFetchRegulationExplainer:
+    def test_uses_amending_title_id_in_endpoint(self):
+        s = _session(_meta_response(200), _binary_response())
+        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
+            _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
+        first_url = s.get.call_args_list[0][0][0]
+        assert _AMENDING_REGULATION_TITLE_ID in first_url
+
+    def test_metadata_request_sends_accept_json(self):
+        s = _session(_meta_response(200), _binary_response())
+        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
+            _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
+        meta_headers = s.get.call_args_list[0][1].get("headers", {})
+        assert meta_headers.get("Accept") == "application/json"
+
+    def test_binary_download_has_no_accept_json(self):
+        s = _session(_meta_response(200), _binary_response())
+        with patch("src.scraper.extract_plain_text_from_docx", return_value="ES text"):
+            _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
+        bin_headers = s.get.call_args_list[1][1].get("headers", {})
+        assert bin_headers.get("Accept") != "application/json"
+
     def test_returns_extracted_text_on_success(self):
-        session = _make_session_with_responses(
-            _meta_response(200),   # ES metadata check
-            _binary_response(),    # Binary DOCX download
-        )
-        with patch("src.scraper.extract_plain_text_from_docx",
-                   return_value="This instrument amends the Trade Marks Regulations."):
-            text, err = _fetch_frl_explainer(_make_source(), session)
-
+        s = _session(_meta_response(200), _binary_response())
+        with patch("src.scraper.extract_plain_text_from_docx", return_value="Plain ES text."):
+            text, err = _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
         assert err is None
-        assert text == "This instrument amends the Trade Marks Regulations."
+        assert text == "Plain ES text."
 
-    def test_uses_extract_plain_text_from_docx(self):
-        """Must call extract_plain_text_from_docx with the binary content."""
-        docx_bytes = b"real-docx-content"
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(content=docx_bytes),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx",
-                   return_value="text") as mock_extract:
-            _fetch_frl_explainer(_make_source(), session)
+    def test_truncates_at_attachment_a(self):
+        es_content = "Purpose of the instrument.\n\nAttachment A\nDetail not wanted."
+        s = _session(_meta_response(200), _binary_response())
+        with patch("src.scraper.extract_plain_text_from_docx", return_value=es_content):
+            text, err = _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
+        assert err is None
+        assert "Purpose of the instrument." in text
+        assert "Detail not wanted." not in text
 
-        mock_extract.assert_called_once_with(docx_bytes)
-
-
-# ---------------------------------------------------------------------------
-# _fetch_frl_explainer — SupplementaryES fallback
-# ---------------------------------------------------------------------------
-
-
-class TestFetchFrlExplainerSupplementaryFallback:
-    def test_falls_back_to_supplementary_es_when_es_is_404(self):
-        """If ES returns 404, SupplementaryES should be tried next."""
-        session = _make_session_with_responses(
+    def test_falls_back_to_supplementary_es(self):
+        s = _session(
             _meta_response(404),   # ES: not found
             _meta_response(200),   # SupplementaryES: found
-            _binary_response(),    # Binary download
+            _binary_response(),
         )
-        with patch("src.scraper.extract_plain_text_from_docx", return_value="supp text"):
-            text, err = _fetch_frl_explainer(_make_source(), session)
-
+        with patch("src.scraper.extract_plain_text_from_docx", return_value="Supplementary text"):
+            text, err = _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
         assert err is None
-        assert text == "supp text"
+        assert text == "Supplementary text"
+        supp_url = s.get.call_args_list[1][0][0]
+        assert "SupplementaryES" in supp_url
 
-        # The second metadata call should use SupplementaryES.
-        second_url = session.get.call_args_list[1][0][0]
-        assert "SupplementaryES" in second_url
-
-    def test_returns_error_when_both_types_are_404(self):
-        """If both ES and SupplementaryES are 404, return (None, error_message)."""
-        session = _make_session_with_responses(
-            _meta_response(404),   # ES: not found
-            _meta_response(404),   # SupplementaryES: not found
-        )
-        text, err = _fetch_frl_explainer(_make_source(), session)
-
+    def test_returns_error_when_both_es_types_404(self):
+        s = _session(_meta_response(404), _meta_response(404))
+        text, err = _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
         assert text is None
         assert err is not None
-        assert "C2004A00913" in err
-
-
-# ---------------------------------------------------------------------------
-# _fetch_frl_explainer — error paths
-# ---------------------------------------------------------------------------
-
-
-class TestFetchFrlExplainerErrors:
-    def test_returns_error_on_api_exception(self):
-        session = MagicMock()
-        session.get.side_effect = Exception("connection refused")
-
-        text, err = _fetch_frl_explainer(_make_source(), session)
-
-        assert text is None
-        assert err is not None
-        assert "C2004A00913" in err
-
-    def test_returns_error_on_download_failure(self):
-        """If metadata check passes but binary download fails, return error."""
-        dl_resp = MagicMock()
-        dl_resp.status_code = 503
-        dl_resp.raise_for_status.side_effect = Exception("503 Service Unavailable")
-
-        session = _make_session_with_responses(
-            _meta_response(200),
-            dl_resp,
-        )
-        text, err = _fetch_frl_explainer(_make_source(), session)
-
-        assert text is None
-        assert err is not None
+        assert _AMENDING_REGULATION_TITLE_ID in err
 
     def test_returns_error_on_empty_extracted_text(self):
-        """If mammoth returns empty string, return (None, error_message)."""
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
+        s = _session(_meta_response(200), _binary_response())
         with patch("src.scraper.extract_plain_text_from_docx", return_value=""):
-            text, err = _fetch_frl_explainer(_make_source(), session)
-
+            text, err = _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
         assert text is None
         assert err is not None
 
-    def test_returns_error_on_extract_exception(self):
-        """If extract_plain_text_from_docx raises, return (None, error_message)."""
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx",
-                   side_effect=RuntimeError("mammoth not installed")):
-            text, err = _fetch_frl_explainer(_make_source(), session)
-
+    def test_returns_error_on_api_exception(self):
+        s = MagicMock()
+        s.get.side_effect = Exception("connection refused")
+        text, err = _fetch_regulation_explainer(_AMENDING_REGULATION_TITLE_ID, s)
         assert text is None
         assert err is not None
+
+
+# ---------------------------------------------------------------------------
+# _fetch_act_bill_summary
+# ---------------------------------------------------------------------------
+
+
+class TestFetchActBillSummary:
+    def _make_session_for_act(self, summary_text: str) -> MagicMock:
+        """Session: Titles API → parlinfo page with summary → no digest."""
+        titles_resp = _json_resp(_TITLES_RESPONSE_WITH_BILL_URI)
+        parlinfo_resp = MagicMock()
+        parlinfo_resp.status_code = 200
+        parlinfo_resp.raise_for_status.return_value = None
+        parlinfo_resp.text = _parlinfo_html(summary_text)
+        s = MagicMock()
+        s.get.side_effect = [titles_resp, parlinfo_resp]
+        return s
+
+    def test_calls_titles_api_with_amending_title_id(self):
+        s = self._make_session_for_act(_LONG_SUMMARY_TEXT)
+        with patch("src.stage3_diff._scrape_parlinfo_page", return_value=_parlinfo_html(_LONG_SUMMARY_TEXT)):
+            _fetch_act_bill_summary(_AMENDING_ACT_TITLE_ID, s)
+        titles_url = s.get.call_args_list[0][0][0]
+        assert _AMENDING_ACT_TITLE_ID in titles_url
+        assert "Titles" in titles_url
+
+    def test_returns_summary_when_long_enough(self):
+        with (
+            patch("src.stage3_diff._scrape_parlinfo_page", return_value=_parlinfo_html(_LONG_SUMMARY_TEXT)),
+        ):
+            s = _session(_json_resp(_TITLES_RESPONSE_WITH_BILL_URI))
+            text, err = _fetch_act_bill_summary(_AMENDING_ACT_TITLE_ID, s)
+        assert err is None
+        assert text is not None
+        assert len(text.split()) >= _PARLINFO_MIN_WORDS
+
+    def test_falls_back_to_bills_digest_when_summary_short(self):
+        digest_content = " ".join(["digestword"] * 150)
+        with (
+            patch(
+                "src.stage3_diff._scrape_parlinfo_page",
+                side_effect=[
+                    _parlinfo_html(_SHORT_SUMMARY_TEXT),   # first call: bill home page
+                    _bills_digest_html(digest_content),    # second call: Bills Digest
+                ],
+            ),
+        ):
+            s = _session(_json_resp(_TITLES_RESPONSE_WITH_BILL_URI))
+            text, err = _fetch_act_bill_summary(_AMENDING_ACT_TITLE_ID, s)
+        assert err is None
+        assert text is not None
+        assert "digestword" in text
+
+    def test_returns_error_when_no_originating_bill_uri(self):
+        s = _session(_json_resp(_TITLES_RESPONSE_NO_BILL_URI))
+        text, err = _fetch_act_bill_summary(_AMENDING_ACT_TITLE_ID, s)
+        assert text is None
+        assert err is not None
+        assert _AMENDING_ACT_TITLE_ID in err
+
+    def test_returns_error_on_titles_api_failure(self):
+        s = _session(_json_resp({}, status_code=503))
+        text, err = _fetch_act_bill_summary(_AMENDING_ACT_TITLE_ID, s)
+        assert text is None
+        assert err is not None
+
+    def test_bills_digest_url_contains_bill_id(self):
+        digest_content = " ".join(["digestword"] * 150)
+        digest_calls = []
+
+        def mock_scrape(url, session):
+            digest_calls.append(url)
+            if "billhome" in url or "billId" not in url:
+                return _parlinfo_html(_SHORT_SUMMARY_TEXT)
+            return _bills_digest_html(digest_content)
+
+        with patch("src.stage3_diff._scrape_parlinfo_page", side_effect=mock_scrape):
+            s = _session(_json_resp(_TITLES_RESPONSE_WITH_BILL_URI))
+            _fetch_act_bill_summary(_AMENDING_ACT_TITLE_ID, s)
+
+        assert len(digest_calls) == 2
+        digest_url = digest_calls[1]
+        assert "r7421" in digest_url
+        assert "BillId_Phrase" in digest_url
+        assert "billsdgs" in digest_url
+
+
+# ---------------------------------------------------------------------------
+# _fetch_frl_explainer — full integration with new flow
+# ---------------------------------------------------------------------------
+
+
+class TestFetchFrlExplainer:
+    def test_regulation_path_uses_version_api_then_es(self):
+        """Full regulation path: Version API → find amending instrument → fetch ES."""
+        es_text = "This instrument amends the Trade Marks Regulations."
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_version_with_reasons",
+                return_value=_VERSION_WITH_REGULATION_REASON,
+            ),
+            patch(
+                "src.stage3_diff._fetch_regulation_explainer",
+                return_value=(es_text, None),
+            ) as mock_reg,
+        ):
+            s = MagicMock()
+            text, err = _fetch_frl_explainer(_make_source(), s)
+
+        assert err is None
+        assert text == es_text
+        mock_reg.assert_called_once_with(_AMENDING_REGULATION_TITLE_ID, s)
+
+    def test_act_path_uses_version_api_then_bill_summary(self):
+        """Full Act path: Version API → find amending Act → fetch bill summary."""
+        bill_text = "The bill makes changes to the ABF Act."
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_version_with_reasons",
+                return_value=_VERSION_WITH_ACT_REASON,
+            ),
+            patch(
+                "src.stage3_diff._fetch_act_bill_summary",
+                return_value=(bill_text, None),
+            ) as mock_act,
+        ):
+            s = MagicMock()
+            text, err = _fetch_frl_explainer(_make_source_act(), s)
+
+        assert err is None
+        assert text == bill_text
+        mock_act.assert_called_once_with(_AMENDING_ACT_TITLE_ID, s)
+
+    def test_returns_error_when_no_amending_instruments(self):
+        with patch(
+            "src.stage3_diff._fetch_frl_version_with_reasons",
+            return_value=_VERSION_NO_REASONS,
+        ):
+            text, err = _fetch_frl_explainer(_make_source(), MagicMock())
+        assert text is None
+        assert err is not None
+        assert "F1996B00084" in err
+
+    def test_returns_error_when_versions_api_fails(self):
+        with patch(
+            "src.stage3_diff._fetch_frl_version_with_reasons",
+            side_effect=Exception("API unreachable"),
+        ):
+            text, err = _fetch_frl_explainer(_make_source(), MagicMock())
+        assert text is None
+        assert err is not None
+        assert "F1996B00084" in err
+
+    def test_returns_error_for_unextractable_title_id(self):
+        source = {"source_id": "bad", "url": "https://example.com/", "source_type": "frl"}
+        text, err = _fetch_frl_explainer(source, MagicMock())
+        assert text is None
+        assert err is not None
+
+    def test_concatenates_multiple_amending_instruments(self):
+        version_multi = {
+            "reasons": [
+                {
+                    "affect": "Amend",
+                    "affectedByTitle": {"titleId": "F2024L00001", "seriesType": "SLI"},
+                },
+                {
+                    "affect": "Amend",
+                    "affectedByTitle": {"titleId": "F2024L00002", "seriesType": "SLI"},
+                },
+            ]
+        }
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_version_with_reasons",
+                return_value=version_multi,
+            ),
+            patch(
+                "src.stage3_diff._fetch_regulation_explainer",
+                side_effect=[
+                    ("Text from instrument 1.", None),
+                    ("Text from instrument 2.", None),
+                ],
+            ),
+        ):
+            text, err = _fetch_frl_explainer(_make_source(), MagicMock())
+
+        assert err is None
+        assert "Text from instrument 1." in text
+        assert "Text from instrument 2." in text
+        assert "---" in text
+
+    def test_unknown_series_type_uses_regulation_path(self):
+        """Empty seriesType should fall through to regulation ES path."""
+        version = {
+            "reasons": [
+                {
+                    "affect": "Amend",
+                    "affectedByTitle": {"titleId": "F2024L00099", "seriesType": ""},
+                }
+            ]
+        }
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_version_with_reasons",
+                return_value=version,
+            ),
+            patch(
+                "src.stage3_diff._fetch_regulation_explainer",
+                return_value=("Regulation text.", None),
+            ) as mock_reg,
+            patch("src.stage3_diff._fetch_act_bill_summary") as mock_act,
+        ):
+            text, err = _fetch_frl_explainer(_make_source(), MagicMock())
+
+        mock_reg.assert_called_once()
+        mock_act.assert_not_called()
+        assert text == "Regulation text."
 
 
 # ---------------------------------------------------------------------------
@@ -316,20 +716,20 @@ class TestFetchFrlExplainerErrors:
 
 class TestGenerateFrlDiff:
     def test_diff_type_is_explainer_when_es_available(self, tmp_path):
-        source = _make_source()
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx",
-                   return_value="Explanatory Statement text here."):
+        es_text = "Explanatory Statement text here."
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_explainer",
+                return_value=(es_text, None),
+            ),
+        ):
             result = generate_diff(
-                source,
+                _make_source(),
                 new_text="",
                 previous_text=None,
                 diff_lines=[],
                 snapshot_dir=tmp_path,
-                session=session,
+                session=MagicMock(),
             )
 
         assert result.diff_type == "explainer"
@@ -338,48 +738,47 @@ class TestGenerateFrlDiff:
         assert result.diff_path is not None
         assert "_explainer_" in result.diff_path
 
-    def test_diff_falls_back_to_unified_diff_when_no_es(self, tmp_path):
-        """When the ES is unavailable, fall back to a webpage-style diff."""
-        source = _make_source()
-        # Both ES and SupplementaryES return 404.
-        session = _make_session_with_responses(
-            _meta_response(404),
-            _meta_response(404),
-        )
-        result = generate_diff(
-            source,
-            new_text="new legislation text",
-            previous_text="old legislation text",
-            diff_lines=["--- old\n", "+++ new\n", "-old legislation text\n",
-                        "+new legislation text\n"],
-            snapshot_dir=tmp_path,
-            session=session,
-        )
+    def test_diff_falls_back_to_unified_diff_when_no_explainer(self, tmp_path):
+        with (
+            patch(
+                "src.stage3_diff._fetch_frl_explainer",
+                return_value=(None, "No explainer found."),
+            ),
+        ):
+            result = generate_diff(
+                _make_source(),
+                new_text="new legislation text",
+                previous_text="old legislation text",
+                diff_lines=[
+                    "--- old\n", "+++ new\n",
+                    "-old legislation text\n", "+new legislation text\n",
+                ],
+                snapshot_dir=tmp_path,
+                session=MagicMock(),
+            )
 
         assert result.diff_type == "unified_diff_fallback"
         assert result.source_type == "frl"
         assert len(result.warnings) > 0
 
     def test_explainer_file_written_to_snapshot_dir(self, tmp_path):
-        source = _make_source()
-        session = _make_session_with_responses(
-            _meta_response(200),
-            _binary_response(),
-        )
-        with patch("src.scraper.extract_plain_text_from_docx",
-                   return_value="ES content"):
+        es_text = "ES content here."
+        with patch(
+            "src.stage3_diff._fetch_frl_explainer",
+            return_value=(es_text, None),
+        ):
             result = generate_diff(
-                source,
+                _make_source(),
                 new_text="",
                 previous_text=None,
                 diff_lines=[],
                 snapshot_dir=tmp_path,
-                session=session,
+                session=MagicMock(),
             )
 
         explainer_path = Path(result.diff_path)
         assert explainer_path.exists()
-        assert explainer_path.read_text(encoding="utf-8") == "ES content"
+        assert explainer_path.read_text(encoding="utf-8") == es_text
 
 
 # ---------------------------------------------------------------------------
