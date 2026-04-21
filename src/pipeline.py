@@ -409,9 +409,27 @@ def _process_source(
 
     logger.info("Source %s: Stage 1 probe=%s", source_id, probe.decision)
     if not probe.should_proceed:
-        logger.info("Source %s: FILTERED after Stage 1 — %s, no change detected", source_id, probe.decision)
-        log_entry["outcome"] = "no_change"
-        return
+        # Even when Stage 1 signals no change, we must scrape once to
+        # establish a content baseline.  Without one, future changes will
+        # produce a "first_run" diff with no before/after context.  This
+        # situation arises when a prior scrape attempt failed after Stage 1
+        # had already persisted the probe signals.
+        if source_state.get("previous_text") is None:
+            logger.info(
+                "Source %s: Stage 1 says %s but no content baseline found — "
+                "proceeding to establish initial snapshot",
+                source_id,
+                probe.decision,
+            )
+            # Fall through to scraping.
+        else:
+            logger.info(
+                "Source %s: FILTERED after Stage 1 — %s, no change detected",
+                source_id,
+                probe.decision,
+            )
+            log_entry["outcome"] = "no_change"
+            return
 
     # ---- Scrape / fetch new content -------------------------------------
     log_entry["stage_reached"] = "scrape"
