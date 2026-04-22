@@ -6,6 +6,6 @@
   },
   "last_checked": "2026-04-21T03:56:16.457946+00:00",
   "last_error": "PermanentError: CAPTCHA or bot-detection page detected at https://www.asbfeo.gov.au/disputes-assistance/dispute-support",
-  "last_error_at": "2026-04-21T16:36:16.807951+00:00",
-  "consecutive_failures": 3
+  "last_error_at": "2026-04-22T04:48:33.086476+00:00",
+  "consecutive_failures": 4
 }
