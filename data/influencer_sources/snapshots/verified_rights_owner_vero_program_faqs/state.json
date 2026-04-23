@@ -1,5 +1,5 @@
 {
   "last_error": "PermanentError: CAPTCHA or bot-detection page detected at https://pages.ebay.com.au/vero/#FAQs",
-  "last_error_at": "2026-04-23T14:39:12.226603+00:00",
-  "consecutive_failures": 2
+  "last_error_at": "2026-04-23T14:41:13.996049+00:00",
+  "consecutive_failures": 3
 }
