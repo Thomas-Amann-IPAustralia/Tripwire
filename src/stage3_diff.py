@@ -338,23 +338,40 @@ def _truncate_at_es_stop_heading(text: str) -> str:
 def _fetch_frl_version_with_reasons(title_id: str, session: Any) -> dict[str, Any]:
     """Fetch the latest compiled Version for *title_id*, expanding the Reasons array.
 
+    Uses the /v1/Versions list endpoint with OData $filter + $expand.  The
+    Versions/Find() function endpoint does not honour $expand (the FRL API spec
+    restricts standard OData query options to list endpoints only), so appending
+    ?$expand=Reasons to Find() silently returns reasons=null.  Querying the
+    list endpoint with isLatest eq true is the correct approach per the API
+    index's "search_affects" recommendation.
+
     API reference:
-        GET /v1/Versions/Find(titleId='{titleId}',asAtSpecification='Latest')?$expand=Reasons
+        GET /v1/Versions?$filter=titleId eq '{titleId}' and isLatest eq true
+                        &$expand=Reasons
         Accept: application/json
         Base URL: https://api.prod.legislation.gov.au
-        Auth: none required for public read.
 
+    Raises ValueError if no matching version is found.
     Raises on HTTP error or connection failure; caller is responsible for handling.
     """
-    endpoint = (
-        f"{_FRL_API_BASE}/v1/Versions/Find("
-        f"titleId='{title_id}',asAtSpecification='Latest')?$expand=Reasons"
+    logger.debug("FRL Versions list API: titleId=%s isLatest=true expand=Reasons", title_id)
+    resp = session.get(
+        f"{_FRL_API_BASE}/v1/Versions",
+        params={
+            "$filter": f"titleId eq '{title_id}' and isLatest eq true",
+            "$expand": "Reasons",
+        },
+        headers={"Accept": "application/json"},
+        timeout=20,
     )
-    logger.debug("FRL Versions API: GET %s", endpoint)
-    resp = session.get(endpoint, headers={"Accept": "application/json"}, timeout=20)
-    logger.debug("FRL Versions API: status=%s", resp.status_code)
+    logger.debug("FRL Versions list API: status=%s", resp.status_code)
     resp.raise_for_status()
-    return resp.json()
+    data = resp.json()
+    # OData list responses wrap items in {"value": [...]}.
+    versions = data.get("value", []) if isinstance(data, dict) else list(data)
+    if not versions:
+        raise ValueError(f"No latest version found for titleId '{title_id}'")
+    return versions[0]
 
 
 def _extract_amending_instruments(version_data: dict[str, Any]) -> list[dict[str, Any]]:

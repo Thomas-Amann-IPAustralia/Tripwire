@@ -329,26 +329,33 @@ class TestExtractAmendingInstruments:
 
 
 class TestFetchFrlVersionWithReasons:
-    def test_calls_correct_endpoint(self):
-        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
+    def test_calls_list_endpoint_with_filter(self):
+        # Response is wrapped in OData {"value": [...]} format.
+        s = _session(_json_resp({"value": [_VERSION_WITH_REGULATION_REASON]}))
         _fetch_frl_version_with_reasons("F1996B00084", s)
         url_called = s.get.call_args[0][0]
-        assert "api.prod.legislation.gov.au" in url_called
-        assert "F1996B00084" in url_called
-        assert "asAtSpecification='Latest'" in url_called
-        assert "$expand=Reasons" in url_called
+        params = s.get.call_args[1].get("params", {})
+        assert "api.prod.legislation.gov.au/v1/Versions" in url_called
+        assert "F1996B00084" in params.get("$filter", "")
+        assert "isLatest eq true" in params.get("$filter", "")
+        assert params.get("$expand") == "Reasons"
 
     def test_sends_accept_json_header(self):
-        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
+        s = _session(_json_resp({"value": [_VERSION_WITH_REGULATION_REASON]}))
         _fetch_frl_version_with_reasons("F1996B00084", s)
         headers = s.get.call_args[1].get("headers", {})
         assert headers.get("Accept") == "application/json"
 
     def test_returns_version_dict(self):
-        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
+        s = _session(_json_resp({"value": [_VERSION_WITH_REGULATION_REASON]}))
         result = _fetch_frl_version_with_reasons("F1996B00084", s)
         assert result["registerId"] == "F2026C00009"
         assert "reasons" in result
+
+    def test_raises_when_no_versions_returned(self):
+        s = _session(_json_resp({"value": []}))
+        with pytest.raises(ValueError, match="No latest version found"):
+            _fetch_frl_version_with_reasons("F1996B00084", s)
 
     def test_raises_on_http_error(self):
         s = _session(_json_resp({}, status_code=503))
