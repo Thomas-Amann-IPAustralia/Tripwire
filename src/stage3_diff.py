@@ -54,6 +54,8 @@ _DEFAULT_VERSIONS_RETAINED = 6
 
 # Official FRL REST API base URL and Explanatory Statement document types to try.
 _FRL_API_BASE = "https://api.prod.legislation.gov.au"
+# Public legislation.gov.au web base URL (used for the ES web download fallback).
+_FRL_WEB_BASE = "https://www.legislation.gov.au"
 # ES is tried first; SupplementaryES is the fallback for instruments that only
 # have a supplementary explanatory statement rather than a standalone one.
 _FRL_ES_TYPES = ("ES", "SupplementaryES")
@@ -66,6 +68,11 @@ _PARLINFO_MIN_WORDS = 100
 
 # Matches an FRL titleId such as C2004A04969, F1996B00084, F2024L01179.
 _FRL_TITLE_ID_RE = re.compile(r"^[A-Z]\d{4}[A-Z]\w+$")
+# Matches an Act series titleId (e.g. C2023A00074).  Used to recognise an
+# amending Act in registerId / markdown fields when the structured fields are
+# missing.
+_FRL_ACT_SERIES_RE = re.compile(r"^C\d{4}A\d+$")
+_FRL_ACT_ID_IN_TEXT_RE = re.compile(r"\bC\d{4}A\d+\b")
 
 
 def _extract_frl_title_id(url: str) -> str | None:
@@ -374,29 +381,286 @@ def _fetch_frl_version_with_reasons(title_id: str, session: Any) -> dict[str, An
     return versions[0]
 
 
-def _extract_amending_instruments(version_data: dict[str, Any]) -> list[dict[str, Any]]:
-    """Extract amending instrument info from a Version's reasons array.
+def _extract_act_id_from_markdown(markdown: str) -> str | None:
+    """Return the first Act series titleId mentioned in *markdown*, or None.
 
-    Returns a list of ``{"title_id": str, "series_type": str}`` dicts — one per
-    ``affect="Amend"`` reason.  ``series_type`` is "Act", "SR", "SLI", or "" if
-    the API did not return it.
+    The FRL API populates ``reason.markdown`` with a human-readable
+    description of the amendment.  When the structured ``amendedByTitle`` /
+    ``affectedByTitle`` fields are missing, the Act titleId is often present
+    in the markdown text in canonical form (e.g. ``C2023A00074``).
+    """
+    if not markdown:
+        return None
+    m = _FRL_ACT_ID_IN_TEXT_RE.search(markdown)
+    return m.group(0) if m else None
+
+
+def _extract_amending_instruments(version_data: dict[str, Any]) -> list[dict[str, Any]]:
+    """Extract amending instrument info from a Version object.
+
+    Discovery layers (run in order; results deduplicated by titleId):
+
+    Layer 1 — registerId check:
+        If ``version_data["registerId"]`` matches the Act series pattern
+        ``C\\d{4}A\\d+``, treat it as an amending Act.  Sometimes the
+        registerId IS the amending Act's titleId.
+
+    Layer 2 — reasons array (with markdown scan):
+        Walk ``version_data["reasons"]`` for ``affect == "Amend"``.  Both
+        ``affectedByTitle.titleId`` AND ``amendedByTitle.titleId`` are
+        checked independently because either can be empty when the other
+        holds the correct id.  As a final within-reason fallback, scan
+        ``reason["markdown"]`` for a canonical Act series titleId.
+
+    Returns a list of ``{"title_id": str, "series_type": str}`` dicts.
+    ``series_type`` is "Act", "SR", "SLI", or "" if the API did not return
+    it (the caller resolves missing types via the Titles API).
+
+    The Affect API fallback (Layer 3) is implemented separately in
+    ``_discover_amending_via_affect_api`` because it requires HTTP and the
+    principal title id; ``_fetch_frl_explainer`` invokes it when this
+    function returns an empty list.
     """
     instruments: list[dict[str, Any]] = []
+    seen: set[str] = set()
+
+    def _add(title_id: str | None, series_type: str = "") -> None:
+        if not title_id or title_id in seen:
+            return
+        seen.add(title_id)
+        instruments.append({"title_id": title_id, "series_type": series_type})
+
+    # Layer 1: registerId check.
+    register_id = version_data.get("registerId") or ""
+    if isinstance(register_id, str) and _FRL_ACT_SERIES_RE.match(register_id):
+        # registerId pattern alone tells us this is an Act series.
+        _add(register_id, "Act")
+
+    # Layer 2: reasons array.
     for reason in version_data.get("reasons", []):
         if reason.get("affect") != "Amend":
             continue
-        # affectedByTitle = the title that affected (amended) the monitored source.
-        # amendedByTitle is a secondary fallback field used in some API responses.
+
+        # Both fields are checked independently — either can be empty when
+        # the other holds the correct id (and both can be populated with
+        # different ids in some responses).
         for field in ("affectedByTitle", "amendedByTitle"):
             ref = reason.get(field) or {}
-            amending_id = ref.get("titleId")
-            if amending_id:
-                instruments.append({
-                    "title_id": amending_id,
-                    "series_type": ref.get("seriesType", ""),
-                })
-                break
+            _add(ref.get("titleId"), ref.get("seriesType", "") or "")
+
+        # Within-reason last resort: scan the markdown blob for a canonical
+        # Act titleId.  Series type is unknown here, so leave it empty and
+        # let the Titles API resolve it.
+        if not (reason.get("affectedByTitle") or reason.get("amendedByTitle")):
+            md_id = _extract_act_id_from_markdown(reason.get("markdown", ""))
+            if md_id:
+                _add(md_id, "")
+
     return instruments
+
+
+def _discover_amending_via_affect_api(
+    title_id: str,
+    session: Any,
+    *,
+    compilation_start_date: str | None = None,
+) -> list[dict[str, Any]]:
+    """Last-resort discovery via the FRL Affects API.
+
+    Runs only when the registerId / reasons-array layers yielded nothing.
+    Tries ``/v1/_AffectsSearch`` first and falls back to ``/v1/Affect`` on
+    404; both endpoints exist in the live API and either may be authoritative
+    depending on the title.
+
+    The ``$filter`` query string is built with ``urllib.parse.quote`` (not
+    ``urlencode``) to preserve the literal ``$`` and the OData operators.
+
+    If ``compilation_start_date`` is supplied (``YYYY-MM-DD``), results are
+    narrowed to instruments whose effective date matches that day —
+    necessary because the Affect API returns the title's full amendment
+    history, not just the changes that triggered the latest compilation.
+
+    Returns a list of ``{"title_id": str, "series_type": str}`` dicts.  Empty
+    on any failure; callers use this as a best-effort fallback.
+    """
+    from urllib.parse import quote
+
+    filter_expr = f"affectedTitleId eq '{title_id}'"
+    encoded_filter = quote(filter_expr, safe="'")
+    query = f"$filter={encoded_filter}&$top=50"
+    endpoints = [
+        f"{_FRL_API_BASE}/v1/_AffectsSearch?{query}",
+        f"{_FRL_API_BASE}/v1/Affect?{query}",
+    ]
+
+    items: list[dict[str, Any]] = []
+    for endpoint in endpoints:
+        logger.debug("FRL Affects API [%s]: GET %s", title_id, endpoint)
+        try:
+            resp = session.get(
+                endpoint,
+                headers={"Accept": "application/json"},
+                timeout=20,
+            )
+        except Exception as exc:
+            logger.debug(
+                "FRL Affects API [%s]: network error: %s", title_id, exc,
+            )
+            continue
+        if resp.status_code == 404:
+            continue
+        if resp.status_code != 200:
+            logger.debug(
+                "FRL Affects API [%s]: status=%s", title_id, resp.status_code,
+            )
+            continue
+        try:
+            data = resp.json()
+        except Exception as exc:
+            logger.debug(
+                "FRL Affects API [%s]: invalid JSON: %s", title_id, exc,
+            )
+            continue
+        items = data.get("value", []) if isinstance(data, dict) else list(data)
+        if items:
+            break
+
+    instruments: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for item in items:
+        # Optional compilation-date filter — keep instruments whose
+        # effective date matches the start of this compilation.  When the
+        # date isn't provided, accept all results.
+        if compilation_start_date:
+            effective = (
+                item.get("effectiveDate")
+                or item.get("startDate")
+                or item.get("commencementDate")
+                or ""
+            )
+            if effective and not effective.startswith(compilation_start_date):
+                continue
+
+        # The amending instrument's id appears under one of these keys
+        # depending on which endpoint served the response.
+        ref = (
+            item.get("amendedByTitle")
+            or item.get("affectedByTitle")
+            or {}
+        )
+        amending_id = (
+            ref.get("titleId")
+            or item.get("amendedByTitleId")
+            or item.get("affectingTitleId")
+        )
+        if not amending_id or amending_id in seen:
+            continue
+        seen.add(amending_id)
+        series_type = ref.get("seriesType", "") if isinstance(ref, dict) else ""
+        instruments.append({"title_id": amending_id, "series_type": series_type})
+    return instruments
+
+
+def _get_asmade_date(amending_title_id: str, session: Any) -> str | None:
+    """Fetch the as-made registration date for an amending instrument.
+
+    Calls Versions/Find(titleId=..., asAtSpecification='AsMade') and returns
+    the ``YYYY-MM-DD`` portion of the ``start`` field.  Returns None on
+    failure; callers should treat the absence of a date as "skip the web
+    fallback" rather than as a hard error.
+
+    The website's direct download URL (``/{id}/asmade/{date}/es/original/word``)
+    requires this date segment.
+    """
+    endpoint = (
+        f"{_FRL_API_BASE}/v1/Versions/Find("
+        f"titleId='{amending_title_id}',"
+        f"asAtSpecification='AsMade')"
+    )
+    logger.debug("FRL AsMade date [%s]: GET %s", amending_title_id, endpoint)
+    try:
+        resp = session.get(endpoint, timeout=15)
+        if resp.status_code != 200:
+            logger.debug(
+                "FRL AsMade date [%s]: status=%s",
+                amending_title_id, resp.status_code,
+            )
+            return None
+        data = resp.json()
+    except Exception as exc:
+        logger.debug(
+            "FRL AsMade date [%s]: lookup failed: %s",
+            amending_title_id, exc,
+        )
+        return None
+
+    start = data.get("start", "") if isinstance(data, dict) else ""
+    # 'start' format: "2024-10-14T00:00:00" — take the date prefix.
+    date_part = start[:10] if start and len(start) >= 10 else None
+    if date_part:
+        logger.debug("FRL AsMade date [%s]: %s", amending_title_id, date_part)
+    return date_part
+
+
+def _download_es_via_web(
+    amending_title_id: str,
+    asmade_date: str,
+    session: Any,
+) -> tuple[bytes | None, str | None]:
+    """Fallback: download the ES Word document directly from the public site.
+
+    Mirrors what the website's Downloads tab serves and works even when the
+    API ``documents/find()`` endpoint returns 404 (e.g. instruments whose ES
+    was lodged as a direct file rather than through the standard API
+    pathway).  Tries ES then SupplementaryES.
+
+    Returns ``(bytes, None)`` on success or ``(None, error_message)`` on
+    failure.  HTML responses < 50 KB are rejected as error pages
+    masquerading as 200.
+    """
+    web_paths = [
+        (doc_type,
+         f"{_FRL_WEB_BASE}/{amending_title_id}/asmade/{asmade_date}/"
+         f"{doc_type.lower()}/original/word")
+        for doc_type in _FRL_ES_TYPES
+    ]
+    last_error: str | None = None
+
+    for doc_type, web_url in web_paths:
+        logger.debug(
+            "FRL ES web fallback [%s]: GET %s",
+            amending_title_id, web_url,
+        )
+        try:
+            resp = session.get(web_url, timeout=60, allow_redirects=True)
+        except Exception as exc:
+            last_error = f"web fallback network error ({doc_type}): {exc}"
+            logger.debug("FRL ES web fallback [%s]: %s", amending_title_id, last_error)
+            continue
+
+        if resp.status_code == 404:
+            last_error = f"web fallback {doc_type}: 404"
+            continue
+        if resp.status_code != 200:
+            last_error = f"web fallback {doc_type}: status {resp.status_code}"
+            continue
+
+        content_type = resp.headers.get("Content-Type", "") or ""
+        # Reject HTML error pages masquerading as 200 OK.
+        if "html" in content_type.lower() and len(resp.content or b"") < 50_000:
+            last_error = f"web fallback {doc_type}: HTML error page"
+            logger.debug(
+                "FRL ES web fallback [%s]: %s", amending_title_id, last_error,
+            )
+            continue
+
+        logger.debug(
+            "FRL ES web fallback [%s]: %s success bytes=%d",
+            amending_title_id, doc_type, len(resp.content or b""),
+        )
+        return resp.content, None
+
+    return None, last_error or "web fallback exhausted"
 
 
 def _fetch_regulation_explainer(
@@ -405,90 +669,116 @@ def _fetch_regulation_explainer(
 ) -> tuple[str | None, str | None]:
     """Fetch and truncate the ES DOCX for a regulation amending instrument.
 
-    Tries ES then SupplementaryES.  Downloads the Word document via the FRL API,
-    extracts plain text (mammoth → trafilatura), then truncates at the first
-    standalone heading in _FRL_STOP_HEADINGS.
+    Two-pass strategy (mirrors the working approach in
+    ``docs/Reference-Code/download_es.py``):
+
+    Pass 1 — FRL API documents endpoint:
+        GET {_FRL_API_BASE}/v1/documents/find(
+            titleid='{amendingTitleId}',
+            asatspecification='AsMade',    # the instrument is fixed at AsMade;
+                                           # 'Latest' returns 404 for many real
+                                           # amending instruments.
+            type='ES' | 'SupplementaryES',
+            format='Word')
+
+        A single GET is issued (no separate metadata probe).  A response is
+        treated as a miss when ``status == 404`` OR when ``status == 200`` AND
+        ``Content-Type`` contains "json" (metadata-only response, no file).
+
+    Pass 2 — Public web URL fallback (only if all API attempts missed):
+        Resolve the as-made date via ``Versions/Find(...,'AsMade')``, then
+        GET https://www.legislation.gov.au/{id}/asmade/{date}/es/original/word
+        (and the SupplementaryES variant).  Used because some instruments'
+        ES documents are lodged as direct files served by the website but
+        not exposed through the API ``documents/find()`` endpoint.
+
+    On binary success the DOCX is parsed via mammoth → trafilatura
+    (``extract_plain_text_from_docx``) and truncated at the first standalone
+    heading in ``_FRL_STOP_HEADINGS``.
 
     Returns ``(text, error_message)``.  On success ``error_message`` is None.
-
-    UI ↔ API mapping (auditable alignment):
-        UI URL:
-            https://www.legislation.gov.au/{amendingTitleId}/latest/text/explanatory-statement
-        API equivalent:
-            GET {_FRL_API_BASE}/v1/documents/find(
-                titleid='{amendingTitleId}',
-                asatspecification='Latest',    # UI "/latest/"
-                type='ES',                     # UI ".../explanatory-statement"
-                format='Word',                 # downloadable DOCX (mammoth-friendly)
-                uniqueTypeNumber=0, volumeNumber=0, rectificationVersionNumber=0)
-
-        Verified against docs/FRL-API/FRL_Instructions.json:
-            type   ∈ {Primary, ES, SupportingMaterial, IncorporatedByReference, SupplementaryES}
-            format ∈ {Word, Pdf, Epub, NameOnly}
-
-    API call sequence:
-        Step 1 — confirm document exists (metadata check):
-            GET ...find(...)  with  Accept: application/json
-            → Document metadata; HTTP 404 means that type is unavailable.
-
-        Step 2 — download binary DOCX:
-            GET ...find(...)  with Accept header omitted
-            → binary DOCX content (application/octet-stream).
     """
+    from src.scraper import extract_plain_text_from_docx
+
+    errors: list[str] = []
+
+    # --- Pass 1: FRL API ---
+    api_all_404 = True
     for doc_type in _FRL_ES_TYPES:
         endpoint = (
             f"{_FRL_API_BASE}/v1/documents/find("
             f"titleid='{amending_title_id}',"
-            f"asatspecification='Latest',"
+            f"asatspecification='AsMade',"
             f"type='{doc_type}',"
-            f"format='Word',"
-            f"uniqueTypeNumber=0,"
-            f"volumeNumber=0,"
-            f"rectificationVersionNumber=0)"
+            f"format='Word')"
         )
         logger.debug(
-            "FRL ES [%s]: attempting type=%s format=Word → %s",
+            "FRL ES API [%s]: type=%s → %s",
             amending_title_id, doc_type, endpoint,
         )
         try:
-            meta_resp = session.get(
-                endpoint,
-                headers={"Accept": "application/json"},
-                timeout=20,
-            )
+            resp = session.get(endpoint, timeout=60)
+        except Exception as exc:
+            api_all_404 = False
+            errors.append(f"API {doc_type} network error: {exc}")
+            continue
+
+        if resp.status_code == 404:
             logger.debug(
-                "FRL ES [%s]: metadata status=%s",
-                amending_title_id, meta_resp.status_code,
+                "FRL ES API [%s]: %s → 404", amending_title_id, doc_type,
             )
-            if meta_resp.status_code == 404:
-                continue  # This document type is unavailable; try next.
-            meta_resp.raise_for_status()
+            continue
+
+        if resp.status_code != 200:
+            api_all_404 = False
+            errors.append(f"API {doc_type}: status {resp.status_code}")
+            continue
+
+        content_type = (resp.headers.get("Content-Type") or "").lower()
+        if "json" in content_type:
+            # Metadata-only response (no file).  Treat as a miss and continue.
+            logger.debug(
+                "FRL ES API [%s]: %s → 200 + JSON metadata (no file)",
+                amending_title_id, doc_type,
+            )
+            continue
+
+        try:
+            text = extract_plain_text_from_docx(resp.content)
         except Exception as exc:
             return None, (
-                f"FRL ES metadata check failed for {amending_title_id} ({doc_type}): {exc}"
+                f"FRL ES extraction failed for {amending_title_id} ({doc_type}): {exc}"
             )
+        if text:
+            return _truncate_at_es_stop_heading(text), None
+        errors.append(f"API {doc_type}: empty text after extraction")
 
-        try:
-            bin_resp = session.get(endpoint, timeout=60)
-            bin_resp.raise_for_status()
-        except Exception as exc:
-            return None, f"FRL ES download failed for {amending_title_id}: {exc}"
+    # --- Pass 2: Web URL fallback (only when API is exhausted with misses) ---
+    if api_all_404:
+        asmade_date = _get_asmade_date(amending_title_id, session)
+        if not asmade_date:
+            errors.append("could not resolve AsMade date for web fallback")
+        else:
+            content, web_err = _download_es_via_web(
+                amending_title_id, asmade_date, session,
+            )
+            if content:
+                try:
+                    text = extract_plain_text_from_docx(content)
+                except Exception as exc:
+                    return None, (
+                        f"FRL ES extraction failed for {amending_title_id} (web): {exc}"
+                    )
+                if text:
+                    return _truncate_at_es_stop_heading(text), None
+                errors.append("web fallback: empty text after extraction")
+            elif web_err:
+                errors.append(web_err)
 
-        logger.debug(
-            "FRL ES [%s]: downloaded type=%s bytes=%d",
-            amending_title_id, doc_type, len(bin_resp.content or b""),
-        )
-
-        try:
-            from src.scraper import extract_plain_text_from_docx
-            text = extract_plain_text_from_docx(bin_resp.content)
-            if text:
-                return _truncate_at_es_stop_heading(text), None
-            return None, f"FRL ES for {amending_title_id} yielded empty text after extraction."
-        except Exception as exc:
-            return None, f"FRL ES extraction failed for {amending_title_id}: {exc}"
-
-    return None, f"No ES or SupplementaryES Word document found for {amending_title_id}."
+    detail = "; ".join(errors) if errors else "no ES located"
+    return None, (
+        f"No ES or SupplementaryES Word document found for {amending_title_id} ({detail})."
+    )
 
 
 def _extract_bill_id(originating_bill_uri: str) -> str | None:
@@ -505,47 +795,124 @@ def _extract_bill_id(originating_bill_uri: str) -> str | None:
     return m.group(1) if m else None
 
 
-def _scrape_text_between(text: str, start_marker: str, end_marker: str) -> str:
-    """Extract the substring of *text* between *start_marker* and *end_marker*.
+# Anchored heading match: the line's stripped length must be ≤ this for it to
+# qualify as a section heading rather than an inline mention.  Mirrors the
+# 80-char heuristic in the reference implementation.
+_PARLINFO_HEADING_MAX_CHARS = 80
 
-    Both markers are matched case-insensitively.  The markers themselves are
-    excluded.  If *end_marker* is not found, everything after *start_marker* is
-    returned.  Returns "" if *start_marker* is not found.
+# EM URLs on parlinfo are deeply nested; the reliable signal is the
+# "legislation%2Fems%2F" segment plus a UUID assigned at upload time.  Cannot
+# be predicted from the bill id, so we scrape it from the bill home page.
+_EM_LINK_RE = re.compile(
+    r'https?://parlinfo\.aph\.gov\.au/parlInfo/search/display/display\.w3p'
+    r'[^\s"\'<>]*legislation%2Fems%2F[^\s"\'<>]+',
+    re.IGNORECASE,
+)
+
+
+def _extract_between_anchored_markers(
+    plain_text: str,
+    start_patterns: list[str],
+    end_patterns: list[str],
+    *,
+    max_heading_chars: int = _PARLINFO_HEADING_MAX_CHARS,
+) -> str:
+    """Extract content between two section-heading lines in *plain_text*.
+
+    A line qualifies as a heading if its stripped length is ≤
+    ``max_heading_chars`` and its full content matches one of the patterns
+    (``re.fullmatch``, case-insensitive).  Once a start heading is found,
+    every subsequent non-empty line is collected until an end heading is
+    encountered (or end-of-text).  Each pattern is a regex.
+
+    The 80-char cap excludes paragraphs that happen to mention "Summary"
+    inline; only short standalone heading lines match.
     """
-    lower = text.lower()
-    start_idx = lower.find(start_marker.lower())
-    if start_idx == -1:
+    if not plain_text:
         return ""
-    start_idx += len(start_marker)
-    end_idx = lower.find(end_marker.lower(), start_idx)
-    if end_idx != -1:
-        return text[start_idx:end_idx].strip()
-    return text[start_idx:].strip()
+
+    start_re = [re.compile(p, re.IGNORECASE) for p in start_patterns]
+    end_re = [re.compile(p, re.IGNORECASE) for p in end_patterns]
+
+    lines = plain_text.splitlines()
+    in_section = False
+    chunks: list[str] = []
+
+    for raw_line in lines:
+        line = raw_line.strip()
+        is_short = bool(line) and len(line) <= max_heading_chars
+
+        if not in_section:
+            if is_short and any(rx.fullmatch(line) for rx in start_re):
+                in_section = True
+            continue
+
+        # Inside the section: stop on an end-marker heading.
+        if is_short and any(rx.fullmatch(line) for rx in end_re):
+            break
+        if line:
+            chunks.append(line)
+
+    return " ".join(chunks).strip()
 
 
-def _scrape_parlinfo_page(url: str, session: Any) -> str:
-    """Fetch a parlinfo page and return normalised plain text.
+def _fetch_parlinfo_text(url: str, session: Any) -> tuple[str, str]:
+    """Fetch a parlinfo page (WAF-aware) and return ``(raw_html, plain_text)``.
 
-    Attempts a requests-based GET first.  If the extracted text is too short
-    (< 200 chars, indicating a JS-gated page), falls back to Selenium.
+    Uses ``fetch_with_waf_polling`` to drive a stealth Chrome that waits out
+    the Azure WAF JS challenge.  Returns ``("", "")`` on failure.  Plain text
+    is produced via the standard trafilatura pipeline (``extract_plain_text``)
+    so the caller can run anchored marker extraction on it.
+
+    The ``session`` parameter is unused but accepted to keep the signature
+    consistent with sibling fetch helpers and to allow future plain-HTTP
+    bypass paths (e.g. against non-WAF mirror servers in tests).
     """
-    from src.scraper import extract_plain_text, _fetch_with_selenium
-    try:
-        resp = session.get(
-            url,
-            timeout=30,
-            headers={"User-Agent": "Mozilla/5.0"},
-        )
-        if resp.status_code == 200:
-            text = extract_plain_text(resp.text)
-            if len(text) >= 200:
-                return text
-    except Exception:
-        pass
-    html = _fetch_with_selenium(url)
-    if html:
-        return extract_plain_text(html)
-    return ""
+    from src.scraper import fetch_with_waf_polling, extract_plain_text
+
+    html = fetch_with_waf_polling(url) or ""
+    if not html:
+        return "", ""
+    plain = extract_plain_text(html) if html else ""
+    return html, plain
+
+
+def _discover_em_url(bill_home_html: str) -> str | None:
+    """Scan the bill home page HTML for an Explanatory Memorandum link.
+
+    The EM URL contains a UUID assigned at upload time that is not derivable
+    from any other field, so the bill home page is the only reliable source.
+    Regex against the raw HTML is more resilient to DOM-structure variation
+    than parsing.
+    """
+    if not bill_home_html:
+        return None
+    m = _EM_LINK_RE.search(bill_home_html)
+    if not m:
+        return None
+    return m.group(0).rstrip("\"'")
+
+
+def _fetch_em_outline(em_url: str, session: Any) -> str | None:
+    """Fetch the Explanatory Memorandum and return its General Outline section.
+
+    Extracts text between ``General Outline`` / ``Outline`` and
+    ``Financial Impact`` / ``Financial Impact Statement`` (case-insensitive,
+    line-anchored).  The heading varies by drafting convention; older EMs
+    use "Outline", newer ones use "General Outline".
+
+    Returns the extracted text on success, or ``None`` if the page cannot
+    be retrieved or the markers are not found.
+    """
+    _, plain = _fetch_parlinfo_text(em_url, session)
+    if not plain:
+        return None
+    text = _extract_between_anchored_markers(
+        plain,
+        start_patterns=[r"general\s+outline", r"outline"],
+        end_patterns=[r"financial\s+impact(?:\s+statement)?"],
+    )
+    return text or None
 
 
 def _fetch_frl_title(title_id: str, session: Any) -> dict[str, Any]:
@@ -579,14 +946,29 @@ def _fetch_act_bill_summary(
 ) -> tuple[str | None, str | None]:
     """Retrieve a plain-English summary for an amending Act via parlinfo.
 
-    Steps:
-    1. GET /v1/Titles('{amendingTitleId}') → originatingBillUri (FRL API).
-       If *prefetched_title* is supplied (e.g. when the caller already fetched
-       it for series-type routing), reuse it instead of re-calling the API.
-    2. Scrape the parlinfo bill page: extract text between "Summary" and
-       "Progress of bill".
-    3. If the summary is < _PARLINFO_MIN_WORDS words, fall back to the Bills
-       Digest: extract text between "Key points" and "Contents".
+    Four-tier content waterfall (mirrors ``docs/Reference-Code/fetch_em_summary``).
+    Each parlinfo fetch goes through ``fetch_with_waf_polling`` so the Azure
+    WAF JS challenge is waited out properly.
+
+    Tier 1 — Bills Digest, "Key Points" → "Contents":
+        Written by the Parliamentary Library for a non-specialist audience;
+        the most readable source.  Tried first because when present it is
+        the highest-quality summary.
+
+    Tier 2 — Bill home Summary, ≥ ``_PARLINFO_MIN_WORDS`` words:
+        Drafted summary on the bill home page, between "Summary" and
+        "Progress of bill".  Used when the Bills Digest is absent.
+
+    Tier 3 — Explanatory Memorandum, "General Outline" → "Financial Impact":
+        EM URL is discovered from the bill home page.  More technical than
+        the digest but always available; used when shorter sources fail.
+
+    Tier 4 — Bill home Summary fallback (any length):
+        Whatever was extracted in Tier 2, even if < 100 words.  Better than
+        nothing.
+
+    The bill home HTML and plain text are fetched once and reused across
+    Tiers 2–4 to avoid a second WAF-bypass roundtrip.
 
     Returns ``(text, error_message)``.  On success ``error_message`` is None.
     """
@@ -608,38 +990,91 @@ def _fetch_act_bill_summary(
         amending_title_id, bill_uri, bill_id,
     )
 
-    # Scrape parlinfo bill home page; extract the Summary section.
-    page_text = _scrape_parlinfo_page(bill_uri, session)
-    summary_raw = _scrape_text_between(page_text, "Summary", "Progress of bill")
-    summary = _normalise_diff_text(summary_raw) if summary_raw else ""
-    summary_word_count = len(summary.split()) if summary else 0
-    logger.debug(
-        "FRL Act path [%s]: parlinfo summary words=%d (threshold=%d)",
-        amending_title_id, summary_word_count, _PARLINFO_MIN_WORDS,
-    )
+    errors: list[str] = []
 
-    if summary and summary_word_count >= _PARLINFO_MIN_WORDS:
-        return summary, None
-
-    # Bills Digest fallback when summary is absent or too short.
+    # --- Tier 1: Bills Digest — Key Points ---
     if bill_id:
         digest_url = (
             f"https://parlinfo.aph.gov.au/parlInfo/search/display/display.w3p;"
             f"query=BillId_Phrase%3A%22{bill_id}%22%20Dataset%3Abillsdgs;rec=0"
         )
         logger.debug(
-            "FRL Act path [%s]: Bills Digest fallback URL=%s",
+            "FRL Act path [%s]: tier 1 Bills Digest URL=%s",
             amending_title_id, digest_url,
         )
-        digest_raw = _scrape_parlinfo_page(digest_url, session)
-        digest_text = _scrape_text_between(digest_raw, "Key points", "Contents")
-        digest_text = _normalise_diff_text(digest_text) if digest_text else ""
-        if digest_text:
-            return digest_text, None
+        _, digest_plain = _fetch_parlinfo_text(digest_url, session)
+        if digest_plain:
+            digest_text = _extract_between_anchored_markers(
+                digest_plain,
+                start_patterns=[r"key\s+points"],
+                end_patterns=[r"contents"],
+            )
+            digest_text = _normalise_diff_text(digest_text) if digest_text else ""
+            if digest_text:
+                logger.debug(
+                    "FRL Act path [%s]: tier 1 success (%d words)",
+                    amending_title_id, len(digest_text.split()),
+                )
+                return digest_text, None
+            errors.append("tier 1 (Bills Digest): markers not found")
+        else:
+            errors.append("tier 1 (Bills Digest): page fetch failed")
+    else:
+        errors.append("tier 1 (Bills Digest): no bill id derivable from originatingBillUri")
 
-    if summary:
+    # --- Tiers 2–4 share the bill home page; fetch once. ---
+    bill_home_html, bill_home_plain = _fetch_parlinfo_text(bill_uri, session)
+    if not bill_home_plain:
+        errors.append("bill home page fetch failed (tiers 2–4 unavailable)")
+        return None, (
+            f"No bill summary found for Act {amending_title_id} "
+            f"(bill ID: {bill_id}): {'; '.join(errors)}"
+        )
+
+    summary_raw = _extract_between_anchored_markers(
+        bill_home_plain,
+        start_patterns=[r"summary"],
+        end_patterns=[r"progress\s+of\s+bill"],
+    )
+    summary = _normalise_diff_text(summary_raw) if summary_raw else ""
+    summary_word_count = len(summary.split()) if summary else 0
+    logger.debug(
+        "FRL Act path [%s]: tier 2 summary words=%d (threshold=%d)",
+        amending_title_id, summary_word_count, _PARLINFO_MIN_WORDS,
+    )
+
+    # --- Tier 2: Summary ≥ MIN_WORDS ---
+    if summary and summary_word_count >= _PARLINFO_MIN_WORDS:
         return summary, None
-    return None, f"No bill summary found for Act {amending_title_id} (bill ID: {bill_id})."
+
+    # --- Tier 3: Explanatory Memorandum — General Outline ---
+    em_url = _discover_em_url(bill_home_html)
+    if em_url:
+        logger.debug("FRL Act path [%s]: tier 3 EM URL=%s", amending_title_id, em_url)
+        em_text = _fetch_em_outline(em_url, session)
+        em_text = _normalise_diff_text(em_text) if em_text else ""
+        if em_text:
+            logger.debug(
+                "FRL Act path [%s]: tier 3 success (%d words)",
+                amending_title_id, len(em_text.split()),
+            )
+            return em_text, None
+        errors.append("tier 3 (EM): markers not found or fetch failed")
+    else:
+        errors.append("tier 3 (EM): no EM link on bill home page")
+
+    # --- Tier 4: Short Summary fallback ---
+    if summary:
+        logger.debug(
+            "FRL Act path [%s]: tier 4 short-summary fallback (%d words)",
+            amending_title_id, summary_word_count,
+        )
+        return summary, None
+
+    return None, (
+        f"No bill summary found for Act {amending_title_id} "
+        f"(bill ID: {bill_id}): {'; '.join(errors)}"
+    )
 
 
 def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | None, str | None]:
@@ -683,6 +1118,20 @@ def _fetch_frl_explainer(source: dict[str, Any], session: Any) -> tuple[str | No
         return None, f"FRL Versions API failed for {title_id}: {exc}"
 
     amending_instruments = _extract_amending_instruments(version_data)
+
+    if not amending_instruments:
+        # Layer 3: Affect API last-resort discovery.  Only runs when the
+        # registerId + reasons-array layers found nothing.
+        compilation_start = version_data.get("start") or ""
+        compilation_start_date = compilation_start[:10] if compilation_start else None
+        amending_instruments = _discover_amending_via_affect_api(
+            title_id, session, compilation_start_date=compilation_start_date,
+        )
+        if amending_instruments:
+            logger.debug(
+                "FRL [%s]: %d amending instrument(s) discovered via Affect API",
+                title_id, len(amending_instruments),
+            )
 
     if not amending_instruments:
         return None, (
