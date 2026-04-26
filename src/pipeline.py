@@ -264,6 +264,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     # ------------------------------------------------------------------
     # 6. Stage 7 — Trigger Aggregation.
     # ------------------------------------------------------------------
+    logger.info("--- Stage 7: Trigger Aggregation ---")
     aggregation_result = aggregate_triggers(source_records, config)
     bundles = aggregation_result.bundles
     bundles_by_page = {b.ipfr_page_id: b for b in bundles}
@@ -299,6 +300,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     # ------------------------------------------------------------------
     # 7. Stage 8 — LLM Assessment.
     # ------------------------------------------------------------------
+    logger.info("--- Stage 8: LLM Assessment ---")
     llm_result = assess_bundles(
         bundles=bundles,
         conn=conn,
@@ -310,6 +312,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     # ------------------------------------------------------------------
     # 8. Stage 9 — Notification.
     # ------------------------------------------------------------------
+    logger.info("--- Stage 9: Email Notification ---")
     page_meta_by_id = _load_page_meta(conn, list(bundles_by_page.keys()))
     run_date = datetime.now(timezone.utc).strftime("%-d %B %Y")
 
@@ -401,6 +404,7 @@ def _process_source(
     logger.info(">>> Source %s (%s): starting check", source_id, source_type)
 
     # ---- Stage 1: Metadata Probe ----------------------------------------
+    logger.info("--- Stage 1: Metadata Probe ---")
     log_entry["stage_reached"] = "stage1"
     source_state = _load_source_state(snapshot_dir, source_id)
     stored_signals = source_state.get("probe_signals")
@@ -473,6 +477,7 @@ def _process_source(
         )
 
     # ---- Stage 2: Change Detection (webpages only) ----------------------
+    logger.info("--- Stage 2: Change Detection ---")
     log_entry["stage_reached"] = "stage2"
     fingerprint_enabled = config.get("change_detection", {}).get(
         "significance_fingerprint", True
@@ -500,6 +505,7 @@ def _process_source(
     significance = change_result.significance
 
     # ---- Stage 3: Diff Generation ---------------------------------------
+    logger.info("--- Stage 3: Diff Generation ---")
     log_entry["stage_reached"] = "stage3"
     versions_retained = int(
         config.get("storage", {}).get("content_versions_retained", 6)
@@ -529,6 +535,7 @@ def _process_source(
     })
 
     # ---- Stage 4: Relevance Scoring -------------------------------------
+    logger.info("--- Stage 4: Relevance Scoring ---")
     log_entry["stage_reached"] = "stage4"
     relevance_result = score_relevance(
         diff_text=normalised_diff,
@@ -568,6 +575,7 @@ def _process_source(
     }
 
     # ---- Stage 5: Bi-Encoder --------------------------------------------
+    logger.info("--- Stage 5: Bi-Encoder ---")
     log_entry["stage_reached"] = "stage5"
     candidate_ids = [p.page_id for p in relevance_result.candidates]
     biencoder_result = score_biencoder(
@@ -609,6 +617,7 @@ def _process_source(
     release_biencoder()
 
     # ---- Stage 6: Cross-Encoder -----------------------------------------
+    logger.info("--- Stage 6: Cross-Encoder ---")
     log_entry["stage_reached"] = "stage6"
     stage5_candidate_ids = [p.page_id for p in biencoder_result.candidate_pages]
     ce_result = score_crossencoder(
