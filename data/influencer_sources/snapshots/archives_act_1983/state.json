@@ -1,7 +1,7 @@
 {
   "probe_signals": {
-    "register_id": "C2024C00855",
-    "compilation_number": "50",
+    "register_id": "C20855",
+    "compilation_number": "20",
     "start": "2024-12-11T00:00:00"
   },
   "last_checked": "2026-04-26T13:10:53.290943+00:00",
