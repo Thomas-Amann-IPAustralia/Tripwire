@@ -350,42 +350,45 @@ def _truncate_at_es_stop_heading(text: str) -> str:
 
 
 def _fetch_frl_version_with_reasons(title_id: str, session: Any) -> dict[str, Any]:
-    """Fetch the latest compiled Version for *title_id*, expanding the Reasons array.
+    """Fetch the latest compiled Version for *title_id*, with its reasons.
 
-    Uses the /v1/Versions list endpoint with OData $filter + $expand.  The
-    Versions/Find() function endpoint does not honour $expand (the FRL API spec
-    restricts standard OData query options to list endpoints only), so appending
-    ?$expand=Reasons to Find() silently returns reasons=null.  Querying the
-    list endpoint with isLatest eq true is the correct approach per the API
-    index's "search_affects" recommendation.
+    Calls the FRL function endpoint
+    ``/v1/Versions/Find(titleId='{titleId}',asAtSpecification='Latest')``,
+    which returns a single ``Version`` object whose schema already includes
+    the ``reasons`` array (see docs/FRL-API/FRL_Instructions.json — the
+    ``Version`` schema declares ``reasons`` as an array of ``ReasonForVersion``).
+    No OData ``$expand`` or ``$filter`` is required, and the live API
+    rejects the equivalent list-endpoint query (``/v1/Versions?$filter=…
+    and isLatest eq true&$expand=Reasons``) with HTTP 400.  This matches
+    the working approach used in ``docs/Reference-Code/download_es.py``.
 
     API reference:
-        GET /v1/Versions?$filter=titleId eq '{titleId}' and isLatest eq true
-                        &$expand=Reasons
+        GET /v1/Versions/Find(titleId='{titleId}',asAtSpecification='Latest')
         Accept: application/json
         Base URL: https://api.prod.legislation.gov.au
 
-    Raises ValueError if no matching version is found.
-    Raises on HTTP error or connection failure; caller is responsible for handling.
+    Raises ValueError if no version is returned (empty body).
+    Raises on HTTP error or connection failure; caller is responsible for
+    handling.
     """
-    logger.debug("FRL Versions list API: titleId=%s isLatest=true expand=Reasons", title_id)
+    endpoint = (
+        f"{_FRL_API_BASE}/v1/Versions/Find("
+        f"titleId='{title_id}',"
+        f"asAtSpecification='Latest')"
+    )
+    logger.debug("FRL Versions/Find: GET %s", endpoint)
     resp = session.get(
-        f"{_FRL_API_BASE}/v1/Versions",
-        params={
-            "$filter": f"titleId eq '{title_id}' and isLatest eq true",
-            "$expand": "Reasons",
-        },
+        endpoint,
         headers={"Accept": "application/json"},
         timeout=20,
     )
-    logger.debug("FRL Versions list API: status=%s", resp.status_code)
+    logger.debug("FRL Versions/Find: status=%s", resp.status_code)
     resp.raise_for_status()
     data = resp.json()
-    # OData list responses wrap items in {"value": [...]}.
-    versions = data.get("value", []) if isinstance(data, dict) else list(data)
-    if not versions:
+    # Find() returns a single Version object directly (not an OData list).
+    if not isinstance(data, dict) or not data:
         raise ValueError(f"No latest version found for titleId '{title_id}'")
-    return versions[0]
+    return data
 
 
 def _extract_act_id_from_markdown(markdown: str) -> str | None:

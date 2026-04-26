@@ -527,31 +527,38 @@ class TestFetchEmOutline:
 
 
 class TestFetchFrlVersionWithReasons:
-    def test_calls_list_endpoint_with_filter(self):
-        # Response is wrapped in OData {"value": [...]} format.
-        s = _session(_json_resp({"value": [_VERSION_WITH_REGULATION_REASON]}))
+    def test_calls_find_function_endpoint(self):
+        # Versions/Find returns a single Version object directly (not wrapped).
+        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
         _fetch_frl_version_with_reasons("F1996B00084", s)
         url_called = s.get.call_args[0][0]
-        params = s.get.call_args[1].get("params", {})
-        assert "api.prod.legislation.gov.au/v1/Versions" in url_called
-        assert "F1996B00084" in params.get("$filter", "")
-        assert "isLatest eq true" in params.get("$filter", "")
-        assert params.get("$expand") == "Reasons"
+        assert "api.prod.legislation.gov.au/v1/Versions/Find(" in url_called
+        assert "titleId='F1996B00084'" in url_called
+        assert "asAtSpecification='Latest'" in url_called
+
+    def test_does_not_use_list_endpoint_query_params(self):
+        """Regression: the live API returns 400 for the list endpoint with
+        $filter+$expand; we must call the function endpoint instead."""
+        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
+        _fetch_frl_version_with_reasons("F1996B00084", s)
+        params = s.get.call_args[1].get("params", {}) or {}
+        assert "$filter" not in params
+        assert "$expand" not in params
 
     def test_sends_accept_json_header(self):
-        s = _session(_json_resp({"value": [_VERSION_WITH_REGULATION_REASON]}))
+        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
         _fetch_frl_version_with_reasons("F1996B00084", s)
         headers = s.get.call_args[1].get("headers", {})
         assert headers.get("Accept") == "application/json"
 
     def test_returns_version_dict(self):
-        s = _session(_json_resp({"value": [_VERSION_WITH_REGULATION_REASON]}))
+        s = _session(_json_resp(_VERSION_WITH_REGULATION_REASON))
         result = _fetch_frl_version_with_reasons("F1996B00084", s)
         assert result["registerId"] == "F2026C00009"
         assert "reasons" in result
 
-    def test_raises_when_no_versions_returned(self):
-        s = _session(_json_resp({"value": []}))
+    def test_raises_when_empty_body(self):
+        s = _session(_json_resp({}))
         with pytest.raises(ValueError, match="No latest version found"):
             _fetch_frl_version_with_reasons("F1996B00084", s)
 
