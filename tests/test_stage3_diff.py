@@ -1336,9 +1336,10 @@ class TestGenerateFrlDiff:
         assert result.source_type == "frl"
         assert "Explanatory Statement" in result.normalised_diff
         assert result.diff_path is not None
-        assert "_explainer_" in result.diff_path
+        # diff_path should point to the snapshot file, not a separate explainer file.
+        assert Path(result.diff_path).name == "frl_trademarks.txt"
 
-    def test_diff_falls_back_to_unified_diff_when_no_explainer(self, tmp_path):
+    def test_diff_returns_compilation_change_when_no_explainer(self, tmp_path):
         with (
             patch(
                 "src.stage3_diff._fetch_frl_explainer",
@@ -1357,11 +1358,14 @@ class TestGenerateFrlDiff:
                 session=MagicMock(),
             )
 
-        assert result.diff_type == "unified_diff_fallback"
+        # No explainer → compilation_change notice, no .diff file.
+        assert result.diff_type == "compilation_change"
         assert result.source_type == "frl"
+        assert result.diff_path is None
         assert len(result.warnings) > 0
+        assert "No Explanatory Statement" in result.normalised_diff
 
-    def test_explainer_file_written_to_snapshot_dir(self, tmp_path):
+    def test_explainer_saved_as_snapshot_not_separate_file(self, tmp_path):
         es_text = "ES content here."
         with patch(
             "src.stage3_diff._fetch_frl_explainer",
@@ -1376,9 +1380,45 @@ class TestGenerateFrlDiff:
                 session=MagicMock(),
             )
 
-        explainer_path = Path(result.diff_path)
-        assert explainer_path.exists()
-        assert explainer_path.read_text(encoding="utf-8") == es_text
+        # Explainer is written to the versioned snapshot file.
+        snap_file = Path(result.diff_path)
+        assert snap_file.exists()
+        assert snap_file.read_text(encoding="utf-8") == es_text
+        # No separate _explainer_*.txt file should exist.
+        source_dir = tmp_path / "frl_trademarks"
+        explainer_files = list(source_dir.glob("*_explainer_*.txt"))
+        assert explainer_files == [], f"Unexpected explainer files: {explainer_files}"
+        # No .diff file should exist.
+        diff_files = list(source_dir.glob("*.diff"))
+        assert diff_files == [], f"Unexpected .diff files: {diff_files}"
+
+    def test_old_explainers_rotated_to_backlog(self, tmp_path):
+        """Second run rotates the previous explainer into a versioned backlog file."""
+        source = _make_source()
+        source_dir = tmp_path / source["source_id"]
+        source_dir.mkdir()
+        # Seed an existing snapshot (simulates a prior run).
+        (source_dir / f"{source['source_id']}.txt").write_text(
+            "Old ES content.", encoding="utf-8"
+        )
+
+        with patch(
+            "src.stage3_diff._fetch_frl_explainer",
+            return_value=("New ES content.", None),
+        ):
+            generate_diff(
+                source,
+                new_text="",
+                previous_text=None,
+                diff_lines=[],
+                snapshot_dir=tmp_path,
+                session=MagicMock(),
+            )
+
+        current = source_dir / f"{source['source_id']}.txt"
+        backlog = source_dir / f"{source['source_id']}.v1.txt"
+        assert current.read_text(encoding="utf-8") == "New ES content."
+        assert backlog.read_text(encoding="utf-8") == "Old ES content."
 
 
 # ---------------------------------------------------------------------------
