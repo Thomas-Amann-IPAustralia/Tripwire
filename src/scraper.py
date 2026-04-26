@@ -471,6 +471,82 @@ def _fetch_with_selenium(url: str) -> str | None:
             pass
 
 
+def fetch_with_waf_polling(
+    url: str,
+    *,
+    must_disappear: str = "Azure WAF",
+    poll_interval_s: float = 0.5,
+    timeout_s: float = 10.0,
+    page_load_timeout_s: int = 30,
+    min_length: int = 500,
+) -> str | None:
+    """Fetch a URL via stealth Chrome and poll until ``must_disappear`` is gone.
+
+    Designed for sites whose WAF (Web Application Firewall) serves an interim
+    JS challenge page that resolves itself within a few seconds once the
+    browser executes the challenge JavaScript.  parlinfo.aph.gov.au sits
+    behind an Azure WAF JS Challenge that returns a page containing the
+    string "Azure WAF" until the challenge completes; once it does, the page
+    is replaced with the real content.  Polling beats a fixed sleep because
+    challenge resolution time varies (typically 0.5–3 s).
+
+    Parameters
+    ----------
+    url:
+        URL to fetch.
+    must_disappear:
+        Substring whose absence from ``page_source`` signals the WAF
+        challenge has cleared.
+    poll_interval_s:
+        Seconds between polls.
+    timeout_s:
+        Maximum total time to wait for ``must_disappear`` to vanish.
+    page_load_timeout_s:
+        Selenium ``set_page_load_timeout`` value applied before navigation.
+    min_length:
+        Reject the page if ``page_source`` is shorter than this; almost
+        always indicates the challenge never resolved.
+
+    Returns
+    -------
+    str | None
+        Final ``page_source`` if the WAF cleared and the page is at least
+        ``min_length`` chars; ``None`` otherwise.
+    """
+    driver = build_selenium_driver()
+    try:
+        driver.set_page_load_timeout(page_load_timeout_s)
+        logger.debug("WAF fetch: navigating to %s", url[:120])
+        driver.get(url)
+
+        max_polls = max(1, int(timeout_s / poll_interval_s))
+        polls_done = 0
+        for _ in range(max_polls):
+            time.sleep(poll_interval_s)
+            polls_done += 1
+            if must_disappear not in driver.page_source:
+                break
+
+        html = driver.page_source
+        cleared = must_disappear not in html
+        logger.debug(
+            "WAF fetch: polls=%d cleared=%s length=%d",
+            polls_done, cleared, len(html or ""),
+        )
+        if cleared and len(html) >= min_length:
+            return html
+        return None
+
+    except Exception as exc:
+        logger.warning("WAF fetch failed for %s: %s", url, exc)
+        return None
+    finally:
+        try:
+            driver.quit()
+        except Exception:
+            pass
+
+
 def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | None:
     """Fetch a URL and return the raw response body as text.
 

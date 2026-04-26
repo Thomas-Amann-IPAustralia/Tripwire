@@ -371,3 +371,119 @@ def test_fetch_raw_with_selenium_returns_none_on_get_exception():
 
     assert result is None
     mock_driver.quit.assert_called_once()
+
+
+# ---------------------------------------------------------------------------
+# fetch_with_waf_polling
+# ---------------------------------------------------------------------------
+
+
+def _waf_driver(page_sources: list[str]) -> MagicMock:
+    """Build a mock Chrome driver whose ``page_source`` returns each value
+    in *page_sources* on successive accesses.
+
+    Selenium's ``page_source`` is a property; with MagicMock we substitute a
+    PropertyMock-like attribute that pops from a list each time it's read.
+    """
+    driver = MagicMock()
+    iterator = iter(page_sources)
+    last_seen = {"value": page_sources[-1]}
+
+    def _next() -> str:
+        try:
+            last_seen["value"] = next(iterator)
+        except StopIteration:
+            pass
+        return last_seen["value"]
+
+    type(driver).page_source = property(lambda _self: _next())
+    return driver
+
+
+def test_waf_fetch_returns_html_when_challenge_clears_immediately(monkeypatch):
+    """First poll already shows the real page — no further iterations needed."""
+    real_html = "<html>" + ("real content " * 50) + "</html>"
+    driver = _waf_driver([real_html])
+
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
+
+    from src.scraper import fetch_with_waf_polling
+    result = fetch_with_waf_polling(
+        "https://parlinfo.example/page",
+        poll_interval_s=0.01,
+        timeout_s=0.05,
+    )
+    assert result == real_html
+    driver.quit.assert_called_once()
+
+
+def test_waf_fetch_returns_html_after_challenge_clears(monkeypatch):
+    """First two polls see the WAF page; third returns the real content."""
+    waf_html = "<html>Azure WAF challenge</html>"
+    real_html = "<html>" + ("real content " * 50) + "</html>"
+    driver = _waf_driver([waf_html, waf_html, real_html])
+
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
+
+    from src.scraper import fetch_with_waf_polling
+    result = fetch_with_waf_polling(
+        "https://parlinfo.example/page",
+        poll_interval_s=0.01,
+        timeout_s=0.1,
+    )
+    assert result == real_html
+    driver.quit.assert_called_once()
+
+
+def test_waf_fetch_returns_none_when_challenge_never_clears(monkeypatch):
+    waf_html = "<html>Azure WAF</html>" + ("padding " * 200)
+    driver = _waf_driver([waf_html])
+
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
+
+    from src.scraper import fetch_with_waf_polling
+    result = fetch_with_waf_polling(
+        "https://parlinfo.example/page",
+        poll_interval_s=0.01,
+        timeout_s=0.05,
+    )
+    assert result is None
+    driver.quit.assert_called_once()
+
+
+def test_waf_fetch_returns_none_when_page_too_short(monkeypatch):
+    """A short page is rejected even if the WAF marker is gone (truncated body)."""
+    short_html = "<html>tiny</html>"
+    driver = _waf_driver([short_html])
+
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
+
+    from src.scraper import fetch_with_waf_polling
+    result = fetch_with_waf_polling(
+        "https://parlinfo.example/page",
+        poll_interval_s=0.01,
+        timeout_s=0.05,
+    )
+    assert result is None
+    driver.quit.assert_called_once()
+
+
+def test_waf_fetch_returns_none_on_navigation_error(monkeypatch):
+    driver = MagicMock()
+    driver.get.side_effect = Exception("navigation timeout")
+
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
+
+    from src.scraper import fetch_with_waf_polling
+    result = fetch_with_waf_polling(
+        "https://parlinfo.example/page",
+        poll_interval_s=0.01,
+        timeout_s=0.05,
+    )
+    assert result is None
+    driver.quit.assert_called_once()
