@@ -364,7 +364,7 @@ def _semantic_score(
         return [0.0] * len(pages)
 
     try:
-        diff_vec = model.encode(diff_text, normalize_embeddings=True)
+        diff_vec = model.encode(diff_text, normalize_embeddings=True, show_progress_bar=False)
         diff_vec = np.array(diff_vec, dtype=np.float32)
     except Exception as exc:
         logger.warning("Stage 4: Failed to encode diff text: %s", exc)

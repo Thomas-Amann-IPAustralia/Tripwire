@@ -85,6 +85,17 @@ def main(argv: list[str] | None = None) -> int:
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
 
+    # Suppress verbose INFO from third-party ML and HTTP libraries.
+    for _lib in ("httpx", "sentence_transformers", "huggingface_hub", "transformers"):
+        logging.getLogger(_lib).setLevel(logging.WARNING)
+
+    # Disable transformers weight-loading progress bars.
+    try:
+        import transformers.utils.logging as _hf_logging
+        _hf_logging.disable_progress_bar()
+    except Exception:
+        pass
+
     run_id = args.run_id or _generate_run_id()
     t_start = time.monotonic()
 
