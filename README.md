@@ -35,39 +35,49 @@ Three source types are handled differently through the pipeline:
 ```
 Tripwire/
 ├── src/
-│   ├── pipeline.py              # Main orchestrator (Stages 1–9)
-│   ├── config.py                # Config loading and validation
-│   ├── errors.py                # Error hierarchy (RetryableError, PermanentError)
-│   ├── retry.py                 # Exponential-backoff retry decorator
-│   ├── scraper.py               # Web scraping with trafilatura
-│   ├── validation.py            # Content validation (CAPTCHA, size, markers)
-│   ├── stage1_metadata.py       # Stage 1: metadata probe
-│   ├── stage2_change_detection.py # Stage 2: hash, diff, significance
-│   ├── stage3_diff.py           # Stage 3: diff generation
-│   ├── stage4_relevance.py      # Stage 4: YAKE-BM25 + bi-encoder RRF
-│   ├── stage5_biencoder.py      # Stage 5: bi-encoder chunking
-│   ├── stage6_crossencoder.py   # Stage 6: cross-encoder reranking + graph
-│   ├── stage7_aggregation.py    # Stage 7: trigger aggregation
-│   ├── stage8_llm.py            # Stage 8: LLM assessment
-│   ├── stage9_notification.py   # Stage 9: email notification
-│   ├── feedback_ingestion.py    # Gmail IMAP polling for feedback replies
-│   ├── health.py                # Health alerting (error rate, consecutive failures)
-│   └── observability.py         # Weekly score distribution report
-├── ingestion/                   # IPFR corpus ingestion pipeline
+│   ├── pipeline.py                  # Main orchestrator (Stages 1–9)
+│   ├── config.py                    # Config loading and validation
+│   ├── errors.py                    # Error hierarchy (RetryableError, PermanentError)
+│   ├── retry.py                     # Exponential-backoff retry decorator
+│   ├── scraper.py                   # Web scraping (trafilatura + Selenium fallback)
+│   ├── validation.py                # Content validation (CAPTCHA, size, markers)
+│   ├── stage1_metadata.py           # Stage 1: metadata probe
+│   ├── stage2_change_detection.py   # Stage 2: hash, diff, significance
+│   ├── stage3_diff.py               # Stage 3: diff generation
+│   ├── stage4_relevance.py          # Stage 4: YAKE-BM25 + bi-encoder RRF
+│   ├── stage5_biencoder.py          # Stage 5: bi-encoder chunking
+│   ├── stage6_crossencoder.py       # Stage 6: cross-encoder reranking + graph
+│   ├── stage7_aggregation.py        # Stage 7: trigger aggregation
+│   ├── stage8_llm.py                # Stage 8: LLM assessment
+│   ├── stage9_notification.py       # Stage 9: email notification
+│   ├── feedback_ingestion.py        # Gmail IMAP polling for feedback replies
+│   ├── health.py                    # Health alerting (error rate, consecutive failures)
+│   └── observability.py             # Weekly score distribution report
+├── ingestion/
+│   ├── ingest.py                    # Ingestion orchestrator (Phases 0–6)
+│   ├── db.py                        # SQLite schema and I/O helpers
+│   ├── scrape_ipfr.py               # IPFR page scraping (trafilatura + DOCX)
+│   ├── enrich.py                    # Chunking, BGE embeddings, NER, YAKE
+│   ├── dedup.py                     # Exact/near-duplicate marking; IDF filtering
+│   ├── sitemap.py                   # IPFR sitemap discovery and page registry
+│   └── graph.py                     # Quasi-graph edge construction
 ├── data/
 │   ├── ipfr_corpus/
-│   │   └── ipfr.sqlite          # SQLite database (IPFR pages + pipeline run log)
+│   │   ├── ipfr.sqlite              # SQLite database (8 tables)
+│   │   ├── sitemap.csv              # IPFR page registry (populated by ingestion)
+│   │   └── snapshots/               # Per-page IPFR content snapshots
 │   ├── influencer_sources/
-│   │   ├── source_registry.csv  # All monitored sources
-│   │   └── snapshots/           # Per-source state and content snapshots
-│   └── logs/                    # Observation summaries, feedback, health alerts
-├── tests/                       # pytest test suite
-├── docs/                        # Operational runbooks
+│   │   ├── source_registry.csv      # All monitored sources
+│   │   └── snapshots/               # Per-source state and content snapshots
+│   └── logs/                        # Observation summaries, feedback, health alerts
+├── tests/                           # pytest test suite (18 files)
+├── docs/                            # Operational runbooks
 │   ├── runbook-failure-response.md
 │   ├── runbook-add-source.md
 │   └── runbook-adjust-thresholds.md
-├── tripwire_config.yaml         # Single configuration file (all thresholds and parameters)
-└── requirements.txt
+├── tripwire_config.yaml             # Single configuration file (all thresholds and parameters)
+├── requirements.txt                 # Main pipeline dependencies
+└── requirements-ingestion.txt       # Ingestion pipeline dependencies
 ```
 
 ---
@@ -85,20 +95,22 @@ cd tripwire
 python3.11 -m venv .venv
 source .venv/bin/activate
 
-# 3. Install dependencies (CPU-only PyTorch for GitHub Actions compatibility)
+# 3. Install pipeline dependencies (CPU-only PyTorch for GitHub Actions compatibility)
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 
-# 4. Configure the pipeline
-cp tripwire_config.yaml.example tripwire_config.yaml   # if not already present
-# Edit tripwire_config.yaml — set emails, adjust thresholds as needed
+# 4. Install ingestion pipeline dependencies
+pip install -r requirements-ingestion.txt
 
-# 5. Set required environment variables (or store as GitHub Actions secrets)
+# 5. Edit tripwire_config.yaml — set emails, adjust thresholds as needed
+
+# 6. Set required environment variables (or store as GitHub Actions secrets)
 export OPENAI_API_KEY=sk-...
-export SMTP_PASSWORD=...        # Gmail App Password for sending notifications
 export SMTP_USER=sender@gmail.com
-export IMAP_PASSWORD=...        # Gmail App Password for reading feedback replies
-export IMAP_USER=feedback@gmail.com
+export SMTP_PASSWORD=...              # Gmail App Password for sending notifications
+export FEEDBACK_EMAIL=reply@gmail.com # Reply-To address in notification emails
+export FEEDBACK_GMAIL_USER=feedback@gmail.com
+export FEEDBACK_GMAIL_APP_PASSWORD=...  # Gmail App Password for reading replies
 ```
 
 ### Hugging Face model downloads
@@ -158,6 +170,15 @@ python -m src.pipeline --config tripwire_config.yaml --log-level DEBUG
 # Override the auto-generated run ID
 python -m src.pipeline --run-id 2026-04-06-manual
 
+# Force-check all sources regardless of their individual schedules
+python -m src.pipeline --check-frequency all
+
+# Run the IPFR corpus ingestion pipeline
+python -m ingestion.ingest
+
+# Force re-ingest all IPFR pages (ignores change detection)
+python -m ingestion.ingest --force-all
+
 # Generate the weekly observability report
 python -m src.observability --days 30
 
@@ -200,26 +221,26 @@ Tests use `pytest` with `tmp_path` and `monkeypatch`. No network calls are made.
 
 ## CI/CD
 
-| Workflow | Trigger | Purpose |
-|----------|---------|---------|
-| `tripwire.yml` | Daily cron 02:00 UTC + manual dispatch | Full pipeline run |
-| `feedback_ingestion.yml` | Every 6 hours | Poll Gmail for feedback replies |
+| Workflow | Trigger | Timeout | Purpose |
+|----------|---------|---------|---------|
+| `ipfr_ingestion.yml` | Daily cron 01:00 UTC + manual dispatch (`force_all` flag) | 60 min | Refresh IPFR corpus in SQLite |
+| `tripwire.yml` | Daily cron 02:00 UTC + manual dispatch | 30 min | Full pipeline run (Stages 1–9) |
+| `feedback_ingestion.yml` | Every 6 hours + manual dispatch | 10 min | Poll Gmail for feedback replies |
 
-The pipeline runs at 02:00 UTC (after the IPFR corpus ingestion workflow at 01:00 UTC).
-A 30-minute `timeout-minutes` budget provides ~23 minutes of headroom on a typical run.
-
-After each run, updated snapshots and the SQLite database are committed back to the
-repository (`data/influencer_sources/snapshots/` and `data/ipfr_corpus/ipfr.sqlite`).
+The ingestion workflow runs at 01:00 UTC so the corpus is always up to date before the
+main pipeline starts at 02:00 UTC. All three workflows commit updated state back to the
+repository and use a concurrency group to prevent parallel writes to SQLite.
 
 GitHub Actions secrets required:
 
-| Secret | Purpose |
-|--------|---------|
-| `OPENAI_API_KEY` | LLM calls (Stage 8) |
-| `SMTP_PASSWORD` | Gmail App Password for sending notification emails |
-| `SMTP_USER` | Gmail address for sending |
-| `IMAP_PASSWORD` | Gmail App Password for reading feedback replies |
-| `IMAP_USER` | Gmail address for reading |
+| Secret | Workflow | Purpose |
+|--------|----------|---------|
+| `OPENAI_API_KEY` | `tripwire.yml` | LLM calls (Stage 8) |
+| `SMTP_USER` | `tripwire.yml` | Gmail address for sending notifications |
+| `SMTP_PASSWORD` | `tripwire.yml` | Gmail App Password for sending notifications |
+| `FEEDBACK_EMAIL` | `tripwire.yml` | Reply-To address embedded in notification emails |
+| `FEEDBACK_GMAIL_USER` | `feedback_ingestion.yml` | Gmail address for reading feedback replies |
+| `FEEDBACK_GMAIL_APP_PASSWORD` | `feedback_ingestion.yml` | Gmail App Password for reading replies |
 
 ---
 
@@ -237,12 +258,16 @@ See [docs/runbook-failure-response.md](docs/runbook-failure-response.md).
 
 ## SQLite Schema
 
-The pipeline writes to `data/ipfr_corpus/ipfr.sqlite`. Key tables:
+`data/ipfr_corpus/ipfr.sqlite` is populated by the ingestion pipeline and read by the main pipeline.
 
 | Table | Purpose |
 |-------|---------|
-| `pages` | IPFR page metadata and content (populated by ingestion pipeline) |
-| `page_chunks` | Pre-chunked IPFR content with bi-encoder embeddings |
+| `pages` | IPFR page metadata, content, doc embedding, status (`active`/`stub`/`duplicate`) |
+| `page_chunks` | Pre-chunked IPFR content with BGE chunk embeddings |
+| `entities` | Named entities (ORG, PERSON, GPE, LAW, etc.) per page |
+| `keyphrases` | YAKE keyphrases with IDF weights per page |
+| `graph_edges` | Quasi-graph edges (embedding similarity, entity overlap) |
+| `sections` | Section headings and offsets per page |
 | `pipeline_runs` | Per-source log entry for every run (used by health and observability) |
 | `deferred_triggers` | Trigger bundles queued for LLM retry after API failures |
 
