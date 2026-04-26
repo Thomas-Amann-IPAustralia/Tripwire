@@ -9,16 +9,23 @@ appropriately for the source type.
 Source-type routing
 -------------------
 Webpage    → unified .diff file (old snapshot vs new snapshot).
-FRL        → retrieve the change explainer document from the FRL API;
-             fall back to webpage diff if unavailable.
+FRL        → retrieve the Explanatory Statement (regulations) or bill summary
+             (Acts) from the FRL API / ParlInfo.  A compilation number change
+             is inherently significant, so no .diff file is needed.  The
+             explainer text is saved as the current snapshot and older
+             explainers are rotated into versioned backlog files.  When no
+             explainer can be retrieved a minimal compilation-change notice is
+             returned instead.
 RSS        → extract new items (and detect mutated items) since last check.
 
 Snapshot management
 -------------------
-For webpage and FRL sources, the current normalised text is written to a
-snapshot file under ``data/influencer_sources/snapshots/<source_id>/``.
-Up to ``content_versions_retained`` (default: 6) previous versions are kept
-on disk; older versions are deleted.
+For webpage sources, the current normalised text is written to a snapshot file
+under ``data/influencer_sources/snapshots/<source_id>/``.  For FRL sources the
+most recent explainer is written to the same location and older versions are
+kept as backlog (``<source_id>.v1.txt``, etc.).  Up to
+``content_versions_retained`` (default: 6) previous versions are kept on disk;
+older versions are deleted.
 
 The snapshot directory is committed to Git at the end of each pipeline run
 (Section 7.2 — handled by the pipeline orchestrator, not this module).
@@ -190,10 +197,7 @@ def generate_diff(
     if source_type == "rss":
         return _generate_rss_diff(source, snap_base, versions_retained, session)
     elif source_type == "frl":
-        return _generate_frl_diff(
-            source, new_text, previous_text, diff_lines,
-            snap_base, versions_retained, run_id, session
-        )
+        return _generate_frl_diff(source, snap_base, versions_retained, session)
     else:
         return _generate_webpage_diff(
             source, new_text, previous_text, diff_lines,
@@ -262,73 +266,79 @@ def _generate_webpage_diff(
 
 def _generate_frl_diff(
     source: dict[str, Any],
-    new_text: str,
-    previous_text: str | None,
-    diff_lines: list[str],
     snap_base: Path,
     versions_retained: int,
-    run_id: str,
     session: Any,
 ) -> DiffResult:
-    """Retrieve FRL change explainer; fall back to webpage diff if unavailable."""
+    """Retrieve FRL change explainer and save it as the versioned snapshot.
+
+    A compilation number change is inherently significant — no .diff file is
+    required.  The Explanatory Statement (for regulations) or bill summary (for
+    Acts) is saved as ``<source_id>.txt``; the rotation system keeps a backlog
+    of previous explainers as ``<source_id>.v1.txt``, ``<source_id>.v2.txt``,
+    etc.
+
+    When no explainer can be retrieved a minimal compilation-change notice is
+    returned so downstream stages can still flag the change for manual review.
+    """
     source_id = source["source_id"]
     warnings: list[str] = []
+    snap_dir = snap_base / source_id
+    snap_dir.mkdir(parents=True, exist_ok=True)
 
     explainer_text = None
     if session is not None:
         explainer_text, err = _fetch_frl_explainer(source, session)
         if err:
             warnings.append(err)
-            # Surface the underlying reason at WARNING level.  Without this
-            # the err string only appears in the diff_result.warnings list
-            # (later persisted to logs/run.jsonl), which makes the fallback
-            # to a unified text diff look unexplained at runtime.
-            logger.warning(
-                "Stage 3 [%s]: FRL explainer error: %s", source_id, err,
-            )
+            logger.warning("Stage 3 [%s]: FRL explainer error: %s", source_id, err)
 
     if explainer_text:
         normalised = _normalise_diff_text(explainer_text)
-        snap_dir = snap_base / source_id
-        snap_dir.mkdir(parents=True, exist_ok=True)
+        # Rotate previous explainers into versioned backlog, then write new one.
         _rotate_snapshots(snap_dir, source_id, versions_retained)
-        (snap_dir / f"{source_id}.txt").write_text(new_text, encoding="utf-8")
-
-        ts = datetime.now(tz=timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-        explainer_path = snap_dir / f"{source_id}_explainer_{ts}.txt"
-        explainer_path.write_text(explainer_text, encoding="utf-8")
+        snap_file = snap_dir / f"{source_id}.txt"
+        snap_file.write_text(explainer_text, encoding="utf-8")
         logger.info(
             "Stage 3 [%s]: FRL explainer saved → %s (%d chars)",
-            source_id, explainer_path, len(explainer_text),
+            source_id, snap_file, len(explainer_text),
         )
-
         return DiffResult(
             source_id=source_id,
             source_type="frl",
             diff_type="explainer",
             normalised_diff=normalised,
-            diff_path=str(explainer_path),
+            diff_path=str(snap_file),
             diff_size_chars=len(explainer_text),
             normalised_size_chars=len(normalised),
             warnings=warnings,
         )
 
-    # Fallback: treat as webpage diff.
+    # No explainer retrieved, but the compilation change is still significant.
+    # Return a minimal notice so downstream stages can flag it for manual review.
     warnings.append(
-        f"FRL explainer unavailable for {source_id}; falling back to text diff."
+        f"FRL explainer unavailable for {source_id}; "
+        "compilation change recorded with no detail."
     )
     logger.warning(
-        "Stage 3 [%s]: FALLBACK — FRL explainer unavailable, using unified text diff",
+        "Stage 3 [%s]: FRL explainer unavailable — compilation change recorded with no detail",
         source_id,
     )
-    result = _generate_webpage_diff(
-        source, new_text, previous_text, diff_lines,
-        snap_base, versions_retained, run_id
+    fallback_text = (
+        f"Compilation updated for {source_id}. "
+        "No Explanatory Statement could be retrieved automatically."
     )
-    result.source_type = "frl"
-    result.diff_type = "unified_diff_fallback"
-    result.warnings = warnings
-    return result
+    normalised = _normalise_diff_text(fallback_text)
+    return DiffResult(
+        source_id=source_id,
+        source_type="frl",
+        diff_type="compilation_change",
+        normalised_diff=normalised,
+        diff_path=None,
+        diff_size_chars=len(fallback_text),
+        normalised_size_chars=len(normalised),
+        warnings=warnings,
+    )
 
 
 def _truncate_at_es_stop_heading(text: str) -> str:
