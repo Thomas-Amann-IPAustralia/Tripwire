@@ -279,6 +279,13 @@ def _generate_frl_diff(
         explainer_text, err = _fetch_frl_explainer(source, session)
         if err:
             warnings.append(err)
+            # Surface the underlying reason at WARNING level.  Without this
+            # the err string only appears in the diff_result.warnings list
+            # (later persisted to logs/run.jsonl), which makes the fallback
+            # to a unified text diff look unexplained at runtime.
+            logger.warning(
+                "Stage 3 [%s]: FRL explainer error: %s", source_id, err,
+            )
 
     if explainer_text:
         normalised = _normalise_diff_text(explainer_text)
