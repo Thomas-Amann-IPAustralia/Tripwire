@@ -224,7 +224,7 @@ def _encode_texts(texts: list[str], model: Any) -> Any:
     try:
         import numpy as np
 
-        embeddings = model.encode(texts, normalize_embeddings=True, batch_size=32)
+        embeddings = model.encode(texts, normalize_embeddings=True, batch_size=32, show_progress_bar=False)
         return np.array(embeddings, dtype=np.float32)
     except Exception as exc:
         logger.error("Stage 5: Encoding %d texts failed: %s", len(texts), exc)

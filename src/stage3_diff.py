@@ -299,10 +299,6 @@ def _generate_frl_diff(
         _rotate_snapshots(snap_dir, source_id, versions_retained)
         snap_file = snap_dir / f"{source_id}.txt"
         snap_file.write_text(explainer_text, encoding="utf-8")
-        logger.info(
-            "Stage 3 [%s]: FRL explainer saved → %s (%d chars)",
-            source_id, snap_file, len(explainer_text),
-        )
         return DiffResult(
             source_id=source_id,
             source_type="frl",

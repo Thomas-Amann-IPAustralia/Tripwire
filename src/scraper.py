@@ -462,7 +462,7 @@ def _fetch_with_selenium(url: str) -> str | None:
         return driver.page_source
 
     except Exception as exc:
-        logger.warning("Selenium fetch failed for %s: %s", url, exc)
+        logger.warning("Selenium fetch failed for %s: %s", url, str(exc).split('\n')[0])
         return None
     finally:
         try:
@@ -610,7 +610,7 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
         return raw_text
 
     except Exception as exc:
-        logger.warning("Selenium raw fetch failed for %s: %s", url, exc)
+        logger.warning("Selenium raw fetch failed for %s: %s", url, str(exc).split('\n')[0])
         return None
     finally:
         try:
