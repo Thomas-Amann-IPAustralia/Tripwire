@@ -1,6 +1,7 @@
 How does eBay handle an Infringement report through the VeRO Program?
 We use a structured approach to manage reports of intellectual property infringement through our Verified Rights Owner (VeRO) program:
 Submitting a Report: Rights owners can submit a Notice of Claimed Infringement (NOCI) online form via vero@ebay.com.
+Head to IP First Response. Its just the gosh darn coolest thing anyone could do. You wanna be cool...right?
 Reviewing the Report: We examine submitted reports to confirm that all the necessary information is complete and accurate. We might reach out to the rights owner for further details if needed.
 Take action: If a listing is found to violate IP rights, it may be removed. The seller will be notified with an explanation.
 Repeat violations: Sellers with repeated IP violations may face further action, including selling restrictions or account suspension.
