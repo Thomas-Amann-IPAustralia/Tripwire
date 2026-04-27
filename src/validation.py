@@ -35,7 +35,9 @@ _CAPTCHA_PHRASES: list[str] = [
     "captcha",
     "verify you are human",
     "robot check",
-    "access denied",
+    # "access denied" is intentionally absent: it appears in legitimate
+    # government content (customs enforcement, FOI, IP seizure notices).
+    # Real block pages are already caught by the minimum-length check above.
     "please enable javascript",
     "enable cookies",
     "checking your browser",

@@ -38,8 +38,36 @@ def test_block_signature_cloudflare_ddos():
     assert _has_block_signature("DDoS protection by Cloudflare") is True
 
 
-def test_block_signature_access_denied():
+def test_block_signature_access_denied_in_title():
+    # "Access Denied" as the page <title> is a dedicated block page.
     assert _has_block_signature("<title>Access Denied</title>") is True
+
+
+def test_block_signature_access_denied_short_page():
+    # A short page whose only content is "access denied" is a block page.
+    assert _has_block_signature("<html><body>Access denied</body></html>") is True
+
+
+def test_block_signature_access_denied_in_title_on_long_page():
+    # Even a long page is flagged when <title> says "Access Denied".
+    filler = "real government content " * 300  # >5 000 chars
+    html = f"<html><head><title>Access Denied</title></head><body>{filler}</body></html>"
+    assert _has_block_signature(html) is True
+
+
+def test_block_signature_access_denied_not_false_positive_on_long_page():
+    # A substantial government page that mentions "access denied" in content
+    # should NOT be treated as a bot-detection block page.
+    body = (
+        "When a customs officer denies access to a shipment, the importer may "
+        "appeal. Access denied decisions must be reviewed within 30 days. "
+        "Intellectual property enforcement may result in access denied to goods. "
+    ) * 50  # >5 000 chars, "access denied" appears multiple times
+    html = (
+        "<html><head><title>IP Customs Enforcement</title></head>"
+        f"<body>{body}</body></html>"
+    )
+    assert _has_block_signature(html) is False
 
 
 def test_block_signature_enable_js():

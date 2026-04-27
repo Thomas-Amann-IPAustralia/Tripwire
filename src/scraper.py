@@ -45,8 +45,11 @@ logger = logging.getLogger(__name__)
 # A 200 OK response carrying any of these strings is treated the same as a
 # network error and triggers the Selenium fallback.
 #
-# This list is a minimum baseline — extend with site-specific strings
-# observed during operation.
+# Only include strings that are unambiguous bot-detection indicators — i.e.
+# phrases that would not appear in the body of a legitimate government page.
+# "access denied" is intentionally absent: it occurs in legitimate Australian
+# government content (customs enforcement decisions, FOI outcomes, IP seizure
+# notices).  It is handled separately in _has_block_signature().
 _BLOCK_SIGNATURES: list[str] = [
     # Cloudflare challenges
     "just a moment",
@@ -58,7 +61,6 @@ _BLOCK_SIGNATURES: list[str] = [
     "please enable javascript",
     "enable cookies",
     # Access control
-    "access denied",
     "checking your browser",
     # Legacy CAPTCHA indicators
     "captcha",
@@ -68,6 +70,17 @@ _BLOCK_SIGNATURES: list[str] = [
     "this site can't be reached",
     "err_http2_protocol_error",
 ]
+
+# Pages longer than this are unlikely to be pure bot-detection responses, so
+# "access denied" appearing in them is treated as legitimate content rather
+# than a block signal.
+_ACCESS_DENIED_PAGE_THRESHOLD: int = 5_000
+
+# Matches <title>Access Denied</title> regardless of surrounding whitespace.
+_ACCESS_DENIED_TITLE_RE = re.compile(
+    r"<title[^>]*>\s*access\s+denied\s*</title>",
+    re.IGNORECASE | re.DOTALL,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -278,9 +291,22 @@ def _has_block_signature(html: str) -> bool:
 
     The check is case-insensitive and runs against the raw HTML so it catches
     block pages that trafilatura might fail to extract any content from.
+
+    "access denied" receives special treatment: it is only treated as a block
+    signal when the page is short (< _ACCESS_DENIED_PAGE_THRESHOLD chars) or
+    when it appears as the entire <title> content.  This prevents false
+    positives on legitimate government pages that discuss denied customs entry,
+    FOI outcomes, or IP enforcement actions.
     """
     lower = html.lower()
-    return any(sig in lower for sig in _BLOCK_SIGNATURES)
+    if any(sig in lower for sig in _BLOCK_SIGNATURES):
+        return True
+
+    if "access denied" in lower:
+        if len(html) < _ACCESS_DENIED_PAGE_THRESHOLD or _ACCESS_DENIED_TITLE_RE.search(html):
+            return True
+
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -312,6 +338,40 @@ def _fetch_with_requests(url: str, session: Any) -> str | None:
 # ---------------------------------------------------------------------------
 # Private helpers — Selenium-based fetch
 # ---------------------------------------------------------------------------
+
+
+def _get_chrome_major_version() -> str:
+    """Return the major version number of the installed Chrome/Chromium binary.
+
+    Tries common binary names in order and parses the first line of output
+    (e.g. "Google Chrome 133.0.6943.98").  Falls back to "133" — a plausible
+    recent version — if no binary is found or the output cannot be parsed.
+
+    Using the actual installed version in the User-Agent prevents the
+    version-mismatch fingerprint that arises when a hardcoded version string
+    falls years behind the real browser.
+    """
+    import subprocess
+
+    for cmd in (
+        ["google-chrome", "--version"],
+        ["google-chrome-stable", "--version"],
+        ["chromium-browser", "--version"],
+        ["chromium", "--version"],
+    ):
+        try:
+            out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL, timeout=5).decode()
+            # Output: "Google Chrome 133.0.6943.98 \n" or "Chromium 133.0.6943.98"
+            version_token = out.strip().splitlines()[0].split()[-1]
+            major = version_token.split(".")[0]
+            if major.isdigit():
+                logger.debug("Detected Chrome major version: %s (from %s)", major, cmd[0])
+                return major
+        except Exception:
+            continue
+
+    logger.debug("Could not detect Chrome version; falling back to 133.")
+    return "133"
 
 
 def build_selenium_driver():
@@ -371,10 +431,11 @@ def build_selenium_driver():
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--lang=en-US,en;q=0.9")
+    _chrome_major = _get_chrome_major_version()
     options.add_argument(
-        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/126.0.0.0 Safari/537.36"
+        f"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        f"AppleWebKit/537.36 (KHTML, like Gecko) "
+        f"Chrome/{_chrome_major}.0.0.0 Safari/537.36"
     )
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
@@ -418,17 +479,18 @@ def build_selenium_driver():
 def _wait_for_block_clearance(
     driver,
     *,
-    timeout_s: float = 20.0,
+    timeout_s: float = 35.0,
     poll_interval_s: float = 0.5,
 ) -> None:
     """Poll page_source until WAF/bot-challenge block signatures disappear.
 
-    Gov.au sites (Azure WAF, Imperva, etc.) serve a JS-challenge page for
-    0.5–5 s while the browser solves the challenge.  Polling until the
-    block signatures are gone — rather than sleeping a fixed amount —
-    handles both fast and slow challenge resolution without over-waiting.
-    If the timeout elapses the function returns silently; the caller's
-    subsequent block-signature check will surface the failure.
+    Gov.au sites (Azure WAF, Imperva, Cloudflare, etc.) serve a JS-challenge
+    page while the browser solves the challenge — typically 1–5 s but
+    occasionally up to 30 s on slower infrastructure.  Polling until the
+    block signatures are gone handles both fast and slow challenge resolution
+    without over-waiting.  If the timeout elapses the function returns
+    silently; the caller's subsequent block-signature check will surface the
+    failure.
     """
     deadline = time.time() + timeout_s
     while time.time() < deadline:
