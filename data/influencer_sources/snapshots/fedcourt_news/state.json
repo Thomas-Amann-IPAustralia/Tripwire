@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for RSS https://fedcourt.gov.au/rss/news-and-events-rss",
-  "last_error_at": "2026-04-27T05:25:55.253092+00:00",
-  "consecutive_failures": 8
+  "last_error_at": "2026-04-27T14:29:24.741259+00:00",
+  "consecutive_failures": 9
 }
