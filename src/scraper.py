@@ -380,12 +380,14 @@ def build_selenium_driver():
     options.add_experimental_option("useAutomationExtension", False)
 
     try:
-        driver = webdriver.Chrome(options=options)
+        from webdriver_manager.chrome import ChromeDriverManager
+        from selenium.webdriver.chrome.service import Service as ChromeService
+        service = ChromeService(ChromeDriverManager().install())
+        driver = webdriver.Chrome(service=service, options=options)
     except Exception as exc:
         raise PermanentError(
             f"Chrome WebDriver failed to launch: {exc}. "
-            "Ensure google-chrome-stable is installed and selenium>=4.10 is "
-            "available (Selenium Manager auto-downloads a compatible chromedriver)."
+            "Ensure google-chrome-stable and webdriver-manager are installed."
         ) from exc
 
     try:
@@ -625,21 +627,40 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
         _wait_for_block_clearance(driver)
 
         # Step 3: synchronous XHR in the authenticated browser context.
-        raw_text = driver.execute_script(
-            """
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', arguments[0], false);
-            xhr.send(null);
-            return xhr.responseText;
-            """,
-            url,
-        )
+        # If the WAF challenge redirected the browser to a different origin,
+        # the XHR may fail with a CORS/load error.  In that case fall back to
+        # driver.page_source, which holds the rendered document (sufficient for
+        # RSS bookkeeping; stage 3 re-fetches for actual parsing).
+        raw_text = None
+        try:
+            raw_text = driver.execute_script(
+                """
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', arguments[0], false);
+                xhr.send(null);
+                return xhr.responseText;
+                """,
+                url,
+            )
+        except Exception as xhr_exc:
+            logger.warning(
+                "XHR failed for %s (%s); falling back to page_source.",
+                url, str(xhr_exc).split('\n')[0],
+            )
 
-        if not raw_text:
-            logger.warning("Selenium raw fetch returned empty response for %s", url)
-            return None
+        if raw_text:
+            return raw_text
 
-        return raw_text
+        # XHR failed or empty: use page_source if it is not a block page.
+        page_src = driver.page_source
+        if page_src and len(page_src) >= 200 and not _has_block_signature(page_src):
+            logger.debug(
+                "Using page_source fallback for %s (length=%d)", url, len(page_src)
+            )
+            return page_src
+
+        logger.warning("Selenium raw fetch returned no usable content for %s", url)
+        return None
 
     except Exception as exc:
         logger.warning("Selenium raw fetch failed for %s: %s", url, str(exc).split('\n')[0])
