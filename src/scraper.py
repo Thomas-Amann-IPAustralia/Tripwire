@@ -368,12 +368,13 @@ def build_selenium_driver():
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
-    options.add_argument("--lang=en-US")
+    options.add_argument("--lang=en-US,en;q=0.9")
     options.add_argument(
         "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/124.0.0.0 Safari/537.36"
+        "Chrome/126.0.0.0 Safari/537.36"
     )
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
@@ -412,6 +413,29 @@ def build_selenium_driver():
     return driver
 
 
+def _wait_for_block_clearance(
+    driver,
+    *,
+    timeout_s: float = 20.0,
+    poll_interval_s: float = 0.5,
+) -> None:
+    """Poll page_source until WAF/bot-challenge block signatures disappear.
+
+    Gov.au sites (Azure WAF, Imperva, etc.) serve a JS-challenge page for
+    0.5–5 s while the browser solves the challenge.  Polling until the
+    block signatures are gone — rather than sleeping a fixed amount —
+    handles both fast and slow challenge resolution without over-waiting.
+    If the timeout elapses the function returns silently; the caller's
+    subsequent block-signature check will surface the failure.
+    """
+    deadline = time.time() + timeout_s
+    while time.time() < deadline:
+        if not _has_block_signature(driver.page_source):
+            return
+        time.sleep(poll_interval_s)
+    logger.debug("WAF challenge did not clear within %.0f s; proceeding.", timeout_s)
+
+
 def _fetch_with_selenium(url: str) -> str | None:
     """Fetch a URL using a fresh Selenium Chrome driver with stealth patches.
 
@@ -446,10 +470,13 @@ def _fetch_with_selenium(url: str) -> str | None:
 
         driver.get(url)
 
-        # Wait for the page body to be present (up to 15 s).
-        WebDriverWait(driver, 15).until(
+        # Wait for the page body to be present (up to 25 s).
+        WebDriverWait(driver, 25).until(
             EC.presence_of_element_located((By.TAG_NAME, "body"))
         )
+
+        # Poll until any WAF/bot JS challenge has resolved.
+        _wait_for_block_clearance(driver)
 
         # Two-stage randomised scroll: triggers lazy-loaded content and
         # makes timing look less robotic.  Fixed delays are themselves a
@@ -591,6 +618,11 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
         WebDriverWait(driver, timeout_seconds).until(
             EC.presence_of_element_located((By.TAG_NAME, "body"))
         )
+
+        # Poll until WAF JS challenge clears before issuing the XHR.
+        # Without this, the XHR fires while the challenge page is still
+        # active and returns the block page instead of the raw resource.
+        _wait_for_block_clearance(driver)
 
         # Step 3: synchronous XHR in the authenticated browser context.
         raw_text = driver.execute_script(
