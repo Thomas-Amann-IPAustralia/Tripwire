@@ -10,6 +10,7 @@ requests>=2.31
 trafilatura>=1.8
 selenium>=4.10
 selenium-stealth>=1.0
+webdriver-manager>=4.0
 
 # --- NLP and keyword extraction ---
 spacy>=3.7
