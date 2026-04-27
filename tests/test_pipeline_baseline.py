@@ -120,7 +120,7 @@ class TestBaselineGuard:
         )
         calls = []
 
-        def fake_scrape(url, source_type, session, force_selenium=False):
+        def fake_scrape(url, source_type, session, force_selenium=False, **_kw):
             calls.append("scrape")
             return scraped_text
 
@@ -178,7 +178,7 @@ class TestBaselineGuard:
 
         calls = []
 
-        def fake_scrape(url, source_type, session, force_selenium=False):
+        def fake_scrape(url, source_type, session, force_selenium=False, **_kw):
             calls.append("scrape")
             return "content"
 

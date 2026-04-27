@@ -15,6 +15,17 @@ pipeline:
   llm_model: "gpt-4o"
   deferred_trigger_max_age_days: 7
 
+# --- Scraping ---
+scraping:
+  proxy:
+    # When SCRAPER_PROXY_URL env var is set the scraper will retry any
+    # WAF-blocked Selenium fetch through the proxy.  The direct attempt is
+    # always tried first; the proxy is a fallback only, so cost is incurred
+    # only when needed.  Leave SCRAPER_PROXY_URL unset to disable.
+    # Recommended provider: residential proxy (Bright Data, Oxylabs, etc.)
+    # as datacenter proxies may also be blocklisted by gov.au WAFs.
+    fallback_on_block: true
+
 # --- Stage 2: Change detection ---
 change_detection:
   significance_fingerprint: true

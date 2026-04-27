@@ -107,6 +107,7 @@ They are **not** in `tripwire_config.yaml`.
 | `FEEDBACK_EMAIL` | Reply-To address embedded in notification mailto links | `tripwire.yml` |
 | `FEEDBACK_GMAIL_USER` | Gmail address for reading feedback replies | `feedback_ingestion.yml` |
 | `FEEDBACK_GMAIL_APP_PASSWORD` | Gmail App Password for reading feedback replies | `feedback_ingestion.yml` |
+| `SCRAPER_PROXY_URL` | Optional residential proxy for gov.au sources that block GHA IPs. Format: `http://user:pass@host:port`. Leave unset to disable proxy fallback. | `tripwire.yml` |
 
 ## Testing
 
