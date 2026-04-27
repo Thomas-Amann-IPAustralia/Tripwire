@@ -265,6 +265,46 @@ def test_normalise_text_preserves_case():
 # ---------------------------------------------------------------------------
 
 
+def test_fetch_with_selenium_polls_until_waf_clears(monkeypatch):
+    """If Selenium initially returns a WAF challenge page, polling waits until it clears."""
+    import sys
+
+    block_html = "<html><body>Just a moment...</body></html>"
+    real_html = "<html><body><p>Real government page content here.</p></body></html>"
+
+    page_sources = [block_html, block_html, real_html]
+    call_count = {"n": 0}
+
+    mock_driver = MagicMock()
+
+    def _next_page_source():
+        idx = min(call_count["n"], len(page_sources) - 1)
+        call_count["n"] += 1
+        return page_sources[idx]
+
+    type(mock_driver).page_source = property(lambda _self: _next_page_source())
+
+    selenium_mocks = {
+        "selenium": MagicMock(),
+        "selenium.webdriver": MagicMock(),
+        "selenium.webdriver.common": MagicMock(),
+        "selenium.webdriver.common.by": MagicMock(),
+        "selenium.webdriver.support": MagicMock(),
+        "selenium.webdriver.support.ui": MagicMock(),
+        "selenium.webdriver.support.expected_conditions": MagicMock(),
+    }
+
+    monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
+
+    with patch("src.scraper.build_selenium_driver", return_value=mock_driver):
+        with patch.dict(sys.modules, selenium_mocks):
+            from src.scraper import _fetch_with_selenium
+            result = _fetch_with_selenium("https://www.asbfeo.gov.au/disputes-assistance/dispute-support")
+
+    assert result == real_html
+    mock_driver.quit.assert_called_once()
+
+
 def test_fetch_with_selenium_propagates_driver_init_failure():
     """Driver init failures are environment-level and must propagate.
 
@@ -319,6 +359,7 @@ def test_fetch_raw_with_selenium_navigates_then_uses_xhr():
     import sys
 
     mock_driver = MagicMock()
+    mock_driver.page_source = ""  # no block signatures → WAF polling exits immediately
     mock_driver.execute_script.return_value = (
         "<urlset><url><loc>https://example.com/</loc></url></urlset>"
     )
@@ -350,6 +391,7 @@ def test_fetch_raw_with_selenium_navigates_then_uses_xhr():
 def test_fetch_raw_with_selenium_returns_none_on_empty_xhr_response():
     """If XHR returns empty string, returns None (not empty string)."""
     mock_driver = MagicMock()
+    mock_driver.page_source = ""  # no block signatures → WAF polling exits immediately
     mock_driver.execute_script.return_value = ""
 
     with patch("src.scraper.build_selenium_driver", return_value=mock_driver):
