@@ -1,8 +1,8 @@
 {
   "probe_signals": {
-    "register_id": "C2024C00855",
-    "compilation_number": "50",
-    "start": "2024-12-11T00:00:00"
+    "register_id": "C2024C00446",
+    "compilation_number": "49",
+    "start": "2024-05-22T00:00:00"
   },
   "last_checked": "2026-04-26T15:27:28.421051+00:00",
   "previous_hash": "288130f1dfde92c2d849b50145957f2003e21de63c27404fd807da320258f110",
