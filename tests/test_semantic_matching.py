@@ -113,7 +113,7 @@ def _minimal_config(overrides: dict | None = None) -> dict:
                 "low_medium_min_chunks": 3,
             },
             "crossencoder": {
-                "model": "gte-reranker-modernbert-base",
+                "model": "Alibaba-NLP/gte-reranker-modernbert-base",
                 "threshold": 0.60,
                 "max_context_tokens": 8192,
             },
