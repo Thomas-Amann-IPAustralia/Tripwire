@@ -30,5 +30,8 @@ openai>=1.30
 pytest>=8.0
 pytest-mock>=3.14
 
+# --- DOCX processing (ES extraction for FRL regulations) ---
+mammoth>=1.6
+
 # --- Utilities ---
 numpy>=1.26
