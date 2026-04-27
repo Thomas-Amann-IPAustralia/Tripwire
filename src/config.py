@@ -25,7 +25,7 @@ _DEFAULT_CONFIG_PATH = _REPO_ROOT / "tripwire_config.yaml"
 
 # Model names accepted by the system (extend as new models are supported).
 _KNOWN_BIENCODER_MODELS = {"BAAI/bge-base-en-v1.5"}
-_KNOWN_CROSSENCODER_MODELS = {"gte-reranker-modernbert-base"}
+_KNOWN_CROSSENCODER_MODELS = {"Alibaba-NLP/gte-reranker-modernbert-base"}
 
 
 # ---------------------------------------------------------------------------
