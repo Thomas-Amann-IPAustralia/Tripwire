@@ -38,8 +38,36 @@ def test_block_signature_cloudflare_ddos():
     assert _has_block_signature("DDoS protection by Cloudflare") is True
 
 
-def test_block_signature_access_denied():
+def test_block_signature_access_denied_in_title():
+    # "Access Denied" as the page <title> is a dedicated block page.
     assert _has_block_signature("<title>Access Denied</title>") is True
+
+
+def test_block_signature_access_denied_short_page():
+    # A short page whose only content is "access denied" is a block page.
+    assert _has_block_signature("<html><body>Access denied</body></html>") is True
+
+
+def test_block_signature_access_denied_in_title_on_long_page():
+    # Even a long page is flagged when <title> says "Access Denied".
+    filler = "real government content " * 300  # >5 000 chars
+    html = f"<html><head><title>Access Denied</title></head><body>{filler}</body></html>"
+    assert _has_block_signature(html) is True
+
+
+def test_block_signature_access_denied_not_false_positive_on_long_page():
+    # A substantial government page that mentions "access denied" in content
+    # should NOT be treated as a bot-detection block page.
+    body = (
+        "When a customs officer denies access to a shipment, the importer may "
+        "appeal. Access denied decisions must be reviewed within 30 days. "
+        "Intellectual property enforcement may result in access denied to goods. "
+    ) * 50  # >5 000 chars, "access denied" appears multiple times
+    html = (
+        "<html><head><title>IP Customs Enforcement</title></head>"
+        f"<body>{body}</body></html>"
+    )
+    assert _has_block_signature(html) is False
 
 
 def test_block_signature_enable_js():
@@ -203,13 +231,100 @@ def test_scrape_and_normalise_raises_retryable_when_both_fail():
 
 
 def test_scrape_and_normalise_raises_captcha_when_selenium_also_blocked():
-    """Selenium returns another block page → PermanentError (captcha)."""
-    block_html = "<html><body>Access denied</body></html>"
+    """Direct Selenium also blocked and no proxy configured → PermanentError."""
+    block_html = "<html><body>Just a moment...</body></html>"
     session = _make_session(200, block_html)
 
     with patch("src.scraper._fetch_with_selenium", return_value=block_html):
         with pytest.raises(PermanentError):
             scrape_and_normalise("https://example.com", "webpage", session)
+
+
+# ---------------------------------------------------------------------------
+# scrape_and_normalise — proxy fallback for IP-reputation blocks
+# ---------------------------------------------------------------------------
+
+
+def test_scrape_and_normalise_proxy_retry_succeeds_after_direct_block():
+    """Direct Selenium blocked; proxy retry returns real content."""
+    block_html = "<html><body>Just a moment...</body></html>"
+    clean_html = "<html><body><p>Real government page content here.</p></body></html>"
+    session = _make_session(200, block_html)
+
+    # First call (direct) → blocked; second call (via proxy) → clean.
+    with patch(
+        "src.scraper._fetch_with_selenium",
+        side_effect=[block_html, clean_html],
+    ) as mock_sel:
+        result = scrape_and_normalise(
+            "https://www.asbfeo.gov.au/disputes-assistance/dispute-support",
+            "webpage",
+            session,
+            force_selenium=True,
+            proxy_url="http://user:pass@proxy.example.com:8080",
+        )
+
+    assert mock_sel.call_count == 2
+    # First call: direct (no proxy).
+    assert mock_sel.call_args_list[0] == (
+        ("https://www.asbfeo.gov.au/disputes-assistance/dispute-support",),
+        {},
+    )
+    # Second call: via proxy.
+    assert mock_sel.call_args_list[1] == (
+        ("https://www.asbfeo.gov.au/disputes-assistance/dispute-support",),
+        {"proxy_url": "http://user:pass@proxy.example.com:8080"},
+    )
+    assert "Real government page content" in result
+
+
+def test_scrape_and_normalise_no_proxy_retry_when_proxy_url_not_set():
+    """When proxy_url is None, a blocked Selenium result raises immediately."""
+    block_html = "<html><body>Just a moment...</body></html>"
+    session = _make_session(200, block_html)
+
+    with patch("src.scraper._fetch_with_selenium", return_value=block_html) as mock_sel:
+        with pytest.raises(PermanentError):
+            scrape_and_normalise(
+                "https://example.com", "webpage", session, force_selenium=True
+            )
+
+    # Only one Selenium attempt — no proxy retry.
+    mock_sel.assert_called_once()
+
+
+def test_scrape_and_normalise_proxy_retry_raises_when_proxy_also_blocked():
+    """Both direct and proxy Selenium attempts blocked → PermanentError."""
+    block_html = "<html><body>Just a moment...</body></html>"
+    session = _make_session(200, block_html)
+
+    with patch("src.scraper._fetch_with_selenium", return_value=block_html):
+        with pytest.raises(PermanentError):
+            scrape_and_normalise(
+                "https://example.com",
+                "webpage",
+                session,
+                force_selenium=True,
+                proxy_url="http://proxy.example.com:8080",
+            )
+
+
+def test_scrape_and_normalise_direct_success_skips_proxy():
+    """Direct Selenium succeeds → proxy is never used."""
+    clean_html = "<html><body><p>Clean content here.</p></body></html>"
+    session = MagicMock()
+
+    with patch("src.scraper._fetch_with_selenium", return_value=clean_html) as mock_sel:
+        scrape_and_normalise(
+            "https://example.com",
+            "webpage",
+            session,
+            force_selenium=True,
+            proxy_url="http://proxy.example.com:8080",
+        )
+
+    # Only one call — the proxy fallback is never triggered.
+    mock_sel.assert_called_once_with("https://example.com")
 
 
 # ---------------------------------------------------------------------------
@@ -447,7 +562,7 @@ def test_waf_fetch_returns_html_when_challenge_clears_immediately(monkeypatch):
     real_html = "<html>" + ("real content " * 50) + "</html>"
     driver = _waf_driver([real_html])
 
-    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda **_kw: driver)
     monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
 
     from src.scraper import fetch_with_waf_polling
@@ -466,7 +581,7 @@ def test_waf_fetch_returns_html_after_challenge_clears(monkeypatch):
     real_html = "<html>" + ("real content " * 50) + "</html>"
     driver = _waf_driver([waf_html, waf_html, real_html])
 
-    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda **_kw: driver)
     monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
 
     from src.scraper import fetch_with_waf_polling
@@ -483,7 +598,7 @@ def test_waf_fetch_returns_none_when_challenge_never_clears(monkeypatch):
     waf_html = "<html>Azure WAF</html>" + ("padding " * 200)
     driver = _waf_driver([waf_html])
 
-    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda **_kw: driver)
     monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
 
     from src.scraper import fetch_with_waf_polling
@@ -501,7 +616,7 @@ def test_waf_fetch_returns_none_when_page_too_short(monkeypatch):
     short_html = "<html>tiny</html>"
     driver = _waf_driver([short_html])
 
-    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda **_kw: driver)
     monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
 
     from src.scraper import fetch_with_waf_polling
@@ -518,7 +633,7 @@ def test_waf_fetch_returns_none_on_navigation_error(monkeypatch):
     driver = MagicMock()
     driver.get.side_effect = Exception("navigation timeout")
 
-    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda: driver)
+    monkeypatch.setattr("src.scraper.build_selenium_driver", lambda **_kw: driver)
     monkeypatch.setattr("src.scraper.time.sleep", lambda _s: None)
 
     from src.scraper import fetch_with_waf_polling

@@ -45,8 +45,11 @@ logger = logging.getLogger(__name__)
 # A 200 OK response carrying any of these strings is treated the same as a
 # network error and triggers the Selenium fallback.
 #
-# This list is a minimum baseline — extend with site-specific strings
-# observed during operation.
+# Only include strings that are unambiguous bot-detection indicators — i.e.
+# phrases that would not appear in the body of a legitimate government page.
+# "access denied" is intentionally absent: it occurs in legitimate Australian
+# government content (customs enforcement decisions, FOI outcomes, IP seizure
+# notices).  It is handled separately in _has_block_signature().
 _BLOCK_SIGNATURES: list[str] = [
     # Cloudflare challenges
     "just a moment",
@@ -58,7 +61,6 @@ _BLOCK_SIGNATURES: list[str] = [
     "please enable javascript",
     "enable cookies",
     # Access control
-    "access denied",
     "checking your browser",
     # Legacy CAPTCHA indicators
     "captcha",
@@ -68,6 +70,17 @@ _BLOCK_SIGNATURES: list[str] = [
     "this site can't be reached",
     "err_http2_protocol_error",
 ]
+
+# Pages longer than this are unlikely to be pure bot-detection responses, so
+# "access denied" appearing in them is treated as legitimate content rather
+# than a block signal.
+_ACCESS_DENIED_PAGE_THRESHOLD: int = 5_000
+
+# Matches <title>Access Denied</title> regardless of surrounding whitespace.
+_ACCESS_DENIED_TITLE_RE = re.compile(
+    r"<title[^>]*>\s*access\s+denied\s*</title>",
+    re.IGNORECASE | re.DOTALL,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -80,6 +93,7 @@ def scrape_and_normalise(
     source_type: str,
     session: Any,
     force_selenium: bool = False,
+    proxy_url: str | None = None,
 ) -> str:
     """Fetch a URL and return normalised plain text.
 
@@ -100,6 +114,11 @@ def scrape_and_normalise(
         If ``True``, skip the requests-based attempt and go straight to
         Selenium.  Useful for targets that reliably block GitHub Actions
         runner IPs on direct connection.
+    proxy_url:
+        Optional proxy URL (e.g. ``"http://user:pass@host:port"``).  When
+        set, a second Selenium attempt is made through the proxy if the
+        direct attempt returns a WAF block page.  This handles IP-reputation
+        blocks that fingerprint stealth alone cannot overcome.
 
     Returns
     -------
@@ -112,13 +131,13 @@ def scrape_and_normalise(
         On transient network failures when all fetch attempts fail.
     src.errors.PermanentError
         On HTTP 4xx responses, or when a block page is returned by both
-        the requests path and the Selenium fallback.
+        the direct Selenium attempt and the proxy fallback.
     """
     if source_type == "docx":
         return _scrape_docx(url, session)
 
     if source_type == "rss":
-        return _fetch_raw_rss(url, session, force_selenium=force_selenium)
+        return _fetch_raw_rss(url, session, force_selenium=force_selenium, proxy_url=proxy_url)
 
     # --- HTML-based fetch ---
     html: str | None = None
@@ -138,6 +157,19 @@ def scrape_and_normalise(
     if html is None:
         from src.errors import RetryableError
         raise RetryableError(f"All fetch attempts failed for {url}")
+
+    # If the direct Selenium attempt is still blocked and a proxy is available,
+    # retry through the proxy.  This handles IP-reputation blocks where the WAF
+    # denies the GitHub Actions runner IP range regardless of browser fingerprint.
+    if _has_block_signature(html) and proxy_url:
+        logger.info(
+            "Direct Selenium attempt blocked for %s; retrying via proxy.", url
+        )
+        html = _fetch_with_selenium(url, proxy_url=proxy_url)
+
+    if html is None:
+        from src.errors import RetryableError
+        raise RetryableError(f"All fetch attempts (including proxy) failed for {url}")
 
     if _has_block_signature(html):
         from src.errors import captcha_error
@@ -278,9 +310,22 @@ def _has_block_signature(html: str) -> bool:
 
     The check is case-insensitive and runs against the raw HTML so it catches
     block pages that trafilatura might fail to extract any content from.
+
+    "access denied" receives special treatment: it is only treated as a block
+    signal when the page is short (< _ACCESS_DENIED_PAGE_THRESHOLD chars) or
+    when it appears as the entire <title> content.  This prevents false
+    positives on legitimate government pages that discuss denied customs entry,
+    FOI outcomes, or IP enforcement actions.
     """
     lower = html.lower()
-    return any(sig in lower for sig in _BLOCK_SIGNATURES)
+    if any(sig in lower for sig in _BLOCK_SIGNATURES):
+        return True
+
+    if "access denied" in lower:
+        if len(html) < _ACCESS_DENIED_PAGE_THRESHOLD or _ACCESS_DENIED_TITLE_RE.search(html):
+            return True
+
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -314,7 +359,41 @@ def _fetch_with_requests(url: str, session: Any) -> str | None:
 # ---------------------------------------------------------------------------
 
 
-def build_selenium_driver():
+def _get_chrome_major_version() -> str:
+    """Return the major version number of the installed Chrome/Chromium binary.
+
+    Tries common binary names in order and parses the first line of output
+    (e.g. "Google Chrome 133.0.6943.98").  Falls back to "133" — a plausible
+    recent version — if no binary is found or the output cannot be parsed.
+
+    Using the actual installed version in the User-Agent prevents the
+    version-mismatch fingerprint that arises when a hardcoded version string
+    falls years behind the real browser.
+    """
+    import subprocess
+
+    for cmd in (
+        ["google-chrome", "--version"],
+        ["google-chrome-stable", "--version"],
+        ["chromium-browser", "--version"],
+        ["chromium", "--version"],
+    ):
+        try:
+            out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL, timeout=5).decode()
+            # Output: "Google Chrome 133.0.6943.98 \n" or "Chromium 133.0.6943.98"
+            version_token = out.strip().splitlines()[0].split()[-1]
+            major = version_token.split(".")[0]
+            if major.isdigit():
+                logger.debug("Detected Chrome major version: %s (from %s)", major, cmd[0])
+                return major
+        except Exception:
+            continue
+
+    logger.debug("Could not detect Chrome version; falling back to 133.")
+    return "133"
+
+
+def build_selenium_driver(*, proxy_url: str | None = None):
     """Create a fresh, stealth-patched Chrome WebDriver.
 
     Chrome flags applied:
@@ -337,6 +416,14 @@ def build_selenium_driver():
     ``selenium-stealth`` is applied on top to patch the JS layer
     (``navigator.plugins``, ``navigator.languages``, WebGL vendor strings,
     etc.) that the Chrome flags alone cannot reach.
+
+    Parameters
+    ----------
+    proxy_url:
+        Optional proxy URL (e.g. ``"http://user:pass@host:port"``).  When
+        set, all Chrome network traffic is routed through the proxy.  Use
+        this as a fallback when the GitHub Actions runner IP is blocked by
+        the target site's WAF.
 
     Returns
     -------
@@ -371,13 +458,16 @@ def build_selenium_driver():
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--lang=en-US,en;q=0.9")
+    _chrome_major = _get_chrome_major_version()
     options.add_argument(
-        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/126.0.0.0 Safari/537.36"
+        f"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        f"AppleWebKit/537.36 (KHTML, like Gecko) "
+        f"Chrome/{_chrome_major}.0.0.0 Safari/537.36"
     )
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
+    if proxy_url:
+        options.add_argument(f"--proxy-server={proxy_url}")
 
     try:
         from webdriver_manager.chrome import ChromeDriverManager
@@ -418,17 +508,18 @@ def build_selenium_driver():
 def _wait_for_block_clearance(
     driver,
     *,
-    timeout_s: float = 20.0,
+    timeout_s: float = 35.0,
     poll_interval_s: float = 0.5,
 ) -> None:
     """Poll page_source until WAF/bot-challenge block signatures disappear.
 
-    Gov.au sites (Azure WAF, Imperva, etc.) serve a JS-challenge page for
-    0.5–5 s while the browser solves the challenge.  Polling until the
-    block signatures are gone — rather than sleeping a fixed amount —
-    handles both fast and slow challenge resolution without over-waiting.
-    If the timeout elapses the function returns silently; the caller's
-    subsequent block-signature check will surface the failure.
+    Gov.au sites (Azure WAF, Imperva, Cloudflare, etc.) serve a JS-challenge
+    page while the browser solves the challenge — typically 1–5 s but
+    occasionally up to 30 s on slower infrastructure.  Polling until the
+    block signatures are gone handles both fast and slow challenge resolution
+    without over-waiting.  If the timeout elapses the function returns
+    silently; the caller's subsequent block-signature check will surface the
+    failure.
     """
     deadline = time.time() + timeout_s
     while time.time() < deadline:
@@ -438,12 +529,13 @@ def _wait_for_block_clearance(
     logger.debug("WAF challenge did not clear within %.0f s; proceeding.", timeout_s)
 
 
-def _fetch_with_selenium(url: str) -> str | None:
+def _fetch_with_selenium(url: str, *, proxy_url: str | None = None) -> str | None:
     """Fetch a URL using a fresh Selenium Chrome driver with stealth patches.
 
     Behaviour:
     - Creates a new driver (no carried-over session state or cookies).
-    - Waits up to 15 s for the page body to be present in the DOM.
+    - Waits up to 25 s for the page body to be present in the DOM.
+    - Polls until any WAF JS challenge clears (up to 35 s).
     - Performs a two-stage randomised scroll (25% → 50% of page height)
       to trigger lazy-loaded content and avoid fixed-timing fingerprints.
     - Quits the driver in a ``finally`` block regardless of outcome.
@@ -452,6 +544,9 @@ def _fetch_with_selenium(url: str) -> str | None:
     ----------
     url:
         The URL to fetch.
+    proxy_url:
+        Optional proxy URL forwarded to ``build_selenium_driver``.  Set this
+        when retrying a source whose direct IP is blocked by the target WAF.
 
     Returns
     -------
@@ -463,7 +558,7 @@ def _fetch_with_selenium(url: str) -> str | None:
     # problems (missing Chrome, missing selenium-stealth).  Let those
     # propagate so the pipeline records them against the source rather than
     # silently falling through to a generic "all fetch attempts failed".
-    driver = build_selenium_driver()
+    driver = build_selenium_driver(proxy_url=proxy_url)
 
     try:
         from selenium.webdriver.common.by import By
@@ -508,6 +603,7 @@ def fetch_with_waf_polling(
     timeout_s: float = 10.0,
     page_load_timeout_s: int = 30,
     min_length: int = 500,
+    proxy_url: str | None = None,
 ) -> str | None:
     """Fetch a URL via stealth Chrome and poll until ``must_disappear`` is gone.
 
@@ -542,7 +638,7 @@ def fetch_with_waf_polling(
         Final ``page_source`` if the WAF cleared and the page is at least
         ``min_length`` chars; ``None`` otherwise.
     """
-    driver = build_selenium_driver()
+    driver = build_selenium_driver(proxy_url=proxy_url)
     try:
         driver.set_page_load_timeout(page_load_timeout_s)
         logger.debug("WAF fetch: navigating to %s", url[:120])
@@ -576,7 +672,12 @@ def fetch_with_waf_polling(
             pass
 
 
-def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | None:
+def fetch_raw_with_selenium(
+    url: str,
+    *,
+    timeout_seconds: int = 60,
+    proxy_url: str | None = None,
+) -> str | None:
     """Fetch a URL and return the raw response body as text.
 
     Used for non-HTML resources (e.g. XML sitemaps) where Chrome's built-in
@@ -608,7 +709,7 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
     """
     # build_selenium_driver raises PermanentError on environment-level
     # problems; let it propagate so callers can record the real cause.
-    driver = build_selenium_driver()
+    driver = build_selenium_driver(proxy_url=proxy_url)
 
     try:
         from selenium.webdriver.common.by import By
@@ -677,7 +778,13 @@ def fetch_raw_with_selenium(url: str, *, timeout_seconds: int = 60) -> str | Non
 # ---------------------------------------------------------------------------
 
 
-def _fetch_raw_rss(url: str, session: Any, *, force_selenium: bool = False) -> str:
+def _fetch_raw_rss(
+    url: str,
+    session: Any,
+    *,
+    force_selenium: bool = False,
+    proxy_url: str | None = None,
+) -> str:
     """Fetch an RSS feed and return the raw XML text.
 
     Stage 3 (_generate_rss_diff) re-fetches and parses the XML itself; this
@@ -687,11 +794,12 @@ def _fetch_raw_rss(url: str, session: Any, *, force_selenium: bool = False) -> s
 
     Fetch strategy mirrors the HTML path:
       1. If ``force_selenium`` is False, try plain ``requests``.
-      2. If ``requests`` fails with a connection error or the response body
-         contains a block-page signature, fall back to
-         ``fetch_raw_with_selenium`` which runs a synchronous XHR inside an
-         authenticated browser context (required for WAF-protected feeds such
-         as fedcourt.gov.au).
+      2. If ``requests`` fails or returns a block page, fall back to
+         ``fetch_raw_with_selenium`` (synchronous XHR in authenticated
+         browser context; required for WAF-protected feeds such as
+         fedcourt.gov.au).
+      3. If the direct Selenium attempt is also blocked and ``proxy_url``
+         is set, retry via proxy.
     """
     from src.errors import RetryableError, http_error
 
@@ -714,6 +822,11 @@ def _fetch_raw_rss(url: str, session: Any, *, force_selenium: bool = False) -> s
             )
 
     raw = fetch_raw_with_selenium(url)
+    if (raw is None or _has_block_signature(raw)) and proxy_url:
+        logger.info(
+            "Direct Selenium attempt blocked for RSS %s; retrying via proxy.", url
+        )
+        raw = fetch_raw_with_selenium(url, proxy_url=proxy_url)
     if raw is None:
         raise RetryableError(f"All fetch attempts failed for RSS {url}")
     if _has_block_signature(raw):

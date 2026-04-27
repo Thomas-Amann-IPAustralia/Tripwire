@@ -123,6 +123,9 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           FEEDBACK_EMAIL: ${{ secrets.FEEDBACK_EMAIL }}
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          # Optional: residential proxy for gov.au sources that block GHA IPs.
+          # Format: http://user:pass@host:port  Leave unset to disable.
+          SCRAPER_PROXY_URL: ${{ secrets.SCRAPER_PROXY_URL }}
         run: |
           RUN_ID_ARG=""
           if [ -n "${{ github.event.inputs.run_id_override }}" ]; then
