@@ -1,5 +1,5 @@
 {
   "last_error": "PermanentError: CAPTCHA or bot-detection page detected at https://www.asbfeo.gov.au/disputes-assistance/dispute-support",
-  "last_error_at": "2026-04-27T14:57:05.141290+00:00",
-  "consecutive_failures": 10
+  "last_error_at": "2026-04-27T15:46:50.695232+00:00",
+  "consecutive_failures": 11
 }
