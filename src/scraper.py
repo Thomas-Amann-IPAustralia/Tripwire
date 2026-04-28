@@ -157,20 +157,31 @@ def scrape_and_normalise(
                 "falling back to Selenium.",
                 url,
             )
-        html = _fetch_with_selenium(url)
+        if force_selenium and proxy_url:
+            # Sources marked force_selenium are known to block GHA runner IPs.
+            # Go directly to the proxy Selenium attempt — skipping the direct
+            # attempt avoids an unnecessary full browser session from the blocked
+            # IP and removes the WAF rate-limit hit that precedes the proxy try.
+            logger.info(
+                "force_selenium + proxy configured for %s; using proxy Selenium directly.", url
+            )
+            html = _fetch_with_selenium(url, proxy_url=proxy_url)
+        else:
+            html = _fetch_with_selenium(url)
 
-    if html is None:
-        from src.errors import RetryableError
-        raise RetryableError(f"All fetch attempts failed for {url}")
+            if html is None:
+                from src.errors import RetryableError
+                raise RetryableError(f"All fetch attempts failed for {url}")
 
-    # If the direct Selenium attempt is still blocked and a proxy is available,
-    # retry through the proxy.  This handles IP-reputation blocks where the WAF
-    # denies the GitHub Actions runner IP range regardless of browser fingerprint.
-    if _has_block_signature(html) and proxy_url:
-        logger.info(
-            "Direct Selenium attempt blocked for %s; retrying via proxy.", url
-        )
-        html = _fetch_with_selenium(url, proxy_url=proxy_url)
+            # If the direct Selenium attempt is still blocked and a proxy is
+            # available, retry through the proxy.  This handles IP-reputation
+            # blocks where the WAF denies the GHA runner IP regardless of
+            # browser fingerprint.
+            if _has_block_signature(html) and proxy_url:
+                logger.info(
+                    "Direct Selenium attempt blocked for %s; retrying via proxy.", url
+                )
+                html = _fetch_with_selenium(url, proxy_url=proxy_url)
 
     if html is None:
         from src.errors import RetryableError
@@ -367,16 +378,17 @@ def _fetch_with_requests(
 # ---------------------------------------------------------------------------
 
 
-def _get_chrome_major_version() -> str:
-    """Return the major version number of the installed Chrome/Chromium binary.
+def _get_chrome_version() -> str:
+    """Return the full version string of the installed Chrome/Chromium binary.
 
     Tries common binary names in order and parses the first line of output
-    (e.g. "Google Chrome 133.0.6943.98").  Falls back to "133" — a plausible
-    recent version — if no binary is found or the output cannot be parsed.
+    (e.g. "Google Chrome 147.0.7727.117").  Falls back to "133.0.0.0" if no
+    binary is found or the output cannot be parsed.
 
-    Using the actual installed version in the User-Agent prevents the
-    version-mismatch fingerprint that arises when a hardcoded version string
-    falls years behind the real browser.
+    The full four-part version (major.minor.build.patch) is required because
+    WAFs cross-check the UA version against known real-browser release strings.
+    No genuine Chrome ever reports ".0.0" for the minor version — using only
+    the major version (e.g. "147.0.0.0") is a well-known automation fingerprint.
     """
     import subprocess
 
@@ -388,17 +400,17 @@ def _get_chrome_major_version() -> str:
     ):
         try:
             out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL, timeout=5).decode()
-            # Output: "Google Chrome 133.0.6943.98 \n" or "Chromium 133.0.6943.98"
+            # Output: "Google Chrome 147.0.7727.117 \n" or "Chromium 147.0.7727.117"
             version_token = out.strip().splitlines()[0].split()[-1]
-            major = version_token.split(".")[0]
-            if major.isdigit():
-                logger.debug("Detected Chrome major version: %s (from %s)", major, cmd[0])
-                return major
+            parts = version_token.split(".")
+            if parts[0].isdigit() and len(parts) >= 2:
+                logger.debug("Detected Chrome version: %s (from %s)", version_token, cmd[0])
+                return version_token
         except Exception:
             continue
 
-    logger.debug("Could not detect Chrome version; falling back to 133.")
-    return "133"
+    logger.debug("Could not detect Chrome version; falling back to 133.0.0.0.")
+    return "133.0.0.0"
 
 
 def build_selenium_driver(*, proxy_url: str | None = None):
@@ -482,11 +494,11 @@ def build_selenium_driver(*, proxy_url: str | None = None):
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--lang=en-US,en;q=0.9")
-    _chrome_major = _get_chrome_major_version()
+    _chrome_version = _get_chrome_version()
     options.add_argument(
         f"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         f"AppleWebKit/537.36 (KHTML, like Gecko) "
-        f"Chrome/{_chrome_major}.0.0.0 Safari/537.36"
+        f"Chrome/{_chrome_version} Safari/537.36"
     )
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
