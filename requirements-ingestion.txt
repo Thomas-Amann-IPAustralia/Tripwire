@@ -13,6 +13,7 @@ requests>=2.31
 # (IP-based rate limiting, JS gates, Cloudflare challenges, etc.).
 selenium>=4.6
 selenium-stealth>=1.0
+webdriver-manager>=4.0
 
 # DOCX processing
 mammoth>=1.6
