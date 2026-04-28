@@ -5,3 +5,7 @@ __pycache__/
 # Ephemeral Tripwire run artifacts — not for version control
 current_run_manifest.json
 staging/
+
+# SQLite WAL auxiliary files
+*.sqlite-shm
+*.sqlite-wal
