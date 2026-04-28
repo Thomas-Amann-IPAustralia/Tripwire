@@ -1,5 +1,5 @@
 {
   "last_error": "PermanentError: HTTP 404 fetching https://www.wipo.int/wipolex/en/legislation/countries/au (non-retryable)",
-  "last_error_at": "2026-04-28T08:04:16.691627+00:00",
-  "consecutive_failures": 1
+  "last_error_at": "2026-04-28T09:12:32.750429+00:00",
+  "consecutive_failures": 2
 }
