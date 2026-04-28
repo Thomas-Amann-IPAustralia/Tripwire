@@ -202,23 +202,17 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     # ------------------------------------------------------------------
     import requests
 
-    # Read the optional proxy URL from the environment.  When set, the scraper
-    # will retry any WAF-blocked Selenium fetch through the proxy — this handles
-    # IP-reputation blocks that fingerprint stealth alone cannot overcome
-    # (e.g. GitHub Actions runner IP ranges blocklisted by gov.au WAFs).
-    # Format: http://user:pass@host:port  or  socks5://host:port
+    # Read the optional proxy URL.  When set, a Selenium fetch that is
+    # bot-blocked will be retried through selenium-wire using this proxy.
     proxy_url: str | None = os.environ.get("SCRAPER_PROXY_URL") or None
     if proxy_url:
-        # Log only the host:port portion — never log credentials.
         _proxy_display = proxy_url.split("@")[-1] if "@" in proxy_url else proxy_url
-        logger.info("Proxy configured for WAF fallback: %s", _proxy_display)
+        logger.info("Proxy configured for blocked-Selenium fallback: %s", _proxy_display)
 
     session = requests.Session()
     session.headers["User-Agent"] = (
         "TripwireBot/1.0 (+https://github.com/thomas-amann-ipaustralia/tripwire)"
     )
-    if proxy_url:
-        session.proxies = {"http": proxy_url, "https": proxy_url}
 
     source_records: list = []
     rejected_candidates: list = []
