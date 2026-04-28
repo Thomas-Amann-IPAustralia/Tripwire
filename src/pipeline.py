@@ -202,6 +202,13 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     # ------------------------------------------------------------------
     import requests
 
+    # Read the optional proxy URL.  When set, a Selenium fetch that is
+    # bot-blocked will be retried through selenium-wire using this proxy.
+    proxy_url: str | None = os.environ.get("SCRAPER_PROXY_URL") or None
+    if proxy_url:
+        _proxy_display = proxy_url.split("@")[-1] if "@" in proxy_url else proxy_url
+        logger.info("Proxy configured for blocked-Selenium fallback: %s", _proxy_display)
+
     session = requests.Session()
     session.headers["User-Agent"] = (
         "TripwireBot/1.0 (+https://github.com/thomas-amann-ipaustralia/tripwire)"
@@ -248,6 +255,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
                 rejected_candidates=rejected_candidates,
                 log_entry=log_entry,
                 check_frequency_override=check_frequency_override,
+                proxy_url=proxy_url,
             )
         except Exception as exc:
             logger.error(
@@ -388,6 +396,7 @@ def _process_source(
     rejected_candidates: list,
     log_entry: dict[str, Any],
     check_frequency_override: str | None = None,
+    proxy_url: str | None = None,
 ) -> None:
     """Run Stages 1–6 for a single source."""
     from src.stage1_metadata import probe_source, is_due_for_check
@@ -460,6 +469,7 @@ def _process_source(
     new_text = scrape_and_normalise(
         source_url, source_type, session,
         force_selenium=source.get("force_selenium", False),
+        proxy_url=proxy_url,
     )
     previous_text = source_state.get("previous_text")
     previous_hash = source_state.get("previous_hash")

@@ -93,12 +93,20 @@ def scrape_and_normalise(
     source_type: str,
     session: Any,
     force_selenium: bool = False,
+    proxy_url: str | None = None,
 ) -> str:
     """Fetch a URL and return normalised plain text.
 
     Routing by source_type:
       - ``"docx"``        → requests download → mammoth → trafilatura
       - anything else     → HTML fetch (requests first, Selenium fallback)
+
+    Fetch strategy for HTML/RSS:
+      1. requests (unless force_selenium).
+      2. Regular Selenium if requests fails or returns a block page.
+      3. Selenium-wire + proxy if regular Selenium is also blocked and
+         ``proxy_url`` is set.  This handles IP-reputation blocks that
+         fingerprint stealth alone cannot overcome.
 
     Parameters
     ----------
@@ -111,8 +119,10 @@ def scrape_and_normalise(
         A ``requests.Session`` (or compatible) object.
     force_selenium:
         If ``True``, skip the requests-based attempt and go straight to
-        Selenium.  Useful for targets that reliably block GitHub Actions
-        runner IPs on direct connection.
+        Selenium.
+    proxy_url:
+        Optional proxy URL (e.g. ``"http://user:pass@host:port"``).  Only
+        used if the regular Selenium attempt is bot-blocked.
 
     Returns
     -------
@@ -124,14 +134,14 @@ def scrape_and_normalise(
     src.errors.RetryableError
         On transient network failures when all fetch attempts fail.
     src.errors.PermanentError
-        On HTTP 4xx responses, or when a block page is returned by both
-        the requests path and the Selenium fallback.
+        On HTTP 4xx responses, or when a block page is returned by all
+        attempted fetch paths.
     """
     if source_type == "docx":
         return _scrape_docx(url, session)
 
     if source_type == "rss":
-        return _fetch_raw_rss(url, session, force_selenium=force_selenium)
+        return _fetch_raw_rss(url, session, force_selenium=force_selenium, proxy_url=proxy_url)
 
     # --- HTML-based fetch ---
     html: str | None = None
@@ -147,6 +157,14 @@ def scrape_and_normalise(
                 url,
             )
         html = _fetch_with_selenium(url)
+
+    # If regular Selenium was also blocked and a proxy is available, retry
+    # through selenium-wire so the proxy credentials are supplied correctly.
+    if (html is None or _has_block_signature(html)) and proxy_url:
+        logger.info(
+            "Regular Selenium attempt blocked for %s; retrying via proxy.", url
+        )
+        html = _fetch_with_selenium(url, proxy_url=proxy_url)
 
     if html is None:
         from src.errors import RetryableError
@@ -375,29 +393,23 @@ def _get_chrome_version() -> str:
     return "133.0.0.0"
 
 
-def build_selenium_driver():
+def build_selenium_driver(*, proxy_url: str | None = None):
     """Create a fresh, stealth-patched Chrome WebDriver.
 
-    Chrome flags applied:
+    When ``proxy_url`` is ``None`` (the common case), a plain
+    ``selenium.webdriver.Chrome`` is returned — no selenium-wire overhead.
 
-    ``--headless=new``
-        Newer headless mode; more fingerprint-consistent than the legacy mode.
-    ``--disable-blink-features=AutomationControlled``
-        Suppresses ``navigator.webdriver = true``, the most commonly checked
-        automation signal.
-    ``excludeSwitches: ["enable-automation"]`` / ``useAutomationExtension: False``
-        Removes the Chrome infobar and associated automation markers.
-    ``--window-size=1920,1080``
-        Headless Chrome defaults to a small viewport; many fingerprinting
-        scripts flag non-standard dimensions.
-    ``--lang=en-US``
-        Sets a plausible ``Accept-Language`` value.
-    ``--no-sandbox`` / ``--disable-dev-shm-usage``
-        Required in GitHub Actions runner containers.
+    When ``proxy_url`` is set, selenium-wire is used so that authenticated
+    proxy credentials are supplied at the network layer (Chrome's
+    ``--proxy-server`` flag silently drops user:pass and fails with
+    ERR_NO_SUPPORTED_PROXIES on a 407).  If selenium-wire is not installed
+    the driver falls back to plain selenium without the proxy.
 
-    ``selenium-stealth`` is applied on top to patch the JS layer
-    (``navigator.plugins``, ``navigator.languages``, WebGL vendor strings,
-    etc.) that the Chrome flags alone cannot reach.
+    Parameters
+    ----------
+    proxy_url:
+        Optional proxy URL (e.g. ``"http://user:pass@host:port"``).  Only
+        pass this on a retry after a regular Selenium attempt was blocked.
 
     Returns
     -------
@@ -409,14 +421,11 @@ def build_selenium_driver():
     ------
     src.errors.PermanentError
         If the ``selenium`` package is missing, Chrome/chromedriver cannot be
-        launched, or ``selenium-stealth`` is not importable.  All three are
-        environment-configuration problems that will not resolve on retry, so
-        they surface as ``PermanentError`` rather than silent warnings.
+        launched, or ``selenium-stealth`` is not importable.
     """
     from src.errors import PermanentError
 
     try:
-        from selenium import webdriver
         from selenium.webdriver.chrome.options import Options
     except ImportError as exc:
         raise PermanentError(
@@ -445,7 +454,28 @@ def build_selenium_driver():
         from webdriver_manager.chrome import ChromeDriverManager
         from selenium.webdriver.chrome.service import Service as ChromeService
         service = ChromeService(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=options)
+
+        if proxy_url:
+            # Use selenium-wire for authenticated proxy routing.  Fall back to
+            # plain selenium (without proxy) if selenium-wire is not installed.
+            try:
+                from seleniumwire import webdriver
+                driver = webdriver.Chrome(
+                    service=service,
+                    options=options,
+                    seleniumwire_options={"proxy": {"http": proxy_url, "https": proxy_url}},
+                )
+            except ImportError:
+                logger.warning(
+                    "selenium-wire not installed; proxy will not be applied. "
+                    "Install with: pip install 'selenium-wire>=5.1' 'pyOpenSSL>=22.0.0'"
+                )
+                from selenium import webdriver
+                driver = webdriver.Chrome(service=service, options=options)
+        else:
+            from selenium import webdriver
+            driver = webdriver.Chrome(service=service, options=options)
+
     except Exception as exc:
         raise PermanentError(
             f"Chrome WebDriver failed to launch: {exc}. "
@@ -501,7 +531,7 @@ def _wait_for_block_clearance(
     logger.debug("WAF challenge did not clear within %.0f s; proceeding.", timeout_s)
 
 
-def _fetch_with_selenium(url: str) -> str | None:
+def _fetch_with_selenium(url: str, *, proxy_url: str | None = None) -> str | None:
     """Fetch a URL using a fresh Selenium Chrome driver with stealth patches.
 
     Behaviour:
@@ -516,6 +546,10 @@ def _fetch_with_selenium(url: str) -> str | None:
     ----------
     url:
         The URL to fetch.
+    proxy_url:
+        Optional proxy forwarded to ``build_selenium_driver``.  Only set
+        this on a retry after a regular (no-proxy) Selenium attempt was
+        bot-blocked.
 
     Returns
     -------
@@ -527,7 +561,7 @@ def _fetch_with_selenium(url: str) -> str | None:
     # problems (missing Chrome, missing selenium-stealth).  Let those
     # propagate so the pipeline records them against the source rather than
     # silently falling through to a generic "all fetch attempts failed".
-    driver = build_selenium_driver()
+    driver = build_selenium_driver(proxy_url=proxy_url)
 
     try:
         from selenium.webdriver.common.by import By
@@ -572,6 +606,7 @@ def fetch_with_waf_polling(
     timeout_s: float = 10.0,
     page_load_timeout_s: int = 30,
     min_length: int = 500,
+    proxy_url: str | None = None,
 ) -> str | None:
     """Fetch a URL via stealth Chrome and poll until ``must_disappear`` is gone.
 
@@ -606,7 +641,7 @@ def fetch_with_waf_polling(
         Final ``page_source`` if the WAF cleared and the page is at least
         ``min_length`` chars; ``None`` otherwise.
     """
-    driver = build_selenium_driver()
+    driver = build_selenium_driver(proxy_url=proxy_url)
     try:
         driver.set_page_load_timeout(page_load_timeout_s)
         logger.debug("WAF fetch: navigating to %s", url[:120])
@@ -644,6 +679,7 @@ def fetch_raw_with_selenium(
     url: str,
     *,
     timeout_seconds: int = 60,
+    proxy_url: str | None = None,
 ) -> str | None:
     """Fetch a URL and return the raw response body as text.
 
@@ -676,7 +712,7 @@ def fetch_raw_with_selenium(
     """
     # build_selenium_driver raises PermanentError on environment-level
     # problems; let it propagate so callers can record the real cause.
-    driver = build_selenium_driver()
+    driver = build_selenium_driver(proxy_url=proxy_url)
 
     try:
         from selenium.webdriver.common.by import By
@@ -750,6 +786,7 @@ def _fetch_raw_rss(
     session: Any,
     *,
     force_selenium: bool = False,
+    proxy_url: str | None = None,
 ) -> str:
     """Fetch an RSS feed and return the raw XML text.
 
@@ -758,12 +795,11 @@ def _fetch_raw_rss(
     source-state bookkeeping.  Trafilatura is intentionally bypassed — it is
     an HTML extractor and produces garbled output on XML feeds.
 
-    Fetch strategy mirrors the HTML path:
-      1. If ``force_selenium`` is False, try plain ``requests``.
-      2. If ``requests`` fails or returns a block page, fall back to
-         ``fetch_raw_with_selenium`` (synchronous XHR in authenticated
-         browser context; required for WAF-protected feeds such as
-         fedcourt.gov.au).
+    Fetch strategy:
+      1. Plain ``requests`` (unless force_selenium).
+      2. Regular ``fetch_raw_with_selenium`` if requests fails or is blocked.
+      3. Proxy Selenium (selenium-wire) if regular Selenium is also blocked
+         and ``proxy_url`` is set.
     """
     from src.errors import RetryableError, http_error
 
@@ -786,6 +822,11 @@ def _fetch_raw_rss(
             )
 
     raw = fetch_raw_with_selenium(url)
+    if (raw is None or _has_block_signature(raw)) and proxy_url:
+        logger.info(
+            "Regular Selenium attempt blocked for RSS %s; retrying via proxy.", url
+        )
+        raw = fetch_raw_with_selenium(url, proxy_url=proxy_url)
     if raw is None:
         raise RetryableError(f"All fetch attempts failed for RSS {url}")
     if _has_block_signature(raw):

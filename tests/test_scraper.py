@@ -9,7 +9,7 @@ processes are started.
 from __future__ import annotations
 
 from types import SimpleNamespace
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, call, patch
 
 import pytest
 
@@ -242,8 +242,8 @@ def test_scrape_and_normalise_raises_captcha_when_selenium_also_blocked():
             scrape_and_normalise("https://example.com", "webpage", session)
 
 
-def test_scrape_and_normalise_selenium_blocked_raises():
-    """A blocked Selenium result raises PermanentError."""
+def test_scrape_and_normalise_selenium_blocked_raises_without_proxy():
+    """Blocked Selenium with no proxy configured raises PermanentError."""
     block_html = "<html><body>Just a moment...</body></html>"
     session = _make_session(200, block_html)
 
@@ -252,6 +252,43 @@ def test_scrape_and_normalise_selenium_blocked_raises():
             scrape_and_normalise(
                 "https://example.com", "webpage", session, force_selenium=True
             )
+
+
+def test_scrape_and_normalise_proxy_retry_when_selenium_blocked():
+    """Blocked regular Selenium triggers a proxy retry that succeeds."""
+    block_html = "<html><body>Just a moment...</body></html>"
+    clean_html = "<html><body><p>Real content.</p></body></html>"
+
+    with patch(
+        "src.scraper._fetch_with_selenium",
+        side_effect=[block_html, clean_html],
+    ) as mock_sel:
+        result = scrape_and_normalise(
+            "https://example.com", "webpage", _make_session(200, block_html),
+            force_selenium=True,
+            proxy_url="http://proxy.example.com:8080",
+        )
+
+    assert mock_sel.call_count == 2
+    # Second call must include proxy_url.
+    assert mock_sel.call_args_list[1] == call(
+        "https://example.com", proxy_url="http://proxy.example.com:8080"
+    )
+    assert "Real content" in result
+
+
+def test_scrape_and_normalise_proxy_not_tried_when_selenium_succeeds():
+    """Successful regular Selenium should not trigger a proxy retry."""
+    clean_html = "<html><body><p>Real content.</p></body></html>"
+
+    with patch("src.scraper._fetch_with_selenium", return_value=clean_html) as mock_sel:
+        scrape_and_normalise(
+            "https://example.com", "webpage", _make_session(200, clean_html),
+            force_selenium=True,
+            proxy_url="http://proxy.example.com:8080",
+        )
+
+    mock_sel.assert_called_once_with("https://example.com")
 
 
 # ---------------------------------------------------------------------------

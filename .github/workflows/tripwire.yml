@@ -37,7 +37,7 @@ jobs:
   run-pipeline:
     name: Run Tripwire Pipeline
     runs-on: ubuntu-latest
-    timeout-minutes: 30       # Section 6.6 pipeline timeout
+    timeout-minutes: 60       # Section 6.6 pipeline timeout
     permissions:
       contents: write          # required to commit snapshots back to the repo
 
