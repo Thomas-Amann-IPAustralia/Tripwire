@@ -1,5 +1,0 @@
-{
-  "last_error": "PermanentError: Content at https://api.legislation.gov.au is too short (166 chars < minimum 200)",
-  "last_error_at": "2026-04-28T06:28:27.206370+00:00",
-  "consecutive_failures": 1
-}

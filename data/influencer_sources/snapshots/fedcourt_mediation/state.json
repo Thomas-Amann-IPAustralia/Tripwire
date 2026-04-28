@@ -1,5 +1,0 @@
-{
-  "last_error": "PermanentError: HTTP 403 fetching https://www.fedcourt.gov.au/services/ADR/mediation (non-retryable)",
-  "last_error_at": "2026-04-28T06:50:51.945074+00:00",
-  "consecutive_failures": 1
-}
