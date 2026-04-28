@@ -202,23 +202,10 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     # ------------------------------------------------------------------
     import requests
 
-    # Read the optional proxy URL from the environment.  When set, the scraper
-    # will retry any WAF-blocked Selenium fetch through the proxy — this handles
-    # IP-reputation blocks that fingerprint stealth alone cannot overcome
-    # (e.g. GitHub Actions runner IP ranges blocklisted by gov.au WAFs).
-    # Format: http://user:pass@host:port  or  socks5://host:port
-    proxy_url: str | None = os.environ.get("SCRAPER_PROXY_URL") or None
-    if proxy_url:
-        # Log only the host:port portion — never log credentials.
-        _proxy_display = proxy_url.split("@")[-1] if "@" in proxy_url else proxy_url
-        logger.info("Proxy configured for WAF fallback: %s", _proxy_display)
-
     session = requests.Session()
     session.headers["User-Agent"] = (
         "TripwireBot/1.0 (+https://github.com/thomas-amann-ipaustralia/tripwire)"
     )
-    if proxy_url:
-        session.proxies = {"http": proxy_url, "https": proxy_url}
 
     source_records: list = []
     rejected_candidates: list = []
@@ -261,7 +248,6 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
                 rejected_candidates=rejected_candidates,
                 log_entry=log_entry,
                 check_frequency_override=check_frequency_override,
-                proxy_url=proxy_url,
             )
         except Exception as exc:
             logger.error(
@@ -402,7 +388,6 @@ def _process_source(
     rejected_candidates: list,
     log_entry: dict[str, Any],
     check_frequency_override: str | None = None,
-    proxy_url: str | None = None,
 ) -> None:
     """Run Stages 1–6 for a single source."""
     from src.stage1_metadata import probe_source, is_due_for_check
@@ -475,7 +460,6 @@ def _process_source(
     new_text = scrape_and_normalise(
         source_url, source_type, session,
         force_selenium=source.get("force_selenium", False),
-        proxy_url=proxy_url,
     )
     previous_text = source_state.get("previous_text")
     previous_hash = source_state.get("previous_hash")

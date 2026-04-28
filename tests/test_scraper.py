@@ -136,12 +136,6 @@ def test_fetch_with_requests_returns_none_on_connection_error():
     assert result is None
 
 
-def test_fetch_with_requests_passes_proxy_to_session():
-    session = _make_session(200, "<html>content</html>")
-    proxy = "http://user:pass@proxy.example.com:8080"
-    _fetch_with_requests("https://example.com", session, proxy_url=proxy)
-    _, call_kwargs = session.get.call_args
-    assert call_kwargs.get("proxies") == {"http": proxy, "https": proxy}
 
 
 # ---------------------------------------------------------------------------
@@ -248,122 +242,16 @@ def test_scrape_and_normalise_raises_captcha_when_selenium_also_blocked():
             scrape_and_normalise("https://example.com", "webpage", session)
 
 
-# ---------------------------------------------------------------------------
-# scrape_and_normalise — proxy fallback for IP-reputation blocks
-# ---------------------------------------------------------------------------
-
-
-def test_scrape_and_normalise_proxy_retry_succeeds_after_direct_block():
-    """force_selenium + proxy goes directly to proxy Selenium and returns real content.
-
-    The direct (unproxied) Selenium attempt is skipped: force_selenium marks
-    sources whose IPs are known to block the GHA runner, so there is no value
-    in burning a full browser session from that IP before the proxy attempt.
-    """
-    clean_html = "<html><body><p>Real government page content here.</p></body></html>"
-    session = MagicMock()
-
-    with patch(
-        "src.scraper._fetch_with_selenium",
-        return_value=clean_html,
-    ) as mock_sel:
-        result = scrape_and_normalise(
-            "https://www.asbfeo.gov.au/disputes-assistance/dispute-support",
-            "webpage",
-            session,
-            force_selenium=True,
-            proxy_url="http://user:pass@proxy.example.com:8080",
-        )
-
-    # Single call — directly via proxy, no wasted direct attempt.
-    mock_sel.assert_called_once_with(
-        "https://www.asbfeo.gov.au/disputes-assistance/dispute-support",
-        proxy_url="http://user:pass@proxy.example.com:8080",
-    )
-    assert "Real government page content" in result
-
-
-def test_scrape_and_normalise_no_proxy_retry_when_proxy_url_not_set():
-    """When proxy_url is None, a blocked Selenium result raises immediately."""
-    block_html = "<html><body>Just a moment...</body></html>"
-    session = _make_session(200, block_html)
-
-    with patch("src.scraper._fetch_with_selenium", return_value=block_html) as mock_sel:
-        with pytest.raises(PermanentError):
-            scrape_and_normalise(
-                "https://example.com", "webpage", session, force_selenium=True
-            )
-
-    # Only one Selenium attempt — no proxy retry.
-    mock_sel.assert_called_once()
-
-
-def test_scrape_and_normalise_proxy_retry_raises_when_proxy_also_blocked():
-    """Both direct and proxy Selenium attempts blocked → PermanentError."""
+def test_scrape_and_normalise_selenium_blocked_raises():
+    """A blocked Selenium result raises PermanentError."""
     block_html = "<html><body>Just a moment...</body></html>"
     session = _make_session(200, block_html)
 
     with patch("src.scraper._fetch_with_selenium", return_value=block_html):
         with pytest.raises(PermanentError):
             scrape_and_normalise(
-                "https://example.com",
-                "webpage",
-                session,
-                force_selenium=True,
-                proxy_url="http://proxy.example.com:8080",
+                "https://example.com", "webpage", session, force_selenium=True
             )
-
-
-def test_scrape_and_normalise_force_selenium_with_proxy_uses_proxy_directly():
-    """force_selenium + proxy_url → single call via proxy, no direct attempt."""
-    clean_html = "<html><body><p>Clean content here.</p></body></html>"
-    session = MagicMock()
-
-    with patch("src.scraper._fetch_with_selenium", return_value=clean_html) as mock_sel:
-        scrape_and_normalise(
-            "https://example.com",
-            "webpage",
-            session,
-            force_selenium=True,
-            proxy_url="http://proxy.example.com:8080",
-        )
-
-    # Single call with proxy_url — the direct (unproxied) attempt is skipped.
-    mock_sel.assert_called_once_with(
-        "https://example.com",
-        proxy_url="http://proxy.example.com:8080",
-    )
-
-
-def test_scrape_and_normalise_proxy_retry_at_requests_level():
-    """When requests returns a block page, a proxy retry is made before falling to Selenium."""
-    block_html = "<html><body>Just a moment...</body></html>"
-    clean_html = "<html><body><p>Real content here.</p></body></html>"
-    proxy = "http://user:pass@proxy.example.com:8080"
-
-    resp_block = MagicMock()
-    resp_block.status_code = 200
-    resp_block.text = block_html
-
-    resp_clean = MagicMock()
-    resp_clean.status_code = 200
-    resp_clean.text = clean_html
-
-    session = MagicMock()
-    session.get.side_effect = [resp_block, resp_clean]
-
-    with patch("src.scraper._fetch_with_selenium") as mock_sel:
-        result = scrape_and_normalise(
-            "https://example.com", "webpage", session, proxy_url=proxy
-        )
-
-    # Two requests calls: direct then proxy.
-    assert session.get.call_count == 2
-    _, second_kwargs = session.get.call_args_list[1]
-    assert second_kwargs.get("proxies") == {"http": proxy, "https": proxy}
-    # Proxy requests succeeded — Selenium not needed.
-    mock_sel.assert_not_called()
-    assert "Real content" in result
 
 
 # ---------------------------------------------------------------------------
