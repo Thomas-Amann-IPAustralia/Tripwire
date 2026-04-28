@@ -144,6 +144,11 @@ def scrape_and_normalise(
 
     if not force_selenium:
         html = _fetch_with_requests(url, session)
+        if (html is None or _has_block_signature(html)) and proxy_url:
+            logger.info(
+                "Requests attempt blocked for %s; retrying via proxy.", url
+            )
+            html = _fetch_with_requests(url, session, proxy_url=proxy_url)
 
     if html is None or _has_block_signature(html):
         if html is not None:
@@ -333,7 +338,9 @@ def _has_block_signature(html: str) -> bool:
 # ---------------------------------------------------------------------------
 
 
-def _fetch_with_requests(url: str, session: Any) -> str | None:
+def _fetch_with_requests(
+    url: str, session: Any, *, proxy_url: str | None = None
+) -> str | None:
     """Attempt a simple requests-based GET.
 
     Returns the raw HTML on success, or ``None`` on connection failure
@@ -342,8 +349,9 @@ def _fetch_with_requests(url: str, session: Any) -> str | None:
     """
     from src.errors import http_error
 
+    proxies = {"http": proxy_url, "https": proxy_url} if proxy_url else None
     try:
-        resp = session.get(url, timeout=30)
+        resp = session.get(url, timeout=30, proxies=proxies)
     except Exception as exc:
         logger.warning("Requests fetch failed for %s: %s", url, exc)
         return None
@@ -442,12 +450,27 @@ def build_selenium_driver(*, proxy_url: str | None = None):
     from src.errors import PermanentError
 
     try:
-        from selenium import webdriver
+        from seleniumwire import webdriver
+        _seleniumwire = True
+    except ImportError:
+        logger.warning(
+            "selenium-wire not installed; authenticated proxy will not work. "
+            "Install with: pip install selenium-wire"
+        )
+        try:
+            from selenium import webdriver  # type: ignore[no-redef]
+        except ImportError as exc:
+            raise PermanentError(
+                f"Selenium is required but not installed: {exc}. "
+                "Install with: pip install selenium-wire selenium>=4.10"
+            ) from exc
+        _seleniumwire = False
+    try:
         from selenium.webdriver.chrome.options import Options
     except ImportError as exc:
         raise PermanentError(
             f"Selenium is required but not installed: {exc}. "
-            "Install with: pip install selenium>=4.10"
+            "Install with: pip install selenium-wire selenium>=4.10"
         ) from exc
 
     options = Options()
@@ -466,14 +489,24 @@ def build_selenium_driver(*, proxy_url: str | None = None):
     )
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option("useAutomationExtension", False)
-    if proxy_url:
-        options.add_argument(f"--proxy-server={proxy_url}")
+    # Proxy auth is handled via seleniumwire_options, not --proxy-server.
+    # Chrome's --proxy-server flag silently drops user:pass from the URL and
+    # then fails with ERR_NO_SUPPORTED_PROXIES when the proxy returns 407.
+    # selenium-wire intercepts at the network layer and supplies credentials
+    # transparently, so Chrome never sees them.
 
     try:
         from webdriver_manager.chrome import ChromeDriverManager
         from selenium.webdriver.chrome.service import Service as ChromeService
         service = ChromeService(ChromeDriverManager().install())
-        driver = webdriver.Chrome(service=service, options=options)
+        if _seleniumwire and proxy_url:
+            driver = webdriver.Chrome(
+                service=service,
+                options=options,
+                seleniumwire_options={"proxy": {"http": proxy_url, "https": proxy_url}},
+            )
+        else:
+            driver = webdriver.Chrome(service=service, options=options)
     except Exception as exc:
         raise PermanentError(
             f"Chrome WebDriver failed to launch: {exc}. "
