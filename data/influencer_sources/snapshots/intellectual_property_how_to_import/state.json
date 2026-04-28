@@ -1,5 +1,8 @@
 {
-  "last_error": "PermanentError: CAPTCHA or bot-detection page detected at https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property",
-  "last_error_at": "2026-04-27T23:30:58.373887+00:00",
-  "consecutive_failures": 14
+  "probe_signals": {
+    "content_length": "20"
+  },
+  "last_checked": "2026-04-28T01:43:02.766939+00:00",
+  "previous_hash": "6cc736145facb1c5ea64ed04b4cb6b60f9db998514d123e240a5b647f3a8b9ee",
+  "previous_text": "This site can\u2019t be reached\nThe webpage at https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property might be temporarily down or it may have moved permanently to a new web address.\nERR_NO_SUPPORTED_PROXIES\nThe webpage at https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property might be temporarily down or it may have moved permanently to a new web address."
 }
