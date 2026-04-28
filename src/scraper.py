@@ -452,10 +452,11 @@ def build_selenium_driver(*, proxy_url: str | None = None):
     try:
         from seleniumwire import webdriver
         _seleniumwire = True
-    except ImportError:
+    except ImportError as _sw_exc:
         logger.warning(
-            "selenium-wire not installed; authenticated proxy will not work. "
-            "Install with: pip install selenium-wire"
+            "selenium-wire not available (%s); authenticated proxy will not work. "
+            "Install with: pip install 'selenium-wire>=5.1' 'pyOpenSSL>=22.0.0'",
+            _sw_exc,
         )
         try:
             from selenium import webdriver  # type: ignore[no-redef]
