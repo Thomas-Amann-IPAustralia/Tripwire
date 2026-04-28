@@ -136,6 +136,14 @@ def test_fetch_with_requests_returns_none_on_connection_error():
     assert result is None
 
 
+def test_fetch_with_requests_passes_proxy_to_session():
+    session = _make_session(200, "<html>content</html>")
+    proxy = "http://user:pass@proxy.example.com:8080"
+    _fetch_with_requests("https://example.com", session, proxy_url=proxy)
+    _, call_kwargs = session.get.call_args
+    assert call_kwargs.get("proxies") == {"http": proxy, "https": proxy}
+
+
 # ---------------------------------------------------------------------------
 # scrape_url (backward-compat path)
 # ---------------------------------------------------------------------------
@@ -325,6 +333,37 @@ def test_scrape_and_normalise_direct_success_skips_proxy():
 
     # Only one call — the proxy fallback is never triggered.
     mock_sel.assert_called_once_with("https://example.com")
+
+
+def test_scrape_and_normalise_proxy_retry_at_requests_level():
+    """When requests returns a block page, a proxy retry is made before falling to Selenium."""
+    block_html = "<html><body>Just a moment...</body></html>"
+    clean_html = "<html><body><p>Real content here.</p></body></html>"
+    proxy = "http://user:pass@proxy.example.com:8080"
+
+    resp_block = MagicMock()
+    resp_block.status_code = 200
+    resp_block.text = block_html
+
+    resp_clean = MagicMock()
+    resp_clean.status_code = 200
+    resp_clean.text = clean_html
+
+    session = MagicMock()
+    session.get.side_effect = [resp_block, resp_clean]
+
+    with patch("src.scraper._fetch_with_selenium") as mock_sel:
+        result = scrape_and_normalise(
+            "https://example.com", "webpage", session, proxy_url=proxy
+        )
+
+    # Two requests calls: direct then proxy.
+    assert session.get.call_count == 2
+    _, second_kwargs = session.get.call_args_list[1]
+    assert second_kwargs.get("proxies") == {"http": proxy, "https": proxy}
+    # Proxy requests succeeded — Selenium not needed.
+    mock_sel.assert_not_called()
+    assert "Real content" in result
 
 
 # ---------------------------------------------------------------------------
