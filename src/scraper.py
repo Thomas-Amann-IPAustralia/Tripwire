@@ -510,7 +510,7 @@ def build_selenium_driver(*, proxy_url: str | None = None):
 def _wait_for_block_clearance(
     driver,
     *,
-    timeout_s: float = 35.0,
+    timeout_s: float = 15.0,
     poll_interval_s: float = 0.5,
 ) -> None:
     """Poll page_source until WAF/bot-challenge block signatures disappear.
@@ -604,7 +604,7 @@ def fetch_with_waf_polling(
     must_disappear: str = "Azure WAF",
     poll_interval_s: float = 0.5,
     timeout_s: float = 10.0,
-    page_load_timeout_s: int = 30,
+    page_load_timeout_s: int = 15,
     min_length: int = 500,
     proxy_url: str | None = None,
 ) -> str | None:
@@ -644,7 +644,7 @@ def fetch_with_waf_polling(
     driver = build_selenium_driver(proxy_url=proxy_url)
     try:
         driver.set_page_load_timeout(page_load_timeout_s)
-        logger.debug("WAF fetch: navigating to %s", url[:120])
+        logger.debug("WAF fetch: navigating to %s", url[:20])
         driver.get(url)
 
         max_polls = max(1, int(timeout_s / poll_interval_s))
@@ -678,7 +678,7 @@ def fetch_with_waf_polling(
 def fetch_raw_with_selenium(
     url: str,
     *,
-    timeout_seconds: int = 60,
+    timeout_seconds: int = 20,
     proxy_url: str | None = None,
 ) -> str | None:
     """Fetch a URL and return the raw response body as text.
@@ -845,7 +845,7 @@ def _scrape_docx(url: str, session: Any) -> str:
     from src.errors import RetryableError, http_error
 
     try:
-        resp = session.get(url, timeout=60)
+        resp = session.get(url, timeout=30)
     except Exception as exc:
         raise RetryableError(f"Connection error downloading DOCX {url}: {exc}") from exc
 
