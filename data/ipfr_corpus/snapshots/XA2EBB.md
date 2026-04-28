@@ -1,0 +1,2 @@
+Read insights and perspectives from professionals, business people and experts within the IP ecosystem and the latest updates about the IP First Response website; our initiative to support Australians navigating IP challenges with clarity and confidence.
+These blogs capture a diverse range of voices that do not necessarily reflect the views or position of IP Australia.
