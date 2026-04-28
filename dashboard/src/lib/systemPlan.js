@@ -1,0 +1,1 @@
+export const systemPlan = { sections: [] };

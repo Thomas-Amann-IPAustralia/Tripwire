@@ -1,0 +1,181 @@
+/* ─── CSS Variables ─────────────────────────────────────────────────────── */
+:root {
+  --bg-primary:    #111110;
+  --bg-secondary:  #1a1a18;
+  --bg-tertiary:   #242420;
+  --bg-accent:     #2e2e28;
+
+  --text-primary:   #e8e2d4;
+  --text-secondary: #9e9888;
+  --text-tertiary:  #5c5a52;
+
+  --rule:        #2e2e28;
+  --rule-accent: #4a4a40;
+
+  /* Stage accent colours — 9 stages, 6 distinct colours (by design).
+     Stages 1 & 7 share green, 2 & 8 share orange, 3 & 9 share amber. */
+  --stage-1: #3a6b3a;
+  --stage-2: #c94020;
+  --stage-3: #d4a820;
+  --stage-4: #4a7ab5;
+  --stage-5: #4a4a40;
+  --stage-6: #7a7a70;
+  --stage-7: #3a6b3a;
+  --stage-8: #c94020;
+  --stage-9: #d4a820;
+
+  --state-alert:    #c94020;
+  --state-warn:     #d4a820;
+  --state-ok:       #3a6b3a;
+  --state-error:    #8b1a1a;
+  --state-inactive: #5c5a52;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --font-body:    'Lora', serif;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  margin: 0;
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-primary);
+}
+
+/* Pills and badges only get a small radius */
+.pill, .badge {
+  border-radius: 2px;
+}
+
+/* ─── Scrollbars ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--rule-accent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ─── Grain texture on panels ───────────────────────────────────────────── */
+.panel {
+  position: relative;
+}
+
+.panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  border-radius: inherit;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes sectionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-enter {
+  animation: sectionEnter 200ms ease-out both;
+}
+
+@keyframes healthPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+@keyframes graphNodePulse {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes docAnchorGlow {
+  0%   { background-color: transparent; }
+  20%  { background-color: color-mix(in srgb, var(--state-warn) 20%, transparent); }
+  100% { background-color: transparent; }
+}
+
+/* ─── Verdict pills ─────────────────────────────────────────────────────── */
+.verdict-change-required {
+  color: var(--state-alert);
+  border: 1px solid var(--state-alert);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+
+.verdict-uncertain {
+  color: var(--state-warn);
+  border: 1px solid var(--state-warn);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+
+.verdict-no-change {
+  color: var(--state-ok);
+  border: 1px solid var(--state-ok);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
