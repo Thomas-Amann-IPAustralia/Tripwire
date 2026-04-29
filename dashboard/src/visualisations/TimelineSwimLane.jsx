@@ -59,6 +59,14 @@ function computePassRates(srcRuns) {
   return counts.map(c => c / total);
 }
 
+function passRatesToStages(passRates) {
+  return passRates.map((rate, i) => ({
+    n: i + 1,
+    reached: rate > 0,
+    status: rate > 0.5 ? 'passed' : rate > 0 ? 'failed' : 'skipped',
+  }));
+}
+
 function truncate28(str) {
   return str.length > 28 ? str.slice(0, 28) : str;
 }
@@ -380,7 +388,7 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
         {/* Fixed right: mini-funnels */}
         <div style={{ width: FUNNEL_W, flexShrink: 0, overflow: 'hidden' }}>
           {activeSrcList.map(src => {
-            const passRates = computePassRates(sourceMap.get(src));
+            const stages = passRatesToStages(computePassRates(sourceMap.get(src)));
             return (
               <div key={src} style={{
                 height: ROW_H,
@@ -389,7 +397,7 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
                 paddingLeft: '8px',
                 borderBottom: '1px solid var(--rule)',
               }}>
-                <StageIndicator passRates={passRates} />
+                <StageIndicator stages={stages} size={0.75} />
               </div>
             );
           })}
