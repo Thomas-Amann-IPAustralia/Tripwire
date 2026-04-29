@@ -9,8 +9,8 @@ import TimelineSwimLane from '../visualisations/TimelineSwimLane.jsx';
 export default function Observe() {
   const { filters, setStageMin, setDateRange } = useDashboard();
   const { data: runs,    isLoading, error } = useRuns(filters);
-  const { data: sources } = useSources();
-
+  const { data: sources = [] } = useSources();
+  
   return (
     <div style={{ height: '100%', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
 
