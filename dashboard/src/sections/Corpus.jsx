@@ -57,7 +57,6 @@ export default function Corpus() {
   const { data: pagesRaw } = usePages();
   const { data: nodesRaw } = useGraphNodes();
   const { data: edgesRaw } = useGraphEdges();
-  const { data: embeddingsRaw } = useEmbeddings();
 
   const pages  = useMemo(() => (Array.isArray(pagesRaw?.data)  ? pagesRaw.data  : pagesRaw  ?? []), [pagesRaw]);
   const nodes  = useMemo(() => (Array.isArray(nodesRaw?.data)  ? nodesRaw.data  : nodesRaw  ?? []), [nodesRaw]);
