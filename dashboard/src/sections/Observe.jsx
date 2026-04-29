@@ -9,6 +9,7 @@ import TimelineSwimLane from '../visualisations/TimelineSwimLane.jsx';
 export default function Observe() {
   const { filters, setStageMin, setDateRange } = useDashboard();
   const { data: runs,    isLoading, error } = useRuns(filters);
+  const runs = runsResult?.data ?? [];
   const { data: sourcesResult } = useSources();
   const sources = sourcesResult?.data ?? [];
   
