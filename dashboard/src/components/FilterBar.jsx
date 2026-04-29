@@ -26,7 +26,7 @@ const chipBase = {
 export default function FilterBar() {
   const { filters, setDatePreset, setDateRange, setSources, setStageMin, setVerdicts } = useDashboard();
   const { data: sourcesData } = useSources();
-  const sources = sourcesData || [];
+  const sources = sourcesData?.data ?? [];
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [search, setSearch] = useState('');
