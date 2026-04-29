@@ -9,6 +9,13 @@ async function apiFetch(path) {
   return res.json();
 }
 
+// Unwrap { data: [...] } envelope — all list endpoints use this shape.
+function selectArray(response) {
+  if (Array.isArray(response)) return response;
+  if (response && Array.isArray(response.data)) return response.data;
+  return [];
+}
+
 function filtersToSearch(filters) {
   if (!filters) return '';
   const params = new URLSearchParams();
@@ -28,6 +35,7 @@ export function useRuns(filters) {
     queryKey: ['runs', qs],
     queryFn: () => apiFetch(`/api/runs${qs}`),
     staleTime: STALE,
+    select: selectArray,
   });
 }
 
@@ -79,6 +87,7 @@ export function useSources() {
     queryKey: ['sources'],
     queryFn: () => apiFetch('/api/sources'),
     staleTime: STALE,
+    select: selectArray,
   });
 }
 
