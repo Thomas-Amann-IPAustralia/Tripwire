@@ -1,5 +1,5 @@
 {
-  "last_error": "PermanentError: CAPTCHA or bot-detection page detected at https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property",
-  "last_error_at": "2026-05-01T01:28:01.733875+00:00",
-  "consecutive_failures": 5
+  "last_error": "RetryableError: All fetch attempts failed for https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property",
+  "last_error_at": "2026-05-01T05:44:21.747830+00:00",
+  "consecutive_failures": 6
 }
