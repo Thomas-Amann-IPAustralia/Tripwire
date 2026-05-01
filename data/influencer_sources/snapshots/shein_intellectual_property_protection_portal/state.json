@@ -1,0 +1,5 @@
+{
+  "last_error": "PermanentError: Content at https://ipp.shein.com/ipp?language=en is too short (3 chars < minimum 200)",
+  "last_error_at": "2026-05-01T03:09:48.436193+00:00",
+  "consecutive_failures": 1
+}

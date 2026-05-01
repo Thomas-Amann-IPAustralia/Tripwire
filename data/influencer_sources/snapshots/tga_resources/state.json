@@ -1,0 +1,5 @@
+{
+  "last_error": "RetryableError: All fetch attempts failed for RSS tga.gov.au/feeds/resource.xml",
+  "last_error_at": "2026-05-01T03:14:42.906835+00:00",
+  "consecutive_failures": 1
+}

@@ -1,0 +1,5 @@
+{
+  "last_error": "RetryableError: All fetch attempts failed for RSS wto.org/library/rss/latest_news_e.xml",
+  "last_error_at": "2026-05-01T03:14:41.033439+00:00",
+  "consecutive_failures": 1
+}
