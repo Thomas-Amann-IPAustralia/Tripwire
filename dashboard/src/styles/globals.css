@@ -145,8 +145,27 @@ a:hover {
 
 @keyframes docAnchorGlow {
   0%   { background-color: transparent; }
-  20%  { background-color: color-mix(in srgb, var(--state-warn) 20%, transparent); }
+  20%  { background-color: rgba(212, 168, 32, 0.18); }
   100% { background-color: transparent; }
+}
+
+.anchor-arrival {
+  animation: docAnchorGlow 1.5s ease-out both;
+  border-radius: 2px;
+}
+
+@keyframes configPulse {
+  0%   { background-color: transparent;           box-shadow: inset 3px 0 0 transparent; }
+  15%  { background-color: rgba(212, 168, 32, 0.12); box-shadow: inset 3px 0 0 var(--state-warn); }
+  100% { background-color: transparent;           box-shadow: inset 3px 0 0 var(--state-warn); }
+}
+
+.config-pulse {
+  animation: configPulse 1.5s ease-in-out both;
+}
+
+[data-config-key] {
+  cursor: pointer !important;
 }
 
 /* ─── Verdict pills ─────────────────────────────────────────────────────── */

@@ -65,7 +65,18 @@ export default function Tooltip({ content, children, learnMoreHref }) {
           {learnMoreHref && (
             <div style={{ marginTop: '8px', borderTop: '1px solid var(--rule)', paddingTop: '6px' }}>
               <button
-                onClick={() => { hide(); navigate(learnMoreHref); }}
+                onClick={() => {
+                  hide();
+                  const [routePart, anchorPart] = (learnMoreHref || '').split('#');
+                  navigate(routePart || learnMoreHref);
+                  if (anchorPart) {
+                    setTimeout(() => {
+                      window.dispatchEvent(
+                        new CustomEvent('tripwire:navigate-doc', { detail: anchorPart })
+                      );
+                    }, 100);
+                  }
+                }}
                 style={{
                   fontFamily: 'var(--font-mono)',
                   fontSize: '10px',

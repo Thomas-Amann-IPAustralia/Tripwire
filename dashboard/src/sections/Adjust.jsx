@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import yaml from 'js-yaml';
 import { useQueryClient } from '@tanstack/react-query';
 import { useConfig as useConfigData } from '../hooks/useData.js';
@@ -233,16 +233,14 @@ const SECTIONS = [
 ];
 
 // ── Accordion Section ─────────────────────────────────────────────────────────
-function AccordionSection({ section, config, staged, onStage }) {
-  const [open, setOpen] = useState(true);
-
+function AccordionSection({ section, config, staged, onStage, open, onToggle }) {
   const stagedCount = section.params.filter(p => staged[p.key] !== undefined).length;
 
   return (
     <div style={{ borderBottom: '1px solid var(--rule)' }}>
       {/* Header */}
       <button
-        onClick={() => setOpen(o => !o)}
+        onClick={() => onToggle(section.id)}
         style={{
           width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
           padding: '10px 12px',
@@ -369,10 +367,53 @@ export default function Adjust() {
   const { data: config, isLoading, error: loadError } = useConfigData();
   const queryClient = useQueryClient();
 
-  const [staged, setStaged]       = useState({});
-  const [showYaml, setShowYaml]   = useState(false);
-  const [saveState, setSaveState] = useState('idle'); // 'idle' | 'saving' | 'success' | 'error'
-  const [saveError, setSaveError] = useState('');
+  const [staged, setStaged]           = useState({});
+  const [showYaml, setShowYaml]       = useState(false);
+  const [saveState, setSaveState]     = useState('idle'); // 'idle' | 'saving' | 'success' | 'error'
+  const [saveError, setSaveError]     = useState('');
+  const [openSections, setOpenSections] = useState(() => new Set(SECTIONS.map(s => s.id)));
+  const accordionRef                  = useRef(null);
+
+  const toggleSection = useCallback((id) => {
+    setOpenSections(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
+
+  // Listen for DOCUMENT → ADJUST config-key highlight
+  useEffect(() => {
+    const handler = (e) => {
+      const configKey = e.detail;
+      if (!configKey) return;
+      // Find the section containing this param and ensure it's open
+      const section = SECTIONS.find(s => s.params.some(p => p.key === configKey));
+      if (section) {
+        setOpenSections(prev => {
+          if (prev.has(section.id)) return prev;
+          const next = new Set(prev);
+          next.add(section.id);
+          return next;
+        });
+      }
+      // After the accordion opens, scroll to the control and pulse it
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const container = accordionRef.current;
+          if (!container) return;
+          const el = container.querySelector(`[data-param="${configKey}"]`);
+          if (!el) return;
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          el.classList.add('config-pulse');
+          setTimeout(() => el.classList.remove('config-pulse'), 1500);
+        });
+      });
+    };
+    window.addEventListener('tripwire:highlight-control', handler);
+    return () => window.removeEventListener('tripwire:highlight-control', handler);
+  }, []);
 
   const isDirty = Object.keys(staged).length > 0;
 
@@ -463,7 +504,7 @@ export default function Adjust() {
       <div style={{ flex: 1, overflowY: 'auto' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0' }}>
           {/* ── Left: accordion (70%) ── */}
-          <div style={{ flex: '0 0 70%', minWidth: 0, borderRight: showYaml ? '1px solid var(--rule)' : 'none' }}>
+          <div ref={accordionRef} style={{ flex: '0 0 70%', minWidth: 0, borderRight: showYaml ? '1px solid var(--rule)' : 'none' }}>
             {SECTIONS.map(section => (
               <AccordionSection
                 key={section.id}
@@ -471,6 +512,8 @@ export default function Adjust() {
                 config={config}
                 staged={staged}
                 onStage={stage}
+                open={openSections.has(section.id)}
+                onToggle={toggleSection}
               />
             ))}
 
