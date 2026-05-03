@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for RSS Sign up to IP National Practice Area and the RSS feed",
-  "last_error_at": "2026-05-03T15:17:22.823811+00:00",
-  "consecutive_failures": 1
+  "last_error_at": "2026-05-03T16:41:03.103682+00:00",
+  "consecutive_failures": 2
 }

@@ -1,5 +1,5 @@
 {
   "last_error": "PermanentError: Content at https://ipp.shein.com/ipp?code=20240730192620775058 is too short (3 chars < minimum 200)",
-  "last_error_at": "2026-05-03T15:14:07.076911+00:00",
-  "consecutive_failures": 1
+  "last_error_at": "2026-05-03T16:37:45.902669+00:00",
+  "consecutive_failures": 2
 }
