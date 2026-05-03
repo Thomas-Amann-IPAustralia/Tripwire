@@ -1,38 +1,69 @@
-/* ─── CSS Variables ─────────────────────────────────────────────────────── */
+/* ─── CSS Variables — Dark mode (default) ───────────────────────────────── */
 :root {
-  --bg-primary:    #111110;
-  --bg-secondary:  #1a1a18;
-  --bg-tertiary:   #242420;
-  --bg-accent:     #2e2e28;
+  --bg-primary:    #0e0e0d;
+  --bg-secondary:  #161614;
+  --bg-tertiary:   #1e1e1b;
+  --bg-accent:     #272722;
 
-  --text-primary:   #e8e2d4;
-  --text-secondary: #9e9888;
-  --text-tertiary:  #5c5a52;
+  --text-primary:   #e8e8e8;
+  --text-secondary: #999999;
+  --text-tertiary:  #777777;
 
-  --rule:        #2e2e28;
-  --rule-accent: #4a4a40;
+  --rule:        #333333;
+  --rule-accent: #444444;
 
   /* Stage accent colours — 9 stages, 6 distinct colours (by design).
-     Stages 1 & 7 share green, 2 & 8 share orange, 3 & 9 share amber. */
-  --stage-1: #3a6b3a;
-  --stage-2: #c94020;
-  --stage-3: #d4a820;
-  --stage-4: #4a7ab5;
-  --stage-5: #4a4a40;
-  --stage-6: #7a7a70;
-  --stage-7: #3a6b3a;
-  --stage-8: #c94020;
-  --stage-9: #d4a820;
+     Stages 1 & 7 share green, 2 & 8 share red, 3 & 9 share amber. */
+  --stage-1: #4ADE80;
+  --stage-2: #F87171;
+  --stage-3: #FBBF24;
+  --stage-4: #60A5FA;
+  --stage-5: #A78BFA;
+  --stage-6: #34D399;
+  --stage-7: #4ADE80;
+  --stage-8: #F87171;
+  --stage-9: #FBBF24;
 
-  --state-alert:    #c94020;
-  --state-warn:     #d4a820;
-  --state-ok:       #3a6b3a;
-  --state-error:    #8b1a1a;
-  --state-inactive: #5c5a52;
+  --state-alert:    #F87171;
+  --state-warn:     #FBBF24;
+  --state-ok:       #4ADE80;
+  --state-error:    #EF4444;
+  --state-inactive: #777777;
 
   --font-display: 'Bebas Neue', sans-serif;
   --font-mono:    'DM Mono', monospace;
   --font-body:    'Lora', serif;
+}
+
+/* ─── Light mode overrides ──────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-primary:    #F5F5F5;
+  --bg-secondary:  #FFFFFF;
+  --bg-tertiary:   #FAFAFA;
+  --bg-accent:     #EEEEEE;
+
+  --text-primary:   #111111;
+  --text-secondary: #333333;
+  --text-tertiary:  #666666;
+
+  --rule:        #CCCCCC;
+  --rule-accent: #BBBBBB;
+
+  --stage-1: #16A34A;
+  --stage-2: #DC2626;
+  --stage-3: #D97706;
+  --stage-4: #2563EB;
+  --stage-5: #7C3AED;
+  --stage-6: #059669;
+  --stage-7: #16A34A;
+  --stage-8: #DC2626;
+  --stage-9: #D97706;
+
+  --state-alert:    #DC2626;
+  --state-warn:     #D97706;
+  --state-ok:       #16A34A;
+  --state-error:    #B91C1C;
+  --state-inactive: #9CA3AF;
 }
 
 /* ─── Reset ─────────────────────────────────────────────────────────────── */
@@ -45,6 +76,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-size: 15px;
 }
 
 body {
@@ -175,7 +207,7 @@ a:hover {
   padding: 1px 6px;
   border-radius: 2px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.05em;
 }
 
@@ -185,7 +217,7 @@ a:hover {
   padding: 1px 6px;
   border-radius: 2px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.05em;
 }
 
@@ -195,6 +227,6 @@ a:hover {
   padding: 1px 6px;
   border-radius: 2px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.05em;
 }

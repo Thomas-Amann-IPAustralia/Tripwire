@@ -98,13 +98,13 @@ export default function Corpus() {
       }}>
         <div>
           <div style={{
-            fontFamily: 'var(--font-display)', fontSize: '42px',
+            fontFamily: 'var(--font-display)', fontSize: '50px',
             lineHeight: 1, color: 'var(--text-primary)',
           }}>
             CORPUS
           </div>
           <div style={{
-            fontFamily: 'var(--font-mono)', fontSize: '11px',
+            fontFamily: 'var(--font-mono)', fontSize: '13px',
             color: 'var(--text-tertiary)', letterSpacing: '0.06em',
           }}>
             IPFR Knowledge Base
@@ -128,7 +128,7 @@ export default function Corpus() {
               background: 'none', border: 'none', cursor: 'pointer',
               padding: '12px 0',
               fontFamily: 'var(--font-display)',
-              fontSize: '14px',
+              fontSize: '17px',
               letterSpacing: '0.06em',
               color: activeTab === i ? 'var(--text-primary)' : 'var(--text-tertiary)',
               borderBottom: activeTab === i ? '2px solid var(--text-primary)' : '2px solid transparent',
@@ -147,7 +147,7 @@ export default function Corpus() {
         padding: '6px 24px',
         borderBottom: '1px solid var(--rule)',
         fontFamily: 'var(--font-mono)',
-        fontSize: '11px',
+        fontSize: '13px',
         color: 'var(--text-tertiary)',
         letterSpacing: '0.06em',
         flexShrink: 0,
@@ -159,7 +159,7 @@ export default function Corpus() {
       <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
         <TabErrorBoundary key="tab0">
           <div style={{ position: 'absolute', inset: 0, display: activeTab === 0 ? 'block' : 'none' }}>
-            <Embedding3D pages={pages} isActive={activeTab === 0} />
+            <Embedding3D isActive={activeTab === 0} />
           </div>
         </TabErrorBoundary>
 
