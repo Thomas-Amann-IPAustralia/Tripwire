@@ -29,6 +29,43 @@ function readCSSVar(varName) {
   return getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
 }
 
+// Soft filled-circle sprite — renders round data points instead of gl squares
+function createCircleSprite() {
+  const sz = 64;
+  const canvas = document.createElement('canvas');
+  canvas.width = sz; canvas.height = sz;
+  const ctx = canvas.getContext('2d');
+  const r = sz / 2;
+  const grd = ctx.createRadialGradient(r, r, 0, r, r, r - 1);
+  grd.addColorStop(0,   'rgba(255,255,255,1.0)');
+  grd.addColorStop(0.6, 'rgba(255,255,255,0.95)');
+  grd.addColorStop(1.0, 'rgba(255,255,255,0.0)');
+  ctx.fillStyle = grd;
+  ctx.beginPath();
+  ctx.arc(r, r, r - 1, 0, Math.PI * 2);
+  ctx.fill();
+  return new THREE.CanvasTexture(canvas);
+}
+
+// Ring sprite for cluster centroids — visually distinct from data points
+function createRingSprite() {
+  const sz = 64;
+  const canvas = document.createElement('canvas');
+  canvas.width = sz; canvas.height = sz;
+  const ctx = canvas.getContext('2d');
+  const r = sz / 2;
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.arc(r, r, r - 2, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalCompositeOperation = 'destination-out';
+  ctx.beginPath();
+  ctx.arc(r, r, r - 10, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalCompositeOperation = 'source-over';
+  return new THREE.CanvasTexture(canvas);
+}
+
 // ─── Error boundary ──────────────────────────────────────────────────────────
 class Embedding3DErrorBoundary extends React.Component {
   constructor(props) {
@@ -185,8 +222,9 @@ function Embedding3DInner({ isActive }) {
   const centroidsRef = useRef(null);   // centroid THREE.Points
   const allPositions = useRef([]);     // world-space xyz per visible chunk
   const allChunkMeta = useRef([]);     // metadata per visible chunk (matches allPositions)
-  const orbitRef     = useRef({ theta: Math.PI / 4, phi: Math.PI / 3, radius: 4 });
-  const dragRef      = useRef({ dragging: false, lastX: 0, lastY: 0 });
+  const orbitRef     = useRef({ theta: Math.PI / 4, phi: Math.PI / 3, radius: 3.0 });
+  const dragRef      = useRef({ dragging: false, hasDragged: false, lastX: 0, lastY: 0, startX: 0, startY: 0 });
+  const tmpV3        = useRef(new THREE.Vector3()); // reused each frame to avoid GC
   const mouseRef     = useRef({ x: -9999, y: -9999 });
   const animateRef   = useRef(false);
   const isActiveRef  = useRef(isActive);
@@ -244,7 +282,10 @@ function Embedding3DInner({ isActive }) {
     if (!pts || !ctr) return;
 
     const visible = chunks.filter(c => !hiddenDocs.has(c.document_id));
-    allPositions.current = visible.map(c => [c.x, c.y, c.z]);
+    // Flat Float32Array — reused by hover loop without per-frame allocation
+    const flatPos = new Float32Array(visible.length * 3);
+    visible.forEach((c, i) => { flatPos[i*3]=c.x; flatPos[i*3+1]=c.y; flatPos[i*3+2]=c.z; });
+    allPositions.current = flatPos;
     allChunkMeta.current = visible;
 
     // Main point cloud
@@ -420,27 +461,42 @@ function Embedding3DInner({ isActive }) {
       scene.add(obj);
     });
 
+    // Sprites: soft circle for data points, ring for centroids
+    const circleSprite = createCircleSprite();
+    const ringSprite   = createRingSprite();
+    const dpr = Math.min(window.devicePixelRatio, 2);
+
     // Main point cloud (geometry populated by rebuildBuffers)
     const ptsGeo = new THREE.BufferGeometry();
     ptsGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(0), 3));
     ptsGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(0), 3));
     const ptsMat = new THREE.PointsMaterial({
       vertexColors: true,
-      size: 4.0,
-      sizeAttenuation: true,
+      size: 5 * dpr,          // fixed CSS-pixel size — not attenuated
+      sizeAttenuation: false,
+      map: circleSprite,
+      alphaTest: 0.15,
+      transparent: true,
+      opacity: 0.88,
+      depthWrite: false,      // prevents z-fighting between overlapping circles
     });
     const pts = new THREE.Points(ptsGeo, ptsMat);
     scene.add(pts);
     pointsRef.current = pts;
 
-    // Centroid points (larger)
+    // Centroid ring markers (larger, ring sprite so they're clearly distinct)
     const ctrGeo = new THREE.BufferGeometry();
     ctrGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(0), 3));
     ctrGeo.setAttribute('color', new THREE.BufferAttribute(new Float32Array(0), 3));
     const ctrMat = new THREE.PointsMaterial({
       vertexColors: true,
-      size: 10.0,
-      sizeAttenuation: true,
+      size: 18 * dpr,
+      sizeAttenuation: false,
+      map: ringSprite,
+      alphaTest: 0.1,
+      transparent: true,
+      opacity: 0.9,
+      depthWrite: false,
     });
     const ctr = new THREE.Points(ctrGeo, ctrMat);
     ctr.userData = { cids: [], centroids: {} };
@@ -493,18 +549,21 @@ function Embedding3DInner({ isActive }) {
 
       updateCamera();
 
-      // Hover: screen-space nearest point (threshold 8px)
+      // Hover: screen-space nearest point (12px threshold).
+      // Reuses tmpV3 to avoid per-frame Vector3 allocations.
       const positions = allPositions.current;
-      if (positions.length > 0 && w > 0 && h > 0) {
+      const n = positions.length / 3;
+      if (n > 0 && w > 0 && h > 0) {
         let nearestIdx = -1;
-        let nearestDist = 64; // 8px threshold squared
+        let nearestDist = 144; // 12px threshold squared
         const mx = ((mouseRef.current.x + 1) / 2) * w;
         const my = ((-mouseRef.current.y + 1) / 2) * h;
+        const v = tmpV3.current;
 
-        for (let i = 0; i < positions.length; i++) {
-          const wp = new THREE.Vector3(...positions[i]).project(camera);
-          const sx = ((wp.x + 1) / 2) * w;
-          const sy = ((-wp.y + 1) / 2) * h;
+        for (let i = 0; i < n; i++) {
+          v.fromArray(positions, i * 3).project(camera);
+          const sx = ((v.x + 1) / 2) * w;
+          const sy = ((-v.y + 1) / 2) * h;
           const dx = sx - mx, dy = sy - my;
           const dist2 = dx * dx + dy * dy;
           if (dist2 < nearestDist) { nearestDist = dist2; nearestIdx = i; }
@@ -512,10 +571,10 @@ function Embedding3DInner({ isActive }) {
 
         if (nearestIdx >= 0) {
           const c = allChunkMeta.current[nearestIdx];
-          const wp = new THREE.Vector3(...positions[nearestIdx]).project(camera);
+          v.fromArray(positions, nearestIdx * 3).project(camera);
           setTooltip({
-            x: ((wp.x + 1) / 2) * w,
-            y: ((-wp.y + 1) / 2) * h,
+            x: ((v.x + 1) / 2) * w,
+            y: ((-v.y + 1) / 2) * h,
             title: c.document_title,
             cluster: c.cluster_id,
             text: c.chunk_text,
@@ -546,13 +605,16 @@ function Embedding3DInner({ isActive }) {
         const dy = e.clientY - dragRef.current.lastY;
         dragRef.current.lastX = e.clientX;
         dragRef.current.lastY = e.clientY;
+        const tdx = e.clientX - dragRef.current.startX;
+        const tdy = e.clientY - dragRef.current.startY;
+        if (Math.abs(tdx) > 3 || Math.abs(tdy) > 3) dragRef.current.hasDragged = true;
         orbitRef.current.theta -= dx * 0.005;
         orbitRef.current.phi = Math.max(0.1, Math.min(Math.PI - 0.1, orbitRef.current.phi - dy * 0.005));
       }
     }
 
     function onMouseDown(e) {
-      dragRef.current = { dragging: true, lastX: e.clientX, lastY: e.clientY };
+      dragRef.current = { dragging: true, hasDragged: false, lastX: e.clientX, lastY: e.clientY, startX: e.clientX, startY: e.clientY };
     }
 
     function onMouseUp() { dragRef.current.dragging = false; }
@@ -563,23 +625,25 @@ function Embedding3DInner({ isActive }) {
     }
 
     function onClick(e) {
-      if (dragRef.current.dragging) return;
+      if (dragRef.current.hasDragged) return; // orbit drag, not a point click
       const rect = container.getBoundingClientRect();
       const mx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const my = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
-      // Find the nearest visible point at click position (8px threshold)
+      // Find the nearest visible point at click position (16px threshold)
       const positions = allPositions.current;
+      const cn = positions.length / 3;
       let nearestIdx = -1;
-      let nearestDist = 64;
+      let nearestDist = 256; // 16px squared
       const cw = rect.width, ch = rect.height;
       const sx0 = ((mx + 1) / 2) * cw;
       const sy0 = ((-my + 1) / 2) * ch;
+      const cv = tmpV3.current;
 
-      for (let i = 0; i < positions.length; i++) {
-        const wp = new THREE.Vector3(...positions[i]).project(cameraRef.current);
-        const sx = ((wp.x + 1) / 2) * cw;
-        const sy = ((-wp.y + 1) / 2) * ch;
+      for (let i = 0; i < cn; i++) {
+        cv.fromArray(positions, i * 3).project(cameraRef.current);
+        const sx = ((cv.x + 1) / 2) * cw;
+        const sy = ((-cv.y + 1) / 2) * ch;
         const dx = sx - sx0, dy = sy - sy0;
         const d2 = dx * dx + dy * dy;
         if (d2 < nearestDist) { nearestDist = d2; nearestIdx = i; }
