@@ -1,21 +1,18 @@
 import React, { useMemo } from 'react';
 
-// Identify changed lines from diff string ("- old line", "+ new line")
-function buildChangedLineSet(diff) {
-  if (!diff) return new Set();
-  const changed = new Set();
-  const lines = diff.split('\n');
-  // Collect lines added in the new snapshot ("+") — these highlight in current text
-  for (const line of lines) {
-    if (line.startsWith('+ ')) changed.add(line.slice(2));
-    if (line.startsWith('- ')) changed.add(line.slice(2));
+// Build sets of added and deleted lines from diff string ("+ new", "- old")
+function buildDiffSets(diff) {
+  const added   = new Set();
+  const deleted = new Set();
+  if (!diff) return { added, deleted };
+  for (const line of diff.split('\n')) {
+    if (line.startsWith('+ ')) added.add(line.slice(2));
+    else if (line.startsWith('- ')) deleted.add(line.slice(2));
   }
-  return changed;
+  return { added, deleted };
 }
 
-function TextPanel({ header, text, changedLines = new Set(), highlight = 'left-border' }) {
-  const warnColor = getComputedStyle(document.documentElement).getPropertyValue('--state-warn').trim() || '#d4a820';
-
+function TextPanel({ header, text, addedLines = new Set(), deletedLines = new Set() }) {
   const lines = useMemo(() => (text ?? '').split('\n'), [text]);
 
   return (
@@ -52,27 +49,33 @@ function TextPanel({ header, text, changedLines = new Set(), highlight = 'left-b
           </div>
         )}
         {lines.map((line, i) => {
-          const isChanged = changedLines.has(line) && line.trim() !== '';
+          const isAdded   = line.trim() !== '' && addedLines.has(line);
+          const isDeleted = line.trim() !== '' && deletedLines.has(line);
           return (
             <div
               key={i}
               style={{
                 fontFamily: '"DM Mono", monospace',
                 fontSize: '11px',
-                color: isChanged ? 'var(--text-primary)' : 'var(--text-secondary)',
                 lineHeight: '1.6',
                 padding: '0 12px',
-                borderLeft: isChanged && highlight === 'left-border'
-                  ? `3px solid ${warnColor}`
-                  : '3px solid transparent',
-                background: isChanged && highlight === 'bg'
-                  ? `rgba(${hexToRgb(warnColor)}, 0.15)`
-                  : 'transparent',
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-all',
+                // Additions: underlined in --state-ok green
+                // Deletions: struck-through in --state-alert red
+                color: isAdded
+                  ? 'var(--state-ok)'
+                  : isDeleted
+                    ? 'var(--state-alert)'
+                    : 'var(--text-secondary)',
+                textDecoration: isAdded
+                  ? 'underline'
+                  : isDeleted
+                    ? 'line-through'
+                    : 'none',
               }}
             >
-              {line || ' '}
+              {line || ' '}
             </div>
           );
         })}
@@ -81,22 +84,13 @@ function TextPanel({ header, text, changedLines = new Set(), highlight = 'left-b
   );
 }
 
-function hexToRgb(hex) {
-  hex = (hex || '#d4a820').replace('#', '');
-  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-  return `${parseInt(hex.slice(0,2),16)},${parseInt(hex.slice(2,4),16)},${parseInt(hex.slice(4,6),16)}`;
-}
-
 function ChunkCard({ text, isMatch }) {
-  const warnColor = getComputedStyle(document.documentElement).getPropertyValue('--state-warn').trim() || '#d4a820';
   return (
     <div style={{
       padding: '10px 12px',
       marginBottom: '8px',
-      border: `1px solid ${isMatch ? warnColor : 'var(--rule)'}`,
-      background: isMatch
-        ? `rgba(${hexToRgb(warnColor)}, 0.15)`
-        : 'var(--bg-tertiary)',
+      border: `1px solid ${isMatch ? 'var(--state-warn)' : 'var(--rule)'}`,
+      background: isMatch ? 'rgba(212,168,32,0.1)' : 'var(--bg-tertiary)',
     }}>
       <div style={{
         fontFamily: 'Lora, serif',
@@ -134,7 +128,10 @@ export default function SnapshotOverlay({ data, onClose }) {
     chunk_texts   = [],
   } = snapshot;
 
-  const changedLines = useMemo(() => buildChangedLineSet(diff), [diff]);
+  const { added: addedLines, deleted: deletedLines } = useMemo(
+    () => buildDiffSets(diff),
+    [diff]
+  );
 
   return (
     <div style={{
@@ -166,6 +163,17 @@ export default function SnapshotOverlay({ data, onClose }) {
           {source_id ?? '—'}
         </div>
         <div style={{ flex: 1 }} />
+        {/* Legend */}
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--state-ok)',
+            textDecoration: 'underline', letterSpacing: '0.04em' }}>
+            ADDITIONS
+          </span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--state-alert)',
+            textDecoration: 'line-through', letterSpacing: '0.04em' }}>
+            DELETIONS
+          </span>
+        </div>
         <button onClick={onClose} style={{
           background: 'none', border: '1px solid var(--rule)',
           cursor: 'pointer', color: 'var(--text-secondary)',
@@ -186,8 +194,8 @@ export default function SnapshotOverlay({ data, onClose }) {
         <TextPanel
           header={`SOURCE: ${source_id ?? '—'}`}
           text={snapshot_text ?? previous_snapshot_text}
-          changedLines={changedLines}
-          highlight="left-border"
+          addedLines={addedLines}
+          deletedLines={deletedLines}
         />
 
         {/* Right panel — matching IPFR chunks */}

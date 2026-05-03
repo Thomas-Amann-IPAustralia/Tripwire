@@ -214,9 +214,9 @@ export default function BipartiteMap({ isActive }) {
       .attr('x', 10)
       .attr('dy', '0.35em')
       .attr('fill', 'var(--text-secondary)')
-      .style('font-family', '"DM Mono", monospace')
+      .style('font-family', '"Lora", serif')
       .style('font-size', '9px')
-      .text(d => d.page_id);
+      .text(d => d.title || d.page_id);
   }, [sources, pages, runs]);
 
   useEffect(() => {
