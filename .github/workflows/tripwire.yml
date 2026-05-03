@@ -157,7 +157,43 @@ jobs:
           git push origin ${{ github.ref_name }} || true
 
       # ------------------------------------------------------------------
-      # 7. Upload run logs as artifact (90-day retention).
+      # 7. Publish data assets as a GitHub Release so the Render dashboard
+      #    can pull fresh data on its next startup via syncDataFromRelease().
+      # ------------------------------------------------------------------
+      - name: Upload data assets to GitHub Release
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="data-$(date +%Y%m%d-%H%M%S)"
+          FILES=""
+          [ -f data/ipfr_corpus/ipfr.sqlite ]                   && FILES="$FILES data/ipfr_corpus/ipfr.sqlite"
+          [ -f data/influencer_sources/source_registry.csv ]    && FILES="$FILES data/influencer_sources/source_registry.csv"
+          [ -f data/logs/feedback.jsonl ]                       && FILES="$FILES data/logs/feedback.jsonl"
+          [ -f tripwire_config.yaml ]                           && FILES="$FILES tripwire_config.yaml"
+          if [ -n "$FILES" ]; then
+            gh release create "$TAG" $FILES \
+              --title "Data sync $TAG" \
+              --notes "Automated data sync from Tripwire pipeline run ${{ github.run_id }}" \
+              --repo ${{ github.repository }}
+          fi
+
+      # ------------------------------------------------------------------
+      # 8. Trigger Render redeploy so the dashboard picks up fresh data.
+      # ------------------------------------------------------------------
+      - name: Trigger Render redeploy
+        if: always()
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -n "$RENDER_DEPLOY_HOOK" ]; then
+            curl -s "$RENDER_DEPLOY_HOOK"
+          else
+            echo "RENDER_DEPLOY_HOOK not set — skipping redeploy"
+          fi
+
+      # ------------------------------------------------------------------
+      # 9. Upload run logs as artifact (90-day retention).
       # ------------------------------------------------------------------
       - name: Upload run logs
         if: always()
