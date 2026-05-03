@@ -236,10 +236,15 @@ export const systemPlan = [
       p([
         b('Candidate selection.'), t(' Take the top '),
         cfg('relevance_scoring.top_n_candidates', 'relevance_scoring.top_n_candidates'),
-        t(' IPFR pages by final score (default N = 5), plus any additional page whose final score exceeds '),
-        cfg('relevance_scoring.min_score_threshold', 'relevance_scoring.min_score_threshold'),
-        t(' (set during the observation period), plus any page where a fast-pass condition is met. This ensures a routine day surfaces ~5 candidates, but a major legislative change that genuinely affects 20 pages lets all 20 through.'),
+        t(' IPFR pages by final score (default N = 5). This ensures a routine day surfaces ~5 candidates, but a major legislative change that genuinely affects 20 pages lets all 20 through.'),
       ], 'doc-top-n'),
+      p([
+        b('Score floor.'), t(' Any additional page whose final score exceeds '),
+        cfg('relevance_scoring.min_score_threshold', 'relevance_scoring.min_score_threshold'),
+        t(' is also forwarded beyond the top-N limit. Set this to '),
+        c('null'),
+        t(' during the observation period so no floor is enforced and raw score distributions can be measured.'),
+      ], 'doc-min-score-threshold'),
       p([
         b('Fast-pass overrides.'), t(' Sources with importance ≥ '),
         cfg('relevance_scoring.fast_pass.source_importance_min', 'relevance_scoring.fast_pass.source_importance_min'),
@@ -313,8 +318,18 @@ export const systemPlan = [
       p([
         t('With '),
         cfg('graph.decay_per_hop', 'graph.decay_per_hop'),
-        t(' = 0.45, the effective signal at 1 hop is 45%, at 2 hops is ~20%, and at 3 hops is ~9% — above the 0.05 floor for strong original signals, matching the intended behaviour for legislative dependency chains.'),
+        t(' = 0.45, the effective signal at 1 hop is 45%, at 2 hops is ~20%, and at 3 hops is ~9% — above the propagation floor for strong original signals, matching the intended behaviour for legislative dependency chains.'),
       ], 'doc-graph-hops'),
+      p([
+        b('Decay rate.'), t(' The '),
+        cfg('graph.decay_per_hop', 'graph.decay_per_hop'),
+        t(' parameter controls how much signal is retained at each hop. Lower values confine propagation to close neighbours; higher values allow weaker long-range signals.'),
+      ], 'doc-graph-decay'),
+      p([
+        b('Propagation floor.'), t(' Propagation halts when the decayed signal falls below '),
+        cfg('graph.propagation_threshold', 'graph.propagation_threshold'),
+        t('. Setting this value higher limits propagation to the strongest direct neighbours; lower values allow signals to reach further but with diminishing relevance.'),
+      ], 'doc-graph-threshold'),
       p([
         b('Decision rule.'), t(' IPFR pages whose final reranked score (including any graph-propagated signal) exceeds '),
         cfg('semantic_scoring.crossencoder.threshold', 'semantic_scoring.crossencoder.threshold'),

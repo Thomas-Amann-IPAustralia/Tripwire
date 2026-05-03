@@ -12,14 +12,6 @@ function clusterColor(cluster) {
   return getCSSColor(`--stage-${stageIdx}`);
 }
 
-function hexWithOpacity(hex, opacity) {
-  hex = hex.replace('#', '');
-  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-  const r = parseInt(hex.slice(0, 2), 16);
-  const g = parseInt(hex.slice(2, 4), 16);
-  const b = parseInt(hex.slice(4, 6), 16);
-  return `rgba(${r},${g},${b},${opacity})`;
-}
 
 export default function ContentMap({ pages = [], isActive }) {
   const containerRef = useRef(null);
@@ -70,7 +62,19 @@ export default function ContentMap({ pages = [], isActive }) {
     const layout = buildLayout(width, height, pages);
     if (!layout) return;
 
-    const warnColor = hexWithOpacity(getCSSColor('--state-warn'), 0.4);
+    // Define grey-hatching pattern for uncovered pages
+    const defs = svg.append('defs');
+    defs.append('pattern')
+      .attr('id', 'uncovered-hatch')
+      .attr('patternUnits', 'userSpaceOnUse')
+      .attr('width', 6)
+      .attr('height', 6)
+      .attr('patternTransform', 'rotate(45)')
+      .append('line')
+      .attr('x1', 0).attr('y1', 0)
+      .attr('x2', 0).attr('y2', 6)
+      .attr('stroke', '#5c5a52')
+      .attr('stroke-width', 2);
 
     const cell = svg.append('g')
       .selectAll('g')
@@ -92,17 +96,18 @@ export default function ContentMap({ pages = [], isActive }) {
       .attr('stroke', 'var(--bg-primary)')
       .attr('stroke-width', 1);
 
-    // Coverage gap overlay
+    // Uncovered pages overlay — grey hatching
     if (showGapOverlay) {
       cell.filter(d => !(d.data.alert_count > 0) || !(d.data.degree > 0))
         .append('rect')
         .attr('width', d => Math.max(0, cellW(d)))
         .attr('height', d => Math.max(0, cellH(d)))
-        .attr('fill', warnColor)
+        .attr('fill', 'url(#uncovered-hatch)')
+        .attr('opacity', 0.6)
         .attr('pointer-events', 'none');
     }
 
-    // Labels: page_id + title
+    // Labels: title (primary) + page_id (secondary)
     cell.filter(d => cellW(d) > 40)
       .append('foreignObject')
       .attr('x', 4).attr('y', 4)
@@ -115,10 +120,11 @@ export default function ContentMap({ pages = [], isActive }) {
       .style('overflow', 'hidden')
       .html(d => {
         const w = cellW(d);
-        const id = `<div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-primary);line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${d.data.page_id}</div>`;
-        if (w < 80) return id;
-        const title = `<div style="font-family:'Lora',serif;font-size:9px;color:var(--text-secondary);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-top:2px;">${d.data.title || ''}</div>`;
-        return id + title;
+        const titleText = d.data.title || d.data.page_id;
+        const title = `<div style="font-family:'Lora',serif;font-size:10px;color:var(--text-primary);line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${titleText}</div>`;
+        if (w < 80) return title;
+        const id = `<div style="font-family:'DM Mono',monospace;font-size:8px;color:var(--text-secondary);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-top:2px;">${d.data.page_id}</div>`;
+        return title + id;
       });
   }
 
@@ -200,7 +206,7 @@ export default function ContentMap({ pages = [], isActive }) {
                 CORPUS
               </span>
               <span style={{ color: 'var(--text-tertiary)' }}> › </span>
-              <span style={{ color: 'var(--text-primary)' }}>{drillPage.page_id}</span>
+              <span style={{ color: 'var(--text-primary)' }}>{drillPage.title || drillPage.page_id}</span>
             </>
           ) : (
             <span style={{ color: 'var(--text-tertiary)' }}>CORPUS</span>
@@ -221,7 +227,7 @@ export default function ContentMap({ pages = [], isActive }) {
             cursor: 'pointer',
           }}
         >
-          COVERAGE GAPS
+          SHOW UNCOVERED PAGES
         </button>
       </div>
 

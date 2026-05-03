@@ -45,7 +45,6 @@ export default function Tooltip({ content, children, learnMoreHref }) {
             width: '240px',
             background: 'var(--bg-secondary)',
             border: '1px solid var(--rule-accent)',
-            borderRadius: '3px',
             padding: '10px 12px',
             zIndex: 1000,
             pointerEvents: learnMoreHref ? 'auto' : 'none',
