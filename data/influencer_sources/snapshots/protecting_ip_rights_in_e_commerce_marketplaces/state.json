@@ -1,0 +1,5 @@
+{
+  "last_error": "PermanentError: HTTP 403 fetching https://www.euipo.europa.eu/en/observatory/enforcement/tools/protecting-ip-rights-e-commerce-marketplaces (non-retryable)",
+  "last_error_at": "2026-05-03T15:15:25.528752+00:00",
+  "consecutive_failures": 1
+}

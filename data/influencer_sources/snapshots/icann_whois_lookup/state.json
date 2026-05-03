@@ -1,0 +1,5 @@
+{
+  "last_error": "PermanentError: Content at https://lookup.icann.org/en is too short (12 chars < minimum 200)",
+  "last_error_at": "2026-05-03T15:14:07.378037+00:00",
+  "consecutive_failures": 1
+}

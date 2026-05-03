@@ -1,0 +1,5 @@
+{
+  "last_error": "RetryableError: All fetch attempts failed for https://www.auda.org.au/au-domain-names/learn-about-au-domain-names/how-to-use-the-au-whois-tool/",
+  "last_error_at": "2026-05-03T15:14:57.951405+00:00",
+  "consecutive_failures": 1
+}

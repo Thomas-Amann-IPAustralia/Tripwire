@@ -1,0 +1,5 @@
+{
+  "last_error": "PermanentError: HTTP 403 fetching https://www.accc.gov.au/public-registers/browse-public-registers (non-retryable)",
+  "last_error_at": "2026-05-03T15:11:57.673589+00:00",
+  "consecutive_failures": 1
+}
