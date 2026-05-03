@@ -3,6 +3,7 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { basicAuth } from './auth.js';
+import { syncDataFromRelease } from './syncData.js';
 
 import runsRouter from './routes/runs.js';
 import pagesRouter from './routes/pages.js';
@@ -45,6 +46,8 @@ if (process.argv.includes('--serve-build')) {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`Tripwire Dashboard server running on port ${PORT}`);
+syncDataFromRelease().finally(() => {
+  app.listen(PORT, () => {
+    console.log(`Tripwire Dashboard server running on port ${PORT}`);
+  });
 });
