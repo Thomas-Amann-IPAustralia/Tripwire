@@ -50,9 +50,11 @@ router.get('/edges', (req, res) => {
 
   try {
     const data = db.prepare(`
-      SELECT source_page_id, target_page_id, edge_type, weight
-      FROM graph_edges
-      ORDER BY weight DESC
+      SELECT ge.source_page_id, ge.target_page_id, ge.edge_type, ge.weight
+      FROM graph_edges ge
+      JOIN pages src ON src.page_id = ge.source_page_id AND src.status = 'active'
+      JOIN pages tgt ON tgt.page_id = ge.target_page_id AND tgt.status = 'active'
+      ORDER BY ge.weight DESC
     `).all();
 
     res.json({ data });
