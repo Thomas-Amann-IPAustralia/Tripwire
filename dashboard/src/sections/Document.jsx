@@ -1,6 +1,7 @@
 import React, {
   useState, useEffect, useRef, useCallback, useMemo,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { systemPlan } from '../lib/systemPlan.js';
 import PipelineDiagram from '../components/PipelineDiagram.jsx';
 
@@ -656,6 +657,7 @@ export default function Document() {
   const [searchQuery, setSearchQuery]   = useState('');
   const bodyRef                         = useRef(null);
   const observerRef                     = useRef(null);
+  const navTo                           = useNavigate();
 
   // IntersectionObserver — update activeId as sections scroll into view
   useEffect(() => {
@@ -685,6 +687,39 @@ export default function Document() {
 
     return () => observer.disconnect();
   }, []);
+
+  // Listen for ADJUST → DOCUMENT anchor navigation
+  useEffect(() => {
+    const handler = (e) => {
+      const anchor = e.detail;
+      if (!anchor) return;
+      requestAnimationFrame(() => {
+        const body = bodyRef.current;
+        if (!body) return;
+        const el = body.querySelector(`[data-anchor="${anchor}"]`);
+        if (!el) return;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.classList.add('anchor-arrival');
+        setTimeout(() => el.classList.remove('anchor-arrival'), 1500);
+      });
+    };
+    window.addEventListener('tripwire:navigate-doc', handler);
+    return () => window.removeEventListener('tripwire:navigate-doc', handler);
+  }, []);
+
+  // DOCUMENT → ADJUST: click delegation on data-config-key elements
+  const handleBodyClick = useCallback((e) => {
+    const el = e.target.closest('[data-config-key]');
+    if (!el) return;
+    const configKey = el.getAttribute('data-config-key');
+    if (!configKey) return;
+    navTo('/adjust');
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent('tripwire:highlight-control', { detail: configKey })
+      );
+    }, 100);
+  }, [navTo]);
 
   const navigate = useCallback((id) => {
     const body = bodyRef.current;
@@ -746,6 +781,7 @@ export default function Document() {
         {/* Scrollable document body */}
         <div
           ref={bodyRef}
+          onClick={handleBodyClick}
           style={{
             flex: 1,
             overflowY: 'auto',

@@ -108,13 +108,61 @@ function PageDetailPanel({ pageId, onClose }) {
 export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
   const svgRef      = useRef(null);
   const simRef      = useRef(null);
+  const zoomRef     = useRef(null);
   const resizeRef   = useRef(null);
   const [edgeVisible, setEdgeVisible] = useState({ embedding_similarity: true, entity_overlap: true, internal_link: true });
   const [selectedPageId, setSelectedPageId] = useState(null);
+  const [pendingHighlight, setPendingHighlight] = useState(null);
 
   const toggleEdgeType = useCallback(type => {
     setEdgeVisible(prev => ({ ...prev, [type]: !prev[type] }));
   }, []);
+
+  // Listen for OBSERVE → CORPUS graph node highlight
+  useEffect(() => {
+    const handler = (e) => setPendingHighlight(e.detail);
+    window.addEventListener('tripwire:highlight-graph-node', handler);
+    return () => window.removeEventListener('tripwire:highlight-graph-node', handler);
+  }, []);
+
+  // When the tab becomes active and there's a pending highlight, pan & pulse
+  useEffect(() => {
+    if (!isActive || !pendingHighlight || !simRef.current || !svgRef.current || !zoomRef.current) return;
+
+    const pageId = pendingHighlight;
+    setPendingHighlight(null);
+
+    const simNodes = simRef.current.nodes();
+    const nodeData = simNodes.find(n => n.page_id === pageId);
+    if (!nodeData) return;
+
+    const svg = d3.select(svgRef.current);
+    const container = svgRef.current.parentElement;
+    if (!container) return;
+    const { width, height } = container.getBoundingClientRect();
+
+    // Pan the viewport to centre on the node
+    svg.transition().duration(600).call(
+      zoomRef.current.transform,
+      d3.zoomIdentity.translate(width / 2 - nodeData.x, height / 2 - nodeData.y)
+    );
+
+    // Add a temporary alert-style pulse ring to that node
+    const nodeGroup = svg.selectAll('.node-group').filter(d => d.page_id === pageId);
+    if (!nodeGroup.empty()) {
+      const r = 6 + ((nodeData.alert_count ?? 0) / Math.max(...simNodes.map(n => n.alert_count ?? 0), 1)) * 14;
+      const ring = nodeGroup.append('circle')
+        .attr('class', 'highlight-ring')
+        .attr('r', r + 4)
+        .attr('fill', 'none')
+        .attr('stroke', getCSSColor('--state-warn'))
+        .attr('stroke-width', 2)
+        .style('animation', 'graphNodePulse 1s ease-out infinite')
+        .style('transform-box', 'fill-box')
+        .style('transform-origin', 'center');
+      setTimeout(() => ring.remove(), 3000);
+    }
+  }, [isActive, pendingHighlight]);
 
   useEffect(() => {
     if (simRef.current) {
@@ -153,6 +201,7 @@ export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
       root.selectAll('.node-label').attr('display', e.transform.k > 1.5 ? 'block' : 'none');
     });
     svg.call(zoom);
+    zoomRef.current = zoom;
 
     // Filter edges by visibility
     const visibleEdges = edges.filter(e => edgeVisible[e.edge_type]);

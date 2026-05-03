@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDashboard } from '../App.jsx';
 import { useRun } from '../hooks/useData.js';
 import { StageIndicator } from './StageIndicator.jsx';
@@ -383,8 +384,21 @@ function FeedbackSection({ run }) {
 export function EventDrawer() {
   const { selectedRunId, drawerOpen, setDrawerOpen } = useDashboard();
   const { data: rawResponse, isLoading } = useRun(selectedRunId);
+  const navTo = useNavigate();
 
   const run = rawResponse?.data?.[0] ?? null;
+
+  const handleViewInGraph = useCallback(() => {
+    if (!run?.ipfr_page_id) return;
+    const pageId = run.ipfr_page_id;
+    setDrawerOpen(false);
+    navTo('/corpus');
+    setTimeout(() => {
+      window.dispatchEvent(
+        new CustomEvent('tripwire:highlight-graph-node', { detail: pageId })
+      );
+    }, 150);
+  }, [run, navTo, setDrawerOpen]);
 
   useEffect(() => {
     if (!drawerOpen) return;
@@ -523,6 +537,42 @@ export function EventDrawer() {
                     </span>
                   ))}
                 </div>
+              </div>
+            </Section>
+          )}
+
+          {/* View in Graph link */}
+          {run?.ipfr_page_id && (
+            <Section>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', letterSpacing: '0.08em', marginBottom: '2px' }}>
+                    IPFR PAGE
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-secondary)' }}>
+                    {run.ipfr_page_id}
+                  </div>
+                </div>
+                <button
+                  onClick={handleViewInGraph}
+                  style={{
+                    fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.06em',
+                    color: 'var(--stage-4)', background: 'none',
+                    border: '1px solid var(--stage-4)',
+                    padding: '4px 10px', cursor: 'pointer',
+                    transition: 'background 120ms, color 120ms',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'var(--stage-4)';
+                    e.currentTarget.style.color = 'var(--bg-primary)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'none';
+                    e.currentTarget.style.color = 'var(--stage-4)';
+                  }}
+                >
+                  VIEW IN GRAPH →
+                </button>
               </div>
             </Section>
           )}

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { usePages, useGraphNodes, useGraphEdges } from '../hooks/useData.js';
 import Embedding3D from '../visualisations/Embedding3D.jsx';
 import KnowledgeGraph from '../visualisations/KnowledgeGraph.jsx';
@@ -53,6 +53,13 @@ class TabErrorBoundary extends React.Component {
 
 export default function Corpus() {
   const [activeTab, setActiveTab] = useState(0);
+
+  // Switch to the 2D Knowledge Graph tab when a highlight-graph-node event arrives
+  useEffect(() => {
+    const handler = () => setActiveTab(1);
+    window.addEventListener('tripwire:highlight-graph-node', handler);
+    return () => window.removeEventListener('tripwire:highlight-graph-node', handler);
+  }, []);
 
   const { data: pagesRaw } = usePages();
   const { data: nodesRaw } = useGraphNodes();
