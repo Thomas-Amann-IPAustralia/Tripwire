@@ -96,6 +96,16 @@ router.get('/:sourceId', (req, res) => {
     const prevPath = path.join(snapDir, `${sourceId}.v1.txt`);
     if (fs.existsSync(prevPath)) {
       previous_snapshot_text = fs.readFileSync(prevPath, 'utf8');
+    } else {
+      // For sources that have not yet changed, the previous scrape lives in
+      // state.json["previous_text"] written by Stage 2 (change detection).
+      const statePath = path.join(snapDir, 'state.json');
+      if (fs.existsSync(statePath)) {
+        try {
+          const state = JSON.parse(fs.readFileSync(statePath, 'utf8'));
+          if (state.previous_text) previous_snapshot_text = state.previous_text;
+        } catch { /* malformed state.json — ignore */ }
+      }
     }
   } catch (err) {
     console.error(`[snapshots] reading files for ${sourceId}:`, err.message);

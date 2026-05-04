@@ -106,6 +106,7 @@ function StatusDot({ failures }) {
 function SourceExpandedDetail({ sourceId }) {
   const { data: runs = [] } = useRuns({ sources: [sourceId] });
   const { data: snapshotData, isLoading: snapLoading } = useSnapshot(sourceId);
+  const hasSnapshot = !!snapshotData?.data?.snapshot_text;
   const [showSnapshot, setShowSnapshot] = useState(false);
 
   const last10 = runs.slice(0, 10);
@@ -173,19 +174,19 @@ function SourceExpandedDetail({ sourceId }) {
         {/* Snapshot button */}
         <button
           onClick={() => setShowSnapshot(true)}
-          disabled={snapLoading || !snapshotData}
+          disabled={snapLoading || !hasSnapshot}
           style={{
             fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.07em',
             background: 'none', border: '1px solid var(--rule-accent)',
-            color: snapshotData ? 'var(--text-secondary)' : 'var(--text-tertiary)',
-            padding: '4px 12px', cursor: snapshotData ? 'pointer' : 'default',
+            color: hasSnapshot ? 'var(--text-secondary)' : 'var(--text-tertiary)',
+            padding: '4px 12px', cursor: hasSnapshot ? 'pointer' : 'default',
           }}
         >
-          {snapLoading ? 'LOADING SNAPSHOT…' : snapshotData ? 'VIEW SNAPSHOT ↗' : 'NO SNAPSHOT'}
+          {snapLoading ? 'LOADING SNAPSHOT…' : hasSnapshot ? 'VIEW SNAPSHOT ↗' : 'NO SNAPSHOT YET'}
         </button>
       </div>
 
-      {showSnapshot && snapshotData && (
+      {showSnapshot && hasSnapshot && (
         <SnapshotOverlay data={snapshotData} onClose={() => setShowSnapshot(false)} />
       )}
     </td>

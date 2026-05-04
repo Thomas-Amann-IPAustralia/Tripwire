@@ -4,6 +4,7 @@
 import fs from 'fs';
 import path from 'path';
 import https from 'https';
+import { execSync } from 'child_process';
 import { DB_PATH, CONFIG_PATH, REGISTRY_PATH, FEEDBACK_PATH, SNAPSHOTS_PATH } from './db.js';
 
 const GITHUB_REPO = process.env.GITHUB_REPO;
@@ -126,6 +127,45 @@ export async function syncDataFromRelease() {
       console.log(`[sync] ${assetName} downloaded OK`);
     } catch (err) {
       console.error(`[sync] Failed to download ${assetName}: ${err.message}`);
+    }
+  }
+
+  // Snapshots tarball — download and extract into SNAPSHOTS_PATH.
+  // A sentinel file records the last-synced release tag to avoid
+  // re-extracting on every startup.
+  const SNAPSHOTS_ASSET = 'snapshots.tar.gz';
+  const snapshotAsset = release.assets?.find(a => a.name === SNAPSHOTS_ASSET);
+  if (!snapshotAsset) {
+    console.log(`[sync] No asset '${SNAPSHOTS_ASSET}' in release — skipping snapshot sync`);
+  } else {
+    const sentinelPath = path.join(SNAPSHOTS_PATH, '.last_sync_tag');
+    let currentTag = null;
+    try { currentTag = fs.readFileSync(sentinelPath, 'utf8').trim(); } catch { /* absent */ }
+
+    if (currentTag === release.tag_name) {
+      console.log(`[sync] ${SNAPSHOTS_ASSET} is up to date (${release.tag_name}) — skipping`);
+    } else {
+      const tmpTar = path.join(SNAPSHOTS_PATH, '..', 'snapshots_sync.tar.gz.tmp');
+      console.log(`[sync] Downloading ${SNAPSHOTS_ASSET}…`);
+      try {
+        await downloadToFile(snapshotAsset.url, tmpTar, {
+          ...authHeader,
+          Accept: 'application/octet-stream',
+        });
+        // Extract: the tarball contains a `snapshots/` directory; extract its
+        // contents directly into SNAPSHOTS_PATH using --strip-components=1.
+        fs.mkdirSync(SNAPSHOTS_PATH, { recursive: true });
+        execSync(
+          `tar xzf "${tmpTar}" --strip-components=1 -C "${SNAPSHOTS_PATH}"`,
+          { stdio: 'pipe' },
+        );
+        fs.unlinkSync(tmpTar);
+        fs.writeFileSync(sentinelPath, release.tag_name, 'utf8');
+        console.log(`[sync] ${SNAPSHOTS_ASSET} extracted OK (${release.tag_name})`);
+      } catch (err) {
+        console.error(`[sync] Failed to sync snapshots: ${err.message}`);
+        try { fs.unlinkSync(tmpTar); } catch { /* ignore */ }
+      }
     }
   }
 }
