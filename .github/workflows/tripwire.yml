@@ -80,6 +80,9 @@ jobs:
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install -r requirements.txt
 
+      - name: Install Playwright Chromium
+        run: playwright install chromium --with-deps
+
       # Selenium smoke test — fails the run early if Chrome or
       # selenium-stealth cannot launch headlessly.  Without this, a broken
       # driver is only visible after every force_selenium source reports a

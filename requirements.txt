@@ -10,10 +10,8 @@ requests>=2.31
 trafilatura>=1.8
 selenium>=4.10
 selenium-stealth>=1.0
-selenium-wire>=5.1
-# blinker 1.7 removed _saferef, which selenium-wire 5.1 imports; pin below that.
-blinker>=1.4,<1.7
-pyOpenSSL>=22.0.0
+playwright>=1.40
+playwright-stealth>=1.0
 webdriver-manager>=4.0
 
 # --- NLP and keyword extraction ---

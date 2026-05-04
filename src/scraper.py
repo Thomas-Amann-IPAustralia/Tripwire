@@ -17,8 +17,10 @@ Fetch strategy:
      or if force_selenium=True on the source, fall back to a Selenium
      ChromeDriver with selenium-stealth patches and randomised scroll
      simulation.
-  3. Selenium uses a fresh driver per fetch — no session state, cookies,
-     or history carries over between sources.
+  3. If the Selenium attempt is also blocked, fall back to a Playwright
+     Chromium browser patched with playwright-stealth.
+  4. Selenium and Playwright each use a fresh browser per fetch — no
+     session state, cookies, or history carries over between sources.
 
 This module is the influencer-source counterpart of ingestion/scrape_ipfr.py
 (which handles IPFR corpus pages).  The extraction logic is identical; the
@@ -104,9 +106,9 @@ def scrape_and_normalise(
     Fetch strategy for HTML/RSS:
       1. requests (unless force_selenium).
       2. Regular Selenium if requests fails or returns a block page.
-      3. Selenium-wire + proxy if regular Selenium is also blocked and
+      3. Playwright + stealth if regular Selenium is also blocked and
          ``proxy_url`` is set.  This handles IP-reputation blocks that
-         fingerprint stealth alone cannot overcome.
+         selenium-stealth alone cannot overcome.
 
     Parameters
     ----------
@@ -121,8 +123,9 @@ def scrape_and_normalise(
         If ``True``, skip the requests-based attempt and go straight to
         Selenium.
     proxy_url:
-        Optional proxy URL (e.g. ``"http://user:pass@host:port"``).  Only
-        used if the regular Selenium attempt is bot-blocked.
+        When set, enables the Playwright + stealth retry pass after a
+        bot-blocked Selenium attempt.  The value is treated as a feature
+        flag for the second-pass fallback.
 
     Returns
     -------
@@ -158,13 +161,13 @@ def scrape_and_normalise(
             )
         html = _fetch_with_selenium(url)
 
-    # If regular Selenium was also blocked and a proxy is available, retry
-    # through selenium-wire so the proxy credentials are supplied correctly.
+    # If regular Selenium was also blocked, retry through Playwright with
+    # stealth patches applied to the page before navigation.
     if (html is None or _has_block_signature(html)) and proxy_url:
         logger.info(
-            "Regular Selenium attempt blocked for %s; retrying via proxy.", url
+            "Regular Selenium attempt blocked for %s; retrying via Playwright.", url
         )
-        html = _fetch_with_selenium(url, proxy_url=proxy_url)
+        html = _fetch_with_playwright(url)
 
     if html is None:
         from src.errors import RetryableError
@@ -393,23 +396,8 @@ def _get_chrome_version() -> str:
     return "133.0.0.0"
 
 
-def build_selenium_driver(*, proxy_url: str | None = None):
+def build_selenium_driver():
     """Create a fresh, stealth-patched Chrome WebDriver.
-
-    When ``proxy_url`` is ``None`` (the common case), a plain
-    ``selenium.webdriver.Chrome`` is returned — no selenium-wire overhead.
-
-    When ``proxy_url`` is set, selenium-wire is used so that authenticated
-    proxy credentials are supplied at the network layer (Chrome's
-    ``--proxy-server`` flag silently drops user:pass and fails with
-    ERR_NO_SUPPORTED_PROXIES on a 407).  If selenium-wire is not installed
-    the driver falls back to plain selenium without the proxy.
-
-    Parameters
-    ----------
-    proxy_url:
-        Optional proxy URL (e.g. ``"http://user:pass@host:port"``).  Only
-        pass this on a retry after a regular Selenium attempt was blocked.
 
     Returns
     -------
@@ -455,26 +443,8 @@ def build_selenium_driver(*, proxy_url: str | None = None):
         from selenium.webdriver.chrome.service import Service as ChromeService
         service = ChromeService(ChromeDriverManager().install())
 
-        if proxy_url:
-            # Use selenium-wire for authenticated proxy routing.  Fall back to
-            # plain selenium (without proxy) if selenium-wire is not installed.
-            try:
-                from seleniumwire import webdriver
-                driver = webdriver.Chrome(
-                    service=service,
-                    options=options,
-                    seleniumwire_options={"proxy": {"http": proxy_url, "https": proxy_url}},
-                )
-            except ImportError:
-                logger.warning(
-                    "selenium-wire not installed; proxy will not be applied. "
-                    "Install with: pip install 'selenium-wire>=5.1' 'pyOpenSSL>=22.0.0'"
-                )
-                from selenium import webdriver
-                driver = webdriver.Chrome(service=service, options=options)
-        else:
-            from selenium import webdriver
-            driver = webdriver.Chrome(service=service, options=options)
+        from selenium import webdriver
+        driver = webdriver.Chrome(service=service, options=options)
 
     except Exception as exc:
         raise PermanentError(
@@ -531,7 +501,7 @@ def _wait_for_block_clearance(
     logger.debug("WAF challenge did not clear within %.0f s; proceeding.", timeout_s)
 
 
-def _fetch_with_selenium(url: str, *, proxy_url: str | None = None) -> str | None:
+def _fetch_with_selenium(url: str) -> str | None:
     """Fetch a URL using a fresh Selenium Chrome driver with stealth patches.
 
     Behaviour:
@@ -546,10 +516,6 @@ def _fetch_with_selenium(url: str, *, proxy_url: str | None = None) -> str | Non
     ----------
     url:
         The URL to fetch.
-    proxy_url:
-        Optional proxy forwarded to ``build_selenium_driver``.  Only set
-        this on a retry after a regular (no-proxy) Selenium attempt was
-        bot-blocked.
 
     Returns
     -------
@@ -561,7 +527,7 @@ def _fetch_with_selenium(url: str, *, proxy_url: str | None = None) -> str | Non
     # problems (missing Chrome, missing selenium-stealth).  Let those
     # propagate so the pipeline records them against the source rather than
     # silently falling through to a generic "all fetch attempts failed".
-    driver = build_selenium_driver(proxy_url=proxy_url)
+    driver = build_selenium_driver()
 
     try:
         from selenium.webdriver.common.by import By
@@ -598,6 +564,52 @@ def _fetch_with_selenium(url: str, *, proxy_url: str | None = None) -> str | Non
             pass
 
 
+def _fetch_with_playwright(url: str) -> str | None:
+    """Fetch a URL using a fresh Playwright Chromium browser with stealth patches.
+
+    Used as the second-pass fallback when the regular Selenium attempt is
+    bot-blocked.  ``playwright_stealth.stealth_sync`` is applied to the page
+    before navigation so automation fingerprints are masked.
+
+    Returns the raw HTML from ``page.content()`` so the caller can route it
+    through the same trafilatura-based normalisation as the first pass.
+    """
+    try:
+        from playwright.sync_api import sync_playwright
+        from playwright_stealth import stealth_sync
+    except ImportError as exc:
+        logger.warning(
+            "Playwright fallback unavailable (%s); install with: "
+            "pip install playwright playwright-stealth && playwright install chromium",
+            exc,
+        )
+        return None
+
+    playwright = None
+    browser = None
+    try:
+        playwright = sync_playwright().start()
+        browser = playwright.chromium.launch(headless=True)
+        page = browser.new_page()
+        stealth_sync(page)
+        page.goto(url)
+        return page.content()
+    except Exception as exc:
+        logger.warning("Playwright fetch failed for %s: %s", url, str(exc).split('\n')[0])
+        return None
+    finally:
+        try:
+            if browser is not None:
+                browser.close()
+        except Exception:
+            pass
+        try:
+            if playwright is not None:
+                playwright.stop()
+        except Exception:
+            pass
+
+
 def fetch_with_waf_polling(
     url: str,
     *,
@@ -606,7 +618,6 @@ def fetch_with_waf_polling(
     timeout_s: float = 10.0,
     page_load_timeout_s: int = 15,
     min_length: int = 500,
-    proxy_url: str | None = None,
 ) -> str | None:
     """Fetch a URL via stealth Chrome and poll until ``must_disappear`` is gone.
 
@@ -641,7 +652,7 @@ def fetch_with_waf_polling(
         Final ``page_source`` if the WAF cleared and the page is at least
         ``min_length`` chars; ``None`` otherwise.
     """
-    driver = build_selenium_driver(proxy_url=proxy_url)
+    driver = build_selenium_driver()
     try:
         driver.set_page_load_timeout(page_load_timeout_s)
         logger.debug("WAF fetch: navigating to %s", url[:20])
@@ -679,7 +690,6 @@ def fetch_raw_with_selenium(
     url: str,
     *,
     timeout_seconds: int = 20,
-    proxy_url: str | None = None,
 ) -> str | None:
     """Fetch a URL and return the raw response body as text.
 
@@ -712,7 +722,7 @@ def fetch_raw_with_selenium(
     """
     # build_selenium_driver raises PermanentError on environment-level
     # problems; let it propagate so callers can record the real cause.
-    driver = build_selenium_driver(proxy_url=proxy_url)
+    driver = build_selenium_driver()
 
     try:
         from selenium.webdriver.common.by import By
@@ -798,8 +808,8 @@ def _fetch_raw_rss(
     Fetch strategy:
       1. Plain ``requests`` (unless force_selenium).
       2. Regular ``fetch_raw_with_selenium`` if requests fails or is blocked.
-      3. Proxy Selenium (selenium-wire) if regular Selenium is also blocked
-         and ``proxy_url`` is set.
+      3. Playwright + stealth if regular Selenium is also blocked and
+         ``proxy_url`` is set.
     """
     from src.errors import RetryableError, http_error
 
@@ -824,9 +834,9 @@ def _fetch_raw_rss(
     raw = fetch_raw_with_selenium(url)
     if (raw is None or _has_block_signature(raw)) and proxy_url:
         logger.info(
-            "Regular Selenium attempt blocked for RSS %s; retrying via proxy.", url
+            "Regular Selenium attempt blocked for RSS %s; retrying via Playwright.", url
         )
-        raw = fetch_raw_with_selenium(url, proxy_url=proxy_url)
+        raw = _fetch_with_playwright(url)
     if raw is None:
         raise RetryableError(f"All fetch attempts failed for RSS {url}")
     if _has_block_signature(raw):
