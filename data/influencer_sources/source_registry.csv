@@ -54,8 +54,8 @@ administrative_review_tribunal_regulations_2024,https://www.legislation.gov.au/F
 administrative_review_tribunal_consequential_and_transitional_provisions_no_1_rules_2024_transitional_rules,https://www.legislation.gov.au/F2024L01292/latest/text,Administrative Review Tribunal (Consequential and Transitional Provisions No. 1) Rules 2024 (Transitional Rules),frl,0,monthly,Null,FALSE
 civil_dispute_resolution_regulations_2011_repealed_30_sep_2021,https://www.legislation.gov.au/C2011A00017/latest/text,Civil Dispute Resolution Regulations 2011 (repealed 30 Sep 2021),frl,0,monthly,Null,FALSE
 australian_small_business_and_family_enterprise_ombudsman_act_2015,https://www.legislation.gov.au/C2015A00123/latest/text,Australian Small Business and Family Enterprise Ombudsman Act 2015,frl,0.6,weekly,Null,FALSE
-wipo_lex_australia,https://www.wipo.int/wipolex/en/legislation/countries/au,WIPO Lex Australia,webpage,0.8,weekly,Null,FALSE
-aph_ip_committee,https://www.aph.gov.au/Parliamentary_Business/Committees/House/Industry_Innovation_and_Science,APH IP Committee,webpage,0.8,weekly,Null,FALSE
+wipo_lex_australia,https://www.wipo.int/wipolex/en/legislation/countries/au,WIPO Lex Australia,webpage,0.8,weekly,Null,TRUE
+aph_ip_committee,https://www.aph.gov.au/Parliamentary_Business/Committees/House/Industry_Innovation_and_Science,APH IP Committee,webpage,0.8,weekly,Null,TRUE
 ip_australia_official_notices_page,https://www.ipaustralia.gov.au/news-and-community/official-notices,IP Australia Official Notices page ,webpage,0.8,weekly,Null,TRUE
 patent_manual,https://manuals.ipaustralia.gov.au/patent,Patent Manual,webpage,0.8,weekly,Null,TRUE
 tm_manual,https://manuals.ipaustralia.gov.au/trademark,TM Manual,webpage,0.8,weekly,Null,TRUE
@@ -71,45 +71,45 @@ ip_australia_someone_is_using_my_ip,https://www.ipaustralia.gov.au/manage-my-ip/
 ip_australia_how_to_prevent_infringement_of_my_ip,https://www.ipaustralia.gov.au/manage-my-ip/how-to-prevent-infringement-of-my-ip,IP Australia - How to prevent infringement of my IP,webpage,0.8,daily,Null,TRUE
 ip_australia_how_to_respond_to_accusations_of_ip_infringement,https://www.ipaustralia.gov.au/manage-my-ip/how-to-respond-to-accusations-of-ip-infringement,IP Australia - How to respond to accusations of IP infringement,webpage,0.8,daily,Null,TRUE
 wipo_arbitration_and_mediation_center,https://www.wipo.int/amc/en/,WIPO Arbitration and Mediation Center,webpage,0.6,weekly,Null,FALSE
-copyright_infringement,https://www.artslaw.com.au/information-sheet/copyright/#copyright-infringement,Copyright Infringement,webpage,0.6,weekly,Null,FALSE
-protecting_your_designs,https://www.artslaw.com.au/information-sheet/protecting-your-designs,Protecting Your Designs,webpage,0.6,weekly,Null,FALSE
-legal_help_who_can_you_go_to,https://www.artslaw.com.au/legal/raw-law/legal-help-who-can-you-go-to/,Legal Help – Who Can You Go To?,webpage,0.6,weekly,Null,FALSE
-an_introduction_to_copyright_in_australia,https://www.copyright.org.au/browse/book/ACC-An-Introduction-to-Copyright-in-Australia-INFO010,An Introduction to Copyright in Australia,webpage,0.6,weekly,Null,FALSE
+copyright_infringement,https://www.artslaw.com.au/information-sheet/copyright/#copyright-infringement,Copyright Infringement,webpage,0.6,weekly,Null,TRUE
+protecting_your_designs,https://www.artslaw.com.au/information-sheet/protecting-your-designs,Protecting Your Designs,webpage,0.6,weekly,Null,TRUE
+legal_help_who_can_you_go_to,https://www.artslaw.com.au/legal/raw-law/legal-help-who-can-you-go-to/,Legal Help – Who Can You Go To?,webpage,0.6,weekly,Null,TRUE
+an_introduction_to_copyright_in_australia,https://www.copyright.org.au/browse/book/ACC-An-Introduction-to-Copyright-in-Australia-INFO010,An Introduction to Copyright in Australia,webpage,0.6,weekly,Null,TRUE
 uniform_domain_name_dispute_resolution_policy_udrp,https://www.icann.org/resources/pages/help/dndr/udrp-en,Uniform Domain Name Dispute Resolution Policy (UDRP),webpage,0.6,weekly,Null,FALSE
 wipo_arbitration_fees,https://www.wipo.int/amc/en/arbitration/fees/,WIPO Arbitration Fees,webpage,0.6,weekly,Null,FALSE
 wipo_contract_clauses,https://www.wipo.int/amc/en/clauses/index.html,WIPO Contract Clauses,webpage,0.6,weekly,Null,FALSE
 domain_name_dispute_resolution,https://www.wipo.int/amc/en/domains,Domain Name Dispute Resolution,webpage,0.6,weekly,Null,FALSE
 wipo_guide_to_domain_name_dispute_resolution,https://www.wipo.int/amc/en/domains/guide/,WIPO Guide to Domain Name Dispute Resolution,webpage,0.6,weekly,Null,FALSE
 assignment_and_licensing_of_ip,https://www.wipo.int/en/web/business/assignment-licensing,Assignment and Licensing of IP,webpage,0.6,weekly,Null,FALSE
-prevent_manage_and_resolve_disputes,https://business.gov.au/people/disputes/prevent-manage-and-resolve-disputes,"Prevent, Manage and Resolve Disputes",webpage,0.6,weekly,Null,FALSE
-intellectual_property_how_to_import,https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property,Intellectual Property – How to Import,webpage,0.6,weekly,Null,FALSE
+prevent_manage_and_resolve_disputes,https://business.gov.au/people/disputes/prevent-manage-and-resolve-disputes,"Prevent, Manage and Resolve Disputes",webpage,0.6,weekly,Null,TRUE
+intellectual_property_how_to_import,https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property,Intellectual Property – How to Import,webpage,0.6,weekly,Null,TRUE
 your_guide_to_dispute_resolution,https://www.ag.gov.au/legal-system/publications/your-guide-dispute-resolution,Your Guide to Dispute Resolution,webpage,0.6,weekly,Null,FALSE
 copyright_basics,https://www.ag.gov.au/rights-and-protections/copyright/copyright-basics,Copyright Basics,webpage,0.6,weekly,Null,FALSE
-five_steps_to_resolve_your_dispute,https://www.asbfeo.gov.au/disputes-assistance/five-steps-resolve-your-dispute,Five Steps to Resolve Your Dispute,webpage,0.6,weekly,Null,FALSE
-federal_court_of_australia_annual_reports,https://www.fedcourt.gov.au/about/corporate-information/annual-reports,Federal Court of Australia – Annual Reports,webpage,0.6,weekly,Null,FALSE
-federal_court_mediation,https://www.fedcourt.gov.au/services/ADR/mediation,Mediation,webpage,0.6,weekly,Null,FALSE
+five_steps_to_resolve_your_dispute,https://www.asbfeo.gov.au/disputes-assistance/five-steps-resolve-your-dispute,Five Steps to Resolve Your Dispute,webpage,0.6,weekly,Null,TRUE
+federal_court_of_australia_annual_reports,https://www.fedcourt.gov.au/about/corporate-information/annual-reports,Federal Court of Australia – Annual Reports,webpage,0.6,weekly,Null,TRUE
+federal_court_mediation,https://www.fedcourt.gov.au/services/ADR/mediation,Mediation,webpage,0.6,weekly,Null,TRUE
 how_to_engage_an_attorney,https://www.ttipattorney.gov.au/for-clients/how-to-engage-an-attorney,How to Engage an Attorney,webpage,0.6,weekly,Null,FALSE
 understanding_australian_business_regulations,https://international.austrade.gov.au/en/do-business-with-australia/invest-in-australia/investor-guide/running-a-business/understanding-australian-business-regulations,Understanding Australian Business Regulations,webpage,0.6,weekly,Null,FALSE
 administrative_decisions_judicial_review,https://www.fcfcoa.gov.au/gfl/administrative-adjr,Administrative Decisions (Judicial Review),webpage,0.6,weekly,Null,FALSE
-afp_cybercrime,https://www.afp.gov.au/crimes/cybercrime,Cybercrime,webpage,0.6,weekly,Null,FALSE
-afp_fraud_and_corruption,https://www.afp.gov.au/crimes/fraud-and-corruption,Fraud and Corruption,webpage,0.6,weekly,Null,FALSE
-afp_intellectual_property_crime,https://www.afp.gov.au/crimes/fraud-and-corruption/intellectual-property-crime,Intellectual Property Crime,webpage,0.6,weekly,Null,FALSE
+afp_cybercrime,https://www.afp.gov.au/crimes/cybercrime,Cybercrime,webpage,0.6,weekly,Null,TRUE
+afp_fraud_and_corruption,https://www.afp.gov.au/crimes/fraud-and-corruption,Fraud and Corruption,webpage,0.6,weekly,Null,TRUE
+afp_intellectual_property_crime,https://www.afp.gov.au/crimes/fraud-and-corruption/intellectual-property-crime,Intellectual Property Crime,webpage,0.6,weekly,Null,TRUE
 ag_copyright_owners,https://www.ag.gov.au/rights-and-protections/copyright/copyright-owners,Copyright Owners,webpage,0.6,weekly,Null,FALSE
 asic_register_a_business_name,https://www.asic.gov.au/for-business-and-companies/business-names/register-a-business-name/,Register a Business Name,webpage,0.6,weekly,Null,FALSE
 asic_register_a_company,https://www.asic.gov.au/for-business-and-companies/companies/register-a-company/,Register a Company,webpage,0.6,weekly,Null,FALSE
 general_federal_law_fees,https://www.fcfcoa.gov.au/gfl/gfl-fees,General Federal Law Fees,webpage,0.6,weekly,Null,FALSE
-intellectual_property_general_federal_law,"https://www.fcfcoa.gov.au/gfl/intellectual-property#:~:text=The%20Federal%20Circuit%20and%20Family,Plant%20Breeder%27s%20Rights%20Act%201994).",Intellectual Property – General Federal Law,webpage,0.6,weekly,Null,FALSE
-federal_court_fees,https://www.fedcourt.gov.au/forms-and-fees/court-fees,Federal Court Fees,webpage,0.6,weekly,Null,FALSE
-federal_court_intellectual_property_national_practice_area,https://www.fedcourt.gov.au/law-and-practice/national-practice-areas/ip,Intellectual Property National Practice Area,webpage,0.6,weekly,Null,FALSE
-federal_court_arbitration,https://www.fedcourt.gov.au/services/ADR/arbitration,Arbitration,webpage,0.6,weekly,Null,FALSE
+intellectual_property_general_federal_law,"https://www.fcfcoa.gov.au/gfl/intellectual-property#:~:text=The%20Federal%20Circuit%20and%20Family,Plant%20Breeder%27s%20Rights%20Act%201994).",Intellectual Property – General Federal Law,webpage,0.6,weekly,Null,TRUE
+federal_court_fees,https://www.fedcourt.gov.au/forms-and-fees/court-fees,Federal Court Fees,webpage,0.6,weekly,Null,TRUE
+federal_court_intellectual_property_national_practice_area,https://www.fedcourt.gov.au/law-and-practice/national-practice-areas/ip,Intellectual Property National Practice Area,webpage,0.6,weekly,Null,TRUE
+federal_court_arbitration,https://www.fedcourt.gov.au/services/ADR/arbitration,Arbitration,webpage,0.6,weekly,Null,TRUE
 ip_australia_policy_register,https://www.ipaustralia.gov.au/about-us/public-consultations/intellectual-property-policy/policy-register,IP Australia Policy register,webpage,0.2,fortnightly,Null,TRUE
 ip_australia_closed_consultations,https://consultation.ipaustralia.gov.au/consultation_finder/?_collection=eyJzb3J0X29uIjogImljb25zdWx0YWJsZV9lbmRkYXRlIiwgInNvcnRfb3JkZXIiOiAiZGVzY2VuZGluZyIsICJzdCI6ICJjbG9zZWQiLCAiY29sbGVjdGlvbl90aXRsZSI6ICJDbG9zZWQgY29uc3VsdGF0aW9ucyJ9%3A0fa5e38679d9e7a7b87732ea534c2680c7c6d8f4f51f64ac4257c42ca0d7741d#cs-finder-results-container,IP Australia closed consultations,webpage,0.2,fortnightly,Null,TRUE
 ip_australia_consultation_hub,https://www.ipaustralia.gov.au/about-us/public-consultations,IP Australia Consultation Hub,webpage,0.2,fortnightly,Null,TRUE
 federal_circuit_and_family_court_of_australia_intellectual_property,https://www.fcfcoa.gov.au/gfl/ip-overview,Federal Circuit and Family Court of Australia - Intellectual Property,webpage,0.2,fortnightly,Null,FALSE
-accc_public_registers_pre_defined_keyword,https://www.accc.gov.au/public-registers/browse-public-registers,ACCC public registers (pre-defined keyword),webpage,0.2,fortnightly,Null,FALSE
+accc_public_registers_pre_defined_keyword,https://www.accc.gov.au/public-registers/browse-public-registers,ACCC public registers (pre-defined keyword),webpage,0.2,fortnightly,Null,TRUE
 accc_consultation_hub,https://consultation.accc.gov.au/,ACCC consultation hub,webpage,0.2,fortnightly,Null,FALSE
 auda_consultations_page,https://www.auda.org.au/public-impact/have-your-say/consultations/,auDA consultations page,webpage,0.2,fortnightly,Null,TRUE
-asbfeo_about_us,https://www.asbfeo.gov.au/about-us,About Us – Australian Small Business and Family Enterprise Ombudsman,webpage,0.2,fortnightly,Null,FALSE
+asbfeo_about_us,https://www.asbfeo.gov.au/about-us,About Us – Australian Small Business and Family Enterprise Ombudsman,webpage,0.2,fortnightly,Null,TRUE
 wipo_pct_system_legal_and_procedural_texts,https://www.wipo.int/en/web/treaties/registration/pct/index,PCT System Legal and Procedural texts,webpage,0.2,fortnightly,Null,FALSE
 wipo_paris_convention_for_the_protection_of_intellectual_property,https://www.wipo.int/wipolex/en/text/288514,Paris Convention for the protection of Intellectual Property,webpage,0.2,fortnightly,Null,FALSE
 wipo_patent_law_treaty,https://www.wipo.int/treaties/en/ip/plt/,Patent Law Treaty,webpage,0.2,fortnightly,Null,FALSE
@@ -123,24 +123,24 @@ wipo_hague_system,https://www.wipo.int/en/web/hague-system/guide/index,Hague Sys
 wipo_strasbourg_agreement,https://www.wipo.int/treaties/en/classification/strasbourg/,Strasbourg Agreement,webpage,0.2,fortnightly,Null,FALSE
 wipo_intergovernmental_committee_igc,https://www.wipo.int/en/web/igc,Intergovernmental Committee (IGC),webpage,0.2,fortnightly,Null,FALSE
 asean_australia_new_zealand_free_trade_area,"https://www.dfat.gov.au/trade/agreements/in-force/aanzfta/asean-australia-new-zealand-free-trade-agreement#:~:text=The%20Agreement%20Establishing%20the%20ASEAN,%29%2C%20Australia%20and%20New%20Zealand.#:~:text=The%20Agreement%20Establishing%20the%20ASEAN,%29%2C%20Australia%20and%20New%20Zealand.",ASEAN-Australia-New Zealand Free Trade Area,webpage,0.2,fortnightly,Null,FALSE
-australian_copyright_council_legal_advice,http://www.copyright.org.au/legal-advice/,Australian Copyright Council – Legal Advice,webpage,0.2,fortnightly,Null,FALSE
+australian_copyright_council_legal_advice,http://www.copyright.org.au/legal-advice/,Australian Copyright Council – Legal Advice,webpage,0.2,fortnightly,Null,TRUE
 get_a_free_consultation,https://ipta.org.au/community/get-free-consultation/,Get a Free Consultation,webpage,0.2,fortnightly,Null,FALSE
 wipo_model_contract_clauses,https://www.wipo.int/amc/en/clauses/,WIPO Model Contract Clauses,webpage,0.2,fortnightly,Null,FALSE
 wipo_ip_checklist_for_businesses,https://www.wipo.int/en/web/business/checklist,IP Checklist for Businesses,webpage,0.2,fortnightly,Null,FALSE
-shein_intellectual_property_infringement_appeal_guidelines,https://ipp.shein.com/ipp?code=20240730201923799773,SHEIN Intellectual Property Infringement Appeal Guidelines,webpage,0.2,fortnightly,Null,FALSE
-how_to_report_an_intellectual_property_ip_issue_on_shein,https://ipp.shein.com/ipp?code=20240730195808179887,How to report an intellectual property(IP) issue on SHEIN,webpage,0.2,fortnightly,Null,FALSE
-shein_global_marketplace_policy_anti_counterfeiting_intellectual_property_infringement_policy,https://ipp.shein.com/ipp?code=20240730192620775058,SHEIN Global Marketplace Policy: Anti-Counterfeiting & Intellectual Property Infringement Policy,webpage,0.2,fortnightly,Null,FALSE
-shein_intellectual_property_protection_portal,https://ipp.shein.com/ipp?language=en,SHEIN Intellectual Property Protection Portal,webpage,0.2,fortnightly,Null,FALSE
-icann_whois_lookup,https://lookup.icann.org/en,ICANN WHOIS Lookup,webpage,0.2,fortnightly,Null,FALSE
-shein_copyright_notice,https://m.shein.com/au/copyright-noticeam-a-379.html,SHEIN Copyright Notice,webpage,0.2,fortnightly,Null,FALSE
+shein_intellectual_property_infringement_appeal_guidelines,https://ipp.shein.com/ipp?code=20240730201923799773,SHEIN Intellectual Property Infringement Appeal Guidelines,webpage,0.2,fortnightly,Null,TRUE
+how_to_report_an_intellectual_property_ip_issue_on_shein,https://ipp.shein.com/ipp?code=20240730195808179887,How to report an intellectual property(IP) issue on SHEIN,webpage,0.2,fortnightly,Null,TRUE
+shein_global_marketplace_policy_anti_counterfeiting_intellectual_property_infringement_policy,https://ipp.shein.com/ipp?code=20240730192620775058,SHEIN Global Marketplace Policy: Anti-Counterfeiting & Intellectual Property Infringement Policy,webpage,0.2,fortnightly,Null,TRUE
+shein_intellectual_property_protection_portal,https://ipp.shein.com/ipp?language=en,SHEIN Intellectual Property Protection Portal,webpage,0.2,fortnightly,Null,TRUE
+icann_whois_lookup,https://lookup.icann.org/en,ICANN WHOIS Lookup,webpage,0.2,fortnightly,Null,TRUE
+shein_copyright_notice,https://m.shein.com/au/copyright-noticeam-a-379.html,SHEIN Copyright Notice,webpage,0.2,fortnightly,Null,TRUE
 amazon_brand_registry,https://sell.amazon.com/brand-registry,Amazon Brand Registry,webpage,0.2,fortnightly,Null,FALSE
 report_infringement_amazon_brand_registry,https://sellercentral.amazon.com/help/hub/reference/external/201361070?locale=en-US,Report Infringement – Amazon Brand Registry,webpage,0.2,fortnightly,Null,FALSE
-how_to_use_the_au_whois_tool,https://www.auda.org.au/au-domain-names/learn-about-au-domain-names/how-to-use-the-au-whois-tool/,How to Use the .au WHOIS Tool,webpage,0.2,fortnightly,Null,FALSE
+how_to_use_the_au_whois_tool,https://www.auda.org.au/au-domain-names/learn-about-au-domain-names/how-to-use-the-au-whois-tool/,How to Use the .au WHOIS Tool,webpage,0.2,fortnightly,Null,TRUE
 ebay_intellectual_property_policy,https://www.ebay.com/sellercenter/resources/intellectual-property,eBay Intellectual Property Policy,webpage,0.2,fortnightly,Null,FALSE
 verified_rights_owner_vero_program_faqs,https://pages.ebay.com.au/vero/#FAQs,Verified Rights Owner (VeRO) Program – FAQs,webpage,0.2,fortnightly,Null,FALSE
-report_intellectual_property_infringement_etsy,https://www.etsy.com/au/ipreporting,Report Intellectual Property Infringement (Etsy),webpage,0.2,fortnightly,Null,FALSE
-etsy_intellectual_property_policy,https://www.etsy.com/legal/ip/,Etsy Intellectual Property Policy,webpage,0.2,fortnightly,Null,FALSE
-protecting_ip_rights_in_e_commerce_marketplaces,https://www.euipo.europa.eu/en/observatory/enforcement/tools/protecting-ip-rights-e-commerce-marketplaces,Protecting IP Rights in E-Commerce Marketplaces,webpage,0.2,fortnightly,Null,FALSE
+report_intellectual_property_infringement_etsy,https://www.etsy.com/au/ipreporting,Report Intellectual Property Infringement (Etsy),webpage,0.2,fortnightly,Null,TRUE
+etsy_intellectual_property_policy,https://www.etsy.com/legal/ip/,Etsy Intellectual Property Policy,webpage,0.2,fortnightly,Null,TRUE
+protecting_ip_rights_in_e_commerce_marketplaces,https://www.euipo.europa.eu/en/observatory/enforcement/tools/protecting-ip-rights-e-commerce-marketplaces,Protecting IP Rights in E-Commerce Marketplaces,webpage,0.2,fortnightly,Null,TRUE
 about_wipo,https://www.wipo.int/about-wipo/en/,About WIPO,webpage,0.2,fortnightly,Null,FALSE
 wipo_ip_audit,https://www.wipo.int/en/web/business/ip-audit,IP Audit,webpage,0.2,fortnightly,Null,FALSE
 wipo_ip_diagnostics,https://www.wipo.int/en/web/wipo-ip-diagnostics,WIPO IP Diagnostics,webpage,0.2,fortnightly,Null,FALSE
@@ -150,8 +150,8 @@ higher_education_research_commercialisation_intellectual_property_hercip,https:/
 protecting_your_intellectual_property_internationally_ebook,https://www.exportfinance.gov.au/media/dfqlxv3g/protecting-your-intellectual-property-internationally-ebook.pdf,Protecting Your Intellectual Property Internationally (eBook),webpage,0.2,fortnightly,Null,FALSE
 ttiap_find_an_attorney,https://www.ttipattorney.gov.au/for-clients/how-to-engage-an-attorney#find-an-attorney,Find an Attorney,webpage,0.2,fortnightly,Null,FALSE
 ttiap_reasons_to_make_a_complaint,https://www.ttipattorney.gov.au/for-clients/how-to-lodge-a-complaint/reasons-to-make-a-complaint,Reasons to Make a Complaint,webpage,0.2,fortnightly,Null,FALSE
-federal_court_practice_notes,Sign up to IP National Practice Area and the RSS feed,Federal Court Practice notes,rss,0.2,daily,Null,FALSE
-federal_court_notice_to_the_profession,Sign up to IP National Practice Area and the RSS feed,Federal Court Notice to the Profession,rss,0.2,daily,Null,FALSE
+federal_court_practice_notes,Sign up to IP National Practice Area and the RSS feed,Federal Court Practice notes,rss,0.2,daily,Null,TRUE
+federal_court_notice_to_the_profession,Sign up to IP National Practice Area and the RSS feed,Federal Court Notice to the Profession,rss,0.2,daily,Null,TRUE
 wipo_news,https://www.wipo.int/en/web/news,WIPO News,rss,0.2,daily,Null,FALSE
 wipo_arbitration_mediation_center_news,RSS Feed,WIPO Arbitration & Mediation Center News,rss,0.8,daily,Null,FALSE
-euipo_enforcement_news,https://www.euipo.europa.eu/en/enforce-ip/news,EUIPO Enforcement News,rss,0.2,daily,Null,FALSE
+euipo_enforcement_news,https://www.euipo.europa.eu/en/enforce-ip/news,EUIPO Enforcement News,rss,0.2,daily,Null,TRUE
