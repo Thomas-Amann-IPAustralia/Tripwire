@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { computeFunnelCounts } from '../lib/dataUtils.js';
 
-const STAGE_SHORT = ['PROBE', 'DETECT', 'DIFF', 'RELV', 'BIENC', 'CROSS', 'AGG', 'LLM', 'NOTIFY'];
+const STAGE_SHORT = ['PROBE', 'DETECT', 'DIFF', 'RELV', 'BIENC', 'CROSS', 'AGG'];
 const STAGE_FULL  = [
   'Stage 1: Metadata Probe',
   'Stage 2: Change Detection',
@@ -10,8 +10,6 @@ const STAGE_FULL  = [
   'Stage 5: Bi-Encoder Chunking',
   'Stage 6: Cross-Encoder Reranking',
   'Stage 7: Trigger Aggregation',
-  'Stage 8: LLM Assessment',
-  'Stage 9: Email Notification',
 ];
 
 const BAR_MAX_H = 80;
@@ -46,10 +44,14 @@ export default function FunnelSummary({ runs = [], onStageClick }) {
       }}>
         {funnel.map((d, i) => {
           const barH = Math.max(2, Math.round((d.count / maxCount) * BAR_MAX_H));
-          const prevCount = i > 0 ? funnel[i - 1].count : d.count;
-          const passRate = prevCount > 0
+          const isPageStage = d.unit === 'pages';
+          // Only show pass-through rate between same-unit consecutive stages (S1–S6)
+          const prevCount = (!isPageStage && i > 0 && funnel[i - 1].unit === 'runs')
+            ? funnel[i - 1].count
+            : null;
+          const passRate = prevCount != null && prevCount > 0
             ? ((d.count / prevCount) * 100).toFixed(1)
-            : '100.0';
+            : null;
 
           return (
             <React.Fragment key={d.stage}>
@@ -59,17 +61,17 @@ export default function FunnelSummary({ runs = [], onStageClick }) {
                   flexDirection: 'column',
                   alignItems: 'center',
                   flex: 1,
-                  cursor: 'pointer',
+                  cursor: isPageStage ? 'default' : 'pointer',
                   position: 'relative',
                   height: `${BAR_MAX_H + PANEL_LABEL_H + 20}px`,
                   justifyContent: 'flex-end',
                 }}
                 onMouseEnter={e => {
                   const rect = e.currentTarget.getBoundingClientRect();
-                  setTooltip({ stage: d.stage, count: d.count, passRate, i, x: rect.left + rect.width / 2, y: rect.top });
+                  setTooltip({ stage: d.stage, count: d.count, unit: d.unit, passRate, i, x: rect.left + rect.width / 2, y: rect.top });
                 }}
                 onMouseLeave={() => setTooltip(null)}
-                onClick={() => onStageClick?.(d.stage)}
+                onClick={() => !isPageStage && onStageClick?.(d.stage)}
               >
                 {/* Count */}
                 <div style={{
@@ -86,7 +88,7 @@ export default function FunnelSummary({ runs = [], onStageClick }) {
                   width: '60%',
                   minWidth: '8px',
                   height: `${barH}px`,
-                  background: `var(--stage-${d.stage})`,
+                  background: isPageStage ? 'var(--state-warn)' : `var(--stage-${d.stage})`,
                   transition: 'opacity 120ms ease',
                   opacity: tooltip?.stage === d.stage ? 1 : 0.75,
                 }} />
@@ -110,6 +112,19 @@ export default function FunnelSummary({ runs = [], onStageClick }) {
                 }}>
                   {STAGE_SHORT[i]}
                 </div>
+                {/* Unit badge for S7 */}
+                {isPageStage && (
+                  <div style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '8px',
+                    color: 'var(--state-warn)',
+                    letterSpacing: '0.04em',
+                    textAlign: 'center',
+                    marginTop: '2px',
+                  }}>
+                    pages
+                  </div>
+                )}
               </div>
 
               {/* Separator */}
@@ -148,11 +163,16 @@ export default function FunnelSummary({ runs = [], onStageClick }) {
             {STAGE_FULL[tooltip.i]}
           </div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)' }}>
-            Count: {tooltip.count}
+            {tooltip.unit === 'pages' ? 'Pages triggered' : 'Count'}: {tooltip.count}
           </div>
-          {tooltip.i > 0 && (
+          {tooltip.passRate != null && (
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)' }}>
               Pass-through: {tooltip.passRate}%
+            </div>
+          )}
+          {tooltip.unit === 'pages' && (
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', marginTop: '2px' }}>
+              Distinct IPFR pages in period
             </div>
           )}
         </div>

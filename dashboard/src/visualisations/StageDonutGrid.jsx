@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell } from 'recharts';
 // Hardcoded hex values — CSS vars don't resolve reliably in SVG fill attributes
 const STAGE_HEX = {
   1: '#3a6b3a', 2: '#c94020', 3: '#d4a820', 4: '#4a7ab5',
-  5: '#4a4a40', 6: '#7a7a70', 7: '#3a6b3a', 8: '#c94020', 9: '#d4a820',
+  5: '#4a4a40', 6: '#7a7a70',
 };
 const BG_ACCENT_HEX  = '#2e2e28';
 const STATE_ERROR_HEX = '#8b1a1a';
@@ -12,7 +12,7 @@ const TEXT_TERT_HEX  = '#5c5a52';
 const BG_TERT_HEX    = '#242420';
 
 function computeStageDonuts(runs) {
-  return Array.from({ length: 9 }, (_, i) => {
+  return Array.from({ length: 6 }, (_, i) => {
     const stage = i + 1;
     let passed = 0, rejected = 0, errored = 0, skipped = 0;
     for (const run of runs) {

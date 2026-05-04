@@ -48,17 +48,27 @@ export function aggregateByDay(runs) {
 }
 
 export function computeFunnelCounts(runs) {
-  if (!runs?.length) {
-    return Array.from({ length: 9 }, (_, i) => ({ stage: i + 1, count: 0 }));
-  }
-  const counts = new Array(9).fill(0);
+  const empty = [
+    ...Array.from({ length: 6 }, (_, i) => ({ stage: i + 1, count: 0, unit: 'runs' })),
+    { stage: 7, count: 0, unit: 'pages' },
+  ];
+  if (!runs?.length) return empty;
+
+  const counts = new Array(6).fill(0);
+  const triggeredPageIds = new Set();
+
   for (const run of runs) {
     const stage = run.deepest_stage ?? run.stage_reached;
-    if (stage >= 1 && stage <= 9) {
-      for (let s = 1; s <= stage; s++) {
-        counts[s - 1]++;
-      }
+    if (stage >= 1 && stage <= 6) {
+      for (let s = 1; s <= stage; s++) counts[s - 1]++;
+    }
+    if (Array.isArray(run.triggered_pages)) {
+      for (const id of run.triggered_pages) triggeredPageIds.add(id);
     }
   }
-  return counts.map((count, i) => ({ stage: i + 1, count }));
+
+  return [
+    ...counts.map((count, i) => ({ stage: i + 1, count, unit: 'runs' })),
+    { stage: 7, count: triggeredPageIds.size, unit: 'pages' },
+  ];
 }

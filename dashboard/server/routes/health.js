@@ -82,6 +82,27 @@ router.get('/summary', (req, res) => {
       if (cf >= 2) consecutiveFailures.push({ source_id, consecutive_failures: cf });
     }
 
+    const llmVerdicts = db.prepare(`
+      SELECT
+        COUNT(*)  AS total,
+        SUM(CASE WHEN json_extract(details, '$.stages.llm_assessment.verdict') = 'CHANGE_REQUIRED' THEN 1 ELSE 0 END) AS change_required,
+        SUM(CASE WHEN json_extract(details, '$.stages.llm_assessment.verdict') = 'UNCERTAIN'       THEN 1 ELSE 0 END) AS uncertain,
+        SUM(CASE WHEN json_extract(details, '$.stages.llm_assessment.verdict') = 'NO_CHANGE'       THEN 1 ELSE 0 END) AS no_change_verdict
+      FROM pipeline_runs
+      WHERE timestamp >= ?
+        AND json_extract(details, '$.stages.llm_assessment.verdict') IS NOT NULL
+    `).get(cutoff30);
+
+    // Count distinct run_ids where any source had triggered pages (= notification bundles sent)
+    const notificationsSent = db.prepare(`
+      SELECT COUNT(DISTINCT run_id) AS cnt
+      FROM pipeline_runs
+      WHERE timestamp >= ?
+        AND triggered_pages IS NOT NULL
+        AND triggered_pages != '[]'
+        AND outcome = 'completed'
+    `).get(cutoff30);
+
     const pipelineStatus = lastRun
       ? (lastRun.outcome === 'error' ? 'ERROR' : lastRun.outcome === 'completed' || lastRun.outcome === 'no_change' ? 'OK' : lastRun.outcome?.toUpperCase() ?? 'IDLE')
       : 'IDLE';
@@ -94,6 +115,11 @@ router.get('/summary', (req, res) => {
         llm_schema_failures_30d: llmSchemaFailures?.cnt ?? 0,
         cross_encoder_truncations_30d: crossEncoderTruncations?.cnt ?? 0,
         sources_with_consecutive_failures: consecutiveFailures,
+        llm_assessments_30d: llmVerdicts?.total ?? 0,
+        llm_verdict_change_required_30d: llmVerdicts?.change_required ?? 0,
+        llm_verdict_uncertain_30d: llmVerdicts?.uncertain ?? 0,
+        llm_verdict_no_change_30d: llmVerdicts?.no_change_verdict ?? 0,
+        notifications_30d: notificationsSent?.cnt ?? 0,
       },
     });
   } catch (err) {
