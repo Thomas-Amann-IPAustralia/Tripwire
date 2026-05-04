@@ -170,7 +170,7 @@ jobs:
           [ -f data/ipfr_corpus/ipfr.sqlite ]                   && FILES="$FILES data/ipfr_corpus/ipfr.sqlite"
           [ -f data/influencer_sources/source_registry.csv ]    && FILES="$FILES data/influencer_sources/source_registry.csv"
           [ -f data/logs/feedback.jsonl ]                       && FILES="$FILES data/logs/feedback.jsonl"
-          [ -f tripwire_config.yaml ]                           && FILES="$FILES tripwire_config.yaml"
+          [ -f tripwire_config.yaml ]                           && cp tripwire_config.yaml data/tripwire_config.yaml && FILES="$FILES data/tripwire_config.yaml"
           if [ -n "$FILES" ]; then
             gh release create "$TAG" $FILES \
               --title "Data sync $TAG" \
