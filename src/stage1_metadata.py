@@ -237,7 +237,7 @@ def _probe_webpage(
     try:
         resp = session.head(url, timeout=15, allow_redirects=True)
     except Exception as exc:
-        raise RetryableError(f"HEAD request failed for {url}: {exc}") from exc
+        raise RetryableError(f"HEAD request failed for {url} — {exc}") from exc
 
     if resp.status_code >= 400:
         from src.errors import http_error
@@ -382,7 +382,7 @@ def _probe_rss(
         resp = session.get(url, timeout=20)
         resp.raise_for_status()
     except Exception as exc:
-        raise RetryableError(f"RSS fetch failed for {url}: {exc}") from exc
+        raise RetryableError(f"RSS fetch failed for {url} — {exc}") from exc
 
     item_ids = _extract_rss_item_ids(resp.text)
     latest_id = item_ids[0] if item_ids else None

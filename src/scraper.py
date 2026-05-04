@@ -198,7 +198,7 @@ def scrape_url(url: str, session: Any) -> str:
     try:
         resp = session.get(url, timeout=30)
     except Exception as exc:
-        raise RetryableError(f"Connection error fetching {url}: {exc}") from exc
+        raise RetryableError(f"Connection error fetching {url} — {exc}") from exc
 
     if resp.status_code != 200:
         raise http_error(resp.status_code, url)
@@ -347,7 +347,7 @@ def _fetch_with_requests(url: str, session: Any) -> str | None:
     try:
         resp = session.get(url, timeout=30)
     except Exception as exc:
-        logger.warning("Requests fetch failed for %s: %s", url, exc)
+        logger.warning("Requests fetch failed for %s — %s", url, exc)
         return None
 
     if resp.status_code != 200:
@@ -555,7 +555,7 @@ def _fetch_with_selenium(url: str) -> str | None:
         return driver.page_source
 
     except Exception as exc:
-        logger.warning("Selenium fetch failed for %s: %s", url, str(exc).split('\n')[0])
+        logger.warning("Selenium fetch failed for %s — %s", url, str(exc).split('\n')[0])
         return None
     finally:
         try:
@@ -568,8 +568,10 @@ def _fetch_with_playwright(url: str) -> str | None:
     """Fetch a URL using a fresh Playwright Chromium browser with stealth patches.
 
     Used as the second-pass fallback when the regular Selenium attempt is
-    bot-blocked.  ``playwright_stealth.stealth_sync`` is applied to the page
-    before navigation so automation fingerprints are masked.
+    bot-blocked.  Stealth is applied via ``playwright_stealth.stealth_sync``
+    when available; otherwise a lightweight inline JS patch masks the most
+    common automation fingerprints (navigator.webdriver, plugins, Chrome
+    runtime object) so the fetch can still proceed.
 
     Returns the raw HTML from ``page.content()`` so the caller can route it
     through the same trafilatura-based normalisation as the first pass.
@@ -586,18 +588,31 @@ def _fetch_with_playwright(url: str) -> str | None:
 
     # playwright-stealth exports stealth_sync from the package root in some
     # versions and only from the stealth submodule in others; try both.
+    # If neither is importable, fall back to inline JS stealth patches so the
+    # Playwright path still runs rather than silently giving up.
+    stealth_fn = None
     try:
         from playwright_stealth import stealth_sync
+        stealth_fn = stealth_sync
     except ImportError:
         try:
             from playwright_stealth.stealth import stealth_sync
+            stealth_fn = stealth_sync
         except ImportError as exc:
-            logger.warning(
-                "playwright-stealth unavailable (%s); install with: "
-                "pip install playwright-stealth",
+            logger.debug(
+                "playwright-stealth unavailable (%s); applying inline JS stealth patches.",
                 exc,
             )
-            return None
+
+    # Minimal inline stealth: masks the four automation signals that Cloudflare
+    # and common WAFs check first.  Applied via add_init_script so it runs
+    # before any page JS when stealth_fn is not available.
+    _INLINE_STEALTH_JS = (
+        "Object.defineProperty(navigator,'webdriver',{get:()=>undefined});"
+        "Object.defineProperty(navigator,'plugins',{get:()=>[1,2,3,4,5]});"
+        "Object.defineProperty(navigator,'languages',{get:()=>['en-US','en']});"
+        "window.chrome={runtime:{}};"
+    )
 
     playwright = None
     browser = None
@@ -605,11 +620,14 @@ def _fetch_with_playwright(url: str) -> str | None:
         playwright = sync_playwright().start()
         browser = playwright.chromium.launch(headless=True)
         page = browser.new_page()
-        stealth_sync(page)
-        page.goto(url)
+        if stealth_fn is not None:
+            stealth_fn(page)
+        else:
+            page.add_init_script(_INLINE_STEALTH_JS)
+        page.goto(url, wait_until="domcontentloaded", timeout=30_000)
         return page.content()
     except Exception as exc:
-        logger.warning("Playwright fetch failed for %s: %s", url, str(exc).split('\n')[0])
+        logger.warning("Playwright fetch failed for %s — %s", url, str(exc).split('\n')[0])
         return None
     finally:
         try:
@@ -691,7 +709,7 @@ def fetch_with_waf_polling(
         return None
 
     except Exception as exc:
-        logger.warning("WAF fetch failed for %s: %s", url, exc)
+        logger.warning("WAF fetch failed for %s — %s", url, exc)
         return None
     finally:
         try:
@@ -791,7 +809,7 @@ def fetch_raw_with_selenium(
         return None
 
     except Exception as exc:
-        logger.warning("Selenium raw fetch failed for %s: %s", url, str(exc).split('\n')[0])
+        logger.warning("Selenium raw fetch failed for %s — %s", url, str(exc).split('\n')[0])
         return None
     finally:
         try:
@@ -871,7 +889,7 @@ def _scrape_docx(url: str, session: Any) -> str:
     try:
         resp = session.get(url, timeout=30)
     except Exception as exc:
-        raise RetryableError(f"Connection error downloading DOCX {url}: {exc}") from exc
+        raise RetryableError(f"Connection error downloading DOCX {url} — {exc}") from exc
 
     if resp.status_code != 200:
         raise http_error(resp.status_code, url)
