@@ -205,6 +205,80 @@ function StatusStrip({ summary, sparkData }) {
   );
 }
 
+// ── Row 1b: Stage 8/9 activity strip ──────────────────────────────────────────
+
+function LlmNotifyStrip({ summary }) {
+  const assessments = summary?.llm_assessments_30d ?? '—';
+  const changeRequired = summary?.llm_verdict_change_required_30d ?? '—';
+  const uncertain = summary?.llm_verdict_uncertain_30d ?? '—';
+  const noChange = summary?.llm_verdict_no_change_30d ?? '—';
+  const notifications = summary?.notifications_30d ?? '—';
+
+  const items = [
+    { label: 'LLM Assessments',    value: assessments,    color: undefined },
+    { label: 'CHANGE_REQUIRED',    value: changeRequired, color: 'var(--state-alert)' },
+    { label: 'UNCERTAIN',          value: uncertain,      color: 'var(--state-warn)' },
+    { label: 'NO_CHANGE',          value: noChange,       color: 'var(--state-ok)' },
+    { label: 'Schema Failures 30d',value: summary?.llm_schema_failures_30d ?? '—', color: undefined },
+    { label: 'Notifications Sent', value: notifications,  color: 'var(--text-primary)' },
+  ];
+
+  return (
+    <div style={{
+      borderBottom: '1px solid var(--rule)',
+      display: 'flex', alignItems: 'stretch',
+      flexShrink: 0,
+    }}>
+      <div style={{
+        padding: '10px 14px',
+        borderRight: '1px solid var(--rule)',
+        display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        gap: '2px',
+        minWidth: '110px',
+      }}>
+        <div style={{
+          fontFamily: 'var(--font-display)', fontSize: '10px',
+          letterSpacing: '0.08em', color: 'var(--text-tertiary)',
+          whiteSpace: 'nowrap',
+        }}>
+          STAGE 8
+        </div>
+        <div style={{
+          fontFamily: 'var(--font-display)', fontSize: '10px',
+          letterSpacing: '0.08em', color: 'var(--text-tertiary)',
+          whiteSpace: 'nowrap',
+        }}>
+          LLM + NOTIFY
+        </div>
+      </div>
+      <div style={{ display: 'flex', flex: 1 }}>
+        {items.map(({ label, value, color }) => (
+          <div key={label} style={{
+            flex: 1, padding: '10px 14px',
+            borderRight: '1px solid var(--rule)',
+            display: 'flex', flexDirection: 'column', gap: '3px',
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-mono)', fontSize: '9px',
+              color: 'var(--text-tertiary)', letterSpacing: '0.07em',
+              textTransform: 'uppercase', whiteSpace: 'nowrap',
+              overflow: 'hidden', textOverflow: 'ellipsis',
+            }}>
+              {label}
+            </div>
+            <div style={{
+              fontFamily: 'var(--font-display)', fontSize: '20px',
+              color: color ?? 'var(--text-primary)', lineHeight: 1,
+            }}>
+              {value}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── Row 2 left: Error rate area chart ─────────────────────────────────────────
 
 const chartTooltipStyle = {
@@ -647,6 +721,9 @@ export default function Health() {
 
         {/* Row 1: five stat cards */}
         <StatusStrip summary={summary} sparkData={sparkData} />
+
+        {/* Row 1b: Stage 8 LLM + Stage 9 notification activity */}
+        <LlmNotifyStrip summary={summary} />
 
         {/* Row 2: area chart + consecutive failures */}
         <div style={{

@@ -188,16 +188,13 @@ router.get('/summary', (req, res) => {
     `).all(...params);
 
     const summary = {};
-    for (let s = 1; s <= 9; s++) {
+    for (let s = 1; s <= 6; s++) {
       summary[s] = { stage: s, total: 0, completed: 0, no_change: 0, error: 0 };
     }
 
     for (const row of rows) {
       const s = row.stage_int;
-      if (s < 1 || s > 9) continue;
-      for (let i = s; i <= 9; i++) {
-        summary[i] = summary[i] || { stage: i, total: 0, completed: 0, no_change: 0, error: 0 };
-      }
+      if (s < 1 || s > 6) continue;
       summary[s].total += row.cnt;
       if (row.outcome === 'completed') summary[s].completed += row.cnt;
       else if (row.outcome === 'no_change') summary[s].no_change += row.cnt;

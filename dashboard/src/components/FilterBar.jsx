@@ -4,7 +4,7 @@ import { useSources } from '../hooks/useData.js';
 
 const DATE_PRESETS = ['7D', '30D', '90D', 'ALL'];
 
-const STAGE_ENTRIES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const STAGE_ENTRIES = [1, 2, 3, 4, 5, 6];
 
 const VERDICT_ENTRIES = [
   { key: 'CHANGE_REQUIRED', color: 'var(--state-alert)' },
