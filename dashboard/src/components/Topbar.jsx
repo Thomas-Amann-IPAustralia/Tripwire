@@ -92,9 +92,10 @@ export default function Topbar() {
   const { refresh } = useDashboard();
   const { data: health } = useHealthSummary();
 
-  const lastRun = health?.last_run_at;
-  const pipelineStatus = health?.pipeline_status || 'IDLE';
-  const stagesCompleted = health?.stages_completed ?? 0;
+  const lastRunData = health?.data?.last_run;
+  const lastRun = lastRunData?.timestamp;
+  const pipelineStatus = lastRunData?.pipeline_status || 'IDLE';
+  const stagesCompleted = lastRunData?.stages_completed ?? 0;
 
   return (
     <header style={{

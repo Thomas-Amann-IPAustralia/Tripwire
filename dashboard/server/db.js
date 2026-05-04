@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const REPO_ROOT = process.env.DATA_ROOT || path.join(__dirname, '..', '..');
 export const DB_PATH = path.join(REPO_ROOT, 'data/ipfr_corpus/ipfr.sqlite');
-export const CONFIG_PATH = path.join(REPO_ROOT, 'data', 'tripwire_config.yaml');
+export const CONFIG_PATH = path.join(REPO_ROOT, 'tripwire_config.yaml');
 export const REGISTRY_PATH = path.join(REPO_ROOT, 'data/influencer_sources/source_registry.csv');
 export const FEEDBACK_PATH = path.join(REPO_ROOT, 'data/logs/feedback.jsonl');
 export const SNAPSHOTS_PATH = path.join(REPO_ROOT, 'data/influencer_sources/snapshots');

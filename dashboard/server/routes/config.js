@@ -5,14 +5,15 @@ import { CONFIG_PATH } from '../db.js';
 
 const router = Router();
 
-const REQUIRED_FIELDS = ['pipeline', 'change_detection', 'relevance', 'biencoder', 'crossencoder'];
+const REQUIRED_FIELDS = ['pipeline', 'change_detection', 'relevance_scoring', 'semantic_scoring', 'graph', 'storage', 'notifications'];
 
 function validateConfig(obj) {
   for (const field of REQUIRED_FIELDS) {
     if (!(field in obj)) return `Missing required top-level key: ${field}`;
   }
   if (obj.pipeline && typeof obj.pipeline !== 'object') return 'pipeline must be an object';
-  if (obj.relevance && typeof obj.relevance !== 'object') return 'relevance must be an object';
+  if (obj.relevance_scoring && typeof obj.relevance_scoring !== 'object') return 'relevance_scoring must be an object';
+  if (obj.semantic_scoring && typeof obj.semantic_scoring !== 'object') return 'semantic_scoring must be an object';
   return null;
 }
 
