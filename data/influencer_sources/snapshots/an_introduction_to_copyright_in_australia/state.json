@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.copyright.org.au/browse/book/ACC-An-Introduction-to-Copyright-in-Australia-INFO010",
-  "last_error_at": "2026-05-04T02:01:54.742074+00:00",
-  "consecutive_failures": 3
+  "last_error_at": "2026-05-04T05:32:31.970981+00:00",
+  "consecutive_failures": 4
 }
