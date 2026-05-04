@@ -1,5 +1,5 @@
 {
   "last_error": "PermanentError: Content at https://www.wipo.int/wipolex/en/legislation/countries/au is too short (123 chars < minimum 200)",
-  "last_error_at": "2026-05-04T01:57:08.599287+00:00",
-  "consecutive_failures": 3
+  "last_error_at": "2026-05-04T05:05:38.038548+00:00",
+  "consecutive_failures": 4
 }

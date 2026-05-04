@@ -1,5 +1,5 @@
 {
   "last_error": "PermanentError: Content at http://www.copyright.org.au/legal-advice/ is too short (68 chars < minimum 200)",
-  "last_error_at": "2026-05-04T02:15:24.230558+00:00",
-  "consecutive_failures": 3
+  "last_error_at": "2026-05-04T05:23:42.480294+00:00",
+  "consecutive_failures": 4
 }
