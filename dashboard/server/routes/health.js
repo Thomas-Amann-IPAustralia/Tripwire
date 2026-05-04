@@ -16,6 +16,26 @@ router.get('/summary', (req, res) => {
       ORDER BY timestamp DESC LIMIT 1
     `).get();
 
+    const stagesCompleted = lastRun
+      ? (db.prepare(`
+          SELECT MAX(
+            CASE stage_reached
+              WHEN 'stage1'          THEN 1
+              WHEN 'scrape'          THEN 1
+              WHEN 'stage2'          THEN 2
+              WHEN 'stage3'          THEN 3
+              WHEN 'stage4'          THEN 4
+              WHEN 'stage5'          THEN 5
+              WHEN 'stage6'          THEN 6
+              WHEN 'stage6_complete' THEN 6
+              ELSE 0
+            END
+          ) AS stages_completed
+          FROM pipeline_runs
+          WHERE run_id = ?
+        `).get(lastRun.run_id)?.stages_completed ?? 0)
+      : 0;
+
     const errorRate = db.prepare(`
       SELECT
         SUM(CASE WHEN outcome = 'error' THEN 1 ELSE 0 END) * 1.0 / MAX(COUNT(*), 1) AS rate,
@@ -62,9 +82,13 @@ router.get('/summary', (req, res) => {
       if (cf >= 2) consecutiveFailures.push({ source_id, consecutive_failures: cf });
     }
 
+    const pipelineStatus = lastRun
+      ? (lastRun.outcome === 'error' ? 'ERROR' : lastRun.outcome === 'completed' || lastRun.outcome === 'no_change' ? 'OK' : lastRun.outcome?.toUpperCase() ?? 'IDLE')
+      : 'IDLE';
+
     res.json({
       data: {
-        last_run: lastRun ?? null,
+        last_run: lastRun ? { ...lastRun, stages_completed: stagesCompleted, pipeline_status: pipelineStatus } : null,
         error_rate_30d: errorRate?.rate ?? 0,
         total_sources_monitored: sourcesMonitored?.cnt ?? 0,
         llm_schema_failures_30d: llmSchemaFailures?.cnt ?? 0,
