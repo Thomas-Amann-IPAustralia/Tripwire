@@ -576,14 +576,28 @@ def _fetch_with_playwright(url: str) -> str | None:
     """
     try:
         from playwright.sync_api import sync_playwright
-        from playwright_stealth import stealth_sync
     except ImportError as exc:
         logger.warning(
             "Playwright fallback unavailable (%s); install with: "
-            "pip install playwright playwright-stealth && playwright install chromium",
+            "pip install playwright && playwright install chromium",
             exc,
         )
         return None
+
+    # playwright-stealth exports stealth_sync from the package root in some
+    # versions and only from the stealth submodule in others; try both.
+    try:
+        from playwright_stealth import stealth_sync
+    except ImportError:
+        try:
+            from playwright_stealth.stealth import stealth_sync
+        except ImportError as exc:
+            logger.warning(
+                "playwright-stealth unavailable (%s); install with: "
+                "pip install playwright-stealth",
+                exc,
+            )
+            return None
 
     playwright = None
     browser = None
