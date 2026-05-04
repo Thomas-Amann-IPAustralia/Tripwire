@@ -1,5 +1,6 @@
 {
-  "last_error": "RetryableError: All fetch attempts failed for https://www.auda.org.au/public-impact/have-your-say/consultations/",
-  "last_error_at": "2026-05-04T02:13:26.319152+00:00",
-  "consecutive_failures": 3
+  "probe_signals": {},
+  "last_checked": "2026-05-04T06:36:15.085221+00:00",
+  "previous_hash": "b0efff7ad3bfc9fa72b485350cb2d9ef2fbc17352b3542b7dbf71df59571952a",
+  "previous_text": "Consultations\nHave your say on .au policies and matters related to auDA via our consultation process.\nActive consultations\n2026 edu.au consultation\nThe auDA Board is consulting on changes to Schedule A of the .au Domain Administration Rules: Licensing (.au Licensing Rules).\nactive\nConsultation on auDA\u2019s Purpose\nauDA\u2019s Board seeks to simplify auDA\u2019s purpose statement to ensure it is accessible and memorable, and clearly and simply articulates what auDA does, for whom and to what end.\nactive\nPast consultations\nConsultation on proposed updates to the WHOIS Policy\nclosed\n.au Licensing Rules Review (2025) consultation\nclosed\nauDA 2026-30 Draft Strategy\nclosed\nCall for feedback: Issues Discovery Paper\nclosed\nPublic consultation on Conduct Complaints Policy and Engagement Charter\nclosed\nConsultation on proposed administrative changes and retirement of published policies\nclosed\nProposed changes to the definition of Australian Presence and Not for Profit entity\nclosed\nUpdates to Reserved Names List (December 2021)\nclosed\nShowing results 1-8 of 36"
 }

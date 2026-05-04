@@ -3,7 +3,7 @@
   "last_checked": "2026-04-29T05:28:53.464862+00:00",
   "previous_hash": "c29ebd8420c3658c500612490be3f6c30074041d640ede50c57053c66e4b5581",
   "previous_text": "This site can\u2019t be reached\nwww.asbfeo.gov.au took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\ndevices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\nsettings.\nIf it is already listed as a program allowed to access the network, try\nremoving it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\nthe Chrome menu >\nSettings\n>\nSystem\n>\nOpen your computer's proxy settings\nand make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.asbfeo.gov.au took too long to respond.",
-  "last_error": "RetryableError: All fetch attempts failed for https://www.asbfeo.gov.au/disputes-assistance/dispute-support",
-  "last_error_at": "2026-05-04T05:49:33.839901+00:00",
-  "consecutive_failures": 11
+  "last_error": "PermanentError: CAPTCHA or bot-detection page detected at https://www.asbfeo.gov.au/disputes-assistance/dispute-support",
+  "last_error_at": "2026-05-04T06:22:28.897453+00:00",
+  "consecutive_failures": 12
 }

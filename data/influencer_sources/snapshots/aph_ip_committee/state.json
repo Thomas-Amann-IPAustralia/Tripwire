@@ -1,5 +1,5 @@
 {
-  "last_error": "RetryableError: All fetch attempts failed for https://www.aph.gov.au/Parliamentary_Business/Committees/House/Industry_Innovation_and_Science",
-  "last_error_at": "2026-05-04T05:48:55.918373+00:00",
-  "consecutive_failures": 5
+  "last_error": "PermanentError: CAPTCHA or bot-detection page detected at https://www.aph.gov.au/Parliamentary_Business/Committees/House/Industry_Innovation_and_Science",
+  "last_error_at": "2026-05-04T06:21:54.509839+00:00",
+  "consecutive_failures": 6
 }
