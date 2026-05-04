@@ -26,7 +26,7 @@ export default function CalendarHeatmap({ runs = [], onDayClick }) {
     const map = new Map();
     for (const run of runs) {
       if (run.verdict?.toUpperCase() !== 'CHANGE_REQUIRED') continue;
-      const date = run.run_at?.slice(0, 10);
+      const date = (run.timestamp ?? run.run_at)?.slice(0, 10);
       if (!date) continue;
       if (!map.has(date)) map.set(date, { count: 0, sources: [] });
       const entry = map.get(date);

@@ -7,6 +7,7 @@ import {
 import {
   useHealthSummary, useHealthRuns, useHealthIngestion, useRun,
 } from '../hooks/useData.js';
+import ErrorBanner from '../components/ErrorBanner.jsx';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -597,8 +598,8 @@ function IngestionStrip({ ingestion }) {
 // ── Main Health section ───────────────────────────────────────────────────────
 
 export default function Health() {
-  const { data: summaryRaw }   = useHealthSummary();
-  const { data: runsRaw }      = useHealthRuns();
+  const { data: summaryRaw,   error: summaryError   } = useHealthSummary();
+  const { data: runsRaw,      error: runsError       } = useHealthRuns();
   const { data: ingestionRaw } = useHealthIngestion();
 
   const summary   = summaryRaw?.data   ?? summaryRaw   ?? null;
@@ -638,6 +639,8 @@ export default function Health() {
           </div>
         </div>
       </div>
+
+      <ErrorBanner error={summaryError ?? runsError} />
 
       {/* Scrollable body */}
       <div style={{ flex: 1, overflowY: 'auto' }}>

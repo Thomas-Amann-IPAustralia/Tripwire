@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { usePages, useGraphNodes, useGraphEdges } from '../hooks/useData.js';
+import ErrorBanner from '../components/ErrorBanner.jsx';
 import Embedding3D from '../visualisations/Embedding3D.jsx';
 import KnowledgeGraph from '../visualisations/KnowledgeGraph.jsx';
 import ContentMap from '../visualisations/ContentMap.jsx';
@@ -61,7 +62,7 @@ export default function Corpus() {
     return () => window.removeEventListener('tripwire:highlight-graph-node', handler);
   }, []);
 
-  const { data: pagesRaw } = usePages();
+  const { data: pagesRaw, error: pagesError } = usePages();
   const { data: nodesRaw } = useGraphNodes();
   const { data: edgesRaw } = useGraphEdges();
 
@@ -111,6 +112,8 @@ export default function Corpus() {
           </div>
         </div>
       </div>
+
+      <ErrorBanner error={pagesError} />
 
       {/* Tab bar */}
       <div style={{

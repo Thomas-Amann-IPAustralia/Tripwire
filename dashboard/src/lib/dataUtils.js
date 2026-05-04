@@ -38,7 +38,7 @@ export function aggregateByDay(runs) {
   if (!runs?.length) return [];
   const map = new Map();
   for (const run of runs) {
-    const date = run.run_at?.slice(0, 10);
+    const date = (run.timestamp ?? run.run_at)?.slice(0, 10);
     if (!date) continue;
     map.set(date, (map.get(date) || 0) + 1);
   }
