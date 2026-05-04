@@ -171,6 +171,10 @@ jobs:
           [ -f data/influencer_sources/source_registry.csv ]    && FILES="$FILES data/influencer_sources/source_registry.csv"
           [ -f data/logs/feedback.jsonl ]                       && FILES="$FILES data/logs/feedback.jsonl"
           [ -f tripwire_config.yaml ]                           && cp tripwire_config.yaml data/tripwire_config.yaml && FILES="$FILES data/tripwire_config.yaml"
+          if [ -d data/influencer_sources/snapshots ] && [ "$(ls -A data/influencer_sources/snapshots 2>/dev/null)" ]; then
+            tar czf data/snapshots.tar.gz -C data/influencer_sources snapshots
+            FILES="$FILES data/snapshots.tar.gz"
+          fi
           if [ -n "$FILES" ]; then
             gh release create "$TAG" $FILES \
               --title "Data sync $TAG" \
