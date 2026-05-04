@@ -1,5 +1,5 @@
 {
-  "last_error": "PermanentError: HTTP 403 fetching https://www.fedcourt.gov.au/law-and-practice/national-practice-areas/ip (non-retryable)",
-  "last_error_at": "2026-05-03T16:34:17.520893+00:00",
-  "consecutive_failures": 2
+  "last_error": "RetryableError: All fetch attempts failed for https://www.fedcourt.gov.au/law-and-practice/national-practice-areas/ip",
+  "last_error_at": "2026-05-04T02:11:17.434421+00:00",
+  "consecutive_failures": 3
 }

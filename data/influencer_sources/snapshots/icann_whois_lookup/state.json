@@ -1,5 +1,5 @@
 {
-  "last_error": "PermanentError: Content at https://lookup.icann.org/en is too short (12 chars < minimum 200)",
-  "last_error_at": "2026-05-03T16:37:46.154757+00:00",
-  "consecutive_failures": 2
+  "last_error": "RetryableError: All fetch attempts failed for https://lookup.icann.org/en",
+  "last_error_at": "2026-05-04T02:15:58.609204+00:00",
+  "consecutive_failures": 3
 }

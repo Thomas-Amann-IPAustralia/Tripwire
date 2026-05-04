@@ -1,5 +1,5 @@
 {
-  "last_error": "PermanentError: HTTP 403 fetching https://www.fedcourt.gov.au/services/ADR/arbitration (non-retryable)",
-  "last_error_at": "2026-05-03T16:34:18.233495+00:00",
-  "consecutive_failures": 2
+  "last_error": "RetryableError: All fetch attempts failed for https://www.fedcourt.gov.au/services/ADR/arbitration",
+  "last_error_at": "2026-05-04T02:11:40.641221+00:00",
+  "consecutive_failures": 3
 }
