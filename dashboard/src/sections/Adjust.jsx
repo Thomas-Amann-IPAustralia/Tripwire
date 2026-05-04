@@ -3,6 +3,7 @@ import yaml from 'js-yaml';
 import { useQueryClient } from '@tanstack/react-query';
 import { useConfig as useConfigData } from '../hooks/useData.js';
 import ConfigControl from '../components/ConfigControl.jsx';
+import ErrorBanner from '../components/ErrorBanner.jsx';
 import ThresholdSimulator from '../visualisations/ThresholdSimulator.jsx';
 
 // ── Nested config helpers ─────────────────────────────────────────────────────
@@ -458,11 +459,7 @@ export default function Adjust() {
     );
   }
   if (loadError) {
-    return (
-      <div style={{ padding: '24px', fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--state-error)' }}>
-        FAILED TO LOAD CONFIG: {loadError.message}
-      </div>
-    );
+    return <ErrorBanner error={loadError} />;
   }
 
   const saveBackground = saveState === 'success' ? 'var(--state-ok)'

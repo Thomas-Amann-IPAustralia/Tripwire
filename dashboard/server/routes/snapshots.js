@@ -5,22 +5,78 @@ import { db, SNAPSHOTS_PATH } from '../db.js';
 
 const router = Router();
 
-function computeDiff(oldText, newText) {
-  if (!oldText || !newText) return null;
-  const oldLines = oldText.split('\n');
-  const newLines = newText.split('\n');
-  const diff = [];
+// Try to load diff-match-patch; set to null if not installed.
+let DiffMatchPatch = null;
+try {
+  const m = await import('diff-match-patch');
+  DiffMatchPatch = m.diff_match_patch ?? m.default?.diff_match_patch ?? null;
+} catch { /* not installed — use LCS fallback */ }
 
-  const oldSet = new Set(oldLines);
-  const newSet = new Set(newLines);
+// Find the most-recent <sourceId>_*.diff file written by the pipeline.
+function loadPipelineDiff(snapDir, sourceId) {
+  try {
+    const entries = fs.readdirSync(snapDir);
+    const diffs = entries
+      .filter(f => f.startsWith(`${sourceId}_`) && f.endsWith('.diff'))
+      .sort(); // lexicographic → most recent last (ISO-timestamp filenames)
+    if (!diffs.length) return null;
+    return fs.readFileSync(path.join(snapDir, diffs[diffs.length - 1]), 'utf8');
+  } catch {
+    return null;
+  }
+}
 
-  for (const line of oldLines) {
-    if (!newSet.has(line)) diff.push(`- ${line}`);
+// Minimal LCS-based line diff; returns a +/- annotated string.
+function lcsDiff(oldLines, newLines) {
+  const m = oldLines.length;
+  const n = newLines.length;
+
+  // Build LCS table
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = oldLines[i - 1] === newLines[j - 1]
+        ? dp[i - 1][j - 1] + 1
+        : Math.max(dp[i - 1][j], dp[i][j - 1]);
+    }
   }
-  for (const line of newLines) {
-    if (!oldSet.has(line)) diff.push(`+ ${line}`);
+
+  // Backtrack
+  const edits = [];
+  let i = m, j = n;
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && oldLines[i - 1] === newLines[j - 1]) {
+      i--; j--;
+    } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+      edits.push(`+ ${newLines[j - 1]}`);
+      j--;
+    } else {
+      edits.push(`- ${oldLines[i - 1]}`);
+      i--;
+    }
   }
-  return diff.join('\n');
+  edits.reverse();
+  return edits.join('\n') || null;
+}
+
+// Compute a diff using diff-match-patch (word-level) or LCS (line-level).
+function computeFallbackDiff(oldText, newText) {
+  if (!oldText && !newText) return null;
+  if (!oldText) return newText.split('\n').map(l => `+ ${l}`).join('\n');
+  if (!newText) return oldText.split('\n').map(l => `- ${l}`).join('\n');
+
+  if (DiffMatchPatch) {
+    const dmp = new DiffMatchPatch();
+    const diffs = dmp.diff_main(oldText, newText);
+    dmp.diff_cleanupSemantic(diffs);
+    const out = diffs
+      .filter(([op]) => op !== 0)
+      .map(([op, text]) => op === 1 ? `+ ${text}` : `- ${text}`)
+      .join('\n');
+    return out || null;
+  }
+
+  return lcsDiff(oldText.split('\n'), newText.split('\n'));
 }
 
 // GET /api/snapshots/:sourceId
@@ -45,7 +101,9 @@ router.get('/:sourceId', (req, res) => {
     console.error(`[snapshots] reading files for ${sourceId}:`, err.message);
   }
 
-  const diff = computeDiff(previous_snapshot_text, snapshot_text);
+  // Prefer the real unified diff written by the pipeline; fall back to computed diff.
+  const diff = loadPipelineDiff(snapDir, sourceId)
+    ?? computeFallbackDiff(previous_snapshot_text, snapshot_text);
 
   let best_match_page_id = null;
   let best_match_page_content = null;

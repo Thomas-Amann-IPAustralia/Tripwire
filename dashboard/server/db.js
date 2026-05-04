@@ -37,7 +37,7 @@ export { db };
 
 export function dbGuard(res) {
   if (!db) {
-    res.json({ data: [], error: 'database_not_found' });
+    res.status(503).json({ data: [], error: 'database_not_found' });
     return false;
   }
   return true;

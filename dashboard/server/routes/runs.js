@@ -83,33 +83,48 @@ function safeParseJson(val, fallback) {
 router.get('/', (req, res) => {
   if (!dbGuard(res)) return;
 
-  const { from, to, source_id, stage_reached_min, verdict, outcome, limit = 1000, offset = 0 } = req.query;
+  const { from, to, outcome, stage_reached_min, limit = 1000, offset = 0 } = req.query;
+
+  // source_id and verdict may arrive as repeated query params → arrays
+  const sourceIds = [req.query.source_id].flat().filter(Boolean);
+  const verdicts  = [req.query.verdict].flat().filter(Boolean);
 
   const conditions = [];
   const params = [];
 
   if (from) { conditions.push('timestamp >= ?'); params.push(from); }
   if (to)   { conditions.push('timestamp <= ?'); params.push(to); }
-  if (source_id) { conditions.push('source_id = ?'); params.push(source_id); }
-  if (outcome)   { conditions.push('outcome = ?');   params.push(outcome); }
-  if (verdict) {
-    conditions.push(`json_extract(details, '$.stages.llm_assessment.verdict') = ?`);
-    params.push(verdict);
+  if (outcome) { conditions.push('outcome = ?'); params.push(outcome); }
+
+  if (sourceIds.length === 1) {
+    conditions.push('source_id = ?');
+    params.push(sourceIds[0]);
+  } else if (sourceIds.length > 1) {
+    conditions.push(`source_id IN (${sourceIds.map(() => '?').join(',')})`);
+    params.push(...sourceIds);
   }
 
-  let where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  if (verdicts.length === 1) {
+    conditions.push(`json_extract(details, '$.stages.llm_assessment.verdict') = ?`);
+    params.push(verdicts[0]);
+  } else if (verdicts.length > 1) {
+    conditions.push(
+      `json_extract(details, '$.stages.llm_assessment.verdict') IN (${verdicts.map(() => '?').join(',')})`
+    );
+    params.push(...verdicts);
+  }
 
-  let sql = `${BASE_SELECT} ${where} ORDER BY timestamp DESC LIMIT ? OFFSET ?`;
+  if (stage_reached_min) {
+    conditions.push(`(${STAGE_REACHED_CASE}) >= ?`);
+    params.push(Number(stage_reached_min));
+  }
+
+  const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+  const sql = `${BASE_SELECT} ${where} ORDER BY timestamp DESC LIMIT ? OFFSET ?`;
   params.push(Number(limit), Number(offset));
 
   try {
-    let rows = db.prepare(sql).all(...params);
-
-    if (stage_reached_min) {
-      const min = Number(stage_reached_min);
-      rows = rows.filter(r => r.stage_reached >= min);
-    }
-
+    const rows = db.prepare(sql).all(...params);
     const data = rows.map(formatRun);
     res.json({ data, total: data.length, limit: Number(limit), offset: Number(offset) });
   } catch (err) {

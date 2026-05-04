@@ -8,5 +8,8 @@ export default defineConfig({
       '/api': 'http://localhost:3001'
     }
   },
-  base: '/'
+  base: '/',
+  test: {
+    environment: 'node',
+  },
 });

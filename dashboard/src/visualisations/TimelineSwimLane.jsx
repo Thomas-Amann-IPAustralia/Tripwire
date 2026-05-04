@@ -35,7 +35,7 @@ function resolvedDateRange(filters, runs) {
     return { from: from.toISOString().slice(0, 10), to: todayStr };
   }
 
-  const dates = runs.map(r => r.run_at?.slice(0, 10)).filter(Boolean).sort();
+  const dates = runs.map(r => (r.timestamp ?? r.run_at)?.slice(0, 10)).filter(Boolean).sort();
   return { from: dates[0], to: dates[dates.length - 1] };
 }
 
@@ -76,7 +76,7 @@ function truncate28(str) {
 function aggregateDaily(runs) {
   const map = new Map();
   for (const run of runs) {
-    const d = run.run_at?.slice(0, 10);
+    const d = (run.timestamp ?? run.run_at)?.slice(0, 10);
     if (!d) continue;
     if (!map.has(d)) map.set(d, { date: d, alerts: 0, total: 0 });
     const e = map.get(d);
@@ -280,7 +280,7 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
             {activeSrcList.map((src, rowIdx) => {
               const srcRuns = sourceMap.get(src) || [];
               const visible = srcRuns.filter(r => {
-                const d = r.run_at?.slice(0, 10);
+                const d = (r.timestamp ?? r.run_at)?.slice(0, 10);
                 return d && d >= visFromStr && d <= visToStr;
               });
               return (
@@ -293,7 +293,7 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
                   }}
                 >
                   {visible.map(run => {
-                    const runDate = run.run_at?.slice(0, 10);
+                    const runDate = (run.timestamp ?? run.run_at)?.slice(0, 10);
                     if (!runDate) return null;
                     const x     = dateToX(runDate, fromStr, ppd);
                     const stage = run.deepest_stage ?? run.stage_reached ?? 1;
@@ -438,7 +438,7 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
             </div>
           )}
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', marginTop: '4px' }}>
-            {hoveredTick.run.run_at}
+            {hoveredTick.run.timestamp ?? hoveredTick.run.run_at}
           </div>
         </div>
       )}

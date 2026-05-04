@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useSources, useRuns, useSnapshot } from '../hooks/useData.js';
 import { formatRelativeTime } from '../lib/dataUtils.js';
 import SnapshotOverlay from '../visualisations/SnapshotOverlay.jsx';
+import ErrorBanner from '../components/ErrorBanner.jsx';
 
 // ── Barcode SVG: vertical bars representing check frequency cadence ──────────
 const CADENCE_BARS = {
@@ -425,7 +426,7 @@ const CELL = {
 };
 
 export default function Sources() {
-  const { data: sources = [], isLoading } = useSources();
+  const { data: sources = [], isLoading, error } = useSources();
   const [expandedId, setExpandedId] = useState(null);
   const [addOpen, setAddOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -469,6 +470,8 @@ export default function Sources() {
           + ADD SOURCE
         </button>
       </div>
+
+      <ErrorBanner error={error} />
 
       {/* ── Table ── */}
       <div style={{ flex: 1, overflowY: 'auto', overflowX: 'auto' }}>

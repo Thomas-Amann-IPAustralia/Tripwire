@@ -7,11 +7,13 @@
     "dev:client": "vite",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "build": "vite build",
-    "start": "node server/index.js --serve-build"
+    "start": "node server/index.js --serve-build",
+    "test": "vitest run"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.100.5",
     "better-sqlite3": "^9.4.3",
+    "diff-match-patch": "^1.0.5",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "csv-parse": "^5.5.5",
@@ -31,6 +33,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.1",
     "nodemon": "^3.1.0",
-    "vite": "^8.0.10"
+    "vite": "^8.0.10",
+    "vitest": "^2.0.0"
   }
 }

@@ -16,15 +16,38 @@ function selectArray(response) {
   return [];
 }
 
+const DATE_PRESET_DAYS = { '7D': 7, '30D': 30, '90D': 90, '180D': 180, '365D': 365 };
+
 function filtersToSearch(filters) {
   if (!filters) return '';
   const params = new URLSearchParams();
-  if (filters.from)               params.set('from', filters.from);
-  if (filters.to)                 params.set('to', filters.to);
-  if (filters.datePreset)         params.set('datePreset', filters.datePreset);
-  if (filters.sources?.length)    params.set('sources', filters.sources.join(','));
-  if (filters.stageMin != null)   params.set('stageMin', filters.stageMin);
-  if (filters.verdicts?.length)   params.set('verdicts', filters.verdicts.join(','));
+
+  // Resolve datePreset into concrete ISO from/to so the backend only
+  // needs to handle real timestamps, not a preset name.
+  let from = filters.from;
+  let to   = filters.to;
+  if (!from && filters.datePreset && DATE_PRESET_DAYS[filters.datePreset]) {
+    const now = new Date();
+    to   = now.toISOString().slice(0, 10);
+    const d = new Date(now);
+    d.setDate(d.getDate() - DATE_PRESET_DAYS[filters.datePreset]);
+    from = d.toISOString().slice(0, 10);
+  }
+  if (from) params.set('from', from);
+  if (to)   params.set('to',   to);
+
+  // Repeated source_id params so the server can use IN (?, ?, …)
+  if (filters.sources?.length) {
+    for (const src of filters.sources) params.append('source_id', src);
+  }
+
+  if (filters.stageMin != null) params.set('stage_reached_min', filters.stageMin);
+
+  // Repeated verdict params for multi-select IN
+  if (filters.verdicts?.length) {
+    for (const v of filters.verdicts) params.append('verdict', v);
+  }
+
   const s = params.toString();
   return s ? `?${s}` : '';
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDashboard } from '../App.jsx';
 import { useRuns, useSources } from '../hooks/useData.js';
 import FilterBar from '../components/FilterBar.jsx';
+import ErrorBanner from '../components/ErrorBanner.jsx';
 import { EventDrawer } from '../components/EventDrawer.jsx';
 import FunnelSummary from '../visualisations/FunnelSummary.jsx';
 import CalendarHeatmap from '../visualisations/CalendarHeatmap.jsx';
@@ -51,11 +52,7 @@ export default function Observe() {
             Loading…
           </div>
         )}
-        {error && (
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--state-error)', padding: '8px 0' }}>
-            {error.message}
-          </div>
-        )}
+        <ErrorBanner error={error} />
 
         {/* Panel Row 1 — Funnel Summary */}
         <FunnelSummary
