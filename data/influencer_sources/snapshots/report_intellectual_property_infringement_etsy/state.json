@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.etsy.com/au/ipreporting",
-  "last_error_at": "2026-05-04T02:17:16.477440+00:00",
-  "consecutive_failures": 3
+  "last_error_at": "2026-05-05T05:27:28.976730+00:00",
+  "consecutive_failures": 4
 }
