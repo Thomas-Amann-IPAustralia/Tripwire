@@ -14,6 +14,7 @@ import graphRouter from './routes/graph.js';
 import snapshotsRouter from './routes/snapshots.js';
 import healthRouter from './routes/health.js';
 import feedbackRouter from './routes/feedback.js';
+import sqlRouter from './routes/sql.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -37,6 +38,7 @@ app.use('/api/graph', graphRouter);
 app.use('/api/snapshots', snapshotsRouter);
 app.use('/api/health', healthRouter);
 app.use('/api/feedback', feedbackRouter);
+app.use('/api/sql', sqlRouter);
 
 if (process.argv.includes('--serve-build')) {
   const distDir = path.join(__dirname, '..', 'dist');

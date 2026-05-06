@@ -1,6 +1,239 @@
 import React, {
   useState, useEffect, useRef, useCallback, useMemo,
 } from 'react';
+
+// ── SQL Console ───────────────────────────────────────────────────────────────
+const KNOWN_TABLES = [
+  'pages', 'page_chunks', 'entities', 'keyphrases',
+  'graph_edges', 'sections', 'pipeline_runs', 'deferred_triggers',
+];
+
+const EXAMPLE_QUERY = 'SELECT page_id, url, title, status\nFROM pages\nLIMIT 20';
+
+function SqlConsole() {
+  const [sql, setSql]       = useState(EXAMPLE_QUERY);
+  const [result, setResult] = useState(null);
+  const [error, setError]   = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [timing, setTiming] = useState(null);
+
+  const run = useCallback(async () => {
+    if (!sql.trim()) return;
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    const t0 = Date.now();
+    try {
+      const res = await fetch('/api/sql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sql }),
+      });
+      const data = await res.json();
+      setTiming(Date.now() - t0);
+      if (!res.ok) {
+        setError(data.message || data.error || 'Query failed');
+      } else {
+        setResult(data);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [sql]);
+
+  const handleKeyDown = useCallback((e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      run();
+    }
+  }, [run]);
+
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '20px 24px 16px' }}>
+
+      {/* Table chips */}
+      <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '12px' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', flexShrink: 0 }}>
+          Tables:
+        </span>
+        {KNOWN_TABLES.map(t => (
+          <code
+            key={t}
+            title={`SELECT * FROM ${t} LIMIT 20`}
+            onClick={() => setSql(`SELECT * FROM ${t} LIMIT 20`)}
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '10px',
+              color: 'var(--text-secondary)',
+              background: 'var(--bg-tertiary)',
+              border: '1px solid var(--rule)',
+              padding: '2px 6px',
+              cursor: 'pointer',
+            }}
+          >
+            {t}
+          </code>
+        ))}
+      </div>
+
+      {/* Textarea */}
+      <textarea
+        value={sql}
+        onChange={e => setSql(e.target.value)}
+        onKeyDown={handleKeyDown}
+        spellCheck={false}
+        placeholder="SELECT …"
+        style={{
+          width: '100%',
+          height: '120px',
+          minHeight: '60px',
+          resize: 'vertical',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '13px',
+          lineHeight: 1.5,
+          background: 'var(--bg-tertiary)',
+          border: '1px solid var(--rule)',
+          color: 'var(--text-primary)',
+          padding: '10px 12px',
+          outline: 'none',
+          boxSizing: 'border-box',
+        }}
+      />
+
+      {/* Run bar */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '10px 0 14px' }}>
+        <button
+          onClick={run}
+          disabled={loading}
+          style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: '11px',
+            letterSpacing: '0.08em',
+            background: loading ? 'var(--bg-accent)' : 'var(--stage-4)',
+            color: loading ? 'var(--text-tertiary)' : '#000',
+            border: 'none',
+            padding: '6px 18px',
+            cursor: loading ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {loading ? 'RUNNING…' : 'RUN'}
+        </button>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)' }}>
+          Ctrl+Enter · SELECT only · read-only
+        </span>
+        {result && timing != null && (
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)', marginLeft: 'auto' }}>
+            {result.rowCount.toLocaleString()} row{result.rowCount !== 1 ? 's' : ''} · {timing}ms
+          </span>
+        )}
+      </div>
+
+      {/* Row-count warning */}
+      {result?.rowWarning && (
+        <div style={{
+          background: 'rgba(251,191,36,0.08)',
+          border: '1px solid rgba(251,191,36,0.35)',
+          color: 'var(--state-warn)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '11px',
+          padding: '8px 12px',
+          marginBottom: '12px',
+        }}>
+          ⚠ {result.rowWarning}
+        </div>
+      )}
+
+      {/* Error */}
+      {error && (
+        <div style={{
+          background: 'rgba(239,68,68,0.08)',
+          border: '1px solid var(--state-error)',
+          color: 'var(--state-error)',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '12px',
+          padding: '10px 12px',
+          marginBottom: '12px',
+          whiteSpace: 'pre-wrap',
+        }}>
+          {error}
+        </div>
+      )}
+
+      {/* Results table */}
+      {result && (
+        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'auto', border: '1px solid var(--rule)' }}>
+          <table style={{
+            borderCollapse: 'collapse',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '12px',
+            width: 'max-content',
+            minWidth: '100%',
+          }}>
+            <thead>
+              <tr>
+                {result.columns.map((col, i) => (
+                  <th key={i} style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '10px',
+                    letterSpacing: '0.07em',
+                    textTransform: 'uppercase',
+                    color: 'var(--text-secondary)',
+                    padding: '6px 10px',
+                    borderBottom: '2px solid var(--rule)',
+                    borderRight: i < result.columns.length - 1 ? '1px solid var(--rule)' : 'none',
+                    background: 'var(--bg-secondary)',
+                    textAlign: 'left',
+                    whiteSpace: 'nowrap',
+                    position: 'sticky',
+                    top: 0,
+                    zIndex: 1,
+                  }}>
+                    {col}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {result.rows.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={result.columns.length || 1}
+                    style={{ padding: '24px', textAlign: 'center', color: 'var(--text-tertiary)', fontStyle: 'italic' }}
+                  >
+                    No rows returned
+                  </td>
+                </tr>
+              ) : (
+                result.rows.map((row, ri) => (
+                  <tr key={ri} style={{ background: ri % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.015)' }}>
+                    {row.map((cell, ci) => (
+                      <td key={ci} style={{
+                        padding: '5px 10px',
+                        borderBottom: '1px solid var(--rule)',
+                        borderRight: ci < row.length - 1 ? '1px solid var(--rule)' : 'none',
+                        color: cell === null ? 'var(--text-tertiary)' : 'var(--text-primary)',
+                        fontStyle: cell === null ? 'italic' : 'normal',
+                        whiteSpace: 'nowrap',
+                        maxWidth: '480px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        verticalAlign: 'top',
+                      }}>
+                        {cell === null ? 'NULL' : String(cell)}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
 import { useNavigate } from 'react-router-dom';
 import { systemPlan } from '../lib/systemPlan.js';
 import PipelineDiagram from '../components/PipelineDiagram.jsx';
@@ -653,6 +886,7 @@ function Sidebar({ activeId, onNavigate, searchQuery, onSearch, matchInfo }) {
 
 // ── Main Document component ───────────────────────────────────────────────────
 export default function Document() {
+  const [view, setView]                 = useState('plan');
   const [activeId, setActiveId]         = useState(systemPlan[0]?.id ?? null);
   const [searchQuery, setSearchQuery]   = useState('');
   const bodyRef                         = useRef(null);
@@ -744,11 +978,11 @@ export default function Document() {
       {/* ── Header band ── */}
       <div style={{
         height: '80px', minHeight: '80px',
-        display: 'flex', alignItems: 'flex-end',
-        padding: '0 24px 12px',
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
+        padding: '0 24px 0',
         borderBottom: '1px solid var(--rule)',
       }}>
-        <div>
+        <div style={{ paddingBottom: '12px' }}>
           <div style={{
             fontFamily: 'var(--font-display)',
             fontSize: '42px',
@@ -766,40 +1000,75 @@ export default function Document() {
             Tripwire System Plan
           </div>
         </div>
-      </div>
 
-      {/* ── Body: sidebar + content ── */}
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-        <Sidebar
-          activeId={activeId}
-          onNavigate={navigate}
-          searchQuery={searchQuery}
-          onSearch={setSearchQuery}
-          matchInfo={matchInfo}
-        />
-
-        {/* Scrollable document body */}
-        <div
-          ref={bodyRef}
-          onClick={handleBodyClick}
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: '8px 52px 80px 48px',
-            fontFamily: 'var(--font-body)',
-            fontSize: '16px',
-            color: 'var(--text-primary)',
-            lineHeight: 1.75,
-          }}
-        >
-          {systemPlan.map(section => (
-            <SectionBlock
-              key={section.id}
-              section={section}
-              searchRx={searchRx}
-            />
+        {/* View tabs */}
+        <div style={{ display: 'flex', alignSelf: 'flex-end' }}>
+          {[
+            { id: 'plan', label: 'SYSTEM PLAN' },
+            { id: 'sql',  label: 'SQL CONSOLE' },
+          ].map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setView(tab.id)}
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '11px',
+                letterSpacing: '0.07em',
+                background: 'none',
+                border: 'none',
+                borderBottom: view === tab.id ? '2px solid var(--stage-4)' : '2px solid transparent',
+                color: view === tab.id ? 'var(--text-primary)' : 'var(--text-tertiary)',
+                padding: '8px 16px',
+                cursor: 'pointer',
+                transition: 'color 120ms, border-color 120ms',
+              }}
+              onMouseEnter={e => { if (view !== tab.id) e.currentTarget.style.color = 'var(--text-secondary)'; }}
+              onMouseLeave={e => { if (view !== tab.id) e.currentTarget.style.color = 'var(--text-tertiary)'; }}
+            >
+              {tab.label}
+            </button>
           ))}
         </div>
+      </div>
+
+      {/* ── Body ── */}
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
+        {view === 'plan' && (
+          <>
+            <Sidebar
+              activeId={activeId}
+              onNavigate={navigate}
+              searchQuery={searchQuery}
+              onSearch={setSearchQuery}
+              matchInfo={matchInfo}
+            />
+
+            {/* Scrollable document body */}
+            <div
+              ref={bodyRef}
+              onClick={handleBodyClick}
+              style={{
+                flex: 1,
+                overflowY: 'auto',
+                padding: '8px 52px 80px 48px',
+                fontFamily: 'var(--font-body)',
+                fontSize: '16px',
+                color: 'var(--text-primary)',
+                lineHeight: 1.75,
+              }}
+            >
+              {systemPlan.map(section => (
+                <SectionBlock
+                  key={section.id}
+                  section={section}
+                  searchRx={searchRx}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        {view === 'sql' && <SqlConsole />}
       </div>
     </div>
   );
