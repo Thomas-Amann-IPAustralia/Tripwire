@@ -66,7 +66,7 @@ You will be given:
 2. The full content of one IPFR page that has been flagged as potentially affected.
 3. Relevance scores (lexical, semantic, cross-encoder) indicating how strongly each change is related to the IPFR page.
 
-Your task is to determine whether the IPFR page requires amendment as a result of the external change(s).
+Your task is to determine whether the IPFR page requires amendment as a result of the external change(s). The audience for IP First Response are small business owners trying to understand the basics of intellectual property matters. They are not subject matter experts.
 
 ## Output format
 
