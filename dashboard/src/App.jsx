@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-d
 import { useQueryClient } from '@tanstack/react-query';
 import NavRail from './components/NavRail.jsx';
 import Topbar from './components/Topbar.jsx';
+import Consider from './sections/Consider.jsx';
 import Observe from './sections/Observe.jsx';
 import Corpus from './sections/Corpus.jsx';
 import Sources from './sections/Sources.jsx';
@@ -54,7 +55,8 @@ function AnimatedRoutes() {
   return (
     <div key={location.pathname} className="section-enter" style={{ flex: 1, overflow: 'auto' }}>
       <Routes location={location}>
-        <Route path="/" element={<Navigate to="/observe" replace />} />
+        <Route path="/" element={<Navigate to="/consider" replace />} />
+        <Route path="/consider" element={<SectionErrorBoundary><Consider /></SectionErrorBoundary>} />
         <Route path="/observe"  element={<SectionErrorBoundary><Observe /></SectionErrorBoundary>} />
         <Route path="/corpus"   element={<SectionErrorBoundary><Corpus /></SectionErrorBoundary>} />
         <Route path="/sources"  element={<SectionErrorBoundary><Sources /></SectionErrorBoundary>} />

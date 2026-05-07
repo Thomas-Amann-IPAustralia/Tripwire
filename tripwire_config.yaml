@@ -7,12 +7,12 @@
 
 # --- Pipeline behaviour ---
 pipeline:
-  observation_mode: true             # true = log everything, trigger nothing
+  observation_mode: false            # false = live mode, LLM + email active
   run_frequency_hours: 24
   max_retries: 3
   retry_base_delay_seconds: 2.0
   llm_temperature: 0.2
-  llm_model: "gpt-4o"
+  llm_model: "gpt-4.1-mini"
   deferred_trigger_max_age_days: 7
 
 # --- Scraping ---

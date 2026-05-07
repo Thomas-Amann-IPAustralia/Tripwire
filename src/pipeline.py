@@ -316,6 +316,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
         run_id=run_id,
     )
     assessments = llm_result.assessments
+    _save_llm_reports(assessments, run_id)
 
     # ------------------------------------------------------------------
     # 8. Stage 9 — Notification.
@@ -358,7 +359,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     conn.close()
 
     # ------------------------------------------------------------------
-    # 10. Commit snapshots back to Git (Section 7.2).
+    # 10. Commit snapshots and LLM reports back to Git (Section 7.2).
     # ------------------------------------------------------------------
     _git_commit_snapshots(snapshot_dir, run_id, config)
 
@@ -951,21 +952,23 @@ def _git_commit_snapshots(
         subprocess.run(["git", "config", "user.name", name], check=True, capture_output=True)
         subprocess.run(["git", "config", "user.email", email_val], check=True, capture_output=True)
         subprocess.run(["git", "add", str(snapshot_dir)], check=True, capture_output=True)
+        llm_reports_dir = Path("data/LLM Reports")
+        if llm_reports_dir.exists():
+            subprocess.run(["git", "add", str(llm_reports_dir)], check=True, capture_output=True)
         diff_result = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True)
         if diff_result.returncode != 0:
             subprocess.run(
                 ["git", "commit", "-m",
-                 f"chore: update influencer snapshots [run {run_id}]"],
+                 f"chore: update influencer snapshots and LLM reports [run {run_id}]"],
                 check=True,
                 capture_output=True,
             )
             subprocess.run(["git", "push", "origin", "HEAD"], check=True, capture_output=True)
             logger.info(
-                "Snapshots committed and pushed → %s (run %s).",
-                snapshot_dir, run_id,
+                "Snapshots and LLM reports committed and pushed (run %s).", run_id,
             )
         else:
-            logger.info("No snapshot changes to commit — nothing to push.")
+            logger.info("No snapshot or report changes to commit — nothing to push.")
     except subprocess.CalledProcessError as exc:
         logger.warning(
             "Git commit/push failed: %s",
@@ -1026,6 +1029,40 @@ def _write_github_summary(
             fh.write("\n".join(lines) + "\n")
     except OSError as exc:
         logger.warning("Could not write GitHub step summary: %s", exc)
+
+
+# ---------------------------------------------------------------------------
+# LLM report persistence
+# ---------------------------------------------------------------------------
+
+
+def _save_llm_reports(assessments: list, run_id: str) -> None:
+    """Write each LLM assessment to data/LLM Reports/ as a JSON file."""
+    if not assessments:
+        return
+    reports_dir = Path("data/LLM Reports")
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    for assessment in assessments:
+        safe_page = assessment.ipfr_page_id.replace("/", "_").replace(" ", "_")
+        filename = f"{run_id}_{safe_page}.json"
+        report = {
+            "run_id": run_id,
+            "ipfr_page_id": assessment.ipfr_page_id,
+            "verdict": assessment.verdict,
+            "confidence": assessment.confidence,
+            "reasoning": assessment.reasoning,
+            "suggested_changes": assessment.suggested_changes,
+            "model": assessment.model,
+            "prompt_tokens": assessment.prompt_tokens,
+            "completion_tokens": assessment.completion_tokens,
+            "total_tokens": assessment.total_tokens,
+            "processing_time_seconds": assessment.processing_time_seconds,
+            "retries": assessment.retries,
+            "schema_valid": assessment.schema_valid,
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+        }
+        (reports_dir / filename).write_text(json.dumps(report, indent=2), encoding="utf-8")
+    logger.info("Saved %d LLM report(s) to %s", len(assessments), reports_dir)
 
 
 # ---------------------------------------------------------------------------
