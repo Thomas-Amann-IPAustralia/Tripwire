@@ -124,6 +124,25 @@ CREATE TABLE IF NOT EXISTS deferred_triggers (
     processed    INTEGER DEFAULT 0
 );
 
+-- LLM assessments: one row per assessed IPFR page per pipeline run
+CREATE TABLE IF NOT EXISTS llm_assessments (
+    id                      INTEGER PRIMARY KEY AUTOINCREMENT,
+    run_id                  TEXT NOT NULL,
+    ipfr_page_id            TEXT NOT NULL,
+    verdict                 TEXT NOT NULL,
+    confidence              REAL NOT NULL,
+    reasoning               TEXT NOT NULL,
+    suggested_changes       TEXT NOT NULL,
+    model                   TEXT NOT NULL,
+    prompt_tokens           INTEGER,
+    completion_tokens       INTEGER,
+    total_tokens            INTEGER,
+    processing_time_seconds REAL,
+    retries                 INTEGER,
+    schema_valid            INTEGER,
+    generated_at            TEXT NOT NULL
+);
+
 -- Ingestion run audit log: one row per page per ingestion run
 CREATE TABLE IF NOT EXISTS ingestion_runs (
     id                INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -156,6 +175,9 @@ CREATE INDEX IF NOT EXISTS idx_sections_page_id ON sections(page_id);
 CREATE INDEX IF NOT EXISTS idx_pipeline_runs_run_id ON pipeline_runs(run_id);
 CREATE INDEX IF NOT EXISTS idx_pipeline_runs_source_id ON pipeline_runs(source_id);
 CREATE INDEX IF NOT EXISTS idx_deferred_triggers_processed ON deferred_triggers(processed);
+CREATE INDEX IF NOT EXISTS idx_llm_assessments_run_id ON llm_assessments(run_id);
+CREATE INDEX IF NOT EXISTS idx_llm_assessments_page_id ON llm_assessments(ipfr_page_id);
+CREATE INDEX IF NOT EXISTS idx_llm_assessments_verdict ON llm_assessments(verdict);
 CREATE INDEX IF NOT EXISTS idx_ingestion_runs_run_id ON ingestion_runs(run_id);
 CREATE INDEX IF NOT EXISTS idx_ingestion_runs_page_id ON ingestion_runs(page_id);
 """

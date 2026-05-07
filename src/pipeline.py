@@ -317,6 +317,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     )
     assessments = llm_result.assessments
     _save_llm_reports(assessments, run_id)
+    _write_llm_assessments(conn, assessments, run_id)
 
     # ------------------------------------------------------------------
     # 8. Stage 9 — Notification.
@@ -1063,6 +1064,48 @@ def _save_llm_reports(assessments: list, run_id: str) -> None:
         }
         (reports_dir / filename).write_text(json.dumps(report, indent=2), encoding="utf-8")
     logger.info("Saved %d LLM report(s) to %s", len(assessments), reports_dir)
+
+
+def _write_llm_assessments(
+    conn: sqlite3.Connection, assessments: list, run_id: str
+) -> None:
+    """Persist LLM assessments to the llm_assessments SQLite table."""
+    if not assessments:
+        return
+    try:
+        conn.executemany(
+            """
+            INSERT INTO llm_assessments
+                (run_id, ipfr_page_id, verdict, confidence, reasoning,
+                 suggested_changes, model, prompt_tokens, completion_tokens,
+                 total_tokens, processing_time_seconds, retries, schema_valid,
+                 generated_at)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            """,
+            [
+                (
+                    run_id,
+                    a.ipfr_page_id,
+                    a.verdict,
+                    a.confidence,
+                    a.reasoning,
+                    json.dumps(a.suggested_changes),
+                    a.model,
+                    a.prompt_tokens,
+                    a.completion_tokens,
+                    a.total_tokens,
+                    a.processing_time_seconds,
+                    a.retries,
+                    1 if a.schema_valid else 0,
+                    datetime.now(timezone.utc).isoformat(),
+                )
+                for a in assessments
+            ],
+        )
+        conn.commit()
+        logger.info("Wrote %d LLM assessment(s) to SQLite.", len(assessments))
+    except sqlite3.Error as exc:
+        logger.error("Failed to write llm_assessments: %s", exc)
 
 
 # ---------------------------------------------------------------------------
