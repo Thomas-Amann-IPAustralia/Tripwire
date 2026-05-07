@@ -103,7 +103,7 @@ normalisation:
 
 # --- Ingestion ---
 ingestion:
-  sitemap_url: "https://ipfirstresponse.ipaustralia.gov.au/sitemap.xml"
+  sitemap_url: "https://www.cdc.gov.au/sitemap.xml"
   force_selenium: true          # IPFR host blocks GHA runner IPs on direct requests
   chunking:
     units: "chars"              # "chars" or "tokens" (tokens multiplies sizes by chars_per_token)
