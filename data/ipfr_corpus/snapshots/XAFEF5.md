@@ -1,2 +1,0 @@
-Last updated: 23 Feb 2026
-We are developing a chatbot function for IP First Response to help you navigate the complex world of IP protection and enforcement.If you have any questions, please reach out to us at ipfirstresponse@ipaustralia.gov.au
