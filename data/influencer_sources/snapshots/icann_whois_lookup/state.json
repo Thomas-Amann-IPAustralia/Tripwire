@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://lookup.icann.org/en",
-  "last_error_at": "2026-05-06T05:42:03.567285+00:00",
-  "consecutive_failures": 6
+  "last_error_at": "2026-05-07T05:51:44.703342+00:00",
+  "consecutive_failures": 7
 }

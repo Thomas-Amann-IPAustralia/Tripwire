@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream sources primarily involve minor typographical corrections, accessibility fixes, removal of empty headings, updated URLs, and removal of references to certain sections in the Plant Breeder's Rights Act. These changes do not affect the substantive content or guidance related to checking products against existing registered designs as described in the IPFR page. There are no updates to timeframes, costs, procedural steps, or legal thresholds relevant to design clearance or freedom to operate searches. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5129,
+  "completion_tokens": 140,
+  "total_tokens": 5269,
+  "processing_time_seconds": 2.148249180999983,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.710945+00:00"
+}
