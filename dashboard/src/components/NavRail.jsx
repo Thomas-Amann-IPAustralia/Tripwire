@@ -3,6 +3,31 @@ import { NavLink } from 'react-router-dom';
 
 const NAV_ITEMS = [
   {
+    id: 'consider',
+    path: '/consider',
+    label: 'CONSIDER',
+    color: 'var(--stage-8)',
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Head outline */}
+        <path d="M5 11 C5 7.5 6.5 5 9 5 C11.5 5 13 7.5 13 11" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+        {/* Left temple */}
+        <line x1="5" y1="11" x2="5" y2="13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        {/* Right temple */}
+        <line x1="13" y1="11" x2="13" y2="13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        {/* Chin bar */}
+        <line x1="5" y1="13" x2="7" y2="13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        <line x1="11" y1="13" x2="13" y2="13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+        {/* Inner lines — thought activity */}
+        <line x1="7.5" y1="8" x2="7.5" y2="10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <line x1="9" y1="7" x2="9" y2="10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        <line x1="10.5" y1="8" x2="10.5" y2="10.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+        {/* Small dot above */}
+        <circle cx="9" cy="3" r="1" fill="currentColor"/>
+      </svg>
+    ),
+  },
+  {
     id: 'observe',
     path: '/observe',
     label: 'OBSERVE',

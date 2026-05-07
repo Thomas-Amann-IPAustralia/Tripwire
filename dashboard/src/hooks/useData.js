@@ -178,3 +178,16 @@ export function useHealthIngestion() {
     staleTime: STALE,
   });
 }
+
+export function useLLMReports(filters) {
+  const params = new URLSearchParams();
+  if (filters?.verdict) params.set('verdict', filters.verdict);
+  if (filters?.run_id)  params.set('run_id', filters.run_id);
+  if (filters?.page_id) params.set('page_id', filters.page_id);
+  const qs = params.toString() ? `?${params.toString()}` : '';
+  return useQuery({
+    queryKey: ['llm-reports', qs],
+    queryFn: () => apiFetch(`/api/llm-reports${qs}`),
+    staleTime: STALE,
+  });
+}
