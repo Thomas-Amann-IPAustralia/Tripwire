@@ -169,7 +169,12 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
         return 1
 
     # ------------------------------------------------------------------
-    # 3. Process any pending deferred triggers first (Section 6.5).
+    # 3. Backfill any JSON report files that predate the llm_assessments table.
+    # ------------------------------------------------------------------
+    _backfill_llm_assessments_from_files(conn, config_dir)
+
+    # ------------------------------------------------------------------
+    # 4. Process any pending deferred triggers first (Section 6.5).
     # ------------------------------------------------------------------
     deferred_max_age = int(cfg_get(config, "pipeline", "deferred_trigger_max_age_days", default=7))
     deferred_records = load_pending_deferred_triggers(conn, deferred_max_age)
@@ -1035,6 +1040,83 @@ def _write_github_summary(
 # ---------------------------------------------------------------------------
 # LLM report persistence
 # ---------------------------------------------------------------------------
+
+
+def _backfill_llm_assessments_from_files(
+    conn: sqlite3.Connection, config_dir: Path
+) -> None:
+    """Import JSON report files into llm_assessments for any records not already present.
+
+    This handles reports generated before the llm_assessments table was added to the
+    schema. Each file is keyed by run_id + ipfr_page_id; duplicates are skipped.
+    """
+    reports_dir = config_dir / "data" / "LLM Reports"
+    if not reports_dir.exists():
+        return
+
+    # Build a set of (run_id, ipfr_page_id) pairs already in the table.
+    try:
+        existing = {
+            (row[0], row[1])
+            for row in conn.execute(
+                "SELECT run_id, ipfr_page_id FROM llm_assessments"
+            ).fetchall()
+        }
+    except sqlite3.Error as exc:
+        logger.warning("Cannot read llm_assessments for backfill check: %s", exc)
+        return
+
+    rows_to_insert: list[tuple] = []
+    for fpath in sorted(reports_dir.glob("*.json")):
+        try:
+            data = json.loads(fpath.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+
+        key = (data.get("run_id", ""), data.get("ipfr_page_id", ""))
+        if not key[0] or not key[1] or key in existing:
+            continue
+
+        rows_to_insert.append((
+            key[0],
+            key[1],
+            data.get("verdict", ""),
+            float(data.get("confidence", 0.0)),
+            data.get("reasoning", ""),
+            json.dumps(data.get("suggested_changes", [])),
+            data.get("model", ""),
+            data.get("prompt_tokens"),
+            data.get("completion_tokens"),
+            data.get("total_tokens"),
+            data.get("processing_time_seconds"),
+            data.get("retries"),
+            1 if data.get("schema_valid", True) else 0,
+            data.get("generated_at", datetime.now(timezone.utc).isoformat()),
+        ))
+        existing.add(key)
+
+    if not rows_to_insert:
+        return
+
+    try:
+        conn.executemany(
+            """
+            INSERT INTO llm_assessments
+                (run_id, ipfr_page_id, verdict, confidence, reasoning,
+                 suggested_changes, model, prompt_tokens, completion_tokens,
+                 total_tokens, processing_time_seconds, retries, schema_valid,
+                 generated_at)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+            """,
+            rows_to_insert,
+        )
+        conn.commit()
+        logger.info(
+            "Backfilled %d LLM assessment(s) from JSON files into SQLite.",
+            len(rows_to_insert),
+        )
+    except sqlite3.Error as exc:
+        logger.error("Failed to backfill llm_assessments from files: %s", exc)
 
 
 def _save_llm_reports(assessments: list, run_id: str) -> None:

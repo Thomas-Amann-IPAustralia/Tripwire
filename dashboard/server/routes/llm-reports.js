@@ -72,13 +72,16 @@ router.get('/', (req, res) => {
   }
 
   // --- Fallback: JSON files (for reports predating the SQLite table) ---
+  // newFileReports = all JSON file reports not already in the DB (unfiltered, for counts).
+  let newFileReports = [];
   let fileReports = [];
   try {
-    fileReports = readJsonFileReports();
-    // Remove any that are already in the DB result set.
     const dbKeys = new Set(dbReports.map(r => `${r.run_id}::${r.ipfr_page_id}`));
-    fileReports = fileReports.filter(r => !dbKeys.has(`${r.run_id}::${r.ipfr_page_id}`));
-    // Apply filters to file reports too.
+    newFileReports = readJsonFileReports().filter(
+      r => !dbKeys.has(`${r.run_id}::${r.ipfr_page_id}`)
+    );
+    // Apply query filters only to the display slice.
+    fileReports = newFileReports;
     if (verdict) fileReports = fileReports.filter(r => r.verdict === verdict);
     if (run_id)  fileReports = fileReports.filter(r => r.run_id  === run_id);
     if (page_id) fileReports = fileReports.filter(r => r.ipfr_page_id === page_id);
@@ -88,7 +91,7 @@ router.get('/', (req, res) => {
     (a, b) => (b.generated_at ?? '').localeCompare(a.generated_at ?? '')
   );
 
-  // Verdict counts across the full unfiltered set (use dbReports + all file reports).
+  // Verdict counts across the full unfiltered set: DB rows + de-duped file reports.
   const verdictCounts = { CHANGE_REQUIRED: 0, UNCERTAIN: 0, NO_CHANGE: 0 };
   let allCount = 0;
   if (db) {
@@ -102,8 +105,8 @@ router.get('/', (req, res) => {
       }
     } catch { /* ignore */ }
   }
-  // Also add file-sourced reports to the total count.
-  for (const r of readJsonFileReports()) {
+  // Add file-sourced reports that are not already counted in the DB total.
+  for (const r of newFileReports) {
     if (r.verdict in verdictCounts) verdictCounts[r.verdict]++;
     allCount++;
   }
