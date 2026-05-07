@@ -40,17 +40,17 @@ entirely (as per Section 2.3) — the function returns immediately with an empty
 result and a note in observation_data.
 """
 
-from __future__ import annotations
+#from __future__ import annotations
 
-import json
+#import json
 import logging
 import sqlite3
 import time
-from dataclasses import dataclass, field
+#from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any
 
-from src.errors import PermanentError, RetryableError
+#from src.errors import PermanentError, RetryableError
 from src.stage7_aggregation import TriggerBundle
 
 logger = logging.getLogger(__name__)
@@ -106,7 +106,7 @@ The `suggested_changes` array must be populated only when verdict is CHANGE_REQU
 _VALID_VERDICTS = {"CHANGE_REQUIRED", "NO_CHANGE", "UNCERTAIN"}
 
 
-def validate_llm_response(raw: str) -> dict[str, Any]:
+#def validate_llm_response(raw: str) -> dict[str, Any]:
     """Parse and validate the raw LLM output string.
 
     Parameters
@@ -326,7 +326,7 @@ def load_pending_deferred_triggers(
     return results
 
 
-def mark_deferred_trigger_processed(
+#def mark_deferred_trigger_processed(
     conn: sqlite3.Connection, trigger_id: int
 ) -> None:
     conn.execute(
@@ -340,7 +340,7 @@ def mark_deferred_trigger_processed(
 # ---------------------------------------------------------------------------
 
 
-def _call_openai(
+#def _call_openai(
     client: Any,
     model: str,
     temperature: float,
@@ -368,14 +368,14 @@ def _call_openai(
         # Rate-limit or server error → retryable
         if any(
             marker in exc_str
-            for marker in ("rate_limit", "rate limit", "RateLimitError", "APIStatusError",
-                           "APIConnectionError", "Timeout", "timeout")
+            for marker in ("rate_limit", "rate limit", "RateLimitError", "StatusError",
+                           "ConnectionError", "Timeout", "timeout")
         ) or "429" in exc_str or "5" in exc_str[:3]:
             raise RetryableError(
-                f"LLM API transient error ({exc_type}): {exc_str}"
+                f"LLM  transient error ({exc_type}): {exc_str}"
             ) from exc
         raise PermanentError(
-            f"LLM API permanent error ({exc_type}): {exc_str}"
+            f"LLM  permanent error ({exc_type}): {exc_str}"
         ) from exc
 
     content = response.choices[0].message.content or ""
@@ -391,7 +391,7 @@ def _call_openai(
 # ---------------------------------------------------------------------------
 
 
-def _build_user_message(
+#def _build_user_message(
     bundle: TriggerBundle,
     page_content: str,
     page_title: str,
@@ -452,7 +452,7 @@ def _build_user_message(
 # ---------------------------------------------------------------------------
 
 
-def assess_bundles(
+#def assess_bundles(
     bundles: list[TriggerBundle],
     conn: sqlite3.Connection,
     config: dict[str, Any],
@@ -473,7 +473,7 @@ def assess_bundles(
         Current pipeline run identifier (e.g. '2026-04-05-001').
     client:
         Pre-constructed OpenAI client, or None to construct one from the
-        environment variable OPENAI_API_KEY.  Injecting the client is
+        environment variable OPENAI__KEY.  Injecting the client is
         preferred in tests.
 
     Returns
@@ -728,7 +728,7 @@ def _verdict_distribution(assessments: list[LLMAssessment]) -> dict[str, int]:
     return dist
 
 
-def _make_openai_client() -> Any:
+#def _make_openai_client() -> Any:
     """Construct an OpenAI client from the environment.
 
     Raises PermanentError if the openai package is unavailable or the API
@@ -741,8 +741,8 @@ def _make_openai_client() -> Any:
             "openai package is not installed. Run: pip install openai"
         ) from exc
 
-    import os
-    api_key = os.environ.get("OPENAI_API_KEY")
+   # import os
+    #api_key = os.environ.get("Please-DontUseMyKey")
     if not api_key:
         raise PermanentError(
             "OPENAI_API_KEY environment variable is not set."
