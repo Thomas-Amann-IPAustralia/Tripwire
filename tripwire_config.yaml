@@ -1,0 +1,170 @@
+# ==============================================================
+# tripwire_config.yaml
+# All tuneable parameters for the Tripwire pipeline.
+# This file is version-controlled so every parameter change is
+# tracked as a commit. Loaded and validated at pipeline start.
+# ==============================================================
+
+# --- Pipeline behaviour ---
+pipeline:
+  observation_mode: false            # false = live mode, LLM + email active
+  run_frequency_hours: 24
+  max_retries: 3
+  retry_base_delay_seconds: 2.0
+  llm_temperature: 0.2
+  llm_model: "gpt-4.1-mini"
+  deferred_trigger_max_age_days: 7
+
+# --- Scraping ---
+scraping:
+  proxy:
+    # When SCRAPER_PROXY_URL env var is set the scraper will retry any
+    # WAF-blocked Selenium fetch through the proxy.  The direct attempt is
+    # always tried first; the proxy is a fallback only, so cost is incurred
+    # only when needed.  Leave SCRAPER_PROXY_URL unset to disable.
+    # Recommended provider: residential proxy (Bright Data, Oxylabs, etc.)
+    # as datacenter proxies may also be blocklisted by gov.au WAFs.
+    fallback_on_block: true
+
+# --- Stage 2: Change detection ---
+change_detection:
+  significance_fingerprint: true
+
+# --- Stage 4: Relevance scoring ---
+relevance_scoring:
+  rrf_k: 60
+  rrf_weight_bm25: 1.0
+  rrf_weight_semantic: 2.0
+  top_n_candidates: 5
+  min_score_threshold: null            # calibrated during observation period
+  source_importance_floor: 0.5
+  fast_pass:
+    source_importance_min: 1.0
+  yake:
+    keyphrases_per_80_words: 1
+    min_keyphrases: 5
+    max_keyphrases: 15
+    short_diff_word_threshold: 50      # supplement with NER entities below this length
+
+# --- Stages 5–6: Semantic scoring ---
+semantic_scoring:
+  biencoder:
+    model: "BAAI/bge-base-en-v1.5"
+    high_threshold: 0.75
+    low_medium_threshold: 0.45
+    low_medium_min_chunks: 3
+  crossencoder:
+    model: "Alibaba-NLP/gte-reranker-modernbert-base"
+    threshold: 0.60
+    max_context_tokens: 8192
+
+# --- Stage 6: Graph propagation ---
+graph:
+  enabled: true
+  max_hops: 3
+  decay_per_hop: 0.45
+  propagation_threshold: 0.05
+  edge_types:
+    embedding_similarity:
+      enabled: true
+      weight: 1.0
+      top_k: 5
+      min_similarity: 0.40
+    entity_overlap:
+      enabled: true
+      weight: 0.8
+      min_jaccard: 0.30
+    internal_links:
+      enabled: false
+      weight: 0.6
+
+# --- Storage ---
+storage:
+  content_versions_retained: 6
+  sqlite_wal_mode: true
+  git_persistence:
+    enabled: true
+    commit_snapshots: true            # commit data/influencer_sources/snapshots/ after each run
+    commit_database: true             # commit data/ipfr_corpus/ipfr.sqlite after each ingestion run
+    commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+
+# --- Notifications ---
+notifications:
+  content_owner_email: "content-owner@example.gov.au"
+  health_alert_email: "admin@example.gov.au"
+  health_alert_conditions:
+    error_rate_threshold: 0.30
+    consecutive_failures_threshold: 3
+    pipeline_timeout_minutes: 30
+
+# --- Normalisation ---
+normalisation:
+  tool: "trafilatura"
+
+# --- Ingestion ---
+ingestion:
+  sitemap_url: "https://ipfirstresponse.ipaustralia.gov.au/sitemap.xml"
+  force_selenium: true          # IPFR host blocks GHA runner IPs on direct requests
+  chunking:
+    units: "chars"              # "chars" or "tokens" (tokens multiplies sizes by chars_per_token)
+    chars_per_token: 4          # approximate char:token ratio for bge-base
+    chunk_size: 1400            # ≈ 350 tokens — well under the 512-token bi-encoder ceiling
+    chunk_overlap: 200          # ≈ 50 tokens
+    boundary_lookback: 160      # max chars to walk back for a clean boundary
+    chunk_min_size: 200         # coalesce trailing chunks smaller than this into their predecessor
+  enrichment:
+    keyphrase_min_length: 3
+    yake_dedup_threshold: 0.7   # lower = stricter YAKE deduplication
+    keyphrase_blocklist: []     # phrases to drop (site chrome, boilerplate, etc.)
+    entity_min_length: 3
+    entity_allowed_types:       # spaCy labels persisted to the DB
+      - ORG
+      - PERSON
+      - GPE
+      - LOC
+      - DATE
+      - MONEY
+      - PERCENT
+      - LAW
+      - NORP
+      - EVENT
+    entity_aliases:             # canonicalise entity surface forms (case-insensitive keys)
+      "IPTA": "Institute of Patent and Trade Mark Attorneys Australia"
+      "IP Australia First Response": "IP First Response"
+  boilerplate:
+    repetition_detection_enabled: true
+    frequency_threshold: 0.7    # drop lines appearing on ≥ this fraction of pages
+    min_documents: 5            # skip detection if the corpus is smaller
+    blocklist:                  # always strip these exact lines / inline phrases
+      - "Skip to main content"
+      - "Menu"
+      - "Close"
+      - "Home"
+      - "About IPA"
+      - "Ventures"
+      - "(Opens in a new tab/window)"
+      - "Learn about enforcement"
+      - "Blog"
+      - "Search"
+  stub_detection:
+    min_content_length: 500     # content shorter than this is marked status=stub
+    phrases:                    # case-insensitive substrings that flag a page as a stub
+      - "This page is coming soon"
+      - "We are working on this page"
+      - "This page will explain your options in simple words"
+  dedup:
+    enabled: true
+    near_duplicate_threshold: 0.98   # doc-embedding cosine similarity cutoff
+  keyphrase_idf:
+    enabled: true
+    df_threshold: 0.7           # drop keyphrases appearing on > this fraction of active pages
+    min_pages: 5                # skip sweep if fewer active pages exist
+
+# --- Paths (relative to repo root) ---
+paths:
+  sqlite_db: "data/ipfr_corpus/ipfr.sqlite"
+  sitemap_csv: "data/ipfr_corpus/sitemap.csv"
+  source_registry_csv: "data/influencer_sources/source_registry.csv"
+  influencer_snapshots_dir: "data/influencer_sources/snapshots"
+  ipfr_snapshots_dir: "data/ipfr_corpus/snapshots"
+  feedback_log: "data/logs/feedback.jsonl"

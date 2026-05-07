@@ -1,0 +1,232 @@
+/* ─── CSS Variables — Dark mode (default) ───────────────────────────────── */
+:root {
+  --bg-primary:    #0e0e0d;
+  --bg-secondary:  #161614;
+  --bg-tertiary:   #1e1e1b;
+  --bg-accent:     #272722;
+
+  --text-primary:   #e8e8e8;
+  --text-secondary: #999999;
+  --text-tertiary:  #777777;
+
+  --rule:        #333333;
+  --rule-accent: #444444;
+
+  /* Stage accent colours — 9 stages, 6 distinct colours (by design).
+     Stages 1 & 7 share green, 2 & 8 share red, 3 & 9 share amber. */
+  --stage-1: #4ADE80;
+  --stage-2: #F87171;
+  --stage-3: #FBBF24;
+  --stage-4: #60A5FA;
+  --stage-5: #A78BFA;
+  --stage-6: #f3701E;
+  --stage-7: #4ADE80;
+  --stage-8: #F87171;
+  --stage-9: #FBBF24;
+
+  --state-alert:    #F87171;
+  --state-warn:     #FBBF24;
+  --state-ok:       #4ADE80;
+  --state-error:    #EF4444;
+  --state-inactive: #777777;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --font-body:    'Lora', serif;
+}
+
+/* ─── Light mode overrides ──────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg-primary:    #F5F5F5;
+  --bg-secondary:  #FFFFFF;
+  --bg-tertiary:   #FAFAFA;
+  --bg-accent:     #EEEEEE;
+
+  --text-primary:   #111111;
+  --text-secondary: #333333;
+  --text-tertiary:  #666666;
+
+  --rule:        #CCCCCC;
+  --rule-accent: #BBBBBB;
+
+  --stage-1: #16A34A;
+  --stage-2: #DC2626;
+  --stage-3: #D97706;
+  --stage-4: #2563EB;
+  --stage-5: #7C3AED;
+  --stage-6: #f3701E;
+  --stage-7: #16A34A;
+  --stage-8: #DC2626;
+  --stage-9: #D97706;
+
+  --state-alert:    #DC2626;
+  --state-warn:     #D97706;
+  --state-ok:       #16A34A;
+  --state-error:    #B91C1C;
+  --state-inactive: #9CA3AF;
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 15px;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  margin: 0;
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-primary);
+}
+
+/* Pills and badges only get a small radius */
+.pill, .badge {
+  border-radius: 2px;
+}
+
+/* ─── Scrollbars ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--rule-accent);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ─── Grain texture on panels ───────────────────────────────────────────── */
+.panel {
+  position: relative;
+}
+
+.panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  border-radius: inherit;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes sectionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-enter {
+  animation: sectionEnter 200ms ease-out both;
+}
+
+@keyframes healthPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+@keyframes graphNodePulse {
+  0%   { transform: scale(1);   opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+@keyframes docAnchorGlow {
+  0%   { background-color: transparent; }
+  20%  { background-color: rgba(212, 168, 32, 0.18); }
+  100% { background-color: transparent; }
+}
+
+.anchor-arrival {
+  animation: docAnchorGlow 1.5s ease-out both;
+  border-radius: 2px;
+}
+
+@keyframes configPulse {
+  0%   { background-color: transparent;           box-shadow: inset 3px 0 0 transparent; }
+  15%  { background-color: rgba(212, 168, 32, 0.12); box-shadow: inset 3px 0 0 var(--state-warn); }
+  100% { background-color: transparent;           box-shadow: inset 3px 0 0 var(--state-warn); }
+}
+
+.config-pulse {
+  animation: configPulse 1.5s ease-in-out both;
+}
+
+[data-config-key] {
+  cursor: pointer !important;
+}
+
+/* ─── Verdict pills ─────────────────────────────────────────────────────── */
+.verdict-change-required {
+  color: var(--state-alert);
+  border: 1px solid var(--state-alert);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.verdict-uncertain {
+  color: var(--state-warn);
+  border: 1px solid var(--state-warn);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.verdict-no-change {
+  color: var(--state-ok);
+  border: 1px solid var(--state-ok);
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}

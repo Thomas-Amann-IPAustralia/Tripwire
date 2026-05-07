@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to Amazon Brand Registry's promotional offer changing from '20% back on branded sales' to '10% back on branded sales'. The IPFR page 'Is it worth registering my IP?' does not mention Amazon Brand Registry or any specific promotional offers related to brand registration. The page focuses on general advice about registering IP rights and the benefits of registration versus automatic protections. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1396,
+  "completion_tokens": 128,
+  "total_tokens": 1524,
+  "processing_time_seconds": 5.624879127999975,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.714628+00:00"
+}
