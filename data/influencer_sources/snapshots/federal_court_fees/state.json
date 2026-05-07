@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.fedcourt.gov.au/forms-and-fees/court-fees",
-  "last_error_at": "2026-05-07T08:00:33.247595+00:00",
-  "consecutive_failures": 8
+  "last_error_at": "2026-05-07T11:56:57.189776+00:00",
+  "consecutive_failures": 9
 }
