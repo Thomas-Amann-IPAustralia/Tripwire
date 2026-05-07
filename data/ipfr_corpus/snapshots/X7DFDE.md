@@ -1,0 +1,2 @@
+NNDSS public dataset – influenza (laboratory confirmed)
+This National Notifiable Diseases Surveillance System (NNDSS) dataset provides records of laboratory-confirmed influenza cases from 2008, by month and other patient variables. We update it in July of each year to include the previous year's notifications and all updates.

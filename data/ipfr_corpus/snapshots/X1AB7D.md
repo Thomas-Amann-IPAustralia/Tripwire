@@ -1,0 +1,3 @@
+Scroll down to access downloads and media. Australian endemic tick-borne diseases – Q fever fact sheet Download [Publication] Australian endemic tick-borne diseases – Q fever (PDF) as PDF - 899 KB - 5 pages Download [Publication] Australian endemic tick-borne diseases – Q fever (Word) as Word - 297 KB - 5 pages Publication type: Fact sheet Published: 25 November 2022 Last updated: 7 December 2025 Part of a collection: Tick bite–associated illnesses – Resources for the general public
+Download [Publication] Australian endemic tick-borne diseases – Q fever (PDF) as PDF - 899 KB - 5 pages
+Download [Publication] Australian endemic tick-borne diseases – Q fever (Word) as Word - 297 KB - 5 pages

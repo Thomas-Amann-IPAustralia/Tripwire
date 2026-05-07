@@ -1,0 +1,3 @@
+Scroll down to access downloads and media. NORDR – Researcher personal information collection notice Download [Publication] NORDR – Researcher personal information collection notice (PDF) as PDF - 228 KB - 2 pages Download [Publication] NORDR – Researcher personal information collection notice (Word) as Word - 138 KB - 2 pages Publication type: Fact sheet Published: 21 May 2024 Last updated: 8 December 2025
+Download [Publication] NORDR – Researcher personal information collection notice (PDF) as PDF - 228 KB - 2 pages
+Download [Publication] NORDR – Researcher personal information collection notice (Word) as Word - 138 KB - 2 pages

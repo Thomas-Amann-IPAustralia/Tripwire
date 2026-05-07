@@ -1,0 +1,2 @@
+Scroll down to access downloads and media. National Syphilis Surveillance Report Q1 2025 Download [Publication] National Syphilis Surveillance Report Q1 2025 (PDF) as PDF - 3 MB - 41 pages Download [Publication] National Syphilis Surveillance Report Q1 2025 (Word) as Word - 4 MB - 41 pages Publication type: Report Published: 12 November 2025 Last updated: 12 December 2025 Part of a collection: National syphilis monitoring reports
+Download [Publication] National Syphilis Surveillance Report Q1 2025 (Word) as Word - 4 MB - 41 pages

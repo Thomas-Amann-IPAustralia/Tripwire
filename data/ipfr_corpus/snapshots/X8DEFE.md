@@ -1,0 +1,3 @@
+Scroll down to access downloads and media. National Communicable Disease Surveillance Dashboard – User guide Download [Publication] National Communicable Disease Surveillance Dashboard – User guide (PDF) as PDF - 755 KB - 5 pages Download [Publication] National Communicable Disease Surveillance Dashboard – User guide (Word) as Word - 2 MB - 5 pages Publication type: Fact sheet Published: 1 January 2022 Last updated: 9 December 2025
+Download [Publication] National Communicable Disease Surveillance Dashboard – User guide (PDF) as PDF - 755 KB - 5 pages
+Download [Publication] National Communicable Disease Surveillance Dashboard – User guide (Word) as Word - 2 MB - 5 pages

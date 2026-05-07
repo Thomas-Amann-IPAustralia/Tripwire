@@ -1,0 +1,3 @@
+Scroll down to access downloads and media. Poliovirus Detection Outbreak Response Plan for Australia 2024 Download [Publication] Poliovirus Detection Outbreak Response Plan for Australia 2024 (PDF) as PDF - 2 MB - 69 pages Download [Publication] Poliovirus Detection Outbreak Response Plan for Australia 2024 (Word) as Word - 5 MB - 69 pages Publication type: Strategy or framework Published: 13 June 2024 Last updated: 7 December 2025
+Download [Publication] Poliovirus Detection Outbreak Response Plan for Australia 2024 (PDF) as PDF - 2 MB - 69 pages
+Download [Publication] Poliovirus Detection Outbreak Response Plan for Australia 2024 (Word) as Word - 5 MB - 69 pages

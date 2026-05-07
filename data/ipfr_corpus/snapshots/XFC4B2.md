@@ -1,0 +1,3 @@
+Scroll down to access downloads and media. Simple steps to improve your indoor air quality at home (brochure) Download [Publication] Simple steps to improve your indoor air quality at home (brochure) (PDF) as PDF - 515 KB - 2 pages Download [Publication] Simple steps to improve your indoor air quality at home (brochure) (Word) as Word - 302 KB - 2 pages Publication type: Fact sheet Published: 7 April 2026 Last updated: 15 December 2025
+Download [Publication] Simple steps to improve your indoor air quality at home (brochure) (PDF) as PDF - 515 KB - 2 pages
+Download [Publication] Simple steps to improve your indoor air quality at home (brochure) (Word) as Word - 302 KB - 2 pages

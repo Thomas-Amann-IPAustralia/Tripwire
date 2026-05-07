@@ -1,0 +1,2 @@
+NNDSS public dataset – salmonella
+This National Notifiable Diseases Surveillance System (NNDSS) dataset provides records of salmonella cases from 2009 to 2024, by month and other patient variables. We update it in July of each year to include the previous year's notifications and all updates.
