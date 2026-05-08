@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { basicAuth } from './auth.js';
 import { syncDataFromRelease } from './syncData.js';
+import { openDb, DB_PATH } from './db.js';
 
 import runsRouter from './routes/runs.js';
 import pagesRouter from './routes/pages.js';
@@ -48,8 +49,23 @@ if (process.argv.includes('--serve-build')) {
   });
 }
 
-syncDataFromRelease().finally(() => {
+async function startServer() {
+  try {
+    await syncDataFromRelease();
+  } catch (err) {
+    console.error(`[startup] Data sync failed: ${err.stack || err.message}`);
+  }
+
+  const openedDb = openDb();
+
+  if (!openedDb) {
+    console.warn(`[startup] Database unavailable at ${DB_PATH}`);
+    console.warn('[startup] Server will still start, but DB-backed routes will return 503.');
+  }
+
   app.listen(PORT, () => {
     console.log(`Tripwire Dashboard server running on port ${PORT}`);
   });
-});
+}
+
+startServer();
