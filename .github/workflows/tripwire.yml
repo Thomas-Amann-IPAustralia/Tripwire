@@ -188,12 +188,12 @@ jobs:
       - name: Trigger Render redeploy
         if: always()
         env:
-          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+          RENDER_DEPLOY_HOOK_ACDC: ${{ secrets.RENDER_DEPLOY_HOOK_ACDC }}
         run: |
-          if [ -n "$RENDER_DEPLOY_HOOK" ]; then
-            curl -s "$RENDER_DEPLOY_HOOK"
+          if [ -n "$RENDER_DEPLOY_HOOK_ACDC" ]; then
+            curl -s "$RENDER_DEPLOY_HOOK_ACDC"
           else
-            echo "RENDER_DEPLOY_HOOK not set — skipping redeploy"
+            echo "RENDER_DEPLOY_HOOK_ACDC not set — skipping redeploy"
           fi
 
       # ------------------------------------------------------------------
