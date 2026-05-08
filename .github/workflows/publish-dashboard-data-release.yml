@@ -64,11 +64,10 @@ jobs:
           cp tripwire_config.yaml release-assets/tripwire_config.yaml
           cp data/influencer_sources/source_registry.csv release-assets/source_registry.csv
 
-          if [ -f "data/logs/feedback.jsonl" ]; then
+          if [ -s "data/logs/feedback.jsonl" ]; then
             cp data/logs/feedback.jsonl release-assets/feedback.jsonl
           else
-            echo "No data/logs/feedback.jsonl found; creating empty feedback.jsonl asset."
-            : > release-assets/feedback.jsonl
+            echo "No non-empty data/logs/feedback.jsonl found; skipping feedback.jsonl asset."
           fi
 
           if [ -d "data/influencer_sources/snapshots" ]; then
