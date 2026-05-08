@@ -47,8 +47,6 @@ export function openDb() {
   }
 }
 
-export { db };
-
 export function dbGuard(res) {
   if (!db) {
     res.status(503).json({ data: [], error: 'database_not_found' });
