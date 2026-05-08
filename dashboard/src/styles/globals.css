@@ -1,18 +1,18 @@
 /* ─── CSS Variables — Dark mode (default) ───────────────────────────────── */
 :root {
-  --bg-primary:    #011a1a;
-  --bg-secondary:  #033636;
+  --bg-primary:    #022424;
+  --bg-secondary:  #010f0f;
   --bg-tertiary:   #b3c2c2;
-  --bg-accent:     #00dca1;
+  --bg-accent:     #386d5f;
 
-  --text-primary:   #00dca1;
+  --text-primary:   #aff0df;
   --text-secondary: #8cefd5;
   --text-tertiary:  #e8e8e8;
 
   --rule:        #333333;
   --rule-accent: #365e5e;
 
-  /* Stage accent colours — 9 stages, 6 distinct colours (by design).
+  /* Stage accent colours — 9 stages, 6 distinct colours (by design). 
      Stages 1 & 7 share green, 2 & 8 share red, 3 & 9 share amber. */
   --stage-1: #91c2b7;
   --stage-2: #F87171;
