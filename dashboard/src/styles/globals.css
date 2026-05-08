@@ -1,34 +1,34 @@
 /* ─── CSS Variables — Dark mode (default) ───────────────────────────────── */
 :root {
-  --bg-primary:    #022424;
-  --bg-secondary:  #010f0f;
-  --bg-tertiary:   #b3c2c2;
-  --bg-accent:     #386d5f;
+  --bg-primary:    #0b1616;
+  --bg-secondary:  #132121;
+  --bg-tertiary:   #1e3333;
+  --bg-accent:     #196d5b;
 
-  --text-primary:   #aff0df;
-  --text-secondary: #8cefd5;
-  --text-tertiary:  #e8e8e8;
+  --text-primary:   #e5f3f0;
+  --text-secondary: #a0c2b9;
+  --text-tertiary:  #6c8a83;
 
-  --rule:        #333333;
-  --rule-accent: #365e5e;
+  --rule:        #1e3333;
+  --rule-accent: #2a4747;
 
   /* Stage accent colours — 9 stages, 6 distinct colours (by design). 
      Stages 1 & 7 share green, 2 & 8 share red, 3 & 9 share amber. */
-  --stage-1: #91c2b7;
-  --stage-2: #F87171;
-  --stage-3: #FBBF24;
-  --stage-4: #60A5FA;
-  --stage-5: #A78BFA;
-  --stage-6: #f3701E;
-  --stage-7: #714ade;
-  --stage-8: #F87171;
-  --stage-9: #FBBF24;
+  --stage-1: #6ee7b7;
+  --stage-2: #fca5a5;
+  --stage-3: #fcd34d;
+  --stage-4: #93c5fd;
+  --stage-5: #c4b5fd;
+  --stage-6: #fdba74;
+  --stage-7: #6ee7b7;
+  --stage-8: #fca5a5;
+  --stage-9: #fcd34d;
 
-  --state-alert:    #F87171;
-  --state-warn:     #FBBF24;
-  --state-ok:       #4ADE80;
-  --state-error:    #EF4444;
-  --state-inactive: #777777;
+  --state-alert:    #ef4444;
+  --state-warn:     #f59e0b;
+  --state-ok:       #10b981;
+  --state-error:    #f87171;
+  --state-inactive: #6b7280;
 
   --font-display: 'Bebas Neue', sans-serif;
   --font-mono:    'DM Mono', monospace;
@@ -37,33 +37,33 @@
 
 /* ─── Light mode overrides ──────────────────────────────────────────────── */
 [data-theme="light"] {
-  --bg-primary:    #e8e8e8;
-  --bg-secondary:  #ceece3;
-  --bg-tertiary:   #8cefd5;
-  --bg-accent:     #00dca1;
+  --bg-primary:    #f4f7f6;
+  --bg-secondary:  #ffffff;
+  --bg-tertiary:   #e6efec;
+  --bg-accent:     #147a65;
 
-  --text-primary:   #033636;
-  --text-secondary: #333333;
-  --text-tertiary:  #666666;
+  --text-primary:   #0f2929;
+  --text-secondary: #3b5e59;
+  --text-tertiary:  #75948d;
 
-  --rule:        #CCCCCC;
-  --rule-accent: #BBBBBB;
+  --rule:        #e1ebe8;
+  --rule-accent: #c2d6d1;
 
-  --stage-1: #16A34A;
-  --stage-2: #DC2626;
-  --stage-3: #D97706;
-  --stage-4: #2563EB;
-  --stage-5: #7C3AED;
-  --stage-6: #f3701E;
-  --stage-7: #16A34A;
-  --stage-8: #DC2626;
-  --stage-9: #D97706;
+  --stage-1: #059669;
+  --stage-2: #dc2626;
+  --stage-3: #d97706;
+  --stage-4: #2563eb;
+  --stage-5: #7c3aed;
+  --stage-6: #ea580c;
+  --stage-7: #059669;
+  --stage-8: #dc2626;
+  --stage-9: #d97706;
 
-  --state-alert:    #DC2626;
-  --state-warn:     #e5f04b;
-  --state-ok:       #1eda63;
-  --state-error:    #B91C1C;
-  --state-inactive: #9CA3AF;
+  --state-alert:    #dc2626;
+  --state-warn:     #d97706;
+  --state-ok:       #059669;
+  --state-error:    #991b1b;
+  --state-inactive: #9ca3af;
 }
 
 /* ─── Reset ─────────────────────────────────────────────────────────────── */
