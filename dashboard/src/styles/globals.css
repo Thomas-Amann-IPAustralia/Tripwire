@@ -1,26 +1,26 @@
 /* ─── CSS Variables — Dark mode (default) ───────────────────────────────── */
 :root {
-  --bg-primary:    #0e0e0d;
-  --bg-secondary:  #161614;
-  --bg-tertiary:   #1e1e1b;
-  --bg-accent:     #272722;
+  --bg-primary:    #033636;
+  --bg-secondary:  #365f5f;
+  --bg-tertiary:   #b3c2c2;
+  --bg-accent:     #00dca1;
 
   --text-primary:   #e8e8e8;
-  --text-secondary: #999999;
-  --text-tertiary:  #777777;
+  --text-secondary: #8cefd5;
+  --text-tertiary:  #00dca1;
 
   --rule:        #333333;
-  --rule-accent: #444444;
+  --rule-accent: #365e5e;
 
   /* Stage accent colours — 9 stages, 6 distinct colours (by design).
      Stages 1 & 7 share green, 2 & 8 share red, 3 & 9 share amber. */
-  --stage-1: #4ADE80;
+  --stage-1: #91c2b7;
   --stage-2: #F87171;
   --stage-3: #FBBF24;
   --stage-4: #60A5FA;
   --stage-5: #A78BFA;
   --stage-6: #f3701E;
-  --stage-7: #4ADE80;
+  --stage-7: #714ade;
   --stage-8: #F87171;
   --stage-9: #FBBF24;
 
@@ -37,12 +37,12 @@
 
 /* ─── Light mode overrides ──────────────────────────────────────────────── */
 [data-theme="light"] {
-  --bg-primary:    #F5F5F5;
-  --bg-secondary:  #FFFFFF;
-  --bg-tertiary:   #FAFAFA;
-  --bg-accent:     #EEEEEE;
+  --bg-primary:    #e8e8e8;
+  --bg-secondary:  #b3c2c2;
+  --bg-tertiary:   #8cefd5;
+  --bg-accent:     #365f5f;
 
-  --text-primary:   #111111;
+  --text-primary:   #033636;
   --text-secondary: #333333;
   --text-tertiary:  #666666;
 
@@ -60,8 +60,8 @@
   --stage-9: #D97706;
 
   --state-alert:    #DC2626;
-  --state-warn:     #D97706;
-  --state-ok:       #16A34A;
+  --state-warn:     #e5f04b;
+  --state-ok:       #1eda63;
   --state-error:    #B91C1C;
   --state-inactive: #9CA3AF;
 }
