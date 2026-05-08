@@ -1,13 +1,13 @@
 /* ─── CSS Variables — Dark mode (default) ───────────────────────────────── */
 :root {
-  --bg-primary:    #033636;
-  --bg-secondary:  #365f5f;
+  --bg-primary:    #011a1a;
+  --bg-secondary:  #033636;
   --bg-tertiary:   #b3c2c2;
   --bg-accent:     #00dca1;
 
-  --text-primary:   #e8e8e8;
+  --text-primary:   #00dca1;
   --text-secondary: #8cefd5;
-  --text-tertiary:  #00dca1;
+  --text-tertiary:  #e8e8e8;
 
   --rule:        #333333;
   --rule-accent: #365e5e;
@@ -38,9 +38,9 @@
 /* ─── Light mode overrides ──────────────────────────────────────────────── */
 [data-theme="light"] {
   --bg-primary:    #e8e8e8;
-  --bg-secondary:  #b3c2c2;
+  --bg-secondary:  #ceece3;
   --bg-tertiary:   #8cefd5;
-  --bg-accent:     #365f5f;
+  --bg-accent:     #00dca1;
 
   --text-primary:   #033636;
   --text-secondary: #333333;
