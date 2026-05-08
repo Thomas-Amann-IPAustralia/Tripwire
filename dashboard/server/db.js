@@ -20,17 +20,31 @@ export function getDbMtime() {
   }
 }
 
-let db = null;
+export let db = null;
 
-try {
-  if (!fs.existsSync(DB_PATH)) {
-    throw new Error(`Database file not found at ${DB_PATH}`);
+export function openDb() {
+  if (db) return db;
+
+  try {
+    if (!fs.existsSync(DB_PATH)) {
+      throw new Error(`Database file not found at ${DB_PATH}`);
+    }
+
+    db = new Database(DB_PATH, {
+      readonly: true,
+      fileMustExist: true,
+    });
+
+    // Do not set WAL mode on a read-only database.
+    db.pragma('query_only = ON');
+
+    console.log(`[db] Opened SQLite database at ${DB_PATH}`);
+    return db;
+  } catch (err) {
+    console.error(`[db] Failed to open SQLite database: ${err.message}`);
+    db = null;
+    return null;
   }
-  db = new Database(DB_PATH, { readonly: true });
-  db.pragma('journal_mode = WAL');
-} catch (err) {
-  console.error(`[db] Failed to open SQLite database: ${err.message}`);
-  db = null;
 }
 
 export { db };
