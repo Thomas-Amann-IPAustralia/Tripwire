@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.artslaw.com.au/legal/raw-law/legal-help-who-can-you-go-to/",
-  "last_error_at": "2026-05-12T05:44:00.311772+00:00",
-  "consecutive_failures": 14
+  "last_error_at": "2026-05-13T05:54:58.252619+00:00",
+  "consecutive_failures": 15
 }
