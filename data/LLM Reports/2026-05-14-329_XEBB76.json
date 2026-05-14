@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia trademark manual primarily involve minor content updates, typographical corrections, and removal of references to a specific section (s 27) of the Plant Breeder's Rights Act. There is also an update to the section on three-dimensional trade marks with a new case reference. However, the IPFR page 'What is IP and how does it protect me?' provides a high-level overview of IP types and their general protections without specific statutory references, procedural details, or case law. The changes do not affect the accuracy or currency of the general descriptions of IP types or their protections as presented in the IPFR page. Therefore, no amendments are required to maintain the correctness of the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3877,
+  "completion_tokens": 177,
+  "total_tokens": 4054,
+  "processing_time_seconds": 3.037233290999893,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.502807+00:00"
+}
