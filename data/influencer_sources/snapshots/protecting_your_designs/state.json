@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.artslaw.com.au/information-sheet/protecting-your-designs",
-  "last_error_at": "2026-05-15T05:59:33.134255+00:00",
-  "consecutive_failures": 18
+  "last_error_at": "2026-05-16T05:32:03.978496+00:00",
+  "consecutive_failures": 19
 }
