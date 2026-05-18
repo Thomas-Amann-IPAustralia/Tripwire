@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.asbfeo.gov.au/about-us",
-  "last_error_at": "2026-05-17T06:00:36.185032+00:00",
-  "consecutive_failures": 19
+  "last_error_at": "2026-05-18T06:28:07.963220+00:00",
+  "consecutive_failures": 20
 }
