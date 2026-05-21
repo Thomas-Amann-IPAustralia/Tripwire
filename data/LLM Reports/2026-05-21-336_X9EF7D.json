@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trade Marks Manual of Practice and Procedure and the updates to IP Australia consultations primarily involve detailed procedural updates, minor content revisions, and consultation summaries. The IPFR page 'Familiarise yourself with IP laws' provides a high-level overview of IP legislation and general guidance for small business owners without delving into specific procedural details or referencing particular sections of manuals or consultations. There are no specific dates, fees, statutory references, or procedural steps in the IPFR page that are contradicted or rendered outdated by these upstream changes. Therefore, the page remains accurate and current in its general description of IP law and related resources.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4597,
+  "completion_tokens": 159,
+  "total_tokens": 4756,
+  "processing_time_seconds": 2.870937233999939,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.588449+00:00"
+}

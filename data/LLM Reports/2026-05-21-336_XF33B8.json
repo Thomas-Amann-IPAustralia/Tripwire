@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to detailed procedural and legal updates in the IP Australia patent manual, including amendments to examination practice, case law updates, and procedural outlines. However, the IPFR page 'Discover where you are in your IP journey' provides a high-level overview of IP stages for business owners without specific procedural or legal detail about patent examination or amendments. There is no specific information in the IPFR page that conflicts with or is rendered inaccurate by the changes in the patent manual. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2549,
+  "completion_tokens": 140,
+  "total_tokens": 2689,
+  "processing_time_seconds": 2.090925144000039,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.589083+00:00"
+}
