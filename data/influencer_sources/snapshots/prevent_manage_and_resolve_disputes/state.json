@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://business.gov.au/people/disputes/prevent-manage-and-resolve-disputes",
-  "last_error_at": "2026-05-22T06:11:33.433915+00:00",
-  "consecutive_failures": 24
+  "last_error_at": "2026-05-23T05:43:52.553335+00:00",
+  "consecutive_failures": 25
 }

@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.asbfeo.gov.au/disputes-assistance/five-steps-resolve-your-dispute",
-  "last_error_at": "2026-05-22T06:12:24.967299+00:00",
-  "consecutive_failures": 24
+  "last_error_at": "2026-05-23T05:44:43.187137+00:00",
+  "consecutive_failures": 25
 }
