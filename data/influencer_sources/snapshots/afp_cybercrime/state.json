@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.afp.gov.au/crimes/cybercrime",
-  "last_error_at": "2026-05-24T06:07:55.491233+00:00",
-  "consecutive_failures": 26
+  "last_error_at": "2026-05-25T06:35:11.006866+00:00",
+  "consecutive_failures": 27
 }
