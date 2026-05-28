@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.aph.gov.au/Parliamentary_Business/Committees/House/Industry_Innovation_and_Science",
-  "last_error_at": "2026-05-27T06:23:10.760148+00:00",
-  "consecutive_failures": 30
+  "last_error_at": "2026-05-28T06:16:36.177760+00:00",
+  "consecutive_failures": 31
 }

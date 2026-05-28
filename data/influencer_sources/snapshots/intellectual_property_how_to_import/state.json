@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.abf.gov.au/importing-exporting-and-manufacturing/importing/how-to-import/types-of-imports/intellectual-property",
-  "last_error_at": "2026-05-27T06:27:28.087666+00:00",
-  "consecutive_failures": 37
+  "last_error_at": "2026-05-28T06:23:03.982584+00:00",
+  "consecutive_failures": 38
 }

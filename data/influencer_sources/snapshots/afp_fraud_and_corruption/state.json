@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.afp.gov.au/crimes/fraud-and-corruption",
-  "last_error_at": "2026-05-27T06:29:32.519899+00:00",
-  "consecutive_failures": 29
+  "last_error_at": "2026-05-28T06:27:53.450164+00:00",
+  "consecutive_failures": 30
 }

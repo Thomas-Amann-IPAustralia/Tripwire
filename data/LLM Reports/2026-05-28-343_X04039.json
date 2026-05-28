@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X04039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual concerning patent examination practices, divisional applications, and specific patent law decisions (e.g., Aristocrat decision). The IPFR page concerns trade mark disputes and court proceedings related to trade marks, not patents. There is no overlap in subject matter that would require updating the trade mark court proceedings guidance. The change does not affect any specific information, procedures, or legal references in the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3316,
+  "completion_tokens": 126,
+  "total_tokens": 3442,
+  "processing_time_seconds": 1.6381029899998794,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.492003+00:00"
+}
