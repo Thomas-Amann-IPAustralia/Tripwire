@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.afp.gov.au/crimes/fraud-and-corruption/intellectual-property-crime",
-  "last_error_at": "2026-05-29T06:23:38.993872+00:00",
-  "consecutive_failures": 31
+  "last_error_at": "2026-05-30T05:57:57.966234+00:00",
+  "consecutive_failures": 32
 }
