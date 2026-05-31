@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.fedcourt.gov.au/services/ADR/mediation",
-  "last_error_at": "2026-05-30T05:56:38.840740+00:00",
-  "consecutive_failures": 32
+  "last_error_at": "2026-05-31T06:27:43.009114+00:00",
+  "consecutive_failures": 33
 }
