@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.fedcourt.gov.au/services/ADR/arbitration",
-  "last_error_at": "2026-05-31T06:30:47.334903+00:00",
-  "consecutive_failures": 33
+  "last_error_at": "2026-06-01T07:07:37.719327+00:00",
+  "consecutive_failures": 34
 }
