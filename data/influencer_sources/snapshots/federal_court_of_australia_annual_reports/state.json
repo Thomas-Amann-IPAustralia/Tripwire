@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.fedcourt.gov.au/about/corporate-information/annual-reports",
-  "last_error_at": "2026-06-02T06:50:13.228953+00:00",
-  "consecutive_failures": 35
+  "last_error_at": "2026-06-03T07:00:07.432245+00:00",
+  "consecutive_failures": 36
 }
