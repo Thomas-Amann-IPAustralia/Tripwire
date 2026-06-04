@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia design manual and plant breeder's rights manual primarily involve accessibility fixes, removal of empty headings, updates to URLs, and minor content clarifications unrelated to the certification process of registered designs. There are no updates to fees, timeframes, procedural steps, or legal requirements directly affecting the content of the IPFR page about requesting IP Australia to confirm a registered design is valid. Therefore, the IPFR page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4278,
+  "completion_tokens": 126,
+  "total_tokens": 4404,
+  "processing_time_seconds": 1.4953038069998001,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707147+00:00"
+}

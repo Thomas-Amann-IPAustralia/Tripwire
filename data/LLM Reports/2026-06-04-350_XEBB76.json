@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to procedural updates for the Administrative Review Tribunal, amendments to oversight legislation for intelligence agencies, updates to ACCC public registers and consultations, and exemptions or undertakings related to consumer data sharing obligations. None of these changes affect the fundamental definitions, explanations, or descriptions of intellectual property types, rights, or enforcement options as presented in the IPFR page. The IPFR page content remains accurate and current regarding what IP is and how it protects rights holders. There are no specific statutory references, procedural steps, or legal thresholds in the IPFR page that are contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4792,
+  "completion_tokens": 154,
+  "total_tokens": 4946,
+  "processing_time_seconds": 1.8762824400000682,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.705796+00:00"
+}
