@@ -1,5 +1,10 @@
 {
-  "last_error": "RetryableError: All fetch attempts failed for https://www.afp.gov.au/crimes/cybercrime",
-  "last_error_at": "2026-06-04T07:01:49.131884+00:00",
-  "consecutive_failures": 37
+  "probe_signals": {
+    "etag": "W/\"1780638543\"",
+    "last_modified": "Fri, 05 Jun 2026 05:49:03 GMT",
+    "content_length": "17042"
+  },
+  "last_checked": "2026-06-05T06:32:35.035405+00:00",
+  "previous_hash": "57e4315c63804363da774f7115a7de45d0d0b5702d3f9820771a52caf4f3d5ab",
+  "previous_text": "This site can\u2019t be reached\nwww.afp.gov.au unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\ndevices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\nsettings.\nIf it is already listed as a program allowed to access the network, try\nremoving it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\nthe Chrome menu >\nSettings\n>\nSystem\n>\nOpen your computer's proxy settings\nand make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.afp.gov.au unexpectedly closed the connection."
 }
