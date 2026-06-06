@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for http://www.copyright.org.au/legal-advice/",
-  "last_error_at": "2026-06-05T06:38:05.157241+00:00",
-  "consecutive_failures": 38
+  "last_error_at": "2026-06-06T06:04:10.220095+00:00",
+  "consecutive_failures": 39
 }
