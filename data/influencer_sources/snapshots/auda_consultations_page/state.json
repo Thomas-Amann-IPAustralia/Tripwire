@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.auda.org.au/public-impact/have-your-say/consultations/",
-  "last_error_at": "2026-06-06T06:03:02.862881+00:00",
-  "consecutive_failures": 39
+  "last_error_at": "2026-06-07T06:33:27.779967+00:00",
+  "consecutive_failures": 40
 }
