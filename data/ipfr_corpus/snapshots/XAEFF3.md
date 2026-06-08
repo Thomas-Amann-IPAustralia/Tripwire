@@ -31,6 +31,7 @@ It is important to understand what does not constitute infringement. The Patents
 - Obtaining regulatory approvals. A person will not be infringing a patent if they are using the patented invention to obtain approval for medical goods with the Therapeutic Goods Administration (TGA)8 or other regulatory approval for non-pharmaceutical goods (e.g., agricultural chemicals).9
 - Experimental use. A person will not infringe a patent if they are experimenting with the invention,10 such as determining the properties of the invention, the legal scope of protection for the invention, improving or modifying the invention, assessing the legality of the patent, or evaluating whether the patent has been infringed.11
 Navigating patent infringement can be complex and often requires legal expertise. Experts can help work out exactly what a patent protects. They can interpret the legal language in the patent claims. Additionally, for infringement to happen, the patent must be legally valid. Patents can be challenged if, for example, the invention is not new or innovative. An expert can help navigate these issues and provide advice. This guide provides a starting point, but qualified professionals should assess specific cases.
+ 
 - Patents Act 1990 (Cth) s 18.
 - Ibid s 13.
 - Ibid s117(1).

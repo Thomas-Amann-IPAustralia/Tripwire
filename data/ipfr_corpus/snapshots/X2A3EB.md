@@ -39,11 +39,11 @@ What do you need to proceed?
 - A copy of your IP registration or evidence of use.
 - The takedown notice or removal email with reference numbers.
 - Screenshots of the original listing and the allegedly infringing content.
-- Knowledge of each platform’s process, for example:
-- Amazon: Using the Account Health Page to provide evidence against a notice or warning for infringement.
+- Knowledge of each platform’s process, for example:- Amazon: Using the Account Health Page to provide evidence against a notice or warning for infringement.
 - eBay: file a VeRO counter notice via email or the provided form (NOCI).
 - Etsy: use “What to Do if You Receive a Notice of Intellectual Property Infringement” page and contact the rights owner directly.
 - Shein: submit via “IP Notice” portal at Shein IPP .
+ 
 - A log of all communications, submissions and platform decisions.
 See also
 - Amazon Intellectual Property Policy (https://sellercentral.amazon.com/help/hub/reference/external/201361070?locale=en-US )

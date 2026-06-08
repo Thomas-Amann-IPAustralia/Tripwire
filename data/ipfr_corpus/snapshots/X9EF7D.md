@@ -39,16 +39,16 @@ Who can use this?
 Everyone can access and read Australian legislation. However, most people will not read the legislation as the main way of understanding IP law.
 Who’s involved?
 The Commonwealth Parliament oversees all federal Legislative Acts. Legislation is administered by government agencies:
-- IP Australia has responsibility for patents, trade marks, designs and plant breeder’s rights legislation and administers the registration system for these IP rights. Our role includes:
-- overseeing the functions of the trade mark, patent, design right and plant breeder's right offices and officers
+- IP Australia has responsibility for patents, trade marks, designs and plant breeder’s rights legislation and administers the registration system for these IP rights. Our role includes:- overseeing the functions of the trade mark, patent, design right and plant breeder's right offices and officers
 - publishing and maintaining the official journals for IP rights in Australia
 - administering applications for trade marks, patents, design rights and plant breeder's rights, including charging fees
 - registering trade mark and patent attorneys and defining their rights of practice
 - accrediting approved persons to supervise and verify plant breeder's rights applications
-- The Attorney-General’s Department has responsibility for copyright and circuit layouts legislation. Their role includes:
-- developing copyright and circuit layouts policy for the government’s consideration
+ 
+- The Attorney-General’s Department has responsibility for copyright and circuit layouts legislation. Their role includes:- developing copyright and circuit layouts policy for the government’s consideration
 - representing Australia’s interests on international copyright issues.
 - While the Attorney-General’s Department cannot give legal advice, it can provide relevant information and direct you to resources if you have questions about copyright.
+ 
 - Courts and tribunals adjudicate IP disputes. Tribunals includes those disputes heard before IP Australia’s hearings officers or licensing disputes before the Copyright Tribunal.
 What do you need to proceed?
 You may wish to seek legal advice to help understand the options available to you under IP law.

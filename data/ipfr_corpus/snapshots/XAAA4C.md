@@ -16,8 +16,8 @@ Make it easy to read Readers are likely skimming during a lunch break or after h
 - Include images where helpful – IPAVentures team can assist with sourcing visuals.
 - Avoid jargon and use plain language wherever possible. If technical terms are necessary, explain them clearly. The IPA Ventures team can help identify terms that may need clarification.
 Be engaging and authentic This is not an academic paper. Use conversational, digestible formats. Share your own experiences and insights. Clearly inserting yourself in the content helps readers connect with your perspective and understand that this is one view - not a definitive answer. For example, “We often find...”, “Many of our clients...”, “Our business specialises in X, and...”, “After 30 years in the industry, I have seen...”
-Avoid promotional content
-The blog is an educational space, not an advertising platform. Posts should focus on sharing knowledge, insights, and practical advice — not promoting specific products, services, or businesses. It’s fine to reference your experience or organisation where relevant, but avoid calls to action, marketing language, or links that direct readers to commercial offerings. IP Australia may edit or decline posts that are primarily promotional.
+Avoid promotional content 
+The blog is an educational space, not an advertising platform. Posts should focus on sharing knowledge, insights, and practical advice — not promoting specific products, services, or businesses. It’s fine to reference your experience or organisation where relevant, but avoid calls to action, marketing language, or links that direct readers to commercial offerings. IP Australia may edit or decline posts that are primarily promotional. 
 Submission process
 - Propose a Topic Let us know what you’d like to write about. You can request our list of possible topics to choose from or propose your own (via IPFirstResponse@IPAustralia.gov.au)
 - Submit Your Draft Email your draft to IPFirstResponse@IPAustralia.gov.au

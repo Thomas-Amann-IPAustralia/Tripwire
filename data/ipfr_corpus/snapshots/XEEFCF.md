@@ -24,7 +24,7 @@ What are the risks?
 What are the possible outcomes?
 The outcomes of monitoring supply chain depend heavily on your individual circumstances, the tools used, industry practices and your overall IP strategy.
 What might the costs be?
-The costs for supply chain monitoring depend heavily on the extent of monitoring activities and whether you choose to engage third-party services such as commercial monitoring software or brand protection specialists.
+The costs for supply chain monitoring depend heavily on the extent of monitoring activities and whether you choose to engage third-party services such as commercial monitoring software or brand protection specialists. 
 Costs for basic software subscriptions vary but can start in the low hundreds of dollars per year. Custom analytics or forensic audits may cost several thousand dollars. For more information on engaging third-party services, see Obtain advice to help manage your IP.
 You can adopt a light-touch program or scale up to a comprehensive monitoring regime at various stages of a product’s life cycle, adjusting the effort as your risk profile or budget changes.
 How much time might be involved?

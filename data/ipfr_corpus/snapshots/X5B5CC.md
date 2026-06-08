@@ -52,13 +52,13 @@ Anybody who is a party to a dispute.
 Mediation generally requires engagement from both parties to the dispute, though some mediation providers will allow a single party to submit a unilateral request for mediation and then encourage the other party to participate in mediation.
 Who’s involved?
 - Parties to the dispute(s).
-- Mediator, whose role is to:
-- control the process
+- Mediator, whose role is to:- control the process
 - create an environment where parties have a chance to hear and listen to each other in a respectful manner
 - help keep emotions in check
 - guide parties through discussions about the issues
 - make sure all relevant issues are covered
 - help parties explore a variety of options.
+ 
 - (Optional) Legal representation for one or more of the participants, noting that some mediation providers limit the participation of legal representation in dispute resolution processes.
 What do you need to proceed?
 Before you engage in mediation, you should think about whether mediation is a suitable dispute resolution method for your situation and what kind of mediator would suit your needs best.
@@ -84,15 +84,14 @@ The Small Business Commissions in most states and territories can also assist wi
 - Queensland Small Business Commissioner
 For some types of disputes related to copyright or licensing, there may be specialist dispute resolution services available. For example:
 - the Arts Law Centre of Australia has access to a panel of mediators and experts who can provide low-cost ADR services to artists and arts organisations who subscribe to Arts Law.
-- Resolution Pathways is a service available to music creators and music users disputing their interactions with
-,APRA AMCOS and/or OneMusic Australia, as well as, in limited circumstances, disputes between music creators.
+- Resolution Pathways is a service available to music creators and music users disputing their interactions with,APRA AMCOS and/or OneMusic Australia, as well as, in limited circumstances, disputes between music creators.
 You can also seek help from IP professionals to obtain advice on whether ADR would be suitable for your situation and represent you throughout an ADR process. You can find a qualified IP attorney to assist you at: Find an IP attorney or firm | Trans-Tasman IP Attorneys Board .
 See also
 For more information on mediation and other types of ADR, see:
 - IP First Response: Understanding alternative dispute resolution
-Mediation at the Federal Court of Australia website
+- Mediation at the Federal Court of Australia website 
 - Your guide to dispute resolution at the Attorney General’s Department website
 - Resolve disputes | business.gov.au
 - Higher Education Research Commercialisation Intellectual Property Framework - Department of Education, Australian Government
 Before you take any action, you should consider whether you need legal or professional advice specific to your situation. It is important to know what rights you have, what remedies are open to you, and the cost and likelihood of success. IP Australia provides information on getting professional assistance with your IP . In addition, the Institute of Patent and Trade Mark Attorneys Australia (IPTA) offers free 30 minute consultations with an attorney .
-Federal Circuit and Family Court of Australia (Division 1) and (Division 2), Annual Reports 2023–24 , p 123
+- Federal Circuit and Family Court of Australia (Division 1) and (Division 2), Annual Reports 2023–24 , p 123

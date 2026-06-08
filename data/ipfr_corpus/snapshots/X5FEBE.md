@@ -25,10 +25,10 @@ What are the risks?
 - Delaying taking enforcement actions may make them more difficult to pursue in the future.
 - The cost and energy of monitoring the infringement in an ongoing way may exceed the effort of dealing with it immediately.
 - If infringement has happened and you do not take action, the infringement may be repeated by the current infringer or others also infringing.
-- Allowing infringement – even that which doesn’t directly damage your business – may:
-- affect public perception of your rights
+- Allowing infringement – even that which doesn’t directly damage your business – may:- affect public perception of your rights
 - undermine your entitlement to these rights
 - in extreme cases, leave you open to legal actions (such as cases where fake versions of a product pose a risk to customers).
+ 
 What are the possible outcomes?
 - The consequences of infringement remain (or become) insignificant.
 - The consequences of infringement increase, and you re-evaluate your stance on enforcement.
@@ -46,11 +46,11 @@ How often is this used?
 Variable. Many businesses may suspect infringement and have not, or will not, take action – ultimately it is a business decision that will depend on the specific circumstances of a business. Additionally, many possible actions may be resolved between two parties directly.
 What do you need to proceed?
 - Review IP First Response resources to understand all your enforcement options, even if you're not using them now. This helps you make an informed choice about waiting and know what tools are available if you change your mind later.
-- Develop a clear strategy for when you will take future enforcement action. Your plan can outline specific triggers that will prompt you to act. These might be when the infringer:
-- Grows beyond a certain size.
+- Develop a clear strategy for when you will take future enforcement action. Your plan can outline specific triggers that will prompt you to act. These might be when the infringer:- Grows beyond a certain size.
 - Starts competing in your geographic area or digital space.
 - Has been infringing for a set period.
 - Crosses other meaningful boundaries for your business.
+ 
 - Calculate the potential costs and timeline for different enforcement actions. This helps you budget and prepare for if you do decide to move forward.
 - Identify which type of IP professional you would consult if you choose to act. Consider having initial conversations to understand their services and approach.
 - Keep documentation of the infringement, including dates and evidence, to maintain a strong foundation if you choose to take action in the future.

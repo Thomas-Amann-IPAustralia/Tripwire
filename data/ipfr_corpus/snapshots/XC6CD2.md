@@ -26,16 +26,16 @@ What are the risks?
 - If you are successful in opposing registration of a trade mark, the denied applicant may appeal the decision
 What are the possible outcomes?
 - The other party does not contest your opposition to their registration, and the trade mark application does not get registered.
-- The other party contests your argument and defends their application in an opposition and hearings process, resulting in:
-- achieving registration, advertised amendment or extension of time in favour of their position, or
+- The other party contests your argument and defends their application in an opposition and hearings process, resulting in:- achieving registration, advertised amendment or extension of time in favour of their position, or
 - your opposition being upheld, and the other party fails to achieve registration, advertised amendment or extension of time.
+ 
 - IP Australia doesn’t accept your application to oppose an accepted trade mark when your application does not meet formal or legal requirements.
 What might the cost be?
 - The fees to IP Australia will typically cost $650. However, extensions of time and other processes will incur further costs. Detailed costs can be seen here .
 - If you have an IP professional acting on your behalf, you may be liable for additional legal fees.
 How much time might be involved?
-Duration of process
-The process duration varies depending on the complexity of the matter in question, how quickly each party responds and each party’s strategy. Refer to some of the timeframes permitted in the image below.
+Duration of process 
+The process duration varies depending on the complexity of the matter in question, how quickly each party responds and each party’s strategy. Refer to some of the timeframes permitted in the image below. 
 Flow chart - Oppose the registration of a trade mark
 Timeframe to initiate process
 Unless the period has been extended, opposition to the registration of a trade mark can typically only be raised within 2 months of its acceptance date being published. If this period has passed, you may need to explore other options.

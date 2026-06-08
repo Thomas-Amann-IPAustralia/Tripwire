@@ -24,19 +24,20 @@ There are two main ways to apply to register a trade mark in Australia:
 These have different costs and timeframes.
 TM Headstart fees
 Registering a trade mark through TM Headstart costs a minimum of $330. This covers submitting your pre-application (step 1), and finalising your application (step 3). If you need to make changes before finalising your application (step 2), this will add to your cost.
-| Action | Fees (per class) |
+| Action | Fees (per class) | 
 |---|---|
-Step 1 - TM Headstart request
-| $200 |
-Step 2 – Amendments to an application (optional) Change of trade mark representation (optional) | $150 |
-Step 2 – Amendments to an application (optional) Addition of new classes (optional) | $200 |
-| Step 3 - Conversion to a standard application (Part 2 fee) | $130 |
+| Step 1 - TM Headstart request 
+ | $200 | 
+| Step 2 – Amendments to an application (optional) Change of trade mark representation (optional) | $150 | 
+| Step 2 – Amendments to an application (optional) Addition of new classes (optional) | $200 | 
+| Step 3 - Conversion to a standard application (Part 2 fee) | $130 | 
 Standard application fees
-A standard trade mark application costs a minimum of $250.
-Your fees will be lower if you use the picklist . The picklist is a searchable list of 60,000+ goods and services categorised into 45 classes relevant to trade marks. This helps examiners to know exactly which goods the trade mark is intended to apply.
-| Action | Fees (per class) with picklist | Fees (per class) without picklist |
+A standard trade mark application costs a minimum of $250. 
+ 
+Your fees will be lower if you use the picklist . The picklist is a searchable list of 60,000+ goods and services categorised into 45 classes relevant to trade marks. This helps examiners to know exactly which goods the trade mark is intended to apply. 
+| Action | Fees (per class) with picklist | Fees (per class) without picklist | 
 |---|---|---|
-| Trade mark application | $250 | $400 |
+| Trade mark application | $250 | $400 | 
 How much time might be involved?
 While TM Headstart and standard applications will have different examination timeframes, registration of a trade mark takes at least 7 months to finalise. This is because a trade mark cannot be registered until at least seven and a half months after its priority date.
 What do you need to proceed?
