@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds some detail about market monitoring and the use of brand registries on platforms like Amazon to detect counterfeit goods. However, the IPFR page already broadly covers educating customers to differentiate genuine products from lookalikes and mentions the use of trade mark registration numbers and symbols. The new content does not contradict or update any specific factual information on the IPFR page, nor does it require changes to the guidance given. The IPFR page focuses on customer education rather than enforcement mechanisms or platform brand registries, so no direct update is needed.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2094,
+  "completion_tokens": 142,
+  "total_tokens": 2236,
+  "processing_time_seconds": 2.4744942580000497,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.611468+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds some additional detail about market monitoring and the risks of counterfeit goods, including the mention of brand registries on platforms like Amazon. However, the IPFR page already provides a broad overview of infringement concepts and trade mark enforcement without going into specific procedural or platform-based enforcement steps. The change does not contradict or render any specific statement in the IPFR page inaccurate or outdated. It is supplementary information rather than a correction or update to existing content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2783,
+  "completion_tokens": 124,
+  "total_tokens": 2907,
+  "processing_time_seconds": 1.9109182649999639,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.612777+00:00"
+}
