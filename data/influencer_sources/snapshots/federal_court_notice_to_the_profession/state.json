@@ -1,5 +1,5 @@
 {
-  "last_error": "RetryableError: All fetch attempts failed for RSS Sign up to IP National Practice Area and the RSS feed",
-  "last_error_at": "2026-06-08T06:55:58.023110+00:00",
-  "consecutive_failures": 40
+  "last_error": "PermanentError: Chrome WebDriver failed to launch: Message: Service /home/runner/.wdm/drivers/chromedriver/linux64/149.0.7827.55/chromedriver-linux64/chromedriver unexpectedly exited. Status code was: 1\n. Ensure google-chrome-stable and webdriver-manager are installed.",
+  "last_error_at": "2026-06-09T06:22:12.868565+00:00",
+  "consecutive_failures": 41
 }
