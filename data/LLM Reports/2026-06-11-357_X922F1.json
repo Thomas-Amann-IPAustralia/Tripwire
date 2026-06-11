@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the IPAustralia patent manual concerning prior art, best method, manner of manufacture, and other substantive patent examination topics, as well as updates to trademark manuals and Federal Circuit and Family Court fees and procedures. However, none of the changes specifically address or alter the opposition process timelines, fees, procedural steps, or outcomes described in the IPFR page. The IPFR page content about challenging a new or amended patent opposition process, including the 3-month opposition window, fees, hearing procedures, and possible outcomes, remains accurate and unaffected by these upstream changes. The fee tables updated in the Federal Circuit and Family Court fees do not correspond to IP Australia opposition fees and thus do not impact the IPFR page content. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 17145,
+  "completion_tokens": 194,
+  "total_tokens": 17339,
+  "processing_time_seconds": 7.367225514999973,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.847656+00:00"
+}

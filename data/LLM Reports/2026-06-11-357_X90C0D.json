@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and accessibility fixes in the Plant Breeder's Rights (PBR) manual, including clarifications on customer engagement, agent nomination, scope of PBR, and procedural details. The IPFR page 'What does IP protection mean for my business?' provides a general overview of IP protection for small businesses, mentioning PBR only in passing as one of the IP rights examined by IP Australia. There are no specific details, dates, fees, or procedural steps about PBR in the IPFR page that are contradicted or outdated by the upstream changes. The changes are mostly internal manual updates and accessibility fixes that do not affect the general guidance or accuracy of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2640,
+  "completion_tokens": 174,
+  "total_tokens": 2814,
+  "processing_time_seconds": 2.635993138999993,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851973+00:00"
+}

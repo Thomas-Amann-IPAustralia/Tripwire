@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the IPAustralia PBR manual webpage, mainly involving formatting fixes, link corrections, accessibility improvements, and the addition of a 'What may be protected by PBR?' section. There is no indication that any substantive legal or procedural information relevant to PBR infringement has changed. The IPFR page content on PBR infringement remains accurate and up to date based on the provided change document. Therefore, no amendments are required to the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3426,
+  "completion_tokens": 130,
+  "total_tokens": 3556,
+  "processing_time_seconds": 2.0495589160000236,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851416+00:00"
+}
