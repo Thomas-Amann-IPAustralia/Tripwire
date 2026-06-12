@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.auda.org.au/au-domain-names/au-rules-and-policies/au-dispute-resolution-policy-audrp-2016-01/",
-  "last_error_at": "2026-06-11T06:57:04.320419+00:00",
-  "consecutive_failures": 45
+  "last_error_at": "2026-06-12T06:45:19.974814+00:00",
+  "consecutive_failures": 46
 }
