@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X4DD92",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to specific third-party platforms' procedures for handling IP infringement reports (Amazon Brand Registry's patent evaluation process and eBay's VeRO program). The IPFR page 'Assert your rights, as a response to an accusation' provides general guidance on responding to IP infringement accusations and enforcement options without detailing specific platform procedures or processes. There are no specific references, procedural steps, or legal thresholds in the IPFR page that are contradicted or rendered outdated by the changes in the Amazon or eBay program descriptions. The changes are about platform-specific mechanisms and do not affect the general advice or information given on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7776,
+  "completion_tokens": 161,
+  "total_tokens": 7937,
+  "processing_time_seconds": 2.4453771739999866,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.706335+00:00"
+}

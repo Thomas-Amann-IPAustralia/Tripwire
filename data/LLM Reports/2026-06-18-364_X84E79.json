@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the ACCC public registers and minor formatting adjustments on WIPO treaty pages. None of these changes affect the specific procedural details, timeframes, or legal requirements described in the IPFR page about the Notice of Objection scheme for stopping infringing goods entering Australia. The IPFR page content remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3711,
+  "completion_tokens": 107,
+  "total_tokens": 3818,
+  "processing_time_seconds": 1.5670691919999626,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.710884+00:00"
+}

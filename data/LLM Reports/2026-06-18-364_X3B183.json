@@ -1,0 +1,21 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X3B183",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page discusses the role and expectations of lawyers and attorneys, including patent and trade mark attorneys. The upstream changes from the Trans-Tasman IP Attorneys Board webpage provide updated and detailed information about when complaints can be made against IP attorneys, the complaint process, and the limitations of disciplinary actions. This is directly relevant to the IPFR page's content about attorneys and their professional conduct. Incorporating this updated information would improve the accuracy and completeness of the IPFR page, especially for small business owners who may need to understand how to address issues with attorneys. The changes do not affect the Defence and Veterans\u2019 Service Commissioner Bill content, which is unrelated to the IPFR page. Therefore, the IPFR page should be amended to include a section or note about the complaint process against IP attorneys as per the updated Trans-Tasman IP Attorneys Board information.",
+  "suggested_changes": [
+    "Add a new section explaining that complaints against registered Australian trade marks attorneys or Trans-Tasman patent attorneys can be made to the Trans-Tasman IP Attorneys Board when an attorney breaches the Code of Conduct or acts below expected standards of competence, diligence, or character.",
+    "Include details that the complaint process involves investigation by the Board and possible referral to a disciplinary tribunal, which can impose penalties such as suspension or cancellation of registration or require additional training.",
+    "Clarify that the Board and tribunal cannot order attorneys to pay damages or force resolution actions, and that compensation claims must be pursued through other avenues such as court action.",
+    "Advise users that if their complaint is about a lawyer who is not a registered attorney, they should contact the relevant law society where the lawyer practices."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4748,
+  "completion_tokens": 365,
+  "total_tokens": 5113,
+  "processing_time_seconds": 4.5182011309998416,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.707884+00:00"
+}

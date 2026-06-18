@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page 'How does IP Australia compare to other government services?' provides a general overview of IP Australia and other government agencies relevant to small businesses, focusing on their roles and how they help. The two upstream changes relate to (1) Defence and Veterans\u2019 Service Commissioner legislative developments, which are unrelated to IP Australia or its services, and (2) an update to the ASEAN-Australia-New Zealand Free Trade Agreement (AANZFTA) describing trade agreement enhancements. While the second change involves trade and business, it does not affect the description or role of IP Australia or the other agencies listed on the IPFR page. The IPFR page does not mention trade agreements or tariff preferences, so no specific content is outdated or inaccurate due to these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3420,
+  "completion_tokens": 186,
+  "total_tokens": 3606,
+  "processing_time_seconds": 2.5890780559998348,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.709781+00:00"
+}

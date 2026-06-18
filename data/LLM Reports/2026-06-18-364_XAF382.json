@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to eBay's intellectual property policy webpage, focusing on practical listing guidelines to avoid IP infringement on their platform, such as proper use of brand names, third-party content, and international selling restrictions. While related to IP infringement generally, these guidelines do not alter or contradict any specific factual or legal information presented in the IPFR page about what constitutes IP infringement under Australian law. The IPFR page provides a broad, foundational explanation of infringement concepts, rights, and defences without referencing platform-specific rules or listing practices. Therefore, no update to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3922,
+  "completion_tokens": 158,
+  "total_tokens": 4080,
+  "processing_time_seconds": 2.268612994999785,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.709394+00:00"
+}
