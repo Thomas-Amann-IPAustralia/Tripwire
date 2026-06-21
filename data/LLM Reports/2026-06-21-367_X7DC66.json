@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change documents a technical connectivity issue with the ASBFEO website (connection closed error) and does not contain any substantive content changes related to intellectual property, business names, or trade marks. The IPFR page discusses the differences and benefits of business name registration versus trade mark registration, none of which are affected by this connectivity issue. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2266,
+  "completion_tokens": 113,
+  "total_tokens": 2379,
+  "processing_time_seconds": 1.476087393000057,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.914550+00:00"
+}
