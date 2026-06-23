@@ -1,13 +1,6 @@
 {
-  "probe_signals": {
-    "etag": "\"1781139786\"",
-    "last_modified": "Thu, 11 Jun 2026 01:03:06 GMT",
-    "content_length": "127120"
-  },
-  "last_checked": "2026-06-11T07:04:04.120191+00:00",
-  "previous_hash": "dbc51c2786ed2bbc864c057d327ca44dc105022465f06f216086900dd191a412",
-  "previous_text": "This site can\u2019t be reached\nwww.asbfeo.gov.au unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\n \n Check your Internet connection\n Check any cables and reboot any routers, modems, or other network\n devices you may be using.\n Allow Chrome to access the network in your firewall or antivirus\n settings.\n If it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\n If you use a proxy server\u2026\n Go to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\n www.asbfeo.gov.au unexpectedly closed the connection.",
-  "last_error": "RetryableError: All fetch attempts failed for https://www.asbfeo.gov.au/disputes-assistance/five-steps-resolve-your-dispute",
-  "last_error_at": "2026-06-22T07:30:38.376032+00:00",
-  "consecutive_failures": 5
+  "probe_signals": {},
+  "last_checked": "2026-06-23T06:12:28.799827+00:00",
+  "previous_hash": "164abdd2b540ee029c77c8274aaaefe61547511734ace19a06b223e490c54526",
+  "previous_text": "You don't have permission to access this resource.Server unable to read htaccess file, denying access to be safe\nAdditionally, a 403 Forbidden error was encountered while trying to use an ErrorDocument to handle the request."
 }

@@ -1,0 +1,25 @@
+--- previous+++ current@@ -1,24 +1,2 @@-This site can’t be reached
+-www.asbfeo.gov.au unexpectedly closed the connection.
+-Try:
+-- Checking the connection
+-- Checking the proxy and the firewall
+-ERR_CONNECTION_CLOSED
+- 
+- Check your Internet connection
+- Check any cables and reboot any routers, modems, or other network
+- devices you may be using.
+- Allow Chrome to access the network in your firewall or antivirus
+- settings.
+- If it is already listed as a program allowed to access the network, try
+- removing it from the list and adding it again.
+- If you use a proxy server…
+- Go to
+- the Chrome menu >
+- Settings
+- >
+- System
+- >
+- Open your computer's proxy settings
+- and make sure your configuration is set to "no proxy" or "direct."
+- www.asbfeo.gov.au unexpectedly closed the connection.+You don't have permission to access this resource.Server unable to read htaccess file, denying access to be safe
++Additionally, a 403 Forbidden error was encountered while trying to use an ErrorDocument to handle the request.
