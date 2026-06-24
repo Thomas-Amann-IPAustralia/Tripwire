@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-24-370",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news feed update from IP Australia containing various news items about patents, trade marks, and IP reports, but it does not provide any specific changes to the processes, definitions, or instructions related to checking if someone else owns a word, logo, or idea. The IPFR page content focuses on guiding users to check IP ownership via registers and tools, and the change does not affect any specific factual information, procedural steps, or references in the page. Therefore, no update to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2288,
+  "completion_tokens": 143,
+  "total_tokens": 2431,
+  "processing_time_seconds": 2.3174570399999084,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-24T06:22:08.485997+00:00"
+}

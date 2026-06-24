@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-24-370",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news webpage update listing recent IP Australia news items, including new initiatives, reports, and features related to IP. The IPFR page is about contributor guidelines for blog posts and does not contain specific factual details, dates, or procedural information that are contradicted or outdated by the news updates. The news items do not affect the accuracy or currency of the contributor guidelines content, which is about submission process, content style, and editorial policy.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3032,
+  "completion_tokens": 124,
+  "total_tokens": 3156,
+  "processing_time_seconds": 1.759909805999996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-24T06:22:08.486123+00:00"
+}

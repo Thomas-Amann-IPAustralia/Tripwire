@@ -8,6 +8,6 @@
   "previous_hash": "da8c86c84b501058667befa4e21fb744dba5023fe392db6ebbf89f3df3c9f1f7",
   "previous_text": "This site can\u2019t be reached\nwww.afp.gov.au took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\ndevices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\nsettings.\nIf it is already listed as a program allowed to access the network, try\nremoving it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\nthe Chrome menu >\nSettings\n>\nSystem\n>\nOpen your computer's proxy settings\nand make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.afp.gov.au took too long to respond.",
   "last_error": "RetryableError: All fetch attempts failed for https://www.afp.gov.au/crimes/fraud-and-corruption",
-  "last_error_at": "2026-06-23T06:14:44.442617+00:00",
-  "consecutive_failures": 13
+  "last_error_at": "2026-06-24T06:16:35.837784+00:00",
+  "consecutive_failures": 14
 }
