@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://www.fedcourt.gov.au/law-and-practice/national-practice-areas/ip",
-  "last_error_at": "2026-06-24T06:18:15.520585+00:00",
-  "consecutive_failures": 57
+  "last_error_at": "2026-06-25T06:25:29.886576+00:00",
+  "consecutive_failures": 58
 }

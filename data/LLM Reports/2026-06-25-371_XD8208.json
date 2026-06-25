@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources relate primarily to updates in the IPAustralia manuals concerning amendments to terms, accessibility fixes, and updates following a High Court case related to honest concurrent use, none of which directly affect the specific procedural details, timeframes, fees, or outcomes described in the IPFR page about removing a trade mark from the register for non-use. There is no indication that the statutory timeframes, fees, or procedural steps for removal applications have changed. The changes are mostly editorial or relate to other topics such as design registrations or concurrent use, which do not impact the accuracy of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4286,
+  "completion_tokens": 157,
+  "total_tokens": 4443,
+  "processing_time_seconds": 2.1235231069999827,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.563597+00:00"
+}

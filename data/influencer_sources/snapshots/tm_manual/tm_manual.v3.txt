@@ -57,6 +57,26 @@
 Recent updates
 | Item amended | Date Amended | Amended Reason |
 |---|---|---|
+| 13.7. Examples of Invalid Series Trade Marks | Whole part reviewed and content updated, including examples. |
+|
+| 13.3. Allowable Differences: Paragraphs 51(1)(a),(b) and (c) | Whole part reviewed and content updated, including examples. |
+|
+| 13.6. Examples of Valid Series Trade Marks | Whole part reviewed and content updated, including examples. |
+|
+| 13.9. Colour Endorsements | Whole part reviewed and content updated, including examples. |
+|
+| 13.8. Divisional Applications from Series | Whole part reviewed and content updated, including examples. |
+|
+| 13.1. Series of Trade Marks - Act | Whole part reviewed and content updated, including examples. |
+|
+| 13.5. Paragraph 51(1)(a) Statements or Representations as to Goods or Services | Whole part reviewed and content updated, including examples. |
+|
+| 13.2. Material Particulars | Whole part reviewed and content updated, including examples. |
+|
+| 13.4. Applying Requirements for Material Particulars and Provisions of Paragraphs 51(1)(a), (b) and (c) | Whole part reviewed and content updated, including examples. |
+|
+| 13. Landing Page | Whole part reviewed and content updated, including examples. |
+|
 | Part 34.7. Evidence required for defensive applications | Part 34.7 reviewed and updated, including references to recent case law and hearing decisions. |
 |
 | 14. Annex A13 List of terms too broad for classification | Minor updates to suggested alternatives to reflect Nice 13 changes. |
@@ -69,30 +89,10 @@ Recent updates
 |
 | 32A. Annex 1 - Applicable Sections of the PBR Act | Content updated - references to s 27 of the PBR Act removed |
 |
-| 60.4.16 Extension of Time to File Notice of Opposition to Protection | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
+| 60.4.5 Expedite | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 60.4.21 Opposition to Cessation of Protection because of Non-Use | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
+| 60.4.8 Reporting on an IRDA | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 60.4.19 Cessation or Limitation of Protection | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
+| 60.4.12 Extension of Time | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
 |
-| 60. Glossary | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.4.26 Replacement | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.2.4 Certifying Process | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.3. The Basic Application or Basic Registration (Basic Trade Mark) | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.4.2 Record of International Registrations | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.4.4 Indexing | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.4.10 Amendments | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.4.11 Deferment of Acceptance | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.4.17 Opposition to Protection | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.4.13 Final decision on provisional refusal based on examination | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
-|
-| 60.4.20 Cessation of Protection because of Non-Use | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
+| 60.4.15 Revocation of Acceptance | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
