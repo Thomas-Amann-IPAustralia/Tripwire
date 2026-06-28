@@ -1,5 +1,5 @@
 {
   "last_error": "RetryableError: All fetch attempts failed for https://m.shein.com/au/copyright-noticeam-a-379.html",
-  "last_error_at": "2026-06-27T06:04:54.618943+00:00",
-  "consecutive_failures": 60
+  "last_error_at": "2026-06-28T06:30:20.049470+00:00",
+  "consecutive_failures": 61
 }
