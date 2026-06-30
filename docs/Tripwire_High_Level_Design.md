@@ -2,7 +2,11 @@
 ### IP First Response Autonomous Change Monitoring Pipeline
 **IP Australia | Internal Working Document**
 **Date:** 30 June 2026
-**Status:** Draft
+**Status:** Draft — architectural review revision
+
+---
+
+> **Revision note (architectural review).** This revision reconciles the draft against the repository as the authoritative source and aligns the section hierarchy to the HLD template. Material corrections verified against the codebase: monitored source count 157 → **156** (54 FRL, 97 webpages, 5 RSS, per `source_registry.csv`); FRL API source count "55+" → **54**; the SQLite store has **10 tables**, with the chunk table correctly named `chunks` and the `ingestion_runs` audit table added (per `ingestion/db.py`); live-corpus scale stated as 139 IPFR pages (130 active); and the manual `publish-dashboard-data-release.yml` workflow added to the Implementation View. Structurally, the Sequence Diagram is nested under Component View, and Architecture Decisions, Risks and Issues, and Financial Impact are placed under Solution Design, matching the template. Per-section confidence summaries flag where a change was made; items that could not be completed from the repository alone are listed in the final section.
 
 ---
 
@@ -20,11 +24,11 @@ Tripwire is a nine-stage filter-funnel pipeline that monitors authoritative Inte
 
 The IP First Response (IPFR) website, hosted at `ipfirstresponse.ipaustralia.gov.au`, provides accessible, plain-language IP guidance to Australian businesses and the public. Its accuracy depends on keeping pace with a broad and rapidly evolving landscape of authoritative sources: Acts of Parliament registered on the Federal Register of Legislation (FRL), associated Regulations, IP Australia practice manuals, court practice notes, WIPO publications, and a range of government and third-party guidance pages.
 
-Maintaining accuracy across this landscape requires ongoing monitoring and content updates. Without automation, content owners must manually check ~157 sources across varying cadences, assess whether each change is substantively relevant to IPFR guidance, and decide what (if anything) needs to be updated. This is time-consuming, error-prone, and scales poorly as both the source landscape and the IPFR corpus grow.
+Maintaining accuracy across this landscape requires ongoing monitoring and content updates. Without automation, content owners must manually check 156 sources across varying cadences, assess whether each change is substantively relevant to IPFR guidance, and decide what (if anything) needs to be updated. This is time-consuming, error-prone, and scales poorly as both the source landscape and the IPFR corpus grow.
 
 Tripwire addresses this by automating the detection-to-notification chain. It answers a progressive chain of questions — each more expensive to compute than the last — and delivers consolidated, evidence-backed amendment suggestions directly to content owners when a substantive, relevant change is detected.
 
-**Confidence summary:** The business problem is clearly and explicitly stated in the system plan (Section 1) and is consistent with the source registry (157 monitored sources) and the IPFR site reference throughout the codebase. **Confidence: 9/10**
+**Confidence summary:** The business problem is clearly and explicitly stated in the system plan (Section 1) and is consistent with the source registry and the IPFR site reference throughout the codebase. *Reviewer correction:* the source count was reduced from 157 to **156** — `source_registry.csv` contains 156 data rows (verified by parsing the CSV: 54 FRL, 97 webpages, 5 RSS); the original figure had counted the header row. **Confidence: 10/10**
 
 ---
 
@@ -32,7 +36,7 @@ Tripwire addresses this by automating the detection-to-notification chain. It an
 
 #### In Scope
 
-- Automated daily monitoring of the 157 influencer sources registered in `data/influencer_sources/source_registry.csv`, spanning:
+- Automated daily monitoring of the 156 influencer sources registered in `data/influencer_sources/source_registry.csv` (54 Federal Register of Legislation entries, 97 government and third-party webpages, 5 RSS feeds), spanning:
   - Federal Register of Legislation (FRL) sources: Acts and Regulations accessed via the FRL REST API
   - Government and third-party webpages (IP Australia, courts, WIPO, ASBFEO, e-commerce platforms, etc.)
   - RSS feeds (Federal Court practice notes, WIPO news, EUIPO enforcement news)
@@ -54,7 +58,7 @@ Tripwire addresses this by automating the detection-to-notification chain. It an
 - Training or fine-tuning of ML models
 - Replacement or modification of the IPFR content management system
 
-**Confidence summary:** In-scope items are verifiable from the source registry CSV, system plan, codebase, and GitHub Actions workflows. Out-of-scope items are inferred from the system's architecture (human-in-the-loop notification model, no CMS integration) and the plan's explicit exclusions. **Confidence: 9/10**
+**Confidence summary:** In-scope items are verifiable from the source registry CSV (156 sources), system plan, codebase, and GitHub Actions workflows. Out-of-scope items are inferred from the system's architecture (human-in-the-loop notification model, no CMS integration) and the plan's explicit exclusions. **Confidence: 9/10**
 
 ---
 
@@ -83,7 +87,7 @@ Tripwire addresses this by automating the detection-to-notification chain. It an
 
 | Requirement Statement | Priority (MoSCoW) |
 |---|---|
-| The pipeline must complete within 30 minutes per run under expected load (~157 sources, ~25 changes detected, ~5 sources reaching Stage 5) | Must |
+| The pipeline must complete within 30 minutes per run under expected load (156 sources; the plan estimates ~25 pass Stage 1, ~10 pass Stage 2, and ~5 reach Stage 5) | Must |
 | The system must fail-closed: uncertain or unclassifiable signals must be escalated, never silently dropped | Must |
 | All credentials and secrets must be stored as encrypted GitHub Actions secrets, never in version-controlled files | Must |
 | The system must be deployable without a dedicated server, using only GitHub Actions for compute | Must |
@@ -95,7 +99,7 @@ Tripwire addresses this by automating the detection-to-notification chain. It an
 | The system should tolerate individual source failures without blocking processing of other sources | Must |
 | The dashboard must require authentication before exposing any data | Must |
 
-**Confidence summary:** Functional requirements are derived directly from the system plan's stage specifications and the pipeline implementation. Non-functional requirements are evidenced in code (`timeout-minutes`, WAL mode, synchronous-only Python constraint, single YAML config, `try/except` per-source isolation), GitHub Actions workflow configuration, and the system plan's design decisions. **Confidence: 8/10**
+**Confidence summary:** Functional requirements are derived directly from the system plan's stage specifications and the pipeline implementation. Non-functional requirements are evidenced in code (`timeout-minutes`, WAL mode, synchronous-only Python constraint, single YAML config, `try/except` per-source isolation), GitHub Actions workflow configuration, and the system plan's design decisions; the load estimates trace to the runtime budget in Section 6.6 of the plan. *Reviewer note:* the template directs authors to cross-reference the IP Australia Enterprise NFR catalogue. That catalogue is not present in the repository, so the NFRs above are derived from the system's own constraints and design decisions rather than mapped to enterprise NFR identifiers — an Enterprise Architect should complete that mapping. **Confidence: 8/10**
 
 ---
 
@@ -136,7 +140,7 @@ The following principles govern the solution design. These are drawn from the ex
 | System | Type | Role in Solution | Support / Licensing |
 |---|---|---|---|
 | **IP First Response website** (`ipfirstresponse.ipaustralia.gov.au`) | Internal — IP Australia | Source of the monitored IPFR content corpus; scraped daily by the ingestion pipeline | IP Australia owned; existing system |
-| **Federal Register of Legislation (FRL) API** (`api.prod.legislation.gov.au`) | External — Attorney-General's Department | Source of structured legislative change information; accessed via official REST API for 55+ legislation sources | Public API; no licensing required; breaking changes possible without notice |
+| **Federal Register of Legislation (FRL) API** (`api.prod.legislation.gov.au`) | External — Attorney-General's Department | Source of structured legislative change information; accessed via official REST API for the 54 Federal Register of Legislation sources | Public API; no licensing required; breaking changes possible without notice |
 | **OpenAI API** | External — commercial | LLM assessment (Stage 8); produces structured JSON verdicts on IPFR amendment requirements | Requires API key (OPENAI_API_KEY); commercial pricing applies; data processing terms apply |
 | **Gmail (SMTP / IMAP)** | External — Google | SMTP for outbound notification and health alert emails; IMAP for ingesting feedback replies | Requires Gmail App Passwords; subject to Google's terms and rate limits |
 | **GitHub Actions** | External — GitHub | All pipeline compute (ingestion, main pipeline, feedback ingestion); persists state via Git commits | Subject to GitHub Actions minutes limits (free for public repos; organisational plan otherwise) |
@@ -195,7 +199,7 @@ Tripwire augments the IP Australia **Content Management** capability by introduc
 
 The pipeline operates across three capability layers:
 
-1. **Source Monitoring:** Automated, scheduled observation of 157 registered influencer sources across legislation, government webpages, and RSS feeds. Replaces manual monitoring effort.
+1. **Source Monitoring:** Automated, scheduled observation of 156 registered influencer sources across legislation, government webpages, and RSS feeds. Replaces manual monitoring effort.
 2. **Relevance Assessment:** Multi-stage semantic and lexical comparison between detected changes and the existing IPFR content corpus, surfacing only the changes most likely to require editorial attention.
 3. **Editorial Support:** Structured, LLM-generated amendment suggestions with supporting evidence (scoring data, diff text, source links) delivered directly to content owners. Includes a feedback loop for continuous quality improvement.
 
@@ -221,9 +225,9 @@ The following diagram describes the logical system components and their relation
 │  └─────────────┘   └──────────────┘   └──────────────┘   └──────────────┘  │
 │         ↓                   ↓                  ↓                  ↓          │
 │  ┌───────────────────────────────────────────────────────────────────────┐  │
-│  │  ipfr.sqlite  (pages, page_chunks, entities, keyphrases,             │  │
-│  │                graph_edges, sections, pipeline_runs,                  │  │
-│  │                deferred_triggers, llm_assessments)                    │  │
+│  │  ipfr.sqlite  (pages, chunks, entities, keyphrases, graph_edges,      │  │
+│  │                sections, pipeline_runs, deferred_triggers,            │  │
+│  │                llm_assessments, ingestion_runs)   [10 tables]         │  │
 │  └───────────────────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────────────────┘
                                         │  (corpus read by main pipeline)
@@ -299,8 +303,8 @@ The following diagram describes the logical system components and their relation
 | `src/health.py` | IP Australia (Tripwire team) | Evaluates post-run health conditions; sends operator alert emails | Unknown |
 | `src/observability.py` | IP Australia (Tripwire team) | Queries SQLite `pipeline_runs`; generates weekly score distribution report | Unknown |
 | `tripwire_config.yaml` | IP Australia (Tripwire team) | Single version-controlled configuration file; all thresholds and parameters; validated at pipeline start | Unknown |
-| `data/influencer_sources/source_registry.csv` | IP Australia (content team) | Registry of all 157 monitored sources: URL, type, importance (0–1), check frequency, force_selenium flag | Unknown |
-| `data/ipfr_corpus/ipfr.sqlite` | IP Australia (Tripwire team) | SQLite corpus database: 8 tables including pages, chunks, embeddings, NER, graph edges, run logs | Unknown |
+| `data/influencer_sources/source_registry.csv` | IP Australia (content team) | Registry of all 156 monitored sources: URL, type, importance (0–1), check frequency, force_selenium flag | Unknown |
+| `data/ipfr_corpus/ipfr.sqlite` | IP Australia (Tripwire team) | SQLite corpus database: 10 tables including pages, chunks, embeddings, NER, graph edges, run logs, and LLM assessments | Unknown |
 | `dashboard/` — Monitoring Dashboard | IP Australia (Tripwire team) | Node 20 / Express API + React/Vite frontend; hosted on Render; Basic Auth protected; displays run history, source health, alerts, config | Unknown |
 | FRL API (`api.prod.legislation.gov.au`) | Attorney-General's Department | Provides structured legislative change information for FRL sources | External |
 | OpenAI API | OpenAI | LLM assessment service (Stage 8); accepts structured prompts, returns JSON verdicts | External |
@@ -312,11 +316,9 @@ This is a net-new system. There is no existing automated monitoring capability b
 
 The phased implementation plan in the system plan (Phases 1–5) provides the transitional roadmap. At time of writing, the system has completed all nine pipeline stages and is running in live mode (`observation_mode: false`). The deferred Phase 5 tasks (threshold calibration from feedback data, grid search on relevance weights, internal link graph edges) require accumulated production data before they can be executed.
 
-**Confidence summary:** The component table is exhaustively evidenced by the actual source files in `src/` and `ingestion/`, the GitHub Actions workflows, the system plan, and the dashboard DEPLOY.md. Target State Alignment cannot be completed without IP Australia's roadmap documents. **Confidence: 9/10** (for components described); **0/10** (for Target State Alignment — not completable without roadmap documents).
+**Confidence summary:** The component table is exhaustively evidenced by the actual source files in `src/` and `ingestion/`, the GitHub Actions workflows, the system plan, and the dashboard DEPLOY.md. *Reviewer corrections:* the SQLite store holds **10 tables** — the chunk table is named `chunks` (not `page_chunks`) and an `ingestion_runs` audit table was added to the listing, both confirmed against `ingestion/db.py`; the source count is **156**. Target State Alignment cannot be completed without IP Australia's roadmap documents. **Confidence: 9/10** (for components described); **0/10** (for Target State Alignment — not completable without roadmap documents).
 
----
-
-### Sequence Diagram
+#### Sequence Diagram
 
 The following describes the primary processing flow for a single influencer source that triggers an IPFR page amendment alert.
 
@@ -374,12 +376,12 @@ The system manages the following categories of information:
 
 | Asset | Location | Format | Description |
 |---|---|---|---|
-| IPFR corpus database | `data/ipfr_corpus/ipfr.sqlite` | SQLite (binary, WAL mode) | 8 tables: `pages`, `page_chunks`, `entities`, `keyphrases`, `graph_edges`, `sections`, `pipeline_runs`, `deferred_triggers`, `llm_assessments`. Committed to Git after each ingestion run. |
+| IPFR corpus database | `data/ipfr_corpus/ipfr.sqlite` | SQLite (binary, WAL mode) | 10 tables: `pages`, `chunks`, `entities`, `keyphrases`, `graph_edges`, `sections`, `pipeline_runs`, `deferred_triggers`, `llm_assessments`, `ingestion_runs`. Committed to Git after each ingestion run. |
 | Influencer source snapshots | `data/influencer_sources/snapshots/<source_id>/` | Plain text (`<source_id>.txt`), JSON (`state.json`), versioned text (`.v1.txt`–`.v6.txt`) | Current content snapshot and state (hash, last probe signals, last checked timestamp) for each monitored source. Committed after each pipeline run. |
 | LLM assessment reports | `data/LLM Reports/<run_id>_<page_id>.json` | JSON | One file per (run, IPFR page) pair with full LLM verdict, reasoning, suggested changes, token counts, and confidence. Committed after each run. |
 | Feedback log | `data/logs/feedback.jsonl` | JSONL | Structured feedback from content owner email replies: run_id, page_id, source_id, feedback category, free-text comment, ingestion timestamp. Appended by feedback ingestion workflow. |
 | IPFR sitemap | `data/ipfr_corpus/sitemap.csv` | CSV | Registry of IPFR pages: URL, title, page_id, snapshot link, last modified date, last checked date. |
-| Source registry | `data/influencer_sources/source_registry.csv` | CSV | 157 monitored sources: source_id, URL, title, type, importance, check_frequency, notes, force_selenium flag. |
+| Source registry | `data/influencer_sources/source_registry.csv` | CSV | 156 monitored sources: source_id, URL, title, type, importance, check_frequency, notes, force_selenium flag. |
 | Observation summaries | `data/logs/observation_summary_<run_id>.json` | JSON | Per-run score distributions and trigger counts during observation mode. |
 | Health alert fallback | `data/logs/health_alert_<run_id>.txt` | Plain text | Written when SMTP health alert cannot be delivered. |
 | Tripwire configuration | `tripwire_config.yaml` | YAML | All tuneable parameters; version-controlled. A snapshot is embedded in every `pipeline_runs.details` record. |
@@ -388,7 +390,7 @@ The system manages the following categories of information:
 
 ```
 pages           — IPFR page metadata, content, document embedding (BGE), status
-page_chunks     — Pre-chunked content with BGE chunk-level embeddings
+chunks          — Pre-chunked content with BGE chunk-level embeddings
 entities        — Named entities (ORG, PERSON, LAW, etc.) per IPFR page
 keyphrases      — YAKE keyphrases with IDF weights per IPFR page
 graph_edges     — Quasi-graph edges: type (embedding_similarity / entity_overlap / internal_link), weight
@@ -396,6 +398,7 @@ sections        — Heading hierarchy and character offsets per IPFR page
 pipeline_runs   — One row per (run, source): stage reached, outcome, triggered pages, full details JSON
 deferred_triggers — LLM-pending trigger bundles awaiting retry
 llm_assessments — LLM verdict, confidence, reasoning, suggested changes, token counts per (run, page)
+ingestion_runs  — Per-page audit log of each ingestion run: counts, status, warnings, duration
 ```
 
 #### Information Classification
@@ -425,7 +428,7 @@ A Privacy Impact Assessment (PIA) may still be required under IP Australia polic
 
 This is a net-new data capability. No existing data stores are being modified or replaced. The SQLite database and all data files are created and maintained entirely by the Tripwire pipeline. The existing IPFR website is read-only (scraped); its content management system is not integrated or modified.
 
-**Confidence summary:** The information view is comprehensively documented by the system plan (Section 9), the SQLite schema in `ingestion/db.py`, the pipeline's file I/O code, and the config YAML. Information Classification and Privacy Impact sections are honestly flagged as incomplete because they require Data Steward input that is not available in the repository. **Confidence: 8/10** (for what is described); **0/10** (for classification and PIA — not completable without Data Steward).
+**Confidence summary:** The information view is comprehensively documented by the system plan (Section 9), the SQLite schema in `ingestion/db.py`, the pipeline's file I/O code, and the config YAML. *Reviewer corrections:* the table list was updated to the actual schema in `ingestion/db.py` — 10 tables, with `chunks` (not `page_chunks`) and the addition of `ingestion_runs`. Information Classification and Privacy Impact sections are honestly flagged as incomplete because they require Data Steward input that is not available in the repository. **Confidence: 8/10** (for what is described); **0/10** (for classification and PIA — not completable without Data Steward).
 
 ---
 
@@ -488,6 +491,8 @@ External services (outbound from GitHub Actions runners):
 | LLM assessment | OpenAI API (gpt-4.1-mini, configurable) | Availability, cost, structured output |
 | Email delivery | Gmail / smtplib | Deliverability, App Password auth |
 | Web scraping | trafilatura + Selenium + Chrome | Boilerplate removal, JS-gate bypass |
+
+**Workflow inventory.** The repository defines four GitHub Actions workflows: three scheduled — `ipfr_ingestion.yml` (01:00 UTC daily), `tripwire.yml` (02:00 UTC daily), and `feedback_ingestion.yml` (every 6 hours) — plus one manual-only workflow, `publish-dashboard-data-release.yml` (`workflow_dispatch`), which packages `ipfr.sqlite`, `tripwire_config.yaml`, `source_registry.csv`, `feedback.jsonl`, and a snapshots tarball into a tagged GitHub Release that Render targets via its `GITHUB_RELEASE_TAG` setting. Separately, `tripwire.yml` itself publishes a timestamped `data-*` GitHub Release after every run and pings the Render deploy hook (`RENDER_DEPLOY_HOOK`), so the dashboard refreshes its data on redeploy.
 
 > **Note:** Target State Alignment against IP Australia's Enabling Platform Roadmaps could not be assessed.
 
@@ -593,12 +598,12 @@ The author recommends that an IT Security Risk Assessment using IP Australia's s
 
 ---
 
-## Architecture Decisions and Patterns
+### Architecture Decisions and Patterns
 
 | Decision | Options Considered | Decision Made | Rationale |
 |---|---|---|---|
 | **Compute platform** | Dedicated VM, AWS Lambda, Azure Functions, GitHub Actions | GitHub Actions | Zero marginal cost; ephemeral runners eliminate state management complexity; tight integration with version-controlled state persistence via Git commits |
-| **Database technology** | PostgreSQL, MongoDB, Redis + flat files, SQLite | SQLite | Sufficient for scale (~150 pages, ~157 sources); no server required; Git-compatible binary committed to repository for persistence and audit trail; WAL mode enables concurrent reads |
+| **Database technology** | PostgreSQL, MongoDB, Redis + flat files, SQLite | SQLite | Sufficient for scale (139 IPFR pages, 130 active; 156 sources); no server required; Git-compatible binary committed to repository for persistence and audit trail; WAL mode enables concurrent reads |
 | **State persistence** | External object storage (S3/Azure Blob), database service, Git commits | Git commits | Provides complete audit history of all snapshots and states; no external service dependency; natural fit for a GitHub Actions–hosted system |
 | **Semantic similarity approach** | BM25 only, embedding-only, cross-encoder only, bi-encoder → cross-encoder cascade | Bi-encoder (Stage 5) → cross-encoder (Stage 6) cascade with BM25 fusion | Bi-encoder is fast enough for all-pairs comparison against the full corpus; cross-encoder is reserved for the small filtered candidate set where precision matters most; BM25 adds lexical complementarity |
 | **Relevance signal fusion** | Hard rules (threshold on single signal), learned ranker, RRF | Weighted Reciprocal Rank Fusion (w_bm25=1.0, w_semantic=2.0) | RRF is robust to score scale differences between signals; no training data required; higher semantic weight reflects its greater discriminative value for this domain |
@@ -609,28 +614,28 @@ The author recommends that an IT Security Risk Assessment using IP Australia's s
 | **Notification method** | Webhook, ticketing system, email | Consolidated email (one per run) with structured feedback links | No external ticketing system required; email is the existing content owner workflow; mailto feedback links enable structured reply capture without a separate web form |
 | **Graph propagation** | No propagation, direct edge only, multi-hop with decay | Multi-hop propagation (max 3 hops, decay 0.45 per hop, degree normalisation) | Captures legislative dependency chains (e.g., Act → Regulation → IP Australia guidance); decay prevents excessive signal diffusion; degree normalisation prevents hub-node over-activation |
 
-**Confidence summary:** All decisions and their rationale are documented explicitly in the system plan (Section 3.4, 7.1, 7.4) or are directly verifiable from the configuration file and source code. No decisions have been inferred or speculated; all are traceable to documented artefacts. **Confidence: 9/10**
+**Confidence summary:** All decisions and their rationale are documented explicitly in the system plan (Section 3.4, 7.1, 7.4) or are directly verifiable from the configuration file and source code. No decisions have been inferred or speculated; all are traceable to documented artefacts. *Reviewer correction:* the scale figures in the database-technology row were updated to the live corpus (139 IPFR pages, 130 active, queried from `ipfr.sqlite`) and 156 sources. **Confidence: 9/10**
 
 ---
 
-## Risks and Issues
+### Risks and Issues
 
 > **Note:** Security risks are recorded separately under the Security View above.
 
-### Risks
+#### Risks
 
 | # | Risk | Likelihood | Impact | Mitigation | Owner |
 |---|---|---|---|---|---|
 | R-01 | **OpenAI API model deprecation or pricing change:** the `gpt-4.1-mini` model may be deprecated or repriced, requiring a model switch. | Medium | Medium | Model is configurable via `tripwire_config.yaml` without code change. Budget monitoring recommended. | System operator |
 | R-02 | **GitHub Actions runner IP blocking:** gov.au sources (notably IPFR itself and several government webpages) block GitHub Actions runner IP ranges, requiring Selenium with a residential proxy. If the proxy provider is unavailable, those sources cannot be scraped. | Medium | Medium | Selenium is the primary driver; residential proxy (`SCRAPER_PROXY_URL`) is a fallback. Sources that fail consecutively trigger health alerts. | System operator |
-| R-03 | **FRL API undocumented changes:** the FRL REST API (`api.prod.legislation.gov.au`) is not formally SLA'd to external consumers. Breaking changes could disable FRL explainer document retrieval (Stage 3) for all legislative sources. | Low–Medium | High (55+ sources affected) | Fallback to webpage diff implemented in `stage3_diff.py`; health alerts on consecutive failure. The Attorney-General's Department should be engaged if the API is relied upon operationally. | IP Australia / Business owner |
+| R-03 | **FRL API undocumented changes:** the FRL REST API (`api.prod.legislation.gov.au`) is not formally SLA'd to external consumers. Breaking changes could disable FRL explainer document retrieval (Stage 3) for all legislative sources. | Low–Medium | High (54 FRL sources affected) | Fallback to webpage diff implemented in `stage3_diff.py`; health alerts on consecutive failure. The Attorney-General's Department should be engaged if the API is relied upon operationally. | IP Australia / Business owner |
 | R-04 | **SQLite database size growth:** the Git repository approach for SQLite persistence has a practical limit of ~50 MB per file (above which Git LFS migration is required). Sustained daily ingestion over 12–24 months could breach this. | Low (short term) | Medium | System plan specifies Git LFS migration path (Section 7.2). `min_content_length: 500` and dedup thresholds help contain database growth. | System operator |
 | R-05 | **Hugging Face model withdrawal:** if `BAAI/bge-base-en-v1.5` or `gte-reranker-modernbert-base` are removed from Hugging Face Hub, cached weights will eventually expire and the pipeline will fail to load models. | Very low | High | Models are open-source; the community maintains mirrors. Consider archiving model weights in a controlled location (e.g., an S3 bucket or private GitHub release) as a long-term mitigation. | System operator |
 | R-06 | **Threshold miscalibration producing excessive false positives:** if the observation period is shortened or thresholds are not carefully calibrated from score distributions, the live pipeline may generate too many `CHANGE_REQUIRED` alerts, eroding content owner trust. | Medium | High | 4–8 week observation period mandated in system plan; manual snapshot alteration testing recommended; `observability.py` score distribution reports support calibration; feedback mechanism enables precision measurement. | Content owner / operator |
 | R-07 | **Gmail rate limiting or App Password revocation:** Google may revoke App Passwords or rate-limit SMTP/IMAP if the sending pattern is flagged as unusual. | Low | Medium | Email failures are detected and written to fallback files; health alerts provide a secondary notification path. The Gmail approach is suitable for current volume (tens of emails/month). | System operator |
 | R-08 | **Content owner email client incompatibility with mailto: feedback links:** some email clients (notably web-based clients in restricted government environments) do not honour `mailto:` links. | Low–Medium | Low | The feedback mechanism is a quality improvement tool, not a critical path. The system functions correctly without feedback. | Content owner |
 
-### Issues
+#### Issues
 
 | # | Issue | Status | Description |
 |---|---|---|---|
@@ -643,17 +648,17 @@ The author recommends that an IT Security Risk Assessment using IP Australia's s
 
 ---
 
-## Financial Impact
+### Financial Impact
 
 > **Incomplete — cost modelling requires input from the business owner and procurement team.**
 
 The following cost categories are identifiable from the system design:
 
-### Implementation Costs
+#### Implementation Costs
 
 The system is fully implemented (all nine pipeline stages are complete and operational). Implementation was conducted outside the scope of this document; no implementation cost estimate is provided here.
 
-### Ongoing Operational Costs
+#### Ongoing Operational Costs
 
 | Cost Item | Basis | Estimated Frequency | Notes |
 |---|---|---|---|
@@ -663,9 +668,9 @@ The system is fully implemented (all nine pipeline stages are complete and opera
 | **Residential proxy** | Per-GB or per-request pricing (provider-dependent) | Per use (only on Selenium fallback for blocked sources) | Proxy is only invoked when a direct Selenium request is WAF-blocked. Expected volume is low. |
 | **System operator time** | Human effort for threshold calibration, source registry maintenance, failure response | Estimated ~2–4 hours/month (Phase 5+, after initial calibration) | Based on runbook complexity and expected alert volumes. No formal estimate is available. |
 
-### Savings
+#### Savings
 
-Tripwire replaces manual monitoring effort across ~157 sources on varying check frequencies. A formal savings calculation would require the business owner to quantify:
+Tripwire replaces manual monitoring effort across 156 sources on varying check frequencies. A formal savings calculation would require the business owner to quantify:
 - Current FTE time spent on source monitoring
 - Time saved per alert through structured amendment suggestions vs. unguided review
 - Reduction in content accuracy errors attributable to faster change detection
