@@ -1,5 +1,5 @@
 # High Level Design — Tripwire
-### IP First Response Autonomous Change Monitoring Pipeline
+### Automated External Change Monitoring and Alerting Platform
 **IP Australia | Internal Working Document**
 **Date:** 30 June 2026
 **Status:** Draft
@@ -8,9 +8,9 @@
 
 ## Purpose
 
-This document describes the architectural design of Tripwire — an autonomous IP monitoring pipeline developed for IP Australia. It presents the solution through multiple architectural views to expose its concepts, constraints, and mechanics. It is not a statement of responsibilities or a deliverables list.
+This document describes the architectural design of Tripwire — an automated external change monitoring and alerting platform developed for IP Australia. It presents the solution through multiple architectural views to expose its concepts, constraints, and mechanics. It is not a statement of responsibilities or a deliverables list.
 
-Tripwire is a nine-stage filter-funnel pipeline that monitors authoritative Intellectual Property sources for substantive changes, determines whether those changes may require amendments to content on the IP First Response (IPFR) website, and delivers structured amendment suggestions and evidence to content owners.
+Tripwire is a nine-stage filter-funnel pipeline that continuously monitors a configurable set of authoritative external sources for substantive changes, assesses the relevance of those changes against a configurable content corpus, and delivers prioritised, explainable update recommendations to content owners. The primary deployment is for the IP First Response (IPFR) website, where the platform monitors IP legislation, regulatory guidance, and related external sources and maps changes to IPFR pages that may require amendment. The same platform is designed to serve additional IP Australia content domains — such as policy guidance or intranet content — through configuration changes alone, with no modification to the underlying system.
 
 ---
 
@@ -18,13 +18,15 @@ Tripwire is a nine-stage filter-funnel pipeline that monitors authoritative Inte
 
 ### Business Problem / Opportunity
 
-The IP First Response (IPFR) website, hosted at `ipfirstresponse.ipaustralia.gov.au`, provides accessible, plain-language IP guidance to Australian businesses and the public. Its accuracy depends on keeping pace with a broad and rapidly evolving landscape of authoritative sources: Acts of Parliament registered on the Federal Register of Legislation (FRL), associated Regulations, IP Australia practice manuals, court practice notes, WIPO publications, and a range of government and third-party guidance pages.
+The immediate use case is IP Australia's IP First Response (IPFR) website, hosted at `ipfirstresponse.ipaustralia.gov.au`, which provides accessible, plain-language IP guidance to Australian businesses and the public. Its accuracy depends on keeping pace with a broad and rapidly evolving landscape of authoritative sources: Acts of Parliament registered on the Federal Register of Legislation (FRL), associated Regulations, IP Australia practice manuals, court practice notes, WIPO publications, and a range of government and third-party guidance pages.
 
 Maintaining accuracy across this landscape requires ongoing monitoring and content updates. Without automation, content owners must manually check ~157 sources across varying cadences, assess whether each change is substantively relevant to IPFR guidance, and decide what (if anything) needs to be updated. This is time-consuming, error-prone, and scales poorly as both the source landscape and the IPFR corpus grow.
 
-Tripwire addresses this by automating the detection-to-notification chain. It answers a progressive chain of questions — each more expensive to compute than the last — and delivers consolidated, evidence-backed amendment suggestions directly to content owners when a substantive, relevant change is detected.
+The underlying problem is not unique to IPFR. Many of IP Australia's business functions depend on maintaining accurate information that reflects the current state of external sources — legislation, court decisions, regulatory guidelines, international IP standards — and keeping that information current through manual monitoring is often operationally costly and creates risk of content becoming outdated or inaccurate. Several internal stakeholders have already expressed interest in applying the same capability to their own content domains, validating the broader organisational opportunity.
 
-**Confidence summary:** The business problem is clearly and explicitly stated in the system plan (Section 1) and is consistent with the source registry (157 monitored sources) and the IPFR site reference throughout the codebase. **Confidence: 9/10**
+Tripwire addresses this by automating the detection-to-notification chain with a fully configurable pipeline. The sources it monitors and the content corpus it maps changes against are defined entirely in configuration files, meaning the same platform can serve different business units and content repositories with no changes to the underlying system. For the initial deployment, it answers a progressive chain of questions — each more expensive to compute than the last — and delivers consolidated, evidence-backed amendment suggestions directly to IPFR content owners when a substantive, relevant change is detected.
+
+**Confidence summary:** The IPFR-specific business problem is clearly and explicitly stated in the system plan (Section 1) and is consistent with the source registry (157 monitored sources). The broader organisational applicability is drawn from the technology acquisition overview provided by the business owner. **Confidence: 9/10**
 
 ---
 
@@ -32,7 +34,7 @@ Tripwire addresses this by automating the detection-to-notification chain. It an
 
 #### In Scope
 
-- Automated daily monitoring of the 157 influencer sources registered in `data/influencer_sources/source_registry.csv`, spanning:
+- Automated daily monitoring of the 157 influencer sources registered in `data/influencer_sources/source_registry.csv` for the IPFR deployment, spanning:
   - Federal Register of Legislation (FRL) sources: Acts and Regulations accessed via the FRL REST API
   - Government and third-party webpages (IP Australia, courts, WIPO, ASBFEO, e-commerce platforms, etc.)
   - RSS feeds (Federal Court practice notes, WIPO news, EUIPO enforcement news)
@@ -44,17 +46,19 @@ Tripwire addresses this by automating the detection-to-notification chain. It an
 - Observability: weekly score distribution reports and SQLite-backed run logging
 - Health alerting: automated email alerts to system operators on error rate thresholds, consecutive failures, LLM failures, and cross-encoder truncation events
 - Operational dashboard: Node/React application (hosted on Render) exposing run history, source status, alert counts, and configuration
+- **Platform configurability:** the source registry, content corpus, check schedules, relevance thresholds, notification recipients, and LLM model are all defined in configuration files. Deploying the platform for a new IP Australia content domain requires only new configuration — no changes to the pipeline code
 
 #### Out of Scope
 
-- Publication of content amendments to the IPFR website (human action is always required; the system recommends, never acts)
-- Monitoring of sources outside the registered source registry
+- Publication of content amendments to any content system (human action is always required; the system recommends, never acts)
+- Monitoring of sources outside the registered source registry for a given deployment
 - Access to any non-public or authenticated sources
 - Real-time (sub-daily) monitoring
 - Training or fine-tuning of ML models
-- Replacement or modification of the IPFR content management system
+- Replacement or modification of any content management system
+- Development of additional domain-specific deployments (these are in scope as future configuration exercises, not as platform changes)
 
-**Confidence summary:** In-scope items are verifiable from the source registry CSV, system plan, codebase, and GitHub Actions workflows. Out-of-scope items are inferred from the system's architecture (human-in-the-loop notification model, no CMS integration) and the plan's explicit exclusions. **Confidence: 9/10**
+**Confidence summary:** In-scope items are verifiable from the source registry CSV, system plan, codebase, and GitHub Actions workflows. The configurability item is evidenced directly by `tripwire_config.yaml` and the system plan's modularity statement. Out-of-scope items are inferred from the system's architecture (human-in-the-loop notification model, no CMS integration) and the plan's explicit exclusions. **Confidence: 9/10**
 
 ---
 
@@ -62,22 +66,27 @@ Tripwire addresses this by automating the detection-to-notification chain. It an
 
 #### Functional Requirements
 
-| Requirement Statement | Priority (MoSCoW) |
-|---|---|
-| The system must detect changes to all registered influencer sources on their configured schedules (daily, weekly, fortnightly, monthly, or quarterly) | Must |
-| The system must filter cosmetic or insignificant changes before performing semantic matching | Must |
-| The system must determine whether a detected change is relevant to the IPFR content corpus | Must |
-| The system must identify which specific IPFR pages are most likely affected by each relevant change | Must |
-| The system must deliver a single, consolidated notification email per run to the content owner, containing all amendment suggestions and supporting evidence | Must |
-| The system must produce a structured LLM verdict (`CHANGE_REQUIRED`, `NO_CHANGE`, or `UNCERTAIN`) for each IPFR page with grouped triggers | Must |
-| The system must operate in an observation mode (no LLM calls, no emails) for calibration during initial deployment | Must |
-| The system must store deferred trigger bundles and retry LLM assessment on the next run when the LLM API is unavailable | Must |
-| The system must send health alert emails to the operator when error thresholds are exceeded | Must |
-| The system must support a structured feedback mechanism so content owners can rate alert quality | Should |
-| The system must produce weekly observability reports summarising score distributions and alert volume | Should |
-| The system must expose a monitoring dashboard with run history, source status, and alert counts | Should |
-| The system should support the addition of new influencer sources without code changes (registry CSV only) | Should |
-| The system could support graph-propagated alerts to related IPFR pages through a quasi-graph of page relationships | Could |
+The following requirements are mapped to the platform requirements (R1–R12) defined in the technology acquisition overview.
+
+| Ref | Requirement Statement | Priority (MoSCoW) |
+|---|---|---|
+| R1 | The system must monitor authoritative external sources for changes on configured schedules (daily, weekly, fortnightly, monthly, or quarterly) | Must |
+| R2 | The system must detect when monitored source content changes | Must |
+| R3 | The system must filter cosmetic or insignificant changes before performing semantic matching | Must |
+| R4 | The system must identify what has changed and characterise the nature of the change (significance tagging: high / standard) | Must |
+| R5 | The system must assess the relevance of a detected change to the monitored content corpus | Must |
+| R6 | The system must identify which specific content assets are most likely affected by each relevant change | Must |
+| R7 | The system must consolidate related change events for the same content asset into a single actionable assessment unit | Must |
+| R8 | The system must generate content update recommendations with supporting evidence, delivered as a structured LLM verdict (`CHANGE_REQUIRED`, `NO_CHANGE`, or `UNCERTAIN`) with reasoning and suggested changes | Must |
+| R9 | The system must notify content owners of required actions via a single, consolidated email per run | Must |
+| R10 | The system must support configurable sources, content repositories, relevance thresholds, notification recipients, and monitoring schedules without code changes | Must |
+| R11 | The system must provide reporting and operational visibility through a monitoring dashboard, weekly observability reports, and SQLite-backed run logging | Should |
+| R12 | The system must support extension to additional IP Australia content domains through configuration alone, without platform changes | Must |
+| — | The system must operate in an observation mode (no LLM calls, no emails) for calibration during initial deployment | Must |
+| — | The system must store deferred trigger bundles and retry LLM assessment on the next run when the LLM API is unavailable | Must |
+| — | The system must send health alert emails to the operator when error thresholds are exceeded | Must |
+| — | The system should support a structured feedback mechanism so content owners can rate alert quality | Should |
+| — | The system could support graph-propagated alerts to related content assets through a quasi-graph of corpus relationships | Could |
 
 #### Non-Functional Requirements
 
@@ -106,6 +115,7 @@ The following principles govern the solution design. These are drawn from the ex
 | Architecture Principle | Compliance |
 |---|---|
 | **Fail-closed:** uncertain signals are escalated, never silently dropped. The LLM is instructed to produce `UNCERTAIN` rather than guess; deferred triggers are retried rather than discarded. | Compliant — implemented in Stage 8 prompt design, deferred trigger mechanism, and the `UNCERTAIN` verdict pathway in Stage 9 |
+| **Configuration-driven extensibility:** all sources, content repositories, thresholds, schedules, and notification recipients are defined in configuration files, not code. Deploying the platform for a new content domain requires no changes to the pipeline. | Compliant — enforced by `tripwire_config.yaml` and `source_registry.csv`; `config.py` validates the configuration at startup and rejects any invalid state |
 | **Single source of truth for configuration:** all thresholds, model identifiers, and behavioural parameters are in one version-controlled YAML file (`tripwire_config.yaml`). No configuration is duplicated across environment variables. | Compliant — enforced by `config.py` validation at pipeline start |
 | **Filter-funnel — cheap before expensive:** each pipeline stage acts as a gate. Expensive operations (semantic inference, LLM API calls) are only reached by the small fraction of changes that survive cheap upstream checks. | Compliant — evidenced by lazy model loading (Section 7.4 of system plan) and per-stage filtering throughout `pipeline.py` |
 | **Modularity:** one Python module per responsibility. The system is forkable: replace sources and corpus, adjust config, and the pipeline works for a different domain. | Compliant — one file per stage, with `ingestion/` and `src/` separation |
@@ -121,13 +131,14 @@ The following principles govern the solution design. These are drawn from the ex
 
 | User Group | Description | Interaction Mode |
 |---|---|---|
-| **Content owner(s)** | IP Australia staff responsible for maintaining the accuracy of the IPFR website. The primary consumers of Tripwire's output. | Receive daily consolidation emails with amendment suggestions; provide feedback via mailto reply links |
+| **IPFR content owner(s)** | IP Australia staff responsible for maintaining the accuracy of the IPFR website. The primary consumers of Tripwire's output in the initial deployment. | Receive daily consolidation emails with amendment suggestions; provide feedback via mailto reply links |
 | **System operator / administrator** | The technical custodian responsible for monitoring pipeline health, adjusting thresholds, adding sources, and responding to failures. May be the same person as the content owner during initial deployment. | Receive health alert emails; access the Render dashboard; run manual `workflow_dispatch` pipeline runs |
+| **Other IP Australia business units (future)** | Teams responsible for other IP Australia content assets — such as policy guidance, intranet content, or practice manuals — that need to remain aligned with a changing external environment. Multiple internal stakeholders have already expressed interest. Each new deployment would have its own content owner(s) and source registry, sharing the same platform. | Same interaction model as IPFR content owners, configured independently per deployment |
 | **IPFR end users (indirect)** | Members of the public, businesses, and IP practitioners who rely on the IPFR website for accurate, up-to-date IP guidance. | Not direct users of Tripwire; benefit from the improved accuracy and timeliness of IPFR content |
 
-> **Note:** I do not have information about the number of content owners, their locations, or specific working arrangements. This section should be expanded by the business owner to include headcount, distributed work considerations, and accessibility requirements for the email notification format.
+> **Note:** I do not have information about the number of content owners, their locations, or specific working arrangements. This section should be expanded by the business owner to include headcount, distributed work considerations, and accessibility requirements for the email notification format. The specific business units expressing interest in future deployments should also be named here.
 
-**Confidence summary:** The content owner and operator roles are clearly established by the notification model (Stage 9 email), the health alert configuration, and the runbooks. IPFR end users as indirect beneficiaries are inferred from the stated purpose. Exact headcount and location data are not available in the repository. **Confidence: 6/10**
+**Confidence summary:** The content owner and operator roles are clearly established by the notification model (Stage 9 email), the health alert configuration, and the runbooks. IPFR end users as indirect beneficiaries are inferred from the stated purpose. The "other business units" row reflects the statement in the technology acquisition overview that "several internal stakeholders have already expressed interest in the platform." Exact headcount, location data, and the names of interested business units are not available in the repository. **Confidence: 6/10**
 
 ---
 
@@ -191,17 +202,19 @@ The following principles govern the solution design. These are drawn from the ex
 
 ### Business Capability View
 
-Tripwire augments the IP Australia **Content Management** capability by introducing automated **IP Regulatory Intelligence** — continuous, evidence-based awareness of changes in the external IP legislative and guidance landscape, delivered in a form that enables efficient editorial decision-making.
+Tripwire augments the IP Australia **Content Management** capability by introducing automated **External Regulatory Intelligence** — continuous, evidence-based awareness of changes in the external legislative and guidance landscape, delivered in a form that enables efficient, governed editorial decision-making across content domains.
 
-The pipeline operates across three capability layers:
+In its primary deployment, the platform serves the IPFR content team. Its architecture is designed from the outset to be reusable: the sources it monitors and the content repository it maps changes against are defined entirely in configuration, meaning the same capability can be extended to other IP Australia content domains without platform changes. This positions Tripwire as shared infrastructure for content accuracy assurance across the organisation, not a single-purpose tool.
 
-1. **Source Monitoring:** Automated, scheduled observation of 157 registered influencer sources across legislation, government webpages, and RSS feeds. Replaces manual monitoring effort.
-2. **Relevance Assessment:** Multi-stage semantic and lexical comparison between detected changes and the existing IPFR content corpus, surfacing only the changes most likely to require editorial attention.
-3. **Editorial Support:** Structured, LLM-generated amendment suggestions with supporting evidence (scoring data, diff text, source links) delivered directly to content owners. Includes a feedback loop for continuous quality improvement.
+The platform operates across three capability layers, applicable to any deployment:
+
+1. **Source Monitoring:** Automated, scheduled observation of a configurable set of authoritative external sources across legislation, government webpages, and RSS feeds. Replaces manual monitoring effort.
+2. **Relevance Assessment:** Multi-stage semantic and lexical comparison between detected changes and the monitored content corpus, surfacing only the changes most likely to require editorial attention in a prioritised, explainable form.
+3. **Editorial Support:** Structured, LLM-generated update recommendations with supporting evidence (scoring data, diff text, source links) delivered directly to content owners through an auditable, transparent, and re-configurable process. Includes a feedback loop for continuous quality improvement.
 
 > **Note:** A formal reference to the IP Australia Business Capability Model could not be made, as that document was not available to this author. The Enterprise Architect should map these capability areas against the authoritative model.
 
-**Confidence summary:** The capability framing is directly derived from the system's stated purpose and the operational flow. The specific alignment with the IP Australia Business Capability Model cannot be verified without that document. **Confidence: 6/10**
+**Confidence summary:** The primary-deployment capability framing is directly derived from the system's stated purpose and the operational flow. The broader organisational positioning reflects the technology acquisition overview provided by the business owner. The specific alignment with the IP Australia Business Capability Model cannot be verified without that document. **Confidence: 6/10**
 
 ---
 
@@ -665,12 +678,14 @@ The system is fully implemented (all nine pipeline stages are complete and opera
 
 ### Savings
 
-Tripwire replaces manual monitoring effort across ~157 sources on varying check frequencies. A formal savings calculation would require the business owner to quantify:
-- Current FTE time spent on source monitoring
+For the IPFR deployment, Tripwire replaces manual monitoring effort across ~157 sources on varying check frequencies. A formal savings calculation would require the business owner to quantify:
+- Current FTE time spent on source monitoring for IPFR
 - Time saved per alert through structured amendment suggestions vs. unguided review
 - Reduction in content accuracy errors attributable to faster change detection
 
-This net present value calculation should be completed by the business owner against the cost estimates above.
+Beyond the IPFR deployment, the platform's configuration-driven extensibility means that incremental cost to serve additional IP Australia content domains is limited to configuration effort and any per-run increase in OpenAI API usage and GitHub Actions minutes — the platform infrastructure cost does not scale with the number of domains served. This shared-infrastructure model makes the return on the initial investment more favourable as additional business units adopt the platform.
+
+This net present value calculation should be completed by the business owner against the cost estimates above, incorporating projections for the additional business units that have already expressed interest.
 
 **Confidence summary:** All cost line items are identifiable from the system design (OpenAI API key requirement, GitHub Actions workflow, Render deployment, proxy configuration). No specific dollar figures have been provided for items where actual prices depend on usage volumes and negotiated rates. The savings case cannot be quantified without business owner input on current manual effort. **Confidence: 4/10** (for cost category identification); **0/10** (for total cost of ownership — requires business owner and procurement input).
 
@@ -685,7 +700,7 @@ The following sections were left incomplete because the required information doe
 | **Architecture Principles — Target State Alignment** (Component and Implementation Views) | Whether each component and technology platform aligns with IP Australia's Target State as defined by Business System Roadmaps and Enabling Platform Roadmaps | These documents are not in the repository |
 | **Architecture Principles — Enterprise Alignment** | Formal cross-reference against IP Australia's Enterprise Architecture Principles and Enterprise NFRs | These documents are not in the repository |
 | **Business Capability View — BCM Reference** | Mapping to the IP Australia Business Capability Model | Not in the repository |
-| **Impacted Users — Headcount and Locations** | Number of content owners, their locations, distributed work arrangements, accessibility requirements | Not in the repository |
+| **Impacted Users — Headcount, Locations, and Future Business Units** | Number of content owners, their locations, distributed work arrangements, accessibility requirements; names of business units expressing interest in future deployments | Not in the repository |
 | **Information Classification** | Formal data classification level for all information assets | Requires Data Steward consultation |
 | **Privacy Impact** | Whether a PIA is required; outcomes of PIA | Requires Data Steward and Privacy Officer consultation |
 | **Security Risk Assessment** | Formal risk assessment against the IT Security Risk Assessment template | Requires IT Security Advisor and Enterprise Security Architect; template link not in repository |
