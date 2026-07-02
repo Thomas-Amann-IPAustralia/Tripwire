@@ -57,7 +57,7 @@ The system's stated core principle — *"fail-closed: uncertain → escalate, ne
 | TW-08 | De-duplicate / throttle health alerts; verify health email delivery | 5 | 3 |
 | **B — Scraping robustness** | | | |
 | TW-09 | Fall back to Selenium on HTTP 403/blocked status codes, not just connection errors | 8 | 3 |
-| TW-10 | Give RSS Stage-3 fetch the same Selenium/proxy fallback; stop triple-fetching feeds | 4 | 3 |
+| TW-10 | Restore the RSS channel — 65 of 67 RSS diffs ever produced are empty | 7 | 3 |
 | TW-11′ *(see D)* | | | |
 | **C — Corpus & ingestion correctness** | | | |
 | TW-12 | Fix `_needs_ingestion`: dead change-detection logic causes daily full re-ingest | 5 | 3 |
@@ -94,6 +94,9 @@ The system's stated core principle — *"fail-closed: uncertain → escalate, ne
 | TW-35 | Pass correct (own) scores for graph-propagated triggers; fix `graph_propagated_to` bookkeeping | 5 | 3 |
 | TW-36 | Implement internal-link edges (requires capturing hrefs at scrape time) and re-weight edge types | 6 | 6 |
 | TW-37 | Retire or re-parameterise the designed boost mechanism (mathematically inert as configured) | 4 | 3 |
+| **K — Cross-component contract breaks (second-pass sweep, 2 Jul)** | | | |
+| TW-38 | Dashboard queries 12+ `details` JSON keys the pipeline never writes — verdicts/scores are null in all 9,752 rows | 7 | 5 |
+| TW-39 | FRL fallback notices ("no ES retrievable") are silently dismissed as NO_CHANGE — force human review | 6 | 2 |
 
 ---
 
@@ -120,7 +123,7 @@ The system's stated core principle — *"fail-closed: uncertain → escalate, ne
 
 `src/stage8_llm.py:683-699`: when the LLM returns malformed JSON twice, the assessment is marked `schema_valid=False`, counted in `failed_count`… and the trigger bundle is discarded. It is not written to `deferred_triggers`, not surfaced in the notification email, and appears only as an aggregate count in a health alert (sent to the placeholder address — see TW-01). The module docstring and plan §6.5 both imply the bundle should be preserved.
 
-**Done when:** a twice-failed bundle is written to `deferred_triggers` (or listed in the email's "requires human review" section with the raw response attached); a test asserts no bundle is ever dropped without a durable record.
+**Done when:** a twice-failed bundle is written to `deferred_triggers` (or listed in the email's "requires human review" section with the raw response attached); a test asserts no bundle is ever dropped without a durable record. Note: the health alert text (`health.py:274-275`) currently *claims* affected bundles "have been written to the deferred_triggers table for retry" — false today; correct the text alongside the behaviour.
 
 #### TW-04 — Wire the retry layer into scraping and probing
 **Urgency 7 · Difficulty 3**
@@ -168,12 +171,12 @@ With ~27 sources above the consecutive-failure threshold, `src/health.py` fires 
 
 **Done when:** 403/406/429/503 (and any response carrying a block signature) trigger the Selenium fallback chain before any error is raised; unit tests cover the 403→Selenium path; the failing-source count drops.
 
-#### TW-10 — RSS: same fallback chain in Stage 3; stop triple-fetching
-**Urgency 4 · Difficulty 3**
+#### TW-10 — Restore the RSS channel (65 of 67 diffs ever produced are empty)
+**Urgency 7 · Difficulty 3** *(urgency raised from 4 after empirical verification, 2 Jul)*
 
-RSS feeds are fetched up to three times per run (Stage-1 probe, `scrape_and_normalise` bookkeeping fetch, and Stage-3 `_generate_rss_diff` re-fetch). The Stage-3 fetch (`stage3_diff.py:1243-1250`) uses plain `requests` with no `force_selenium`/proxy support — so a WAF-protected feed passes Stages 1–2 via Selenium and then produces an empty diff in Stage 3, wasting the entire downstream funnel. The RSS state file also grows without bound (GUID history is never pruned).
+RSS monitoring is effectively non-functional and always has been. Of 67 RSS Stage-3 diffs in the database, **65 are empty and 64 carry fetch warnings**; across the 5 registered feeds (Federal Court ×2, WIPO ×2, EUIPO), only `wipo_arbitration_mediation_center_news` has ever yielded items — twice, in late April/early May. Root cause: feeds are fetched up to three times per run (Stage-1 probe, `scrape_and_normalise` bookkeeping fetch, Stage-3 `_generate_rss_diff` re-fetch), and the Stage-3 fetch (`stage3_diff.py:1243-1250`) — the only one whose output feeds the funnel — uses plain `requests` with no `force_selenium`/proxy support, so WAF-protected feeds pass Stages 1–2 via Selenium and then produce an empty diff. The RSS state file also grows without bound (GUID history never pruned).
 
-**Done when:** the raw XML fetched once (with the full fallback chain) is passed down to Stage 3 instead of re-fetched; GUID history is capped (e.g. retain 500 most recent); tests cover the blocked-feed path.
+**Done when:** the raw XML fetched once (with the full fallback chain) is passed down to Stage 3 instead of re-fetched; each of the 5 feeds demonstrably produces items on a forced run (or is retired per TW-06 triage); GUID history is capped; tests cover the blocked-feed path.
 
 ---
 
@@ -394,7 +397,25 @@ The *intended* propagation mechanism — boosts lifting pages over the 0.60 thre
 
 **Done when:** after TW-34/TW-36 land, the additive-boost parameters are either re-derived so the mechanism has a plausible firing range (validated against historical scores), or the boost path is removed and the graph's role is redefined as bundle-context/neighbour-audit only. The decision and evidence are recorded in the config comments or an ADR.
 
----
+### Theme K — Cross-component contract breaks (second-pass sweep, 2 July 2026)
+
+*Found by systematically validating cross-component data contracts against the live database — the same method that exposed the graph side-door. See §4.2 for the sweep summary.*
+
+#### TW-38 — Dashboard queries `details` JSON keys the pipeline never writes
+**Urgency 7 · Difficulty 5**
+
+The dashboard server extracts at least 12 JSON paths from `pipeline_runs.details` that the pipeline has never produced. Verified against all 9,752 rows: **zero** contain `$.stages.llm_assessment.*` (verdict/confidence/reasoning/suggested_changes/schema_valid), `$.stages.diff.diff_text`, `$.stages.biencoder.candidate_pages`, `$.stages.crossencoder.scored_pages`, `$.stages.relevance.rrf_score`, or `$.graph_propagated`. The pipeline actually writes only summary counts (`biencoder: {candidates_in, candidates_out}`, `crossencoder: {candidates_in, confirmed, graph_propagated}`, etc.), and Stage-8 results go solely to the `llm_assessments` table (which only `llm-reports.js` reads correctly).
+
+Blast radius: the runs API (`runs.js:26-41`) returns null verdict/confidence/reasoning/scores for every row — so the Triggered Events table, EventDrawer score panels and the Observe section run on nulls; `pages.js:147,212-213` and `graph.js:21` count `CHANGE_REQUIRED` per page as permanently zero; `health.js:54,88-93` LLM metrics are permanently zero. A compounding gap: `triggered_pages` only records directly-confirmed pages, so even after a join to `llm_assessments`, per-page alert counts would miss the 45% of assessments (including 3 of 7 CHANGE_REQUIRED) that arrived via the graph side door (TW-34).
+
+**Done when:** one side of the contract is fixed and the other verified against it — either (a) the pipeline writes the richer per-source detail the dashboard expects (per-page scored lists + an `llm_assessment` summary keyed back to sources), or (b) the dashboard derives verdicts by joining `llm_assessments` and reads the summary keys that actually exist. An integration test loads a real `details` row and asserts every JSON path the server queries is present. The imagined-schema keys are deleted from whichever side loses.
+
+#### TW-39 — FRL fallback notices are silently dismissed — force human review
+**Urgency 6 · Difficulty 2**
+
+When a legislative compilation changes but no Explanatory Statement can be retrieved, Stage 3 substitutes a ~15-word placeholder ("Compilation updated for X. No Explanatory Statement could be retrieved automatically") whose stated purpose is "so downstream stages can still flag the change for manual review" (`stage3_diff.py:281-337`). In practice there is no manual-review path: verified 4 occurrences (Trade Marks Regulations, two AAO sources, Australian Border Force Act 2015 on 25 June); each placeholder sailed through Stages 4–6 (triggering 5 pages — further evidence the semantic gates barely discriminate, see TW-14), and the LLM — reasonably, given a contentless diff — returned `NO_CHANGE`. Net effect: **known legislative changes with unretrievable detail are silently dismissed**, another fail-closed violation.
+
+**Done when:** `diff_type == "compilation_change"` bypasses LLM adjudication and is routed directly to the notification email's "requires human review" section (with the FRL register link), regardless of scores; a test asserts a fallback notice always reaches the email.
 
 ## 4. Addendum — quasi-graph investigation (2 July 2026)
 
@@ -411,6 +432,18 @@ Net assessment: the graph as implemented degrades the *filtration* function (the
 **Question 2: are same-site internal links not captured, despite being the higher-quality signal?**
 
 Correct on both counts. Internal-link edges are unimplemented at every level (config disabled, `graph.py` warning-only, plan task 5.5 open), and the raw material is destroyed before storage — both scrapers extract plain text without link preservation, so the corpus snapshots contain no hrefs. Meanwhile 73% of existing edges are embedding-similarity edges, which are circular as a propagation signal: they re-encode the same semantic-similarity measurement Stages 4–6 already made. Editorial links are directed, sparse, human-curated, and orthogonal to the encoders — precisely the "if this page changes, its linked siblings may need review" relation the quasi-graph was designed to model. TW-36 covers implementation; note it requires an ingestion-side change (link capture at scrape time), not just a graph-builder change.
+
+### §4.2 — Second-pass contract sweep (2 July 2026)
+
+The graph side-door was found by cross-validating live data against code rather than reading code alone. A follow-up sweep applied the same method to every remaining cross-component boundary (pipeline→DB→dashboard, stage→stage payloads, alert text→actual behaviour) and to the modules the first pass had only skimmed (`health.py` internals, `observability.py`, the FRL explainer chain, RSS Stage-3). New confirmed findings, all empirically verified:
+
+1. **Dashboard/pipeline `details` schema break (TW-38).** 12+ JSON paths queried by the dashboard exist in 0 of 9,752 `pipeline_runs` rows. Every verdict, confidence, reasoning and per-page score surfaced through the runs/pages/graph/health routes is null or zero, and always has been. The dashboard was built against an imagined schema; only `llm-reports.js` reads the real table.
+2. **FRL fallback dismissal (TW-39).** All 4 historical "compilation changed, no ES retrievable" placeholders triggered 5 IPFR pages each and were adjudicated `NO_CHANGE` — the promised manual-review routing does not exist. (The 25 June Australian Border Force Act compilation change was dismissed this way.)
+3. **RSS channel non-functional (TW-10, urgency raised 4→7).** 65 of 67 RSS diffs ever produced are empty; only one of five feeds has ever yielded an item.
+4. **Health alert text contradicts behaviour (folded into TW-03).** The malformed-LLM alert tells the operator bundles were deferred for retry; they are dropped.
+5. Minor, noted for TW-14/TW-16: unified-diff markup (`+`/`-`/`@@`/header lines) is passed unstripped into YAKE, BM25 and the encoders, adding token noise to every webpage-source score.
+
+Checked and found sound in the same sweep: snapshot rotation logic; run-ID uniqueness (no collisions in 70 runs); the frequency gate (probe volume matches registry cadences — ~32 of 156 sources scraped daily); health streak queries (run rows are logged before evaluation); feedback IMAP parsing against the mailto format; observability report generation (code is fine — it is simply never scheduled, TW-20).
 
 ---
 
