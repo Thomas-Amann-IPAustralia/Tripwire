@@ -89,6 +89,11 @@ The system's stated core principle — *"fail-closed: uncertain → escalate, ne
 | **I — Signal quality (longer-horizon)** | | | |
 | TW-32 | Investigate uniform 0.85 LLM confidence; make confidence informative | 3 | 4 |
 | TW-33 | Existing plan §5 deferred tasks (5.3–5.6) — unblocked earlier by TW-14 | 3 | 6 |
+| **J — Quasi-graph (investigated 2 Jul; see §5 addendum)** | | | |
+| TW-34 | Close the graph "side door": rejected neighbours reach the LLM ungated (45% of all LLM calls) | 7 | 4 |
+| TW-35 | Pass correct (own) scores for graph-propagated triggers; fix `graph_propagated_to` bookkeeping | 5 | 3 |
+| TW-36 | Implement internal-link edges (requires capturing hrefs at scrape time) and re-weight edge types | 6 | 6 |
+| TW-37 | Retire or re-parameterise the designed boost mechanism (mathematically inert as configured) | 4 | 3 |
 
 ---
 
@@ -357,7 +362,59 @@ Tracked in CLAUDE.md and TODOs: human-feedback threshold calibration (5.3), weig
 
 ---
 
-## 4. Suggested first fortnight
+### Theme J — Quasi-graph findings and tasks (added 2 July 2026)
+
+*Investigation prompted by the hypothesis that graph propagation may be harming filtration quality and that same-site internal links — a higher-quality relatedness signal — are not captured. Both claims were tested against the code and the live database. Verdict: the internal-links claim is fully correct; the "harming filtration" claim is half correct — the graph is silently **doubling LLM volume through an unintended path**, but that same path produced 3 of the 7 CHANGE_REQUIRED alerts ever raised, so it cannot simply be deleted. Full analysis in §5.*
+
+#### TW-34 — Close the graph "side door" (rejected neighbours reach the LLM ungated)
+**Urgency 7 · Difficulty 4**
+
+Stage 6's bookkeeping (`stage6_crossencoder.py:235-240`) appends **any** page that accumulated a ≥0.05 boost to the `graph_propagated_to` list of every confirmed neighbour — regardless of whether that page passed, or even approached, the 0.60 threshold. Stage 7 (`stage7_aggregation.py:234-273`) then builds a full trigger bundle for each such page. Measured effect: **231 of 516 LLM assessments (45%) were for pages the cross-encoder rejected**, entering through this path. The Stage-6 gate is effectively bypassed for the entire embedding-neighbourhood of every confirmed page. However, 3 of the 7 historical `CHANGE_REQUIRED` verdicts came from exactly these pages — the side door is also functioning as an accidental recall net over a (likely miscalibrated, see TW-14) cross-encoder threshold.
+
+**Done when:** the expansion is either (a) removed, with recall recovered deliberately via TW-14 threshold calibration, or (b) retained as an explicit, documented "neighbour audit" with its own gate (e.g. only neighbours whose *own* boosted `final_score` clears the threshold, or a per-bundle cap) — decided using the calibration data, since the CE threshold and this expansion trade off against each other. Either way, the number of LLM calls per confirmed page becomes bounded and intentional.
+
+#### TW-35 — Correct scores for propagated triggers; fix `graph_propagated_to` bookkeeping
+**Urgency 5 · Difficulty 3**
+
+Two defects in the same path: (1) Stage 7 gives a propagated page's `TriggerSource` the **source page's** cross-encoder scores (the code comments concede the propagated score "we don't have directly here") — so the LLM receives inflated relevance evidence for pages that scored below threshold; (2) the Stage-6 marking loop tags a neighbour on every confirmed page that has *any* edge to it, whether or not that page actually contributed the boost, producing misleading provenance in logs and bundles.
+
+**Done when:** propagated triggers carry their own (boost/final) scores; `graph_propagated_to` reflects actual contribution above the floor; the Stage-8 prompt's "indirect signal" note keys off accurate data.
+
+#### TW-36 — Implement internal-link edges; re-weight edge types
+**Urgency 6 · Difficulty 6**
+
+Confirmed: internal links are not captured anywhere. `graph.py:69-72` logs "not yet implemented" even if enabled; config has `internal_links.enabled: false`; and — the deeper blocker — both scrapers call `trafilatura.extract()` without `include_links`, so hrefs are destroyed before snapshots are written. Plain-text snapshots cannot be mined for links retroactively. The hypothesis that editorial links are the higher-quality signal is well-founded: they are human-curated, *directed*, sparse, and orthogonal to embedding similarity — whereas 73% of current edges (655/897) are embedding-similarity edges (mean weight 0.82) that **re-encode the same signal the bi-encoder and cross-encoder already measured**, so propagation along them double-counts evidence rather than adding independent support. This is consistent with the live data: side-door pages convert to `CHANGE_REQUIRED` at roughly the same low rate as directly confirmed ones (~1.3% vs ~1.4%) — the graph currently widens recall without adding precision.
+
+**Done when:** ingestion captures in-domain `<a href>` targets from the main content region at scrape time (e.g. `trafilatura.extract(..., include_links=True)` or parsing the raw HTML before extraction), stores them (new `page_links` table or equivalent), and Phase 6 builds directed `internal_links` edges; `internal_links.enabled` flips to true; embedding-similarity edge weight is reviewed (down-weighted or dropped) once link edges exist, since the two now compete as propagation carriers. Plan task 5.5 is satisfied by this work.
+
+#### TW-37 — Retire or re-parameterise the designed boost mechanism
+**Urgency 4 · Difficulty 3**
+
+The *intended* propagation mechanism — boosts lifting pages over the 0.60 threshold, or standalone graph-only pages — has fired **zero times in 148 Stage-6 completions**, and parameter analysis shows it mathematically almost cannot fire: max per-edge boost potential is 0.088 at a perfect seed score (median 0.055), only 76/897 edges clear the 0.05 floor at a realistic seed of 0.65, no realistic combination bridges a 0.10 gap, and second-hop signals (~0.004) always die at the floor — making `max_hops: 3` illusory. As configured, the designed mechanism is dead weight while the accidental side door (TW-34) does all the work.
+
+**Done when:** after TW-34/TW-36 land, the additive-boost parameters are either re-derived so the mechanism has a plausible firing range (validated against historical scores), or the boost path is removed and the graph's role is redefined as bundle-context/neighbour-audit only. The decision and evidence are recorded in the config comments or an ADR.
+
+---
+
+## 5. Addendum — quasi-graph investigation (2 July 2026)
+
+**Question 1: is graph propagation harming filtration quality?**
+
+Partially, yes — but not through the mechanism one would guess, and removing it naively would hurt.
+
+- The **designed** mechanism is inert. Boosts are `score × weight × 0.45 / out_degree`; with median out-degree 6 the median per-edge boost potential is 0.055 *at a perfect seed score of 1.0*. No page has ever been lifted over the 0.60 threshold by a boost, and no graph-only page has ever been added (0 occurrences in 148 Stage-6 completions). Multi-hop propagation has never survived the 0.05 floor.
+- The **accidental** mechanism dominates. A bookkeeping loop in Stage 6 plus bundle expansion in Stage 7 sends every ≥0.05-boosted *neighbour of a confirmed page* to the LLM with no score gate and with the confirmed page's (higher) scores attached. Verified per-run: e.g. run `2026-06-21-367` had 4 confirmed (source, page) pairs but 18 pages assessed; all 14 extras are graph-neighbours of the 4 confirmed pages. Across all history this path accounts for **45% of every LLM call ever made** (231/516).
+- **But it caught things.** 3 of the 7 `CHANGE_REQUIRED` verdicts ever produced (`X2A3EB` on 7 May; `XD2102`, `X3B183` on 18 June) came from side-door pages the cross-encoder had rejected. The leak is functioning as a crude recall net over a threshold that passes 98.6% noise anyway (TW-14). Conversion rates are near-identical on both paths (~1.3–1.4%), i.e. the graph widens recall without adding precision.
+
+Net assessment: the graph as implemented degrades the *filtration* function (the funnel leaks around its final gate, doubling LLM volume with correlated evidence) while accidentally providing recall the cross-encoder threshold should be providing. Fix the gate and the threshold together (TW-34 + TW-14), don't just delete the graph.
+
+**Question 2: are same-site internal links not captured, despite being the higher-quality signal?**
+
+Correct on both counts. Internal-link edges are unimplemented at every level (config disabled, `graph.py` warning-only, plan task 5.5 open), and the raw material is destroyed before storage — both scrapers extract plain text without link preservation, so the corpus snapshots contain no hrefs. Meanwhile 73% of existing edges are embedding-similarity edges, which are circular as a propagation signal: they re-encode the same semantic-similarity measurement Stages 4–6 already made. Editorial links are directed, sparse, human-curated, and orthogonal to the encoders — precisely the "if this page changes, its linked siblings may need review" relation the quasi-graph was designed to model. TW-36 covers implementation; note it requires an ingestion-side change (link capture at scrape time), not just a graph-builder change.
+
+---
+
+## 6. Suggested first fortnight
 
 1. **TW-01** (hours) — until the emails land somewhere real, everything else is academic.
 2. **TW-11** (half-day) — green, enforced tests protect all subsequent fixes.
