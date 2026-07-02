@@ -89,7 +89,7 @@ The system's stated core principle — *"fail-closed: uncertain → escalate, ne
 | **I — Signal quality (longer-horizon)** | | | |
 | TW-32 | Investigate uniform 0.85 LLM confidence; make confidence informative | 3 | 4 |
 | TW-33 | Existing plan §5 deferred tasks (5.3–5.6) — unblocked earlier by TW-14 | 3 | 6 |
-| **J — Quasi-graph (investigated 2 Jul; see §5 addendum)** | | | |
+| **J — Quasi-graph (investigated 2 Jul; see §4 addendum)** | | | |
 | TW-34 | Close the graph "side door": rejected neighbours reach the LLM ungated (45% of all LLM calls) | 7 | 4 |
 | TW-35 | Pass correct (own) scores for graph-propagated triggers; fix `graph_propagated_to` bookkeeping | 5 | 3 |
 | TW-36 | Implement internal-link edges (requires capturing hrefs at scrape time) and re-weight edge types | 6 | 6 |
@@ -364,7 +364,7 @@ Tracked in CLAUDE.md and TODOs: human-feedback threshold calibration (5.3), weig
 
 ### Theme J — Quasi-graph findings and tasks (added 2 July 2026)
 
-*Investigation prompted by the hypothesis that graph propagation may be harming filtration quality and that same-site internal links — a higher-quality relatedness signal — are not captured. Both claims were tested against the code and the live database. Verdict: the internal-links claim is fully correct; the "harming filtration" claim is half correct — the graph is silently **doubling LLM volume through an unintended path**, but that same path produced 3 of the 7 CHANGE_REQUIRED alerts ever raised, so it cannot simply be deleted. Full analysis in §5.*
+*Investigation prompted by the hypothesis that graph propagation may be harming filtration quality and that same-site internal links — a higher-quality relatedness signal — are not captured. Both claims were tested against the code and the live database. Verdict: the internal-links claim is fully correct; the "harming filtration" claim is half correct — the graph is silently **doubling LLM volume through an unintended path**, but that same path produced 3 of the 7 CHANGE_REQUIRED alerts ever raised, so it cannot simply be deleted. Full analysis in §4.*
 
 #### TW-34 — Close the graph "side door" (rejected neighbours reach the LLM ungated)
 **Urgency 7 · Difficulty 4**
@@ -396,7 +396,7 @@ The *intended* propagation mechanism — boosts lifting pages over the 0.60 thre
 
 ---
 
-## 5. Addendum — quasi-graph investigation (2 July 2026)
+## 4. Addendum — quasi-graph investigation (2 July 2026)
 
 **Question 1: is graph propagation harming filtration quality?**
 
@@ -414,7 +414,7 @@ Correct on both counts. Internal-link edges are unimplemented at every level (co
 
 ---
 
-## 6. Suggested first fortnight
+## 5. Suggested first fortnight
 
 1. **TW-01** (hours) — until the emails land somewhere real, everything else is academic.
 2. **TW-11** (half-day) — green, enforced tests protect all subsequent fixes.
