@@ -1,23 +1,23 @@
 Recent updates
 | Item amended | Date Amended | Amended Reason | 
 |---|---|---|
+| IPC-Sub-Class-and-Examination-Sections.docx | Update to IPC Sub-Class and Examination Sections | |
+| IPC-Sub-Class-and-Examination-Sections.pdf | Update to IPC Sub-Class and Examination Sections | |
+| 5.6.4.1 Prior Art - What is Included (Definition From the Act, Publicly Available, Exclusions, Grace Period) | Page updated to provide further guidance on the type of information that is considered publicly available. | |
 | 5.6.7.5 Best method | Page updated to ensure consistence of text in relation to the align with the text relating to the decision in NOCO v Brown [2026] FCAFC | |
 | 5.6.5.3 Prior and Secret Use | Passage relating to confidential information removed in view of updates made to s5.6.4.1 re publicly available information. | |
-| 5.6.4.1 Prior Art - What is Included (Definition From the Act, Publicly Available, Exclusions, Grace Period) | Page updated to provide further guidance on the type of information that is considered publicly available. | |
 | 5.3.2.3 Requirements for text, pagination, formulas, equations, and drawings | Corrected link to Formalities Determination 2019 | |
 | 5.6.14.2 Applications Concerning Defence of the Commonwealth | Updated link DGSL and added information related to applications falling on Category 0 | |
 | 5.7.4.2 Allowability of amendments before acceptance | Addition of information related to reliance on cross-references | |
-| 6.2.1 Procedural Outline - International Type Search | Temporarily removed link to Annex D in Related Chapters section | |
 | 5.6.2.7 Excess Claims Fees and Invitation to Pay | Corrected broken link under 'On this page' | |
-| 3.3.2.1 Level of Detail in the Report | Addition of paragraphs relating to level of details in second and later reports | |
+| 6.2.1 Procedural Outline - International Type Search | Temporarily removed link to Annex D in Related Chapters section | |
 | 5.6.11.1 Conditions for filing | Correcting criteria requirements for when an application is for a divisional and additional of the same parent can be accepted | |
+| 3.3.2.1 Level of Detail in the Report | Addition of paragraphs relating to level of details in second and later reports | |
 | 5.6.7.2 Clear enough and complete enough disclosure s40(2)(a) | Correcting guidance under plausibility | |
 | 5.6.7.4 Difference between ‘clear and complete disclosure’ and ‘support’ | Changing "serious inconsistency" to "material difference" and other minor typographical updates | |
-| 5.6.8.1 General Principles – Assessing Manner of Manufacture | Updating content in view of Aristocrat decision ([2025] FCAFC 131) | |
-| 5.6.8.5 Printed Matter | Removing banner note | |
-| 5.6.8.7 Games and Gaming Machines | Updating content in view of Aristocrat decision ([2025] FCAFC 131) | |
-| 5.6.8.8 Mathematical Algorithms | Removing banner note | |
 | 5.6.8.4 Discoveries, Ideas, Scientific Theories, Mere Schemes and Plans | Updating content in view of Aristocrat decision ([2025] FCAFC 131) | |
 | 5.6.8.20 Annex A - History of Manner of Manufacture | Updating content in view of Aristocrat decision ([2025] FCAFC 131) | |
 | 5.6.8.6 Computer Implemented Inventions, Mere Schemes, and Business Methods | Updating formatting at [127] paragraph | |
-| 7.12.1.1 Pharmaceutical Substance per se | Updated note to reflect leave to appeal to the HC has been granted |
+| 5.6.8.1 General Principles – Assessing Manner of Manufacture | Updating content in view of Aristocrat decision ([2025] FCAFC 131) | |
+| 5.6.8.5 Printed Matter | Removing banner note | |
+| 5.6.8.7 Games and Gaming Machines | Updating content in view of Aristocrat decision ([2025] FCAFC 131) |

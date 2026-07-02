@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X61162",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor addition to the Amazon Brand Registry FAQ page, adding a prompt about selling on Amazon. It does not affect any legal or procedural information about trade mark use, enforcement, or brand consistency that is discussed in the IPFR page. The IPFR page focuses on trade mark use and brand recognition principles, not on specific third-party brand registry programs or their dispute resolution processes. Therefore, no update to the IPFR content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1868,
+  "completion_tokens": 124,
+  "total_tokens": 1992,
+  "processing_time_seconds": 1.8659433200000421,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.273595+00:00"
+}

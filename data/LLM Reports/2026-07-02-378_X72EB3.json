@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X72EB3",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The IP Australia official notices announce a new Qualified Persons (QP) portal launching on 7 July 2026 to replace the current Interactive Variety Description System (IVDS). The PBR manual updates include multiple new pages and guidance content related to the QP Portal, indicating a significant change in how QPs interact with IP Australia systems. The IPFR page currently references the Qualified Persons Directory and the process of engaging QPs but does not mention this upcoming portal change or the replacement of IVDS. Given the high significance and relevance scores, the IPFR page should be updated to inform users about the new QP portal launch date, its purpose, and how it replaces the IVDS, to keep the guidance current and accurate for small business users.",
+  "suggested_changes": [
+    "Add a section or note to the IPFR page stating that IP Australia will launch a new Qualified Persons (QP) portal on 7 July 2026, which will replace the current Interactive Variety Description System (IVDS) used for managing QP-related activities.",
+    "Update references to the current QP system or directory to include information about the new portal and direct users to updated guidance or links once the portal is live.",
+    "Include a brief explanation of the expected benefits or changes in process due to the new QP portal, based on the PBR manual updates, to help users understand the impact on engaging or becoming a QP."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3450,
+  "completion_tokens": 316,
+  "total_tokens": 3766,
+  "processing_time_seconds": 3.8535002220000933,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268281+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to updates on the WIPO Madrid System webpage, including territorial clarifications and upcoming procedural changes for Jersey, UK, as well as some event announcements. The IPFR page is about contributor guidelines for blog posts and does not contain specific information about the Madrid System, trademark fees, territorial coverage, or procedural details that would be affected by these updates. Therefore, the IPFR page content remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2338,
+  "completion_tokens": 125,
+  "total_tokens": 2463,
+  "processing_time_seconds": 1.9848307510001177,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.273763+00:00"
+}

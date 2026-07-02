@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in upstream manuals (patent, design, plant breeder's rights), legislative amendments to secrecy provisions, news updates, and minor content additions on external sites such as Amazon Brand Registry. None of these changes directly affect the specific content or guidance provided in the IPFR page about what IP protection means for a business. The IPFR page provides general, foundational information about IP rights, their practical benefits, and enforcement options without citing specific legal provisions, dates, or procedural details that have changed. The updates to manuals and legislation do not require changes to the general explanatory content aimed at small businesses. The news and consultation updates do not impact the accuracy of the IPFR page content. Therefore, no amendment is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10501,
+  "completion_tokens": 184,
+  "total_tokens": 10685,
+  "processing_time_seconds": 3.491369764999945,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.266038+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the ACCC consultation hub relate to safety standards for consumer goods and water market regulations, which are unrelated to the content of the IPFR page about notifying online marketplaces of IP infringement. The change from the Amazon Brand Registry page adds a minor FAQ prompt about selling on Amazon but does not alter the substantive information about brand registry or the notice and takedown process described in the IPFR page. Therefore, none of these changes affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4761,
+  "completion_tokens": 132,
+  "total_tokens": 4893,
+  "processing_time_seconds": 2.4173521210000217,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.265951+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the patent manual and plant breeder's rights manual, including procedural clarifications, link corrections, and content updates related to patents and plant breeder's rights. The IPFR page concerns the opposition process for trade marks, specifically the challenge to registration of new trade marks. None of the changes indicate amendments to trade mark opposition procedures, timeframes, fees, or legal grounds that would affect the accuracy or currency of the IPFR page content. The changes are either indirect or unrelated to trade mark oppositions.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6742,
+  "completion_tokens": 139,
+  "total_tokens": 6881,
+  "processing_time_seconds": 2.509269327000311,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.264478+00:00"
+}
