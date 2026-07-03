@@ -1,13 +1,10 @@
 {
   "probe_signals": {
-    "etag": "W/\"1780554312\"",
-    "last_modified": "Thu, 04 Jun 2026 06:25:12 GMT",
-    "content_length": "16227"
+    "etag": "W/\"1783055638\"",
+    "last_modified": "Fri, 03 Jul 2026 05:13:58 GMT",
+    "content_length": "16220"
   },
-  "last_checked": "2026-06-04T07:01:49.756011+00:00",
-  "previous_hash": "da8c86c84b501058667befa4e21fb744dba5023fe392db6ebbf89f3df3c9f1f7",
-  "previous_text": "This site can\u2019t be reached\nwww.afp.gov.au took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\ndevices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\nsettings.\nIf it is already listed as a program allowed to access the network, try\nremoving it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\nthe Chrome menu >\nSettings\n>\nSystem\n>\nOpen your computer's proxy settings\nand make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.afp.gov.au took too long to respond.",
-  "last_error": "RetryableError: All fetch attempts failed for https://www.afp.gov.au/crimes/fraud-and-corruption",
-  "last_error_at": "2026-07-02T06:18:34.353294+00:00",
-  "consecutive_failures": 21
+  "last_checked": "2026-07-03T06:02:23.581174+00:00",
+  "previous_hash": "c9acea8eecef47aa6f187f647aca34b250bc61f877fa0210fd2c9c9e2338c3a9",
+  "previous_text": "This site can\u2019t be reached\nwww.afp.gov.au unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\n \n Check your Internet connection\n Check any cables and reboot any routers, modems, or other network\n devices you may be using.\n Allow Chrome to access the network in your firewall or antivirus\n settings.\n If it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\n If you use a proxy server\u2026\n Go to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\n www.afp.gov.au unexpectedly closed the connection."
 }
