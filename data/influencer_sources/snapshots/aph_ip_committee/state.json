@@ -1,5 +1,5 @@
 {
-  "last_error": "RetryableError: All fetch attempts failed for https://www.aph.gov.au/Parliamentary_Business/Committees/House/Industry_Innovation_and_Science",
-  "last_error_at": "2026-07-04T05:48:05.797603+00:00",
-  "consecutive_failures": 67
+  "last_error": "PermanentError: Content at https://www.aph.gov.au/Parliamentary_Business/Committees/House/Industry_Innovation_and_Science is too short (140 chars < minimum 200)",
+  "last_error_at": "2026-07-05T06:06:21.497305+00:00",
+  "consecutive_failures": 68
 }
