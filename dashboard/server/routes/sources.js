@@ -48,8 +48,7 @@ router.get('/', (req, res) => {
             COUNT(*) AS total_checks,
             MAX(timestamp) AS last_checked,
             MAX(CASE WHEN outcome = 'completed' THEN timestamp END) AS last_changed,
-            SUM(CASE WHEN outcome = 'error' THEN 1 ELSE 0 END) AS total_errors,
-            SUM(CASE WHEN json_extract(details, '$.stages.llm_assessment.verdict') = 'CHANGE_REQUIRED' THEN 1 ELSE 0 END) AS alert_count
+            SUM(CASE WHEN outcome = 'error' THEN 1 ELSE 0 END) AS total_errors
           FROM pipeline_runs
           WHERE source_id = ?
         `).get(src.source_id);
@@ -58,8 +57,20 @@ router.get('/', (req, res) => {
           stats.total_checks = agg.total_checks;
           stats.last_checked = agg.last_checked;
           stats.last_changed = agg.last_changed;
-          stats.alert_count = agg.alert_count;
         }
+
+        // Alerts = CHANGE_REQUIRED LLM verdicts among the IPFR pages this source
+        // triggered. Verdicts live in llm_assessments (keyed by run_id +
+        // ipfr_page_id), joined back to this source via triggered_pages.
+        const alertAgg = db.prepare(`
+          SELECT COUNT(*) AS alert_count
+          FROM llm_assessments la
+          JOIN pipeline_runs pr
+            ON pr.run_id = la.run_id
+            AND pr.triggered_pages LIKE '%' || la.ipfr_page_id || '%'
+          WHERE pr.source_id = ? AND la.verdict = 'CHANGE_REQUIRED'
+        `).get(src.source_id);
+        stats.alert_count = alertAgg?.alert_count ?? 0;
 
         // Consecutive failures: count from the most recent run backwards
         const recentRuns = db.prepare(`
@@ -116,7 +127,16 @@ router.get('/', (req, res) => {
               WHEN 'stage6_complete' THEN 6
               ELSE 0
             END AS stage_reached,
-            json_extract(details, '$.stages.llm_assessment.verdict') AS verdict
+            (SELECT la.verdict FROM llm_assessments la
+               WHERE la.run_id = pipeline_runs.run_id
+                 AND pipeline_runs.triggered_pages LIKE '%' || la.ipfr_page_id || '%'
+               ORDER BY CASE la.verdict
+                   WHEN 'CHANGE_REQUIRED' THEN 3
+                   WHEN 'UNCERTAIN'       THEN 2
+                   WHEN 'NO_CHANGE'       THEN 1
+                   ELSE 0
+                 END DESC, la.confidence DESC
+               LIMIT 1) AS verdict
           FROM pipeline_runs
           WHERE source_id = ? AND timestamp >= ?
           ORDER BY timestamp ASC

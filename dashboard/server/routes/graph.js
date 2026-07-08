@@ -12,16 +12,21 @@ router.get('/nodes', (req, res) => {
     const rows = db.prepare(`
       SELECT
         p.page_id, p.title,
-        COUNT(DISTINCT ge.id) AS degree,
-        COUNT(DISTINCT pr.id) AS alert_count
+        COUNT(DISTINCT ge.id) AS degree
       FROM pages p
       LEFT JOIN graph_edges ge ON ge.source_page_id = p.page_id OR ge.target_page_id = p.page_id
-      LEFT JOIN pipeline_runs pr
-        ON pr.triggered_pages LIKE '%' || p.page_id || '%'
-        AND json_extract(pr.details, '$.stages.llm_assessment.verdict') = 'CHANGE_REQUIRED'
       WHERE p.status = 'active'
       GROUP BY p.page_id
     `).all();
+
+    // Alert counts come from the llm_assessments table, keyed by IPFR page id.
+    const alertRows = db.prepare(`
+      SELECT ipfr_page_id, COUNT(*) AS alert_count
+      FROM llm_assessments
+      WHERE verdict = 'CHANGE_REQUIRED'
+      GROUP BY ipfr_page_id
+    `).all();
+    const alertByPage = Object.fromEntries(alertRows.map(r => [r.ipfr_page_id, r.alert_count]));
 
     const cache = getCache();
 
@@ -31,7 +36,7 @@ router.get('/nodes', (req, res) => {
         page_id: row.page_id,
         title: row.title,
         cluster: emb.cluster ?? null,
-        alert_count: row.alert_count,
+        alert_count: alertByPage[row.page_id] ?? 0,
         degree: row.degree,
         embedding_2d: emb.embedding_2d ?? null,
       };
