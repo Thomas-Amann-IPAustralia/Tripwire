@@ -138,16 +138,26 @@ router.get('/', (req, res) => {
       SELECT
         p.page_id, p.url, p.title, p.last_modified, p.last_ingested, p.status,
         COUNT(DISTINCT c.chunk_id) AS chunk_count,
-        COUNT(DISTINCT e.id)       AS entity_count,
-        COUNT(DISTINCT pr.id)      AS alert_count
+        COUNT(DISTINCT e.id)       AS entity_count
       FROM pages p
       LEFT JOIN chunks   c  ON c.page_id  = p.page_id
       LEFT JOIN entities e  ON e.page_id  = p.page_id
-      LEFT JOIN pipeline_runs pr ON pr.triggered_pages LIKE '%' || p.page_id || '%'
-        AND json_extract(pr.details, '$.stages.llm_assessment.verdict') = 'CHANGE_REQUIRED'
       WHERE p.status = 'active'
       GROUP BY p.page_id
     `).all();
+
+    // Alert counts come from the llm_assessments table (one row per assessed
+    // IPFR page per run). Fetched separately and merged in JS — joining it into
+    // the query above via a triggered_pages LIKE scan over pipeline_runs is
+    // pathologically slow and, since verdicts moved out of pipeline_runs.details,
+    // no longer returns anything anyway.
+    const alertRows = db.prepare(`
+      SELECT ipfr_page_id, COUNT(*) AS alert_count
+      FROM llm_assessments
+      WHERE verdict = 'CHANGE_REQUIRED'
+      GROUP BY ipfr_page_id
+    `).all();
+    const alertByPage = Object.fromEntries(alertRows.map(r => [r.ipfr_page_id, r.alert_count]));
 
     const cache = getCache();
 
@@ -155,6 +165,7 @@ router.get('/', (req, res) => {
       const emb = cache.byPageId[row.page_id] || {};
       return {
         ...row,
+        alert_count: alertByPage[row.page_id] ?? 0,
         embedding_2d: emb.embedding_2d ?? null,
         embedding_3d: emb.embedding_3d ?? null,
         cluster: emb.cluster ?? null,
@@ -208,13 +219,23 @@ router.get('/:page_id', (req, res) => {
     `).all(page_id);
 
     const alerts = db.prepare(`
-      SELECT run_id, source_id, timestamp, outcome,
-        json_extract(details, '$.stages.llm_assessment.verdict')    AS verdict,
-        json_extract(details, '$.stages.llm_assessment.confidence') AS confidence
-      FROM pipeline_runs
-      WHERE triggered_pages LIKE ?
-      ORDER BY timestamp DESC LIMIT 50
-    `).all(`%${page_id}%`);
+      SELECT
+        la.run_id,
+        la.generated_at AS timestamp,
+        la.verdict,
+        la.confidence,
+        (SELECT pr.source_id FROM pipeline_runs pr
+           WHERE pr.run_id = la.run_id
+             AND pr.triggered_pages LIKE '%' || la.ipfr_page_id || '%'
+           LIMIT 1) AS source_id,
+        (SELECT pr.outcome FROM pipeline_runs pr
+           WHERE pr.run_id = la.run_id
+             AND pr.triggered_pages LIKE '%' || la.ipfr_page_id || '%'
+           LIMIT 1) AS outcome
+      FROM llm_assessments la
+      WHERE la.ipfr_page_id = ?
+      ORDER BY la.generated_at DESC LIMIT 50
+    `).all(page_id);
 
     const alert_count = alerts.filter(a => a.verdict === 'CHANGE_REQUIRED').length;
 

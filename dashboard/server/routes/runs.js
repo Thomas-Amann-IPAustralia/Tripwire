@@ -18,15 +18,33 @@ const STAGE_REACHED_CASE = `
   END
 `;
 
+// LLM assessments moved out of pipeline_runs.details into their own table,
+// keyed by (run_id, ipfr_page_id). A pipeline_runs row (one source in one run)
+// can trigger several IPFR pages, so we surface the most severe verdict among
+// the pages that source triggered as the representative verdict for the row.
+const BEST_ASSESSMENT_ID = `(
+  SELECT la2.id FROM llm_assessments la2
+  WHERE la2.run_id = pipeline_runs.run_id
+    AND pipeline_runs.triggered_pages LIKE '%' || la2.ipfr_page_id || '%'
+  ORDER BY CASE la2.verdict
+      WHEN 'CHANGE_REQUIRED' THEN 3
+      WHEN 'UNCERTAIN'       THEN 2
+      WHEN 'NO_CHANGE'       THEN 1
+      ELSE 0
+    END DESC, la2.confidence DESC
+  LIMIT 1
+)`;
+
 const BASE_SELECT = `
   SELECT
-    id, run_id, source_id, source_url, source_type, timestamp,
+    pipeline_runs.id AS id, pipeline_runs.run_id AS run_id,
+    source_id, source_url, source_type, timestamp,
     ${STAGE_REACHED_CASE} AS stage_reached,
     outcome, triggered_pages, duration_seconds,
-    json_extract(details, '$.stages.llm_assessment.verdict')           AS verdict,
-    json_extract(details, '$.stages.llm_assessment.confidence')        AS confidence,
-    json_extract(details, '$.stages.llm_assessment.reasoning')         AS reasoning,
-    json_extract(details, '$.stages.llm_assessment.suggested_changes') AS suggested_changes_json,
+    la.verdict            AS verdict,
+    la.confidence         AS confidence,
+    la.reasoning          AS reasoning,
+    la.suggested_changes  AS suggested_changes_json,
     json_extract(details, '$.stages.diff.diff_text')                   AS diff_text,
     json_extract(details, '$.stages.biencoder.candidate_pages[0].max_chunk_score') AS biencoder_max,
     json_extract(details, '$.stages.crossencoder.scored_pages[0].crossencoder_score') AS crossencoder_score,
@@ -40,6 +58,7 @@ const BASE_SELECT = `
     json_extract(details, '$.stages.crossencoder.scored_pages')  AS crossencoder_scores_json,
     json_extract(details, '$.graph_propagated')                  AS graph_propagated
   FROM pipeline_runs
+  LEFT JOIN llm_assessments la ON la.id = ${BEST_ASSESSMENT_ID}
 `;
 
 function formatRun(row) {
@@ -105,11 +124,11 @@ router.get('/', (req, res) => {
   }
 
   if (verdicts.length === 1) {
-    conditions.push(`json_extract(details, '$.stages.llm_assessment.verdict') = ?`);
+    conditions.push(`la.verdict = ?`);
     params.push(verdicts[0]);
   } else if (verdicts.length > 1) {
     conditions.push(
-      `json_extract(details, '$.stages.llm_assessment.verdict') IN (${verdicts.map(() => '?').join(',')})`
+      `la.verdict IN (${verdicts.map(() => '?').join(',')})`
     );
     params.push(...verdicts);
   }
@@ -149,7 +168,7 @@ router.get('/feedback', (req, res) => {
     const data = feedbackRecords.map(fb => {
       let runRecord = null;
       try {
-        const row = db.prepare(`${BASE_SELECT} WHERE run_id = ? AND source_id = ?`).get(fb.run_id, fb.source_id);
+        const row = db.prepare(`${BASE_SELECT} WHERE pipeline_runs.run_id = ? AND source_id = ?`).get(fb.run_id, fb.source_id);
         if (row) runRecord = formatRun(row);
       } catch { /* ignore */ }
       return { ...fb, run: runRecord };
@@ -213,18 +232,22 @@ router.get('/:run_id', (req, res) => {
   if (!dbGuard(res)) return;
 
   try {
-    const rows = db.prepare(`
-      SELECT *, ${STAGE_REACHED_CASE} AS stage_reached_int,
-        json(details) AS details_parsed
-      FROM pipeline_runs
-      WHERE run_id = ?
-    `).all(req.params.run_id);
+    const rows = db.prepare(`${BASE_SELECT} WHERE pipeline_runs.run_id = ?`).all(req.params.run_id);
 
     if (!rows.length) return res.json({ data: null });
 
+    // Full details JSON is only needed on the single-run detail view, so it is
+    // fetched separately rather than carried through BASE_SELECT.
+    const detailRows = db.prepare(
+      `SELECT id, details FROM pipeline_runs WHERE run_id = ?`
+    ).all(req.params.run_id);
+    const detailsById = Object.fromEntries(
+      detailRows.map(d => [d.id, safeParseJson(d.details, {})])
+    );
+
     const formatted = rows.map(row => {
-      const base = formatRun({ ...row, stage_reached: row.stage_reached_int });
-      base.details = safeParseJson(row.details, {});
+      const base = formatRun(row);
+      base.details = detailsById[row.id] ?? {};
       return base;
     });
 

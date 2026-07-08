@@ -49,9 +49,9 @@ router.get('/summary', (req, res) => {
     `).get();
 
     const llmSchemaFailures = db.prepare(`
-      SELECT COUNT(*) AS cnt FROM pipeline_runs
-      WHERE timestamp >= ?
-        AND json_extract(details, '$.stages.llm_assessment.schema_valid') = 0
+      SELECT COUNT(*) AS cnt FROM llm_assessments
+      WHERE generated_at >= ?
+        AND schema_valid = 0
     `).get(cutoff30);
 
     const crossEncoderTruncations = db.prepare(`
@@ -85,12 +85,11 @@ router.get('/summary', (req, res) => {
     const llmVerdicts = db.prepare(`
       SELECT
         COUNT(*)  AS total,
-        SUM(CASE WHEN json_extract(details, '$.stages.llm_assessment.verdict') = 'CHANGE_REQUIRED' THEN 1 ELSE 0 END) AS change_required,
-        SUM(CASE WHEN json_extract(details, '$.stages.llm_assessment.verdict') = 'UNCERTAIN'       THEN 1 ELSE 0 END) AS uncertain,
-        SUM(CASE WHEN json_extract(details, '$.stages.llm_assessment.verdict') = 'NO_CHANGE'       THEN 1 ELSE 0 END) AS no_change_verdict
-      FROM pipeline_runs
-      WHERE timestamp >= ?
-        AND json_extract(details, '$.stages.llm_assessment.verdict') IS NOT NULL
+        SUM(CASE WHEN verdict = 'CHANGE_REQUIRED' THEN 1 ELSE 0 END) AS change_required,
+        SUM(CASE WHEN verdict = 'UNCERTAIN'       THEN 1 ELSE 0 END) AS uncertain,
+        SUM(CASE WHEN verdict = 'NO_CHANGE'       THEN 1 ELSE 0 END) AS no_change_verdict
+      FROM llm_assessments
+      WHERE generated_at >= ?
     `).get(cutoff30);
 
     // Count distinct run_ids where any source had triggered pages (= notification bundles sent)
