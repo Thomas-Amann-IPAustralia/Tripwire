@@ -610,15 +610,34 @@ def _process_source(
         "Source %s: Stage 5 — %d/%d candidates passed bi-encoder",
         source_id, len(biencoder_result.candidate_pages), len(candidate_ids),
     )
+    # Record every candidate that did not clear the bi-encoder gate, with the
+    # numeric rationale, so Stage 9 can surface it in the "didn't make the cut"
+    # section.  This runs whether or not any page passed, capturing partial
+    # rejections too.
+    bi_cfg = config.get("semantic_scoring", {}).get("biencoder", {})
+    bi_high = float(bi_cfg.get("high_threshold", 0.75))
+    bi_low_med = float(bi_cfg.get("low_medium_threshold", 0.45))
+    bi_min_chunks = int(bi_cfg.get("low_medium_min_chunks", 3))
+    passed_bi_ids = {p.page_id for p in biencoder_result.candidate_pages}
+    for p in biencoder_result.all_pages:
+        if p.page_id in passed_bi_ids:
+            continue
+        rejected_candidates.append(RejectedCandidate(
+            source_id=source_id,
+            source_url=source_url,
+            ipfr_page_id=p.page_id,
+            rejection_stage="biencoder",
+            score=p.max_chunk_score,
+            threshold=bi_high,
+            score_label="Bi-encoder max-chunk",
+            note=(
+                f"{p.chunks_above_low_medium} chunk(s) ≥ {bi_low_med:.2f} "
+                f"(need max-chunk ≥ {bi_high:.2f}, or {bi_min_chunks}+ such chunks)"
+            ),
+        ))
+
     if not biencoder_result.candidate_pages:
         logger.info("Source %s: FILTERED after Stage 5 — no pages passed bi-encoder threshold", source_id)
-        for page_id in candidate_ids:
-            rejected_candidates.append(RejectedCandidate(
-                source_id=source_id,
-                source_url=source_url,
-                ipfr_page_id=page_id,
-                rejection_stage="biencoder",
-            ))
         log_entry["outcome"] = "no_change"
         return
 
@@ -650,6 +669,9 @@ def _process_source(
         "graph_propagated": len(ce_result.graph_propagated_pages),
     }
 
+    ce_threshold = float(
+        config.get("semantic_scoring", {}).get("crossencoder", {}).get("threshold", 0.60)
+    )
     confirmed_ids = {p.page_id for p in ce_result.confirmed_pages}
     for p in ce_result.all_scored:
         if p.decision != "proceed":
@@ -658,6 +680,9 @@ def _process_source(
                 source_url=source_url,
                 ipfr_page_id=p.page_id,
                 rejection_stage="crossencoder",
+                score=p.final_score,
+                threshold=ce_threshold,
+                score_label="Cross-encoder",
                 crossencoder_score=p.crossencoder_score,
                 reranked_score=p.reranked_score,
             ))

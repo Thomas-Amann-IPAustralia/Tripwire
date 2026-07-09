@@ -257,8 +257,10 @@ def test_compose_html_contains_page_id():
 
 def test_compose_html_suggested_changes_in_list():
     _, _, html = _compose(change_required=[_make_assessment()])
-    assert "<ol>" in html
-    assert "<li>" in html
+    # Styling is inline under the redesigned template, so the tags carry a
+    # style attribute rather than being bare.
+    assert "<ol" in html
+    assert "<li" in html
 
 
 def test_compose_no_alerts_returns_empty():
@@ -448,3 +450,194 @@ def test_compose_missing_meta_falls_back_to_page_id():
         feedback_email="fb@example.com",
     )
     assert "B9999" in text
+
+
+# ---------------------------------------------------------------------------
+# RejectedCandidate — numeric rationale
+# ---------------------------------------------------------------------------
+
+
+def test_rejected_candidate_gap_short_of_threshold():
+    rc = RejectedCandidate(
+        source_id="S1", source_url="", ipfr_page_id="P1",
+        rejection_stage="crossencoder", score=0.52, threshold=0.60,
+    )
+    assert rc.gap == pytest.approx(0.08)
+
+
+def test_rejected_candidate_gap_cleared_threshold():
+    """A NO_CHANGE page cleared its gate — gap is negative."""
+    rc = RejectedCandidate(
+        source_id="S1", source_url="", ipfr_page_id="P1",
+        rejection_stage="llm_no_change", score=0.80, threshold=0.60,
+    )
+    assert rc.gap == pytest.approx(-0.20)
+
+
+def test_rejected_candidate_gap_none_without_threshold():
+    rc = RejectedCandidate(
+        source_id="S1", source_url="", ipfr_page_id="P1",
+        rejection_stage="biencoder", score=0.30,
+    )
+    assert rc.gap is None
+
+
+def test_rejected_candidate_backcompat_derives_score():
+    """Legacy callers that only pass reranked_score still get a unified score."""
+    rc = RejectedCandidate(
+        source_id="S1", source_url="", ipfr_page_id="P1",
+        rejection_stage="crossencoder",
+        crossencoder_score=0.45, reranked_score=0.42,
+    )
+    assert rc.score == pytest.approx(0.42)
+
+
+def test_rejected_candidate_stage_label():
+    rc = RejectedCandidate(
+        source_id="S1", source_url="", ipfr_page_id="P1",
+        rejection_stage="biencoder",
+    )
+    assert "Bi-encoder" in rc.stage_label
+
+
+# ---------------------------------------------------------------------------
+# "Didn't make the cut" table rendering
+# ---------------------------------------------------------------------------
+
+
+def _biencoder_rc(page_id="B2001", score=0.41):
+    return RejectedCandidate(
+        source_id="SRC-BI", source_url="https://x", ipfr_page_id=page_id,
+        rejection_stage="biencoder", score=score, threshold=0.75,
+        score_label="Bi-encoder max-chunk",
+        note="1 chunk(s) >= 0.45 (need max-chunk >= 0.75, or 3+ such chunks)",
+    )
+
+
+def test_rejected_table_text_shows_score_and_threshold():
+    rc = _biencoder_rc()
+    _, text, _ = _compose(change_required=[_make_assessment()], rejected=[rc])
+    assert "DIDN'T MAKE THE CUT" in text
+    assert "B2001" in text
+    assert "0.4100" in text   # score
+    assert "0.7500" in text   # threshold
+
+
+def test_rejected_table_text_shows_gap_sign():
+    rc = _biencoder_rc(score=0.41)  # short of 0.75 by 0.34
+    _, text, _ = _compose(change_required=[_make_assessment()], rejected=[rc])
+    assert "-0.3400" in text
+
+
+def test_rejected_table_html_shows_score_arrow_threshold():
+    rc = _biencoder_rc()
+    _, _, html = _compose(change_required=[_make_assessment()], rejected=[rc])
+    assert "Didn&#39;t Make the Cut" in html or "Didn't Make the Cut" in html
+    assert "B2001" in html
+    assert "0.410" in html
+    assert "&rarr;" in html or "→" in html
+
+
+def test_rejected_table_html_includes_note():
+    rc = _biencoder_rc()
+    _, _, html = _compose(change_required=[_make_assessment()], rejected=[rc])
+    assert "max-chunk" in html
+
+
+def test_rejected_table_sorted_closest_to_passing_first():
+    """Within a stage, the near-miss (smallest gap) should render first."""
+    far = _biencoder_rc(page_id="FAR", score=0.20)    # gap 0.55
+    near = _biencoder_rc(page_id="NEAR", score=0.70)  # gap 0.05
+    _, text, _ = _compose(
+        change_required=[_make_assessment()], rejected=[far, near]
+    )
+    assert text.index("NEAR") < text.index("FAR")
+
+
+# ---------------------------------------------------------------------------
+# Summary banner / stat tiles
+# ---------------------------------------------------------------------------
+
+
+def test_html_banner_shows_counts():
+    rc = _biencoder_rc()
+    _, _, html = _compose(
+        change_required=[_make_assessment("B1")],
+        uncertain=[_make_assessment("B2", verdict="UNCERTAIN", suggested_changes=[])],
+        rejected=[rc],
+    )
+    assert "Amendment required" in html
+    assert "Needs human review" in html
+    assert "Didn't make the cut" in html
+
+
+# ---------------------------------------------------------------------------
+# NO_CHANGE verdicts surface in the "didn't make the cut" section
+# ---------------------------------------------------------------------------
+
+
+def _decode_sent_mime(smtp_client):
+    import email as _email
+
+    call_args = smtp_client.sendmail.call_args
+    raw_mime = call_args[0][2] if call_args[0] else call_args[1].get("msg", "")
+    msg = _email.message_from_string(raw_mime)
+    full_text = ""
+    for part in msg.walk():
+        payload = part.get_payload(decode=True)
+        if payload:
+            full_text += payload.decode("utf-8", errors="replace")
+    return full_text
+
+
+def test_no_change_assessment_surfaces_with_rationale():
+    """A NO_CHANGE page (which cleared every gate but was judged not to need a
+    change) must appear in the 'didn't make the cut' section with its LLM
+    confidence and reasoning."""
+    smtp_client = MagicMock()
+
+    change = _make_assessment("B1012")
+    no_change = _make_assessment(
+        "B7777",
+        verdict="NO_CHANGE",
+        suggested_changes=[],
+        confidence=0.82,
+        reasoning="The amendment concerns fees, which this page does not mention.",
+    )
+
+    result = send_notification(
+        assessments=[change, no_change],
+        bundles_by_page={
+            "B1012": _make_bundle("B1012"),
+            "B7777": _make_bundle("B7777"),
+        },
+        page_meta_by_id={
+            "B1012": PageMeta("B1012", "Trade Marks", "https://x/b1012"),
+            "B7777": PageMeta("B7777", "Design Basics", "https://x/b7777"),
+        },
+        rejected_candidates=[],
+        run_id="run-001",
+        run_date="6 April 2026",
+        config=_simple_config(),
+        smtp_client=smtp_client,
+    )
+
+    assert result.sent is True
+    body = _decode_sent_mime(smtp_client)
+    assert "B7777" in body
+    assert "LLM confidence 82%" in body
+    assert "which this page does not mention" in body
+
+
+def test_no_change_alone_does_not_send():
+    """NO_CHANGE-only runs still send nothing (no-alert policy preserved)."""
+    result = send_notification(
+        assessments=[_make_assessment(verdict="NO_CHANGE", suggested_changes=[])],
+        bundles_by_page={},
+        page_meta_by_id={},
+        rejected_candidates=[],
+        run_id="run-001",
+        run_date="6 April 2026",
+        config=_simple_config(),
+    )
+    assert result.sent is False

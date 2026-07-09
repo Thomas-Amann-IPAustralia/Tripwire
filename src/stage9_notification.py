@@ -8,23 +8,31 @@ all amendment suggestions from Stage 8.
 
 Email structure:
   • Subject: "Tripwire — {date} — {N} IPFR page(s) flagged"
-  • One section per CHANGE_REQUIRED page:
+  • A summary banner with per-category counts.
+  • One card per CHANGE_REQUIRED page:
       - IPFR page identifier and title
-      - Source(s) that triggered the alert (with URLs)
+      - Source(s) that triggered the alert (with URLs) and their scores
       - Normalised diff text
-      - LLM reasoning
-      - Full suggested_changes entries
-      - Scoring evidence (fused relevance, bi-encoder max, cross-encoder)
+      - LLM reasoning and full suggested_changes entries
       - Four mailto feedback links
-  • "Items requiring human review" section for UNCERTAIN verdicts
-  • "Candidates rejected at deep analysis" section (pages that failed
-    cross-encoder or LLM gate — supplied by the pipeline as rejected_candidates)
+  • "Items requiring human review" section for UNCERTAIN verdicts.
+  • "Didn't make the cut" section — a single compact table of everything that
+    was considered but rejected, WITH the numeric rationale (the score it
+    achieved, the threshold it needed, and how close it came).  This covers:
+      - pages dropped at the bi-encoder gate (Stage 5)
+      - pages dropped at the cross-encoder gate (Stage 6)
+      - pages the LLM assessed as NO_CHANGE (Stage 8)
+    Rows are sorted closest-to-passing first, so the near-misses that matter
+    for threshold calibration are at the top.
 
 No-alert policy: if no pages are flagged (no CHANGE_REQUIRED or UNCERTAIN),
-the email is not sent.
+the email is not sent — the "didn't make the cut" context only rides along
+with an email that is already being sent for a real alert.
 
 Email delivery: Python smtplib with a Gmail app password stored in
-SMTP_PASSWORD environment variable.
+SMTP_PASSWORD environment variable.  All styling is inline (no <head> CSS
+block) because Outlook and several webmail clients strip <style> blocks;
+the layout is table-based for the same reason.
 
 Feedback mailto format:
   Subject: [TRIPWIRE] Feedback — {run_id} — {page_id}
@@ -43,11 +51,25 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from typing import Any
 
-from src.errors import RetryableError
 from src.stage7_aggregation import TriggerBundle
 from src.stage8_llm import LLMAssessment
 
 logger = logging.getLogger(__name__)
+
+# ---------------------------------------------------------------------------
+# Palette (inline colours — kept restrained for a government audience)
+# ---------------------------------------------------------------------------
+
+_C_NAVY = "#1a2b4a"
+_C_RED = "#c0392b"
+_C_AMBER = "#e67e22"
+_C_GREY = "#6b7280"
+_C_GREEN = "#2e7d32"
+_C_BG = "#f4f5f7"
+_C_CARD = "#ffffff"
+_C_BORDER = "#e2e5ea"
+_C_TEXT = "#222222"
+_C_MUTED = "#6b7280"
 
 # ---------------------------------------------------------------------------
 # Feedback category labels
@@ -72,6 +94,29 @@ _FEEDBACK_CATEGORIES: list[tuple[str, str]] = [
     ),
 ]
 
+# ---------------------------------------------------------------------------
+# Human-readable labels for each rejection stage
+# ---------------------------------------------------------------------------
+
+_REJECTION_STAGE_LABELS: dict[str, str] = {
+    "stage4": "Relevance (Stage 4)",
+    "biencoder": "Bi-encoder (Stage 5)",
+    "crossencoder": "Cross-encoder (Stage 6)",
+    "llm_no_change": "LLM: no change (Stage 8)",
+    "llm_schema": "LLM: invalid output (Stage 8)",
+    "llm_permanent": "LLM: error (Stage 8)",
+}
+
+# Order in which rejection stages appear in the table (earliest gate first).
+_REJECTION_STAGE_ORDER: list[str] = [
+    "stage4",
+    "biencoder",
+    "crossencoder",
+    "llm_no_change",
+    "llm_schema",
+    "llm_permanent",
+]
+
 
 # ---------------------------------------------------------------------------
 # Rejected candidate record (supplied by the pipeline from Stage 6 output)
@@ -80,15 +125,56 @@ _FEEDBACK_CATEGORIES: list[tuple[str, str]] = [
 
 @dataclass
 class RejectedCandidate:
-    """A page that was rejected at the cross-encoder or LLM stage."""
+    """A page that was considered but did not make the cut.
+
+    Carries the numeric rationale for the rejection so the content team can
+    see how close each near-miss came to the threshold.
+    """
 
     source_id: str
     source_url: str
     ipfr_page_id: str
     rejection_stage: str
-    """'crossencoder' | 'llm_schema' | 'llm_permanent'"""
+    """'stage4' | 'biencoder' | 'crossencoder' | 'llm_no_change' | 'llm_schema' | 'llm_permanent'"""
+
+    # Unified numeric rationale ------------------------------------------------
+    score: float | None = None
+    """The decisive score this candidate achieved at the rejecting stage."""
+    threshold: float | None = None
+    """The bar the score needed to clear (None when the stage has no fixed bar)."""
+    score_label: str = "Score"
+    """Human label for `score` (e.g. 'Bi-encoder max-chunk')."""
+    note: str | None = None
+    """Free-text supplementary rationale (e.g. chunk counts, LLM reasoning)."""
+    page_title: str | None = None
+
+    # Legacy / supplementary cross-encoder detail (kept for back-compat) -------
     crossencoder_score: float | None = None
     reranked_score: float | None = None
+
+    def __post_init__(self) -> None:
+        # Back-compat: callers that only supplied the old cross-encoder fields
+        # still get a populated unified `score`/`threshold`.
+        if self.score is None and self.reranked_score is not None:
+            self.score = self.reranked_score
+
+    @property
+    def stage_label(self) -> str:
+        return _REJECTION_STAGE_LABELS.get(self.rejection_stage, self.rejection_stage)
+
+    @property
+    def gap(self) -> float | None:
+        """How far short of the threshold (positive = short, negative = cleared)."""
+        if self.score is None or self.threshold is None:
+            return None
+        return self.threshold - self.score
+
+    def _sort_key(self) -> tuple[float, float]:
+        """Sort closest-to-passing first, then by raw score descending."""
+        gap = self.gap
+        gap_key = gap if gap is not None else 1e9
+        score_key = -(self.score if self.score is not None else -1e9)
+        return (gap_key, score_key)
 
 
 # ---------------------------------------------------------------------------
@@ -151,7 +237,7 @@ def send_notification(
     page_meta_by_id:
         Mapping page_id → PageMeta (title + URL).
     rejected_candidates:
-        Pages rejected at Stage 6 or Stage 8 (for the calibration section).
+        Pages rejected at Stage 5/6 (for the "didn't make the cut" section).
     run_id:
         Current run identifier (e.g. '2026-04-05-001').
     run_date:
@@ -175,12 +261,12 @@ def send_notification(
 
     change_required = [a for a in assessments if a.verdict == "CHANGE_REQUIRED"]
     uncertain = [a for a in assessments if a.verdict == "UNCERTAIN"]
+    no_change = [a for a in assessments if a.verdict == "NO_CHANGE"]
 
     if not change_required and not uncertain:
-        no_change_count = sum(1 for a in assessments if a.verdict == "NO_CHANGE")
         logger.info(
             "Stage 9: no pages flagged (%d NO_CHANGE, %d total assessments) — email not sent.",
-            no_change_count,
+            len(no_change),
             len(assessments),
         )
         return NotificationResult(
@@ -190,10 +276,24 @@ def send_notification(
             observation_data={"reason": "no_alerts"},
         )
 
+    # Fold NO_CHANGE assessments into the "didn't make the cut" list so the
+    # team can see the pages that reached the LLM but were judged not to need a
+    # change — the numeric context (scores that got them there + LLM verdict)
+    # is the most valuable calibration signal.
+    ce_threshold = float(
+        config.get("semantic_scoring", {})
+        .get("crossencoder", {})
+        .get("threshold", 0.60)
+    )
+    llm_change_conf = 0.70  # confidence bar for CHANGE_REQUIRED (Stage 8 prompt)
+    all_rejected = list(rejected_candidates) + _no_change_rows(
+        no_change, bundles_by_page, page_meta_by_id, ce_threshold, llm_change_conf
+    )
+
     subject, body_text, body_html = _compose_email(
         change_required=change_required,
         uncertain=uncertain,
-        rejected_candidates=rejected_candidates,
+        rejected_candidates=all_rejected,
         bundles_by_page=bundles_by_page,
         page_meta_by_id=page_meta_by_id,
         run_id=run_id,
@@ -250,7 +350,8 @@ def send_notification(
                 observation_data={
                     "change_required": len(change_required),
                     "uncertain": len(uncertain),
-                    "rejected_candidates": len(rejected_candidates),
+                    "no_change": len(no_change),
+                    "rejected_candidates": len(all_rejected),
                 },
             )
         except Exception as exc:
@@ -285,8 +386,45 @@ def send_notification(
         observation_data={
             "change_required": len(change_required),
             "uncertain": len(uncertain),
+            "no_change": len(no_change),
         },
     )
+
+
+def _no_change_rows(
+    no_change: list[LLMAssessment],
+    bundles_by_page: dict[str, TriggerBundle],
+    page_meta_by_id: dict[str, PageMeta],
+    ce_threshold: float,
+    change_conf: float,
+) -> list[RejectedCandidate]:
+    """Convert NO_CHANGE assessments into 'didn't make the cut' rows.
+
+    These pages cleared every upstream gate and reached the LLM, which then
+    judged that no amendment was needed.  We surface the cross-encoder score
+    (why it reached the LLM) plus the LLM's confidence and reasoning.
+    """
+    rows: list[RejectedCandidate] = []
+    for a in no_change:
+        bundle = bundles_by_page.get(a.ipfr_page_id)
+        meta = page_meta_by_id.get(a.ipfr_page_id)
+        ce_final = bundle.max_crossencoder_score if bundle else None
+        source_ids = ", ".join(bundle.source_ids) if bundle else ""
+        note = f"LLM confidence {a.confidence:.0%}. {a.reasoning}"
+        rows.append(
+            RejectedCandidate(
+                source_id=source_ids,
+                source_url="",
+                ipfr_page_id=a.ipfr_page_id,
+                rejection_stage="llm_no_change",
+                score=ce_final,
+                threshold=ce_threshold,
+                score_label="Cross-encoder",
+                note=note,
+                page_title=meta.title if meta else None,
+            )
+        )
+    return rows
 
 
 # ---------------------------------------------------------------------------
@@ -315,14 +453,24 @@ def _compose_email(
     html_parts: list[str] = []
 
     _txt_header(text_parts, subject, run_id, run_date, total_flagged)
-    _html_header(html_parts, subject, run_id, run_date, total_flagged)
+    _html_header(
+        html_parts,
+        subject,
+        run_id,
+        run_date,
+        n_change=len(change_required),
+        n_uncertain=len(uncertain),
+        n_rejected=len(rejected_candidates),
+    )
 
     # ---- CHANGE_REQUIRED section -----------------------------------------
     if change_required:
         text_parts.append("=" * 70)
         text_parts.append("AMENDMENT REQUIRED")
         text_parts.append("=" * 70)
-        html_parts.append('<h2 style="color:#c0392b;">Amendment Required</h2>')
+        html_parts.append(
+            _html_section_heading("Amendment Required", _C_RED)
+        )
 
         for assessment in change_required:
             page_id = assessment.ipfr_page_id
@@ -342,7 +490,7 @@ def _compose_email(
         text_parts.append("ITEMS REQUIRING HUMAN REVIEW")
         text_parts.append("=" * 70)
         html_parts.append(
-            '<h2 style="color:#e67e22;">Items Requiring Human Review</h2>'
+            _html_section_heading("Items Requiring Human Review", _C_AMBER)
         )
 
         for assessment in uncertain:
@@ -356,35 +504,38 @@ def _compose_email(
                 html_parts, assessment, meta, bundle, run_id, feedback_email
             )
 
-    # ---- Rejected candidates section -------------------------------------
+    # ---- Didn't make the cut section -------------------------------------
     if rejected_candidates:
+        ordered = _sort_rejected(rejected_candidates)
         text_parts.append("")
         text_parts.append("=" * 70)
-        text_parts.append("CANDIDATES REJECTED AT DEEP ANALYSIS")
+        text_parts.append("CANDIDATES REJECTED — DIDN'T MAKE THE CUT")
         text_parts.append(
-            "(Surfaced for calibration — potential false positives in upstream stages)"
+            "(Considered but filtered out — score achieved vs. threshold needed. "
+            "Sorted closest-to-passing first; surfaced for calibration.)"
         )
         text_parts.append("=" * 70)
-        html_parts.append(
-            "<h2>Candidates Rejected at Deep Analysis</h2>"
-            "<p><em>Surfaced for calibration — potential false positives in "
-            "upstream stages.</em></p>"
-        )
-        for rc in rejected_candidates:
-            _txt_rejected_section(text_parts, rc)
-            _html_rejected_section(html_parts, rc)
+        _txt_rejected_table(text_parts, ordered)
+        _html_rejected_table(html_parts, ordered)
 
     text_parts.append("")
-    text_parts.append(
-        f"Run ID: {run_id} | Generated by Tripwire"
-    )
-    html_parts.append(
-        f'<hr><p style="color:#888;font-size:0.85em;">'
-        f"Run ID: {run_id} | Generated by Tripwire</p>"
-    )
-    html_parts.append("</body></html>")
+    text_parts.append(f"Run ID: {run_id} | Generated by Tripwire")
+    _html_footer(html_parts, run_id)
 
     return subject, "\n".join(text_parts), "\n".join(html_parts)
+
+
+def _sort_rejected(rejected: list[RejectedCandidate]) -> list[RejectedCandidate]:
+    """Group by rejection stage (pipeline order), closest-to-passing first."""
+    return sorted(
+        rejected,
+        key=lambda rc: (
+            _REJECTION_STAGE_ORDER.index(rc.rejection_stage)
+            if rc.rejection_stage in _REJECTION_STAGE_ORDER
+            else len(_REJECTION_STAGE_ORDER),
+            *rc._sort_key(),
+        ),
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -497,51 +648,139 @@ def _txt_uncertain_section(
     parts.append("")
 
 
-def _txt_rejected_section(parts: list[str], rc: RejectedCandidate) -> None:
-    parts.append(
-        f"  • Source: {rc.source_id}  Page: {rc.ipfr_page_id}  "
-        f"Rejected at: {rc.rejection_stage}"
+def _txt_rejected_table(parts: list[str], rejected: list[RejectedCandidate]) -> None:
+    """Aligned plain-text table of rejected candidates."""
+    parts.append("")
+    header = (
+        f"  {'Page':<12} {'Stage':<26} {'Score':>8} {'Needs':>8} {'Gap':>8}  Source"
     )
-    if rc.crossencoder_score is not None:
+    parts.append(header)
+    parts.append("  " + "-" * (len(header) - 2))
+    for rc in rejected:
+        score_s = f"{rc.score:.4f}" if rc.score is not None else "—"
+        thr_s = f"{rc.threshold:.4f}" if rc.threshold is not None else "—"
+        gap = rc.gap
+        if gap is None:
+            gap_s = "—"
+        elif gap > 0:
+            gap_s = f"-{gap:.4f}"   # short of the bar
+        else:
+            gap_s = f"+{-gap:.4f}"  # cleared the bar (e.g. NO_CHANGE at LLM)
         parts.append(
-            f"    CE score: {rc.crossencoder_score:.4f}  "
-            f"Reranked: {rc.reranked_score:.4f}"
+            f"  {rc.ipfr_page_id:<12} {rc.rejection_stage:<26} "
+            f"{score_s:>8} {thr_s:>8} {gap_s:>8}  {rc.source_id}"
         )
+        if rc.note:
+            note = rc.note if len(rc.note) <= 200 else rc.note[:197] + "..."
+            parts.append(f"      ↳ {note}")
+    parts.append("")
 
 
 # ---------------------------------------------------------------------------
-# HTML section builders
+# HTML section builders (all styling inline; table-based layout)
 # ---------------------------------------------------------------------------
 
 
 def _html_header(
-    parts: list[str], subject: str, run_id: str, run_date: str, total: int
+    parts: list[str],
+    subject: str,
+    run_id: str,
+    run_date: str,
+    n_change: int,
+    n_uncertain: int,
+    n_rejected: int,
 ) -> None:
     parts.append(
-        '<!DOCTYPE html><html><head>'
-        '<meta charset="UTF-8">'
-        '<style>'
-        'body{font-family:Arial,sans-serif;font-size:14px;color:#222;}'
-        'h2{border-bottom:2px solid #ccc;padding-bottom:4px;}'
-        'h3{margin-bottom:4px;}'
-        '.page-block{border:1px solid #ddd;padding:16px;margin:16px 0;'
-        'border-radius:4px;}'
-        '.scores{font-size:0.85em;color:#555;}'
-        '.diff{background:#f6f6f6;padding:8px;font-family:monospace;'
-        'font-size:0.8em;white-space:pre-wrap;max-height:300px;overflow-y:auto;}'
-        '.feedback a{display:inline-block;margin:4px 2px;padding:5px 10px;'
-        'background:#f0f0f0;border-radius:3px;text-decoration:none;color:#333;'
-        'font-size:0.85em;border:1px solid #ccc;}'
-        '.feedback a:hover{background:#e0e0e0;}'
-        '</style>'
-        '</head><body>'
+        '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+        "</head>"
+        f'<body style="margin:0;padding:0;background:{_C_BG};'
+        'font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;'
+        f'color:{_C_TEXT};">'
     )
-    parts.append(f"<h1>{subject}</h1>")
+    # Outer wrapper table (full-width background) → centred 600px container.
     parts.append(
-        f"<p>Run ID: <code>{run_id}</code> &nbsp;|&nbsp; Date: {run_date}</p>"
+        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
+        f'border="0" style="background:{_C_BG};"><tr><td align="center" '
+        'style="padding:24px 12px;">'
+        '<table role="presentation" width="600" cellpadding="0" cellspacing="0" '
+        'border="0" style="width:600px;max-width:600px;">'
     )
+    # Banner
     parts.append(
-        f"<p>{total} IPFR page{'s' if total != 1 else ''} require attention.</p>"
+        f'<tr><td style="background:{_C_NAVY};border-radius:8px 8px 0 0;'
+        'padding:20px 24px;">'
+        '<div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;'
+        'color:#9fb0cc;font-weight:600;">Tripwire · IPFR Monitoring</div>'
+        f'<div style="font-size:20px;font-weight:700;color:#ffffff;'
+        f'margin-top:4px;">{_html_escape(subject)}</div>'
+        f'<div style="font-size:13px;color:#c3ccdb;margin-top:6px;">'
+        f'Run <code style="color:#e6ebf3;">{_html_escape(run_id)}</code> '
+        f'&nbsp;·&nbsp; {_html_escape(run_date)}</div>'
+        "</td></tr>"
+    )
+    # Stat tiles row
+    parts.append(
+        f'<tr><td style="background:{_C_CARD};padding:16px 12px;'
+        f'border-left:1px solid {_C_BORDER};border-right:1px solid {_C_BORDER};">'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
+        'border="0"><tr>'
+    )
+    parts.append(_html_stat_tile(n_change, "Amendment required", _C_RED))
+    parts.append(_html_stat_tile(n_uncertain, "Needs human review", _C_AMBER))
+    parts.append(_html_stat_tile(n_rejected, "Didn't make the cut", _C_GREY))
+    parts.append("</tr></table></td></tr>")
+    # Body container open
+    parts.append(
+        f'<tr><td style="background:{_C_CARD};padding:8px 24px 24px 24px;'
+        f'border-left:1px solid {_C_BORDER};border-right:1px solid {_C_BORDER};">'
+    )
+
+
+def _html_stat_tile(count: int, label: str, colour: str) -> str:
+    return (
+        '<td align="center" style="padding:6px;">'
+        f'<div style="font-size:28px;font-weight:700;line-height:1;'
+        f'color:{colour};">{count}</div>'
+        f'<div style="font-size:11px;color:{_C_MUTED};margin-top:4px;'
+        'text-transform:uppercase;letter-spacing:0.5px;">'
+        f'{_html_escape(label)}</div></td>'
+    )
+
+
+def _html_section_heading(text: str, colour: str) -> str:
+    return (
+        f'<h2 style="font-size:16px;color:{colour};margin:20px 0 8px 0;'
+        f'padding-bottom:6px;border-bottom:2px solid {colour};">'
+        f'{_html_escape(text)}</h2>'
+    )
+
+
+def _html_score_chips(bundle: TriggerBundle | None) -> str:
+    """Render a compact per-source score row as inline chips."""
+    if not bundle:
+        return ""
+    rows = []
+    for trig in bundle.triggers:
+        chips = (
+            _html_chip("Stage 4", f"{trig.stage4_final_score:.4f}")
+            + _html_chip("Bi-enc", f"{trig.biencoder_max_chunk_score:.4f}")
+            + _html_chip("Cross-enc", f"{trig.crossencoder_final_score:.4f}")
+        )
+        rows.append(
+            f'<div style="margin:4px 0;font-size:12px;color:{_C_MUTED};">'
+            f'<strong style="color:{_C_TEXT};">{_html_escape(trig.source_id)}</strong> '
+            f"&nbsp;{chips}</div>"
+        )
+    return "".join(rows)
+
+
+def _html_chip(label: str, value: str) -> str:
+    return (
+        f'<span style="display:inline-block;background:{_C_BG};'
+        f'border:1px solid {_C_BORDER};border-radius:3px;padding:1px 6px;'
+        f'margin:0 2px;font-size:11px;color:{_C_TEXT};">'
+        f'{_html_escape(label)} <strong>{_html_escape(value)}</strong></span>'
     )
 
 
@@ -553,56 +792,57 @@ def _html_change_required_section(
     run_id: str,
     feedback_email: str,
 ) -> None:
+    title = f"{meta.page_id} — {meta.title}"
     page_link = (
-        f'<a href="{meta.url}">{meta.page_id} — {meta.title}</a>'
+        f'<a href="{_html_attr(meta.url)}" style="color:{_C_NAVY};'
+        f'text-decoration:none;">{_html_escape(title)}</a>'
         if meta.url
-        else f"{meta.page_id} — {meta.title}"
+        else _html_escape(title)
     )
-    parts.append('<div class="page-block">')
-    parts.append(f"<h3>{page_link}</h3>")
     parts.append(
-        f'<p class="scores">Confidence: {assessment.confidence:.0%} '
-        f"&nbsp;|&nbsp; Model: {assessment.model}</p>"
+        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
+        f'border="0" style="border:1px solid {_C_BORDER};border-left:4px solid '
+        f'{_C_RED};border-radius:4px;margin:12px 0;"><tr><td style="padding:16px;">'
+    )
+    parts.append(
+        f'<div style="font-size:15px;font-weight:700;">{page_link}</div>'
+        f'<div style="font-size:12px;color:{_C_MUTED};margin-top:4px;">'
+        f'Confidence {assessment.confidence:.0%} &nbsp;·&nbsp; '
+        f'Model {_html_escape(assessment.model)}</div>'
     )
     if bundle:
-        parts.append("<p><strong>Triggered by:</strong></p><ul>")
-        for trig in bundle.triggers:
-            parts.append(
-                f'<li><a href="{trig.source_url}">{trig.source_id}</a> '
-                f"({trig.source_type}) &mdash; "
-                f'<span class="scores">Stage4={trig.stage4_final_score:.4f} '
-                f"BiEnc={trig.biencoder_max_chunk_score:.4f} "
-                f"CE={trig.crossencoder_final_score:.4f}</span></li>"
-            )
-        parts.append("</ul>")
-
-        parts.append("<details><summary>Change document(s)</summary>")
+        parts.append(
+            f'<div style="font-size:12px;color:{_C_MUTED};margin-top:10px;'
+            'font-weight:600;">Triggered by</div>'
+        )
+        parts.append(_html_score_chips(bundle))
+        # Diff block (always visible, bordered, monospace).
         for trig in bundle.triggers:
             diff_preview = trig.diff_text[:3000]
             if len(trig.diff_text) > 3000:
                 diff_preview += "\n... [truncated]"
             parts.append(
-                f'<p><strong>{trig.source_id}:</strong></p>'
-                f'<div class="diff">{_html_escape(diff_preview)}</div>'
+                f'<div style="font-size:11px;color:{_C_MUTED};margin-top:8px;">'
+                f'Change document · {_html_escape(trig.source_id)}</div>'
+                f'<div style="background:{_C_BG};border:1px solid {_C_BORDER};'
+                'border-radius:3px;padding:8px;font-family:Consolas,Menlo,monospace;'
+                'font-size:11px;white-space:pre-wrap;word-break:break-word;'
+                f'color:{_C_TEXT};margin-top:2px;">{_html_escape(diff_preview)}</div>'
             )
-        parts.append("</details>")
-
-    parts.append(f"<p><strong>LLM Reasoning:</strong> {_html_escape(assessment.reasoning)}</p>")
-    parts.append("<p><strong>Suggested Changes:</strong></p><ol>")
+    parts.append(
+        f'<div style="margin-top:12px;font-size:13px;"><strong>Reasoning:</strong> '
+        f'{_html_escape(assessment.reasoning)}</div>'
+    )
+    parts.append(
+        '<div style="margin-top:10px;font-size:13px;font-weight:600;">'
+        "Suggested changes</div><ol style=\"margin:4px 0 0 0;padding-left:20px;"
+        'font-size:13px;">'
+    )
     for change in assessment.suggested_changes:
-        parts.append(f"<li>{_html_escape(change)}</li>")
+        parts.append(f"<li style=\"margin:3px 0;\">{_html_escape(change)}</li>")
     parts.append("</ol>")
-
-    parts.append('<div class="feedback"><strong>Feedback:</strong><br>')
-    for category, label in _FEEDBACK_CATEGORIES:
-        href = _mailto_link(
-            to=feedback_email,
-            subject=f"[TRIPWIRE] Feedback — {run_id} — {meta.page_id}",
-            body=_feedback_body(run_id, meta.page_id, bundle, category),
-        )
-        parts.append(f'<a href="{href}">{label}</a>')
-    parts.append("</div>")
-    parts.append("</div>")
+    _html_feedback_buttons(parts, meta, bundle, run_id, feedback_email)
+    parts.append("</td></tr></table>")
 
 
 def _html_uncertain_section(
@@ -613,55 +853,159 @@ def _html_uncertain_section(
     run_id: str,
     feedback_email: str,
 ) -> None:
+    title = f"{meta.page_id} — {meta.title}"
     page_link = (
-        f'<a href="{meta.url}">{meta.page_id} — {meta.title}</a>'
+        f'<a href="{_html_attr(meta.url)}" style="color:{_C_NAVY};'
+        f'text-decoration:none;">{_html_escape(title)}</a>'
         if meta.url
-        else f"{meta.page_id} — {meta.title}"
+        else _html_escape(title)
     )
-    parts.append('<div class="page-block" style="border-left:4px solid #e67e22;">')
-    parts.append(f"<h3>{page_link} <em>[UNCERTAIN]</em></h3>")
-    if bundle:
-        parts.append("<p><strong>Triggered by:</strong> ")
-        sources = ", ".join(
-            f'<a href="{t.source_url}">{t.source_id}</a> ({t.source_type})'
-            for t in bundle.triggers
-        )
-        parts.append(sources + "</p>")
-        parts.append('<p class="scores">')
-        for trig in bundle.triggers:
-            parts.append(
-                f"{trig.source_id}: Stage4={trig.stage4_final_score:.4f} "
-                f"BiEnc={trig.biencoder_max_chunk_score:.4f} "
-                f"CE={trig.crossencoder_final_score:.4f}<br>"
-            )
-        parts.append("</p>")
     parts.append(
-        f"<p><strong>LLM Reasoning:</strong> {_html_escape(assessment.reasoning)}</p>"
+        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
+        f'border="0" style="border:1px solid {_C_BORDER};border-left:4px solid '
+        f'{_C_AMBER};border-radius:4px;margin:12px 0;"><tr><td style="padding:16px;">'
     )
-    parts.append('<div class="feedback"><strong>Feedback:</strong><br>')
+    parts.append(
+        f'<div style="font-size:15px;font-weight:700;">{page_link} '
+        f'<span style="font-size:11px;color:{_C_AMBER};font-weight:600;">'
+        "[UNCERTAIN]</span></div>"
+    )
+    if bundle:
+        parts.append(
+            f'<div style="font-size:12px;color:{_C_MUTED};margin-top:10px;'
+            'font-weight:600;">Triggered by</div>'
+        )
+        parts.append(_html_score_chips(bundle))
+    parts.append(
+        f'<div style="margin-top:12px;font-size:13px;"><strong>Reasoning:</strong> '
+        f'{_html_escape(assessment.reasoning)}</div>'
+    )
+    _html_feedback_buttons(parts, meta, bundle, run_id, feedback_email)
+    parts.append("</td></tr></table>")
+
+
+def _html_feedback_buttons(
+    parts: list[str],
+    meta: PageMeta,
+    bundle: TriggerBundle | None,
+    run_id: str,
+    feedback_email: str,
+) -> None:
+    parts.append(
+        f'<div style="margin-top:14px;font-size:12px;color:{_C_MUTED};'
+        'font-weight:600;">Feedback (one click opens a pre-filled reply)</div>'
+        '<div style="margin-top:6px;">'
+    )
     for category, label in _FEEDBACK_CATEGORIES:
         href = _mailto_link(
             to=feedback_email,
             subject=f"[TRIPWIRE] Feedback — {run_id} — {meta.page_id}",
             body=_feedback_body(run_id, meta.page_id, bundle, category),
         )
-        parts.append(f'<a href="{href}">{label}</a>')
-    parts.append("</div>")
-    parts.append("</div>")
-
-
-def _html_rejected_section(parts: list[str], rc: RejectedCandidate) -> None:
-    score_str = ""
-    if rc.crossencoder_score is not None:
-        score_str = (
-            f" (CE={rc.crossencoder_score:.4f}, "
-            f"reranked={rc.reranked_score:.4f})"
+        short = label.split(" — ")[0]
+        parts.append(
+            f'<a href="{_html_attr(href)}" title="{_html_attr(label)}" '
+            f'style="display:inline-block;margin:3px 4px 3px 0;padding:6px 12px;'
+            f'background:{_C_BG};border:1px solid {_C_BORDER};border-radius:4px;'
+            f'text-decoration:none;color:{_C_NAVY};font-size:12px;">'
+            f'{_html_escape(short)}</a>'
         )
+    parts.append("</div>")
+
+
+def _html_rejected_table(parts: list[str], rejected: list[RejectedCandidate]) -> None:
+    parts.append(_html_section_heading("Didn't Make the Cut", _C_GREY))
     parts.append(
-        f"<li>Source: <strong>{rc.source_id}</strong> &rarr; "
-        f"Page: <strong>{rc.ipfr_page_id}</strong> — "
-        f"rejected at <em>{rc.rejection_stage}</em>{score_str}</li>"
+        f'<div style="font-size:12px;color:{_C_MUTED};margin:-4px 0 10px 0;">'
+        "Considered but filtered out — the score each candidate achieved versus "
+        "the threshold it needed. Sorted closest-to-passing first for calibration."
+        "</div>"
     )
+    parts.append(
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
+        f'border="0" style="border:1px solid {_C_BORDER};border-radius:4px;'
+        'border-collapse:collapse;font-size:12px;">'
+    )
+    parts.append(
+        f'<tr style="background:{_C_BG};color:{_C_MUTED};text-align:left;">'
+        '<th style="padding:8px 10px;font-weight:600;">Page</th>'
+        '<th style="padding:8px 10px;font-weight:600;">Rejected at</th>'
+        '<th style="padding:8px 10px;font-weight:600;">Score → needs</th>'
+        '<th style="padding:8px 10px;font-weight:600;text-align:right;">Gap</th>'
+        "</tr>"
+    )
+    for rc in rejected:
+        page_cell = _html_escape(rc.ipfr_page_id)
+        if rc.page_title:
+            page_cell += (
+                f'<br><span style="color:{_C_MUTED};font-size:11px;">'
+                f'{_html_escape(rc.page_title)}</span>'
+            )
+        if rc.source_id:
+            page_cell += (
+                f'<br><span style="color:{_C_MUTED};font-size:11px;">via '
+                f'{_html_escape(rc.source_id)}</span>'
+            )
+        gap = rc.gap
+        if gap is None:
+            gap_html = f'<span style="color:{_C_MUTED};">—</span>'
+        elif gap > 0:
+            gap_html = f'<span style="color:{_C_RED};font-weight:600;">-{gap:.3f}</span>'
+        else:
+            gap_html = (
+                f'<span style="color:{_C_GREEN};font-weight:600;">+{-gap:.3f}</span>'
+            )
+        score_cell = _html_score_vs_threshold(rc)
+        note_html = ""
+        if rc.note:
+            note = rc.note if len(rc.note) <= 240 else rc.note[:237] + "..."
+            note_html = (
+                f'<div style="color:{_C_MUTED};font-size:11px;margin-top:3px;">'
+                f'{_html_escape(note)}</div>'
+            )
+        parts.append(
+            f'<tr style="border-top:1px solid {_C_BORDER};vertical-align:top;">'
+            f'<td style="padding:8px 10px;">{page_cell}</td>'
+            f'<td style="padding:8px 10px;">{_html_escape(rc.stage_label)}</td>'
+            f'<td style="padding:8px 10px;">{score_cell}{note_html}</td>'
+            f'<td style="padding:8px 10px;text-align:right;">{gap_html}</td>'
+            "</tr>"
+        )
+    parts.append("</table>")
+
+
+def _html_score_vs_threshold(rc: RejectedCandidate) -> str:
+    """Score → threshold with a colour reflecting how close it came."""
+    score_s = f"{rc.score:.3f}" if rc.score is not None else "—"
+    thr_s = f"{rc.threshold:.3f}" if rc.threshold is not None else "—"
+    gap = rc.gap
+    if gap is None:
+        colour = _C_MUTED
+    elif gap <= 0:
+        colour = _C_GREEN
+    elif gap <= 0.10:
+        colour = _C_AMBER
+    else:
+        colour = _C_RED
+    return (
+        f'<span style="color:{_C_MUTED};font-size:11px;">{_html_escape(rc.score_label)}</span> '
+        f'<strong style="color:{colour};">{score_s}</strong>'
+        f'<span style="color:{_C_MUTED};"> → {thr_s}</span>'
+    )
+
+
+def _html_footer(parts: list[str], run_id: str) -> None:
+    # Close body container cell, then footer row, then wrapper tables.
+    parts.append("</td></tr>")
+    parts.append(
+        f'<tr><td style="background:{_C_CARD};border:1px solid {_C_BORDER};'
+        'border-top:none;border-radius:0 0 8px 8px;padding:14px 24px;'
+        f'font-size:11px;color:{_C_MUTED};">'
+        f'Run ID <code>{_html_escape(run_id)}</code> · Generated automatically by '
+        "Tripwire. Reply to this email to send feedback."
+        "</td></tr>"
+    )
+    parts.append("</table></td></tr></table></body></html>")
 
 
 # ---------------------------------------------------------------------------
@@ -748,8 +1092,14 @@ def _write_fallback(body_text: str, run_id: str) -> str:
 def _html_escape(text: str) -> str:
     """Minimal HTML escaping for user-provided content."""
     return (
-        text.replace("&", "&amp;")
+        str(text)
+        .replace("&", "&amp;")
         .replace("<", "&lt;")
         .replace(">", "&gt;")
         .replace('"', "&quot;")
     )
+
+
+def _html_attr(text: str) -> str:
+    """Escape a value destined for an HTML attribute (href/title)."""
+    return _html_escape(text).replace("'", "&#39;")
