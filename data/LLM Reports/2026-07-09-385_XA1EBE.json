@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XA1EBE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document relates primarily to updates in the IPAustralia patent manual, including updates to classification systems, computer implemented inventions, prior art guidance, and procedural details about patent examination reports. However, none of these updates specifically address or alter the patent re-examination process, its costs, timelines, procedural steps, or outcomes as described in the IPFR page. The IPFR page focuses on explaining the patent re-examination process to small business owners, including reasons for re-examination, risks, benefits, costs, and procedural aspects. Since the upstream changes do not mention any amendments to the re-examination process or its statutory basis, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3059,
+  "completion_tokens": 171,
+  "total_tokens": 3230,
+  "processing_time_seconds": 2.9469826719998764,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.818482+00:00"
+}

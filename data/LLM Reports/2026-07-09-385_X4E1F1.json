@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in patent regulations, official notices about design rights surrender, patent manual updates on computer-implemented inventions, and intelligence oversight legislation. None of these changes directly affect the general guidance on using IP that is not yours, which is the focus of the IPFR page. The page provides broad, foundational advice on IP infringement risks and licensing, without specific references to patent regulations, design registration numbers, or procedural details that have changed. Therefore, the page content remains accurate and current despite these external updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3089,
+  "completion_tokens": 137,
+  "total_tokens": 3226,
+  "processing_time_seconds": 2.0205910039999253,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.817152+00:00"
+}

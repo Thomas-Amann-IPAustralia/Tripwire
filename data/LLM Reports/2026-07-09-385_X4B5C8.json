@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X4B5C8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the 'how_to_engage_an_attorney' source primarily involve formatting improvements, slight rewording, and additional spacing in the guidance on choosing and preparing to meet an IP attorney. The fee ranges for patent and trade mark attorneys remain consistent with those stated in the IPFR page. There are no changes to legal requirements, procedural steps, or statutory references that would affect the accuracy or currency of the IPFR content. The update to the patents regulations compilation does not provide substantive content changes impacting the IPFR page. Therefore, no amendments to the IPFR page are necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6136,
+  "completion_tokens": 151,
+  "total_tokens": 6287,
+  "processing_time_seconds": 2.8766189610000765,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.816837+00:00"
+}
