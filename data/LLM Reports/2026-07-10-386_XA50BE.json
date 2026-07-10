@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change relates to the Australian Federal Police (AFP) webpage on fraud and corruption, which is unrelated to the content of the IPFR page about seeking binding, authoritative decisions in design disputes. The change is a technical issue with the AFP website's availability, not a substantive legal or procedural update affecting design rights, court proceedings, or IP dispute resolution. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2799,
+  "completion_tokens": 118,
+  "total_tokens": 2917,
+  "processing_time_seconds": 1.8708941989998493,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.791184+00:00"
+}

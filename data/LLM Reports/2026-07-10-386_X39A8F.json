@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the Australian Federal Police (AFP) fraud and corruption webpage is currently unreachable due to a connection timeout. This change is unrelated to the content of the IPFR page, which focuses on what to check before getting registered IP, including types of IP, registration requirements, timing considerations, ownership, and availability checks. There is no direct or indirect impact on the accuracy or currency of the IPFR page content from the AFP webpage being down. The relevance scores are low to moderate and the change is about website accessibility, not substantive IP law or procedural changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1730,
+  "completion_tokens": 147,
+  "total_tokens": 1877,
+  "processing_time_seconds": 2.787433096000086,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790211+00:00"
+}

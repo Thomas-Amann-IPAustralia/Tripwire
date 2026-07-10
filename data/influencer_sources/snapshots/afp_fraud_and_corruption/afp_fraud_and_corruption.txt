@@ -1,9 +1,9 @@
 This site can’t be reached
-www.afp.gov.au unexpectedly closed the connection.
+www.afp.gov.au took too long to respond.
 Try:
 - Checking the connection
 - Checking the proxy and the firewall
-ERR_CONNECTION_CLOSED
+ERR_TIMED_OUT
  
  Check your Internet connection
  Check any cables and reboot any routers, modems, or other network
@@ -21,4 +21,4 @@ ERR_CONNECTION_CLOSED
  >
  Open your computer's proxy settings
  and make sure your configuration is set to "no proxy" or "direct."
- www.afp.gov.au unexpectedly closed the connection.
+ www.afp.gov.au took too long to respond.
