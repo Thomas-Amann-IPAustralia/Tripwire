@@ -4,6 +4,6 @@
   "previous_hash": "5375c47ee21459335fb22b86a7813da72f0f1a6b58bc255d6036ea6a9db9ac43",
   "previous_text": "This site can\u2019t be reached\nwww.etsy.com took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\ndevices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\nsettings.\nIf it is already listed as a program allowed to access the network, try\nremoving it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\nthe Chrome menu >\nSettings\n>\nSystem\n>\nOpen your computer's proxy settings\nand make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.etsy.com took too long to respond.",
   "last_error": "RetryableError: All fetch attempts failed for https://www.etsy.com/legal/ip/",
-  "last_error_at": "2026-07-11T05:27:03.329522+00:00",
-  "consecutive_failures": 24
+  "last_error_at": "2026-07-12T05:41:44.603657+00:00",
+  "consecutive_failures": 25
 }

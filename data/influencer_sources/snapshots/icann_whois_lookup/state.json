@@ -3,7 +3,7 @@
     "last_modified": "Thu, 01 Jan 1970 00:00:01 GMT",
     "content_length": "1"
   },
-  "last_checked": "2026-06-28T06:29:52.403734+00:00",
+  "last_checked": "2026-07-12T05:40:02.298507+00:00",
   "previous_hash": "96ed462b4ec8b281d1dfcffaa8a45c6ad13fd46d9e6430cb0ac5f298fc15e7f8",
   "previous_text": "This site can\u2019t be reached\nlookup.icann.org took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\ndevices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\nsettings.\nIf it is already listed as a program allowed to access the network, try\nremoving it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\nthe Chrome menu >\nSettings\n>\nSystem\n>\nOpen your computer's proxy settings\nand make sure your configuration is set to \"no proxy\" or \"direct.\"\nlookup.icann.org took too long to respond."
 }

@@ -4,6 +4,6 @@
   "previous_hash": "01fd92fa8f36ead4141b342d72c812c91830ce0e1639845179fb5d8878b5c4e9",
   "previous_text": "This site can\u2019t be reached\nwww.copyright.org.au unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\ndevices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\nsettings.\nIf it is already listed as a program allowed to access the network, try\nremoving it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\nthe Chrome menu >\nSettings\n>\nSystem\n>\nOpen your computer's proxy settings\nand make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.copyright.org.au unexpectedly closed the connection.",
   "last_error": "RetryableError: All fetch attempts failed for https://www.copyright.org.au/browse/book/ACC-An-Introduction-to-Copyright-in-Australia-INFO010",
-  "last_error_at": "2026-07-11T05:18:25.330828+00:00",
-  "consecutive_failures": 26
+  "last_error_at": "2026-07-12T05:33:42.758788+00:00",
+  "consecutive_failures": 27
 }
