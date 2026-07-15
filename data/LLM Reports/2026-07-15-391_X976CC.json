@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP webpages concern technical connectivity issues (timeouts and connection closures) and do not affect the substantive content related to intellectual property dispute resolution or the WIPO Clause Generator described in the IPFR page. There is no update to legal information, procedural guidance, or ADR options that would impact the accuracy or currency of the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3043,
+  "completion_tokens": 102,
+  "total_tokens": 3145,
+  "processing_time_seconds": 1.987268270999948,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.111659+00:00"
+}

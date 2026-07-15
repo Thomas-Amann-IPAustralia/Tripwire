@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update listing recent articles and features on the IP Australia website, including stories about trade marks and IP protection experiences. It does not contain any changes to legislation, procedural requirements, statutory timeframes, fees, or legal thresholds that would affect the accuracy or currency of the IPFR page content. The IPFR page provides general guidance on what to check before getting registered IP, including basic requirements and practical advice, none of which is contradicted or outdated by the news update. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1961,
+  "completion_tokens": 144,
+  "total_tokens": 2105,
+  "processing_time_seconds": 2.330322100000103,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.111068+00:00"
+}
