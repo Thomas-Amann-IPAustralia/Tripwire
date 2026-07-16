@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to customs regulations defining an international airport, and to various IP Australia consultations and updates on patent manuals, trade mark regulations, design protections, and Indigenous Knowledge policies. None of these changes directly affect the factual content of the IPFR page, which explains that Australian IP rights only apply within Australia and that protection overseas requires separate applications or international systems. There is no update to the scope of Australian IP protection overseas, nor to the advice about applying in other countries or using international filing systems. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4656,
+  "completion_tokens": 144,
+  "total_tokens": 4800,
+  "processing_time_seconds": 3.00925971200013,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231813+00:00"
+}

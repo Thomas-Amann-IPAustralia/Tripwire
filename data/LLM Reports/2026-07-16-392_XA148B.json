@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the IP Australia's Trade Marks Manual of Practice and Procedure, including consolidation of filing requirements chapters and minor text edits, as well as administrative changes such as the establishment of the Administrative Review Tribunal replacing the AAT. These updates do not specifically alter the opposition process timelines, procedures, or substantive content described in the IPFR page about responding to a trade mark opposition. There is no indication of changes to the 2-month opposition window, the notice of intention to defend process, or other procedural steps described. Therefore, the existing IPFR content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9883,
+  "completion_tokens": 151,
+  "total_tokens": 10034,
+  "processing_time_seconds": 2.980645843000275,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.229034+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in manuals and official notices concerning trade marks, patents, plant breeder's rights, and design manual accessibility fixes. There is no indication of substantive amendments to the Designs Act 2003 or to the legal principles, definitions, or procedural requirements relevant to design infringement as described in the IPFR page. The changes do not affect the accuracy of the explanations about design infringement, the scope of protection, or the examples given. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5798,
+  "completion_tokens": 136,
+  "total_tokens": 5934,
+  "processing_time_seconds": 2.5817439480001667,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232714+00:00"
+}

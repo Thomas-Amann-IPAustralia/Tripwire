@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO 'about' webpage involve a minor reordering of content and the repositioning of the phrase 'Inventing the future: How WIPO is supporting innovators and creators around the world.' There are no changes to factual information, membership, functions, or descriptions of WIPO's role that would affect the accuracy or currency of the IPFR page content. The IPFR page's explanation of WIPO's role as a coordinating body and not a global IP office remains accurate and unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2250,
+  "completion_tokens": 134,
+  "total_tokens": 2384,
+  "processing_time_seconds": 2.24513050700034,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.229885+00:00"
+}
