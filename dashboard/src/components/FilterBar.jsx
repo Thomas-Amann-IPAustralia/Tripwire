@@ -251,7 +251,7 @@ export default function FilterBar() {
                 color: selected ? color : 'var(--text-tertiary)',
               }}
             >
-              {key.replace(/_/g, '​')}
+              {key.replace(/_/g, ' ')}
             </button>
           );
         })}

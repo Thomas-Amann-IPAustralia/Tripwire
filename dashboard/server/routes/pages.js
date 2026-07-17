@@ -1,8 +1,36 @@
 import { Router } from 'express';
 import { PCA } from 'ml-pca';
 import { db, dbGuard, getDbMtime } from '../db.js';
+import { loadAcks, acknowledgePage, clearAcknowledgment, outstandingCount } from '../acks.js';
 
 const router = Router();
+
+// Per-page CHANGE_REQUIRED alert timestamps, with acknowledgments applied.
+// Returns { alertsByPage: { page_id: { count, total, last_alert } }, acks }.
+export function computeAlertCounts() {
+  const acks = loadAcks();
+  const rows = db.prepare(`
+    SELECT ipfr_page_id, generated_at
+    FROM llm_assessments
+    WHERE verdict = 'CHANGE_REQUIRED'
+  `).all();
+
+  const byPage = {};
+  for (const row of rows) {
+    (byPage[row.ipfr_page_id] ??= []).push(row.generated_at);
+  }
+
+  const alertsByPage = {};
+  for (const [pageId, timestamps] of Object.entries(byPage)) {
+    timestamps.sort();
+    alertsByPage[pageId] = {
+      count: outstandingCount(timestamps, acks[pageId]),
+      total: timestamps.length,
+      last_alert: timestamps[timestamps.length - 1] ?? null,
+    };
+  }
+  return { alertsByPage, acks };
+}
 
 let embeddingCache = null;
 let cacheMtime = null;
@@ -150,22 +178,21 @@ router.get('/', (req, res) => {
     // IPFR page per run). Fetched separately and merged in JS — joining it into
     // the query above via a triggered_pages LIKE scan over pipeline_runs is
     // pathologically slow and, since verdicts moved out of pipeline_runs.details,
-    // no longer returns anything anyway.
-    const alertRows = db.prepare(`
-      SELECT ipfr_page_id, COUNT(*) AS alert_count
-      FROM llm_assessments
-      WHERE verdict = 'CHANGE_REQUIRED'
-      GROUP BY ipfr_page_id
-    `).all();
-    const alertByPage = Object.fromEntries(alertRows.map(r => [r.ipfr_page_id, r.alert_count]));
+    // no longer returns anything anyway. alert_count excludes acknowledged
+    // alerts; alert_count_total is the all-time figure.
+    const { alertsByPage, acks } = computeAlertCounts();
 
     const cache = getCache();
 
     const data = rows.map(row => {
       const emb = cache.byPageId[row.page_id] || {};
+      const alerts = alertsByPage[row.page_id];
       return {
         ...row,
-        alert_count: alertByPage[row.page_id] ?? 0,
+        alert_count: alerts?.count ?? 0,
+        alert_count_total: alerts?.total ?? 0,
+        last_alert: alerts?.last_alert ?? null,
+        acknowledged_at: acks[row.page_id] ?? null,
         embedding_2d: emb.embedding_2d ?? null,
         embedding_3d: emb.embedding_3d ?? null,
         cluster: emb.cluster ?? null,
@@ -237,7 +264,10 @@ router.get('/:page_id', (req, res) => {
       ORDER BY la.generated_at DESC LIMIT 50
     `).all(page_id);
 
-    const alert_count = alerts.filter(a => a.verdict === 'CHANGE_REQUIRED').length;
+    const acks = loadAcks();
+    const ackTs = acks[page_id] ?? null;
+    const changeRequired = alerts.filter(a => a.verdict === 'CHANGE_REQUIRED');
+    const alert_count = outstandingCount(changeRequired.map(a => a.timestamp), ackTs);
 
     const cache = getCache();
     const emb = cache.byPageId[page_id] || {};
@@ -250,6 +280,8 @@ router.get('/:page_id', (req, res) => {
         neighbours,
         alerts,
         alert_count,
+        alert_count_total: changeRequired.length,
+        acknowledged_at: ackTs,
         embedding_2d: emb.embedding_2d ?? null,
         embedding_3d: emb.embedding_3d ?? null,
         cluster: emb.cluster ?? null,
@@ -258,6 +290,31 @@ router.get('/:page_id', (req, res) => {
   } catch (err) {
     console.error('[pages] GET /:page_id:', err.message);
     res.status(500).json({ data: null, error: err.message });
+  }
+});
+
+// POST /api/pages/:page_id/acknowledge — mark a page's outstanding
+// CHANGE_REQUIRED flags as reviewed. Alerts generated after this moment
+// re-flag the page automatically.
+router.post('/:page_id/acknowledge', (req, res) => {
+  try {
+    const acknowledged_at = acknowledgePage(req.params.page_id);
+    res.json({ success: true, page_id: req.params.page_id, acknowledged_at });
+  } catch (err) {
+    console.error('[pages] POST /:page_id/acknowledge:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE /api/pages/:page_id/acknowledge — undo a reset, restoring the
+// page's full alert history as outstanding.
+router.delete('/:page_id/acknowledge', (req, res) => {
+  try {
+    const removed = clearAcknowledgment(req.params.page_id);
+    res.json({ success: true, page_id: req.params.page_id, removed });
+  } catch (err) {
+    console.error('[pages] DELETE /:page_id/acknowledge:', err.message);
+    res.status(500).json({ error: err.message });
   }
 });
 

@@ -54,9 +54,13 @@ function filtersToSearch(filters) {
 
 export function useRuns(filters) {
   const qs = filtersToSearch(filters);
+  // lite fields + a high limit: list views need the whole filtered history
+  // (the old default capped at 1000 rows and silently truncated), while the
+  // heavy fields (diff text, LLM prose) are only fetched per-run on demand.
+  const sep = qs ? '&' : '?';
   return useQuery({
     queryKey: ['runs', qs],
-    queryFn: () => apiFetch(`/api/runs${qs}`),
+    queryFn: () => apiFetch(`/api/runs${qs}${sep}fields=lite&limit=20000`),
     staleTime: STALE,
     select: selectArray,
   });
@@ -144,6 +148,27 @@ export function useGraphEdges() {
     queryFn: () => apiFetch('/api/graph/edges'),
     staleTime: STALE,
   });
+}
+
+// Source → IPFR page trigger edges aggregated server-side over the full
+// run history (not subject to the /api/runs row limit).
+export function useBipartiteEdges() {
+  return useQuery({
+    queryKey: ['graph', 'bipartite'],
+    queryFn: () => apiFetch('/api/graph/bipartite'),
+    staleTime: STALE,
+    select: selectArray,
+  });
+}
+
+// Acknowledge ("mark reviewed") a page's outstanding CHANGE_REQUIRED flags.
+// Not a hook — call from event handlers, then invalidate queries.
+export async function acknowledgePageAlerts(pageId, { undo = false } = {}) {
+  const res = await fetch(`/api/pages/${encodeURIComponent(pageId)}/acknowledge`, {
+    method: undo ? 'DELETE' : 'POST',
+  });
+  if (!res.ok) throw new Error(`API ${res.status}: acknowledge ${pageId}`);
+  return res.json();
 }
 
 export function useSnapshot(sourceId) {

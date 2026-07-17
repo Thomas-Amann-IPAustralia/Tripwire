@@ -1,27 +1,54 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+const HIDE_GRACE_MS = 300; // time allowed to move the pointer onto the tooltip
 
 export default function Tooltip({ content, children, learnMoreHref }) {
   const [visible, setVisible] = useState(false);
   const [coords, setCoords] = useState({ top: 0, left: 0 });
-  const timerRef = useRef(null);
+  const showTimerRef = useRef(null);
+  const hideTimerRef = useRef(null);
   const triggerRef = useRef(null);
   const navigate = useNavigate();
 
-  const show = useCallback((e) => {
-    clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
+  const show = useCallback(() => {
+    // Cancel any pending hide so moving between trigger and tooltip
+    // doesn't dismiss it mid-travel.
+    clearTimeout(hideTimerRef.current);
+    clearTimeout(showTimerRef.current);
+    showTimerRef.current = setTimeout(() => {
       const rect = triggerRef.current?.getBoundingClientRect();
       if (rect) {
-        setCoords({ top: rect.bottom + 6, left: rect.left });
+        // Clamp so the 240px panel never renders off the right edge.
+        const left = Math.min(rect.left, window.innerWidth - 252);
+        setCoords({ top: rect.bottom + 6, left: Math.max(8, left) });
       }
       setVisible(true);
     }, 150);
   }, []);
 
+  // Delayed hide: without the grace period the tooltip unmounted the moment
+  // the pointer left the ⓘ trigger, making the "Learn more" link unclickable.
   const hide = useCallback(() => {
-    clearTimeout(timerRef.current);
+    clearTimeout(showTimerRef.current);
+    clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = setTimeout(() => setVisible(false), HIDE_GRACE_MS);
+  }, []);
+
+  const hideNow = useCallback(() => {
+    clearTimeout(showTimerRef.current);
+    clearTimeout(hideTimerRef.current);
     setVisible(false);
+  }, []);
+
+  useEffect(() => () => {
+    clearTimeout(showTimerRef.current);
+    clearTimeout(hideTimerRef.current);
+  }, []);
+
+  const keepOpen = useCallback(() => {
+    clearTimeout(hideTimerRef.current);
+    clearTimeout(showTimerRef.current);
   }, []);
 
   return (
@@ -50,7 +77,7 @@ export default function Tooltip({ content, children, learnMoreHref }) {
             pointerEvents: learnMoreHref ? 'auto' : 'none',
             animation: 'tooltipFade 150ms ease both',
           }}
-          onMouseEnter={learnMoreHref ? show : undefined}
+          onMouseEnter={learnMoreHref ? keepOpen : undefined}
           onMouseLeave={learnMoreHref ? hide : undefined}
         >
           <div style={{
@@ -65,7 +92,7 @@ export default function Tooltip({ content, children, learnMoreHref }) {
             <div style={{ marginTop: '8px', borderTop: '1px solid var(--rule)', paddingTop: '6px' }}>
               <button
                 onClick={() => {
-                  hide();
+                  hideNow();
                   const [routePart, anchorPart] = (learnMoreHref || '').split('#');
                   navigate(routePart || learnMoreHref);
                   if (anchorPart) {

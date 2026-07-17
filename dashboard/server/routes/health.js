@@ -66,21 +66,24 @@ router.get('/summary', (req, res) => {
       SELECT DISTINCT source_id FROM pipeline_runs
     `).all();
 
+    // Walk each source's full history (most recent first) so long failure
+    // streaks are reported accurately — the previous LIMIT 10 silently capped
+    // the streak count at 10 once a source had been failing for longer.
     const consecutiveFailures = [];
+    const outcomesStmt = db.prepare(`
+      SELECT outcome FROM pipeline_runs
+      WHERE source_id = ?
+      ORDER BY timestamp DESC
+    `);
     for (const { source_id } of allSources) {
-      const recentRuns = db.prepare(`
-        SELECT outcome FROM pipeline_runs
-        WHERE source_id = ?
-        ORDER BY timestamp DESC LIMIT 10
-      `).all(source_id);
-
       let cf = 0;
-      for (const r of recentRuns) {
+      for (const r of outcomesStmt.iterate(source_id)) {
         if (r.outcome === 'error') cf++;
         else break;
       }
       if (cf >= 2) consecutiveFailures.push({ source_id, consecutive_failures: cf });
     }
+    consecutiveFailures.sort((a, b) => b.consecutive_failures - a.consecutive_failures);
 
     const llmVerdicts = db.prepare(`
       SELECT
@@ -131,9 +134,13 @@ router.get('/summary', (req, res) => {
 router.get('/runs', (req, res) => {
   if (!dbGuard(res)) return;
 
-  const { limit = 50, offset = 0 } = req.query;
+  const { limit = 500, offset = 0 } = req.query;
 
   try {
+    const totalRuns = db.prepare(
+      `SELECT COUNT(DISTINCT run_id) AS cnt FROM pipeline_runs`
+    ).get()?.cnt ?? 0;
+
     const rows = db.prepare(`
       SELECT
         run_id,
@@ -157,7 +164,7 @@ router.get('/runs', (req, res) => {
         : 'ok',
     }));
 
-    res.json({ data, limit: Number(limit), offset: Number(offset) });
+    res.json({ data, total: totalRuns, limit: Number(limit), offset: Number(offset) });
   } catch (err) {
     console.error('[health] GET /runs:', err.message);
     res.status(500).json({ data: [], error: err.message });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDashboard } from '../App.jsx';
-import { useRuns, useSources } from '../hooks/useData.js';
+import { useRuns, useRunsSummary, useSources } from '../hooks/useData.js';
 import FilterBar from '../components/FilterBar.jsx';
 import ErrorBanner from '../components/ErrorBanner.jsx';
 import { EventDrawer } from '../components/EventDrawer.jsx';
@@ -15,6 +15,9 @@ import TriggeredEventsTable from '../visualisations/TriggeredEventsTable.jsx';
 export default function Observe() {
   const { filters, setStageMin, setDateRange } = useDashboard();
   const { data: runs,    isLoading, error } = useRuns(filters);
+  // Server-side aggregation over the FULL filtered history — the funnel must
+  // not undercount when the row-level list is large.
+  const { data: runsSummary } = useRunsSummary(filters);
   const { data: sources } = useSources();
 
   return (
@@ -57,6 +60,7 @@ export default function Observe() {
         {/* Panel Row 1 — Funnel Summary */}
         <FunnelSummary
           runs={runs ?? []}
+          summary={runsSummary}
           onStageClick={setStageMin}
         />
 

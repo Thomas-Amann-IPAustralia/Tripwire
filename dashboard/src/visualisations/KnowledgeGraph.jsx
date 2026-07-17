@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
-import { usePage } from '../hooks/useData.js';
+import { useQueryClient } from '@tanstack/react-query';
+import { usePage, acknowledgePageAlerts } from '../hooks/useData.js';
 
 const CLUSTER_STAGE = [1, 2, 3, 4, 5, 6, 1];
 const EDGE_TYPES = ['embedding_similarity', 'entity_overlap', 'internal_link'];
@@ -19,9 +20,31 @@ function getCSSColor(varName) {
   return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#5c5a52';
 }
 
-function PageDetailPanel({ pageId, onClose }) {
+export function PageDetailPanel({ pageId, onClose }) {
   const { data: raw, isLoading } = usePage(pageId);
   const page = raw?.data ?? raw ?? null;
+  const queryClient = useQueryClient();
+  const [ackBusy, setAckBusy] = useState(false);
+  const [ackError, setAckError] = useState(null);
+
+  // "Mark reviewed" clears the page's outstanding CHANGE_REQUIRED flags in
+  // every view that surfaces them (graph pulse, 3D glow, content map);
+  // alerts generated afterwards re-flag the page automatically.
+  const toggleAck = useCallback(async (undo) => {
+    if (!pageId) return;
+    setAckBusy(true);
+    setAckError(null);
+    try {
+      await acknowledgePageAlerts(pageId, { undo });
+      await queryClient.invalidateQueries({ queryKey: ['pages'] });
+      await queryClient.invalidateQueries({ queryKey: ['graph'] });
+      await queryClient.invalidateQueries({ queryKey: ['embeddings'] });
+    } catch (err) {
+      setAckError(err.message);
+    } finally {
+      setAckBusy(false);
+    }
+  }, [pageId, queryClient]);
 
   return (
     <div style={{
@@ -65,12 +88,60 @@ function PageDetailPanel({ pageId, onClose }) {
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-primary)' }}>{page.cluster ?? '—'}</div>
             </div>
             <div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', letterSpacing: '0.06em' }}>ALERTS</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', letterSpacing: '0.06em' }}>OUTSTANDING</div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: page.alert_count > 0 ? 'var(--state-alert)' : 'var(--text-primary)' }}>
                 {page.alert_count ?? 0}
               </div>
             </div>
+            <div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', letterSpacing: '0.06em' }}>ALL-TIME</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-primary)' }}>
+                {page.alert_count_total ?? page.alert_count ?? 0}
+              </div>
+            </div>
           </div>
+
+          {/* Alert flag reset */}
+          {(page.alert_count ?? 0) > 0 && (
+            <button
+              disabled={ackBusy}
+              onClick={() => toggleAck(false)}
+              style={{
+                fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.06em',
+                color: 'var(--state-alert)', background: 'none',
+                border: '1px solid var(--state-alert)',
+                padding: '5px 10px', cursor: ackBusy ? 'wait' : 'pointer',
+                textAlign: 'center',
+              }}
+            >
+              {ackBusy ? 'SAVING…' : '⚑ MARK REVIEWED — RESET FLAG'}
+            </button>
+          )}
+          {(page.alert_count ?? 0) === 0 && page.acknowledged_at && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--state-ok)' }}>
+                ✓ Reviewed {new Date(page.acknowledged_at).toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' })}
+              </div>
+              <button
+                disabled={ackBusy}
+                onClick={() => toggleAck(true)}
+                style={{
+                  fontFamily: 'var(--font-mono)', fontSize: '9px',
+                  color: 'var(--text-tertiary)', background: 'none', border: 'none',
+                  padding: 0, cursor: ackBusy ? 'wait' : 'pointer',
+                  textDecoration: 'underline', textDecorationStyle: 'dotted',
+                  textAlign: 'left',
+                }}
+              >
+                undo review
+              </button>
+            </div>
+          )}
+          {ackError && (
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--state-error)' }}>
+              {ackError}
+            </div>
+          )}
           {page.keyphrases?.length > 0 && (
             <div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', letterSpacing: '0.06em', marginBottom: '4px' }}>
@@ -106,6 +177,14 @@ function PageDetailPanel({ pageId, onClose }) {
 }
 
 export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
+  const edgeCounts = useMemo(() => {
+    const counts = { embedding_similarity: 0, entity_overlap: 0, internal_link: 0 };
+    for (const e of edges) {
+      if (e.edge_type in counts) counts[e.edge_type] += 1;
+    }
+    return counts;
+  }, [edges]);
+
   const svgRef      = useRef(null);
   const simRef      = useRef(null);
   const zoomRef     = useRef(null);
@@ -331,24 +410,40 @@ export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
         borderBottom: '1px solid var(--rule)',
         flexShrink: 0,
       }}>
-        {EDGE_TYPES.map(type => (
-          <button
-            key={type}
-            onClick={() => toggleEdgeType(type)}
-            style={{
-              background: edgeVisible[type] ? getCSSColor(EDGE_CSS_VARS[type]) : 'transparent',
-              color: edgeVisible[type] ? 'var(--bg-primary)' : getCSSColor(EDGE_CSS_VARS[type]),
-              border: `1px solid ${getCSSColor(EDGE_CSS_VARS[type])}`,
-              padding: '3px 10px',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              letterSpacing: '0.06em',
-              cursor: 'pointer',
-            }}
-          >
-            {EDGE_LABELS[type]}
-          </button>
-        ))}
+        {EDGE_TYPES.map(type => {
+          const count = edgeCounts[type] ?? 0;
+          const empty = count === 0;
+          // An edge type with zero rows in graph_edges isn't "toggled off" —
+          // there is nothing to draw. Internal-link edges in particular are a
+          // deferred pipeline feature (plan task 5.5), so show that honestly
+          // instead of a live-looking toggle that does nothing.
+          const title = empty
+            ? (type === 'internal_link'
+                ? 'No internal-link edges in the corpus yet — deferred pipeline feature (plan task 5.5)'
+                : 'No edges of this type in the corpus')
+            : `${count} edge${count !== 1 ? 's' : ''}`;
+          return (
+            <button
+              key={type}
+              onClick={() => !empty && toggleEdgeType(type)}
+              disabled={empty}
+              title={title}
+              style={{
+                background: !empty && edgeVisible[type] ? getCSSColor(EDGE_CSS_VARS[type]) : 'transparent',
+                color: !empty && edgeVisible[type] ? 'var(--bg-primary)' : getCSSColor(EDGE_CSS_VARS[type]),
+                border: `1px ${empty ? 'dashed' : 'solid'} ${getCSSColor(EDGE_CSS_VARS[type])}`,
+                opacity: empty ? 0.45 : 1,
+                padding: '3px 10px',
+                fontFamily: 'var(--font-mono)',
+                fontSize: '10px',
+                letterSpacing: '0.06em',
+                cursor: empty ? 'not-allowed' : 'pointer',
+              }}
+            >
+              {EDGE_LABELS[type]} · {empty ? 'NO DATA' : count}
+            </button>
+          );
+        })}
       </div>
 
       {/* SVG */}

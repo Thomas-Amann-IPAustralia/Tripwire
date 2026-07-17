@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { db, dbGuard } from '../db.js';
-import { getCache } from './pages.js';
+import { getCache, computeAlertCounts } from './pages.js';
 
 const router = Router();
 
@@ -19,24 +19,22 @@ router.get('/nodes', (req, res) => {
       GROUP BY p.page_id
     `).all();
 
-    // Alert counts come from the llm_assessments table, keyed by IPFR page id.
-    const alertRows = db.prepare(`
-      SELECT ipfr_page_id, COUNT(*) AS alert_count
-      FROM llm_assessments
-      WHERE verdict = 'CHANGE_REQUIRED'
-      GROUP BY ipfr_page_id
-    `).all();
-    const alertByPage = Object.fromEntries(alertRows.map(r => [r.ipfr_page_id, r.alert_count]));
+    // Alert counts come from the llm_assessments table, keyed by IPFR page id,
+    // with acknowledgments ("mark reviewed") applied.
+    const { alertsByPage, acks } = computeAlertCounts();
 
     const cache = getCache();
 
     const data = rows.map(row => {
       const emb = cache.byPageId[row.page_id] || {};
+      const alerts = alertsByPage[row.page_id];
       return {
         page_id: row.page_id,
         title: row.title,
         cluster: emb.cluster ?? null,
-        alert_count: alertByPage[row.page_id] ?? 0,
+        alert_count: alerts?.count ?? 0,
+        alert_count_total: alerts?.total ?? 0,
+        acknowledged_at: acks[row.page_id] ?? null,
         degree: row.degree,
         embedding_2d: emb.embedding_2d ?? null,
       };
@@ -45,6 +43,70 @@ router.get('/nodes', (req, res) => {
     res.json({ data });
   } catch (err) {
     console.error('[graph] GET /nodes:', err.message);
+    res.status(500).json({ data: [], error: err.message });
+  }
+});
+
+// GET /api/graph/bipartite — source → IPFR page trigger edges aggregated
+// over the FULL run history (the row-limited /api/runs endpoint previously
+// used by the client silently dropped older connections once the history
+// exceeded the row cap).
+router.get('/bipartite', (req, res) => {
+  if (!dbGuard(res)) return;
+
+  try {
+    const triggeredRows = db.prepare(`
+      SELECT run_id, source_id, timestamp, triggered_pages
+      FROM pipeline_runs
+      WHERE triggered_pages IS NOT NULL AND triggered_pages != '[]'
+    `).all();
+
+    // Assessment lookup keyed by run + page for verdict/confidence per edge.
+    const assessmentRows = db.prepare(`
+      SELECT run_id, ipfr_page_id, verdict, confidence FROM llm_assessments
+    `).all();
+    const assessmentByRunPage = new Map(
+      assessmentRows.map(r => [`${r.run_id}|${r.ipfr_page_id}`, r])
+    );
+
+    const edgeMap = new Map();
+    for (const row of triggeredRows) {
+      let pageIds;
+      try { pageIds = JSON.parse(row.triggered_pages); } catch { continue; }
+      if (!Array.isArray(pageIds)) continue;
+
+      for (const pageId of pageIds) {
+        const key = `${row.source_id}|${pageId}`;
+        let edge = edgeMap.get(key);
+        if (!edge) {
+          edge = {
+            source_id: row.source_id,
+            page_id: pageId,
+            trigger_count: 0,
+            change_required_count: 0,
+            max_confidence: null,
+            last_triggered: null,
+          };
+          edgeMap.set(key, edge);
+        }
+        edge.trigger_count += 1;
+        if (!edge.last_triggered || row.timestamp > edge.last_triggered) {
+          edge.last_triggered = row.timestamp;
+        }
+        const assessment = assessmentByRunPage.get(`${row.run_id}|${pageId}`);
+        if (assessment) {
+          if (assessment.verdict === 'CHANGE_REQUIRED') edge.change_required_count += 1;
+          if (assessment.confidence != null &&
+              (edge.max_confidence == null || assessment.confidence > edge.max_confidence)) {
+            edge.max_confidence = assessment.confidence;
+          }
+        }
+      }
+    }
+
+    res.json({ data: [...edgeMap.values()] });
+  } catch (err) {
+    console.error('[graph] GET /bipartite:', err.message);
     res.status(500).json({ data: [], error: err.message });
   }
 });

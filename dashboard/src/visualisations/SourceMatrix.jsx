@@ -1,8 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { useDashboard } from '../App.jsx';
 
-const STAGES = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const STAGE_SHORT = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9'];
+// stage_reached from the server tops out at 6 (stage6_complete) — S7–S9
+// columns were permanently blank. The final ⚑ column marks sources whose
+// runs actually bundled IPFR pages for Stages 7–9.
+const STAGES = [1, 2, 3, 4, 5, 6];
+const STAGE_SHORT = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6'];
 
 function computeCell(runs, stage) {
   let passed = 0, rejected = 0, errored = 0, unreached = 0;
@@ -66,7 +69,8 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
       const srcRuns   = runsBySource.get(srcId) || [];
       const importance = Math.min(1, Math.max(0, parseFloat(src.importance) || 0));
       const cells     = STAGES.map(stage => computeCell(srcRuns, stage));
-      return { srcId, importance, cells };
+      const triggered = srcRuns.filter(r => (r.triggered_pages?.length ?? 0) > 0).length;
+      return { srcId, importance, cells, triggered };
     });
   }, [sourceList, runsBySource]);
 
@@ -95,7 +99,7 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
         SOURCE MATRIX
       </div>
 
-      <div style={{ overflowY: 'auto', overflowX: 'auto' }}>
+      <div style={{ overflowY: 'auto', overflowX: 'auto', maxHeight: '440px' }}>
         {/* Column headers */}
         <div style={{
           display: 'flex', alignItems: 'center', marginBottom: '2px',
@@ -111,10 +115,17 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
               {STAGE_SHORT[i]}
             </div>
           ))}
+          <div title="Runs that triggered IPFR pages (Stage 7+)" style={{
+            width: CELL_W, flexShrink: 0, textAlign: 'center',
+            fontFamily: 'var(--font-mono)', fontSize: '9px',
+            color: 'var(--state-alert)', letterSpacing: '0.06em',
+          }}>
+            ⚑
+          </div>
         </div>
 
         {/* Data rows */}
-        {matrixData.map(({ srcId, importance, cells }) => (
+        {matrixData.map(({ srcId, importance, cells, triggered }) => (
           <div
             key={srcId}
             style={{
@@ -176,6 +187,19 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
                 </div>
               );
             })}
+
+            {/* Triggered (Stage 7+) count */}
+            <div
+              title={triggered > 0 ? `${triggered} run${triggered !== 1 ? 's' : ''} triggered IPFR pages` : 'No triggers'}
+              style={{
+                width: CELL_W, height: CELL_H, flexShrink: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: 'var(--font-mono)', fontSize: '9px',
+                color: triggered > 0 ? 'var(--state-alert)' : 'var(--text-tertiary)',
+              }}
+            >
+              {triggered > 0 ? triggered : '·'}
+            </div>
           </div>
         ))}
       </div>

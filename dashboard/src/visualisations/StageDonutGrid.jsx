@@ -116,13 +116,18 @@ export default function StageDonutGrid({ runs = [] }) {
         flexShrink: 0, flexWrap: 'wrap',
       }}>
         {[
-          { label: 'passed',   color: BG_ACCENT_HEX, note: 'stage colour' },
+          { label: 'passed (stage colour)', gradient: true },
           { label: 'rejected', color: BG_ACCENT_HEX },
           { label: 'errored',  color: STATE_ERROR_HEX },
           { label: 'skipped',  color: TEXT_TERT_HEX },
-        ].map(({ label, color }) => (
+        ].map(({ label, color, gradient }) => (
           <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <div style={{ width: 6, height: 6, borderRadius: '50%', background: color, flexShrink: 0 }} />
+            <div style={{
+              width: 6, height: 6, borderRadius: '50%', flexShrink: 0,
+              background: gradient
+                ? `linear-gradient(135deg, ${STAGE_HEX[1]}, ${STAGE_HEX[4]})`
+                : color,
+            }} />
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)' }}>
               {label}
             </span>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { computeFunnelCounts } from '../lib/dataUtils.js';
+import { computeFunnelCounts, funnelFromSummary } from '../lib/dataUtils.js';
 
 const STAGE_SHORT = ['PROBE', 'DETECT', 'DIFF', 'RELV', 'BIENC', 'CROSS', 'AGG'];
 const STAGE_FULL  = [
@@ -15,11 +15,16 @@ const STAGE_FULL  = [
 const BAR_MAX_H = 80;
 const PANEL_LABEL_H = 32;
 
-export default function FunnelSummary({ runs = [], onStageClick }) {
+// Prefers server-side `summary` (aggregated over the full run history, immune
+// to the /api/runs row limit); falls back to computing from the runs list.
+export default function FunnelSummary({ runs = [], summary = null, onStageClick }) {
   const [tooltip, setTooltip] = useState(null);
 
-  const funnel = computeFunnelCounts(runs);
+  const funnel = summary?.data
+    ? funnelFromSummary(summary.data, summary.triggered_page_count ?? 0)
+    : computeFunnelCounts(runs);
   const maxCount = Math.max(...funnel.map(d => d.count), 1);
+  const totalRuns = summary?.total_runs;
 
   return (
     <div className="panel" style={{
@@ -34,7 +39,7 @@ export default function FunnelSummary({ runs = [], onStageClick }) {
         letterSpacing: '0.1em',
         marginBottom: '16px',
       }}>
-        PIPELINE FUNNEL
+        PIPELINE FUNNEL{totalRuns != null ? ` — ${totalRuns.toLocaleString()} SOURCE CHECKS` : ''}
       </div>
 
       <div style={{
@@ -81,7 +86,7 @@ export default function FunnelSummary({ runs = [], onStageClick }) {
                   marginBottom: '4px',
                   lineHeight: 1,
                 }}>
-                  {d.count}
+                  {d.count.toLocaleString()}
                 </div>
                 {/* Bar */}
                 <div style={{
@@ -163,7 +168,7 @@ export default function FunnelSummary({ runs = [], onStageClick }) {
             {STAGE_FULL[tooltip.i]}
           </div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)' }}>
-            {tooltip.unit === 'pages' ? 'Pages triggered' : 'Count'}: {tooltip.count}
+            {tooltip.unit === 'pages' ? 'Pages triggered' : 'Count'}: {tooltip.count.toLocaleString()}
           </div>
           {tooltip.passRate != null && (
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)' }}>

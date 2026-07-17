@@ -72,6 +72,9 @@ function DashboardProvider({ children }) {
   const queryClient = useQueryClient();
   const { filters, setDatePreset, setDateRange, setSources, setStageMin, setVerdicts, toQueryParams } = useFilters();
   const [selectedRunId, setSelectedRunId] = useState(null);
+  // A run_id covers every source checked in that pipeline run; the row id
+  // pins the drawer to the specific source row the user clicked.
+  const [selectedRowId, setSelectedRowId] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const refresh = useCallback(() => {
@@ -88,6 +91,8 @@ function DashboardProvider({ children }) {
     toQueryParams,
     selectedRunId,
     setSelectedRunId,
+    selectedRowId,
+    setSelectedRowId,
     drawerOpen,
     setDrawerOpen,
     refresh,

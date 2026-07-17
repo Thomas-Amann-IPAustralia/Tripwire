@@ -4,7 +4,7 @@
 // run.timestamp. The calendar and sparkline were always empty.
 
 import { describe, it, expect } from 'vitest';
-import { aggregateByDay } from '../lib/dataUtils.js';
+import { aggregateByDay, funnelFromSummary } from '../lib/dataUtils.js';
 
 // Rows as returned by the runs API (field is `timestamp`, not `run_at`).
 const PIPELINE_RUNS = [
@@ -51,5 +51,43 @@ describe('aggregateByDay (BUG-005)', () => {
     for (let i = 1; i < days.length; i++) {
       expect(days[i].date >= days[i - 1].date).toBe(true);
     }
+  });
+});
+
+// The funnel must not undercount past the /api/runs row limit: it now
+// consumes /api/runs/summary (per-stage "deepest stage reached" totals over
+// the FULL history) and converts to cumulative reached-at-least counts.
+describe('funnelFromSummary', () => {
+  const SUMMARY = [
+    { stage: 1, total: 10665 },
+    { stage: 2, total: 609 },
+    { stage: 3, total: 0 },
+    { stage: 4, total: 0 },
+    { stage: 5, total: 159 },
+    { stage: 6, total: 191 },
+  ];
+
+  it('converts deepest-stage totals into cumulative funnel counts', () => {
+    const funnel = funnelFromSummary(SUMMARY, 98);
+    expect(funnel[0]).toEqual({ stage: 1, count: 11624, unit: 'runs' });
+    expect(funnel[1]).toEqual({ stage: 2, count: 959,   unit: 'runs' });
+    expect(funnel[4]).toEqual({ stage: 5, count: 350,   unit: 'runs' });
+    expect(funnel[5]).toEqual({ stage: 6, count: 191,   unit: 'runs' });
+  });
+
+  it('handles counts above the old 1000-row client cap', () => {
+    const funnel = funnelFromSummary(SUMMARY, 0);
+    expect(funnel[0].count).toBeGreaterThan(1000);
+  });
+
+  it('reports distinct triggered pages as the Stage 7 bar', () => {
+    const funnel = funnelFromSummary(SUMMARY, 98);
+    expect(funnel[6]).toEqual({ stage: 7, count: 98, unit: 'pages' });
+  });
+
+  it('is safe on empty input', () => {
+    const funnel = funnelFromSummary([], 0);
+    expect(funnel).toHaveLength(7);
+    expect(funnel.every(d => d.count === 0)).toBe(true);
   });
 });
