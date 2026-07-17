@@ -105,7 +105,7 @@ export default function CalendarHeatmap({ runs = [], onDayClick }) {
         letterSpacing: '0.1em',
         marginBottom: '12px',
       }}>
-        ALERT DENSITY — CHANGE REQUIRED · 52 WEEKS
+        ALERT DENSITY — CHANGE REQUIRED · 52-WEEK GRID (COLOURED WITHIN THE ACTIVE DATE FILTER)
       </div>
 
       <div style={{ display: 'flex', gap: '8px' }}>

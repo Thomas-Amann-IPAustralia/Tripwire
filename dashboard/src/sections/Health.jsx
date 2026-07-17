@@ -383,6 +383,7 @@ function ConsecutiveFailures({ failures }) {
           ALL SOURCES HEALTHY
         </div>
       ) : (
+        <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr>
@@ -424,6 +425,7 @@ function ConsecutiveFailures({ failures }) {
             })}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );
@@ -501,7 +503,8 @@ const PAGER_BTN = {
   color: 'var(--text-secondary)', cursor: 'pointer', padding: '3px 10px',
 };
 
-function RunLogTable({ runs }) {
+function RunLogTable({ runs, totalRuns }) {
+  const total = totalRuns ?? runs.length;
   const [page, setPage]         = useState(0);
   const [expanded, setExpanded] = useState(new Set());
 
@@ -520,7 +523,7 @@ function RunLogTable({ runs }) {
         fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)',
         letterSpacing: '0.07em', padding: '10px 16px', borderBottom: '1px solid var(--rule)',
       }}>
-        RUN LOG — {runs.length} PIPELINE RUN{runs.length !== 1 ? 'S' : ''}
+        RUN LOG — {total} PIPELINE RUN{total !== 1 ? 'S' : ''}{runs.length < total ? ` (SHOWING ${runs.length} MOST RECENT)` : ''}
       </div>
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '700px' }}>
@@ -736,7 +739,7 @@ export default function Health() {
 
         {/* Row 3: paginated run log */}
         <div style={{ borderBottom: '1px solid var(--rule)' }}>
-          <RunLogTable runs={runs} />
+          <RunLogTable runs={runs} totalRuns={runsRaw?.total} />
         </div>
 
         {/* Row 4: ingestion health strip */}

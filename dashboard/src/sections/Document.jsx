@@ -3,10 +3,23 @@ import React, {
 } from 'react';
 
 // ── SQL Console ───────────────────────────────────────────────────────────────
-const KNOWN_TABLES = [
-  'pages', 'page_chunks', 'entities', 'keyphrases',
-  'graph_edges', 'sections', 'pipeline_runs', 'deferred_triggers',
-];
+// Actual tables in ipfr.sqlite. Note the chunk table is named `chunks`
+// (the system plan calls it `page_chunks`, but that name never existed in
+// the database — queries against it fail with "no such table").
+// Chip queries avoid BLOB embedding columns and huge text columns so the
+// default click always renders a readable result.
+const KNOWN_TABLES = {
+  pages:             "SELECT page_id, url, title, status, last_ingested FROM pages LIMIT 20",
+  chunks:            "SELECT chunk_id, page_id, chunk_index, section_heading, substr(chunk_text, 1, 120) AS chunk_text_preview FROM chunks LIMIT 20",
+  entities:          "SELECT * FROM entities LIMIT 20",
+  keyphrases:        "SELECT * FROM keyphrases LIMIT 20",
+  graph_edges:       "SELECT * FROM graph_edges LIMIT 20",
+  sections:          "SELECT * FROM sections LIMIT 20",
+  pipeline_runs:     "SELECT id, run_id, source_id, timestamp, stage_reached, outcome, triggered_pages, duration_seconds FROM pipeline_runs ORDER BY timestamp DESC LIMIT 20",
+  llm_assessments:   "SELECT id, run_id, ipfr_page_id, verdict, confidence, generated_at FROM llm_assessments ORDER BY generated_at DESC LIMIT 20",
+  deferred_triggers: "SELECT * FROM deferred_triggers LIMIT 20",
+  ingestion_runs:    "SELECT * FROM ingestion_runs ORDER BY timestamp DESC LIMIT 20",
+};
 
 const EXAMPLE_QUERY = 'SELECT page_id, url, title, status\nFROM pages\nLIMIT 20';
 
@@ -58,11 +71,11 @@ function SqlConsole() {
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', flexShrink: 0 }}>
           Tables:
         </span>
-        {KNOWN_TABLES.map(t => (
+        {Object.entries(KNOWN_TABLES).map(([t, query]) => (
           <code
             key={t}
-            title={`SELECT * FROM ${t} LIMIT 20`}
-            onClick={() => setSql(`SELECT * FROM ${t} LIMIT 20`)}
+            title={query}
+            onClick={() => setSql(query)}
             style={{
               fontFamily: 'var(--font-mono)',
               fontSize: '10px',

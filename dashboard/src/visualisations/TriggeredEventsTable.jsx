@@ -77,7 +77,7 @@ const TH_S = { ...MONO, color: 'var(--text-tertiary)', padding: '4px 6px', textA
 const TD_S = { ...MONO, color: 'var(--text-secondary)', padding: '4px 6px', borderBottom: '1px solid var(--rule)', verticalAlign: 'middle' };
 
 export default function TriggeredEventsTable({ runs = [] }) {
-  const { setSelectedRunId, setDrawerOpen } = useDashboard();
+  const { setSelectedRunId, setSelectedRowId, setDrawerOpen } = useDashboard();
 
   const { data: feedbackResponse } = useFeedback();
   const feedbackRecords = feedbackResponse?.data ?? [];
@@ -93,8 +93,11 @@ export default function TriggeredEventsTable({ runs = [] }) {
     return m;
   }, [feedbackRecords]);
 
+  // "Triggered" = the run bundled IPFR pages for Stage 7+ (aggregation/LLM).
+  // stage_reached from the server tops out at 6 (stage6_complete), so the old
+  // `stage_reached >= 8` filter matched nothing and the table was always empty.
   const triggered = useMemo(
-    () => runs.filter(r => (r.stage_reached ?? 0) >= 8),
+    () => runs.filter(r => (r.triggered_pages?.length ?? 0) > 0 || r.verdict != null),
     [runs],
   );
 
@@ -138,7 +141,7 @@ export default function TriggeredEventsTable({ runs = [] }) {
       {/* Header row */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', letterSpacing: '0.1em' }}>
-          TRIGGERED EVENTS — STAGE ≥ 8 &nbsp;
+          TRIGGERED EVENTS — STAGE 7+ &nbsp;
           <span style={{ color: 'var(--text-secondary)' }}>({triggered.length})</span>
         </div>
         <button
@@ -206,7 +209,7 @@ export default function TriggeredEventsTable({ runs = [] }) {
                 <tr
                   key={run.id ?? run.run_id}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => { setSelectedRunId(run.run_id); setDrawerOpen(true); }}
+                  onClick={() => { setSelectedRunId(run.run_id); setSelectedRowId(run.id ?? null); setDrawerOpen(true); }}
                   onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-tertiary)'; }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
                 >

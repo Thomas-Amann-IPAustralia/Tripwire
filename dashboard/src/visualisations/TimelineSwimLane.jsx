@@ -117,7 +117,7 @@ const chartTickStyle = { fontFamily: 'var(--font-mono)', fontSize: 9, fill: '#5c
 // ---- Component -------------------------------------------------------------
 
 export default function TimelineSwimLane({ runs = [], sources = [] }) {
-  const { filters, setDateRange, setSelectedRunId, setDrawerOpen } = useDashboard();
+  const { filters, setDateRange, setSelectedRunId, setSelectedRowId, setDrawerOpen } = useDashboard();
 
   const scrollRef    = useRef(null);
   const containerRef = useRef(null);
@@ -241,7 +241,9 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
         </button>
       </div>
 
-      <div ref={containerRef} style={{ display: 'flex' }}>
+      {/* Bounded height: with 150+ sources the unbounded lane list made this
+          panel several thousand pixels tall and swamped the whole page. */}
+      <div ref={containerRef} style={{ display: 'flex', maxHeight: '520px', overflowY: 'auto' }}>
 
         {/* Fixed left: source labels */}
         <div style={{ width: LABEL_W, flexShrink: 0, overflow: 'hidden' }}>
@@ -316,7 +318,8 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
                         }}
                         onMouseLeave={() => setHoveredTick(null)}
                         onClick={() => {
-                          setSelectedRunId(runId);
+                          setSelectedRunId(run.run_id ?? runId);
+                          setSelectedRowId(run.id ?? null);
                           setDrawerOpen(true);
                         }}
                       />

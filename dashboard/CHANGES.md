@@ -86,3 +86,78 @@
 - `Corpus.jsx` updated: removed the `pages` prop from `<Embedding3D>` (the component now
   fetches its own chunk data via `useEmbeddings()`).
 - Build confirmed: `npm run build` passes with 0 errors.
+
+## 6. Front-End Audit Fixes (July 2026)
+
+Full audit of the dashboard against the live database (11,624 pipeline_runs
+rows, 82 runs, 157 sources) and the v3.0 brief. Root causes and fixes:
+
+### Data-limit bugs (the "1000 limit" family)
+- **Pipeline funnel** undercounted once history passed the `/api/runs`
+  1000-row default. `/api/runs/summary` now aggregates stage totals, total
+  runs, and distinct triggered pages server-side (honouring the same
+  from/to/source/verdict filters), and `FunnelSummary` consumes it.
+- **`/api/runs`** gained `fields=lite` (drops diff text and LLM prose) and the
+  client now fetches the full filtered history (limit 20000, capped 50000
+  server-side), so the heatmap, timeline, matrix and events table see all rows.
+- **Source-corpus map** was built client-side from the capped runs list, so
+  most influencers/influenced pages were missing. New `/api/graph/bipartite`
+  endpoint aggregates source → page trigger edges over the FULL history
+  (with per-edge trigger counts, CHANGE_REQUIRED counts, max confidence);
+  the map now shows every connection, grows/scrolls vertically, and colours
+  change-required edges red vs triggered-only blue.
+- **Health — consecutive source failures** were capped at 10 by a
+  `LIMIT 10` in the streak query; real streaks (up to 82) now report in full
+  and sort worst-first. The run-log endpoint default limit rose 50 → 500 and
+  returns a `total` so the header count is accurate.
+
+### Broken-by-schema bugs
+- **SQL console `page_chunks`** — the table is named `chunks`; the chip list
+  now reflects the real schema (incl. `llm_assessments`, `ingestion_runs`)
+  and each chip issues a BLOB-free, human-readable default query.
+- **Triggered Events table was permanently empty**: it filtered on
+  `stage_reached >= 8`, but the server maps stage_reached to at most 6.
+  It now shows runs that bundled IPFR pages or carry an LLM verdict.
+- **details-JSON extraction paths didn't match pipeline output**: page id and
+  RRF score now fall back to `$.stages.relevance.top_candidates[0]`,
+  graph_propagated to the cross-encoder counter, and the event drawer's diff
+  preview reads the recorded `diff_path` file (re-rooted from the GHA runner
+  path onto the local data directory, with containment checks).
+- **Event drawer showed an arbitrary source's record** for a run (a run_id
+  spans ~156 source rows); callers now pass the clicked row id.
+
+### Alert flags now resettable
+- New acknowledgment store (`data/logs/alert_acks.json`, atomic writes) with
+  `POST/DELETE /api/pages/:page_id/acknowledge`. `alert_count` everywhere
+  now means *outstanding* (post-acknowledgment) alerts; `alert_count_total`
+  preserves history. The page detail panel (2D graph + content map) gets a
+  "MARK REVIEWED — RESET FLAG" button with undo; later alerts re-flag
+  automatically.
+
+### 2D knowledge graph
+- Edge-type toggles show live edge counts; types with zero edges (notably
+  INTERNAL LINK, a deferred pipeline feature — plan task 5.5) render as
+  disabled "NO DATA" chips with an explanatory tooltip instead of a
+  live-looking toggle that draws nothing.
+
+### Content map rework
+- Now a two-level treemap (cluster bands → pages) per the brief: size =
+  chunk count, colour = cluster, red border/⚑ = outstanding alerts, with a
+  legend strip, hover tooltip (chunks/entities/alert counts), click-through
+  to the shared page-detail panel, and a fixed SHOW UNCOVERED PAGES toggle
+  (it previously hatched *every* cell because it referenced a field the API
+  never returned; it now hatches never-alerted pages only).
+
+### Observe layout
+- Timeline swim-lane and source matrix are height-bounded with internal
+  scrolling (157 sources previously made the page thousands of pixels tall).
+- Source matrix drops the always-empty S7–S9 columns for a ⚑ triggered
+  count column; stage-donut legend no longer shows the wrong swatch for
+  "passed"; heatmap header clarifies it colours within the active filter;
+  verdict filter chips render readable labels and the ERROR chip actually
+  filters (mapped to `outcome = 'error'` server-side).
+
+### Tooltips
+- `Tooltip` (the ⓘ popups) hid the instant the pointer left the trigger,
+  making "Learn more" unreachable. Hiding now has a 300 ms grace period,
+  hovering the tooltip keeps it open, and it clamps to the viewport.

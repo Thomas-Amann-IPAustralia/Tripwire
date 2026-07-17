@@ -47,6 +47,25 @@ export function aggregateByDay(runs) {
     .map(([date, count]) => ({ date, count }));
 }
 
+// Build funnel data from /api/runs/summary (server-side aggregation over the
+// FULL run history). summaryRows: [{ stage, total, ... }] with per-stage
+// "deepest stage reached" totals; the funnel wants cumulative "reached at
+// least stage s" counts. triggeredPageCount fills the Stage 7 pages bar.
+export function funnelFromSummary(summaryRows, triggeredPageCount = 0) {
+  const totals = new Array(6).fill(0);
+  for (const row of summaryRows ?? []) {
+    if (row.stage >= 1 && row.stage <= 6) totals[row.stage - 1] = row.total ?? 0;
+  }
+  const cumulative = new Array(6).fill(0);
+  for (let s = 0; s < 6; s++) {
+    for (let t = s; t < 6; t++) cumulative[s] += totals[t];
+  }
+  return [
+    ...cumulative.map((count, i) => ({ stage: i + 1, count, unit: 'runs' })),
+    { stage: 7, count: triggeredPageCount, unit: 'pages' },
+  ];
+}
+
 export function computeFunnelCounts(runs) {
   const empty = [
     ...Array.from({ length: 6 }, (_, i) => ({ stage: i + 1, count: 0, unit: 'runs' })),

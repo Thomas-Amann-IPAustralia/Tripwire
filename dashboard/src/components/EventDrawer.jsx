@@ -382,11 +382,14 @@ function FeedbackSection({ run }) {
 /* ─── main drawer ───────────────────────────────────────────────────────────── */
 
 export function EventDrawer() {
-  const { selectedRunId, drawerOpen, setDrawerOpen } = useDashboard();
+  const { selectedRunId, selectedRowId, drawerOpen, setDrawerOpen } = useDashboard();
   const { data: rawResponse, isLoading } = useRun(selectedRunId);
   const navTo = useNavigate();
 
-  const run = rawResponse?.data?.[0] ?? null;
+  // A run_id groups one row per source checked in that pipeline run — show
+  // the row the user actually clicked, not an arbitrary first row.
+  const rows = rawResponse?.data ?? [];
+  const run = (selectedRowId != null && rows.find(r => r.id === selectedRowId)) || rows[0] || null;
 
   const handleViewInGraph = useCallback(() => {
     if (!run?.ipfr_page_id) return;
