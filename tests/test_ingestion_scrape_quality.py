@@ -175,3 +175,69 @@ def test_heuristic_sections_preserves_char_offsets():
     assert out
     head = out[0]
     assert text[head["char_start"]:head["char_end"]] == "What is it?"
+
+
+# ---------------------------------------------------------------------------
+# Internal-link extraction (plan task 5.5)
+# ---------------------------------------------------------------------------
+
+from ingestion.scrape_ipfr import extract_internal_links, normalise_url  # noqa: E402
+
+
+def test_normalise_url_canonicalises_case_fragment_and_trailing_slash():
+    base = "https://ipfirstresponse.ipaustralia.gov.au/options/foo"
+    assert normalise_url("HTTPS://IPFirstResponse.IPAustralia.gov.au/options/foo/") == base
+    assert normalise_url(base + "#section-2") == base
+    assert normalise_url(base + "?utm=x") == base
+
+
+def test_normalise_url_preserves_site_root():
+    assert normalise_url("https://ipfirstresponse.ipaustralia.gov.au/") == \
+        "https://ipfirstresponse.ipaustralia.gov.au/"
+
+
+def test_extract_internal_links_keeps_same_site_pages():
+    page = "https://ipfirstresponse.ipaustralia.gov.au/options/a"
+    html = """
+      <a href="/options/b">B, root-relative</a>
+      <a href="https://ipfirstresponse.ipaustralia.gov.au/options/c/">C, absolute</a>
+      <a href='d'>D, sibling-relative</a>
+    """
+    links = extract_internal_links(html, page)
+    assert links == [
+        "https://ipfirstresponse.ipaustralia.gov.au/options/b",
+        "https://ipfirstresponse.ipaustralia.gov.au/options/c",
+        "https://ipfirstresponse.ipaustralia.gov.au/options/d",
+    ]
+
+
+def test_extract_internal_links_drops_external_assets_and_schemes():
+    page = "https://ipfirstresponse.ipaustralia.gov.au/options/a"
+    html = """
+      <a href="https://www.ipaustralia.gov.au/commercialise">external site</a>
+      <a href="mailto:help@example.gov.au">email</a>
+      <a href="tel:131488">phone</a>
+      <a href="#top">anchor</a>
+      <a href="javascript:void(0)">js</a>
+      <a href="/files/guide.pdf">pdf asset</a>
+      <a href="/options/real">real page</a>
+    """
+    links = extract_internal_links(html, page)
+    assert links == ["https://ipfirstresponse.ipaustralia.gov.au/options/real"]
+
+
+def test_extract_internal_links_excludes_self_and_dedupes():
+    page = "https://ipfirstresponse.ipaustralia.gov.au/options/a"
+    html = """
+      <a href="/options/a">self</a>
+      <a href="/options/a#later">self with anchor</a>
+      <a href="/options/b">B</a>
+      <a href="/options/b/">B again</a>
+    """
+    links = extract_internal_links(html, page)
+    assert links == ["https://ipfirstresponse.ipaustralia.gov.au/options/b"]
+
+
+def test_extract_internal_links_handles_empty_html():
+    assert extract_internal_links("", "https://x.gov.au/a") == []
+    assert extract_internal_links("<p>no links</p>", "https://x.gov.au/a") == []

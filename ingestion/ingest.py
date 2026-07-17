@@ -281,13 +281,14 @@ def _scrape_one(
             "raw_text": None,
             "sections": [],
             "title": "",
+            "internal_links": [],
             "outcome": "skipped",
             "error": None,
             "started_at": start,
         }
 
     try:
-        plain_text, sections, scraped_title = scrape_ipfr.scrape_page(
+        plain_text, sections, scraped_title, internal_links = scrape_ipfr.scrape_page(
             url, session, force_selenium=force_selenium,
         )
         snapshot_path = Path(row.get("snapshot_path", "") or
@@ -303,6 +304,7 @@ def _scrape_one(
             "raw_text": plain_text,
             "sections": sections,
             "title": scraped_title or row.get("title", "") or "",
+            "internal_links": internal_links,
             "outcome": "scraped",
             "error": None,
             "started_at": start,
@@ -317,6 +319,7 @@ def _scrape_one(
             "raw_text": None,
             "sections": [],
             "title": row.get("title", "") or "",
+            "internal_links": [],
             "outcome": "error",
             "error": str(exc),
             "error_type": type(exc).__name__,
@@ -444,11 +447,12 @@ def _enrich_and_persist(
             "status": "stub",
             "duplicate_of": None,
         })
-        # Stub pages don't get chunks/entities/keyphrases.
+        # Stub pages don't get chunks/entities/keyphrases/links.
         db.replace_chunks(conn, page_id, [])
         db.replace_entities(conn, page_id, [])
         db.replace_keyphrases(conn, page_id, [])
         db.replace_sections(conn, page_id, [])
+        db.replace_page_links(conn, page_id, [])
         db.log_ingestion_run(conn, {
             "run_id": run_id,
             "page_id": page_id,
@@ -516,6 +520,7 @@ def _enrich_and_persist(
     db.replace_entities(conn, page_id, enriched["entities"])
     db.replace_keyphrases(conn, page_id, enriched["keyphrases"])
     db.replace_sections(conn, page_id, enriched["sections"])
+    db.replace_page_links(conn, page_id, scrape_result.get("internal_links", []))
 
     db.log_ingestion_run(conn, {
         "run_id": run_id,

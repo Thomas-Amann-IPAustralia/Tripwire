@@ -11,6 +11,7 @@ Schema (Section 9 of the system plan):
   chunks         — one row per content chunk (section-aware)
   entities       — named entities per page
   keyphrases     — YAKE-extracted keyphrases per page
+  page_links     — outbound internal hyperlinks per page (raw target URLs)
   graph_edges    — quasi-graph edges between pages
   sections       — heading hierarchy / section metadata per page
   pipeline_runs  — one row per source per pipeline run (Section 8)
@@ -74,6 +75,17 @@ CREATE TABLE IF NOT EXISTS keyphrases (
     page_id         TEXT NOT NULL REFERENCES pages(page_id),
     keyphrase       TEXT NOT NULL,
     score           REAL NOT NULL
+);
+
+-- Page links: outbound internal hyperlinks discovered per page.  Stored as raw
+-- (normalised) target URLs so the graph builder can resolve them to page_ids
+-- against the full corpus regardless of ingestion order.  One row per
+-- (source page, target URL).
+CREATE TABLE IF NOT EXISTS page_links (
+    id              INTEGER PRIMARY KEY AUTOINCREMENT,
+    source_page_id  TEXT NOT NULL REFERENCES pages(page_id),
+    target_url      TEXT NOT NULL,
+    UNIQUE(source_page_id, target_url)
 );
 
 -- Graph edges: quasi-graph relationships between IPFR pages
@@ -169,6 +181,7 @@ CREATE TABLE IF NOT EXISTS ingestion_runs (
 CREATE INDEX IF NOT EXISTS idx_chunks_page_id ON chunks(page_id);
 CREATE INDEX IF NOT EXISTS idx_entities_page_id ON entities(page_id);
 CREATE INDEX IF NOT EXISTS idx_keyphrases_page_id ON keyphrases(page_id);
+CREATE INDEX IF NOT EXISTS idx_page_links_source ON page_links(source_page_id);
 CREATE INDEX IF NOT EXISTS idx_graph_edges_source ON graph_edges(source_page_id);
 CREATE INDEX IF NOT EXISTS idx_graph_edges_target ON graph_edges(target_page_id);
 CREATE INDEX IF NOT EXISTS idx_sections_page_id ON sections(page_id);
@@ -425,6 +438,36 @@ def get_keyphrases_for_page(conn: sqlite3.Connection, page_id: str) -> list[sqli
     return conn.execute(
         "SELECT * FROM keyphrases WHERE page_id = ? ORDER BY score", (page_id,)
     ).fetchall()
+
+
+# ---------------------------------------------------------------------------
+# Page link operations
+# ---------------------------------------------------------------------------
+
+
+def replace_page_links(conn: sqlite3.Connection, page_id: str, target_urls: Sequence[str]) -> None:
+    """Delete all existing outbound links for *page_id* and insert the new set.
+
+    *target_urls* are normalised absolute URLs pointing at other IPFR pages
+    (see ``scrape_ipfr.extract_internal_links``).  Duplicates and self-links are
+    tolerated — the UNIQUE constraint and INSERT OR IGNORE collapse repeats.
+    """
+    conn.execute("DELETE FROM page_links WHERE source_page_id = ?", (page_id,))
+    conn.executemany(
+        "INSERT OR IGNORE INTO page_links (source_page_id, target_url) VALUES (?, ?)",
+        [(page_id, url) for url in target_urls if url],
+    )
+
+
+def get_page_links_for_page(conn: sqlite3.Connection, page_id: str) -> list[sqlite3.Row]:
+    return conn.execute(
+        "SELECT * FROM page_links WHERE source_page_id = ? ORDER BY target_url",
+        (page_id,),
+    ).fetchall()
+
+
+def get_all_page_links(conn: sqlite3.Connection) -> list[sqlite3.Row]:
+    return conn.execute("SELECT * FROM page_links ORDER BY source_page_id").fetchall()
 
 
 # ---------------------------------------------------------------------------

@@ -75,7 +75,7 @@ graph:
       weight: 0.8
       min_jaccard: 0.30
     internal_links:
-      enabled: false
+      enabled: true
       weight: 0.6
 
 # --- Storage ---

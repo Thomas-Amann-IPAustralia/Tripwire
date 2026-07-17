@@ -414,12 +414,13 @@ export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
           const count = edgeCounts[type] ?? 0;
           const empty = count === 0;
           // An edge type with zero rows in graph_edges isn't "toggled off" —
-          // there is nothing to draw. Internal-link edges in particular are a
-          // deferred pipeline feature (plan task 5.5), so show that honestly
+          // there is nothing to draw. Internal-link extraction is implemented
+          // in the ingestion pipeline; edges appear here after the next corpus
+          // ingestion run that reaches the live site, so say that honestly
           // instead of a live-looking toggle that does nothing.
           const title = empty
             ? (type === 'internal_link'
-                ? 'No internal-link edges in the corpus yet — deferred pipeline feature (plan task 5.5)'
+                ? 'No internal-link edges yet — populated on the next corpus ingestion run'
                 : 'No edges of this type in the corpus')
             : `${count} edge${count !== 1 ? 's' : ''}`;
           return (

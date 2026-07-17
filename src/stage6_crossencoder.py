@@ -49,10 +49,12 @@ logger = logging.getLogger(__name__)
 # "not_significant" / "wrong_page" to find the optimal decision boundary.
 # See docs/runbook-adjust-thresholds.md for the interim manual procedure.
 
-# TODO(5.5): Internal-link graph edges — enable link_graph.edge_types.internal_links
-# in tripwire_config.yaml once link extraction from the IPFR corpus is implemented
-# in the ingestion pipeline. The scoring logic in _propagate_graph() already
-# handles arbitrary edge types; only the edge data needs to be populated in SQLite.
+# Internal-link graph edges (plan task 5.5) are now built by the ingestion
+# pipeline: scrape_ipfr.extract_internal_links captures each page's outbound
+# IPFR hyperlinks, ingestion.graph._build_internal_link_edges resolves them to
+# "internal_link" rows in graph_edges, and graph.edge_types.internal_links is
+# enabled in tripwire_config.yaml. _propagate_graph() below consumes them like
+# any other edge type — no type-specific handling required here.
 
 # Lazy model cache.
 _crossencoder_cache: dict[str, Any] = {}
