@@ -77,6 +77,8 @@ graph:
     internal_links:
       enabled: true
       weight: 0.6
+      nav_link_df_threshold: 0.5   # drop link targets linked from >50% of pages (site nav/footer chrome)
+      min_pages: 5                 # only apply the nav filter once the corpus is at least this large
 
 # --- Storage ---
 storage:

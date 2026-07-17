@@ -68,11 +68,13 @@ def test_replace_page_links_dedupes_and_ignores_empty(conn):
 # ---------------------------------------------------------------------------
 
 
-def _link_cfg(enabled=True, weight=0.6):
+def _link_cfg(enabled=True, weight=0.6, **extra):
+    internal = {"enabled": enabled, "weight": weight}
+    internal.update(extra)
     return {"graph": {"edge_types": {
         "embedding_similarity": {"enabled": False},
         "entity_overlap": {"enabled": False},
-        "internal_links": {"enabled": enabled, "weight": weight},
+        "internal_links": internal,
     }}}
 
 
@@ -137,6 +139,46 @@ def test_internal_links_disabled_writes_no_edges(conn):
     counts = graph.rebuild_graph(conn, _link_cfg(enabled=False))
     assert "internal_link" not in counts
     assert db.get_all_edges(conn) == []
+
+
+def test_nav_link_frequency_filter_drops_ubiquitous_targets(conn):
+    # 6 content pages all link to a shared "footer" page; each also has one
+    # genuine content link. The footer (linked by 100% of pages) is dropped by
+    # the >50% document-frequency filter; the content links survive.
+    ids = [f"P{i:04d}" for i in range(6)]
+    for i, pid in enumerate(ids):
+        _add_page(conn, pid, f"/p{i}")
+    _add_page(conn, "FOOT0", "/privacy")
+    _add_page(conn, "CONT0", "/content")
+    # Every page links to the footer (df = 6/8 = 75%); only two pages link to
+    # the content page (df = 2/8 = 25%).
+    for pid in ids:
+        links = [f"{BASE}/privacy"]
+        if pid in ("P0000", "P0001"):
+            links.append(f"{BASE}/content")
+        db.replace_page_links(conn, pid, links)
+
+    counts = graph.rebuild_graph(conn, _link_cfg(nav_link_df_threshold=0.5, min_pages=5))
+
+    targets = {e["target_page_id"] for e in db.get_all_edges(conn)}
+    assert "FOOT0" not in targets          # nav/footer target filtered out
+    assert "CONT0" in targets              # genuine content link kept
+    # 2 edges to CONT0, 0 to FOOT0.
+    assert counts["internal_link"] == 2
+
+
+def test_nav_link_filter_disabled_below_min_pages(conn):
+    # With fewer than min_pages, the filter stays off so bootstrap corpora keep
+    # every edge even if a target is technically linked by everyone.
+    _add_page(conn, "P0001", "/a")
+    _add_page(conn, "P0002", "/b")
+    _add_page(conn, "FOOT0", "/privacy")
+    db.replace_page_links(conn, "P0001", [f"{BASE}/privacy"])
+    db.replace_page_links(conn, "P0002", [f"{BASE}/privacy"])
+
+    counts = graph.rebuild_graph(conn, _link_cfg(nav_link_df_threshold=0.5, min_pages=5))
+    assert counts["internal_link"] == 2
+    assert {e["target_page_id"] for e in db.get_all_edges(conn)} == {"FOOT0"}
 
 
 def test_internal_link_coexists_with_max_weight_merge(conn):
