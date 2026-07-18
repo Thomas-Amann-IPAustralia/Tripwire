@@ -26,9 +26,19 @@ import hashlib
 import logging
 import re
 import unicodedata
+import urllib.parse
 from typing import Any
 
 logger = logging.getLogger(__name__)
+
+# href schemes that are never IPFR content links.
+_NON_PAGE_SCHEMES = ("mailto:", "tel:", "javascript:", "data:")
+# File extensions that are downloadable assets, not navigable pages.
+_ASSET_SUFFIXES = (
+    ".pdf", ".docx", ".doc", ".xlsx", ".xls", ".pptx", ".ppt", ".zip",
+    ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico",
+    ".css", ".js", ".xml", ".json", ".rss",
+)
 
 # Minimum acceptable content length (characters).
 _MIN_CONTENT_LENGTH = 200
@@ -72,7 +82,7 @@ def scrape_page(
     session: Any,
     *,
     force_selenium: bool = False,
-) -> tuple[str, list[dict[str, Any]], str]:
+) -> tuple[str, list[dict[str, Any]], str, list[str]]:
     """Fetch and normalise a single IPFR page.
 
     Strategy:
@@ -101,11 +111,13 @@ def scrape_page(
 
     Returns
     -------
-    (plain_text, sections, title)
-        plain_text — normalised plain text (trafilatura output).
-        sections   — list of section dicts with keys:
-                     heading_text, heading_level, char_start, char_end.
-        title      — page title from trafilatura metadata, or "" if not found.
+    (plain_text, sections, title, internal_links)
+        plain_text     — normalised plain text (trafilatura output).
+        sections       — list of section dicts with keys:
+                         heading_text, heading_level, char_start, char_end.
+        title          — page title from trafilatura metadata, or "" if not found.
+        internal_links — normalised absolute URLs of same-site IPFR pages this
+                         page links to (deduplicated, self-link excluded).
 
     Raises
     ------
@@ -119,12 +131,15 @@ def scrape_page(
     plain_text = extract_plain_text(html)
     sections = extract_sections(html, plain_text=plain_text)
     title = extract_title(html)
+    # Internal hyperlinks are pulled from the raw HTML *before* trafilatura
+    # strips the <a href> targets — this is the only stage where they survive.
+    internal_links = extract_internal_links(html, url)
 
     # Content validation
     _validate_captcha(plain_text, url)
     _validate_length(plain_text, url)
 
-    return plain_text, sections, title
+    return plain_text, sections, title, internal_links
 
 
 def _fetch_page_html(url: str, session: Any, force_selenium: bool = False) -> str:
@@ -323,6 +338,78 @@ def extract_title(html: str) -> str:
         raw = re.sub(r"<[^>]+>", "", match.group(1))
         return normalise_text(raw)
     return ""
+
+
+def normalise_url(url: str) -> str:
+    """Return a canonical form of *url* for stable cross-page matching.
+
+    Lower-cases the scheme and host, drops the fragment and query string, and
+    strips a trailing slash from the path (except for the site root).  This lets
+    hyperlink targets be matched against the ``url`` column of the ``pages``
+    table regardless of cosmetic differences (``HTTP`` vs ``http``, a stray
+    ``#section`` anchor, a trailing ``/``).
+    """
+    if not url:
+        return ""
+    parsed = urllib.parse.urlsplit(url.strip())
+    scheme = (parsed.scheme or "https").lower()
+    netloc = parsed.netloc.lower()
+    path = parsed.path or "/"
+    if len(path) > 1:
+        path = path.rstrip("/")
+    return urllib.parse.urlunsplit((scheme, netloc, path, "", ""))
+
+
+# Matches href attribute values regardless of quote style.
+_HREF_RE = re.compile(r"""<a\b[^>]*?\bhref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))""",
+                      re.IGNORECASE)
+
+
+def extract_internal_links(html: str, page_url: str) -> list[str]:
+    """Extract same-site IPFR page links from raw HTML.
+
+    Every ``<a href>`` is resolved to an absolute URL against *page_url*.  A
+    link is kept when ALL of the following hold:
+
+    * it is an HTTP(S) link (``mailto:``/``tel:``/``javascript:`` etc. dropped);
+    * it points at the same host as *page_url* (i.e. within IP First Response);
+    * it is not a downloadable asset (PDF, image, stylesheet, …);
+    * it is not a self-link back to *page_url*.
+
+    Returns the deduplicated, sorted list of normalised absolute URLs.  The
+    returned URLs are normalised with :func:`normalise_url` so the graph builder
+    can resolve them against the ``pages`` table.
+    """
+    if not html or not page_url:
+        return []
+
+    base_host = urllib.parse.urlsplit(page_url).netloc.lower()
+    self_norm = normalise_url(page_url)
+
+    seen: set[str] = set()
+    for match in _HREF_RE.finditer(html):
+        href = (match.group(1) or match.group(2) or match.group(3) or "").strip()
+        if not href:
+            continue
+        lowered = href.lower()
+        if lowered.startswith("#") or lowered.startswith(_NON_PAGE_SCHEMES):
+            continue
+
+        absolute = urllib.parse.urljoin(page_url, href)
+        parsed = urllib.parse.urlsplit(absolute)
+        if parsed.scheme not in ("http", "https"):
+            continue
+        if parsed.netloc.lower() != base_host:
+            continue
+        if parsed.path.lower().endswith(_ASSET_SUFFIXES):
+            continue
+
+        norm = normalise_url(absolute)
+        if not norm or norm == self_norm:
+            continue
+        seen.add(norm)
+
+    return sorted(seen)
 
 
 def compute_version_hash(text: str) -> str:

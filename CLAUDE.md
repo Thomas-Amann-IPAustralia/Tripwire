@@ -139,7 +139,8 @@ The ingestion workflow runs at 01:00 UTC so the corpus is up to date before the 
 | `page_chunks` | Pre-chunked IPFR content with BGE chunk embeddings |
 | `entities` | Named entities (ORG, PERSON, GPE, LAW, etc.) per page |
 | `keyphrases` | YAKE keyphrases with IDF weights per page |
-| `graph_edges` | Quasi-graph edges (embedding similarity, entity overlap) |
+| `page_links` | Outbound internal IPFR hyperlinks (raw target URLs) per page |
+| `graph_edges` | Quasi-graph edges (embedding similarity, entity overlap, internal link) |
 | `sections` | Section headings and offsets per page |
 | `pipeline_runs` | Per-source log entry for every run (used by health and observability) |
 | `deferred_triggers` | Trigger bundles queued for LLM retry after API failures |
@@ -150,8 +151,9 @@ These tasks from the plan require accumulated feedback data or live run history:
 
 - **5.3** — Threshold calibration using feedback data (`src/stage4_relevance.py`, `src/stage6_crossencoder.py`)
 - **5.4** — Grid search over relevance weights (`src/stage4_relevance.py`)
-- **5.5** — Enable internal-link graph edges (`src/stage6_crossencoder.py`, `link_graph.enabled`)
 - **5.6** — BM25 positional/proximity extensions (`src/stage4_relevance.py`)
+
+Task **5.5** (internal-link graph edges) is now implemented: `scrape_ipfr.extract_internal_links` captures each page's outbound IPFR hyperlinks, they are stored in `page_links`, and `ingestion.graph._build_internal_link_edges` resolves them to `internal_link` rows in `graph_edges` (enabled via `graph.edge_types.internal_links`). Edges populate on the next ingestion run that reaches the live site.
 
 TODO comments referencing these tasks are present in the relevant source files.
 

@@ -12,7 +12,11 @@ Three edge sources:
      between all pairs of pages.  Retain edges above a minimum Jaccard
      threshold.  Edge weight = Jaccard × scaling_factor.
 
-  3. Internal links (structural) — DEFERRED: disabled in initial config.
+  3. Internal links (structural) — directed edges from a page to every other
+     IPFR page it hyperlinks to.  Link targets are captured at scrape time
+     (see scrape_ipfr.extract_internal_links), persisted in the page_links
+     table, and resolved to page_ids here against the pages table.  Edge weight
+     is a configurable constant (default 0.6).
 
 Where multiple sources produce edges between the same pair, the maximum weight
 across all sources is used (handled by db.upsert_graph_edge).
@@ -66,10 +70,13 @@ def rebuild_graph(conn: Any, config: dict[str, Any]) -> dict[str, int]:
         counts["entity_overlap"] = n
         logger.info("Entity overlap edges: %d written.", n)
 
-    # --- Internal links (deferred) ---
+    # --- Internal links (structural) ---
     link_cfg = edge_types.get("internal_links", {})
     if link_cfg.get("enabled", False):
-        logger.warning("Internal link graph edges are not yet implemented — skipping.")
+        db.clear_graph_edges(conn, edge_type="internal_link")
+        n = _build_internal_link_edges(conn, link_cfg)
+        counts["internal_link"] = n
+        logger.info("Internal link edges: %d written.", n)
 
     conn.commit()
     return counts
@@ -193,6 +200,89 @@ def _build_entity_overlap_edges(conn: Any, cfg: dict[str, Any]) -> int:
                 db.upsert_graph_edge(conn, pid_a, pid_b, "entity_overlap", weight)
                 db.upsert_graph_edge(conn, pid_b, pid_a, "entity_overlap", weight)
                 edge_count += 2
+
+    return edge_count
+
+
+# ---------------------------------------------------------------------------
+# Internal link edges
+# ---------------------------------------------------------------------------
+
+
+def _build_internal_link_edges(conn: Any, cfg: dict[str, Any]) -> int:
+    """Build directed edges from each page to the IPFR pages it links to.
+
+    Outbound link targets were captured at scrape time and stored as normalised
+    URLs in the ``page_links`` table.  Here we resolve those URLs to page_ids
+    against the active corpus and emit one directed edge (source → target) per
+    resolved link.  Links to stub/duplicate pages, to pages outside the corpus,
+    and self-links are dropped.  Edge weight is the configured constant.
+
+    Site-wide navigation/footer links (Privacy, Disclaimers, the navigator tool,
+    …) appear on nearly every page and would otherwise swamp the graph with
+    high-degree hubs that carry no topical signal.  These are removed with a
+    corpus-wide document-frequency filter, mirroring the boilerplate-line and
+    keyphrase-IDF filters used elsewhere in ingestion: a target linked from more
+    than ``nav_link_df_threshold`` of the active corpus is treated as chrome and
+    dropped.  The filter only engages once the corpus has at least ``min_pages``
+    pages so small/bootstrap corpora are left intact.
+    """
+    from ingestion.scrape_ipfr import normalise_url
+
+    weight: float = float(cfg.get("weight", 0.6))
+    df_threshold: float = float(cfg.get("nav_link_df_threshold", 0.5))
+    min_pages: int = int(cfg.get("min_pages", 5))
+
+    rows = db.get_all_pages(conn)
+    active_ids = {r["page_id"] for r in rows if _is_active(r)}
+
+    # Map every active page's canonical URL to its page_id so link targets
+    # (also normalised at extraction time) resolve regardless of cosmetic
+    # differences.  normalise_url is idempotent, so re-normalising is safe.
+    url_to_id: dict[str, str] = {}
+    for r in rows:
+        if r["page_id"] in active_ids and r["url"]:
+            url_to_id[normalise_url(r["url"])] = r["page_id"]
+
+    # First pass: resolve every link to a (source, target) pair and count each
+    # target's document frequency (distinct linking pages).
+    resolved: list[tuple[str, str]] = []
+    target_sources: dict[str, set[str]] = {}
+    for source_id in active_ids:
+        for link_row in db.get_page_links_for_page(conn, source_id):
+            target_id = url_to_id.get(normalise_url(link_row["target_url"]))
+            if target_id is None or target_id == source_id:
+                continue
+            resolved.append((source_id, target_id))
+            target_sources.setdefault(target_id, set()).add(source_id)
+
+    # Identify nav/footer targets by document frequency.
+    n_active = len(active_ids)
+    nav_targets: set[str] = set()
+    if n_active >= min_pages:
+        cutoff = df_threshold * n_active
+        nav_targets = {t for t, srcs in target_sources.items() if len(srcs) > cutoff}
+        if nav_targets:
+            logger.info(
+                "Internal links: dropping %d site-wide nav/footer target(s) "
+                "linked from >%.0f%% of %d pages: %s",
+                len(nav_targets), df_threshold * 100, n_active,
+                ", ".join(sorted(nav_targets)),
+            )
+
+    # Second pass: emit edges for the remaining (content) links.
+    edge_count = 0
+    for source_id, target_id in resolved:
+        if target_id in nav_targets:
+            continue
+        db.upsert_graph_edge(
+            conn,
+            source=source_id,
+            target=target_id,
+            edge_type="internal_link",
+            weight=weight,
+        )
+        edge_count += 1
 
     return edge_count
 
