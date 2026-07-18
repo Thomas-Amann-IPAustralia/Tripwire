@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 const API_BASE = '';
@@ -123,7 +124,28 @@ export function useConfig() {
     queryKey: ['config'],
     queryFn: () => apiFetch('/api/config'),
     staleTime: STALE,
+    // The server wraps the YAML config in a { data: … } envelope. Unwrap it
+    // here so consumers see the real config object — without this every
+    // dot-path lookup (pipeline.max_retries, …) misses and controls render 0.
+    select: (response) =>
+      response && typeof response === 'object' && 'data' in response
+        ? response.data
+        : response,
   });
+}
+
+// page_id → title lookup built from the pages list. IPFR page IDs (X02CB3…)
+// are opaque to users, so views that reference pages should display titles.
+export function usePageTitles() {
+  const { data } = usePages();
+  return useMemo(() => {
+    const pages = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : []);
+    const map = new Map();
+    for (const p of pages) {
+      if (p.page_id && p.title) map.set(p.page_id, p.title);
+    }
+    return map;
+  }, [data]);
 }
 
 export function useEmbeddings() {

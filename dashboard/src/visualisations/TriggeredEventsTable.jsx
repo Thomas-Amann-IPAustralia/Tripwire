@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { useDashboard } from '../App.jsx';
-import { useFeedback } from '../hooks/useData.js';
+import { useFeedback, usePageTitles } from '../hooks/useData.js';
 import { StageIndicator } from '../components/StageIndicator.jsx';
 import { formatRelativeTime, formatScore } from '../lib/dataUtils.js';
 
@@ -9,8 +9,8 @@ const PAGE_SIZE = 20;
 const COLUMNS = [
   { key: 'run_id',           label: 'RUN ID',    w: '9%'  },
   { key: 'timestamp',        label: 'TIME',      w: '7%'  },
-  { key: 'source_id',        label: 'SOURCE',    w: '14%' },
-  { key: 'ipfr_page_id',     label: 'PAGE',      w: '9%'  },
+  { key: 'source_id',        label: 'SOURCE',    w: '13%' },
+  { key: 'ipfr_page_id',     label: 'PAGE',      w: '17%' },
   { key: 'stage_reached',    label: 'STAGE',     w: '6%'  },
   { key: 'verdict',          label: 'VERDICT',   w: '10%' },
   { key: 'confidence',       label: 'CONF',      w: '5%'  },
@@ -48,13 +48,14 @@ function ConfCell({ value }) {
   return <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: c }}>{n.toFixed(2)}</span>;
 }
 
-function exportTSV(rows) {
-  const headers = COLUMNS.map(c => c.label).join('\t');
+function exportTSV(rows, pageTitles) {
+  const headers = COLUMNS.flatMap(c => c.key === 'ipfr_page_id' ? ['PAGE ID', 'PAGE TITLE'] : [c.label]).join('\t');
   const body = rows.map(r => [
     r.run_id ?? '',
     r.timestamp ?? r.run_at ?? '',
     r.source_id ?? '',
     r.ipfr_page_id ?? '',
+    pageTitles?.get(r.ipfr_page_id) ?? '',
     r.stage_reached ?? '',
     r.verdict ?? '',
     r.confidence != null ? Number(r.confidence).toFixed(2) : '',
@@ -81,6 +82,7 @@ export default function TriggeredEventsTable({ runs = [] }) {
 
   const { data: feedbackResponse } = useFeedback();
   const feedbackRecords = feedbackResponse?.data ?? [];
+  const pageTitles = usePageTitles();
 
   const [search,  setSearch]  = useState('');
   const [page,    setPage]    = useState(0);
@@ -107,9 +109,10 @@ export default function TriggeredEventsTable({ runs = [] }) {
     return triggered.filter(r =>
       (r.run_id        ?? '').toLowerCase().includes(q) ||
       (r.source_id     ?? '').toLowerCase().includes(q) ||
-      (r.ipfr_page_id  ?? '').toLowerCase().includes(q),
+      (r.ipfr_page_id  ?? '').toLowerCase().includes(q) ||
+      (pageTitles.get(r.ipfr_page_id) ?? '').toLowerCase().includes(q),
     );
-  }, [triggered, search]);
+  }, [triggered, search, pageTitles]);
 
   const sorted = useMemo(() => {
     const copy = [...filtered];
@@ -145,7 +148,7 @@ export default function TriggeredEventsTable({ runs = [] }) {
           <span style={{ color: 'var(--text-secondary)' }}>({triggered.length})</span>
         </div>
         <button
-          onClick={() => exportTSV(sorted)}
+          onClick={() => exportTSV(sorted, pageTitles)}
           style={{
             fontFamily: 'var(--font-mono)', fontSize: '10px',
             color: 'var(--text-tertiary)', background: 'transparent',
@@ -229,7 +232,24 @@ export default function TriggeredEventsTable({ runs = [] }) {
                       {(run.source_id ?? '—').slice(0, 20)}
                     </span>
                   </td>
-                  <td style={TD_S}>{run.ipfr_page_id ?? '—'}</td>
+                  <td style={{ ...TD_S, whiteSpace: 'normal' }}>
+                    {run.ipfr_page_id ? (
+                      <span title={`${pageTitles.get(run.ipfr_page_id) ?? ''} (${run.ipfr_page_id})`}>
+                        <span style={{ color: 'var(--text-primary)' }}>
+                          {pageTitles.get(run.ipfr_page_id) ?? run.ipfr_page_id}
+                        </span>
+                        {pageTitles.has(run.ipfr_page_id) && (
+                          <span style={{
+                            fontFamily: 'var(--font-mono)', fontSize: '8px',
+                            color: 'var(--text-tertiary)', marginLeft: '4px',
+                            whiteSpace: 'nowrap',
+                          }}>
+                            {run.ipfr_page_id}
+                          </span>
+                        )}
+                      </span>
+                    ) : '—'}
+                  </td>
                   <td style={TD_S}>
                     <StageIndicator
                       stages={[{ n: stg, reached: true, status: 'passed' }]}

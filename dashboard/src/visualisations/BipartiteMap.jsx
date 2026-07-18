@@ -14,6 +14,33 @@ function clusterColor(cluster) {
   return getCSSColor(`--stage-${stageIdx}`);
 }
 
+const SRC_FONT  = '9px "DM Mono", monospace';
+const PAGE_FONT = '9px "Lora", serif';
+
+let measureCtx = null;
+function textWidth(text, font) {
+  if (!measureCtx) measureCtx = document.createElement('canvas').getContext('2d');
+  measureCtx.font = font;
+  return measureCtx.measureText(text).width;
+}
+
+// Longest label width in a list, for sizing the side gutters.
+function maxTextWidth(texts, font) {
+  let max = 0;
+  for (const t of texts) max = Math.max(max, textWidth(t ?? '', font));
+  return max;
+}
+
+// Trim a label with an ellipsis so it fits the available pixel width.
+function fitText(text, font, avail) {
+  if (textWidth(text, font) <= avail) return text;
+  let t = text;
+  while (t.length > 3 && textWidth(`${t}…`, font) > avail) {
+    t = t.slice(0, -1);
+  }
+  return `${t}…`;
+}
+
 export default function BipartiteMap({ isActive }) {
   const svgRef       = useRef(null);
   const containerRef = useRef(null);
@@ -81,8 +108,25 @@ export default function BipartiteMap({ isActive }) {
     svg.attr('width', width).attr('height', height);
 
     const margin = { top: 24, bottom: 24 };
-    const leftX  = 12 + 80;
-    const rightX = width - 12 - 80;
+
+    // Size the side gutters from the actual rendered label widths so neither
+    // the source IDs (left, right-aligned) nor the page titles (right,
+    // left-aligned) get clipped by the panel edges. Each gutter is capped so
+    // the connection ribbon in the middle stays readable; the rare label that
+    // exceeds the cap is ellipsis-trimmed and carries a full-text tooltip.
+    const LABEL_GAP = 10;  // gap between node circle and its label
+    const EDGE_PAD  = 12;  // padding against the panel edge
+    const MIN_SPAN  = 140; // minimum width kept for the connection ribbon
+    const gutterCap = Math.min(
+      width * 0.34,
+      (width - MIN_SPAN) / 2 - EDGE_PAD - LABEL_GAP,
+    );
+    // +6px slack absorbs measurement drift while web fonts are still loading.
+    const srcLabelW  = Math.min(maxTextWidth(shownSources.map(s => s.source_id), SRC_FONT) + 6, gutterCap);
+    const pageLabelW = Math.min(maxTextWidth(shownPages.map(p => p.title || p.page_id), PAGE_FONT) + 6, gutterCap);
+
+    const leftX  = EDGE_PAD + srcLabelW + LABEL_GAP;
+    const rightX = width - EDGE_PAD - pageLabelW - LABEL_GAP;
     const drawH  = height - margin.top - margin.bottom;
 
     // Y positions
@@ -187,14 +231,16 @@ export default function BipartiteMap({ isActive }) {
       .attr('stroke', 'var(--bg-primary)')
       .attr('stroke-width', 1);
 
+    srcNodeSel.append('title').text(d => d.source_id);
+
     srcNodeSel.append('text')
-      .attr('x', -10)
+      .attr('x', -LABEL_GAP)
       .attr('dy', '0.35em')
       .attr('text-anchor', 'end')
       .attr('fill', 'var(--text-secondary)')
       .style('font-family', '"DM Mono", monospace')
       .style('font-size', '9px')
-      .text(d => d.source_id);
+      .text(d => fitText(d.source_id ?? '', SRC_FONT, srcLabelW));
 
     // Page nodes — sized by total trigger count across all sources
     const triggersByPage = new Map();
@@ -218,17 +264,27 @@ export default function BipartiteMap({ isActive }) {
       .attr('stroke', 'var(--bg-primary)')
       .attr('stroke-width', 1);
 
+    pgNodeSel.append('title').text(d => d.title ? `${d.title} (${d.page_id})` : d.page_id);
+
     pgNodeSel.append('text')
-      .attr('x', 10)
+      .attr('x', LABEL_GAP)
       .attr('dy', '0.35em')
       .attr('fill', 'var(--text-secondary)')
       .style('font-family', '"Lora", serif')
       .style('font-size', '9px')
-      .text(d => d.title || d.page_id);
+      .text(d => fitText(d.title || d.page_id || '', PAGE_FONT, pageLabelW));
   }, [shownSources, shownPages, edges]);
 
   useEffect(() => {
     draw();
+  }, [draw]);
+
+  // Label gutters are sized by canvas text measurement; once the web fonts
+  // finish loading, re-measure and redraw so nothing is under-allocated.
+  useEffect(() => {
+    let cancelled = false;
+    document.fonts?.ready?.then(() => { if (!cancelled) draw(); });
+    return () => { cancelled = true; };
   }, [draw]);
 
   useEffect(() => {

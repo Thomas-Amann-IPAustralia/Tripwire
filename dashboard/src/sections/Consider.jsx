@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useLLMReports } from '../hooks/useData.js';
+import { useLLMReports, usePageTitles } from '../hooks/useData.js';
 import ErrorBanner from '../components/ErrorBanner.jsx';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -92,7 +92,7 @@ function StatStrip({ data }) {
   const vc = verdict_counts ?? {};
 
   const items = [
-    { label: 'Total Assessments',  value: all_count ?? 0,                      color: undefined },
+    { label: 'Total Assessments — All Time', value: all_count ?? 0,            color: undefined },
     { label: 'Change Required',    value: vc.CHANGE_REQUIRED ?? 0,             color: 'var(--state-alert)' },
     { label: 'Uncertain',          value: vc.UNCERTAIN ?? 0,                   color: 'var(--state-warn)' },
     { label: 'No Change',          value: vc.NO_CHANGE ?? 0,                   color: 'var(--state-ok)' },
@@ -173,7 +173,7 @@ function FilterBar({ verdict, onVerdict, search, onSearch }) {
       </div>
       <input
         type="text"
-        placeholder="Search page ID or reasoning…"
+        placeholder="Search page title, ID or reasoning…"
         value={search}
         onChange={e => onSearch(e.target.value)}
         style={{
@@ -192,7 +192,7 @@ function FilterBar({ verdict, onVerdict, search, onSearch }) {
 
 // ── Report card ───────────────────────────────────────────────────────────────
 
-function ReportCard({ report }) {
+function ReportCard({ report, pageTitle }) {
   const [expanded, setExpanded] = useState(false);
   const hasSuggestions = Array.isArray(report.suggested_changes) && report.suggested_changes.length > 0;
 
@@ -221,13 +221,21 @@ function ReportCard({ report }) {
       >
         {/* Left: page + run info */}
         <div style={{ minWidth: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
             <span style={{
               fontFamily: 'var(--font-display)', fontSize: '16px',
               color: 'var(--text-primary)', letterSpacing: '0.03em',
             }}>
-              {report.ipfr_page_id || '—'}
+              {pageTitle || report.ipfr_page_id || '—'}
             </span>
+            {pageTitle && report.ipfr_page_id && (
+              <span style={{
+                fontFamily: 'var(--font-mono)', fontSize: '9px',
+                color: 'var(--text-tertiary)', letterSpacing: '0.05em',
+              }}>
+                {report.ipfr_page_id}
+              </span>
+            )}
             <span style={{
               fontFamily: 'var(--font-mono)', fontSize: '9px',
               color: 'var(--text-tertiary)', letterSpacing: '0.05em',
@@ -429,6 +437,7 @@ export default function Consider() {
 
   const apiVerdict = verdictFilter === 'ALL' ? undefined : verdictFilter;
   const { data: raw, error, isLoading } = useLLMReports({ verdict: apiVerdict });
+  const pageTitles = usePageTitles();
 
   const allReports = useMemo(() => {
     const base = Array.isArray(raw?.data) ? raw.data : [];
@@ -436,11 +445,12 @@ export default function Consider() {
     const q = search.toLowerCase();
     return base.filter(r =>
       (r.ipfr_page_id ?? '').toLowerCase().includes(q) ||
+      (pageTitles.get(r.ipfr_page_id) ?? '').toLowerCase().includes(q) ||
       (r.reasoning ?? '').toLowerCase().includes(q) ||
       (r.run_id ?? '').toLowerCase().includes(q) ||
       (r.suggested_changes ?? []).some(s => s.toLowerCase().includes(q))
     );
-  }, [raw, search]);
+  }, [raw, search, pageTitles]);
 
   const hasFilter = verdictFilter !== 'ALL' || search.trim() !== '';
 
@@ -512,7 +522,11 @@ export default function Consider() {
               {hasFilter ? ' (filtered)' : ''}
             </div>
             {allReports.map((report, i) => (
-              <ReportCard key={report._filename ?? i} report={report} />
+              <ReportCard
+                key={report._filename ?? i}
+                report={report}
+                pageTitle={pageTitles.get(report.ipfr_page_id)}
+              />
             ))}
           </div>
         )}

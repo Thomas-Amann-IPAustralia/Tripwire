@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDashboard } from '../App.jsx';
-import { useRun } from '../hooks/useData.js';
+import { useRun, usePageTitles } from '../hooks/useData.js';
 import { StageIndicator } from './StageIndicator.jsx';
 import { formatRelativeTime, formatScore } from '../lib/dataUtils.js';
 
@@ -62,6 +62,7 @@ function Section({ children, style }) {
 }
 
 function GraphTrace({ run }) {
+  const pageTitles = usePageTitles();
   if (!run?.graph_propagated) return null;
   const pages = run?.details?.stages?.crossencoder?.scored_pages;
   if (!pages?.length) return null;
@@ -70,7 +71,7 @@ function GraphTrace({ run }) {
     { id: run.source_id ?? 'source', label: (run.source_id ?? 'source').slice(0, 18), score: null },
     ...pages.slice(0, 3).map(p => ({
       id:    p.page_id ?? '?',
-      label: (p.page_id ?? '?').slice(0, 18),
+      label: (pageTitles.get(p.page_id) ?? p.page_id ?? '?').slice(0, 18),
       score: p.crossencoder_score ?? p.reranked_score ?? null,
     })),
   ];
@@ -98,6 +99,7 @@ function GraphTrace({ run }) {
             const opacity   = nextScore != null ? Math.min(1, Math.max(0.2, nextScore + 0.2)) : 1;
             return (
               <g key={node.id}>
+                <title>{pageTitles.get(node.id) ?? node.id}</title>
                 <rect
                   x={x} y={4} width={NODE_W} height={NODE_H}
                   fill="#242420" stroke="#4a4a40" strokeWidth={1}
@@ -384,6 +386,7 @@ function FeedbackSection({ run }) {
 export function EventDrawer() {
   const { selectedRunId, selectedRowId, drawerOpen, setDrawerOpen } = useDashboard();
   const { data: rawResponse, isLoading } = useRun(selectedRunId);
+  const pageTitles = usePageTitles();
   const navTo = useNavigate();
 
   // A run_id groups one row per source checked in that pipeline run — show
@@ -468,7 +471,9 @@ export function EventDrawer() {
                 {[
                   { label: 'RUN',    val: run.run_id },
                   { label: 'SOURCE', val: run.source_id },
-                  { label: 'PAGE',   val: run.ipfr_page_id },
+                  { label: 'PAGE',   val: run.ipfr_page_id
+                      ? `${pageTitles.get(run.ipfr_page_id) ?? run.ipfr_page_id}`
+                      : null },
                   { label: 'TIME',   val: formatRelativeTime(run.timestamp ?? run.run_at) },
                 ].map(({ label, val }) => (
                   <div key={label} style={{ display: 'flex', gap: '4px', alignItems: 'baseline' }}>
@@ -552,9 +557,14 @@ export function EventDrawer() {
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', letterSpacing: '0.08em', marginBottom: '2px' }}>
                     IPFR PAGE
                   </div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-secondary)' }}>
-                    {run.ipfr_page_id}
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'var(--text-primary)' }}>
+                    {pageTitles.get(run.ipfr_page_id) ?? run.ipfr_page_id}
                   </div>
+                  {pageTitles.has(run.ipfr_page_id) && (
+                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)' }}>
+                      {run.ipfr_page_id}
+                    </div>
+                  )}
                 </div>
                 <button
                   onClick={handleViewInGraph}
