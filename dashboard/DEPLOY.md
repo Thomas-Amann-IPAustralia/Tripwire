@@ -173,8 +173,32 @@ in a `.env` file that is **not** committed).
 | `DASHBOARD_PASS` | Production | — | Basic Auth password |
 | `DASHBOARD_ORIGIN` | Production | — | CORS allowed origin — set to the full Render URL (e.g., `https://tripwire-dashboard.onrender.com`) |
 | `DATA_ROOT` | Production | `../../` (relative to `dashboard/server/`) | Absolute path to the data directory on the persistent disk; set to `/data` on Render |
+| `GITHUB_REPO` | Optional | — | `owner/repo` used by `syncData.js` to pull the latest data Release into `DATA_ROOT` at startup. Leave unset to rely solely on the committed-data fallback below. |
+| `GITHUB_TOKEN` | Optional | — | Token with read access to the repo's contents + releases. **Required whenever `GITHUB_REPO` points at a private repo** — without it the Releases API returns `HTTP 401` and the release download is skipped. Fine-grained/classic PATs expire; a `401` in the logs means it lapsed. |
 | `NODE_ENV` | Production | `development` | When `production`: enables Basic Auth, locks CORS to `DASHBOARD_ORIGIN`, disables stack traces in error responses |
 | `PORT` | Both | `3001` | TCP port Express listens on; Render sets this automatically — do not override it manually on Render |
+
+### Data delivery: Release download + committed-data fallback
+
+The dashboard reads `ipfr.sqlite` and friends from `DATA_ROOT`. Two mechanisms
+keep that data current, in priority order:
+
+1. **GitHub Release download** (`syncData.js`): when `GITHUB_REPO` is set (and
+   `GITHUB_TOKEN` is valid for a private repo), the newest data Release is
+   downloaded into `DATA_ROOT` at startup. This is the only path that can carry
+   data that is *not* committed to the repo (e.g. large snapshot tarballs).
+2. **Committed-data fallback** (`dataSeed.js`, token-free): for any file the
+   Release did not provide — no token, expired token (`401`), unreachable API,
+   or missing asset — the copy committed to the deployed git checkout is copied
+   into `DATA_ROOT` when the deploy carries a newer/different version. Because
+   the pipeline commits `ipfr.sqlite`, `tripwire_config.yaml`, and
+   `source_registry.csv` on every run, a plain redeploy is enough to refresh the
+   dashboard even with **no** GitHub token configured.
+
+The database is seeded synchronously in `db.js` *before* the read-only
+connection opens, so a refresh takes effect on the same restart rather than the
+next one. If you never want to manage a token, simply leave `GITHUB_REPO` unset
+and let the daily pipeline's redeploy hook ship fresh committed data.
 
 ### Local Development
 

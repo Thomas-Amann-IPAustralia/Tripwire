@@ -2,6 +2,7 @@ import Database from 'better-sqlite3';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { committedPath, seedFileIfNewer } from './dataSeed.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -21,6 +22,14 @@ export function getDbMtime() {
 }
 
 let db = null;
+
+// Token-free refresh: replace the on-disk database with the copy committed to
+// this deploy when it is newer/different, BEFORE opening the read-only
+// connection below. This must run synchronously and before `new Database(...)`:
+// once the handle is open it pins the current inode for the life of the
+// process, so a later swap (here or in syncData) would not be served until the
+// next restart.
+seedFileIfNewer(committedPath('data/ipfr_corpus/ipfr.sqlite'), DB_PATH, 'ipfr.sqlite');
 
 try {
   if (!fs.existsSync(DB_PATH)) {
