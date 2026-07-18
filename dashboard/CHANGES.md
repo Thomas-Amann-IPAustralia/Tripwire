@@ -188,3 +188,40 @@ updates *code*, not `/data`.
   took effect on the *next* restart; now it lands on the same restart.
 - **`DEPLOY.md`** documents `GITHUB_REPO`/`GITHUB_TOKEN` (previously absent from
   the env table) and the two-tier data-delivery model.
+
+## 8. UI Feedback Fixes (July 2026)
+
+- **ADJUST page showed zeros instead of the saved config** — `GET /api/config`
+  wraps the YAML in a `{ data: … }` envelope, but the `useConfig` hook passed it
+  through unwrapped, so every dot-path lookup missed and each control fell back
+  to its minimum. The hook now unwraps the envelope (`useData.js`); controls
+  render the live values from `tripwire_config.yaml` and Apply Changes posts a
+  valid full config again.
+- **IPFR pages referenced by title, not just ID** — new `usePageTitles()` hook
+  (page_id → title map from `/api/pages`). Applied to: CONSIDER report cards
+  (title prominent, ID + run ID secondary; search now also matches titles),
+  OBSERVE Triggered Events table (title + small ID in the PAGE column, title
+  searchable, TSV export gains a PAGE TITLE column), the event drawer (header,
+  IPFR PAGE section, graph-trace nodes), the 2D knowledge-graph node labels and
+  neighbour list, and the Sources snapshot overlay's BEST MATCH PAGE line.
+- **"254 vs 597 LLM assessments" clarified** — the two figures were different
+  windows over the same `llm_assessments` data, not a conflict: HEALTH's strip
+  is a trailing 30-day count, CONSIDER's stat is all-time. Both are now
+  labelled explicitly ("LLM Assessments 30d" / "LAST 30 DAYS" header block;
+  "Total Assessments — All Time"). Also fixed a real counting bug found while
+  verifying: with a verdict filter active, `/api/llm-reports` deduplicated the
+  JSON-file fallback against only the *filtered* DB rows, inflating
+  `all_count` (810 instead of 786). Dedup now uses the full DB key set.
+- **2D knowledge-graph physics tamed** — charge repulsion cut from −120 to −40
+  and range-capped (`distanceMax` 280); every node is tethered to the viewport
+  centre by weak `forceX`/`forceY` (0.05) so unconnected nodes can no longer be
+  repelled off-screen when the user interacts; drag reheat lowered
+  (alphaTarget 0.3 → 0.08) and damping raised (velocityDecay 0.6). Layout is
+  seeded around the viewport centre and translated on resize — the previous
+  code initialised at (0,0) and relied on `forceCenter`, which mean-centres and
+  was part of why dragging one node shoved the whole layout.
+- **Source-corpus map labels no longer clipped** — side gutters are now sized
+  from the actual rendered label widths (canvas `measureText` per font),
+  capped at 34% of the panel per side so the ribbon stays readable; labels that
+  exceed the cap are ellipsis-trimmed and every node carries a full-text
+  `<title>` tooltip. Re-measures once web fonts finish loading.

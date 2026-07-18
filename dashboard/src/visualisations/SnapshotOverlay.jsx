@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { usePageTitles } from '../hooks/useData.js';
 
 // Build sets of added and deleted lines from diff string ("+ new", "- old")
 function buildDiffSets(diff) {
@@ -117,6 +118,7 @@ function ChunkCard({ text, isMatch }) {
  */
 export default function SnapshotOverlay({ data, onClose }) {
   const snapshot = data?.data ?? data ?? {};
+  const pageTitles = usePageTitles();
 
   const {
     source_id,
@@ -213,7 +215,9 @@ export default function SnapshotOverlay({ data, onClose }) {
             flexShrink: 0,
             background: 'var(--bg-tertiary)',
           }}>
-            BEST MATCH PAGE: {best_match_page_id ?? '—'}
+            BEST MATCH PAGE: {best_match_page_id
+              ? `${pageTitles.get(best_match_page_id) ?? best_match_page_id}${pageTitles.has(best_match_page_id) ? ` (${best_match_page_id})` : ''}`
+              : '—'}
           </div>
 
           {/* Chunks */}

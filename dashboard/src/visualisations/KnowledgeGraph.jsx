@@ -164,8 +164,8 @@ export function PageDetailPanel({ pageId, onClose }) {
                 GRAPH NEIGHBOURS
               </div>
               {page.neighbours.slice(0, 5).map((n, i) => (
-                <div key={i} style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>
-                  {n.page_id} <span style={{ color: 'var(--text-tertiary)' }}>({(n.weight ?? 0).toFixed(3)})</span>
+                <div key={i} style={{ fontFamily: 'var(--font-body)', fontSize: '11px', color: 'var(--text-secondary)', marginBottom: '2px' }} title={n.page_id}>
+                  {n.title ?? n.page_id} <span style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', fontSize: '9px' }}>({(n.weight ?? 0).toFixed(3)})</span>
                 </div>
               ))}
             </div>
@@ -286,8 +286,20 @@ export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
     const visibleEdges = edges.filter(e => edgeVisible[e.edge_type]);
     const nodeIds = new Set(nodes.map(n => n.page_id));
 
-    // Build link/node arrays for simulation (clone to avoid mutation)
-    const simNodes = nodes.map(n => ({ ...n, id: n.page_id }));
+    // Build link/node arrays for simulation (clone to avoid mutation).
+    // Seed positions in a phyllotaxis around the viewport centre — d3's
+    // default initialisation centres on (0,0), and without forceCenter the
+    // weak x/y tethers won't pull the layout on-screen before alpha decays.
+    const simNodes = nodes.map((n, i) => {
+      const angle = i * 2.399963;
+      const radius = 16 * Math.sqrt(i);
+      return {
+        ...n,
+        id: n.page_id,
+        x: width / 2 + radius * Math.cos(angle),
+        y: height / 2 + radius * Math.sin(angle),
+      };
+    });
     const nodeMap = new Map(simNodes.map(n => [n.id, n]));
     const simLinks = visibleEdges
       .filter(e => nodeMap.has(e.source_page_id) && nodeMap.has(e.target_page_id))
@@ -336,7 +348,10 @@ export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
       .style('font-family', '"DM Mono", monospace')
       .style('font-size', '9px')
       .style('pointer-events', 'none')
-      .text(d => d.page_id);
+      .text(d => {
+        const t = d.title || d.page_id;
+        return t.length > 42 ? `${t.slice(0, 40)}…` : t;
+      });
 
     // Hover
     nodeSel
@@ -354,10 +369,11 @@ export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
         setSelectedPageId(d.page_id);
       });
 
-    // D3 drag
+    // D3 drag — a low alphaTarget keeps the reheat gentle so dragging one
+    // node nudges its neighbourhood instead of re-energising the whole layout.
     const drag = d3.drag()
       .on('start', (event, d) => {
-        if (!event.active) sim.alphaTarget(0.3).restart();
+        if (!event.active) sim.alphaTarget(0.08).restart();
         d.fx = d.x; d.fy = d.y;
       })
       .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
@@ -367,12 +383,17 @@ export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
       });
     nodeSel.call(drag);
 
-    // Simulation
+    // Simulation. Charge repulsion is capped in range and strength, and every
+    // node is individually tethered to the viewport centre with weak x/y
+    // forces — otherwise unconnected nodes (no link force holding them) are
+    // repelled indefinitely and fly off-screen whenever the user interacts.
     const sim = d3.forceSimulation(simNodes)
       .force('link', d3.forceLink(simLinks).id(d => d.id).distance(80).strength(0.3))
-      .force('charge', d3.forceManyBody().strength(-120))
-      .force('center', d3.forceCenter(width / 2, height / 2))
+      .force('charge', d3.forceManyBody().strength(-40).distanceMax(280))
+      .force('x', d3.forceX(width / 2).strength(0.05))
+      .force('y', d3.forceY(height / 2).strength(0.05))
       .force('collision', d3.forceCollide().radius(d => 6 + ((d.alert_count ?? 0) / maxAlerts) * 14 + 6))
+      .velocityDecay(0.6)
       .on('tick', () => {
         linkSel
           .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
@@ -384,10 +405,26 @@ export default function KnowledgeGraph({ nodes = [], edges = [], isActive }) {
     if (!isActive) sim.stop();
 
     // Resize
+    let prevCx = width / 2;
+    let prevCy = height / 2;
     function onResize() {
       const { width: w, height: h } = container.getBoundingClientRect();
+      if (!w || !h) return; // hidden tab — keep the last real geometry
       svg.attr('width', w).attr('height', h);
-      sim.force('center', d3.forceCenter(w / 2, h / 2));
+      // Translate the whole layout to the new centre. The tethers are too
+      // weak to migrate it themselves — critically so on first reveal, when
+      // the initial mount measured a display:none container as 0×0.
+      const dx = w / 2 - prevCx;
+      const dy = h / 2 - prevCy;
+      prevCx = w / 2;
+      prevCy = h / 2;
+      for (const n of simNodes) {
+        n.x += dx; n.y += dy;
+        if (n.fx != null) n.fx += dx;
+        if (n.fy != null) n.fy += dy;
+      }
+      sim.force('x', d3.forceX(w / 2).strength(0.05));
+      sim.force('y', d3.forceY(h / 2).strength(0.05));
       sim.alpha(0.3).restart();
     }
     const ro = new ResizeObserver(onResize);

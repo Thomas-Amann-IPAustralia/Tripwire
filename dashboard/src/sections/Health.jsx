@@ -214,13 +214,16 @@ function LlmNotifyStrip({ summary }) {
   const noChange = summary?.llm_verdict_no_change_30d ?? '—';
   const notifications = summary?.notifications_30d ?? '—';
 
+  // Every figure in this strip covers the trailing 30-day window — the
+  // Consider page's "Total Assessments" is all-time, so label the window
+  // explicitly to keep the two from reading as contradictory.
   const items = [
-    { label: 'LLM Assessments',    value: assessments,    color: undefined },
-    { label: 'CHANGE_REQUIRED',    value: changeRequired, color: 'var(--state-alert)' },
-    { label: 'UNCERTAIN',          value: uncertain,      color: 'var(--state-warn)' },
-    { label: 'NO_CHANGE',          value: noChange,       color: 'var(--state-ok)' },
-    { label: 'Schema Failures 30d',value: summary?.llm_schema_failures_30d ?? '—', color: undefined },
-    { label: 'Notifications Sent', value: notifications,  color: 'var(--text-primary)' },
+    { label: 'LLM Assessments 30d',    value: assessments,    color: undefined },
+    { label: 'CHANGE_REQUIRED 30d',    value: changeRequired, color: 'var(--state-alert)' },
+    { label: 'UNCERTAIN 30d',          value: uncertain,      color: 'var(--state-warn)' },
+    { label: 'NO_CHANGE 30d',          value: noChange,       color: 'var(--state-ok)' },
+    { label: 'Schema Failures 30d',    value: summary?.llm_schema_failures_30d ?? '—', color: undefined },
+    { label: 'Notifications Sent 30d', value: notifications,  color: 'var(--text-primary)' },
   ];
 
   return (
@@ -249,6 +252,13 @@ function LlmNotifyStrip({ summary }) {
           whiteSpace: 'nowrap',
         }}>
           LLM + NOTIFY
+        </div>
+        <div style={{
+          fontFamily: 'var(--font-mono)', fontSize: '8px',
+          letterSpacing: '0.07em', color: 'var(--text-tertiary)',
+          whiteSpace: 'nowrap',
+        }}>
+          LAST 30 DAYS
         </div>
       </div>
       <div style={{ display: 'flex', flex: 1 }}>

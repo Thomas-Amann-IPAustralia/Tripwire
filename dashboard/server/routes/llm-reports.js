@@ -76,7 +76,18 @@ router.get('/', (req, res) => {
   let newFileReports = [];
   let fileReports = [];
   try {
-    const dbKeys = new Set(dbReports.map(r => `${r.run_id}::${r.ipfr_page_id}`));
+    // Dedup against ALL DB rows, not the verdict/run-filtered slice above —
+    // otherwise file copies of DB reports excluded by the filter get
+    // re-counted and all_count inflates whenever a filter is active.
+    let dbKeys = new Set(dbReports.map(r => `${r.run_id}::${r.ipfr_page_id}`));
+    if (db) {
+      try {
+        dbKeys = new Set(
+          db.prepare('SELECT run_id, ipfr_page_id FROM llm_assessments').all()
+            .map(r => `${r.run_id}::${r.ipfr_page_id}`)
+        );
+      } catch { /* table may not exist yet — keep the filtered-slice keys */ }
+    }
     newFileReports = readJsonFileReports().filter(
       r => !dbKeys.has(`${r.run_id}::${r.ipfr_page_id}`)
     );
