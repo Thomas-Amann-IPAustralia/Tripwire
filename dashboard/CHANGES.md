@@ -161,3 +161,30 @@ rows, 82 runs, 157 sources) and the v3.0 brief. Root causes and fixes:
 - `Tooltip` (the ⓘ popups) hid the instant the pointer left the trigger,
   making "Learn more" unreachable. Hiding now has a 300 ms grace period,
   hovering the tooltip keeps it open, and it clamps to the viewport.
+
+## 7. Token-Free Data Refresh (July 2026)
+
+Internal-link graph edges (and, in general, any freshly ingested data) were not
+reaching the deployed dashboard. Root cause: the server refreshes `DATA_ROOT`
+(the Render persistent disk) only by downloading the latest GitHub **Release**
+in `syncData.js`, which for a private repo needs a valid `GITHUB_TOKEN`. That
+token had expired, so `getLatestRelease()` returned `HTTP 401`, the sync
+aborted, and the disk stayed frozen on an older snapshot — a git redeploy only
+updates *code*, not `/data`.
+
+- **Committed-data fallback** (`server/dataSeed.js`, new): the pipeline already
+  commits `ipfr.sqlite`, `tripwire_config.yaml`, and `source_registry.csv` into
+  the repo, and Render ships them in every deploy. `seedFileIfNewer()` copies
+  that committed copy into `DATA_ROOT` when the deploy carries a newer/different
+  version (mtime or size differs), so the dashboard refreshes on redeploy with
+  **no token**. No-ops in local dev where `DATA_ROOT` is the repo root.
+- **`syncData.js`** no longer early-returns on a missing/expired token or a
+  `401`; the Release download stays the preferred path, and anything it does not
+  provide falls back to the committed data (DB, config, registry, feedback; and
+  snapshots when the destination is empty).
+- **`server/db.js`** seeds the database synchronously *before* opening the
+  read-only connection. Previously the connection opened at import (before
+  `syncData` ran), pinning the pre-sync inode, so even a successful refresh only
+  took effect on the *next* restart; now it lands on the same restart.
+- **`DEPLOY.md`** documents `GITHUB_REPO`/`GITHUB_TOKEN` (previously absent from
+  the env table) and the two-tier data-delivery model.

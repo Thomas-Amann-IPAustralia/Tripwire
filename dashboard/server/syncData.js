@@ -6,6 +6,7 @@ import path from 'path';
 import https from 'https';
 import { execSync } from 'child_process';
 import { DB_PATH, CONFIG_PATH, REGISTRY_PATH, FEEDBACK_PATH, SNAPSHOTS_PATH } from './db.js';
+import { committedPath, seedFileIfNewer } from './dataSeed.js';
 
 const GITHUB_REPO = process.env.GITHUB_REPO;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -87,85 +88,135 @@ function releaseIsNewer(release, localPath) {
 }
 
 export async function syncDataFromRelease() {
-  if (!GITHUB_REPO) {
-    console.log('[sync] GITHUB_REPO not set — skipping data sync');
-    return;
-  }
+  // Asset names successfully refreshed from (or already up to date in) the
+  // GitHub Release. Anything NOT in this set falls back to the copy committed
+  // to this deploy, so a missing/expired token (HTTP 401) no longer freezes
+  // the dashboard.
+  const provided = new Set();
+  let release = null;
 
-  console.log('[sync] Checking for updated data in latest GitHub release...');
-  let release;
-  try {
-    release = await getLatestRelease();
-  } catch (err) {
-    console.warn(`[sync] Failed to reach GitHub API: ${err.message}`);
-    return;
-  }
-  if (!release) return;
-
-  console.log(`[sync] Latest release: ${release.tag_name} (${release.published_at})`);
-
-  fs.mkdirSync(SNAPSHOTS_PATH, { recursive: true });
-
-  const authHeader = GITHUB_TOKEN ? { Authorization: `Bearer ${GITHUB_TOKEN}` } : {};
-
-  for (const { localPath, assetName } of ASSETS) {
-    const asset = release.assets?.find(a => a.name === assetName);
-    if (!asset) {
-      console.log(`[sync] No asset '${assetName}' in release — skipping`);
-      continue;
-    }
-    if (!releaseIsNewer(release, localPath)) {
-      console.log(`[sync] ${assetName} is up to date — skipping`);
-      continue;
-    }
-    console.log(`[sync] Downloading ${assetName} → ${localPath}`);
+  if (GITHUB_REPO) {
+    console.log('[sync] Checking for updated data in latest GitHub release...');
     try {
-      await downloadToFile(asset.url, localPath, {
-        ...authHeader,
-        Accept: 'application/octet-stream',
-      });
-      console.log(`[sync] ${assetName} downloaded OK`);
+      release = await getLatestRelease();
     } catch (err) {
-      console.error(`[sync] Failed to download ${assetName}: ${err.message}`);
+      console.warn(`[sync] Failed to reach GitHub API: ${err.message}`);
     }
+  } else {
+    console.log('[sync] GITHUB_REPO not set — using data committed to this deploy');
   }
 
-  // Snapshots tarball — download and extract into SNAPSHOTS_PATH.
-  // A sentinel file records the last-synced release tag to avoid
-  // re-extracting on every startup.
-  const SNAPSHOTS_ASSET = 'snapshots.tar.gz';
-  const snapshotAsset = release.assets?.find(a => a.name === SNAPSHOTS_ASSET);
-  if (!snapshotAsset) {
-    console.log(`[sync] No asset '${SNAPSHOTS_ASSET}' in release — skipping snapshot sync`);
-  } else {
-    const sentinelPath = path.join(SNAPSHOTS_PATH, '.last_sync_tag');
-    let currentTag = null;
-    try { currentTag = fs.readFileSync(sentinelPath, 'utf8').trim(); } catch { /* absent */ }
+  if (release) {
+    console.log(`[sync] Latest release: ${release.tag_name} (${release.published_at})`);
 
-    if (currentTag === release.tag_name) {
-      console.log(`[sync] ${SNAPSHOTS_ASSET} is up to date (${release.tag_name}) — skipping`);
-    } else {
-      const tmpTar = path.join(SNAPSHOTS_PATH, '..', 'snapshots_sync.tar.gz.tmp');
-      console.log(`[sync] Downloading ${SNAPSHOTS_ASSET}…`);
+    fs.mkdirSync(SNAPSHOTS_PATH, { recursive: true });
+
+    const authHeader = GITHUB_TOKEN ? { Authorization: `Bearer ${GITHUB_TOKEN}` } : {};
+
+    for (const { localPath, assetName } of ASSETS) {
+      const asset = release.assets?.find(a => a.name === assetName);
+      if (!asset) {
+        console.log(`[sync] No asset '${assetName}' in release — skipping`);
+        continue;
+      }
+      if (!releaseIsNewer(release, localPath)) {
+        console.log(`[sync] ${assetName} is up to date — skipping`);
+        provided.add(assetName);
+        continue;
+      }
+      console.log(`[sync] Downloading ${assetName} → ${localPath}`);
       try {
-        await downloadToFile(snapshotAsset.url, tmpTar, {
+        await downloadToFile(asset.url, localPath, {
           ...authHeader,
           Accept: 'application/octet-stream',
         });
-        // Extract: the tarball contains a `snapshots/` directory; extract its
-        // contents directly into SNAPSHOTS_PATH using --strip-components=1.
-        fs.mkdirSync(SNAPSHOTS_PATH, { recursive: true });
-        execSync(
-          `tar xzf "${tmpTar}" --strip-components=1 -C "${SNAPSHOTS_PATH}"`,
-          { stdio: 'pipe' },
-        );
-        fs.unlinkSync(tmpTar);
-        fs.writeFileSync(sentinelPath, release.tag_name, 'utf8');
-        console.log(`[sync] ${SNAPSHOTS_ASSET} extracted OK (${release.tag_name})`);
+        provided.add(assetName);
+        console.log(`[sync] ${assetName} downloaded OK`);
       } catch (err) {
-        console.error(`[sync] Failed to sync snapshots: ${err.message}`);
-        try { fs.unlinkSync(tmpTar); } catch { /* ignore */ }
+        console.error(`[sync] Failed to download ${assetName}: ${err.message}`);
       }
     }
+
+    // Snapshots tarball — download and extract into SNAPSHOTS_PATH.
+    // A sentinel file records the last-synced release tag to avoid
+    // re-extracting on every startup.
+    const SNAPSHOTS_ASSET = 'snapshots.tar.gz';
+    const snapshotAsset = release.assets?.find(a => a.name === SNAPSHOTS_ASSET);
+    if (!snapshotAsset) {
+      console.log(`[sync] No asset '${SNAPSHOTS_ASSET}' in release — skipping snapshot sync`);
+    } else {
+      const sentinelPath = path.join(SNAPSHOTS_PATH, '.last_sync_tag');
+      let currentTag = null;
+      try { currentTag = fs.readFileSync(sentinelPath, 'utf8').trim(); } catch { /* absent */ }
+
+      if (currentTag === release.tag_name) {
+        console.log(`[sync] ${SNAPSHOTS_ASSET} is up to date (${release.tag_name}) — skipping`);
+        provided.add(SNAPSHOTS_ASSET);
+      } else {
+        const tmpTar = path.join(SNAPSHOTS_PATH, '..', 'snapshots_sync.tar.gz.tmp');
+        console.log(`[sync] Downloading ${SNAPSHOTS_ASSET}…`);
+        try {
+          await downloadToFile(snapshotAsset.url, tmpTar, {
+            ...authHeader,
+            Accept: 'application/octet-stream',
+          });
+          // Extract: the tarball contains a `snapshots/` directory; extract its
+          // contents directly into SNAPSHOTS_PATH using --strip-components=1.
+          fs.mkdirSync(SNAPSHOTS_PATH, { recursive: true });
+          execSync(
+            `tar xzf "${tmpTar}" --strip-components=1 -C "${SNAPSHOTS_PATH}"`,
+            { stdio: 'pipe' },
+          );
+          fs.unlinkSync(tmpTar);
+          fs.writeFileSync(sentinelPath, release.tag_name, 'utf8');
+          provided.add(SNAPSHOTS_ASSET);
+          console.log(`[sync] ${SNAPSHOTS_ASSET} extracted OK (${release.tag_name})`);
+        } catch (err) {
+          console.error(`[sync] Failed to sync snapshots: ${err.message}`);
+          try { fs.unlinkSync(tmpTar); } catch { /* ignore */ }
+        }
+      }
+    }
+  }
+
+  seedCommittedFallback(provided);
+}
+
+// Seed anything the release did not provide from the data committed to this
+// deploy. The DB is also seeded synchronously in db.js before the read-only
+// connection opens; repeating it here is a harmless no-op once that has run.
+function seedCommittedFallback(provided) {
+  const files = [
+    { localPath: DB_PATH,       committed: 'data/ipfr_corpus/ipfr.sqlite',                assetName: 'ipfr.sqlite' },
+    { localPath: CONFIG_PATH,   committed: 'tripwire_config.yaml',                        assetName: 'tripwire_config.yaml' },
+    { localPath: REGISTRY_PATH, committed: 'data/influencer_sources/source_registry.csv', assetName: 'source_registry.csv' },
+    { localPath: FEEDBACK_PATH, committed: 'data/logs/feedback.jsonl',                    assetName: 'feedback.jsonl' },
+  ];
+  for (const { localPath, committed, assetName } of files) {
+    if (provided.has(assetName)) continue;
+    seedFileIfNewer(committedPath(committed), localPath, assetName);
+  }
+
+  // Snapshots: seed the committed directory only when the destination is
+  // missing or empty. A full recursive re-copy on every deploy is wasteful, and
+  // when a token is present the release path keeps snapshots fresh.
+  if (!provided.has('snapshots.tar.gz')) seedSnapshotsIfEmpty();
+}
+
+function seedSnapshotsIfEmpty() {
+  try {
+    const src = committedPath('data/influencer_sources/snapshots');
+    if (path.resolve(src) === path.resolve(SNAPSHOTS_PATH)) return;
+    if (!fs.existsSync(src)) return;
+
+    let existing = [];
+    try { existing = fs.readdirSync(SNAPSHOTS_PATH).filter(n => !n.startsWith('.')); } catch { /* missing */ }
+    if (existing.length > 0) return;
+
+    fs.mkdirSync(SNAPSHOTS_PATH, { recursive: true });
+    fs.cpSync(src, SNAPSHOTS_PATH, { recursive: true });
+    console.log('[seed] snapshots: seeded from committed data');
+  } catch (err) {
+    console.error(`[seed] snapshots: failed to seed from committed data: ${err.message}`);
   }
 }
