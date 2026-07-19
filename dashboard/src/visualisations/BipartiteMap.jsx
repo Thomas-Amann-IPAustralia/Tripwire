@@ -41,6 +41,22 @@ function fitText(text, font, avail) {
   return `${t}…`;
 }
 
+// Longest label we keep intact: the length of the reference name
+// "wipo_pct_system_legal_and_procedural_texts". Anything longer is collapsed
+// with a mid-string ellipsis so pathologically long IDs (e.g. the transitional
+// rules acts) don't blow out the gutter. Full text stays in the tooltip.
+const MAX_LABEL_CHARS = 43;
+
+// Collapse an over-long label by keeping its head and tail around a middle
+// ellipsis, so both the meaningful prefix and the distinguishing suffix survive.
+function midTruncate(text, maxChars = MAX_LABEL_CHARS) {
+  if (!text || text.length <= maxChars) return text ?? '';
+  const keep = maxChars - 1; // one char reserved for the ellipsis
+  const head = Math.ceil(keep / 2);
+  const tail = Math.floor(keep / 2);
+  return `${text.slice(0, head)}…${text.slice(text.length - tail)}`;
+}
+
 export default function BipartiteMap({ isActive }) {
   const svgRef       = useRef(null);
   const containerRef = useRef(null);
@@ -122,8 +138,8 @@ export default function BipartiteMap({ isActive }) {
       (width - MIN_SPAN) / 2 - EDGE_PAD - LABEL_GAP,
     );
     // +6px slack absorbs measurement drift while web fonts are still loading.
-    const srcLabelW  = Math.min(maxTextWidth(shownSources.map(s => s.source_id), SRC_FONT) + 6, gutterCap);
-    const pageLabelW = Math.min(maxTextWidth(shownPages.map(p => p.title || p.page_id), PAGE_FONT) + 6, gutterCap);
+    const srcLabelW  = Math.min(maxTextWidth(shownSources.map(s => midTruncate(s.source_id)), SRC_FONT) + 6, gutterCap);
+    const pageLabelW = Math.min(maxTextWidth(shownPages.map(p => midTruncate(p.title || p.page_id)), PAGE_FONT) + 6, gutterCap);
 
     const leftX  = EDGE_PAD + srcLabelW + LABEL_GAP;
     const rightX = width - EDGE_PAD - pageLabelW - LABEL_GAP;
@@ -240,7 +256,7 @@ export default function BipartiteMap({ isActive }) {
       .attr('fill', 'var(--text-secondary)')
       .style('font-family', '"DM Mono", monospace')
       .style('font-size', '9px')
-      .text(d => fitText(d.source_id ?? '', SRC_FONT, srcLabelW));
+      .text(d => fitText(midTruncate(d.source_id ?? ''), SRC_FONT, srcLabelW));
 
     // Page nodes — sized by total trigger count across all sources
     const triggersByPage = new Map();
@@ -272,7 +288,7 @@ export default function BipartiteMap({ isActive }) {
       .attr('fill', 'var(--text-secondary)')
       .style('font-family', '"Lora", serif')
       .style('font-size', '9px')
-      .text(d => fitText(d.title || d.page_id || '', PAGE_FONT, pageLabelW));
+      .text(d => fitText(midTruncate(d.title || d.page_id || ''), PAGE_FONT, pageLabelW));
   }, [shownSources, shownPages, edges]);
 
   useEffect(() => {
