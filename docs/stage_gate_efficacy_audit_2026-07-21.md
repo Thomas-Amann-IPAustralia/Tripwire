@@ -25,6 +25,17 @@ The net effect: the system works as a "LLM-decides-everything" pipeline. It is f
 
 ---
 
+## Implementation status (updated 2026-07-21)
+
+The following Tier-1 items from §5 have been implemented in this change:
+
+- **Rec #1 — semantic scores are now persisted.** `pipeline.py` writes per-page bi-encoder scores (`details.stages.biencoder.pages[]`) and cross-encoder scores (`details.stages.crossencoder.pages[]`) for **every scored candidate, including rejected ones**, and `observability.py` now reads its Stage 5/6 distributions from there. This is always-on (no config flag) so the calibration data accrues from every run going forward. The `triggered_pages` field was deliberately left as a bare ID list to avoid breaking the dashboard, which parses it as such.
+- **Rec #2 — the dead fast-pass config is fixed.** `fast_pass.source_importance_min` is now `null` (explicitly disabled) and the Stage-4 code treats null as "off".
+
+Still open: reliability fixes (recs #3/#4 — source quarantine and the `SCRAPER_PROXY_URL` secret), and the Tier-2 calibration work, which now has data flowing in. Rec #5 (`source_importance_floor`) was intentionally deferred: it has no behavioural effect until `min_score_threshold` is set (rec #7), so the two should be calibrated together rather than changed in isolation.
+
+---
+
 ## 2. The end-to-end funnel (2026-05-07 → 2026-07-20)
 
 Every source-run is logged exactly once at the stage it stopped. The counts below reconcile exactly to the 11,388 total.

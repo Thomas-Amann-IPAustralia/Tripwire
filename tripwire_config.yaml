@@ -39,7 +39,12 @@ relevance_scoring:
   min_score_threshold: null            # calibrated during observation period
   source_importance_floor: 0.5
   fast_pass:
-    source_importance_min: 1.0
+    # null = fast-pass disabled. The previous value (1.0) was unreachable —
+    # the highest importance in source_registry.csv is 0.8, so the fast-pass
+    # never fired in any run. Kept off deliberately: the fast-pass bypasses the
+    # semantic gates, which the 2026-07-21 stage-gate audit found are already
+    # too permissive. Set to a reachable value (<=0.8) only to re-enable it.
+    source_importance_min: null
   yake:
     keyphrases_per_80_words: 1
     min_keyphrases: 5

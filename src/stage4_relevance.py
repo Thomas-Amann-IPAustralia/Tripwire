@@ -138,10 +138,14 @@ def score_relevance(
     top_n = int(rs_cfg.get("top_n_candidates", 5))
     min_score_threshold = rs_cfg.get("min_score_threshold")
     importance_floor = float(rs_cfg.get("source_importance_floor", 0.5))
-    fast_pass_min = float(
-        cfg_get(config, "relevance_scoring", "fast_pass", "source_importance_min",
-                default=1.0)
+    # A null source_importance_min disables the fast-pass entirely (no source
+    # can exceed +inf). This is the intended "off" state — the registry's max
+    # importance is 0.8, so a value of 1.0 was silently unreachable anyway.
+    _fast_pass_raw = cfg_get(
+        config, "relevance_scoring", "fast_pass", "source_importance_min",
+        default=1.0,
     )
+    fast_pass_min = float(_fast_pass_raw) if _fast_pass_raw is not None else float("inf")
 
     biencoder_model_name = cfg_get(
         config, "semantic_scoring", "biencoder", "model",
