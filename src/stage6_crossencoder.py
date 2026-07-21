@@ -35,7 +35,6 @@ release the bi-encoder before loading the cross-encoder (see Section 7.4).
 from __future__ import annotations
 
 import logging
-import math
 import sqlite3
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -316,19 +315,20 @@ def _load_crossencoder(model_name: str) -> Any:
         return None
 
 
-def _sigmoid(x: float) -> float:
-    """Sigmoid function to normalise raw logits to [0, 1]."""
-    try:
-        return 1.0 / (1.0 + math.exp(-x))
-    except OverflowError:
-        return 0.0 if x < 0 else 1.0
-
-
 def _score_pair(page_content: str, change_text: str, model: Any) -> float:
     """Score a (page, change) pair with the cross-encoder.
 
-    Returns a probability in [0, 1] (sigmoid of the raw logit).
-    Returns 0.5 (uncertain) if the model is unavailable.
+    Returns a relevance probability in [0, 1]. ``CrossEncoder.predict`` already
+    applies the model's default activation (Sigmoid for this single-label
+    reranker), so its output is used directly.
+
+    Do NOT apply a second sigmoid here. An earlier version did, which mapped the
+    already-[0, 1] score onto [0.5, 0.731] — compressing the whole usable range
+    into a ~0.16-wide band and destroying the gate's discriminating power (the
+    "Stage 6 confirms everything" symptom). See §2.3a of
+    docs/threshold_calibration_efficacy_2026-07-21.md.
+
+    Returns 0.5 (uncertain) if the model is unavailable or prediction fails.
     """
     if model is None:
         return 0.5
@@ -337,10 +337,11 @@ def _score_pair(page_content: str, change_text: str, model: Any) -> float:
         raw = model.predict([[change_text, page_content]])
         # CrossEncoder.predict returns an array; take the first element.
         if hasattr(raw, "__len__"):
-            raw = float(raw[0])
+            score = float(raw[0])
         else:
-            raw = float(raw)
-        return _sigmoid(raw)
+            score = float(raw)
+        # predict() already returns a probability; clamp for numerical safety.
+        return min(1.0, max(0.0, score))
     except Exception as exc:
         logger.warning("Stage 6: Cross-encoder prediction failed: %s", exc)
         return 0.5

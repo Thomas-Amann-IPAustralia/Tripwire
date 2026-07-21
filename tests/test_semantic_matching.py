@@ -453,24 +453,6 @@ class TestScoreBiencoder:
 # ===========================================================================
 
 
-class TestSigmoid:
-    def test_zero_gives_half(self):
-        from src.stage6_crossencoder import _sigmoid
-        assert abs(_sigmoid(0.0) - 0.5) < 1e-9
-
-    def test_large_positive_approaches_one(self):
-        from src.stage6_crossencoder import _sigmoid
-        assert _sigmoid(100.0) > 0.99
-
-    def test_large_negative_approaches_zero(self):
-        from src.stage6_crossencoder import _sigmoid
-        assert _sigmoid(-100.0) < 0.01
-
-    def test_symmetric(self):
-        from src.stage6_crossencoder import _sigmoid
-        assert abs(_sigmoid(2.0) - (1 - _sigmoid(-2.0))) < 1e-9
-
-
 class TestEstimateTokens:
     def test_empty_string_returns_one(self):
         from src.stage6_crossencoder import _estimate_tokens
@@ -603,14 +585,25 @@ class TestScorePair:
         from src.stage6_crossencoder import _score_pair
         assert _score_pair("page content", "change text", None) == 0.5
 
-    def test_sigmoid_applied_to_logit(self):
-        from src.stage6_crossencoder import _score_pair, _sigmoid
+    def test_predict_probability_returned_directly(self):
+        from src.stage6_crossencoder import _score_pair
 
+        # predict() already applies the model's sigmoid activation, so its
+        # [0, 1] output must be used as-is — no second sigmoid (that bug
+        # compressed everything into [0.5, 0.731]).
         mock_model = MagicMock()
-        mock_model.predict.return_value = [2.0]   # logit = 2.0
+        mock_model.predict.return_value = [0.88]
 
         score = _score_pair("page", "change", mock_model)
-        assert abs(score - _sigmoid(2.0)) < 1e-6
+        assert abs(score - 0.88) < 1e-6
+
+    def test_score_clamped_to_unit_interval(self):
+        from src.stage6_crossencoder import _score_pair
+
+        hi = MagicMock(); hi.predict.return_value = [1.4]
+        lo = MagicMock(); lo.predict.return_value = [-0.2]
+        assert _score_pair("p", "c", hi) == 1.0
+        assert _score_pair("p", "c", lo) == 0.0
 
     def test_prediction_failure_returns_half(self):
         from src.stage6_crossencoder import _score_pair
@@ -623,9 +616,11 @@ class TestScorePair:
 
 
 class TestScoreCrossencoder:
-    def _mock_crossencoder(self, logit: float = 1.0) -> MagicMock:
+    def _mock_crossencoder(self, prob: float = 0.73) -> MagicMock:
+        # predict() returns a probability in [0, 1] (model's sigmoid already
+        # applied); _score_pair uses it directly.
         m = MagicMock()
-        m.predict.return_value = [logit]
+        m.predict.return_value = [prob]
         return m
 
     def test_no_candidates_returns_empty(self):
@@ -639,16 +634,16 @@ class TestScoreCrossencoder:
         assert "warning" in result.observation_data
 
     def test_page_above_threshold_is_confirmed(self):
-        from src.stage6_crossencoder import score_crossencoder, _sigmoid
+        from src.stage6_crossencoder import score_crossencoder
 
         conn = _make_corpus_conn(pages=[{"page_id": "A", "content": "patent content"}])
         config = _minimal_config()
         config["semantic_scoring"]["crossencoder"]["threshold"] = 0.50
 
-        # logit=2.0 → sigmoid=0.88 > 0.50 → should be confirmed.
+        # CE probability 0.88 > 0.50 → should be confirmed.
         result = score_crossencoder(
             ["A"], "change text", conn, config,
-            model=self._mock_crossencoder(logit=2.0),
+            model=self._mock_crossencoder(prob=0.88),
         )
         assert len(result.confirmed_pages) == 1
         assert result.confirmed_pages[0].page_id == "A"
@@ -661,10 +656,10 @@ class TestScoreCrossencoder:
         config = _minimal_config()
         config["semantic_scoring"]["crossencoder"]["threshold"] = 0.90
 
-        # logit=0.0 → sigmoid=0.5 < 0.90 → should be rejected.
+        # CE probability 0.5 < 0.90 → should be rejected.
         result = score_crossencoder(
             ["A"], "change text", conn, config,
-            model=self._mock_crossencoder(logit=0.0),
+            model=self._mock_crossencoder(prob=0.5),
         )
         assert len(result.confirmed_pages) == 0
         assert result.all_scored[0].decision == "rejected"
@@ -712,7 +707,7 @@ class TestScoreCrossencoder:
         result = score_crossencoder(
             ["A", "B"], "change text", conn, config,
             stage4_scores=stage4_scores,
-            model=self._mock_crossencoder(logit=0.0),
+            model=self._mock_crossencoder(prob=0.5),
         )
         by_id = {r.page_id: r for r in result.all_scored}
         assert by_id["A"].reranked_score > by_id["B"].reranked_score
@@ -732,10 +727,10 @@ class TestScoreCrossencoder:
         config["graph"]["propagation_threshold"] = 0.0
         config["semantic_scoring"]["crossencoder"]["threshold"] = 0.0
 
-        # logit=2.0 → sigmoid≈0.88.  Propagated signal to B should be added.
+        # CE probability 0.88.  Propagated signal to B should be added.
         result = score_crossencoder(
             ["A"], "change text", conn, config,
-            model=self._mock_crossencoder(logit=2.0),
+            model=self._mock_crossencoder(prob=0.88),
         )
         direct_ids = {r.page_id for r in result.all_scored}
         assert "A" in direct_ids
@@ -758,7 +753,7 @@ class TestScoreCrossencoder:
 
         result = score_crossencoder(
             ["A"], "change text", conn, config,
-            model=self._mock_crossencoder(logit=2.0),
+            model=self._mock_crossencoder(prob=0.88),
         )
         assert result.graph_propagated_pages == []
 
@@ -794,7 +789,7 @@ class TestScoreCrossencoder:
         result = score_crossencoder(
             ["A", "B", "C"], "change", conn, config,
             stage4_scores=stage4_scores,
-            model=self._mock_crossencoder(logit=0.0),
+            model=self._mock_crossencoder(prob=0.5),
         )
         final_scores = [r.final_score for r in result.all_scored]
         assert final_scores == sorted(final_scores, reverse=True)
@@ -816,7 +811,7 @@ class TestScoreCrossencoder:
 
     def test_graph_boost_is_additive_only(self):
         """Graph-propagated signals should never lower a direct score."""
-        from src.stage6_crossencoder import score_crossencoder, _sigmoid
+        from src.stage6_crossencoder import score_crossencoder
 
         conn = _make_corpus_conn(
             pages=[
@@ -830,7 +825,7 @@ class TestScoreCrossencoder:
 
         result = score_crossencoder(
             ["A", "B"], "change", conn, config,
-            model=self._mock_crossencoder(logit=0.0),
+            model=self._mock_crossencoder(prob=0.5),
         )
         by_id = {r.page_id: r for r in result.all_scored}
         # B's final_score should be >= its reranked_score (boost is additive).
