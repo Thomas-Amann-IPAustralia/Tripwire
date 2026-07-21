@@ -31,8 +31,9 @@ The following Tier-1 items from §5 have been implemented in this change:
 
 - **Rec #1 — semantic scores are now persisted.** `pipeline.py` writes per-page bi-encoder scores (`details.stages.biencoder.pages[]`) and cross-encoder scores (`details.stages.crossencoder.pages[]`) for **every scored candidate, including rejected ones**, and `observability.py` now reads its Stage 5/6 distributions from there. This is always-on (no config flag) so the calibration data accrues from every run going forward. The `triggered_pages` field was deliberately left as a bare ID list to avoid breaking the dashboard, which parses it as such.
 - **Rec #2 — the dead fast-pass config is fixed.** `fast_pass.source_importance_min` is now `null` (explicitly disabled) and the Stage-4 code treats null as "off".
+- **Rec #3 — the 17 always-failing sources are disabled.** `source_registry.csv` gains an `enabled` column; the loader skips any row marked `enabled=false` (blank/missing = enabled), so those sources produce no probe, scrape, or `pipeline_runs` entry. The rows are retained in the file so they can be re-enabled by flipping the flag once the root cause is addressed.
 
-Still open: reliability fixes (recs #3/#4 — source quarantine and the `SCRAPER_PROXY_URL` secret), and the Tier-2 calibration work, which now has data flowing in. Rec #5 (`source_importance_floor`) was intentionally deferred: it has no behavioural effect until `min_score_threshold` is set (rec #7), so the two should be calibrated together rather than changed in isolation.
+Still open: **rec #4 — set the `SCRAPER_PROXY_URL` secret** (the root-cause fix for the WAF blocks; it is a GitHub Actions secret and must be set outside this change). Once set, flip the 17 sources back to `enabled=true`. Also open: the Tier-2 calibration work, which now has data flowing in. Rec #5 (`source_importance_floor`) was intentionally deferred: it has no behavioural effect until `min_score_threshold` is set (rec #7), so the two should be calibrated together rather than changed in isolation.
 
 ---
 
