@@ -604,6 +604,19 @@ def _process_source(
     stages["biencoder"] = {
         "candidates_in": len(candidate_ids),
         "candidates_out": len(biencoder_result.candidate_pages),
+        # Per-page bi-encoder scores for every candidate that was scored
+        # (including those the gate rejected, trigger_reason=None). Persisted
+        # so threshold calibration and the observability score-distribution
+        # report have real data to work with (audit 2026-07-21).
+        "pages": [
+            {
+                "page_id": p.page_id,
+                "max_chunk_score": p.max_chunk_score,
+                "chunks_above_low_medium": p.chunks_above_low_medium,
+                "trigger_reason": p.trigger_reason,
+            }
+            for p in biencoder_result.all_pages
+        ],
     }
 
     logger.info(
@@ -648,6 +661,20 @@ def _process_source(
         "candidates_in": len(stage5_candidate_ids),
         "confirmed": len(ce_result.confirmed_pages),
         "graph_propagated": len(ce_result.graph_propagated_pages),
+        # Per-page cross-encoder scores for every candidate that was scored
+        # (including those the gate rejected, decision='rejected'). Persisted
+        # so the 0.60 threshold can be calibrated against the actual score
+        # distribution and against downstream LLM verdicts (audit 2026-07-21).
+        "pages": [
+            {
+                "page_id": p.page_id,
+                "crossencoder_score": p.crossencoder_score,
+                "reranked_score": p.reranked_score,
+                "final_score": p.final_score,
+                "decision": p.decision,
+            }
+            for p in ce_result.all_scored
+        ],
     }
 
     confirmed_ids = {p.page_id for p in ce_result.confirmed_pages}

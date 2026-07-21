@@ -40,6 +40,7 @@ src/
   feedback_ingestion.py      — Gmail IMAP polling for feedback replies
   health.py                  — Health alerting
   observability.py           — Weekly score distribution report
+  backfill_scores.py         — Historical Stage 5–6 score replay / calibration backfill
 ingestion/
   ingest.py                  — Ingestion orchestrator (Phases 0–6)
   db.py                      — SQLite schema and I/O helpers
@@ -87,6 +88,10 @@ python -m ingestion.ingest --force-all
 # Weekly observability report
 python -m src.observability --days 30
 
+# Backfill historical bi-/cross-encoder scores (replay Stages 5–6 for past
+# webpage changes; writes the score_backfill table + a calibration report)
+python -m src.backfill_scores --since 2026-05-07
+
 # Feedback ingestion (poll Gmail)
 python -m src.feedback_ingestion
 
@@ -126,6 +131,7 @@ Test files follow the pattern `tests/test_<module>.py`.
 | `ipfr_ingestion.yml` | Daily cron 01:00 UTC + `workflow_dispatch` (`force_all` flag) | 60 min | Refresh IPFR corpus in SQLite |
 | `tripwire.yml` | Daily cron 02:00 UTC + `workflow_dispatch` | 30 min | Full pipeline run (Stages 1–9) |
 | `feedback_ingestion.yml` | Every 6 hours + `workflow_dispatch` | 10 min | Poll Gmail for feedback replies |
+| `backfill_scores.yml` | `workflow_dispatch` only | 60 min | Replay historical changes to backfill Stage 5–6 scores (`score_backfill`). Shares the `tripwire-pipeline` concurrency group; don't run during the ingestion window. |
 
 All three workflows commit updated state back to the repository after running (snapshots, SQLite, `sitemap.csv`, `feedback.jsonl`). Each uses a concurrency group to prevent parallel writes to SQLite.
 
@@ -144,6 +150,7 @@ The ingestion workflow runs at 01:00 UTC so the corpus is up to date before the 
 | `sections` | Section headings and offsets per page |
 | `pipeline_runs` | Per-source log entry for every run (used by health and observability) |
 | `deferred_triggers` | Trigger bundles queued for LLM retry after API failures |
+| `score_backfill` | Replayed historical Stage 5–6 scores per candidate page, joined to LLM verdicts (calibration dataset; written by `backfill_scores.py`, never overwrites `pipeline_runs`) |
 
 ## Deferred Tasks (do not implement without live data)
 

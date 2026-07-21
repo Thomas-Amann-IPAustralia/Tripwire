@@ -48,6 +48,7 @@ _REGISTRY_FIELDNAMES = [
     "check_frequency",
     "notes",
     "force_selenium",
+    "enabled",
 ]
 
 # Check frequencies mapped to days.
@@ -72,10 +73,22 @@ def load_source_registry(csv_path: str | Path) -> list[dict[str, Any]]:
         raise FileNotFoundError(f"Source registry not found: {path}")
 
     sources: list[dict[str, Any]] = []
+    skipped = 0
     with path.open(newline="", encoding="utf-8") as fh:
         reader = csv.DictReader(fh)
         for row in reader:
             row = dict(row)
+            # Skip disabled sources entirely — no probe, no scrape, no scoring,
+            # no pipeline_runs entry. A blank or missing "enabled" column means
+            # enabled; only an explicit "false" disables. Used to quarantine
+            # sources that are persistently unreachable (e.g. gov WAFs blocking
+            # the CI runner) until they can be recovered — e.g. by setting
+            # SCRAPER_PROXY_URL — at which point flip "enabled" back to true.
+            enabled = str(row.get("enabled") or "true").strip().lower() != "false"
+            row["enabled"] = enabled
+            if not enabled:
+                skipped += 1
+                continue
             # Parse importance as float.
             try:
                 row["importance"] = float(row.get("importance", 0.5))
@@ -84,6 +97,9 @@ def load_source_registry(csv_path: str | Path) -> list[dict[str, Any]]:
             # Parse force_selenium as bool (accepts "true"/"false", case-insensitive).
             row["force_selenium"] = str(row.get("force_selenium", "false")).strip().lower() == "true"
             sources.append(row)
+
+    if skipped:
+        logger.info("Source registry: %d disabled source(s) skipped.", skipped)
 
     return sources
 

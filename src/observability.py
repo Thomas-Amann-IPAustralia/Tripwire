@@ -259,20 +259,25 @@ def _section_score_distributions(rows: list[dict]) -> list[str]:
             if score is not None:
                 score_buckets["stage4_final_score"].append(float(score))
 
-        # Stage 5/6 scores stored on triggered_pages (flat field)
-        triggered_raw = row.get("triggered_pages")
-        if triggered_raw:
-            try:
-                pages = json.loads(triggered_raw) if isinstance(triggered_raw, str) else triggered_raw
-                if isinstance(pages, list):
-                    for page in pages:
-                        if isinstance(page, dict):
-                            for field_name in ("biencoder_max_chunk_score", "crossencoder_final_score"):
-                                val = page.get(field_name)
-                                if val is not None:
-                                    score_buckets[field_name].append(float(val))
-            except (json.JSONDecodeError, TypeError):
-                pass
+        # Stage 5 bi-encoder scores — persisted per scored page under
+        # details.stages.biencoder.pages (see pipeline.py). max_chunk_score is
+        # the field the threshold gate keys on.
+        bi = stages.get("biencoder", {})
+        for page in bi.get("pages", []):
+            if isinstance(page, dict):
+                val = page.get("max_chunk_score")
+                if val is not None:
+                    score_buckets["biencoder_max_chunk_score"].append(float(val))
+
+        # Stage 6 cross-encoder scores — persisted per scored page under
+        # details.stages.crossencoder.pages. final_score is what the 0.60
+        # threshold is compared against.
+        ce = stages.get("crossencoder", {})
+        for page in ce.get("pages", []):
+            if isinstance(page, dict):
+                val = page.get("final_score")
+                if val is not None:
+                    score_buckets["crossencoder_final_score"].append(float(val))
 
     lines: list[str] = [
         "## Score Distributions",
