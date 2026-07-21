@@ -12,8 +12,8 @@
 The July 21 audit proved the semantic gates were mis-set but could not recommend numbers, because the raw bi-/cross-encoder scores were never persisted. That instrumentation gap is now closed and the scores have been backfilled. With the labelled score dataset in hand, the picture is clear and, in one important respect, **the opposite of what the audit tentatively proposed.**
 
 1. **The bi-encoder (Stage 5) is a genuinely strong discriminator** — separability AUC **0.834**. It should carry the semantic precision load, and it can be tightened to cut roughly a quarter to a third of wasted LLM calls **without losing a single one of the 21 known true positives.**
-2. **The cross-encoder (Stage 6) is almost non-discriminative** — separability AUC **0.585**, barely above the 0.5 coin-flip. Its final score does not separate `CHANGE_REQUIRED` from `NO_CHANGE`. **The audit's Tier-2 rec #6 ("raise the cross-encoder threshold") is refuted by the data** — raising it sheds true positives faster than false positives. Leave it where it is; do not lean on it for precision.
-3. **The precision lever is a bi-encoder `max_chunk_score` floor, not the cross-encoder.** A floor of ~0.63 retains 100% recall on the labelled set and removes ~24% of the false-positive LLM calls; ~0.65 removes ~36% with a thinner safety margin.
+2. **The cross-encoder (Stage 6) is almost non-discriminative *because of a bug*** — separability AUC **0.585**, barely above the 0.5 coin-flip. The root cause (§2.3a) is a **double sigmoid** in `stage6_crossencoder._score_pair`: the model already returns a probability and the code sigmoids it again, crushing the score into a 0.16-wide band ([0.555, 0.718]) and destroying the signal. So **the audit's Tier-2 rec #6 ("raise the cross-encoder threshold") is refuted** — the threshold is landing in algebraic noise, and no cut-point on it can work until the bug is fixed.
+3. **The precision lever right now is a bi-encoder `max_chunk_score` floor.** A floor of ~0.63 retains 100% recall on the labelled set and removes ~24% of the false-positive LLM calls; ~0.65 removes ~36% with a thinner safety margin. **This is implemented** (`max_chunk_floor: 0.63`).
 4. **Efficacy on the goal is mixed.** Tripwire *is* surfacing real, high-value signals (21–24 `CHANGE_REQUIRED` across ~20 distinct IPFR pages in the window), so the pipeline demonstrably works end-to-end. But precision is ~3–4%, recall is still unmeasured (no ground truth for *missed* changes), and precision today is enforced entirely by the LLM. The calibration below moves the first slice of that load back onto the cheap gates where it belongs.
 
 ---
@@ -67,6 +67,21 @@ The bi-encoder distributions are offset (CR median 0.751 vs NO_CHANGE 0.674, and
 
 The cross-encoder table is the whole argument against rec #6: every step that removes false positives removes true positives at almost the same rate, so precision barely moves (3.9% → 5.6%) while recall collapses (100% → 48%). There is no good operating point on this curve.
 
+### 2.3a Root cause: the cross-encoder score is double-sigmoided (a bug)
+
+The cross-encoder is not intrinsically weak — **its output is being destroyed in `src/stage6_crossencoder.py`.** The raw cross-encoder score across all 540 backfilled pairs is crushed into **[0.555, 0.718]** (stdev **0.021**, versus **0.072** for the bi-encoder — 3.4× wider). Every single value sits in [0.50, 0.75] and **not one is below 0.5.** That hard floor at 0.5 is the tell.
+
+`_score_pair()` calls `model.predict(...)` and then applies `_sigmoid()` to the result:
+
+```python
+raw = model.predict([[change_text, page_content]])   # ← already a probability in [0,1]
+return _sigmoid(raw)                                  # ← squashes [0,1] → [0.5, 0.731]
+```
+
+`sentence_transformers.CrossEncoder.predict()` applies the model's **default activation (sigmoid) for a single-label reranker**, so it already returns a probability in [0, 1]. Applying `_sigmoid` a second time maps that [0, 1] range onto **[sigmoid(0), sigmoid(1)] = [0.5, 0.731]** — and, because the sigmoid is flattest near its centre, it compresses exactly the region where the discriminative differences live. Inverting the observed band through the sigmoid recovers pre-squash values of **[0.22, 0.93]** — a healthy, wide, discriminative range that the second sigmoid throws away. The impossibility of any score below 0.5 (a double sigmoid is lower-bounded at 0.5; a correctly single-sigmoided reranker would return sub-0.5 scores for the many off-topic pairs) is conclusive.
+
+So the audit's "Stage 6 confirms everything" symptom and this report's "AUC 0.585" measurement have the **same underlying cause**: the gate is comparing a 0.60 threshold against scores that have been algebraically compressed into a 0.16-wide band around 0.63–0.70, so the threshold lands in the middle of the noise. **This is a code fix, not a threshold change** — see rec F.
+
 ### 2.4 Why the bi-encoder floor is safe *and* why the gate logic must stay
 
 Stage 5 passes a page if **either** its max chunk ≥ `high_threshold` (0.75) **or** ≥ `low_medium_min_chunks` (3) chunks exceed `low_medium_threshold` (0.45). Of the 21 true positives, **12 pass via the high path and 9 pass only via the low-medium path** (max-chunk in [0.666, 0.75)). So the low-medium path is not dead weight — removing it or raising `high_threshold` would discard 43% of known true positives. Likewise, the nine low-path true positives have chunk counts {3, 4, 6, 12, 12, 13, 13, 13, 13}; exactly one sits on the `min_chunks=3` boundary, so raising `low_medium_min_chunks` to 4 would cost a true positive. **Neither existing knob can be tightened without losing recall.**
@@ -81,13 +96,14 @@ These supersede the audit's Tier-2 table (§5, recs #6–#8) now that the calibr
 
 | # | Setting | Current | **Revised recommendation** | Basis | Effect on labelled set |
 |---|---------|---------|----------------------------|-------|------------------------|
-| A | **Bi-encoder `max_chunk_floor`** (new knob, applied to both pass paths) | none | **0.63** (conservative) — up to **0.65** once trusted | §2.3/2.4: AUC 0.834; lowest TP = 0.666 | 100% recall retained; ~24% (0.63) to ~36% (0.65) fewer LLM calls |
+| A | **Bi-encoder `max_chunk_floor`** (new knob, applied to both pass paths) | none | **0.63** ✅ **implemented** — up to **0.65** once trusted | §2.3/2.4: AUC 0.834; lowest TP = 0.666 | 100% recall retained; ~24% (0.63) to ~36% (0.65) fewer LLM calls |
 | B | `semantic_scoring.crossencoder.threshold` | 0.60 | **Keep 0.60 — do NOT raise** (reverses audit rec #6) | §2.1/2.3: AUC 0.585; every step up sheds TPs ≈ as fast as FPs | Any raise damages recall for negligible precision gain |
 | C | `semantic_scoring.biencoder.high_threshold` | 0.75 | **Keep 0.75** | §2.4: 9/21 TPs pass *below* 0.75 via the low-medium path | Raising it drops 43% of known TPs |
 | D | `semantic_scoring.biencoder.low_medium_min_chunks` | 3 | **Keep 3** | §2.4: one TP sits exactly at 3 chunks | Raising to 4 drops a TP |
 | E | `relevance_scoring.min_score_threshold` (audit rec #7) | null | **Defer / low priority (~0.030 if set)** | Stage-4 RRF still compresses to ~0.03 and was not rescored in the backfill; the bi-encoder floor (A) achieves the same precision goal with a measured cut-point | Marginal; keep as a degenerate-candidate guard only |
+| F | **`src/stage6_crossencoder.py` `_score_pair` — remove the double sigmoid** (code fix) | double-sigmoided | apply the model activation **once** | §2.3a: raw CE crushed to [0.555, 0.718], nothing below 0.5 — the second sigmoid destroys the signal | **Not a threshold change.** Restores the cross-encoder's usable range so it can be re-calibrated as a genuine second gate. Requires a re-backfill afterwards, since every CE number in this report was computed with the bug present. |
 
-**Bottom line:** amendment **A** is the single high-value change. Amendments B–D are "hold the line" corrections that stop well-intentioned but harmful tightening. The audit was right that Stage 6 filters nothing and Stage 5 is the real gate — but the fix is to *strengthen Stage 5*, not to raise Stage 6.
+**Bottom line:** amendment **A** is the single high-value change and is now implemented. Amendments B–D are "hold the line" corrections that stop well-intentioned but harmful tightening. **Amendment F is the real explanation** behind the audit's "Stage 6 confirms everything" finding: the cross-encoder was never given a chance to discriminate, because its scores are algebraically compressed by a double sigmoid. The audit was right that Stage 5 is the real working gate — but Stage 6 is *fixable*, not inherently useless. Fixing F, then re-backfilling, is the path to a genuine second semantic gate and a chance to raise precision further than the bi-encoder floor alone can.
 
 ### Ready-to-apply config diff
 
@@ -98,11 +114,12 @@ semantic_scoring:
     high_threshold: 0.75          # unchanged — 9/21 true positives pass below this
     low_medium_threshold: 0.45    # unchanged
     low_medium_min_chunks: 3      # unchanged — one true positive sits exactly here
-    max_chunk_floor: 0.63         # NEW absolute floor on both pass paths (rec A)
+    max_chunk_floor: 0.63         # IMPLEMENTED — absolute floor on both pass paths (rec A)
                                   #   0.63 = 100% recall, ~24% fewer LLM calls
                                   #   0.65 = 100% recall, ~36% fewer LLM calls (thinner margin)
   crossencoder:
-    threshold: 0.60               # HOLD — do NOT raise (rec B); AUC 0.585, no good operating point
+    threshold: 0.60               # HOLD — do NOT raise (rec B). AUC 0.585 is a symptom of the
+                                  # double-sigmoid bug (rec F), not a bad threshold.
 
 # --- Stage 4: Relevance ---
 relevance_scoring:
@@ -132,8 +149,9 @@ relevance_scoring:
 ## 5. How to improve it — prioritised
 
 1. **Fix the input before the gates (highest leverage on the actual goal).** Set `SCRAPER_PROXY_URL` and re-enable the 17 quarantined sources. Half of all due checks currently fail; this is the biggest lever on *recall*, which no threshold can touch. (Audit recs #3/#4 — still open.)
-2. **Ship amendment A (bi-encoder `max_chunk_floor` = 0.63).** ~24% fewer LLM calls at 100% recall on the labelled set. Small code change + config.
-3. **Hold Stage 6 and the Stage-5 OR-logic (amendments B–D).** Explicitly *do not* raise the cross-encoder threshold or the bi-encoder high/min-chunks knobs — the data shows each would cost recall.
+2. **Amendment A (bi-encoder `max_chunk_floor` = 0.63) — done.** ~24% fewer LLM calls at 100% recall on the labelled set.
+3. **Fix the cross-encoder double sigmoid (amendment F), then re-backfill.** This is the highest-value *code* change: it turns Stage 6 from a broken no-op into a potential second semantic gate, and is the only way to know whether Stage 6 can add precision the bi-encoder floor cannot. It is deliberately **not** shipped in this change because it alters live alerting scores and invalidates the CE numbers in this report — it needs its own validation cycle (fix → re-backfill → re-calibrate the Stage 6 threshold on corrected scores).
+4. **Hold Stage 6's threshold and the Stage-5 OR-logic (amendments B–D)** until F lands. Explicitly *do not* raise the cross-encoder threshold or the bi-encoder high/min-chunks knobs — the data shows each would cost recall.
 4. **Stop error-artefact diffs reaching the LLM (audit rec #10).** 17% of `NO_CHANGE` verdicts were degraded/error pages that passed validation. Tightening the size-ratio band and blocklist removes a large slice of the remaining false positives that the bi-encoder floor does not catch (error pages can still score topically).
 5. **Re-weight sources by demonstrated signal value.** The manuals over-trigger and rarely matter; the fee/complaint pages under-trigger relative to their value. Feed the 20 confirmed IPFR pages back into source importance so budget follows signal.
 6. **Keep accruing the labelled set and re-run this calibration quarterly.** 21 true positives is a thin basis for a production cut-point; the safety margin on `max_chunk_floor=0.63` (0.036 below the lowest TP) should be re-checked as the count grows. Raising toward 0.65 is justified only once more true positives confirm the floor holds. Running observation mode for a clean 2–4 week window (audit §5) is the cheapest way to grow it.

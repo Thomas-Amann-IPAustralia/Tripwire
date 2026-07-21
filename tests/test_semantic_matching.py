@@ -235,6 +235,37 @@ class TestScorePages:
         assert results[0].trigger_reason == "single_chunk_high"
         assert results[0].max_chunk_score >= 0.75
 
+    def test_max_chunk_floor_rejects_multi_chunk_below_floor(self):
+        from src.stage5_biencoder import _score_pages
+
+        # 3 chunks at cos 0.6 → multi_chunk_medium under the OR-logic, but a
+        # 0.63 floor sits above 0.6 and must veto the trigger.
+        change_emb = self._make_change_embeddings([1.0, 0.0])
+        corpus_chunks = [
+            {"chunk_id": f"A-chunk-{i:03d}", "page_id": "A",
+             "chunk_embedding": _make_embedding([0.6, 0.0])}
+            for i in range(3)
+        ]
+        results = _score_pages(change_emb, corpus_chunks, 0.75, 0.45, 3,
+                               max_chunk_floor=0.63)
+        assert results[0].trigger_reason is None
+        # Same inputs with no floor still trigger — the floor is the only cause.
+        assert _score_pages(change_emb, corpus_chunks, 0.75, 0.45,
+                            3)[0].trigger_reason == "multi_chunk_medium"
+
+    def test_max_chunk_floor_keeps_candidate_at_or_above_floor(self):
+        from src.stage5_biencoder import _score_pages
+
+        # max_chunk_score = 1.0, comfortably above a 0.63 floor → still triggers.
+        change_emb = self._make_change_embeddings([1.0, 0.0])
+        corpus_chunks = [
+            {"chunk_id": "A-chunk-000", "page_id": "A",
+             "chunk_embedding": _make_embedding([1.0, 0.0])}
+        ]
+        results = _score_pages(change_emb, corpus_chunks, 0.75, 0.45, 3,
+                               max_chunk_floor=0.63)
+        assert results[0].trigger_reason == "single_chunk_high"
+
     def test_low_medium_threshold_triggers_multi_chunk_medium(self):
         from src.stage5_biencoder import _score_pages
 

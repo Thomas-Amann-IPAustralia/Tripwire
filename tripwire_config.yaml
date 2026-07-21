@@ -58,6 +58,13 @@ semantic_scoring:
     high_threshold: 0.75
     low_medium_threshold: 0.45
     low_medium_min_chunks: 3
+    # Absolute floor on max_chunk_score applied to BOTH pass paths above:
+    # a page must clear the OR-logic AND score at least this to survive Stage 5.
+    # Calibrated 2026-07-21 from the score_backfill dataset: every known
+    # CHANGE_REQUIRED page scored >= 0.666, so 0.63 keeps 100% recall on the
+    # labelled set while cutting ~24% of downstream LLM calls. null disables it.
+    # See docs/threshold_calibration_efficacy_2026-07-21.md.
+    max_chunk_floor: 0.63
   crossencoder:
     model: "Alibaba-NLP/gte-reranker-modernbert-base"
     threshold: 0.60
