@@ -490,6 +490,10 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     conn = sqlite3.connect(db_path)
+    # Stage 5/6 DB helpers build dicts via ``dict(row)``, which requires the
+    # sqlite3.Row factory (the production pipeline sets this in ingestion.db.
+    # init_db). Without it rows are plain tuples and dict(row) raises.
+    conn.row_factory = sqlite3.Row
     try:
         stats = run_backfill(conn, config, since=args.since, run_id=args.run_id, limit=args.limit)
         report = generate_report(conn, stats)
