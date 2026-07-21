@@ -188,6 +188,9 @@ def _validate_semantic_scoring(ss: dict) -> None:
     _require_threshold_float(bi, "semantic_scoring.biencoder", "low_medium_threshold")
     if not isinstance(bi["low_medium_min_chunks"], int) or bi["low_medium_min_chunks"] <= 0:
         raise ConfigError("semantic_scoring.biencoder.low_medium_min_chunks must be a positive integer.")
+    # Optional absolute max_chunk_score floor (null/absent = disabled).
+    if bi.get("max_chunk_floor") is not None:
+        _require_threshold_float(bi, "semantic_scoring.biencoder", "max_chunk_floor")
 
     ce = ss["crossencoder"]
     _require_keys(ce, "semantic_scoring.crossencoder",

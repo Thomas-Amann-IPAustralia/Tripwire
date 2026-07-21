@@ -120,6 +120,13 @@ def score_biencoder(
     high_threshold: float = float(bi_cfg.get("high_threshold", 0.75))
     low_medium_threshold: float = float(bi_cfg.get("low_medium_threshold", 0.45))
     low_medium_min_chunks: int = int(bi_cfg.get("low_medium_min_chunks", 3))
+    # Absolute floor on max_chunk_score, applied on top of the OR-logic below.
+    # null / missing = disabled (backwards compatible). See the calibration in
+    # docs/threshold_calibration_efficacy_2026-07-21.md.
+    _floor_raw = bi_cfg.get("max_chunk_floor")
+    max_chunk_floor: float | None = (
+        float(_floor_raw) if _floor_raw is not None else None
+    )
 
     # ---- 1. Chunk the change document -----------------------------------
     change_chunks = _chunk_text(change_text, _DEFAULT_CHUNK_SIZE, _DEFAULT_CHUNK_OVERLAP)
@@ -159,7 +166,7 @@ def score_biencoder(
     # ---- 4. Compute similarity and aggregate per page -------------------
     page_results = _score_pages(
         change_embeddings, corpus_chunks, high_threshold, low_medium_threshold,
-        low_medium_min_chunks,
+        low_medium_min_chunks, max_chunk_floor,
     )
 
     # Sort all pages by max_chunk_score descending.
@@ -280,6 +287,7 @@ def _score_pages(
     high_threshold: float,
     low_medium_threshold: float,
     low_medium_min_chunks: int,
+    max_chunk_floor: float | None = None,
 ) -> list[PageBiEncoderResult]:
     """Score all IPFR pages by aggregating chunk-level cosine similarities.
 
@@ -288,6 +296,12 @@ def _score_pages(
         corpus-chunk pairs for that page.
       - chunks_above_low_medium: count of corpus chunks scoring >=
         low_medium_threshold (at least once, from any change chunk).
+
+    A page triggers if it satisfies the high-score OR multi-chunk-medium rule.
+    When ``max_chunk_floor`` is set, a page must additionally score at least
+    that value on ``max_chunk_score`` to trigger — an absolute floor applied to
+    both pass paths that drops low-similarity candidates the OR-logic would
+    otherwise forward.
     """
     try:
         import numpy as np
@@ -333,6 +347,15 @@ def _score_pages(
             trigger_reason = "single_chunk_high"
         elif chunks_above >= low_medium_min_chunks:
             trigger_reason = "multi_chunk_medium"
+
+        # Absolute max-chunk floor: reject anything below it regardless of
+        # which OR-branch matched (calibration rec A, 2026-07-21).
+        if (
+            trigger_reason is not None
+            and max_chunk_floor is not None
+            and max_score < max_chunk_floor
+        ):
+            trigger_reason = None
 
         # Top-5 chunk scores for logging.
         top_indices = max_per_corpus_chunk.argsort()[::-1][:5]
