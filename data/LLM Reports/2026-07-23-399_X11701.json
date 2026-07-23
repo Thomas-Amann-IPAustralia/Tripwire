@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change consists of news headlines and summaries about IP topics such as trade marks and the value of protecting IP early, but it does not contain any updates to laws, procedures, timeframes, or specific actionable guidance that would affect the accuracy or currency of the IPFR page content. The IPFR page provides general advice on what to do if someone infringes your IP, and this remains accurate and relevant despite the new news items. There are no changes to statutory references, procedural steps, or legal thresholds in the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2128,
+  "completion_tokens": 140,
+  "total_tokens": 2268,
+  "processing_time_seconds": 2.3629285080000955,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.257630+00:00"
+}

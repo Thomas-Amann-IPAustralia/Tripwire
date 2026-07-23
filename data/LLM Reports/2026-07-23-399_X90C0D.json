@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia design manual primarily involve accessibility fixes, minor image corrections, URL updates, and reorganization of content headings without altering substantive content about design rights or their enforcement. The IPFR page provides a general overview of IP protection for businesses without specific procedural details or references to design manual sections that would be affected by these changes. Similarly, the news update adds a new article encouraging IP protection but does not change any factual or procedural information presented in the IPFR page. Therefore, none of the specific guidance or factual statements in the IPFR page are rendered inaccurate or outdated by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2829,
+  "completion_tokens": 155,
+  "total_tokens": 2984,
+  "processing_time_seconds": 2.501342187000091,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.258045+00:00"
+}
