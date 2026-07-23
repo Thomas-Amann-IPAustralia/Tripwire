@@ -1,0 +1,54 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:56px;right:72px">
+    <div class="kicker lead purple">Octavius · rules as code</div>
+    <div class="h2" style="margin-top:16px;font-size:44px">Turning a written rule into a test</div>
+  </div>
+
+  <!-- 3 stage flow -->
+  <div class="panel" style="position:absolute;left:72px;top:196px;width:330px;height:340px">
+    <div class="panel-head"><span class="on">1 · The written rule</span><span>plain english</span></div>
+    <div class="panel-body" style="padding:20px 22px">
+      <div class="label" style="color:var(--purple)">Adverbial clauses</div>
+      <div class="body" style="font-size:17px;margin-top:12px;color:var(--ink)">"Use a comma after an adverbial clause that precedes the main clause."</div>
+      <div class="small" style="margin-top:16px">When an adverbial clause comes before the main clause, a trailing comma helps the reader find the subject.</div>
+    </div>
+  </div>
+
+  <div class="panel" style="position:absolute;left:475px;top:196px;width:330px;height:340px">
+    <div class="panel-head"><span class="on">2 · Structured record</span><span>one row</span></div>
+    <div class="panel-body mono" style="padding:18px 20px;font-size:12.5px;line-height:1.7;color:var(--ink2)">
+      <div><span style="color:var(--blue)">source_heading</span> : Adverbial clauses</div>
+      <div style="margin-top:8px"><span style="color:var(--blue)">rule_summary</span> : comma after<br>&nbsp;&nbsp;a leading adverbial clause</div>
+      <div style="margin-top:8px"><span style="color:var(--blue)">rule_detail</span> : &hellip; helps<br>&nbsp;&nbsp;identify the main subject</div>
+      <div style="margin-top:8px"><span style="color:var(--blue)">pattern_hint</span> : conj. at<br>&nbsp;&nbsp;sentence start, no comma</div>
+    </div>
+  </div>
+
+  <div class="panel" style="position:absolute;left:878px;top:196px;width:330px;height:340px">
+    <div class="panel-head"><span class="on">3 · Code + test</span><span>generated</span></div>
+    <div class="panel-body mono" style="padding:18px 20px;font-size:12.5px;line-height:1.6">
+      <div style="color:var(--ink3)"># detection</div>
+      <div style="color:var(--ink2)"><span style="color:var(--purple)">def</span> check(sent):</div>
+      <div style="color:var(--ink2)">&nbsp;&nbsp;<span style="color:var(--purple)">if</span> leads_with_conj(sent)</div>
+      <div style="color:var(--ink2)">&nbsp;&nbsp;<span style="color:var(--purple)">and not</span> has_comma(sent):</div>
+      <div style="color:var(--ink2)">&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--red)">flag</span>(sent)</div>
+      <div style="margin-top:12px;color:var(--ink3)"># test</div>
+      <div class="row center" style="gap:8px;margin-top:4px"><div style="color:var(--green)">%%ICON check var(--green) 16%%</div><div style="color:var(--green)">passes on fixtures</div></div>
+    </div>
+  </div>
+
+  <svg style="position:absolute;inset:0;pointer-events:none" width="1280" height="720">
+    <defs><marker id="ar2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0l6 3-6 3z" fill="#8a887e"/></marker></defs>
+    <g stroke="#8a887e" stroke-width="1.8" fill="none" marker-end="url(#ar2)">
+      <path d="M405 366 L470 366"/><path d="M808 366 L873 366"/>
+    </g>
+    <text x="437" y="352" fill="#726f66" font-family="DM Mono" font-size="10" text-anchor="middle">EXTRACT</text>
+    <text x="840" y="352" fill="#726f66" font-family="DM Mono" font-size="10" text-anchor="middle">GENERATE</text>
+  </svg>
+
+  <div class="row center" style="position:absolute;left:72px;bottom:52px;gap:16px">
+    <div style="color:var(--purple);flex:none">%%ICON code var(--purple) 22%%</div>
+    <div class="body" style="font-size:16px;color:var(--ink2)">Every rule becomes a <b>testable unit of code</b> — deterministic, inspectable, and cheap to run.</div>
+  </div>
+  %%FOOT Rule → code → test | 13%%
+</div>

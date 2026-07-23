@@ -1,0 +1,62 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:56px;right:72px">
+    <div class="kicker lead purple">Octavius · GenAI for content writing</div>
+    <div class="h2" style="margin-top:16px;font-size:46px">A two-pass writing pipeline</div>
+  </div>
+
+  <!-- feeder for LLM write -->
+  <div class="panel" style="position:absolute;left:72px;top:178px;width:250px;height:168px">
+    <div class="panel-head" style="padding:9px 13px;font-size:11px"><span class="on">Inputs · draft</span></div>
+    <div class="panel-body" style="padding:11px 14px">
+      <div class="label on" style="font-size:11px">System instructions</div>
+      <div class="small" style="font-size:12.5px;line-height:1.4;margin:3px 0 10px">Small-business owners · plain English ~Year-8 · "may/can" over imperatives.</div>
+      <div class="label on" style="font-size:11px">Writer's prompt</div>
+      <div class="small" style="font-size:12.5px;line-height:1.4;margin-top:3px">The topic — and what to focus on.</div>
+    </div>
+  </div>
+
+  <!-- feeder for LLM check -->
+  <div class="panel" style="position:absolute;left:470px;top:178px;width:250px;height:168px">
+    <div class="panel-head" style="padding:9px 13px;font-size:11px"><span class="on">Inputs · check</span></div>
+    <div class="panel-body" style="padding:11px 14px">
+      <div class="label on" style="font-size:11px">QA instructions</div>
+      <div class="small" style="font-size:12.5px;line-height:1.4;margin:3px 0 10px">Check the draft against the rules · report what changed &amp; why.</div>
+      <div class="row center" style="gap:8px"><div style="color:var(--amber)">%%ICON book var(--amber) 18%%</div><div class="label on" style="font-size:11px">Rule book — the codified manual</div></div>
+    </div>
+  </div>
+
+  <!-- spine -->
+  <div class="row center" style="position:absolute;left:122px;top:440px;width:150px;height:86px;border:1px solid var(--purple);background:var(--bg2);flex-direction:column;justify-content:center;gap:6px">
+    <div style="color:var(--purple)">%%ICON brain var(--purple) 26%%</div><div class="label on" style="font-size:12px">LLM · write</div>
+  </div>
+  <div class="row center" style="position:absolute;left:330px;top:453px;width:120px;height:60px;border:1px solid var(--rule2);background:var(--bg3);gap:9px">
+    <div style="color:var(--ink2)">%%ICON file var(--ink2) 20%%</div><div class="label on" style="font-size:12px">Draft</div>
+  </div>
+  <div class="row center" style="position:absolute;left:520px;top:440px;width:150px;height:86px;border:1px solid var(--purple);background:var(--bg2);flex-direction:column;justify-content:center;gap:6px">
+    <div style="color:var(--purple)">%%ICON brain var(--purple) 26%%</div><div class="label on" style="font-size:12px">LLM · check</div>
+  </div>
+  <div class="row center" style="position:absolute;left:728px;top:440px;width:160px;height:86px;border:1px solid var(--green);background:var(--bg2);flex-direction:column;justify-content:center;gap:6px">
+    <div style="color:var(--green)">%%ICON checkc var(--green) 26%%</div><div class="label on" style="font-size:12px">Clean draft</div>
+  </div>
+  <div class="row center" style="position:absolute;left:946px;top:453px;width:160px;height:60px;border:1px solid var(--rule2);background:var(--bg3);gap:9px">
+    <div style="color:var(--ink2)">%%ICON eye var(--ink2) 20%%</div><div class="label on" style="font-size:12.5px">Writer review</div>
+  </div>
+
+  <svg style="position:absolute;inset:0;pointer-events:none" width="1280" height="720">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0 0l6 3-6 3z" fill="#8a887e"/></marker></defs>
+    <g stroke="#8a887e" stroke-width="1.7" fill="none" marker-end="url(#ar)">
+      <path d="M197 346 L197 434"/>          <!-- feeder -> LLM write -->
+      <path d="M595 346 L595 434"/>          <!-- feeder -> LLM check -->
+      <path d="M272 483 L324 483"/>          <!-- LLM write -> draft -->
+      <path d="M450 483 L514 483"/>          <!-- draft -> LLM check -->
+      <path d="M670 483 L722 483"/>          <!-- LLM check -> clean -->
+      <path d="M888 483 L940 483"/>          <!-- clean -> review -->
+    </g>
+  </svg>
+
+  <div class="row center" style="position:absolute;left:72px;bottom:52px;gap:16px">
+    <div style="color:var(--purple);flex:none">%%ICON zap var(--purple) 22%%</div>
+    <div class="body" style="font-size:16px;color:var(--ink2)">Wired up as projects / "agents", it returns a workable result — <b>5 comms strategies drafted in 2 days.</b></div>
+  </div>
+  %%FOOT The writing pipeline | 11%%
+</div>

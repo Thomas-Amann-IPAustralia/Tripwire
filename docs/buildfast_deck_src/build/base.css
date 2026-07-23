@@ -1,0 +1,123 @@
+/* ============================================================
+   Tripwire / BUILDFAST deck — unified design system
+   Aesthetic lifted from the "Source–Corpus Map" artifact.
+   Canvas: 1280 x 720 (16:9). Rendered at 2x -> 2560 x 1440.
+   ============================================================ */
+
+:root{
+  --bg:#0e0e0d; --bg2:#161614; --bg3:#1e1e1b; --bg4:#272722;
+  --ink:#e8e8e8; --ink2:#9a988f; --ink3:#726f66;
+  --rule:#333331; --rule2:#45443f;
+  --green:#4ADE80; --red:#F87171; --amber:#FBBF24;
+  --blue:#60A5FA; --purple:#A78BFA; --orange:#F3701E;
+  --alert:#F87171; --ok:#4ADE80; --source:#cfc7ad;
+  --font-display:'Bebas Neue','Oswald','Arial Narrow',sans-serif;
+  --font-mono:'DM Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --font-body:'Lora',Georgia,'Times New Roman',serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;border-radius:0;margin:0;padding:0}
+
+html,body{background:#000}
+body{font-family:var(--font-body);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+/* ---- the slide stage ---- */
+.slide{
+  position:relative; width:1280px; height:720px; overflow:hidden;
+  background:var(--bg); color:var(--ink);
+  background-image:
+    radial-gradient(1100px 620px at 82% -8%, color-mix(in srgb, var(--blue) 9%, transparent), transparent 60%),
+    radial-gradient(820px 520px at 4% 6%, color-mix(in srgb, var(--alert) 6%, transparent), transparent 60%);
+}
+/* faint film-grain so flat darks don't band */
+.slide::after{
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:.025; z-index:60;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+.slide.light{ background:#F1EFE9; color:#17150f;
+  background-image:radial-gradient(900px 500px at 85% -10%, rgba(37,99,235,.06), transparent 60%); }
+
+/* safe area / padding */
+.pad{ position:absolute; inset:0; padding:64px 72px; }
+.pad.tight{ padding:52px 64px; }
+
+/* ---- typography primitives ---- */
+.kicker{
+  font-family:var(--font-mono); font-size:15px; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--blue);
+  display:inline-flex; align-items:center; gap:14px;
+}
+.kicker.lead::before{content:'';width:38px;height:1px;background:currentColor;display:inline-block}
+.kicker.plain{color:var(--ink3);letter-spacing:.2em;font-size:14px}
+.kicker.green{color:var(--green)} .kicker.red{color:var(--red)} .kicker.amber{color:var(--amber)}
+.kicker.purple{color:var(--purple)} .kicker.orange{color:var(--orange)} .kicker.source{color:var(--source)}
+
+h1,h2,h3{font-family:var(--font-display);font-weight:400;line-height:.96;letter-spacing:.01em}
+.display{ font-family:var(--font-display); font-weight:400; line-height:.95; letter-spacing:.01em; }
+.title{ font-family:var(--font-display); font-size:80px; line-height:.94; letter-spacing:.012em; text-wrap:balance; }
+.title .accent{color:var(--red)}
+.title .blue{color:var(--blue)}
+.h2{ font-family:var(--font-display); font-size:56px; line-height:.96; letter-spacing:.012em; text-wrap:balance; }
+.h3{ font-family:var(--font-display); font-size:34px; line-height:.98; letter-spacing:.012em; }
+
+.lede{ font-family:var(--font-body); font-size:21px; line-height:1.5; color:var(--ink2); max-width:60ch; }
+.lede b, .body b{color:var(--ink);font-weight:600}
+.body{ font-family:var(--font-body); font-size:17px; line-height:1.55; color:var(--ink2); }
+.small{ font-size:14.5px; line-height:1.5; color:var(--ink2); }
+.mono{ font-family:var(--font-mono); }
+.label{ font-family:var(--font-mono); font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink3); }
+.label.on{color:var(--ink)}
+
+/* ---- rules ---- */
+.hr{height:1px;background:var(--rule);border:0;width:100%}
+.vr{width:1px;background:var(--rule);align-self:stretch}
+
+/* ---- panels / cards (full border, sharp corners; no edge stripes) ---- */
+.panel{ background:var(--bg2); border:1px solid var(--rule); position:relative; }
+.panel-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:12px 16px;border-bottom:1px solid var(--rule);
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);
+}
+.panel-head .on{color:var(--ink)}
+.panel-body{padding:16px}
+
+/* ---- stat figure ---- */
+.fignum{ font-family:var(--font-display); font-size:96px; line-height:.85; letter-spacing:.01em; color:var(--ink);
+  font-variant-numeric:tabular-nums; }
+.figcap{ font-family:var(--font-mono); font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); margin-top:12px; }
+.figsub{ font-size:15px; color:var(--ink2); margin-top:8px; line-height:1.45; }
+.alertnum{color:var(--alert)}
+
+/* pull quote */
+.pull{ padding-left:22px; border-left:2px solid var(--alert);
+  font-family:var(--font-body); font-style:italic; font-size:34px; line-height:1.22; color:var(--ink); }
+
+/* number chip */
+.chip{ display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border:1px solid var(--rule2);color:var(--ink);
+  font-family:var(--font-display);font-size:22px;line-height:1; }
+.chip.solid{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* swatch */
+.swatch{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;color:var(--ink2);text-transform:uppercase}
+.swatch i{width:18px;height:3px;display:inline-block}
+
+/* ---- slide chrome: page number + tag (no bars, just marks) ---- */
+.pageno{ position:absolute; right:72px; bottom:44px; font-family:var(--font-mono); font-size:12px;
+  letter-spacing:.14em; color:var(--ink3); z-index:50; }
+.slugtag{ position:absolute; left:72px; bottom:44px; font-family:var(--font-mono); font-size:12px;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--ink3); z-index:50; }
+
+/* icon circle */
+.iconwrap{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--rule2)}
+.iconwrap svg{display:block}
+svg .st{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+svg .stf{stroke:none}
+
+/* helpers */
+.row{display:flex} .col{display:flex;flex-direction:column} .grow{flex:1}
+.center{align-items:center} .between{justify-content:space-between} .end{justify-content:flex-end}
+.wrap-img{width:100%;height:100%;object-fit:cover;display:block}
+.frame{border:1px solid var(--rule);background:var(--bg2);overflow:hidden}
+.tabnum{font-variant-numeric:tabular-nums}

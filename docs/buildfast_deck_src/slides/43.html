@@ -1,0 +1,47 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:52px;right:72px" class="row between">
+    <div>
+      <div class="kicker lead">The roadmap</div>
+      <div class="h2" style="margin-top:12px;font-size:44px">The path to enterprise — a plan, not a promise</div>
+      <div class="body" style="font-size:15.5px;margin-top:8px;color:var(--ink2)">Migrating Tripwire to AWS — event-driven (SQS), the same nine stages, production-grade.</div>
+    </div>
+    <div class="panel" style="height:fit-content;border-color:var(--blue)"><div class="panel-body col center" style="padding:14px 22px;text-align:center">
+      <div class="fignum" style="font-size:48px;color:var(--blue)">~80</div>
+      <div class="figcap" style="margin-top:4px">hrs · estimated</div>
+    </div></div>
+  </div>
+
+  <div style="position:absolute;left:72px;right:72px;top:210px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+    <div class="panel"><div class="panel-body" style="padding:20px 22px;height:172px">
+      <div class="row between center"><div class="display" style="font-size:22px;color:var(--blue)">01</div><div style="color:var(--ink3)">%%ICON layers var(--ink3) 22%%</div></div>
+      <div class="display" style="font-size:21px;margin-top:12px">Infrastructure</div>
+      <div class="small" style="font-size:13px;margin-top:8px">VPC, IAM roles, and an EventBridge / SQS event bus to drive the stages.</div>
+    </div></div>
+    <div class="panel"><div class="panel-body" style="padding:20px 22px;height:172px">
+      <div class="row between center"><div class="display" style="font-size:22px;color:var(--blue)">02</div><div style="color:var(--ink3)">%%ICON database var(--ink3) 22%%</div></div>
+      <div class="display" style="font-size:21px;margin-top:12px">Data layer</div>
+      <div class="small" style="font-size:13px;margin-top:8px">SQLite → managed Postgres; snapshots and artefacts to S3.</div>
+    </div></div>
+    <div class="panel"><div class="panel-body" style="padding:20px 22px;height:172px">
+      <div class="row between center"><div class="display" style="font-size:22px;color:var(--blue)">03</div><div style="color:var(--ink3)">%%ICON brain var(--ink3) 22%%</div></div>
+      <div class="display" style="font-size:21px;margin-top:12px">Bedrock integration</div>
+      <div class="small" style="font-size:13px;margin-top:8px">Route Stage 8 assessment through Amazon Bedrock, same schema.</div>
+    </div></div>
+    <div class="panel"><div class="panel-body" style="padding:20px 22px;height:172px">
+      <div class="row between center"><div class="display" style="font-size:22px;color:var(--blue)">04</div><div style="color:var(--ink3)">%%ICON cpu var(--ink3) 22%%</div></div>
+      <div class="display" style="font-size:21px;margin-top:12px">Containerisation</div>
+      <div class="small" style="font-size:13px;margin-top:8px">Package each stage as a Lambda / Fargate task, triggered by queue.</div>
+    </div></div>
+    <div class="panel"><div class="panel-body" style="padding:20px 22px;height:172px">
+      <div class="row between center"><div class="display" style="font-size:22px;color:var(--blue)">05</div><div style="color:var(--ink3)">%%ICON check var(--ink3) 22%%</div></div>
+      <div class="display" style="font-size:21px;margin-top:12px">Testing</div>
+      <div class="small" style="font-size:13px;margin-top:8px">Parity tests against the GitHub-Actions baseline before any switch.</div>
+    </div></div>
+    <div class="panel"><div class="panel-body" style="padding:20px 22px;height:172px">
+      <div class="row between center"><div class="display" style="font-size:22px;color:var(--green)">06</div><div style="color:var(--green)">%%ICON rocket var(--green) 22%%</div></div>
+      <div class="display" style="font-size:21px;margin-top:12px">Cutover</div>
+      <div class="small" style="font-size:13px;margin-top:8px">Dual-run, then flip — keeping the free-tier build as a fallback.</div>
+    </div></div>
+  </div>
+  %%FOOT Roadmap to AWS | 43%%
+</div>

@@ -1,0 +1,29 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:56px;right:72px">
+    <div class="kicker lead">Iterate through a single config</div>
+    <div class="h2" style="margin-top:14px;font-size:46px">Tune the whole system from one file</div>
+  </div>
+
+  <!-- left -->
+  <div style="position:absolute;left:72px;top:200px;width:470px">
+    <div class="row center" style="gap:20px">
+      <div class="fignum" style="font-size:96px;color:var(--blue)">0.63</div>
+      <div><div class="label on">Bi-encoder floor</div><div class="small" style="font-size:13px;margin-top:4px">calibrated, not guessed</div></div>
+    </div>
+    <div class="body" style="font-size:16.5px;margin-top:22px;max-width:44ch">
+      Set in <span class="mono" style="font-size:14px">tripwire_config.yaml</span> from real calibration data. Every known
+      true positive scored <b>≥ 0.666</b> — leaving a <b>0.036 safety margin</b> below the floor.
+    </div>
+    <div class="panel" style="margin-top:22px;border-color:var(--green)"><div class="panel-body row center" style="padding:16px 20px;gap:16px">
+      <div style="color:var(--green)">%%ICON gauge var(--green) 30%%</div>
+      <div class="body" style="font-size:16px;color:var(--ink)">Removes <b style="color:var(--green)">~24%</b> of false-positive LLM calls — <b>138 of 546</b> — with zero known misses.</div>
+    </div></div>
+  </div>
+
+  <!-- right: histogram -->
+  <div class="frame" style="position:absolute;right:72px;top:200px;width:560px;bottom:64px;background:#0b0b0a;display:flex;align-items:center;justify-content:center">
+    <img src="%%IMG image95.png%%" style="width:100%;height:100%;object-fit:contain;display:block">
+  </div>
+  <div class="label" style="position:absolute;right:72px;bottom:74px;text-align:right">bi-encoder max-chunk score, by true class</div>
+  %%FOOT Calibration · one config | 39%%
+</div>

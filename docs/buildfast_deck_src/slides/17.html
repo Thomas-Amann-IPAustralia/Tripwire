@@ -1,0 +1,46 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:56px;right:72px">
+    <div class="kicker lead red">Where it broke</div>
+    <div class="h2" style="margin-top:16px;font-size:46px">Scaling the rulebook surfaced fundamental issues</div>
+  </div>
+
+  <!-- left: what we built + mascot -->
+  <div class="panel" style="position:absolute;left:72px;top:186px;width:392px;height:344px">
+    <div class="panel-head"><span class="on">What we built</span><span>naïve v1</span></div>
+    <div class="panel-body" style="padding:8px 24px 20px;position:relative;height:calc(100% - 44px)">
+      <div style="position:absolute;right:6px;top:0;width:150px;height:150px;background:radial-gradient(circle,rgba(167,139,250,.18),transparent 60%)"></div>
+      <img src="%%IMG octo_flag.png%%" style="position:absolute;right:8px;top:6px;width:150px;height:150px;object-fit:contain">
+      <div class="body" style="font-size:16.5px;position:absolute;bottom:22px;left:24px;right:24px">
+        Every rule fired at <b>every</b> sentence — with no idea whether it was reading a heading,
+        a legal disclaimer, a table cell or a link.
+      </div>
+    </div>
+  </div>
+
+  <!-- right: three problems -->
+  <div style="position:absolute;left:496px;top:186px;right:72px">
+    <div class="row" style="gap:16px;padding:14px 0;border-top:1px solid var(--rule)">
+      <div style="color:var(--red);flex:none;margin-top:2px">%%ICON xc var(--red) 24%%</div>
+      <div><div class="display" style="font-size:24px">It runs every rule, everywhere</div>
+        <div class="small" style="margin-top:5px">No sense of which checks are even relevant to the sentence in front of it.</div></div>
+    </div>
+    <div class="row" style="gap:16px;padding:14px 0;border-top:1px solid var(--rule)">
+      <div style="color:var(--red);flex:none;margin-top:2px">%%ICON xc var(--red) 24%%</div>
+      <div><div class="display" style="font-size:24px">It has no context</div>
+        <div class="small" style="margin-top:5px">A quick note and a formal letter are judged by exactly the same rules.</div></div>
+    </div>
+    <div class="row" style="gap:16px;padding:14px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+      <div style="color:var(--red);flex:none;margin-top:2px">%%ICON xc var(--red) 24%%</div>
+      <div><div class="display" style="font-size:24px">Many "rules" are judgement calls</div>
+        <div class="small" style="margin-top:5px">Tone and appropriateness aren't yes/no — automatable, but far more complex, and no longer just code.</div></div>
+    </div>
+  </div>
+
+  <!-- what we needed -->
+  <div class="row center" style="position:absolute;left:72px;right:72px;bottom:52px;gap:18px;border:1px solid var(--green);background:rgba(74,222,128,.06);padding:16px 22px">
+    <div style="color:var(--green);flex:none">%%ICON route var(--green) 26%%</div>
+    <div><span class="label" style="color:var(--green)">What we needed</span>
+      <div class="body" style="font-size:16px;color:var(--ink);margin-top:3px">Parse the document's <b>structure</b> first · route each element to the rules that actually apply · <b>only then</b> judge.</div></div>
+  </div>
+  %%FOOT Where it broke | 17%%
+</div>

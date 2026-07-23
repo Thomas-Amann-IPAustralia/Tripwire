@@ -1,0 +1,58 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:52px;right:72px" class="row between">
+    <div>
+      <div class="kicker lead">Stages 4 – 6</div>
+      <div class="h2" style="margin-top:12px;font-size:44px">Semantic filtering</div>
+      <div class="body" style="font-size:15.5px;margin-top:8px;color:var(--ink2);max-width:80ch">Progressively more precise — and more expensive — matching narrows the field to the pages a change truly affects.</div>
+    </div>
+    <div class="label" style="border:1px solid var(--blue);color:var(--blue);padding:8px 14px;height:fit-content">Filter</div>
+  </div>
+
+  <div class="row" style="position:absolute;left:72px;right:72px;top:196px;gap:18px">
+    <div class="panel grow" style="height:462px">
+      <div class="panel-head"><span class="on">Stage 4</span><span>relevance scoring</span></div>
+      <div class="panel-body" style="padding:20px 22px">
+        <div class="display" style="font-size:24px;color:var(--blue)">Relevance Scoring</div>
+        <div class="small" style="font-size:13.5px;margin-top:10px">Which IPFR pages could this change touch? Two signals fused by weighted RRF before any heavy work.</div>
+        <div style="border:1px solid var(--rule);padding:12px 14px;margin-top:16px">
+          <div class="mono" style="font-size:12px;line-height:1.7;color:var(--ink2)">
+            <div>BM25 — YAKE keyphrases</div>
+            <div style="margin-top:6px">Bi-encoder — BGE cosine</div>
+            <div style="margin-top:6px"><span style="color:var(--blue)">RRF</span> — semantic 2× keyword (k=60)</div>
+          </div>
+        </div>
+        <div class="small" style="font-size:12.5px;margin-top:16px;font-style:italic;color:var(--ink3)">Top-N + threshold + fast-pass stop a major change being capped at 5 pages.</div>
+      </div>
+    </div>
+    <div class="panel grow" style="height:462px">
+      <div class="panel-head"><span class="on">Stage 5</span><span>bi-encoder</span></div>
+      <div class="panel-body" style="padding:20px 22px">
+        <div class="display" style="font-size:24px;color:var(--blue)">Bi-Encoder Matching</div>
+        <div class="small" style="font-size:13.5px;margin-top:10px">A coarse chunk-level pass. The change is chunked, BGE-encoded, and cosine-compared to every precomputed IPFR chunk.</div>
+        <div style="border:1px solid var(--rule);padding:12px 14px;margin-top:16px">
+          <div class="label" style="font-size:10px;margin-bottom:8px">Candidate if</div>
+          <div class="mono" style="font-size:12px;line-height:1.7;color:var(--ink2)">
+            <div>any single chunk ≥ 0.75</div>
+            <div>or ≥ 3 chunks from a page ≥ 0.45</div>
+          </div>
+        </div>
+        <div class="small" style="font-size:12.5px;margin-top:16px;font-style:italic;color:var(--ink3)">Cheap dot products over embeddings already built during ingestion.</div>
+      </div>
+    </div>
+    <div class="panel grow" style="height:462px">
+      <div class="panel-head"><span class="on">Stage 6</span><span>cross-encoder</span></div>
+      <div class="panel-body" style="padding:20px 22px">
+        <div class="display" style="font-size:24px;color:var(--blue)">Cross-Encoder Refine</div>
+        <div class="small" style="font-size:13.5px;margin-top:10px">Precise reranking of survivors with a gte-reranker (8,192-token window), fusing semantic, lexical &amp; graph signals.</div>
+        <div style="border:1px solid var(--rule);padding:12px 14px;margin-top:16px">
+          <div class="mono" style="font-size:12px;line-height:1.7;color:var(--ink2)">
+            <div>Rerank — CE + lexical + graph</div>
+            <div style="margin-top:6px">Propagate — along edges<br>&nbsp;&nbsp;(decay 0.45/hop, ≤ 3 hops)</div>
+          </div>
+        </div>
+        <div class="small" style="font-size:12.5px;margin-top:16px;font-style:italic;color:var(--ink3)">Neighbours only boost, never lower; pages ≥ 0.60 proceed to aggregation.</div>
+      </div>
+    </div>
+  </div>
+  %%FOOT Stages 4–6 · Filter | 31%%
+</div>

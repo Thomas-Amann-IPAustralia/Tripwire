@@ -1,0 +1,32 @@
+<div class="slide">
+  <!-- left -->
+  <div style="position:absolute;left:72px;top:64px;width:520px">
+    <div class="kicker lead green">Proof of concept</div>
+    <div class="h2" style="margin-top:20px;font-size:52px">Small-scale testing was positive</div>
+    <div class="display" style="margin-top:10px;font-size:24px;color:var(--amber)">&mdash; if a little overzealous</div>
+    <div class="body" style="margin-top:24px;font-size:18px;max-width:44ch">
+      A handful of hand-checked rules ran over real pages and reliably caught what they were meant to —
+      and then some. The concept held: usable rules <b>can</b> be created programmatically.
+    </div>
+    <div class="row center" style="gap:12px;margin-top:26px">
+      <div style="color:var(--ink3)">%%ICON alertc var(--ink3) 20%%</div>
+      <div class="small" style="font-size:14px">Example shown: checking for <b style="color:var(--ink)">passive voice</b>.</div>
+    </div>
+  </div>
+
+  <!-- right: mock flagged document -->
+  <div class="panel" style="position:absolute;right:72px;top:64px;width:540px;bottom:104px">
+    <div class="panel-head"><span class="on">Sample output</span><span>passive-voice pass</span></div>
+    <div class="panel-body" style="padding:24px 26px;font-family:var(--font-body);font-size:16px;line-height:1.9;color:var(--ink2)">
+      <div>The application <span style="background:rgba(251,191,36,.18);color:var(--ink);padding:1px 4px">was reviewed by the examiner</span> last week.</div>
+      <div style="margin-top:10px">Fees are set out in the schedule.</div>
+      <div style="margin-top:10px">Your response <span style="background:rgba(251,191,36,.18);color:var(--ink);padding:1px 4px">must be lodged</span> within two months.</div>
+      <div style="margin-top:10px">A decision <span style="background:rgba(248,113,113,.16);color:var(--ink);padding:1px 4px">will be made</span> shortly.</div>
+      <div style="margin-top:18px;border-top:1px solid var(--rule);padding-top:16px" class="row between center">
+        <div class="swatch"><i style="background:var(--amber)"></i>flagged · passive</div>
+        <div class="swatch"><i style="background:var(--red)"></i>flagged · maybe fine</div>
+      </div>
+    </div>
+  </div>
+  %%FOOT It works (maybe too well) | 15%%
+</div>

@@ -1,0 +1,51 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:48px;right:72px" class="row between">
+    <div>
+      <div class="kicker lead amber">Stages 7 – 9</div>
+      <div class="h2" style="margin-top:12px;font-size:44px">Assessment &amp; alerting</div>
+      <div class="body" style="font-size:15.5px;margin-top:8px;color:var(--ink2);max-width:82ch">Survivors are grouped, judged by a generative model, and delivered as one actionable report.</div>
+    </div>
+    <div class="label" style="border:1px solid var(--amber);color:var(--amber);padding:8px 14px;height:fit-content">Alert</div>
+  </div>
+
+  <div class="row" style="position:absolute;left:72px;right:72px;top:190px;gap:18px">
+    <div class="panel grow" style="height:404px">
+      <div class="panel-head"><span class="on">Stage 7</span><span>trigger aggregation</span></div>
+      <div class="panel-body" style="padding:18px 22px">
+        <div class="display" style="font-size:23px;color:var(--amber)">Trigger Aggregation</div>
+        <div class="small" style="font-size:13.5px;margin-top:9px">Groups every surviving trigger by IPFR page — so the owner gets <b>one alert per page</b> and the model can reason over the combined effect.</div>
+        <div style="border:1px solid var(--rule);padding:12px 14px;margin-top:14px">
+          <div class="mono" style="font-size:12px;line-height:1.7;color:var(--ink2)">Bundle diffs + source meta<br>&nbsp;&nbsp;+ Stage 4–6 scores<br>One bundle / page → Stage 8</div>
+        </div>
+        <div class="small" style="font-size:12.5px;margin-top:14px;font-style:italic;color:var(--ink3)">Prevents duplicate notifications about one page in a run.</div>
+      </div>
+    </div>
+    <div class="panel grow" style="height:404px">
+      <div class="panel-head"><span class="on">Stage 8</span><span>llm assessment · paid</span></div>
+      <div class="panel-body" style="padding:18px 22px">
+        <div class="display" style="font-size:23px;color:var(--amber)">LLM Assessment</div>
+        <div class="small" style="font-size:13.5px;margin-top:9px">One call per page returns a structured verdict. <b>UNCERTAIN is valid</b> — the model never guesses to resolve genuine ambiguity.</div>
+        <div style="border:1px solid var(--rule);padding:12px 14px;margin-top:14px">
+          <div class="mono" style="font-size:12px;line-height:1.7;color:var(--ink2)"><span style="color:var(--amber)">Verdict</span> — CHANGE_REQUIRED ·<br>&nbsp;&nbsp;NO_CHANGE · UNCERTAIN<br><span style="color:var(--amber)">Out</span> — confidence, reasoning,<br>&nbsp;&nbsp;edits (validated JSON)</div>
+        </div>
+        <div class="small" style="font-size:12.5px;margin-top:14px;font-style:italic;color:var(--ink3)">Fail-closed: schema-invalid twice → skip &amp; log to health.</div>
+      </div>
+    </div>
+    <div class="panel grow" style="height:404px">
+      <div class="panel-head"><span class="on">Stage 9</span><span>notification</span></div>
+      <div class="panel-body" style="padding:18px 22px">
+        <div class="display" style="font-size:23px;color:var(--amber)">Notification</div>
+        <div class="small" style="font-size:13.5px;margin-top:9px">One consolidated email per run summarises every flagged page. Nothing flagged → no email, but the run is still fully logged.</div>
+        <div style="border:1px solid var(--rule);padding:12px 14px;margin-top:14px">
+          <div class="mono" style="font-size:12px;line-height:1.7;color:var(--ink2)">Per page — diff, reasoning,<br>&nbsp;&nbsp;edits, score evidence<br>+ human-review &amp; rejected<br>+ one-click feedback links</div>
+        </div>
+        <div class="small" style="font-size:12.5px;margin-top:14px;font-style:italic;color:var(--ink3)">Delivered via GitHub Actions + smtplib to the owner.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="small" style="position:absolute;left:72px;right:72px;bottom:52px;font-size:13px;color:var(--ink3);border-top:1px solid var(--rule);padding-top:14px">
+    <b style="color:var(--ink2)">Observation mode</b> runs Stages 1–7 and logs scores while skipping 8–9 during calibration · LLM calls that fail after retries are <b style="color:var(--ink2)">deferred</b> and retried at the start of the next run.
+  </div>
+  %%FOOT Stages 7–9 · Alert | 36%%
+</div>

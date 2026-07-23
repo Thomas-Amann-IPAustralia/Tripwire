@@ -1,0 +1,46 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:52px;right:72px">
+    <div class="kicker lead">The final stage, and the human</div>
+    <div class="h2" style="margin-top:12px;font-size:42px">One email. A human decides. The system improves.</div>
+  </div>
+
+  <!-- left: the email -->
+  <div class="panel" style="position:absolute;left:72px;top:186px;width:560px;bottom:60px">
+    <div class="panel-head"><span class="on">%%ICON mail var(--ink) 15%% &nbsp;Tripwire — Mon 20 Jul</span><span style="color:var(--amber)">2 pages flagged</span></div>
+    <div class="panel-body" style="padding:18px 22px">
+      <div class="row" style="gap:12px;padding:11px 0;border-bottom:1px solid var(--rule)"><div style="width:9px;height:9px;background:var(--green);margin-top:6px;flex:none"></div>
+        <div><div class="body" style="font-size:15.5px;color:var(--ink)">Recommended amendments</div><div class="small" style="font-size:12.5px">The page, what changed upstream, the reasoning, the exact edit — and every gate's score as evidence.</div></div></div>
+      <div class="row" style="gap:12px;padding:11px 0;border-bottom:1px solid var(--rule)"><div style="width:9px;height:9px;background:var(--amber);margin-top:6px;flex:none"></div>
+        <div><div class="body" style="font-size:15.5px;color:var(--ink)">For human review</div><div class="small" style="font-size:12.5px">The "uncertain" pile — each with the AI's stated reason for doubt.</div></div></div>
+      <div class="row" style="gap:12px;padding:11px 0"><div style="width:9px;height:9px;background:var(--ink3);margin-top:6px;flex:none"></div>
+        <div><div class="body" style="font-size:15.5px;color:var(--ink)">Rejected at the final gates</div><div class="small" style="font-size:12.5px">Near-misses the deep checks threw out — so over-filtering is as visible as alerts.</div></div></div>
+      <div class="label" style="font-size:10px;margin-top:16px;margin-bottom:10px">One-click feedback at the foot of every item</div>
+      <div class="row" style="gap:8px;flex-wrap:wrap">
+        <span class="label" style="font-size:10px;border:1px solid var(--green);color:var(--green);padding:6px 10px">Useful</span>
+        <span class="label" style="font-size:10px;border:1px solid var(--rule2);padding:6px 10px">Not significant</span>
+        <span class="label" style="font-size:10px;border:1px solid var(--rule2);padding:6px 10px">Wrong amendment</span>
+        <span class="label" style="font-size:10px;border:1px solid var(--rule2);padding:6px 10px">Wrong page</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- right: learning loop -->
+  <div style="position:absolute;right:72px;top:186px;width:512px">
+    <div class="label on" style="margin-bottom:20px">The learning loop</div>
+    <div style="position:relative;padding-left:34px">
+      <div style="position:absolute;left:16px;top:6px;bottom:24px;width:1px;background:var(--rule2)"></div>
+      <div style="position:relative;margin-bottom:22px"><div style="position:absolute;left:-34px;top:-2px" class="chip solid">1</div>
+        <div class="display" style="font-size:22px">Tripwire alerts</div><div class="small" style="font-size:13px;margin-top:3px">One consolidated email per run.</div></div>
+      <div style="position:relative;margin-bottom:22px"><div style="position:absolute;left:-34px;top:-2px" class="chip solid">2</div>
+        <div class="display" style="font-size:22px">A person decides</div><div class="small" style="font-size:13px;margin-top:3px">Acts on the site — and clicks one button.</div></div>
+      <div style="position:relative;margin-bottom:22px"><div style="position:absolute;left:-34px;top:-2px" class="chip solid">3</div>
+        <div class="display" style="font-size:22px">Replies filed automatically</div><div class="small" style="font-size:13px;margin-top:3px">A scheduled job reads the mailbox into structured records.</div></div>
+      <div style="position:relative"><div style="position:absolute;left:-34px;top:-2px;color:var(--green)">%%ICON refresh var(--green) 30%%</div>
+        <div class="display" style="font-size:22px;color:var(--green)">Thresholds tuned on evidence</div><div class="small" style="font-size:13px;margin-top:3px">Each button points at a different gate to adjust.</div></div>
+    </div>
+    <div class="small" style="font-size:13px;margin-top:22px;border-top:1px solid var(--rule);padding-top:14px;color:var(--ink2)">
+      <b>"Wrong page"</b> tunes the search gates; <b>"wrong amendment"</b> tunes the exam. Feedback lands on the gate that erred.
+    </div>
+  </div>
+  %%FOOT The learning loop | 37%%
+</div>

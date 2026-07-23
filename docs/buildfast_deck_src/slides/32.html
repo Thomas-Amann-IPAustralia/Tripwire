@@ -1,0 +1,61 @@
+<div class="slide">
+  <!-- left -->
+  <div style="position:absolute;left:72px;top:64px;width:470px">
+    <div class="kicker lead">Crash course on semantics</div>
+    <div class="h2" style="margin-top:18px;font-size:46px">Representing meaning with numbers</div>
+    <div class="body" style="margin-top:22px;font-size:17px;max-width:42ch">
+      Give every concept <b>coordinates</b>. Things that mean similar things sit close together.
+    </div>
+    <div class="body" style="margin-top:14px;font-size:17px;max-width:42ch;color:var(--ink2)">
+      The trick: even a concept we never plotted, we can <b>place by inference</b> — because its
+      neighbours tell us roughly where it belongs.
+    </div>
+    <div class="panel" style="margin-top:24px;width:330px"><div class="panel-body row center between" style="padding:14px 18px">
+      <div class="mono" style="font-size:14px;color:var(--ink)">crocodile</div>
+      <div class="mono" style="font-size:14px;color:var(--amber)">≈ [ 35, 28 ]</div>
+    </div></div>
+    <div class="small" style="font-size:12.5px;margin-top:10px;color:var(--ink3)">inferred from its neighbours — never plotted.</div>
+  </div>
+
+  <!-- right: scatter -->
+  <div class="panel" style="position:absolute;right:72px;top:64px;width:560px;bottom:64px">
+    <div class="panel-head"><span class="on">Semantic feature space</span><span>size × habitat</span></div>
+    <div class="panel-body" style="padding:20px 22px">
+      <svg viewBox="0 0 500 400" width="100%">
+        <!-- axes -->
+        <line x1="44" y1="360" x2="480" y2="360" stroke="#45443f"/>
+        <line x1="44" y1="24" x2="44" y2="360" stroke="#45443f"/>
+        <text x="44" y="384" fill="#726f66" font-family="DM Mono" font-size="11">LAND</text>
+        <text x="480" y="384" fill="#726f66" font-family="DM Mono" font-size="11" text-anchor="end">WATER</text>
+        <text x="30" y="360" fill="#726f66" font-family="DM Mono" font-size="11" text-anchor="end" transform="rotate(-90 30 360)" style="text-anchor:start">SMALL</text>
+        <text x="30" y="34" fill="#726f66" font-family="DM Mono" font-size="11" transform="rotate(-90 30 34)" style="text-anchor:end">LARGE</text>
+        <!-- dots: cx=44+(x/50)*432, cy=360-(y/50)*320 -->
+        <g font-family="DM Mono" font-size="12">
+          <!-- elephant [10,45] -->
+          <circle cx="130" cy="72" r="6" fill="#60A5FA"/><text x="142" y="76" fill="#9a988f">elephant</text>
+          <!-- whale [46,48] -->
+          <circle cx="441" cy="53" r="6" fill="#60A5FA"/><text x="435" y="44" fill="#9a988f" text-anchor="end">whale</text>
+          <!-- shark [44,38] -->
+          <circle cx="424" cy="117" r="6" fill="#60A5FA"/><text x="418" y="120" fill="#9a988f" text-anchor="end">shark</text>
+          <!-- dog [12,25] -->
+          <circle cx="148" cy="200" r="6" fill="#60A5FA"/><text x="160" y="204" fill="#9a988f">dog</text>
+          <!-- turtle [30,20] -->
+          <circle cx="303" cy="232" r="6" fill="#60A5FA"/><text x="315" y="236" fill="#9a988f">turtle</text>
+          <!-- mouse [8,6] -->
+          <circle cx="113" cy="322" r="6" fill="#60A5FA"/><text x="125" y="326" fill="#9a988f">mouse</text>
+          <!-- frog [28,8] -->
+          <circle cx="286" cy="309" r="6" fill="#60A5FA"/><text x="298" y="313" fill="#9a988f">frog</text>
+          <!-- fish [46,12] -->
+          <circle cx="441" cy="283" r="6" fill="#60A5FA"/><text x="435" y="287" fill="#9a988f" text-anchor="end">fish</text>
+          <!-- minnow [49,5] -->
+          <circle cx="467" cy="328" r="6" fill="#60A5FA"/><text x="461" y="332" fill="#9a988f" text-anchor="end">minnow</text>
+          <!-- crocodile [35,28] inferred -->
+          <circle cx="346" cy="181" r="9" fill="none" stroke="#FBBF24" stroke-width="2"/>
+          <circle cx="346" cy="181" r="3.5" fill="#FBBF24"/>
+          <text x="358" y="185" fill="#FBBF24">crocodile ?</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+  %%FOOT Meaning as coordinates | 32%%
+</div>

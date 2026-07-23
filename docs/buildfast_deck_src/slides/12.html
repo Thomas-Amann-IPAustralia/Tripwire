@@ -1,0 +1,63 @@
+<div class="slide">
+  <div style="position:absolute;left:72px;top:60px;right:72px">
+    <div class="kicker lead purple">The problem</div>
+    <div class="h2" style="margin-top:18px;font-size:54px">An impractical number of rules</div>
+  </div>
+
+  <!-- left: rule sources -->
+  <div style="position:absolute;left:72px;top:210px;width:512px">
+    <div class="label" style="margin-bottom:20px">Every page must obey three rulebooks</div>
+
+    <div style="margin-bottom:26px">
+      <div class="row between center"><div class="body" style="font-size:17px;color:var(--ink)">APS Style Manual</div>
+        <div class="row center" style="gap:8px"><div class="fignum" style="font-size:44px;line-height:.8">180</div><div class="label">pages</div></div></div>
+      <div style="height:8px;background:var(--bg3);margin-top:8px"><div style="height:8px;width:100%;background:var(--purple)"></div></div>
+    </div>
+    <div style="margin-bottom:26px">
+      <div class="row between center"><div class="body" style="font-size:17px;color:var(--ink)">IP First Response style guide</div>
+        <div class="row center" style="gap:8px"><div class="fignum" style="font-size:44px;line-height:.8">30</div><div class="label">pages</div></div></div>
+      <div style="height:8px;background:var(--bg3);margin-top:8px"><div style="height:8px;width:16.7%;background:var(--purple)"></div></div>
+    </div>
+    <div style="margin-bottom:26px">
+      <div class="row between center"><div class="body" style="font-size:17px;color:var(--ink)">IP Australia Tone of Voice</div>
+        <div class="row center" style="gap:8px"><div class="fignum" style="font-size:44px;line-height:.8">17</div><div class="label">pages</div></div></div>
+      <div style="height:8px;background:var(--bg3);margin-top:8px"><div style="height:8px;width:9.4%;background:var(--purple)"></div></div>
+    </div>
+
+    <div class="row center" style="gap:14px;margin-top:14px;border-top:1px solid var(--rule);padding-top:18px">
+      <div style="color:var(--ink3)">%%ICON list var(--ink3) 24%%</div>
+      <div class="body" style="font-size:15.5px">Hundreds of pages — <b>thousands of individual rules</b> — for a single sentence to satisfy.</div>
+    </div>
+  </div>
+
+  <!-- right: context rot -->
+  <div class="panel" style="position:absolute;right:72px;top:210px;width:560px;height:400px">
+    <div class="panel-head"><span class="on">Context rot</span><span>LLM accuracy vs context length</span></div>
+    <div class="panel-body" style="padding:20px 22px 16px">
+      <svg viewBox="0 0 520 250" width="100%" style="display:block">
+        <!-- zones -->
+        <rect x="46" y="10" width="150" height="196" fill="#4ADE80" opacity=".07"/>
+        <rect x="196" y="10" width="150" height="196" fill="#FBBF24" opacity=".08"/>
+        <rect x="346" y="10" width="150" height="196" fill="#F87171" opacity=".10"/>
+        <!-- axes -->
+        <line x1="46" y1="206" x2="496" y2="206" stroke="#45443f" stroke-width="1"/>
+        <line x1="46" y1="10" x2="46" y2="206" stroke="#45443f" stroke-width="1"/>
+        <!-- degrading line -->
+        <polyline fill="none" stroke="#e8e8e8" stroke-width="2.4" stroke-linejoin="round"
+          points="46,34 110,40 150,36 196,58 240,72 286,64 346,104 392,150 440,150 470,196 496,200"/>
+        <circle cx="496" cy="200" r="4" fill="#F87171"/>
+        <!-- zone labels -->
+        <text x="121" y="228" fill="#4ADE80" font-family="DM Mono" font-size="11" text-anchor="middle" letter-spacing="1">STABLE</text>
+        <text x="271" y="228" fill="#FBBF24" font-family="DM Mono" font-size="11" text-anchor="middle" letter-spacing="1">ERRATIC</text>
+        <text x="421" y="228" fill="#F87171" font-family="DM Mono" font-size="11" text-anchor="middle" letter-spacing="1">COLLAPSE</text>
+        <text x="30" y="20" fill="#726f66" font-family="DM Mono" font-size="10" text-anchor="end">HIGH</text>
+        <text x="30" y="204" fill="#726f66" font-family="DM Mono" font-size="10" text-anchor="end">LOW</text>
+      </svg>
+      <div class="body" style="font-size:15px;margin-top:10px;color:var(--ink2)">
+        Performance <b>degrades</b> as the context grows. No single model can reliably hold
+        every rule in its head at once — so a giant prompt isn't the answer.
+      </div>
+    </div>
+  </div>
+  %%FOOT Context rot | 12%%
+</div>
