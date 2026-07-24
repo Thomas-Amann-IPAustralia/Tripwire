@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "XF8F30",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the IP Australia news webpage, specifically a correction in the number of results shown (from 37 to 36) and the addition of a news item about the PPH eXtra Initiative providing clearer information on patent examination timeframes. This change does not alter any substantive information about expedited examination processes, fees, timelines, or procedures described in the IPFR page. The IPFR page content remains accurate and current regarding expedited examination of patents, trade marks, and designs. There is no indication that the new transparency program changes the fundamental process or requirements for requesting expedited examination.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2398,
+  "completion_tokens": 155,
+  "total_tokens": 2553,
+  "processing_time_seconds": 4.090830531999927,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.429467+00:00"
+}
