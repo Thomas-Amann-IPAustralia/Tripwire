@@ -57,6 +57,10 @@
 Recent updates
 | Item amended | Date Amended | Amended Reason | 
 |---|---|---|
+| Part 9.4. Amendment after particulars of an application have been published (Sections 63, 65 and 65A) | Outdated terms updated. | |
+| 28.3. Examining evidence of honest concurrent use - the five criteria | Reviewed and updated following Zip Co Limited v Firstmac Limited [2026] HCA 16. | |
+| Part 9.8. Process for amendments under subsection 63(1) | Outdated terms updated. | |
+| 28.2. Honest concurrent use - para 44(3)(a) | Reviewed and updated following Zip Co Limited v Firstmac Limited [2026] HCA 16. | |
 | 13.6. Examples of Valid Series Trade Marks | Whole part reviewed and content updated, including examples. | |
 | 13.9. Colour Endorsements | Whole part reviewed and content updated, including examples. | |
 | 13.8. Divisional Applications from Series | Whole part reviewed and content updated, including examples. | |
@@ -72,8 +76,4 @@ Recent updates
 | 21.3. Shape (three-dimensional) trade marks | Part 21.3 reviewed, content updated, including reference to Koninklijke Douwe Egberts BV v Cantarella Bros Pty Ltd [2024] FCA 1277. | |
 | 60.4.7 Examination of an IRDA | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. | |
 | 32A.2.1 Section 42: Contrary to Law | Content updated - references to s 27 of the PBR Act removed | |
-| 32A. Annex 1 - Applicable Sections of the PBR Act | Content updated - references to s 27 of the PBR Act removed | |
-| 60.2.5 Fees for International Applications | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. | |
-| 60.2.1 General Description | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. | |
-| 60.4.3 Filing/Data Capture/Allocation of Australian Trade Mark Number | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. | |
-| 60.4.6 Classification of Goods and Services | Part reviewed: Minor content updates, links to legislation updated, minor typographical corrections. |
+| 32A. Annex 1 - Applicable Sections of the PBR Act | Content updated - references to s 27 of the PBR Act removed |

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center webpage and related WIPO pages primarily involve expanded descriptions, additional sector-specific information, minor textual corrections, and updated contact details. The IPFR page content already accurately describes the WIPO Clause Generator, its purpose, benefits, risks, and usage. There are no changes to the core facts, procedures, or fee structures that would require updating the IPFR page. The minor corrections to fee descriptions and language availability do not affect the guidance given to small business owners. Therefore, no amendment is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 19345,
+  "completion_tokens": 143,
+  "total_tokens": 19488,
+  "processing_time_seconds": 2.7502236600000742,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152355+00:00"
+}

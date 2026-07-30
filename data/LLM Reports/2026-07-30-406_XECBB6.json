@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IP Australia trademark manual concerning divisional applications and prescribed signs, and updates to the ACCC public registers about exemptions and declarations under the Competition and Consumer Act. The IPFR page 'Infringement 101' focuses on explaining the basics of IP infringement, trade mark registration, and enforcement in accessible language for small businesses. None of the changes specifically update or contradict any factual or procedural information presented in the IPFR page. There are no amendments to definitions, enforcement procedures, or trade mark registrability criteria that would require updating the IPFR content. The ACCC register changes are unrelated to IP infringement or trade mark law content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4855,
+  "completion_tokens": 167,
+  "total_tokens": 5022,
+  "processing_time_seconds": 2.2763793280000755,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.154663+00:00"
+}
