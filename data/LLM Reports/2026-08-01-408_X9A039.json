@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to a webpage about preventing infringement of IP, specifically mentioning brand registries on platforms like Amazon. The IPFR page 'Register your trade mark' focuses on the process, benefits, risks, costs, and timeframes of registering a trade mark in Australia. The change does not affect any specific factual information, fees, timeframes, or procedural steps described in the IPFR page. It is more about enforcement and prevention post-registration, which is outside the scope of the IPFR page content. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2125,
+  "completion_tokens": 147,
+  "total_tokens": 2272,
+  "processing_time_seconds": 1.7876579840000204,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.813122+00:00"
+}
