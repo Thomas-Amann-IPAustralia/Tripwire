@@ -4,8 +4,8 @@ The Arts Law Centre of Australia (Arts Law) is Australia’s national community 
 You can access Arts Law’s information sheets covering various copyright topics in relation to your circumstance. Eligible artists and arts organisations can seek legal advice through Arts Law’s legal query form here .
 Further information about the services that Arts Law offers, including who can use them, any costs that apply, how much time might be involved and what would be needed to proceed, may be accessed on its website .
 See also
-- For more information about copyright infringement see:- What is IP infringement? | IP Australia First Response containing information about many types of IP infringement.
-- Copyright infringement | IP Australia First Response outlines details specific to copyright ownership, rights and infringement
- 
+- For more information about copyright infringement see:
+ - What is IP infringement? | IP Australia First Response containing information about many types of IP infringement.
+ - Copyright infringement | IP Australia First Response outlines details specific to copyright ownership, rights and infringement
 - The Attorney-General’s Department’s website also contains information about copyright: Copyright | Attorney-General's Department .
 - You may also find further information about copyright in resources published by the Australian Copyright Council (ACC): Home - Australian Copyright Council . The ACC is an independent not-for-profit Community Legal Service (CLS) whose affiliate members include the peak bodies for Australian writers, musicians, designers, photographers, visual artists, journalists, film makers and architects.

@@ -26,8 +26,7 @@ TM Headstart fees
 Registering a trade mark through TM Headstart costs a minimum of $330. This covers submitting your pre-application (step 1), and finalising your application (step 3). If you need to make changes before finalising your application (step 2), this will add to your cost.
 | Action | Fees (per class) | 
 |---|---|
-| Step 1 - TM Headstart request 
- | $200 | 
+| Step 1 - TM Headstart request | $200 | 
 | Step 2 – Amendments to an application (optional) Change of trade mark representation (optional) | $150 | 
 | Step 2 – Amendments to an application (optional) Addition of new classes (optional) | $200 | 
 | Step 3 - Conversion to a standard application (Part 2 fee) | $130 | 

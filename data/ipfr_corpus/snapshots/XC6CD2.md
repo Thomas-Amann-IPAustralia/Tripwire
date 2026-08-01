@@ -26,9 +26,9 @@ What are the risks?
 - If you are successful in opposing registration of a trade mark, the denied applicant may appeal the decision
 What are the possible outcomes?
 - The other party does not contest your opposition to their registration, and the trade mark application does not get registered.
-- The other party contests your argument and defends their application in an opposition and hearings process, resulting in:- achieving registration, advertised amendment or extension of time in favour of their position, or
-- your opposition being upheld, and the other party fails to achieve registration, advertised amendment or extension of time.
- 
+- The other party contests your argument and defends their application in an opposition and hearings process, resulting in:
+ - achieving registration, advertised amendment or extension of time in favour of their position, or
+ - your opposition being upheld, and the other party fails to achieve registration, advertised amendment or extension of time.
 - IP Australia doesn’t accept your application to oppose an accepted trade mark when your application does not meet formal or legal requirements.
 What might the cost be?
 - The fees to IP Australia will typically cost $650. However, extensions of time and other processes will incur further costs. Detailed costs can be seen here .

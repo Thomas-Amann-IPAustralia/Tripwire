@@ -74,10 +74,6 @@ Throughout the negotiation with the other party, it can be helpful to remember t
 It can be difficult to determine whether negotiations are a suitable option. An IP professional can help you make this assessment and advise what steps would work best in your situation.
 See also
 Information about commercialisation:
-- How To Commercialise My IP | IP Australia
-- How To Licence My IP | IP Australia
-- Licence royalties | IP Australia
-- An example of a letter of consent | IPA Manuals (Example for plant breeder’s right )
 Information about resolving disputes:
 - What To Consider Before Taking Legal Action | IP Australia
 - Five steps to resolve your dispute | ASBFEO

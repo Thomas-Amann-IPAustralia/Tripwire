@@ -13,12 +13,3 @@ Look for these red flags:
 - The claimed ‘IP attorney’ or ‘law firm’ cannot be found on the Trans-Tasman IP Attorneys Board register or a relevant law society register (e.g. Register of Solicitors | The Law Society of NSW ) .
 You can also confirm any official notice by logging into IP Australia’s Online Services .
 If you suspect a scam, you may wish to report it to Scamwatch or ReportCyber , and keep any evidence such as screenshots or email headers.
-See also
-- Report a scam, fraud or risk to public interest | IP Australia First Response
-- Scams related to managing IP Rights | IP Australia
-- Identifying unofficial invoices and registers | IP Australia
-- Fraud and corruption | IP Australia
-- Manage my IP | IP Australia
-- Find an IP attorney or firm | Trans-Tasman IP Attorneys Board
-- Register of Solicitors
-- Home | Scamwatch
