@@ -6,5 +6,8 @@
   },
   "last_checked": "2026-07-26T05:37:03.700449+00:00",
   "previous_hash": "5ebd0a4672bf869f39dbaf35ca5b10b88f064048e206ba2381ba842c9ba93cd0",
-  "previous_text": "This site can\u2019t be reached\nwww.afp.gov.au took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\n \n Check your Internet connection\n Check any cables and reboot any routers, modems, or other network\n devices you may be using.\n Allow Chrome to access the network in your firewall or antivirus\n settings.\n If it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\n If you use a proxy server\u2026\n Go to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\n www.afp.gov.au took too long to respond."
+  "previous_text": "This site can\u2019t be reached\nwww.afp.gov.au took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\n \n Check your Internet connection\n Check any cables and reboot any routers, modems, or other network\n devices you may be using.\n Allow Chrome to access the network in your firewall or antivirus\n settings.\n If it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\n If you use a proxy server\u2026\n Go to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\n www.afp.gov.au took too long to respond.",
+  "last_error": "RetryableError: All fetch attempts failed for https://www.afp.gov.au/crimes/cybercrime",
+  "last_error_at": "2026-08-02T05:32:27.945376+00:00",
+  "consecutive_failures": 1
 }
