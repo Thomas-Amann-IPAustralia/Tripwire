@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to minor textual clarifications and updated implementation dates for the Uniform Domain-Name Dispute-Resolution Policy (UDRP) on the ICANN website, including the note that the updated policy reflecting the Registration Data Policy will be implemented between August 2024 and August 2025. The IPFR page focuses on the .au Dispute Resolution Policy (auDRP) for .au domain names and only briefly references the UDRP as an alternative for non-.au domains. There are no specific procedural, fee, timeframe, or eligibility details about the UDRP in the IPFR page that are affected by these upstream changes. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3449,
+  "completion_tokens": 178,
+  "total_tokens": 3627,
+  "processing_time_seconds": 3.4090409210000416,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.794536+00:00"
+}

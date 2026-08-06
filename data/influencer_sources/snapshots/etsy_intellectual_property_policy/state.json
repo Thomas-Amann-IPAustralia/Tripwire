@@ -1,9 +1,6 @@
 {
   "probe_signals": {},
-  "last_checked": "2026-05-31T06:34:34.102860+00:00",
-  "previous_hash": "5375c47ee21459335fb22b86a7813da72f0f1a6b58bc255d6036ea6a9db9ac43",
-  "previous_text": "This site can\u2019t be reached\nwww.etsy.com took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\ndevices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\nsettings.\nIf it is already listed as a program allowed to access the network, try\nremoving it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\nthe Chrome menu >\nSettings\n>\nSystem\n>\nOpen your computer's proxy settings\nand make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.etsy.com took too long to respond.",
-  "last_error": "RetryableError: All fetch attempts failed for https://www.etsy.com/legal/ip/",
-  "last_error_at": "2026-08-05T05:22:44.326043+00:00",
-  "consecutive_failures": 49
+  "last_checked": "2026-08-06T05:39:17.086808+00:00",
+  "previous_hash": "0931bf9c826c38fe779ff06d46b250b6b0e5c5c9e5db5f50a537bb5f5d73af30",
+  "previous_text": "This site can\u2019t be reached\nwww.etsy.com unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\n \n Check your Internet connection\n Check any cables and reboot any routers, modems, or other network\n devices you may be using.\n Allow Chrome to access the network in your firewall or antivirus\n settings.\n If it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\n If you use a proxy server\u2026\n Go to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\n www.etsy.com unexpectedly closed the connection."
 }

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to practice directions of the Administrative Review Tribunal, updates to trademark manual sections on divisional applications and prohibited signs, minor formatting and wording corrections in IP Australia legislation and WIPO UDRP policy pages, and procedural details about judicial review applications. None of these changes directly affect the specific content of the IPFR page on 'What happens in an IP Australia hearing?' which focuses on the hearing process at IP Australia, including steps for opposition, hearing requests, and decisions. There are no updates to fees, timeframes, procedural steps, or appeal pathways described in the IPFR page that would require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6473,
+  "completion_tokens": 163,
+  "total_tokens": 6636,
+  "processing_time_seconds": 3.449375825999823,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793229+00:00"
+}

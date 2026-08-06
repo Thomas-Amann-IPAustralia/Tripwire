@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to corrections and amendments to specific design registrations, surrender of certain design registrations, updates to the Designs Manual for accessibility and minor content fixes, and procedural details unrelated to the core content of the IPFR page. There are no changes to the examination process, fees (the IPFR page already states the examination fee effective from 1 October 2024), timeframes, or procedural rights that would affect the accuracy or currency of the IPFR page content. The administrative decisions judicial review page change is unrelated to design examination or certification. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9293,
+  "completion_tokens": 154,
+  "total_tokens": 9447,
+  "processing_time_seconds": 2.9819827679998525,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793766+00:00"
+}

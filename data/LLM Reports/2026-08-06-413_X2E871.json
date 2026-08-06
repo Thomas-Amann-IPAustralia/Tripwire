@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Uniform Domain-Name Dispute-Resolution Policy (UDRP) on the ICANN website, specifically noting an update dated 21 February 2024 and implementation deadlines in 2024-2025. The IPFR page focuses on WIPO arbitration and mediation services for international IP disputes and does not mention the UDRP or domain name dispute resolution specifically. There is no specific information, dates, or procedural details in the IPFR page that are contradicted or rendered outdated by the UDRP update. The changes are indirectly related and do not affect the accuracy or currency of the IPFR content about WIPO ADR services.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3772,
+  "completion_tokens": 164,
+  "total_tokens": 3936,
+  "processing_time_seconds": 2.3475516229998448,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.794464+00:00"
+}

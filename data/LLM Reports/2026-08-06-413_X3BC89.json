@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.9,
+  "reasoning": "The upstream change concerns amendments to the Australian Securities and Investments Commission Act 2001 related to financial reporting system reform, including the creation of a new standard-setting body called External Reporting Australia. This change is focused on financial reporting and sustainability standards and does not relate to intellectual property rights, trade marks, patents, designs, or the processes for checking IP ownership as described in the IPFR page. Therefore, the content of the IPFR page about checking ownership of words, logos, or ideas is unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1769,
+  "completion_tokens": 133,
+  "total_tokens": 1902,
+  "processing_time_seconds": 2.905412870999953,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.797796+00:00"
+}

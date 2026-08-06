@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change relates to the Uniform Domain-Name Dispute-Resolution Policy (UDRP) updates on ICANN's website, specifically noting an update dated 21 February 2024 and implementation deadlines for contracted parties. The IPFR page in question concerns complaints about IP Australia services and does not discuss domain name dispute resolution procedures or the UDRP. Therefore, the update to the UDRP does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1855,
+  "completion_tokens": 126,
+  "total_tokens": 1981,
+  "processing_time_seconds": 2.6779033430000254,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.794676+00:00"
+}

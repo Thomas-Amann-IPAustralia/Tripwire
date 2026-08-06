@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia legislation and non-legislative instruments page are minor formatting corrections and do not alter any substantive legal or procedural information relevant to enforcing a filed patent. The changes to the administrative decisions judicial review page relate to filing applications for extensions of time and court fee exemptions, which are not directly relevant to the enforcement of a filed patent or the specific content of the IPFR page. There is no update to any legal thresholds, timeframes, or enforceability rules concerning filed patents. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3115,
+  "completion_tokens": 143,
+  "total_tokens": 3258,
+  "processing_time_seconds": 2.688043050000033,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.795665+00:00"
+}

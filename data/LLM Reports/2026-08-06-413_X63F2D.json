@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to corrections of specific design registrations in the Designs Register, surrender of certain design registrations, updates to the Designs Manual for accessibility fixes and minor content adjustments, and procedural clarifications in unrelated administrative judicial review processes. None of these changes affect the substantive content of the IPFR page about requesting IP Australia to confirm a registered design's validity, including fees, processes, timelines, or legal implications. There are no updates to examination fees, certification procedures, or enforcement rights that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9438,
+  "completion_tokens": 138,
+  "total_tokens": 9576,
+  "processing_time_seconds": 2.4590043410000817,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793624+00:00"
+}
