@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-07-414",
+  "ipfr_page_id": "X5B5CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the fee structure for WIPO arbitration, including registration fees, administration fees, and arbitrator fees. However, the IPFR page content focuses on mediation processes, costs, and timelines, with only a brief mention of WIPO mediation taking 3-4 months. There is no specific mention of WIPO arbitration fees or detailed fee schedules that would be affected by this update. Therefore, the changes to WIPO arbitration fees do not impact the accuracy or currency of the IPFR page content about mediation.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3410,
+  "completion_tokens": 137,
+  "total_tokens": 3547,
+  "processing_time_seconds": 2.3063102149999395,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-07T04:35:18.610701+00:00"
+}
