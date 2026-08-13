@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to amendments in customs regulations concerning firearms importation, updates to IP Australia manuals (design and PBR), updates to IP Australia legislation and policy registers, and updates to eBay's intellectual property policy. None of these changes directly affect the content of the IPFR page 'What to check before getting registered IP', which focuses on general guidance about IP types, registration requirements, timing considerations, ownership, and availability checks. There are no specific statutory references, procedural steps, or thresholds in the IPFR page that are contradicted or outdated by these changes. The changes to customs regulations and firearms importation do not impact IP registration guidance. Updates to manuals and policy registers are internal or procedural and do not alter the basic IP registration advice given. The eBay policy updates concern marketplace listing practices and do not affect the IPFR page content. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 13772,
+  "completion_tokens": 215,
+  "total_tokens": 13987,
+  "processing_time_seconds": 3.440596381999967,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.873764+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the eBay intellectual property policy webpage provide detailed guidance on listing essentials to avoid IP infringement, such as proper use of brand names, third-party content, international selling restrictions, warranty information, and third-party logos. While these updates are relevant to the general topic of IP rights enforcement on online platforms, the IPFR page 'Inform online platforms that you have IP rights' focuses on the process and benefits of enrolling in IP protection programs on marketplaces, rather than detailed listing compliance rules. The IPFR page does not contain specific statements about eBay's listing rules or brand name usage that are contradicted or outdated by these changes. Therefore, no specific amendments to the IPFR page content are required based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4410,
+  "completion_tokens": 180,
+  "total_tokens": 4590,
+  "processing_time_seconds": 2.2033005069999945,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.875273+00:00"
+}

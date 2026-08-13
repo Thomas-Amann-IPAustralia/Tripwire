@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to specific customs import regulations for firearms, updates to IPAustralia manuals on trade marks and designs, and minor updates to WIPO Madrid System information and WIPO's about page. None of these changes directly affect the content of the IPFR page on addressing overseas infringement, which focuses on general principles of territorial IP rights, practical considerations for overseas enforcement, and options for addressing infringement. There are no changes to the territorial nature of IP rights, enforcement options, or international treaties that would require updating the IPFR page content. The changes to the Madrid System remove Jersey from the UK coverage after August 1, 2026, but this detail is not mentioned in the IPFR page and does not affect the general guidance provided. Therefore, no update to the IPFR page is needed.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6823,
+  "completion_tokens": 194,
+  "total_tokens": 7017,
+  "processing_time_seconds": 2.8378320990000248,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.874078+00:00"
+}

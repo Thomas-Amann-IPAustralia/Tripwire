@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Madrid System webpage primarily involve updates to the list of territories covered under the UK's protection, removal of the Bailiwick of Jersey after August 1, 2026, and announcements about upcoming webinars and system transitions. The IPFR page provides a general overview that Australian IP protection applies only within Australia and that international protection requires separate applications or international systems. It does not specify territorial coverage details, dates, or procedural specifics about the Madrid System or the UK territories. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2099,
+  "completion_tokens": 150,
+  "total_tokens": 2249,
+  "processing_time_seconds": 2.3781595919999745,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.876504+00:00"
+}

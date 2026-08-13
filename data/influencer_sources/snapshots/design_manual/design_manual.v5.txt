@@ -55,4 +55,4 @@ Recent updates
 | 11.4. Excluded designs: Amendments | Changed URL from"Designs-that-cannot-be-excluded" | |
 | 11.3. Excluded designs: Extensions of time | Updated URL from "Checking-the-priority-status-of-an-excluded-design" to "excluded-designs-extension-of-time" | |
 | 11. Excluded designs | Hyperlink now stretches across the complete title and URL has been updated to reflect the changes approved earlier | |
-| 11.1. Excluded designs: overview | Updated to include detailed requirements for an excluded design. |
+| 19.6. Priority date: Excluded designs | Remove requirements and redirect to Part 11. |

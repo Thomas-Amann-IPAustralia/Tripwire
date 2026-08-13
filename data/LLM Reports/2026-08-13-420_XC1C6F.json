@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XC1C6F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to eBay's intellectual property policy regarding the use of brand names, third-party content, international selling, warranty, and logos in product listings. While this relates to trademark and IP infringement issues, it does not directly affect the specific content of the IPFR page about choosing to rebrand to avoid potential IP conflicts. The IPFR page focuses on strategic considerations, benefits, risks, and practical steps for rebranding, rather than detailed marketplace listing rules or e-commerce platform policies. There is no conflicting or outdated information in the IPFR page that requires updating based on the eBay policy changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3318,
+  "completion_tokens": 157,
+  "total_tokens": 3475,
+  "processing_time_seconds": 1.7481110379999336,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.877663+00:00"
+}

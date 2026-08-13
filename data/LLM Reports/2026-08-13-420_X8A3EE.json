@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to eBay's intellectual property policy regarding listing practices and trademark use on their platform. While the IPFR page discusses pausing use of contested IP generally, it does not provide platform-specific guidance or detailed rules about listing or selling practices on marketplaces like eBay. The change focuses on listing requirements, brand name use, and copyright compliance for sellers, which is related but does not directly affect the accuracy or currency of the IPFR page content about ceasing use of contested IP. Therefore, no specific amendments to the IPFR page are required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3477,
+  "completion_tokens": 151,
+  "total_tokens": 3628,
+  "processing_time_seconds": 1.7573735979999583,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.875186+00:00"
+}

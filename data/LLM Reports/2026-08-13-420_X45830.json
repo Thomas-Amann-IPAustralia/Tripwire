@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X45830",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an update to eBay's intellectual property policy regarding the use of brand names in product listings, focusing on trademark infringement risks in online sales contexts. The IPFR page discusses the challenges of naming tech startups after personal names from a trademark distinctiveness and brand strategy perspective. There is no direct overlap in content or specific factual information that would require updating the IPFR page. The eBay policy changes do not affect the accuracy or currency of the IPFR page's guidance on trademark distinctiveness, secondary meaning, or branding strategy for personal names.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3252,
+  "completion_tokens": 144,
+  "total_tokens": 3396,
+  "processing_time_seconds": 2.0191098850000344,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.876766+00:00"
+}

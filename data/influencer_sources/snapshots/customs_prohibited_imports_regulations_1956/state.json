@@ -1,13 +1,10 @@
 {
   "probe_signals": {
-    "register_id": "F2026C00277",
-    "compilation_number": "146",
-    "start": "2026-03-26T00:00:00"
+    "register_id": "F2026C00751",
+    "compilation_number": "147",
+    "start": "2026-07-13T00:00:00"
   },
-  "last_checked": "2026-07-30T05:00:24.623640+00:00",
-  "previous_hash": "19efa2e194de2febb72bdf2e6c75a43db67a9315eb488a222d3c90b1e639dde4",
-  "previous_text": "Customs (Prohibited Imports) Regulations 1956\nAdministered by\n- Department of Home Affairs\nThis item is authorised by the following title:\nThis instrument was backcaptured in accordance with Section 36 of the Legislative Instruments Act 2003\nLegislation text\nTable of contents",
-  "last_error": "PermanentError: Content at https://www.legislation.gov.au/F1996B03651/latest/text is too short (150 chars < minimum 200)",
-  "last_error_at": "2026-08-12T04:09:54.836480+00:00",
-  "consecutive_failures": 7
+  "last_checked": "2026-08-13T04:13:31.468390+00:00",
+  "previous_hash": "b3c78eaad84b776c0755872de60b5e7c43b7ced682f3c532a4778176632c6d0e",
+  "previous_text": "Maintenance is scheduled between 8:30pm - 11 pm AEST, Thursday 13 August 2026 and the site may be unavailable or slow during this time.\nThis item is authorised by the following title:\nThis instrument was backcaptured in accordance with Section 36 of the Legislative Instruments Act 2003"
 }
