@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia PBR manual, specifically adding a new item about acceptance or rejection of PBR applications and some minor updates to portal statuses and links. The IPFR page focuses on PBR infringement, explaining what constitutes infringement, examples, and defences. The change does not affect any specific infringement definitions, legal thresholds, or procedural steps described in the IPFR page. Therefore, the accuracy and currency of the infringement content remain unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2729,
+  "completion_tokens": 128,
+  "total_tokens": 2857,
+  "processing_time_seconds": 2.1956505529999504,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228820+00:00"
+}
