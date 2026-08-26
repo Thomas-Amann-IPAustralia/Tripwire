@@ -4,6 +4,6 @@
   "previous_hash": "2896c6e77f5ab00483285312c4a854d777efcd39900a5bcc49f498fbcae4b67a",
   "previous_text": "This site can\u2019t be reached\nbusiness.gov.au unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\n \n Check your Internet connection\n Check any cables and reboot any routers, modems, or other network\n devices you may be using.\n Allow Chrome to access the network in your firewall or antivirus\n settings.\n If it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\n If you use a proxy server\u2026\n Go to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\n business.gov.au unexpectedly closed the connection.",
   "last_error": "RetryableError: All fetch attempts failed for https://business.gov.au/people/disputes/prevent-manage-and-resolve-disputes",
-  "last_error_at": "2026-08-25T03:02:54.888561+00:00",
-  "consecutive_failures": 33
+  "last_error_at": "2026-08-26T03:09:03.743634+00:00",
+  "consecutive_failures": 34
 }

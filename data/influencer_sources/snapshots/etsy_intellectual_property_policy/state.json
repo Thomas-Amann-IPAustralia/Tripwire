@@ -3,7 +3,7 @@
   "last_checked": "2026-08-06T05:39:17.086808+00:00",
   "previous_hash": "0931bf9c826c38fe779ff06d46b250b6b0e5c5c9e5db5f50a537bb5f5d73af30",
   "previous_text": "This site can\u2019t be reached\nwww.etsy.com unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\n \n Check your Internet connection\n Check any cables and reboot any routers, modems, or other network\n devices you may be using.\n Allow Chrome to access the network in your firewall or antivirus\n settings.\n If it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\n If you use a proxy server\u2026\n Go to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\n www.etsy.com unexpectedly closed the connection.",
-  "last_error": "RetryableError: All fetch attempts failed for https://www.etsy.com/legal/ip/",
-  "last_error_at": "2026-08-25T03:06:17.171072+00:00",
-  "consecutive_failures": 6
+  "last_error": "PermanentError: Dramatic content size change at https://www.etsy.com/legal/ip/: 725 \u2192 5905 chars",
+  "last_error_at": "2026-08-26T03:12:01.904144+00:00",
+  "consecutive_failures": 7
 }
