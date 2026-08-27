@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the WIPO Paris Convention table of contents formatting and the addition of educational resources and podcasts related to the Madrid System on the WIPO website. The IPFR page content provides a general explanation that Australian IP rights only apply within Australia and that international protection requires separate filings or use of international systems. There are no specific details, fees, procedures, or legal references in the IPFR page that are contradicted or outdated by these changes. The updates do not affect the accuracy or currency of the IPFR page's core message.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5891,
+  "completion_tokens": 144,
+  "total_tokens": 6035,
+  "processing_time_seconds": 4.197716608000064,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.906904+00:00"
+}

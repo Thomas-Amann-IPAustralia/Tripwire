@@ -7,52 +7,52 @@ at Lisbon on October 31, 1958,
 and at Stockholm on July 14, 1967,
 and as amended on September 28, 1979
 TABLE OF CONTENTS1
-| Article 1: | Establishment of the Union; Scope of Industrial Property |
-| Article 2: | National Treatment for Nationals of Countries of the Union |
-| Article 3: | Same Treatment for Certain Categories of Persons as for Nationals of Countries of the Union |
-| Article 4: | A. to I. Patents, Utility Models, Industrial Designs, Marks, Inventors’ Certificates: Right of Priority. - G. Patents: Division of the Application |
-| Article 4bis: | Patents: Independence of Patents Obtained for the Same Invention in Different Countries |
-| Article 4ter: | Patents: Mention of the Inventor in the Patent |
-| Article 4quater: | Patents: Patentability in Case of Restrictions of Sale by Law |
-| Article 5: | A. Patents: Importation of Articles; Failure to Work or Insufficient Working; Compulsory Licenses. - B. Industrial Designs: Failure to Work; Importation of Articles. - C. Marks: Failure to Use; Different Forms; Use by Co-proprietors. - D. Patents, Utility Models, Marks, Industrial Designs: Marking |
-| Article 5bis: | All Industrial Property Rights: Period of Grace for the Payment of Fees for the Maintenance of Rights; Patents: Restoration |
-| Article 5ter: | Patents: Patented Devices Forming Part of Vessels, Aircraft, or Land Vehicles |
-| Article 5quater: | Patents: Importation of Products Manufactured by a Process Patented in the Importing Country |
-| Article 5quinquies: | Industrial Designs |
-| Article 6: | Marks: Conditions of Registration; Independence of Protection of Same Mark in Different Countries |
-| Article 6bis: | Marks: Well-Known Marks |
-| Article 6ter: | Marks: Prohibitions concerning State Emblems, Official Hallmarks, and Emblems of Intergovernmental Organizations |
-| Article 6quater: | Marks: Assignment of Marks |
-| Article 6quinquies: | Marks: Protection of Marks Registered in One Country of the Union in the Other Countries of the Union |
-| Article 6sexies: | Marks: Service Marks |
-| Article 6septies: | Marks: Registration in the Name of the Agent or Representative of the Proprietor Without the Latter’s Authorization |
-| Article 7: | Marks: Nature of the Goods to which the Mark is Applied |
-| Article 7bis: | Marks: Collective Marks |
-| Article 8: | Trade Names |
-| Article 9: | Marks, Trade Names: Seizure, on Importation, etc., of Goods Unlawfully Bearing a Mark or Trade Name |
-| Article 10: | False Indications: Seizure, on Importation, etc., of Goods Bearing False Indications as to their Source or the Identity of the Producer |
-| Article 10bis: | Unfair Competition |
-| Article 10ter: | Marks, Trade Names, False Indications, Unfair Competition: Remedies, Right to Sue |
-| Article 11: | Inventions, Utility Models, Industrial Designs, Marks: Temporary Protection at Certain International Exhibitions |
-| Article 12: | Special National Industrial Property Services |
-| Article 13: | Assembly of the Union |
-| Article 14: | Executive Committee |
-| Article 15: | International Bureau |
-| Article 16: | Finances |
-| Article 17: | Amendment of Articles 13 to 17 |
-| Article 18: | Revision of Articles 1 to 12 and 18 to 30 |
-| Article 19: | Special Agreements |
-| Article 20: | Ratification or Accession by Countries of the Union; Entry Into Force |
-| Article 21: | Accession by Countries Outside the Union; Entry Into Force |
-| Article 22: | Consequences of Ratification or Accession |
-| Article 23: | Accession to Earlier Acts |
-| Article 24: | Territories |
-| Article 25: | Implementation of the Convention on the Domestic Level |
-| Article 26: | Denunciation |
-| Article 27: | Application of Earlier Acts |
-| Article 28: | Disputes |
-| Article 29: | Signature, Languages, Depositary Functions |
-| Article 30: | Transitional Provisions |
+| Article 1: | Establishment of the Union; Scope of Industrial Property | 
+| Article 2: | National Treatment for Nationals of Countries of the Union | 
+| Article 3: | Same Treatment for Certain Categories of Persons as for Nationals of Countries of the Union | 
+| Article 4: | A. to I. Patents, Utility Models, Industrial Designs, Marks, Inventors’ Certificates: Right of Priority. - G. Patents: Division of the Application | 
+| Article 4bis: | Patents: Independence of Patents Obtained for the Same Invention in Different Countries | 
+| Article 4ter: | Patents: Mention of the Inventor in the Patent | 
+| Article 4quater: | Patents: Patentability in Case of Restrictions of Sale by Law | 
+| Article 5: | A. Patents: Importation of Articles; Failure to Work or Insufficient Working; Compulsory Licenses. - B. Industrial Designs: Failure to Work; Importation of Articles. - C. Marks: Failure to Use; Different Forms; Use by Co-proprietors. - D. Patents, Utility Models, Marks, Industrial Designs: Marking | 
+| Article 5bis: | All Industrial Property Rights: Period of Grace for the Payment of Fees for the Maintenance of Rights; Patents: Restoration | 
+| Article 5ter: | Patents: Patented Devices Forming Part of Vessels, Aircraft, or Land Vehicles | 
+| Article 5quater: | Patents: Importation of Products Manufactured by a Process Patented in the Importing Country | 
+| Article 5quinquies: | Industrial Designs | 
+| Article 6: | Marks: Conditions of Registration; Independence of Protection of Same Mark in Different Countries | 
+| Article 6bis: | Marks: Well-Known Marks | 
+| Article 6ter: | Marks: Prohibitions concerning State Emblems, Official Hallmarks, and Emblems of Intergovernmental Organizations | 
+| Article 6quater: | Marks: Assignment of Marks | 
+| Article 6quinquies: | Marks: Protection of Marks Registered in One Country of the Union in the Other Countries of the Union | 
+| Article 6sexies: | Marks: Service Marks | 
+| Article 6septies: | Marks: Registration in the Name of the Agent or Representative of the Proprietor Without the Latter’s Authorization | 
+| Article 7: | Marks: Nature of the Goods to which the Mark is Applied | 
+| Article 7bis: | Marks: Collective Marks | 
+| Article 8: | Trade Names | 
+| Article 9: | Marks, Trade Names: Seizure, on Importation, etc., of Goods Unlawfully Bearing a Mark or Trade Name | 
+| Article 10: | False Indications: Seizure, on Importation, etc., of Goods Bearing False Indications as to their Source or the Identity of the Producer | 
+| Article 10bis: | Unfair Competition | 
+| Article 10ter: | Marks, Trade Names, False Indications, Unfair Competition: Remedies, Right to Sue | 
+| Article 11: | Inventions, Utility Models, Industrial Designs, Marks: Temporary Protection at Certain International Exhibitions | 
+| Article 12: | Special National Industrial Property Services | 
+| Article 13: | Assembly of the Union | 
+| Article 14: | Executive Committee | 
+| Article 15: | International Bureau | 
+| Article 16: | Finances | 
+| Article 17: | Amendment of Articles 13 to 17 | 
+| Article 18: | Revision of Articles 1 to 12 and 18 to 30 | 
+| Article 19: | Special Agreements | 
+| Article 20: | Ratification or Accession by Countries of the Union; Entry Into Force | 
+| Article 21: | Accession by Countries Outside the Union; Entry Into Force | 
+| Article 22: | Consequences of Ratification or Accession | 
+| Article 23: | Accession to Earlier Acts | 
+| Article 24: | Territories | 
+| Article 25: | Implementation of the Convention on the Domestic Level | 
+| Article 26: | Denunciation | 
+| Article 27: | Application of Earlier Acts | 
+| Article 28: | Disputes | 
+| Article 29: | Signature, Languages, Depositary Functions | 
+| Article 30: | Transitional Provisions | 
 Article 1
 Establishment of the Union; Scope of Industrial Property2
 (1) The countries to which this Convention applies constitute a Union for the protection of industrial property.
@@ -272,7 +272,6 @@ Executive Committee
 (1) The Assembly shall have an Executive Committee.
 (a) The Executive Committee shall consist of countries elected by the Assembly from among countries members of the Assembly. Furthermore, the country on whose territory the Organization has its headquarters shall, subject to the provisions of Article 16(7)(b), have an ex officio seat on the Committee.
 (b) The Government of each country member of the Executive Committee shall be represented by one delegate, who may be assisted by alternate delegates, advisors, and experts.
-(c) The expenses of each delegation shall be borne by the Government which has appointed it.
 (3) The number of countries members of the Executive Committee shall correspond to one-fourth of the number of countries members of the Assembly. In establishing the number of seats to be filled, remainders after division by four shall be disregarded.
 (4) In electing the members of the Executive Committee, the Assembly shall have due regard to an equitable geographical distribution and to the need for countries party to the Special Agreements established in relation with the Union to be among the countries constituting the Executive Committee.
 (a) Each member of the Executive Committee shall serve from the close of the session of the Assembly which elected it to the close of the next ordinary session of the Assembly.

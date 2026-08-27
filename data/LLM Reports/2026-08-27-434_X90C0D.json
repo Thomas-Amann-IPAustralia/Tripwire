@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Madrid System page primarily add educational resources and minor formatting adjustments without altering substantive information about the system. The IPFR page already correctly describes the Madrid System as an international system for trade marks and its general benefits. The changes to the IP attorney engagement page involve reformatting and reordering of bullet points about what information to provide an attorney, without changing the content or advice. These do not affect the accuracy or currency of the IPFR page content, which provides general guidance on seeking professional advice. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2579,
+  "completion_tokens": 149,
+  "total_tokens": 2728,
+  "processing_time_seconds": 2.5958735009999145,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907923+00:00"
+}

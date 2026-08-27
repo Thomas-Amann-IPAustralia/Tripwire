@@ -1,10 +1,11 @@
 Recent updates
 | Item amended | Date Amended | Amended Reason | 
 |---|---|---|
+| 5.6.4.6 Identifying and raising citations | | Updated references to AbS where previously EPOQUE and updated link to 6.1.12.5.6 | 
 | 6.3.4.2 Determining Cost of a Top-up Search on EPOQUE | | Page has been archived as procedure is no longer relevant. | 
 | 6.1.12.5.7 Relevant Claim Numbers | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
 | 6.6.4 Search Procedure | | Updated references to AbS following replacement of EPOQUE | 
-| 5.6.4.6 Identifying and raising citations | | Updated references to AbS where previously EPOQUE and updated link to 6.1.12.5.6 | 
+| 6.1.12.5.5 Citation Examples | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
 | 6.1.12.5.6 Citing patent Documents Retrieved from AbS | | Renamed URL to match chapter 'Citing patent Documents Retrieved from AbS' title | 
 | 6.1.12.5.3 Citation of Prior Art | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
 | 6.1.12.5.4 Citation of URLs | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
@@ -12,7 +13,6 @@ Recent updates
 | 6.1.12.5.1 Selection of Documents Considered to be Relevant | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
 | 6.3.8.4 Box III Non-Establishment of Opinion with Regard to Novelty, Inventive Step & Industrial Applicability | | Corrected broken links to PCT Articles | 
 | 6.1.12.5 Documents Considered to be Relevant | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
-| 6.1.12.5.5 Citation Examples | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
 | 6.3.4.1 Demand and Top-up Search | | Removed superfluous sub-chapter link in view of no longer using EPOQUE | 
 | 6.1.2.1 Overview - International Searching | | corrected links to ISPE guidelines | 
 | 6.3.7 IPRPII and Notification | | Fixed broken link 'Attaching Annexes to the IPRPII' | 

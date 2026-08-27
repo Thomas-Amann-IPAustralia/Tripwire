@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in procedural guidance, filing instruments, and portal user guides for Plant Breeder's Rights applications and related administrative processes. There is no indication of changes affecting court proceedings, legal claims, or dispute resolution processes described in the IPFR page. The IPFR page focuses on seeking binding, authoritative decisions through court actions, including costs, outcomes, and risks, none of which are impacted by the procedural and filing updates in the upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4531,
+  "completion_tokens": 125,
+  "total_tokens": 4656,
+  "processing_time_seconds": 2.449051524000197,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907782+00:00"
+}

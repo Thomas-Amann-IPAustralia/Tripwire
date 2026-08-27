@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an update to the ACCC public registers webpage, including announcements about acquisitions, price notifications, and enforceable undertakings unrelated to the Australian Border Force's Notice of Objection scheme or intellectual property enforcement at the border. There is no mention of changes to the Notice of Objection process, timeframes, costs, or legal requirements that would affect the IPFR page content. The relevance scores indicate a low lexical and moderate semantic relation, but the actual content changes do not impact the IPFR page's accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3145,
+  "completion_tokens": 140,
+  "total_tokens": 3285,
+  "processing_time_seconds": 2.296616239000059,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.910021+00:00"
+}
