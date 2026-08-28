@@ -4,6 +4,6 @@
   "previous_hash": "e3f836d508d2796c69f61ab1c9c9a93468de5358e69202c5a2a481c42f4099b7",
   "previous_text": "There is an unknown connection issue between Cloudflare and the origin web server. As a result, the web page can not be displayed.\nPlease try again in a few minutes.\nThere is an issue between Cloudflare's cache and your origin web server. Cloudflare monitors for these errors and automatically investigates the cause. To help support the investigation, you can pull the corresponding error log from your web server and submit it our support team. Please include the Ray ID (which is at the bottom of this error page). Additional troubleshooting resources.",
   "last_error": "RetryableError: All fetch attempts failed for https://www.artslaw.com.au/information-sheet/copyright/#copyright-infringement",
-  "last_error_at": "2026-08-27T12:31:12.878845+00:00",
-  "consecutive_failures": 91
+  "last_error_at": "2026-08-28T13:52:42.324028+00:00",
+  "consecutive_failures": 92
 }
