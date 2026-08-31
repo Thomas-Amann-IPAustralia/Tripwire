@@ -4,6 +4,6 @@
   "previous_hash": "164abdd2b540ee029c77c8274aaaefe61547511734ace19a06b223e490c54526",
   "previous_text": "You don't have permission to access this resource.Server unable to read htaccess file, denying access to be safe\nAdditionally, a 403 Forbidden error was encountered while trying to use an ErrorDocument to handle the request.",
   "last_error": "RetryableError: All fetch attempts failed for https://www.asbfeo.gov.au/about-us",
-  "last_error_at": "2026-08-30T08:03:03.528620+00:00",
-  "consecutive_failures": 53
+  "last_error_at": "2026-08-31T08:18:15.718236+00:00",
+  "consecutive_failures": 54
 }
