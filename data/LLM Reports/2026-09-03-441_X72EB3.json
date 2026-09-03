@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "X72EB3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the PBR Manual, specifically the creation of new guidance pages for the QP Portal and updates to links and user guides. The IPFR page content focuses on explaining the role, benefits, risks, costs, and process of engaging or becoming a Qualified Person (QP) but does not include procedural details or links to the QP Portal or specific submission processes. Therefore, while the topics are related, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2378,
+  "completion_tokens": 136,
+  "total_tokens": 2514,
+  "processing_time_seconds": 2.680228382999985,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039233+00:00"
+}

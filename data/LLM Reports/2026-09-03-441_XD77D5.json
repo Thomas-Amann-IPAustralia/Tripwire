@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Trade Marks Office Manual of Practice and Procedure, including amendments to sections about examination of trade marks relating to plants or plant materials, prescribed signs, and other procedural details. The IPFR page focuses on guidance for SMEs receiving AI-generated IP infringement allegations, emphasizing practical advice and a checklist for responding to such allegations. There are no specific references in the IPFR page to the procedural or substantive details updated in the upstream change, such as examination procedures or legislative provisions. Therefore, the content of the IPFR page remains accurate and does not require amendment based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4292,
+  "completion_tokens": 155,
+  "total_tokens": 4447,
+  "processing_time_seconds": 2.827011477000042,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039175+00:00"
+}
