@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.9,
+  "reasoning": "The upstream change is a news update listing various topics and articles related to IP Australia, including strategic plans and recent news items. There is no specific update or amendment to the legal or procedural information about worldwide IP rights, international systems, or territorial nature of IP rights. The IPFR page content remains accurate and current based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1586,
+  "completion_tokens": 102,
+  "total_tokens": 1688,
+  "processing_time_seconds": 2.1917567089999466,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250457+00:00"
+}
