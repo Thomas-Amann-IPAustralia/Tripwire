@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the ACCC public registers, the ASEAN-Australia-New Zealand Free Trade Agreement upgrade, and eBay's intellectual property policy updates do not directly affect the specific content of the IPFR page about the difference between an ABN, registered business name, and registered trade mark. The IPFR page focuses on explaining the distinctions and benefits of business name registration versus trade mark registration in Australia, including enforcement and protection aspects. None of the upstream changes update or amend the legal requirements, definitions, or protections related to business names or trade marks in Australia as described in the IPFR page. The ACCC changes relate to competition and consumer law undertakings and exemptions, the AANZFTA update concerns trade agreements and tariff preferences, and the eBay policy changes relate to listing practices and IP infringement on their platform. Therefore, no factual or procedural updates are required to maintain the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5523,
+  "completion_tokens": 219,
+  "total_tokens": 5742,
+  "processing_time_seconds": 3.428090210999926,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.710103+00:00"
+}

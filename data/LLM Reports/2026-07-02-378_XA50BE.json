@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes include updated Federal Court and Federal Circuit and Family Court fees effective from 1 July 2026, with specific fee amounts for filing applications, responses, interlocutory matters, hearings, subpoenas, and other court services increasing. The IPFR page discusses court proceedings for design disputes, including a section on 'What might the costs be?' which currently provides general cost estimates but does not specify filing fees or court fees. Since the fees for court filings and related services have changed, the IPFR page should be updated to reflect the new fee schedule to maintain accuracy and currency for users considering court action. The changes to the Federal Court Rules 2011 amendments are procedural and do not directly affect the substantive content of the IPFR page. Therefore, the primary actionable update is to revise the cost information to reflect the new fees effective from 1 July 2026.",
+  "suggested_changes": [
+    "Update the 'What might the costs be?' section to include the new Federal Court and Federal Circuit and Family Court filing and hearing fees effective from 1 July 2026, such as increasing the filing application fee from $2,005 to $2,085 and other related fees accordingly, based on the Federal Court and Federal Circuit and Family Court Amendment (Filing Fees) Regulations 2026.",
+    "Add a note in the costs section indicating that court fees are subject to annual adjustments and users should check the latest fees on the Federal Court or Federal Circuit and Family Court websites before proceeding."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9677,
+  "completion_tokens": 332,
+  "total_tokens": 10009,
+  "processing_time_seconds": 4.693431700000019,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267580+00:00"
+}

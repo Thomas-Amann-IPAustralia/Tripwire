@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to practice directions under the Administrative Review Tribunal Act 2024 and amendments to oversight legislation concerning intelligence and security bodies. These changes do not affect the content of the IPFR page, which focuses on when to seek legal advice for IP issues, distinctions between IP attorneys and lawyers, and general guidance on engaging legal professionals. There are no specific references to tribunal procedures, oversight bodies, or legislative amendments in the IPFR page content that would require updating based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2487,
+  "completion_tokens": 129,
+  "total_tokens": 2616,
+  "processing_time_seconds": 1.4586996510001882,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.709218+00:00"
+}

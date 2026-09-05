@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in practice directions for the Administrative Review Tribunal, amendments to the patent manual regarding prior art, best method, and manner of manufacture, and updates to trademark manual sections. None of these changes specifically affect the procedural details, timelines, fees, or substantive grounds for opposing a patent as described in the IPFR page. There are no updates to the 3-month opposition window, fees, or opposition outcomes that would require changes to the IPFR content. The changes to the patent manual focus on technical examination and substantive patentability criteria rather than opposition procedures. The tribunal practice directions updates do not directly impact the patent opposition process described. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12008,
+  "completion_tokens": 174,
+  "total_tokens": 12182,
+  "processing_time_seconds": 2.2841354709998996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.705559+00:00"
+}

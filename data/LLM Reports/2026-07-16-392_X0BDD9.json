@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change relates to the Customs Act and the definition of international airports for customs officer availability, which does not affect the IPFR page content about worldwide IP rights and international IP protection mechanisms. The second change concerns closed consultations on various IP Australia policy and procedural updates, including patents and trademarks, but does not specify any amendments to the international IP rights systems or the descriptions of PCT, Madrid, or Hague systems as presented in the IPFR page. There is no indication that the definitions, member countries, or procedural timelines for international IP rights have changed. Therefore, the IPFR page remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3473,
+  "completion_tokens": 157,
+  "total_tokens": 3630,
+  "processing_time_seconds": 3.4708605480000188,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231986+00:00"
+}

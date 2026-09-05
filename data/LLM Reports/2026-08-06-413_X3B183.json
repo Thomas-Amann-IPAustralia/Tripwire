@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X3B183",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and reorganization of the Plant Breeder's Rights (PBR) manual, including new guidance pages for the QP Portal and updated links. The IPFR page 'What can I expect from a lawyer or attorney?' provides general guidance on legal professionals and their roles in IP matters, without specific references to PBR procedures, portals, or detailed application processes. There is no specific information in the IPFR page that is contradicted or outdated by the changes in the PBR manual. Therefore, no amendment to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2517,
+  "completion_tokens": 153,
+  "total_tokens": 2670,
+  "processing_time_seconds": 2.8930998880000516,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796249+00:00"
+}

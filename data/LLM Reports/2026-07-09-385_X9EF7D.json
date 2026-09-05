@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the Patents Regulations 1991 compilation, amendments to intelligence oversight legislation, and recent official notices from IP Australia including updates to the Patent Manual and design rights surrender notices. However, the IPFR page 'Familiarise yourself with IP laws' provides a high-level overview of IP law framework, legislation, and agencies without referencing specific procedural details, dates, or regulatory provisions that have changed. None of the changes directly affect the accuracy or currency of the general information presented on this page. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3273,
+  "completion_tokens": 149,
+  "total_tokens": 3422,
+  "processing_time_seconds": 2.3170486709998386,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.819838+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XEB5B5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources relate primarily to updates in the IPAustralia patent manual and plant breeder's rights manual, including clarifications on best method, prior art, manner of manufacture, and internal link fixes. None of these changes directly affect the factual content, procedural steps, costs, timeframes, or legal thresholds described in the IPFR page about applying for a patent. The IPFR page content remains accurate and up-to-date for its intended audience of small business owners. The changes are mostly technical, formatting, or internal reference updates without altering the substantive guidance or key figures presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3378,
+  "completion_tokens": 156,
+  "total_tokens": 3534,
+  "processing_time_seconds": 2.2191561060001277,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.564140+00:00"
+}

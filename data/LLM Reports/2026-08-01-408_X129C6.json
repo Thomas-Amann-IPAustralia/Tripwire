@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change in the upstream source involved a minor textual edit removing some line breaks and blank lines in a paragraph about counterfeit goods and the recommendation to list IP rights with platforms. The core information about adding trade marks and other IP rights to brand registries for automated detection remains unchanged. The IPFR page already accurately reflects this concept and provides detailed information about enrolling in online marketplaces' IP protection programs. There is no specific factual update, procedural change, or new requirement that would necessitate amending the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1938,
+  "completion_tokens": 136,
+  "total_tokens": 2074,
+  "processing_time_seconds": 1.6305416529999093,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.812949+00:00"
+}

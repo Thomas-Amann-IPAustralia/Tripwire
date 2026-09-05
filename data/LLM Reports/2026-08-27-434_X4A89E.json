@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X4A89E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor formatting adjustment and reordering of bullet points on a government webpage about engaging an IP attorney. It does not alter any substantive information about the process, costs, or nature of freedom to operate searches or patent checks. The IPFR page content remains accurate and consistent with the updated source. There is no specific factual or procedural detail in the IPFR page that is contradicted or outdated by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1945,
+  "completion_tokens": 118,
+  "total_tokens": 2063,
+  "processing_time_seconds": 2.283919558999969,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909756+00:00"
+}

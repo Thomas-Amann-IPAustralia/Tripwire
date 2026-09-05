@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns updates and consultations related to mandatory safety standards for toys containing magnets, aquatic toys, baby bath aids, and water market regulations. These topics are unrelated to the content of the IPFR page, which focuses on Toyota's approach to counterfeit vehicle parts and the use of the Australian Border Force's Notice of Objection scheme for IP enforcement. There is no mention or implication of changes to IP enforcement procedures, counterfeit automotive parts, or the ABF scheme in the change document. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3124,
+  "completion_tokens": 145,
+  "total_tokens": 3269,
+  "processing_time_seconds": 2.230409637000321,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269301+00:00"
+}

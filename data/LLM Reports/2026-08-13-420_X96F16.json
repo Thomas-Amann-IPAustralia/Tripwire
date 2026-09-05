@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to amendments in customs regulations concerning firearms importation and minor formatting and accessibility updates to the IP Australia design manual. None of the changes affect the substantive content of the IPFR page on design infringement, which focuses on the legal principles, definitions, and examples of design infringement under the Designs Act 2003. There are no updates to the statutory provisions, timeframes, or procedural steps related to design infringement or registered designs that would require amending the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5193,
+  "completion_tokens": 131,
+  "total_tokens": 5324,
+  "processing_time_seconds": 1.9657294500000262,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.873956+00:00"
+}

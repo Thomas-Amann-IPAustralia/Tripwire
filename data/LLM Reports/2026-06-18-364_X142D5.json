@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X142D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to the WIPO Intergovernmental Committee (IGC) schedule and mandate renewal, which is unrelated to the specific content of the IPFR page about the Australian Copyright Council's services and resources. The IPFR page focuses on Australian copyright help for creative industries and does not mention the IGC or international treaty developments. Therefore, the update does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1747,
+  "completion_tokens": 118,
+  "total_tokens": 1865,
+  "processing_time_seconds": 6.232384122999974,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.712731+00:00"
+}

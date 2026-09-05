@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Australian Border Force Act 2015, the Patent Manual, and the Design Manual primarily involve accessibility fixes, link updates, formatting changes, and updates to patent examination content unrelated to design infringement. There are no amendments to the substantive legal provisions or procedural requirements concerning design infringement or registered designs in Australia. The IPFR page on design infringement remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4024,
+  "completion_tokens": 114,
+  "total_tokens": 4138,
+  "processing_time_seconds": 2.4967744630000652,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.562728+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on ACCC public register entries and amendments to the ASEAN-Australia-New Zealand Free Trade Agreement (AANZFTA). These changes do not affect the specific content of the IPFR page on unregistered trade marks, which focuses on legal protections under Australian law such as passing off and the Australian Consumer Law. There are no updates to the Trade Marks Act, passing off law, or ACL provisions relevant to unregistered trade marks in the provided changes. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3944,
+  "completion_tokens": 140,
+  "total_tokens": 4084,
+  "processing_time_seconds": 1.9654180699999415,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.709921+00:00"
+}

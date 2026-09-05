@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X142D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to amendments to the Competition and Consumer Act 2010, specifically introducing new powers for the Minister and ACCC regarding exceptional circumstances declarations and increasing penalties under the Oil Code of Conduct. The IPFR page focuses on copyright assistance provided by the Australian Copyright Council and does not discuss competition law, consumer law, or the ACCC's powers. Therefore, the legislative changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2055,
+  "completion_tokens": 123,
+  "total_tokens": 2178,
+  "processing_time_seconds": 1.5757912149997537,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.709343+00:00"
+}

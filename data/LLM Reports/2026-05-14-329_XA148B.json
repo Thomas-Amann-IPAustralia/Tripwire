@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of updates to official notices about Olympic Insignia Protection forms, publication of signs under Article 6ter of the Paris Convention, and minor updates to the Trade Marks and Plant Breeder's Rights manuals such as typographical corrections, link fixes, accessibility improvements, and removal of references to a section of the PBR Act. None of these changes specifically affect the content of the IPFR page regarding the opposition process for trade marks, such as deadlines, procedures, fees, or outcomes. There is no indication of amendments to the opposition process or related timelines that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7972,
+  "completion_tokens": 156,
+  "total_tokens": 8128,
+  "processing_time_seconds": 3.2893336659999477,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.500288+00:00"
+}

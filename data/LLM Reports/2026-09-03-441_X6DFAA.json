@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, specifically about submission processes and portal guidance. The IPFR page focuses on general options for dealing with IP issues without going to court, including ADR and administrative actions at IP Australia, but does not mention PBR application procedures or portal details. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1905,
+  "completion_tokens": 117,
+  "total_tokens": 2022,
+  "processing_time_seconds": 1.7625088439999672,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039761+00:00"
+}

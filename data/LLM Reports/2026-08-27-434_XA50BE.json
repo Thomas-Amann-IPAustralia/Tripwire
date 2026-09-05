@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IPAustralia design manual mainly involve formatting amendments and minor updates to various sections unrelated to court proceedings or dispute resolution processes. There is no indication of changes to legal time limits, procedural steps, or substantive rights that would affect the content of the IPFR page on seeking binding, authoritative decisions in design disputes. The WIPO Paris Convention document update appears to be a formatting or structural update without substantive changes to the convention text that would impact the IPFR page content. Therefore, the IPFR page remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5028,
+  "completion_tokens": 147,
+  "total_tokens": 5175,
+  "processing_time_seconds": 3.1909352249999756,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909249+00:00"
+}

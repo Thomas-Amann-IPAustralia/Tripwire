@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update about a trade mark opposition case involving Clothing The Gaps and The Gap, as well as a copyright dispute over the Aboriginal flag. This is a topical news item and does not affect any specific factual content, procedural details, or guidance provided in the IPFR page about monitoring the trade mark register and market for competitor activity. The IPFR page remains accurate and current in its advice and does not require amendment based on this news item.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2244,
+  "completion_tokens": 126,
+  "total_tokens": 2370,
+  "processing_time_seconds": 1.8622690750000856,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.819728+00:00"
+}

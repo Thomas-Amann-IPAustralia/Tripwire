@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X142D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to exemptions granted by the ACCC under the Competition and Consumer Act 2010 concerning consumer data sharing obligations for specific companies. The IPFR page content focuses on copyright law assistance provided by the Australian Copyright Council and related copyright resources. There is no mention or discussion of the ACCC, competition law, consumer data sharing, or the Competition and Consumer Act in the IPFR page. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1815,
+  "completion_tokens": 131,
+  "total_tokens": 1946,
+  "processing_time_seconds": 2.158428782000101,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.590181+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Trade Marks Manual of Practice and Procedure, specifically sections about divisional applications, prescribed signs, and other procedural details. The IPFR page 'Remove a trade mark from the register' focuses on revocation of registration, its circumstances, benefits, risks, and procedures. The change document does not mention revocation procedures, timelines, costs, or legal thresholds relevant to revocation. Therefore, there is no direct impact on the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2546,
+  "completion_tokens": 135,
+  "total_tokens": 2681,
+  "processing_time_seconds": 1.745150699000078,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.156281+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to new ACCC exemptions and court enforceable undertakings concerning product data sharing obligations and unfair contract terms under the Australian Consumer Law. However, the IPFR page discusses reporting counterfeit goods and IP infringement issues to the ACCC and other agencies, without detailing specific ACCC exemptions, undertakings, or legislative provisions. The new ACCC entries do not affect the accuracy or currency of the IPFR page content, which focuses on general guidance for reporting IP-related consumer harm and scams rather than specific ACCC regulatory actions or exemptions.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2129,
+  "completion_tokens": 140,
+  "total_tokens": 2269,
+  "processing_time_seconds": 2.495940369999971,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.711941+00:00"
+}

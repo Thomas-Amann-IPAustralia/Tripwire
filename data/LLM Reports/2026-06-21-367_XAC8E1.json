@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the upstream webpage www.asbfeo.gov.au is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). There is no substantive content change or update to intellectual property laws, definitions, or procedures relevant to the IPFR page 'Is my business name my IP?'. The IPFR page content about business names, company names, and trade marks remains accurate and unaffected by this connectivity issue.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1617,
+  "completion_tokens": 117,
+  "total_tokens": 1734,
+  "processing_time_seconds": 1.4843047180000895,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.915116+00:00"
+}

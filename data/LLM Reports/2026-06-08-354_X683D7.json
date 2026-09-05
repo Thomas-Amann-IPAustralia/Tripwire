@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change clarifies the example narrative about an unjustified threat of infringement involving an unexamined registered design. However, it does not alter any factual or procedural information about the third party examination process, fees, timelines, or legal thresholds described in the IPFR page. The IPFR page content already correctly states that formal action can only be initiated after certification and that threats based on unexamined designs are unjustified. The change is purely editorial and does not require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2282,
+  "completion_tokens": 133,
+  "total_tokens": 2415,
+  "processing_time_seconds": 1.9211823539999386,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.612036+00:00"
+}

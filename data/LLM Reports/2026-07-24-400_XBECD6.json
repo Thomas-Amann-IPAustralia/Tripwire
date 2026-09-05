@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage and an announcement about a new transparency program related to patent examination timeframes for Patent Prosecution Highway requests. There is no information in the change document that affects the content of the IPFR page about 'Prevent a patent under examination from being granted' or the process and details of lodging a section 27 notice. The IPFR page content remains accurate and current based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1930,
+  "completion_tokens": 130,
+  "total_tokens": 2060,
+  "processing_time_seconds": 2.3310093080000343,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.429804+00:00"
+}

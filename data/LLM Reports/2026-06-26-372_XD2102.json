@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-26-372",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia news webpage primarily add new news items about design rights and other IP topics, but do not alter any substantive legal or procedural information relevant to when a person should seek legal or attorney assistance for IP issues. The IPFR page focuses on guidance about when to consult legal professionals, the differences between IP lawyers and attorneys, and general advice on seeking help. None of the new news content or updates affect the accuracy or currency of this guidance. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2100,
+  "completion_tokens": 137,
+  "total_tokens": 2237,
+  "processing_time_seconds": 2.4755341909999515,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-26T06:24:24.248916+00:00"
+}

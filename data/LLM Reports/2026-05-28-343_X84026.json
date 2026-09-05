@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to amendments in the Administrative Review Tribunal Act 2024 and updates to the Patent Manual reflecting recent court decisions. The IPFR page concerns how to complain about IP Australia service and clarifies that complaints are separate from formal review or appeal processes. The legislative amendment expands circumstances for tribunal decisions without oral hearings, mainly in migration and administrative review contexts, which does not directly affect the complaint process described. The patent manual updates concern patent examination and legal decisions, unrelated to complaint handling or service dissatisfaction procedures. Therefore, the IPFR page content remains accurate and does not require updates based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2155,
+  "completion_tokens": 153,
+  "total_tokens": 2308,
+  "processing_time_seconds": 1.9992532559999745,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491688+00:00"
+}

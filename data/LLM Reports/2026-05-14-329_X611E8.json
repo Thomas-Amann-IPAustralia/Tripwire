@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified are mostly updates to official notices related to trademarks, Olympic insignia, and minor accessibility fixes in Plant Breeder's Rights manuals, as well as updates to the Patent Manual concerning procedural details and case law references. None of the changes specifically address the patent opposition process, timelines, fees, or procedural steps described in the IPFR page. There is no indication that the fees, timeframes, or procedural descriptions for responding to a patent opposition have changed. Therefore, the IPFR page content remains accurate and does not require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8591,
+  "completion_tokens": 146,
+  "total_tokens": 8737,
+  "processing_time_seconds": 7.395186748000015,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.500063+00:00"
+}

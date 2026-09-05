@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage 'five_steps_to_resolve_your_dispute' from asbfeo.gov.au is currently inaccessible due to server errors (403 Forbidden and connection closed). There is no indication that the content of that page has changed or that any legislative or procedural information relevant to the IPFR page on 'Respond to an unjustified threat' has been updated or altered. The IPFR page content remains accurate and does not rely on specific details from the inaccessible page. Therefore, no update to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2530,
+  "completion_tokens": 147,
+  "total_tokens": 2677,
+  "processing_time_seconds": 2.15160880499991,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.366092+00:00"
+}

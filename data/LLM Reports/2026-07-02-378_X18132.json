@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document announces the launch of a new Qualified Persons (QP) portal for Plant Breeders Rights (PBR) on 7 July 2026, replacing the current Interactive Variety Description System (IVDS). While this is relevant to PBR administration, the IPFR page focuses on seeking binding, authoritative decisions through court proceedings for PBR disputes, including infringement and validity challenges. The new QP portal relates to application and variety description processes rather than dispute resolution or court proceedings. Therefore, the IPFR page content about legal claims, court processes, and enforcement remains accurate and unaffected by this administrative update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2790,
+  "completion_tokens": 155,
+  "total_tokens": 2945,
+  "processing_time_seconds": 3.4411860390000584,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269825+00:00"
+}

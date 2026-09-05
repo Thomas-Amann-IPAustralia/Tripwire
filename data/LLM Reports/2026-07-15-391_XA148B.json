@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP webpages relate solely to connectivity issues and error messages (e.g., 'ERR_TIMED_OUT' vs 'ERR_CONNECTION_CLOSED') when accessing the AFP website. There is no substantive change to the content or legal information regarding trade mark oppositions or procedures. The IPFR page content about responding to trade mark oppositions remains accurate and unaffected by these technical website access changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4804,
+  "completion_tokens": 112,
+  "total_tokens": 4916,
+  "processing_time_seconds": 3.6943756450000365,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.109904+00:00"
+}

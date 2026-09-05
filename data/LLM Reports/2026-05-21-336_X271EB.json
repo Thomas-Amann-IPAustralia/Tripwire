@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update on a High Court decision (Zip Co Ltd v Firstmac Ltd) and a notice about approved forms for Olympic designs, along with some administrative information about public holidays and office closures. None of these changes affect the substantive content of the IPFR page regarding the process, timing, or requirements for requesting removal of a trade mark for non-use. There is no update to timeframes, fees, procedures, or legal thresholds relevant to the removal process described in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2782,
+  "completion_tokens": 134,
+  "total_tokens": 2916,
+  "processing_time_seconds": 2.186025711999946,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.589577+00:00"
+}

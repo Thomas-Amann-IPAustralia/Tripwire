@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the Australian Federal Police (AFP) webpage on fraud and corruption is currently unreachable due to technical connection issues (ERR_CONNECTION_CLOSED). This is an accessibility issue rather than a content change. The IPFR page about the WIPO Clause Generator and handling IP disputes via contracts does not reference the AFP or fraud and corruption topics, nor does it contain any information that would be affected by the AFP webpage being temporarily inaccessible. Therefore, there is no impact on the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2498,
+  "completion_tokens": 138,
+  "total_tokens": 2636,
+  "processing_time_seconds": 2.6063295330000074,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.996781+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change relates to the Australian Federal Police (AFP) webpage on fraud and corruption, specifically a technical issue where the site is timing out rather than closing connections. This is an indirect and low-relevance signal to the IPFR page about responding to international IP infringement accusations. The IPFR page does not reference the AFP fraud and corruption page or its content, nor does it provide procedural or legal details that would be affected by this technical change. Therefore, the IPFR page content remains accurate and does not require updates based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2184,
+  "completion_tokens": 140,
+  "total_tokens": 2324,
+  "processing_time_seconds": 2.637512028999936,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.789816+00:00"
+}

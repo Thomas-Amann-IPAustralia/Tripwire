@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual concerning internal references, links, and naming conventions related to patent document citation and search procedures. The IPFR page focuses on practical advice for SMEs receiving AI-generated IP infringement allegations, emphasizing the need for clear identification of IP rights and substantiation of claims. There is no specific information in the IPFR page about patent search tools, citation procedures, or manual references that would be affected by the upstream change. Therefore, the content of the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3869,
+  "completion_tokens": 140,
+  "total_tokens": 4009,
+  "processing_time_seconds": 3.065041758999996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908701+00:00"
+}

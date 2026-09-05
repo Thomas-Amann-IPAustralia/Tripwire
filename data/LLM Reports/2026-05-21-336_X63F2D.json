@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and WIPO Madrid System news and reviews, which do not affect the content of the IPFR page about requesting IP Australia to confirm a registered design is valid. The IPFR page focuses on the process, benefits, risks, costs, and procedures related to design certification by IP Australia, none of which are impacted by the ACCC exemptions or the Madrid System yearly review updates. Therefore, no specific factual or procedural content in the IPFR page is outdated or incorrect due to these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2477,
+  "completion_tokens": 141,
+  "total_tokens": 2618,
+  "processing_time_seconds": 2.1206973640000797,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.588834+00:00"
+}

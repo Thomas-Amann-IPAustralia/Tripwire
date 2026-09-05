@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources primarily relate to updates in patent examination manuals, design manuals, and plant breeder's rights manuals, focusing on clarifications, link corrections, formatting, and accessibility improvements. There are no specific amendments to the procedural timeframes, statutory references, or substantive requirements related to lodging a section 27 notice or third party notifications of prior art. The IPFR page content about section 27 notices, including the timing (up to three months after notice of acceptance), the process, and the outcomes, remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3439,
+  "completion_tokens": 145,
+  "total_tokens": 3584,
+  "processing_time_seconds": 1.9565227400000822,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.563781+00:00"
+}

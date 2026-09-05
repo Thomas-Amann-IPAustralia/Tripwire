@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate solely to the Australian Federal Police (AFP) website's accessibility issues and error messages (connection timeouts and closures). There is no substantive change to the content or guidance on intellectual property infringement or enforcement, nor any update to legal information or procedural advice relevant to responding to international IP infringement accusations. The IPFR page content remains accurate and unaffected by these technical website availability changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3851,
+  "completion_tokens": 110,
+  "total_tokens": 3961,
+  "processing_time_seconds": 1.8041741719998754,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.110856+00:00"
+}

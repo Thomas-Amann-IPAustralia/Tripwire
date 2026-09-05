@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia Design Manual are primarily accessibility fixes, removal of empty headings, URL updates, and restructuring of sections related to excluded designs and priority dates. There are no substantive changes to the examination and certification process, fees, timelines, or legal rights associated with certified designs. The IPFR page content about requesting examination to certify a registered design remains accurate and up to date based on the provided change documents.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3840,
+  "completion_tokens": 116,
+  "total_tokens": 3956,
+  "processing_time_seconds": 1.6116524620001655,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.490562+00:00"
+}

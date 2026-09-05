@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources relate primarily to minor content updates, typographical corrections, accessibility fixes, and link corrections in trademark and PBR manuals. There is no indication of substantive changes to legal procedures, costs, court processes, or outcomes related to Plant Breeder's Rights disputes in court that would affect the accuracy or currency of the IPFR page content. The IPFR page's detailed guidance on court proceedings, costs, risks, and outcomes remains accurate and unaffected by these upstream updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3661,
+  "completion_tokens": 131,
+  "total_tokens": 3792,
+  "processing_time_seconds": 2.2226946470000257,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713647+00:00"
+}

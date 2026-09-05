@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change involves updating content on the IP Australia webpage about preventing infringement of IP, specifically about counterfeit goods and brand registries on platforms like Amazon. The IPFR page 'Pause use of contested IP until resolution' focuses on the option and implications of ceasing use of contested IP after receiving a demand or dispute. The change does not affect any specific information, procedures, or advice given in the IPFR page about pausing use of contested IP, nor does it alter any legal thresholds, timeframes, or costs described. The topics are related but the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2369,
+  "completion_tokens": 153,
+  "total_tokens": 2522,
+  "processing_time_seconds": 1.9757835799999839,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.812658+00:00"
+}

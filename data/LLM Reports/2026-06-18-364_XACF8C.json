@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to eBay's Verified Rights Owner (VeRO) program and details about how infringement reports are handled on eBay. The IPFR page content focuses on common scams related to IP infringement, warning signs, and how to identify fake communications, particularly those pretending to be from IP Australia. There is no specific information in the IPFR page about eBay's VeRO program or instructions that conflict with or require updating based on the changes to eBay's reporting process. The change is indirectly related and does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2475,
+  "completion_tokens": 150,
+  "total_tokens": 2625,
+  "processing_time_seconds": 2.1174534299998413,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.712122+00:00"
+}

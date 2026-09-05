@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes from the IP Australia news page relate to the Corporate Strategic Plan 2026-27 and various news items about patents, trade marks, and innovation. These updates do not contain any specific information or amendments regarding international IP infringement considerations, procedures, or legal advice that would affect the content of the IPFR page on responding to international accusations. The IPFR page's guidance remains accurate and current as it does not reference any specific Australian legislative changes or procedural updates reflected in the news items.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2759,
+  "completion_tokens": 131,
+  "total_tokens": 2890,
+  "processing_time_seconds": 2.988931349999916,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250322+00:00"
+}

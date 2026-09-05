@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to a minor content update on the WIPO IP Diagnostics webpage, specifically the removal of a heading 'Industry-specific adaptations' and some event information. The IPFR page 'Using mediation to resolve IP disputes' does not reference WIPO IP Diagnostics or any specific events, dates, or procedural details that would be affected by this change. The relevance scores are low to moderate and the change does not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2601,
+  "completion_tokens": 127,
+  "total_tokens": 2728,
+  "processing_time_seconds": 1.9908497240000997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.910279+00:00"
+}

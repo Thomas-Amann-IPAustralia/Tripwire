@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in patent manuals, plant breeder's rights manuals, design manuals, and an Amazon Brand Registry promotional update. The only trade mark related change is a notice about a technical coding issue affecting the trade mark bulk data product provided to third party subscribers, which does not impact the procedural or substantive content of the IPFR page about responding to a trade mark opposition. There are no changes to statutory timeframes, fees, procedural steps, or substantive grounds for opposition or defence mentioned in the upstream changes. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7757,
+  "completion_tokens": 149,
+  "total_tokens": 7906,
+  "processing_time_seconds": 3.679938753999977,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.709034+00:00"
+}

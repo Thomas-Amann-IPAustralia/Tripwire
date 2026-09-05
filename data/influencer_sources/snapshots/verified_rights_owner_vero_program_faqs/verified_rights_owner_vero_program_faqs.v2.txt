@@ -1,0 +1,39 @@
+How does eBay handle an Infringement report through the VeRO Program?
+We use a structured approach to manage reports of intellectual property infringement through our Verified Rights Owner (VeRO) program:
+Submitting a Report: Rights owners can submit a Notice of Claimed Infringement (NOCI) online form via vero@ebay.com.
+Reviewing the Report: We examine submitted reports to confirm that all the necessary information is complete and accurate. We might reach out to the rights owner for further details if needed.
+Take action: If a listing is found to violate IP rights, it may be removed. The seller will be notified with an explanation.
+Repeat violations: Sellers with repeated IP violations may face further action, including selling restrictions or account suspension.
+Our goal is to protect intellectual property rights while maintaining a fair marketplace for sellers and buyers. We encourage rights owners to use the VeRO program thoughtfully and responsibly when reporting potential infringements.
+How can I retract a report I made?
+If you’ve reported a listing in error, you can submit a retraction by emailing the VeRO team the details from an authorised authorised email address at vero@ebay.com.
+What if I don’t own intellectual property?
+The VeRO Program is only for rights owners or their authorised authorised representatives.
+If you’re not a rights owner but believe a listing violates policy, you can still report it:
+Go to the item and select the question mark icon located on the bottom right
+Select "Submit report"
+Sign in or submit as a guest
+Select from the dropdown menu, “What you would like to report?” and add the relevant reason
+Fill in the form, including the details of the content you’re reporting, and your reason
+Select “Submit report”
+Can I use the VeRO program to report stolen items?
+The VeRO program can’t be used to report stolen items. If you believe an item is stolen, please report it to local law enforcement. We’ll assist authorities if they contact us directly.
+Why is the seller's listing still live?
+The seller may have removed the infringing content before you reported it.
+Listings can be reinstated if the seller successfully appeals or corrects the issue.
+We may be waiting on more information from you—please check your eBay messages.
+The seller isn’t authorized to sell my product, why wasn’t the listing removed?
+The VeRO program only applies to intellectual property rights, not distribution or pricing agreements. eBay is a global marketplace, and we don’t restrict the sale of items based on distribution contracts or selective selling policies unless there is a valid IP violation.
+How can I get a VeRO participant page?
+A VeRO participant page helps eBay members understand which IP rights you protect and why a listing may have been removed.
+To create one:
+1. Draft your content in a Word document
+2. Email it to vero@ebay.com
+We'll review and publish it if it meets our guidelines.
+Participant pages should:
+Focus only on your intellectual property
+Avoid topics like MAP pricing, contracts, or off-eBay sales
+Not include offensive or misleading content
+Not make assumptions about eBay’s enforcement actions
+Avoid references to eBay’s site policies (we already provide that info)
+You may include your company’s logo as long as it doesn’t infringe on any other trademarks.

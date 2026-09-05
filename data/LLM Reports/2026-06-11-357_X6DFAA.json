@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change indicates that the ASBFEO webpage 'five_steps_to_resolve_your_dispute' is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). This is an availability issue rather than a content change. The IPFR page references ASBFEO as a public ADR provider but does not rely on specific procedural details or content from the ASBFEO page. Since the change does not alter any substantive information or guidance about ADR or dispute resolution, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1729,
+  "completion_tokens": 139,
+  "total_tokens": 1868,
+  "processing_time_seconds": 3.0270302450001054,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850964+00:00"
+}

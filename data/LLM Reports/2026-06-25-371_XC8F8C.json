@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XC8F8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change relates to an update of the Australian Border Force Act 2015 compilation, but there is no specific information or explanatory statement indicating any amendments that affect the content of the IPFR page about enforcement costs. The IPFR page discusses general principles and practical considerations of IP enforcement costs without referencing the Australian Border Force Act or specific procedures under it. The low relevance scores and lack of detailed changes mean the page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1522,
+  "completion_tokens": 120,
+  "total_tokens": 1642,
+  "processing_time_seconds": 1.9975476399999934,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.565489+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-02-348",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change announces a new transparency program related to patent examination timeframes for Patent Prosecution Highway requests and notes new international search options for patent applicants. However, the IPFR page content focuses on explaining the concept that there is no worldwide IP right and outlines the main international systems for IP protection, without specifying examination timeframes or search office options. The change does not affect the accuracy or currency of the IPFR page's explanations or listed international systems.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1594,
+  "completion_tokens": 123,
+  "total_tokens": 1717,
+  "processing_time_seconds": 2.198075139999901,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-02T06:57:01.162435+00:00"
+}

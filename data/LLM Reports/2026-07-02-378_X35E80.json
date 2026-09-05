@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X35E80",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to amendments to the Criminal Code Act 1995 concerning secrecy provisions, including repealing certain offences and introducing new offences related to improper use or communication of information by Commonwealth officials. The IPFR page is a Privacy Notice for the IP First Response chatbot, focusing on how personal information is handled, user privacy rights, and consent. There is no specific mention or reliance on the Criminal Code secrecy provisions or related offences in the IPFR page content. The changes do not affect the accuracy or currency of the privacy notice or its statements about data handling, consent, or user obligations. Therefore, no update to the IPFR page is required based on this legislative amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2403,
+  "completion_tokens": 168,
+  "total_tokens": 2571,
+  "processing_time_seconds": 2.211552587999904,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.272327+00:00"
+}

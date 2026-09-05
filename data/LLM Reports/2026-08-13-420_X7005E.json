@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to exemptions and undertakings under the Competition and Consumer Act 2010 (Cth) concerning data sharing obligations and specific company exemptions. The IPFR page discusses unregistered trade marks and legal protections under passing off and the Australian Consumer Law (ACL) provisions against misleading or deceptive conduct. However, the change does not alter or update any legal principles, definitions, or procedural information related to unregistered trade marks or ACL protections as described on the IPFR page. There is no impact on the accuracy or currency of the IPFR content regarding unregistered trade marks.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2394,
+  "completion_tokens": 149,
+  "total_tokens": 2543,
+  "processing_time_seconds": 1.936054484000124,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.878156+00:00"
+}

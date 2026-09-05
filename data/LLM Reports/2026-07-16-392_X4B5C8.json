@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X4B5C8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are minor formatting and wording adjustments to the 'How to engage an attorney' webpage, including clarifications on average fees and preparation for meetings with attorneys. These changes do not alter any specific factual information, statutory references, or procedural steps currently presented in the IPFR page. The IPFR page already provides a range of cost estimates and general advice on preparing for meetings with IP professionals, consistent with the updated source. Therefore, no update to the IPFR page content is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5155,
+  "completion_tokens": 131,
+  "total_tokens": 5286,
+  "processing_time_seconds": 2.7015875459997005,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.228283+00:00"
+}

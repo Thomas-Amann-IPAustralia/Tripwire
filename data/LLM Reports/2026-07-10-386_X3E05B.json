@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the AFP fraud and corruption webpage is currently unreachable due to a timeout error, but there is no change to the substantive content or guidance on that page. The IPFR page references the AFP as an agency to report fraud and impersonation to, but does not rely on specific content from the AFP page that has changed. Since the change is a temporary access issue rather than a content update, the IPFR page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2373,
+  "completion_tokens": 127,
+  "total_tokens": 2500,
+  "processing_time_seconds": 1.6866177019999213,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790033+00:00"
+}

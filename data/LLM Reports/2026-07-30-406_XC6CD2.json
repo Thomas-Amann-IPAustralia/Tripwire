@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the IP Australia trademark manual concerning divisional applications, prescribed signs, and copyright notices, none of which directly affect the content of the IPFR page on challenging the registration of a new trade mark. The IPFR page focuses on the opposition process, timelines, costs, and procedural aspects, and there is no indication that these updates alter any specific procedural rules, timeframes, fees, or legal grounds for opposition described in the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3397,
+  "completion_tokens": 125,
+  "total_tokens": 3522,
+  "processing_time_seconds": 1.7021203500000865,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.153611+00:00"
+}

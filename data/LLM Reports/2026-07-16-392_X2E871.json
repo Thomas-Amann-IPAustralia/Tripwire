@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO 'about' webpage consist solely of a minor rearrangement of a heading ('Inventing the future: How WIPO is supporting innovators and creators around the world') without any substantive updates to WIPO's services, procedures, fees, or other details relevant to the IPFR page on accessing international arbitration and mediation services. The IPFR page contains detailed procedural and practical information about WIPO ADR services that remains unaffected by this cosmetic change. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3832,
+  "completion_tokens": 138,
+  "total_tokens": 3970,
+  "processing_time_seconds": 2.304358731999855,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.229621+00:00"
+}

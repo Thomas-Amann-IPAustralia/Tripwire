@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the ASIC 'register a company' page add procedural details about director IDs, consent templates, and mention fees for registering a company without specifying exact amounts. The IPFR page already correctly distinguishes company names from business names and explains the registration process in general terms without specific fee amounts or procedural steps. The change to the ASBFEO disputes page is unrelated to the IPFR page content. Therefore, none of the changes affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4493,
+  "completion_tokens": 130,
+  "total_tokens": 4623,
+  "processing_time_seconds": 3.2033602139999857,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.848181+00:00"
+}

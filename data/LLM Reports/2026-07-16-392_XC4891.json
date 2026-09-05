@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia PBR manual, specifically the creation of new guidance pages for the QP Portal and updates to links and content structure. These changes concern procedural guidance for application submissions and portal usage, which do not affect the substantive legal content or definitions of PBR infringement presented in the IPFR page. The IPFR page focuses on explaining what constitutes PBR infringement, examples, and legal protections, none of which are contradicted or rendered outdated by the procedural updates in the upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2897,
+  "completion_tokens": 138,
+  "total_tokens": 3035,
+  "processing_time_seconds": 2.8002538529999583,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234626+00:00"
+}

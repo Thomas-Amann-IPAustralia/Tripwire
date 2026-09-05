@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes primarily relate to legislative updates about the Defence and Veterans\u2019 Service Commissioner, updates to Amazon Brand Registry's patent dispute process and reporting tools, eBay's intellectual property policy clarifications and VeRO program procedural details, and minor updates to product recall guidelines. None of these changes directly affect the accuracy or currency of the IPFR page content about notifying online marketplaces of infringement. The IPFR page content remains accurate and relevant for small business owners seeking guidance on infringement notification processes on online marketplaces. There are no specific procedural, legal, or policy changes in the provided upstream changes that require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 14303,
+  "completion_tokens": 155,
+  "total_tokens": 14458,
+  "processing_time_seconds": 4.609623722999913,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.705864+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern updates to the patent manual, plant breeder rights manual, design manual, and trade mark manual, including procedural clarifications, case law updates, and accessibility fixes. The changes to the trade mark manual relate to honest concurrent use criteria, series trade marks, colour endorsements, and divisional applications from series, but do not specifically alter the opposition process timelines, fees, or procedural steps described in the IPFR page. The IPFR page content about trade mark opposition, including the 2-month opposition window, fees, risks, benefits, and process steps, remains accurate and is not contradicted or outdated by these upstream changes. The policy register changes do not indicate any immediate amendments affecting the opposition process described. Therefore, no update to the IPFR page is required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 13558,
+  "completion_tokens": 195,
+  "total_tokens": 13753,
+  "processing_time_seconds": 11.585446780999973,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.264573+00:00"
+}

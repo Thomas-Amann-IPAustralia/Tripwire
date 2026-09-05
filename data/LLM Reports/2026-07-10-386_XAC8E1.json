@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP fraud and corruption webpage is currently unreachable due to connection issues (timeout or closed connection). There is no substantive content change related to intellectual property, business names, trade marks, or company names. The IPFR page discusses the differences between business names, company names, and registered trade marks, and this content is not affected by the AFP website's availability or connection errors. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1421,
+  "completion_tokens": 125,
+  "total_tokens": 1546,
+  "processing_time_seconds": 1.917935863999901,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790480+00:00"
+}

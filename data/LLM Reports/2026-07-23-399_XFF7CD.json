@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to amendments in the Administrative Review Tribunal Rules 2024 and news updates on IP Australia website. The ART Rules amendments concern procedural and fee matters related to migration and NDIS provider reviews, which do not affect the content of the IPFR page about free IP tools. The IP Australia news update adds new articles and general information about IP but does not change any factual details or descriptions of the free IP tools listed on the IPFR page. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3077,
+  "completion_tokens": 135,
+  "total_tokens": 3212,
+  "processing_time_seconds": 2.0755759419998867,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.258333+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the Trade Marks Office Manual of Practice and Procedure, including amendments to sections on examination of trade marks relating to plants or plant materials, indexing, amendments, and prescribed signs. These updates do not specifically address or alter the procedural steps, timelines, or decision-making processes involved in IP Australia hearings as described in the IPFR page. The IPFR page content focuses on the hearing process, including filing oppositions, requesting hearings, hearing scheduling, and decisions, none of which are contradicted or updated by the changes. Therefore, the IPFR page remains accurate and current with respect to the hearing process at IP Australia.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5115,
+  "completion_tokens": 163,
+  "total_tokens": 5278,
+  "processing_time_seconds": 2.7690849139999045,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.038862+00:00"
+}

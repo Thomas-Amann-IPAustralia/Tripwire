@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change relates to Amazon's Brand Registry and its internal process for patent infringement evaluation, specifically the increase of the deposit amount from $4,000 to $5,000 for the neutral evaluator. The IPFR page provides general information about IP protection for small businesses and does not mention Amazon's Brand Registry, the deposit amounts, or specific online infringement reporting mechanisms. Therefore, this change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2521,
+  "completion_tokens": 123,
+  "total_tokens": 2644,
+  "processing_time_seconds": 1.5519466860000648,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.154319+00:00"
+}

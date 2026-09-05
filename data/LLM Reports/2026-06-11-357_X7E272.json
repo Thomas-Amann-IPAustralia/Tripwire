@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern updates to the patent and trade mark manuals, including clarifications on prior art, best method, and examples related to trade marks, as well as updates to court fees and administrative procedures. However, the IPFR page 'What happens in an IP Australia hearing?' provides a high-level overview of the hearing process, including steps and outcomes, without specifying fees, detailed procedural rules, or legal thresholds that have changed. None of the changes directly affect the accuracy or currency of the procedural description or the general guidance on hearings at IP Australia. Therefore, no update to the IPFR page content is required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9602,
+  "completion_tokens": 162,
+  "total_tokens": 9764,
+  "processing_time_seconds": 3.2829565350000394,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.847901+00:00"
+}

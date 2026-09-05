@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X76412",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in ACCC public registers, WIPO treaty formatting, Amazon Brand Registry procedural clarifications, eBay VeRO program FAQ formatting, and product recall guideline formatting. None of these changes provide new or updated substantive information that directly affects the content of the IPFR page about asking suppliers and sellers to help protect IP. The IPFR page content remains accurate and current as it focuses on informal enforcement approaches and does not reference specific external procedural details or data that have changed. The changes are mostly minor formatting or procedural clarifications unrelated to the specific guidance given in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9427,
+  "completion_tokens": 154,
+  "total_tokens": 9581,
+  "processing_time_seconds": 3.351927266000075,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.706100+00:00"
+}

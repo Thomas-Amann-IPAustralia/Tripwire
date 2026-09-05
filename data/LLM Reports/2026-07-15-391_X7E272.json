@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP (Australian Federal Police) webpages relate solely to error messages about the website connection status (e.g., 'ERR_TIMED_OUT' vs 'ERR_CONNECTION_CLOSED'). These are technical connectivity issues and do not affect the substantive content or procedural information about IP Australia hearings described in the IPFR page. The IPFR page content focuses on the hearing process at IP Australia, which is unrelated to the AFP website's connectivity messages. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3104,
+  "completion_tokens": 134,
+  "total_tokens": 3238,
+  "processing_time_seconds": 2.5440758009999627,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.110152+00:00"
+}

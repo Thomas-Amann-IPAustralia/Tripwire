@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-24-370",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from IP Australia news and the 'someone is using my IP' page are mostly updates to news items, reports, and minor wording adjustments that do not affect the substantive guidance or factual accuracy of the IPFR page content. The IPFR page provides general advice on what to do if someone infringes your IP, including steps to gather information, consider options, and seek professional advice. None of the changes introduce new legal requirements, procedural steps, or statutory references that would require updating the IPFR page. The minor wording change in the second source does not alter the meaning or require content revision.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3151,
+  "completion_tokens": 153,
+  "total_tokens": 3304,
+  "processing_time_seconds": 2.5516623789999358,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-24T06:22:08.485636+00:00"
+}

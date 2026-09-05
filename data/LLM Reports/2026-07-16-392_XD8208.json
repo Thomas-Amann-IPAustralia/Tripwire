@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia Trade Marks Manual and Design Manual primarily involve reorganization and consolidation of filing requirements chapters, minor text edits, accessibility fixes, and updates to URLs and formatting. There are no specific amendments to the substantive legal requirements, timeframes, fees, or procedural steps related to the removal of trade marks for non-use as described in the IPFR page. The IPFR content on removal of trade marks remains accurate and up to date based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5815,
+  "completion_tokens": 129,
+  "total_tokens": 5944,
+  "processing_time_seconds": 6.857677660999798,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231550+00:00"
+}

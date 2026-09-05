@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document announces the launch of a new Qualified Persons (QP) portal on 7 July 2026 to replace the current Interactive Variety Description System (IVDS). The IPFR page on 'Choosing the right IP professional' already references the IVDS in the context of Qualified Persons for Plant Breeder's Rights and describes their role and functions. However, the change does not affect any specific factual information, dates, or procedural steps currently stated in the IPFR page. The IPFR page does not provide detailed instructions on using the IVDS or the portal, nor does it specify the portal launch date or procedural changes that would require updating. Therefore, while the change is relevant to the topic of Qualified Persons and PBR, it does not impact the accuracy or currency of the IPFR page content as it stands.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4669,
+  "completion_tokens": 197,
+  "total_tokens": 4866,
+  "processing_time_seconds": 3.0061047170001984,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.273968+00:00"
+}

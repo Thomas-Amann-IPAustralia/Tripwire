@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-24-370",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor wording adjustment adding a trailing space after a sentence about determining infringement depending on the type of IP right involved. This does not alter any substantive information, legal thresholds, definitions, or procedural guidance. The IPFR page already comprehensively covers the concept of infringement, its elements, and the importance of understanding the type of IP right involved. Therefore, no update to the IPFR page content is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2808,
+  "completion_tokens": 118,
+  "total_tokens": 2926,
+  "processing_time_seconds": 1.880792898999971,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-24T06:22:08.486218+00:00"
+}

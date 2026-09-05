@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X79616",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a formatting adjustment and reorganization of an example illustrating unjustified threats of IP infringement, without altering any substantive information or legal principles. The IPFR page already covers the risks and consequences of making unjustified threats, including liability for compensation and damages. Since the change does not update or contradict any specific factual or procedural content in the IPFR page, no amendment is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3410,
+  "completion_tokens": 111,
+  "total_tokens": 3521,
+  "processing_time_seconds": 1.6752005280000049,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.611285+00:00"
+}

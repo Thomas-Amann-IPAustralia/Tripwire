@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-18-394",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the AFP fraud and corruption webpage is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED) instead of a timeout error. This is a technical accessibility issue with the external site and does not affect the accuracy or currency of the IPFR page content about common scams. The IPFR page does not cite specific content from the AFP page that would be invalidated or require updating due to this connectivity problem.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1536,
+  "completion_tokens": 119,
+  "total_tokens": 1655,
+  "processing_time_seconds": 1.8534487809999973,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-18T05:03:28.023042+00:00"
+}

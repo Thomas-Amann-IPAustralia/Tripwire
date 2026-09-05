@@ -1,0 +1,44 @@
+By following these steps and providing the necessary information, you can efficiently submit an intellectual property (IP) issue on SHEIN.
+1. Visit the IP Notice Section:
+• Scroll to the bottom of the SHEIN homepage and click on IP NOTICE.
+2. Access the Complaint Portal:
+• In the initial section of the INTELLECTUAL PROPERTY NOTICE page, find and click the complaint portal link: www.shein.com/ip-complaint .
+3. Review Required Materials:
+• Read through the list of materials needed to file your complaint, then click BEGIN.
+4. Specify Your Relationship to the Rights Holder:
+• Select the relationship between the complaint submitter and the rights holder, then click CONFIRM.
+5. Select Patent Type and Infringement Scenario:
+• Choose the type of patent involved in your complaint. Additional options for specific infringement scenarios will appear. Select the appropriate scenario and click NEXT.
+6. Provide Detailed Information:
+• Submit comprehensive details including but not limited to the following, based on the type of IP issue:
+Trademark Issue:
+• URL or SKU number(s) for related product(s)
+• Trademark or description of the trademark
+• Trademark application or registration number (Optional)
+• Date that you first used the trademark
+• Links or files showing the use of the trademark
+Copyright Issue:
+• Description of the copyright
+• URL or SKU number(s) for related product(s)
+• Copyright Registration Number (if applicable)
+• Date of first publication (date the work was first made available to the public)
+• Links or files showing the copyrighted work
+• Links or files showing the creation of the original work
+Utility Patent Issue:
+• Description of the utility patent
+• URL or SKU number(s) for related product(s)
+• Patent Registration Number
+• Country of Patent Registration
+• Links or files showing the registration
+• Court order or judgment supporting your claim
+Design Rights Issue:
+• URL or SKU number(s) for related product(s)
+• Design Registration Number (if applicable)
+• Country of Design Registration
+• Links or files showing the registration (for registered designs)
+• Links or files showing the creation of the original design (for unregistered designs)
+Click NEXT after providing the required information.
+7. Enter Contact Information:
+• Input your contact details, including but not limited to: the name of the rights holder, the agent's name, contact email, and mailing address. Click SUBMIT.
+8. Sign and Confirm:
+• A signature box will appear. Enter your signature and check the box to confirm that the information submitted is true. Click CONFIRM. You will see a submission success page, and wait for a response from the SHEIN team via email.

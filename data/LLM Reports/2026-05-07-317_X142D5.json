@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X142D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to the ACCC granting an exemption under the Competition and Consumer Act 2010 and an undertaking related to consumer law matters. The IPFR page concerns the Australian Copyright Council and its copyright-related services. There is no overlap in subject matter or specific content that would require updating the IPFR page about ACC's copyright services. The change does not affect any factual information, legal references, or procedural details in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1670,
+  "completion_tokens": 122,
+  "total_tokens": 1792,
+  "processing_time_seconds": 2.333720226999958,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.714540+00:00"
+}

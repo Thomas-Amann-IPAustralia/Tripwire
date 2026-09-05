@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XBA31C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Administrative Review Tribunal Act 2024 and the Migration Act 1958, specifically about the Tribunal's ability to make decisions without oral hearings in migration-related cases. The IPFR page focuses on arbitration as an alternative dispute resolution method for IP disputes, which is a distinct process from tribunal reviews and migration decisions. There is no mention or discussion of the Administrative Review Tribunal or migration decisions in the IPFR page content. Therefore, the legislative amendments do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3111,
+  "completion_tokens": 141,
+  "total_tokens": 3252,
+  "processing_time_seconds": 4.809904699000072,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.492484+00:00"
+}

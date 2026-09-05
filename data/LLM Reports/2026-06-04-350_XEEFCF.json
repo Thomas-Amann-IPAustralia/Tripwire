@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XEEFCF",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document updates numerical data and dates related to Amazon's Transparency program and Brand Protection Report, increasing the verified product units from 2.5 billion to 2.7 billion and updating the data source date to May 2026. However, the IPFR page content does not mention Amazon, its Transparency program, or any specific statistics or dates related to brand protection programs. Therefore, the updated figures and dates do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2049,
+  "completion_tokens": 130,
+  "total_tokens": 2179,
+  "processing_time_seconds": 1.368420421999872,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708425+00:00"
+}

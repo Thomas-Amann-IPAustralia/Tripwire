@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change updates the payment methods and instructions for fees related to WIPO arbitration and mediation services, replacing detailed bank transfer information with instructions to contact WIPO or use WIPO Pay. The IPFR page mentions that fees are payable and references the WIPO Schedule of Fees but does not provide specific payment instructions or bank details. Therefore, the change does not affect the accuracy or currency of the IPFR page content, which remains correct and appropriate for its audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2752,
+  "completion_tokens": 124,
+  "total_tokens": 2876,
+  "processing_time_seconds": 2.56282785600024,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268765+00:00"
+}

@@ -1,0 +1,304 @@
+{
+  "_index_meta": {
+    "purpose": "LLM navigation aid for FRL_Instructions.json (OpenAPI 3.0.1, ~17 000 lines). Read this index first. Use it to locate the specific path and schema definitions you need in the full spec, then fetch only those sections.",
+    "base_url": "https://api.prod.legislation.gov.au",
+    "auth": "None required for public read operations. POST /v1/Sessions to obtain an authToken for write/user operations.",
+    "odata": "All list endpoints support standard OData query parameters: $filter, $select, $expand, $orderby, $top, $skip, $count.",
+    "duplication_warning": "Every endpoint appears 2–3 times in the full spec under different casing conventions (e.g. /v1/titles, /v1/Titles, /v1/Titles/Default.Search). These are functionally identical. Prefer the lowercase or PascalCase-without-Default variant. Do not process duplicate entries.",
+    "schema_noise_warning": "153 schemas are defined in components/schemas. Only 30 are FRL domain objects. The remaining 123 are ASP.NET/OData framework internals (System.*, Microsoft.*, Frl.Domain.*) — ignore them unless debugging framework behaviour.",
+    "full_spec_file": "FRL_Instructions.json"
+  },
+
+  "task_index": {
+    "search_for_legislation": {
+      "description": "Find titles (Acts, instruments) by keyword, series, status, or date.",
+      "recommended_endpoints": [
+        "GET /v1/Titles/Search(criteria={criteria})",
+        "GET /v1/Titles/Search_Old(criteria={criteria})"
+      ],
+      "key_params": ["criteria — serialised TitleCriteria object"],
+      "returns": "Array<Title>",
+      "schemas_needed": ["Title", "SearchContexts"]
+    },
+    "get_title_by_id": {
+      "description": "Retrieve a single title (legislation entry) by its unique identifier.",
+      "recommended_endpoints": [
+        "GET /v1/Titles/{key}"
+      ],
+      "key_params": ["key — titleId, e.g. C2004A01224"],
+      "expand_options": ["AdministeringDepartments", "ParliamentaryScrutiny"],
+      "returns": "Title",
+      "schemas_needed": ["Title", "Version", "Department", "ParliamentaryScrutinyEvent", "NameHistory", "StatusHistory", "TextApplies"]
+    },
+    "list_all_titles": {
+      "description": "Page through all titles with optional OData filtering.",
+      "recommended_endpoints": [
+        "GET /v1/Titles",
+        "GET /v1/Titles/$count"
+      ],
+      "returns": "Array<Title>",
+      "schemas_needed": ["Title"]
+    },
+    "get_version_of_title": {
+      "description": "Retrieve a specific compiled version of a title at a point in time, by compilation number, or by registerId.",
+      "recommended_endpoints": [
+        "GET /v1/Versions/Find(titleId={titleId},asAtSpecification={asAtSpecification})",
+        "GET /v1/Versions/Find(titleId={titleId},compilationNumber={compilationNumber})",
+        "GET /v1/Versions/Find(registerId={registerId})",
+        "GET /v1/versions/find(titleid='{titleId}',asat={asAt})",
+        "GET /v1/versions/find(titleid='{titleId}',asat={asAt},viewedat={viewedAt})"
+      ],
+      "key_params": [
+        "titleId — e.g. C2004A01224",
+        "asAt — date (yyyy-mm-dd)",
+        "viewedAt — date (yyyy-mm-dd), for point-in-time as-viewed",
+        "asAtSpecification — enum: Latest | AsMade | InForce | ...",
+        "compilationNumber — string, e.g. '3'",
+        "registerId — e.g. F2021C00286"
+      ],
+      "returns": "Version",
+      "schemas_needed": ["Version", "Document", "ReasonForVersion"]
+    },
+    "list_versions_of_title": {
+      "description": "List all registered versions (compilations) of a title.",
+      "recommended_endpoints": [
+        "GET /v1/Versions",
+        "GET /v1/Versions/Search(criteria={criteria})"
+      ],
+      "odata_filter_hint": "Use $filter=titleId eq 'C2004A01224' to scope to one title.",
+      "returns": "Array<Version>",
+      "schemas_needed": ["Version"]
+    },
+    "download_document": {
+      "description": "Download the actual PDF, Word, or EPUB file for a version of a title.",
+      "recommended_endpoints": [
+        "GET /v1/documents/find(titleid='{titleId}',asat={asAt},type='{type}',format='{format}',uniqueTypeNumber={uniqueTypeNumber},volumeNumber={volumeNumber},rectificationVersionNumber={rectificationVersionNumber})",
+        "GET /v1/documents/find(titleid='{titleId}',asatspecification='{asAtSpecification}',type='{type}',format='{format}',uniqueTypeNumber={uniqueTypeNumber},volumeNumber={volumeNumber},rectificationVersionNumber={rectificationVersionNumber})",
+        "GET /v1/documents/find(titleid='{titleId}',compilationNumber='{compilationNumber}',type='{type}',format='{format}',uniqueTypeNumber={uniqueTypeNumber},volumeNumber={volumeNumber},rectificationVersionNumber={rectificationVersionNumber})",
+        "GET /v1/documents/find(registerId='{registerId}',type='{type}',format='{format}',uniqueTypeNumber={uniqueTypeNumber},volumeNumber={volumeNumber},rectificationVersionNumber={rectificationVersionNumber})"
+      ],
+      "note_on_response": "Default response is binary (application/octet-stream). Add Accept: application/json header to get document metadata instead of file bytes.",
+      "key_params": [
+        "titleId — e.g. C2004A01224",
+        "type — enum: Primary | ES | SupportingMaterial | IncorporatedByReference | SupplementaryES",
+        "format — enum: Word | Pdf | Epub | NameOnly",
+        "uniqueTypeNumber — integer, default 0",
+        "volumeNumber — integer, default 0",
+        "rectificationVersionNumber — integer, 0 if not a rectification",
+        "asAtSpecification — enum: Latest | AsMade | InForce | ...",
+        "compilationNumber — string",
+        "registerId — e.g. F2021C00286"
+      ],
+      "returns": "Binary file or Document (JSON)",
+      "schemas_needed": ["Document", "DocumentKey"]
+    },
+    "get_document_metadata": {
+      "description": "Retrieve metadata about a document without downloading the file.",
+      "recommended_endpoints": [
+        "GET /v1/Documents (with OData filter)",
+        "GET /v1/Documents/$count"
+      ],
+      "note": "Same find() endpoints as download_document but with Accept: application/json header return Document metadata.",
+      "returns": "Array<Document> or Document",
+      "schemas_needed": ["Document"]
+    },
+    "download_epub_file_within_document": {
+      "description": "Retrieve a specific file from inside an EPUB document.",
+      "recommended_endpoints": [
+        "GET /v1/documents/find(...)/{residualPath}",
+        "GET /v1/documents(...)/getzipitems — list files inside EPUB"
+      ],
+      "key_params": ["All document find params, plus residualPath — relative path within the EPUB zip"],
+      "schemas_needed": ["Document"]
+    },
+    "get_content_by_key": {
+      "description": "Download a content document using its direct content key (used for inline HTML/XML renditions).",
+      "recommended_endpoints": [
+        "GET /v1/Content/{key}"
+      ],
+      "key_params": ["key — unique content identifier string"],
+      "returns": "Binary (application/octet-stream)"
+    },
+    "list_departments": {
+      "description": "Retrieve the list of Australian Government departments that administer legislation.",
+      "recommended_endpoints": [
+        "GET /v1/Departments",
+        "GET /v1/Departments/$count"
+      ],
+      "returns": "Array<Department>",
+      "schemas_needed": ["Department"]
+    },
+    "search_affects": {
+      "description": "Find amendments, repeals, and other affects between titles.",
+      "recommended_endpoints": [
+        "GET /v1/Versions (with $expand=Reasons or $filter on affect fields)"
+      ],
+      "note": "Affect data is embedded in Version.reasons. Use the _AffectsSearch search context for targeted queries.",
+      "schemas_needed": ["Affect", "AffectSearch", "AffectedByTitle", "ReasonForVersion"]
+    },
+    "search_full_text": {
+      "description": "Search within the text of legislation.",
+      "recommended_endpoints": [
+        "GET /v1/Versions/Search(criteria={criteria})"
+      ],
+      "note": "Pass FullTextVersionSearch criteria. Returns ranked results with relevance scores.",
+      "schemas_needed": ["FullTextVersionSearch", "TextSearch", "SearchContexts"]
+    },
+    "search_point_in_time": {
+      "description": "Find which version of a title was in force at a specific date.",
+      "recommended_endpoints": [
+        "GET /v1/versions/find(titleid='{titleId}',asat={asAt})",
+        "GET /v1/versions/find(titleid='{titleId}',asat={asAt},viewedat={viewedAt})"
+      ],
+      "schemas_needed": ["Version", "PointInTimeSearch"]
+    },
+    "disallowance_queries": {
+      "description": "Check disallowance status and open disallowance periods for instruments.",
+      "relevant_search_contexts": ["_DisallowanceSearch", "_OpenForDisallowanceSearch"],
+      "schemas_needed": ["DisallowanceSearch", "OpenForDisallowanceSearch", "ParliamentaryScrutinyEvent"]
+    },
+    "sunset_date_queries": {
+      "description": "Find instruments with upcoming or past sunset dates.",
+      "relevant_search_contexts": ["_FutureSunsetDateSearch"],
+      "schemas_needed": ["FutureSunsetDateSearch"]
+    },
+    "text_applies": {
+      "description": "Retrieve TextApplies values — records of which provisions of one instrument apply to another.",
+      "recommended_endpoints": [
+        "GET /v1/TextApplies",
+        "GET /v1/TextApplies/$count"
+      ],
+      "returns": "Array<TextApplies>",
+      "schemas_needed": ["TextApplies"]
+    },
+    "print_order": {
+      "description": "Create a print order for physical copies of legislation.",
+      "recommended_endpoints": [
+        "POST /v1/Documents/CreatePrintOrder"
+      ],
+      "schemas_needed": ["PrintOrderRequest", "PrintOrder", "DocumentPrint", "DocumentKey", "Frl.Api.Public.V1.Dtos.PrintOrderLineItems"]
+    },
+    "user_management": {
+      "description": "Create accounts, manage passwords, save searches. Requires authentication.",
+      "recommended_endpoints": [
+        "POST /v1/Sessions — authenticate, get authToken",
+        "POST /v1/Users — create user",
+        "GET /v1/Users/{key} — get user profile",
+        "PUT /v1/Users/{key} — update user",
+        "POST /v1/Users/{key}/ValidateEmail",
+        "POST /v1/Users/{key}/ForgotPassword",
+        "POST /v1/Users/{key}/ResetPassword",
+        "POST /v1/Users/{key}/ChangePassword",
+        "POST /v1/users({key})/savedsearches — save a search"
+      ],
+      "schemas_needed": ["User", "Session", "SavedSearch", "Frl.Security.Models.Credentials"]
+    },
+    "submit_feedback": {
+      "description": "Submit public feedback about the legislation register.",
+      "recommended_endpoints": [
+        "POST /v1/PublicFeedback"
+      ],
+      "schemas_needed": ["PublicFeedback", "ClientDetails"]
+    }
+  },
+
+  "domain_schemas": {
+    "Title": {
+      "description": "A law's official entry on the register — its name, series info, status, and pointers to its versions.",
+      "key_fields": ["id", "name", "seriesType (Act|SR|SLI)", "status", "isInForce", "isPrincipal", "year", "number", "versions", "administeringDepartments", "parliamentaryScrutiny"]
+    },
+    "Version": {
+      "description": "A compiled snapshot of a Title at a point in time (e.g. Compilation No. 3).",
+      "key_fields": ["titleId", "start", "end", "isCurrent", "isLatest", "status (InForce|Ceased|Repealed|NeverEffective)", "registerId", "compilationNumber", "reasons", "documents"]
+    },
+    "Document": {
+      "description": "A physical file (PDF, Word, EPUB) associated with a version of a title.",
+      "key_fields": ["titleId", "start", "type (Primary|ES|SupportingMaterial|IncorporatedByReference|SupplementaryES)", "format (Word|Pdf|Epub|NameOnly)", "registerId", "fileName", "bytes", "sizeInBytes", "isAuthorised"]
+    },
+    "Affect": {
+      "description": "Describes how one title affects another (amends, repeals, commences, etc.).",
+      "key_fields": ["affectingTitleId", "affectingTitle", "affectingProvisions", "affectedTitleId", "affectedTitle", "affectedProvisions"]
+    },
+    "Department": {
+      "description": "An Australian Government department that administers legislation.",
+      "key_fields": ["id", "name", "portfolio"]
+    },
+    "TextApplies": {
+      "description": "Records which provisions of one instrument apply as if part of another.",
+      "key_fields": ["type", "titleId", "titleName", "provisions"]
+    },
+    "Session": {
+      "description": "Authentication session returned by POST /v1/Sessions.",
+      "key_fields": ["authToken", "expiresIn", "userName", "user"]
+    },
+    "User": {
+      "description": "A registered user of the legislation.gov.au portal.",
+      "key_fields": ["userName", "email", "homeSite (Lodgement|Public|Management)", "emailConfirmed", "savedSearches"]
+    },
+    "ParliamentaryScrutinyEvent": {
+      "description": "A disallowance motion or other scrutiny event in Parliament.",
+      "key_fields": ["eventType", "eventDate", "house", "disallowanceMotionExpiryDate", "motionOutcomeType", "documents"]
+    },
+    "ReasonForVersion": {
+      "description": "Explains why a new version of a title was compiled — links to the affecting title.",
+      "key_fields": ["affect", "markdown", "affectedByTitle", "amendedByTitle", "dateChanged"]
+    },
+    "SearchContexts": {
+      "description": "Identifies which search context(s) a title appears in (full text, affects, disallowance, etc.).",
+      "key_fields": ["fullTextVersion", "titleId", "pointInTime", "affects", "text", "disallowance", "openForDisallowance", "futureSunsetDate"]
+    },
+    "NameHistory": {
+      "description": "Previous names of a title and when each name changed.",
+      "key_fields": ["name", "start", "affecterTitleId"]
+    },
+    "StatusHistory": {
+      "description": "History of a title's status changes (e.g. when it was repealed).",
+      "key_fields": ["status", "start", "reasons"]
+    },
+    "PrintOrderRequest": {
+      "description": "Input for requesting physical printed copies.",
+      "key_fields": ["numberOfCopiesOfEach", "bindingOption", "printOptions", "documents"]
+    },
+    "PublicFeedback": {
+      "description": "Feedback submission payload.",
+      "key_fields": ["subject", "message", "senderName", "senderEmail", "refererUrl", "clientDetails"]
+    },
+    "AffectSearch": "Search criteria for filtering affect relationships.",
+    "AffectedByTitle": "A title affected by another, with series metadata.",
+    "DisallowanceSearch": "Search criteria for disallowance queries.",
+    "FutureSunsetDateSearch": "Search result for upcoming sunset dates.",
+    "OpenForDisallowanceSearch": "Search result for instruments currently open for disallowance.",
+    "FullTextVersionSearch": "Search result for full-text version searches with relevance.",
+    "PointInTimeSearch": "Search criteria for point-in-time queries.",
+    "TextSearch": "Full-text search result with relevance and date context.",
+    "SavedSearch": "A named saved search stored against a user account.",
+    "DateChanged": "A from/to date pair recording when a value changed.",
+    "DocumentPrint": "A document with its print price per copy.",
+    "DocumentKey": "The composite key uniquely identifying a document.",
+    "ClientDetails": "Browser/device metadata for feedback submissions."
+  },
+
+  "common_identifier_patterns": {
+    "titleId": "Series identifier, e.g. C2004A01224 (Acts) or F2021L00100 (instruments). Present on Title, Version, Document.",
+    "registerId": "Register identifier for a specific compiled version, e.g. F2021C00286. Unique to a Version.",
+    "compilationNumber": "Incrementing string ('0', '1', '2' ...) for compilations of a title. '0' = as-made.",
+    "asAt": "Date string yyyy-mm-dd. Selects the version in force on that date.",
+    "asAtSpecification": "Enum shorthand for common as-at points: Latest | AsMade | InForce | Repealed | ...",
+    "documentType": "Primary | ES (Explanatory Statement) | SupportingMaterial | IncorporatedByReference | SupplementaryES",
+    "documentFormat": "Word | Pdf | Epub | NameOnly"
+  },
+
+  "endpoint_groups_in_full_spec": {
+    "note": "Each group below corresponds to a tag in FRL_Instructions.json. Path entries appear 2–3 times each; read only the first occurrence you find for a given normalised path.",
+    "Content": "3 entries — all GET /v1/Content/{key} variants",
+    "Departments": "3 entries — GET list, GET list (PascalCase), GET $count",
+    "Documents": "~48 entries — list, get-by-key, find() variants by asAt/compilationNumber/registerId, EPUB internals, CreatePrintOrder",
+    "Metadata": "1 entry — GET /v1/$metadata",
+    "PublicFeedback": "2 entries — POST /v1/PublicFeedback variants",
+    "Sessions": "2 entries — POST /v1/Sessions variants",
+    "TextApplies": "3 entries — GET list, GET list (PascalCase), GET $count",
+    "Titles": "~12 entries — list, $count, get-by-key, Search, Search_Old",
+    "Users": "~30 entries — CRUD, password management, saved searches",
+    "Versions": "~12 entries — list, $count, Search, Find() variants"
+  }
+}

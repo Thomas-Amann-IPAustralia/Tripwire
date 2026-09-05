@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to practice directions for the Administrative Review Tribunal, updates to the IP Australia manuals concerning divisional applications, prohibited signs, and procedural updates in plant breeder's rights and design manuals. There are also minor formatting and link updates on legislation and judicial review pages. None of these changes specifically affect the content of the IPFR page on responding to a trade mark opposition, which focuses on the opposition process, timelines, costs, and outcomes. There are no changes to the Trade Marks Act provisions, opposition timelines, procedural steps, or fees that would require updating the IPFR page content. The changes are either tangential or unrelated to the opposition response process described.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9835,
+  "completion_tokens": 167,
+  "total_tokens": 10002,
+  "processing_time_seconds": 4.423373806999962,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.792640+00:00"
+}

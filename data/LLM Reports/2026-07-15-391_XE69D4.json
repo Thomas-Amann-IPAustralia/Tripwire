@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP webpages are solely about the websites being unreachable or timing out, with no substantive content changes related to intellectual property crime or domain name disputes. The IPFR page content about challenging international domain names remains accurate and unaffected by these technical access issues.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3639,
+  "completion_tokens": 85,
+  "total_tokens": 3724,
+  "processing_time_seconds": 1.1894250029999967,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.111568+00:00"
+}

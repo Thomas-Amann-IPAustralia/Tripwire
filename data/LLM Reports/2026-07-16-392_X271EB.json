@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia Trade Marks Manual consolidate filing requirements chapters but do not specifically update or alter the substantive content regarding removal of trade marks for non-use, timeframes, fees, or procedures described in the IPFR page. The design manual changes relate to design IP and accessibility fixes, which are unrelated to trade mark removal. The eBay VeRO program changes update contact email addresses but do not affect the trade mark removal process or content. Therefore, none of the changes impact the accuracy or currency of the IPFR page content on requesting removal of an unused trade mark.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6910,
+  "completion_tokens": 148,
+  "total_tokens": 7058,
+  "processing_time_seconds": 3.0800715199998194,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231460+00:00"
+}

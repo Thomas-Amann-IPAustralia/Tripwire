@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia design manual webpage primarily involve formatting amendments and minor updates to sections about products and representations, without altering substantive legal content relevant to design infringement. The additions to the IP Australia legislation page list new non-legislative instruments but do not affect the substantive explanation of design infringement or its legal criteria. The WIPO Paris Convention document update is a formatting and layout change without substantive content changes affecting design infringement under Australian law. Therefore, the IPFR page content on design infringement remains accurate and current, with no specific factual or legal details contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5170,
+  "completion_tokens": 151,
+  "total_tokens": 5321,
+  "processing_time_seconds": 2.941194285999927,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909181+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the 'How to prevent infringement of my IP' page on IP Australia, adding details about market monitoring, the risks of counterfeit goods, and brand registries on platforms like Amazon. However, the IPFR page 'Infringement 101' is a general overview and educational piece about IP infringement, focusing on understanding rights and reactions to infringement. It does not contain specific procedural steps, platform recommendations, or detailed prevention strategies that are affected by these changes. Therefore, the IPFR page remains accurate and does not require amendment based on this update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1969,
+  "completion_tokens": 147,
+  "total_tokens": 2116,
+  "processing_time_seconds": 2.1167807460001313,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.613163+00:00"
+}

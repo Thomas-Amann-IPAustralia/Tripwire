@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern updates to procedural instruments, manuals, and forms related to design rights, plant breeder's rights, patents, and trade marks, including specific dates for new forms and minor updates to examination manuals. The IPFR page provides a general overview of what IP is and the main types of IP rights in Australia, without specific procedural details, dates, or references to manuals or forms. None of the changes affect the accuracy of the general descriptions or the types of IP rights listed. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6050,
+  "completion_tokens": 148,
+  "total_tokens": 6198,
+  "processing_time_seconds": 3.1497272019998945,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907265+00:00"
+}

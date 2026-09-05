@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to a technical coding issue affecting the trade mark bulk data product provided to third party subscribers and an update to the Patent Manual of Practice and Procedures. The IPFR page 'Free IP tools you can use' provides general descriptions of free IP tools and lists common tools without specific technical details or references to bulk data products or procedural guidelines. There is no specific information in the IPFR page that is rendered inaccurate or outdated by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1628,
+  "completion_tokens": 123,
+  "total_tokens": 1751,
+  "processing_time_seconds": 1.9093200669999533,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713961+00:00"
+}

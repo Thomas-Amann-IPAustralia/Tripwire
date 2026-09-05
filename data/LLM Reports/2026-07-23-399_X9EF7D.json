@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to amendments to the Administrative Review Tribunal Rules 2024, specifically about the ART's operation regarding migration decisions and fee imposition for NDIS providers. The IPFR page 'Familiarise yourself with IP laws' focuses on providing a general overview of Australian IP legislation, the roles of IP Australia and the Attorney-General's Department, and the nature of IP rights and their administration. There is no mention of the Administrative Review Tribunal's procedural rules, migration law, or NDIS provider fee structures in the IPFR page. The changes do not affect the accuracy or currency of the IPFR page content about IP laws, their administration, or enforcement. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3435,
+  "completion_tokens": 178,
+  "total_tokens": 3613,
+  "processing_time_seconds": 2.677192168999909,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.259184+00:00"
+}
