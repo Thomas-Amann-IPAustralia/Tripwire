@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to specific design registrations being surrendered or amended, as announced on the IP Australia official notices page. These notices do not affect the general procedural, fee, or legal information presented on the IPFR page about requesting examination to certify a registered design. There is no update to fees, timeframes, or procedural steps that would require amending the IPFR content. The IPFR page provides general guidance and does not list specific design registrations or their status, so these notices do not impact its accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3863,
+  "completion_tokens": 136,
+  "total_tokens": 3999,
+  "processing_time_seconds": 2.897682775000021,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552240+00:00"
+}

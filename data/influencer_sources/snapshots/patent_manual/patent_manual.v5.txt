@@ -1,23 +1,23 @@
 Recent updates
 | Item amended | Date Amended | Amended Reason | 
 |---|---|---|
-| 4.4.3.2.2 How to Use Classification Symbols in Searching | Updating information to reflect AbS as search tool | |
-| 4.4.1 Three Person Team (3PT) | Removing references to EPOQUE | |
-| 4.4.3.2.1 How to Find Classification Symbols for a Search | Addition of FindSimilar function information in AbS for preliminary searching | |
-| 5.6.9.9 Withdrawal of an application | Removed reference to EPOQUE and replaced with EspaceNet | |
-| 6.1.15.1 Background Patent Search Aids and Documentation | Updating information relating to EPOQUE to AbS | |
-| 4.4.3 Search Area | Updating references to EPOQUE to AbS | |
-| 4.4.3.2.3 Japanese FI/F-Term Classification | Updating references to EPOQUE to AbS | |
-| 6.1.10 Non-Patent Literature | Replacing EPOQUE references to AbS and updating related information | |
-| 6.1.11.7 Obtaining Full Copies | Updating information relating to EPOQUE to AbS | |
-| 4.4.2 Search Strategy Considerations | Updating references to EPOQUE to AbS | |
-| 4.4.3.1 Patent Literature | Updating references to EPOQUE to AbS | |
-| 4.4.3.3 Non-Patent Literature | Updating reference to EPOQUE to AbS | |
-| 6.1.11.5 Conducting the Search | Replacing reference to EPOQUE with reference to AbS and updating relating information | |
-| 6.1.12.5.6 Citing patent Documents Retrieved from AbS | Replacing and updating information relating to EPOQUE to AbS | |
-| 4.3.6 Applicant and/or Inventor Name Searching | Updated reference from EPOQUE to AbS | |
-| 5.6.2.7 Excess Claims Fees and Invitation to Pay | Updating grandfather arrangement information | |
-| 4.2.1 Patent Classification Systems | Link updated for IPC Sub-Class and Examination Sections document | |
-| 5.6.8.4 Discoveries, Ideas, Scientific Theories, Mere Schemes and Plans | Updated content related to computer implemented inventions. Updated 5.6.8.6 link. | |
-| 5.6.8.1 General Principles – Assessing Manner of Manufacture | Updated content related to computer implemented inventions. Updated 5.6.8.6 link. | |
-| 5.6.8.7 Games and Gaming Machines | Updated content related to computer implemented inventions. Updated 5.6.8.6 link. |
+| 6.3.4.2 Determining Cost of a Top-up Search on EPOQUE | | Page has been archived as procedure is no longer relevant. | 
+| 6.1.12.5.7 Relevant Claim Numbers | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
+| 6.6.4 Search Procedure | | Updated references to AbS following replacement of EPOQUE | 
+| 5.6.4.6 Identifying and raising citations | | Updated references to AbS where previously EPOQUE and updated link to 6.1.12.5.6 | 
+| 6.1.12.5.6 Citing patent Documents Retrieved from AbS | | Renamed URL to match chapter 'Citing patent Documents Retrieved from AbS' title | 
+| 6.1.12.5.3 Citation of Prior Art | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
+| 6.1.12.5.4 Citation of URLs | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
+| 6.1.12 Search Report and Notification Form Completion | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
+| 6.1.12.5.1 Selection of Documents Considered to be Relevant | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
+| 6.3.8.4 Box III Non-Establishment of Opinion with Regard to Novelty, Inventive Step & Industrial Applicability | | Corrected broken links to PCT Articles | 
+| 6.1.12.5 Documents Considered to be Relevant | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
+| 6.1.12.5.5 Citation Examples | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
+| 6.3.4.1 Demand and Top-up Search | | Removed superfluous sub-chapter link in view of no longer using EPOQUE | 
+| 6.1.2.1 Overview - International Searching | | corrected links to ISPE guidelines | 
+| 6.3.7 IPRPII and Notification | | Fixed broken link 'Attaching Annexes to the IPRPII' | 
+| 6.1.4.9 Issuing the Invitation to Pay Additional Search Fees | | Corrected broken link to Article 17(3)(a) | 
+| 6.3.4 Top-up Search | | Removed superfluous sub-chapter in view of no longer using EPOQUE | 
+| 5.3.2.5 Requirements for amino acid and nucleotide sequences | | Correcting typo in date under 'Requirements after July 1 2022' from '1 July 2021' to '1 July 2022' | 
+| 6.2.1 Procedural Outline - International Type Search | | Updated point 15a. and linked to Annex D - Extracting publication numbers from AbS | 
+| 4.1.2 Iterative Searching | | Edited image to remove EPOQUE syntax which is no longer applicable in AbS |

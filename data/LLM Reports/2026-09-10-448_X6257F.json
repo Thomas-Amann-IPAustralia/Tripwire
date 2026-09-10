@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X6257F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates solely to design rights, specifically corrections and surrenders of design registrations and an update to the Trade Marks Manual of Practice and Procedure regarding filing requirements. There is no indication that the substantive legal provisions, definitions, or explanations concerning trade mark infringement under the Trade Marks Act 1995 have changed. The IPFR page content focuses on trade mark infringement law and principles, which remain accurate and unaffected by these procedural or design-related updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4065,
+  "completion_tokens": 123,
+  "total_tokens": 4188,
+  "processing_time_seconds": 1.8145467530000587,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552594+00:00"
+}
