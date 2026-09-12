@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update listing recent IP Australia news items, including reports on patents, design rights, and trade marks, as well as new features like a chatbot and procedural updates. However, the IPFR page content is a general overview comparing IP Australia to other government agencies and explaining the role of IP Australia in protecting IP rights. The change does not affect any specific factual statements, procedures, or descriptions in the IPFR page. There are no updates to agency functions, services, or comparative information that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1865,
+  "completion_tokens": 144,
+  "total_tokens": 2009,
+  "processing_time_seconds": 2.38723617200003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268106+00:00"
+}

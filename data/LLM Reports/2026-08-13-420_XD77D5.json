@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream changes relate primarily to updates in procedural manuals for patents, trademarks, and designs, as well as updates to external intellectual property policy pages such as eBay's IP policy and DFAT's WTO IP page. The IPFR page in question provides practical advice and a checklist for SMEs receiving AI-generated IP infringement allegations, focusing on the need for substantiated claims and the involvement of qualified attorneys. None of the upstream changes indicate amendments to the legal thresholds, procedural steps, or substantive IP law that would affect the accuracy or currency of the advice or checklist provided in the IPFR page. The changes are mostly editorial updates, link corrections, or policy clarifications unrelated to the core guidance on handling AI-generated infringement allegations. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6940,
+  "completion_tokens": 189,
+  "total_tokens": 7129,
+  "processing_time_seconds": 2.8345094849998986,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.876588+00:00"
+}

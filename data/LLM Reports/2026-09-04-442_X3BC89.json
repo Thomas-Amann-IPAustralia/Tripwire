@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a general update about IP Australia's corporate plan and news items highlighting priorities and success stories related to patents, trade marks, and other IP rights. There is no specific change to the factual content or procedural details about checking IP ownership or the use of registers mentioned in the IPFR page. The IPFR page content remains accurate and does not reference any details contradicted or updated by the change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1451,
+  "completion_tokens": 114,
+  "total_tokens": 1565,
+  "processing_time_seconds": 2.678273071999911,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250697+00:00"
+}

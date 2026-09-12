@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-07-414",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to WIPO arbitration fees and WIPO contract clauses, as well as updates to the WIPO domain name dispute resolution webpage including formatting and minor textual clarifications. The IPFR page XE69D4 discusses the domain name dispute resolution process, including costs, timelines, and procedures, but does not specify detailed fee schedules or arbitration fee brackets that have changed in the WIPO arbitration fees updates. The fee information on the IPFR page is general (e.g., starting fees of US$1,500 and US$4,000 for panels) and does not conflict with the updated fee tables. The changes to the WIPO domain name dispute resolution page add information about expedited case processing and minor formatting changes but do not alter the fundamental process or costs described in the IPFR page. Therefore, the IPFR page remains accurate and up to date for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12033,
+  "completion_tokens": 210,
+  "total_tokens": 12243,
+  "processing_time_seconds": 3.624668090000114,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-07T04:35:18.610005+00:00"
+}

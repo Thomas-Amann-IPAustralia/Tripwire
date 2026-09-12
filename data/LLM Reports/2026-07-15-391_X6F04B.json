@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP webpages are solely about technical access issues (connection errors and timeouts) and do not affect any substantive content related to intellectual property crime or domain name disputes. The IPFR page content about disputing .au domain names under the auDRP remains accurate and unaffected by these technical webpage access changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3051,
+  "completion_tokens": 97,
+  "total_tokens": 3148,
+  "processing_time_seconds": 1.7781390000000101,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.111924+00:00"
+}

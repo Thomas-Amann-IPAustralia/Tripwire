@@ -1,0 +1,4 @@
+Yes, provided that the domain name Registration Agreement covering the domain name in issue specifically incorporates the UDRP. For those ccTLDs, if the registrant is the same, a combined case involving domain names registered in any gTLDs may be filed to save on costs.
+ccTLDs adopting the UDRP include .AG, .AI, .AS, .BM, .BS, .BZ, .CC, .CD, .CO, .CV, .CY, .DJ, .EC, .FJ, .FM, .GA, .GD, .GT, .KI, .LA, .LC, .MD, .ME, .MG, .MW, .NR, .NU, .PA, .PK, .PN, .PR, .PW, .RO, .SC, .SL, .SN, .SO, .TJ, .TT, .TV, .UG, .VE, .VG, and .WS.
+ccTLDs which have adopted a variation of the UDRP include:
+.AC, .AD, .AE (and امارات.), .AO, .AU, .BH (and البحرين.), .BO, .BR, .CH, .CN (and .中国), .CR, .DO, .EU (and .ею and .ευ), .ES, .FR, .GE, .HN, .HT, .IE, .IO, .IR, .LI, .LV, .MA, .MP, .MX, .NL, .PE, .PH, .PL, .PM, .PY, .QA (and قطر.), .RE, .RW, .SA (and السعودية.), .SE, .SH, .TM, .TF, .TZ, .UA, .WF and .YT.

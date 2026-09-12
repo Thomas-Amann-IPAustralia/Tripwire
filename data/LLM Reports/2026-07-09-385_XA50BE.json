@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily concern administrative updates such as a surrender of design registrations, updates to the Patent Manual, and changes to URLs and content structure in the Designs Manual related to excluded designs. None of these changes directly affect the substantive content of the IPFR page XA50BE, which focuses on seeking binding, authoritative decisions in design disputes, court processes, benefits, risks, outcomes, costs, and timeframes. There are no updates to limitation periods, procedural steps, or legal thresholds mentioned in the changes that would require updating the IPFR page content. The changes are either procedural or relate to other IP rights (patents) or internal manual restructuring, not the core guidance on court proceedings for design disputes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3696,
+  "completion_tokens": 177,
+  "total_tokens": 3873,
+  "processing_time_seconds": 3.1481773470000007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.816713+00:00"
+}

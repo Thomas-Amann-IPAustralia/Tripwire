@@ -1,0 +1,143 @@
+name: Publish dashboard data release
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: "Branch, tag, or commit SHA to package data from"
+        required: true
+        default: "main"
+        type: string
+      release_tag:
+        description: "Release tag Render should target, e.g. data-ipfr-test-20260508"
+        required: true
+        type: string
+      release_title:
+        description: "Optional release title"
+        required: false
+        default: ""
+        type: string
+      overwrite_assets:
+        description: "Replace existing assets if the release tag already exists"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  publish-dashboard-data-release:
+    name: Package and publish dashboard data
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out selected source ref
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source_ref }}
+          fetch-depth: 1
+
+      - name: Prepare release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p release-assets
+
+          if [ ! -f "data/ipfr_corpus/ipfr.sqlite" ]; then
+            echo "ERROR: data/ipfr_corpus/ipfr.sqlite not found at source_ref '${{ inputs.source_ref }}'" >&2
+            exit 1
+          fi
+
+          if [ ! -f "tripwire_config.yaml" ]; then
+            echo "ERROR: tripwire_config.yaml not found at source_ref '${{ inputs.source_ref }}'" >&2
+            exit 1
+          fi
+
+          if [ ! -f "data/influencer_sources/source_registry.csv" ]; then
+            echo "ERROR: data/influencer_sources/source_registry.csv not found at source_ref '${{ inputs.source_ref }}'" >&2
+            exit 1
+          fi
+
+          cp data/ipfr_corpus/ipfr.sqlite release-assets/ipfr.sqlite
+          cp tripwire_config.yaml release-assets/tripwire_config.yaml
+          cp data/influencer_sources/source_registry.csv release-assets/source_registry.csv
+
+          if [ -s "data/logs/feedback.jsonl" ]; then
+            cp data/logs/feedback.jsonl release-assets/feedback.jsonl
+          else
+            echo "No non-empty data/logs/feedback.jsonl found; skipping feedback.jsonl asset."
+          fi
+
+          if [ -d "data/influencer_sources/snapshots" ]; then
+            tar -czf release-assets/snapshots.tar.gz -C data/influencer_sources snapshots
+          else
+            echo "No data/influencer_sources/snapshots directory found; creating empty snapshots.tar.gz asset."
+            mkdir -p /tmp/empty-snapshots/snapshots
+            tar -czf release-assets/snapshots.tar.gz -C /tmp/empty-snapshots snapshots
+          fi
+
+          echo "Prepared release assets:"
+          ls -lh release-assets
+
+      - name: Create or update GitHub release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          RELEASE_TITLE: ${{ inputs.release_title }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+          OVERWRITE_ASSETS: ${{ inputs.overwrite_assets }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$RELEASE_TITLE" ]; then
+            RELEASE_TITLE="$RELEASE_TAG"
+          fi
+
+          RELEASE_NOTES=$(cat <<EOF
+          Dashboard data release for Tripwire Dashboard.
+
+          Source ref: $SOURCE_REF
+          Workflow run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+
+          Render can use this by setting:
+          GITHUB_RELEASE_TAG=$RELEASE_TAG
+          EOF
+          )
+
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release $RELEASE_TAG already exists. Updating title and notes."
+            gh release edit "$RELEASE_TAG" \
+              --title "$RELEASE_TITLE" \
+              --notes "$RELEASE_NOTES"
+          else
+            echo "Creating release $RELEASE_TAG from source ref $SOURCE_REF."
+            gh release create "$RELEASE_TAG" \
+              --target "$SOURCE_REF" \
+              --title "$RELEASE_TITLE" \
+              --notes "$RELEASE_NOTES"
+          fi
+
+          if [ "$OVERWRITE_ASSETS" = "true" ]; then
+            gh release upload "$RELEASE_TAG" release-assets/* --clobber
+          else
+            gh release upload "$RELEASE_TAG" release-assets/*
+          fi
+
+      - name: Summary
+        shell: bash
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<EOF
+          ## Dashboard data release published
+
+          **Release tag:** \`${{ inputs.release_tag }}\`  
+          **Source ref:** \`${{ inputs.source_ref }}\`
+
+          Set this on Render:
+
+          \`\`\`text
+          GITHUB_RELEASE_TAG=${{ inputs.release_tag }}
+          \`\`\`
+          EOF

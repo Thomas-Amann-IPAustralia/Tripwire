@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to the patent manual and trademark manual, including updates to examples, case law references, and minor typographical corrections. There are also updates to court fees and administrative procedures unrelated to the specific trade mark opposition process described in the IPFR page. The IPFR page content about opposing trade mark registrations, including timelines, fees, procedures, and risks, remains accurate and unaffected by these upstream changes. No specific amendments to fees, timeframes, or procedural steps for trade mark opposition are indicated in the changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 14833,
+  "completion_tokens": 138,
+  "total_tokens": 14971,
+  "processing_time_seconds": 3.6549217829999634,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.847750+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified in the upstream documents primarily relate to updates in the patent manual, plant breeder's rights manual, and design manual that focus on accessibility fixes, link corrections, formatting changes, and updates to legal case references or internal guidance. None of the changes specifically address the process, fees, timelines, or substantive procedural rules for third-party examination or certification of registered designs as described in the IPFR page. The IPFR page content about requesting confirmation of a registered design's validity remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4950,
+  "completion_tokens": 138,
+  "total_tokens": 5088,
+  "processing_time_seconds": 2.2843198139999004,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.563247+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page and the how-to-engage-an-attorney page are minor and do not affect the substantive content of the IPFR page on what to do if someone infringes your IP. The news update is about a startup survey and general IP news, which does not impact the guidance on infringement response. The changes to the attorney engagement page are formatting or minor reordering of bullet points without any change in substantive advice. Therefore, the IPFR page remains accurate and current with respect to its advice on infringement response.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2803,
+  "completion_tokens": 141,
+  "total_tokens": 2944,
+  "processing_time_seconds": 2.723341471999902,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.227683+00:00"
+}

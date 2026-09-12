@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural details about payment methods for WIPO arbitration fees (introduction of WIPO Pay and related instructions) and additional geographic clarifications about the Madrid System's territorial coverage. The IPFR page on accessing international arbitration and mediation services does not specify payment methods, bank details, or geographic coverage of the Madrid System. It provides general information about WIPO ADR services, benefits, risks, costs, and procedures without detailing payment processes or territorial specifics. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6869,
+  "completion_tokens": 145,
+  "total_tokens": 7014,
+  "processing_time_seconds": 2.245590118000109,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.266663+00:00"
+}

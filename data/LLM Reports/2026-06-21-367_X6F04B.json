@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage www.asbfeo.gov.au is currently unreachable due to connection issues (ERR_CONNECTION_CLOSED), but there is no substantive change to the content or information relevant to disputing a domain name under the auDRP. The IPFR page content about disputing .au domain names and the auDRP process remains accurate and unaffected by this technical outage. There is no update to fees, procedures, timelines, or legal criteria in the change document that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2511,
+  "completion_tokens": 139,
+  "total_tokens": 2650,
+  "processing_time_seconds": 1.89737070700005,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.913527+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the AFP fraud and corruption webpage is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). There is no substantive content change or update to the information about fraud, scams, or reporting procedures. The IPFR page references the AFP as an investigative body for fraud and impersonation, which remains accurate. The change is a technical access issue rather than a content update that affects the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2564,
+  "completion_tokens": 123,
+  "total_tokens": 2687,
+  "processing_time_seconds": 1.9374332230001983,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.997495+00:00"
+}

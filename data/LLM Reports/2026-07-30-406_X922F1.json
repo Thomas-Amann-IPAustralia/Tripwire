@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the trademark manual, specifically sections about divisional applications and prescribed signs under trademark law. The IPFR page concerns the opposition process for patents, including timelines, costs, and procedures specific to patent oppositions. There is no indication that the trademark manual updates affect patent opposition procedures or content. Therefore, the IPFR page content remains accurate and does not require amendment based on this trademark-related change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2484,
+  "completion_tokens": 118,
+  "total_tokens": 2602,
+  "processing_time_seconds": 1.9238611589998982,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.153409+00:00"
+}

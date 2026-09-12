@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an update to IP Australia's Corporate Strategic Plan 2026\u201327 and some news items highlighting priorities and recent stories. The IPFR page 'Discover where you are in your IP journey' provides a general guide to stages of IP engagement for business owners, focusing on practical steps and concepts rather than specific policy priorities or strategic plans. The change does not affect any specific factual information, statutory references, procedural steps, or thresholds described in the IPFR page. Therefore, the page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1902,
+  "completion_tokens": 140,
+  "total_tokens": 2042,
+  "processing_time_seconds": 2.2489819959999977,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250499+00:00"
+}

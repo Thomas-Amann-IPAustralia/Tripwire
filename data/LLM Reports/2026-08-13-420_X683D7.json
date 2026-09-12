@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia Designs Manual primarily consist of minor formatting updates, accessibility fixes, and reviewed guidance with no specific amendments to the procedural details, fees, timelines, or substantive content related to third-party examination requests. The IPFR page content about requesting confirmation of a registered design's validity remains accurate and up to date based on the provided changes. There is no indication of changes to fees, timeframes, or procedural steps that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3105,
+  "completion_tokens": 127,
+  "total_tokens": 3232,
+  "processing_time_seconds": 1.7887787969998499,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.874427+00:00"
+}

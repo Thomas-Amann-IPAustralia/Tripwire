@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates contact email addresses for submitting and retracting infringement reports in eBay's VeRO program from vero@ebay.com to askvero@ebay.com. While the IPFR page discusses pausing use of contested IP and mentions cease and desist letters and dispute resolution, it does not reference eBay's VeRO program, specific reporting procedures, or contact details. The update is specific to eBay's internal reporting process and does not affect the general guidance on ceasing use of contested IP or the risks and benefits described. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3290,
+  "completion_tokens": 154,
+  "total_tokens": 3444,
+  "processing_time_seconds": 5.3362642199999755,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231637+00:00"
+}

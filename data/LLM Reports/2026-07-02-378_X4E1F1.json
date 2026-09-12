@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural amendments in Federal Court rules, secrecy provisions in the Criminal Code, updates to IP Australia official notices about portals, fees, and policy register updates. None of these changes directly affect the core content of the IPFR page 'Can I get in trouble for using IP that is not mine?', which provides general guidance on IP infringement risks, checking ownership, and obtaining permission. There are no specific legal thresholds, dates, or procedural steps mentioned in the IPFR page that are contradicted or outdated by these changes. The changes do not alter the fundamental advice about infringement risk or the need for permission and professional advice.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8194,
+  "completion_tokens": 160,
+  "total_tokens": 8354,
+  "processing_time_seconds": 2.529704935999689,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267205+00:00"
+}

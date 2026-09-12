@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified in the upstream sources primarily relate to patent and plant breeder's rights manuals, design manual accessibility fixes, and a minor update to Amazon Brand Registry promotional details. The only trade mark related changes concern a technical coding issue affecting the trade mark bulk data product provided to third parties, which does not impact the procedural or substantive content of the IPFR page on challenging trade mark registrations. There are no updates to opposition timeframes, fees, procedures, or legal grounds that would require updating the IPFR content. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8290,
+  "completion_tokens": 146,
+  "total_tokens": 8436,
+  "processing_time_seconds": 2.6556001339999966,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.709118+00:00"
+}

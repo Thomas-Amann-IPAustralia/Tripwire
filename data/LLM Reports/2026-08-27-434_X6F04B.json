@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor textual update to the WIPO IP Diagnostics webpage, removing a single line about 'Industry-specific adaptations'. This change is indirect and does not affect any specific information, procedures, fees, timeframes, or legal criteria described in the IPFR page about disputing .au domain names under the auDRP. The IPFR page content remains accurate and current with respect to the auDRP process and related details.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2245,
+  "completion_tokens": 121,
+  "total_tokens": 2366,
+  "processing_time_seconds": 2.4234982919999766,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.910213+00:00"
+}

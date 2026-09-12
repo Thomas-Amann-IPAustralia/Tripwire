@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates to the IP Australia trade mark manual related to detailed examination criteria, series trade marks, colour endorsements, and procedural updates following recent case law. These updates are technical and detailed, focusing on legal interpretation and examination processes rather than the basic procedural, cost, or benefit information presented on the IPFR page. The IPFR page content is aimed at small business owners and provides general guidance on registering trade marks, fees, benefits, risks, and timeframes, none of which are contradicted or rendered inaccurate by the upstream changes. Other changes relate to design manuals, policy registers, ACCC registers, and Amazon Brand Registry, which are not directly relevant to the content of this IPFR page. Therefore, no specific amendments to the IPFR page are required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10949,
+  "completion_tokens": 193,
+  "total_tokens": 11142,
+  "processing_time_seconds": 2.9553778319996127,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.266946+00:00"
+}

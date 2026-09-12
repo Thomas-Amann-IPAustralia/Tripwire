@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to accessibility fixes in the IP Australia design manual, updates to closed consultation dates on the ACCC consultation hub, and updated statistics and dates on Amazon's Brand Registry page. None of these changes affect the specific content of the IPFR page about registering unregistered trade marks in Australia, including fees, timeframes, procedural steps, or legal references. The IPFR page content remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4378,
+  "completion_tokens": 124,
+  "total_tokens": 4502,
+  "processing_time_seconds": 1.456526624000162,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.706812+00:00"
+}

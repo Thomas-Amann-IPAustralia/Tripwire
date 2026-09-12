@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the formatting and presentation of guidance on how to engage an attorney, including details about fees, preparation for meetings, and confidentiality obligations. However, the IPFR page content on 'Choosing the right IP professional' already provides comprehensive and accurate information about the roles, qualifications, and how to find IP attorneys and lawyers. The change does not introduce new legal requirements, fee amounts, or procedural steps that contradict or update specific factual statements in the IPFR page. Therefore, no amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4922,
+  "completion_tokens": 139,
+  "total_tokens": 5061,
+  "processing_time_seconds": 2.1772936069999105,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.818582+00:00"
+}

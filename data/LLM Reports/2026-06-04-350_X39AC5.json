@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia design manual are primarily accessibility fixes and updates to headings and URLs related to design registrations and excluded designs. These changes do not affect the content or procedures related to trade mark revocation described in the IPFR page. There is no indication of changes to trade mark law, procedures, timeframes, or costs that would require updating the IPFR page on removing a trade mark from the register.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3213,
+  "completion_tokens": 116,
+  "total_tokens": 3329,
+  "processing_time_seconds": 1.3838198270000248,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.706880+00:00"
+}

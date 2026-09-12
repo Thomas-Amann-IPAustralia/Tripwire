@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change relates to the Customs Amendment (International Airport Definition) Regulations 2026, which updates the definition of 'international airport' to include Western Sydney International Airport for customs officer availability. This is a procedural and regulatory update about customs operations at airports and does not affect the content of the IPFR page about considerations before enforcing IP overseas. The second change concerns closed consultations by IP Australia on various IP regulatory and procedural matters, including patent manual updates and trade mark regulations. These consultations do not directly impact the guidance or factual content of the IPFR page, which focuses on practical considerations and options for enforcing IP rights overseas. Neither change alters any specific legal thresholds, procedural steps, or factual information presented in the IPFR page. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4415,
+  "completion_tokens": 190,
+  "total_tokens": 4605,
+  "processing_time_seconds": 2.5911826579999797,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231900+00:00"
+}

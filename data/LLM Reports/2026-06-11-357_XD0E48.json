@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the Plant Breeder's Rights manual and detailed listings of ccTLDs adopting UDRP or variations thereof for domain name dispute resolution. The IPFR page focuses on notifying online marketplaces of infringement on their platform, including takedown mechanisms and brand registries, but does not specifically address domain name disputes or Plant Breeder's Rights processes. There is no specific information in the IPFR page that is contradicted or outdated by these changes, nor any procedural or legal detail that requires updating based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4139,
+  "completion_tokens": 144,
+  "total_tokens": 4283,
+  "processing_time_seconds": 2.3407692339999358,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851154+00:00"
+}

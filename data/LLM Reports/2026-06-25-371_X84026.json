@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change relates to an update in the Australian Border Force Act 2015, which is unrelated to the content of the IPFR page about complaints regarding IP Australia. The IPFR page focuses on complaint procedures and does not reference or depend on the Australian Border Force Act. The relevance scores are low to moderate and the change document provides no substantive content affecting the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1255,
+  "completion_tokens": 108,
+  "total_tokens": 1363,
+  "processing_time_seconds": 1.673828543999889,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.565402+00:00"
+}

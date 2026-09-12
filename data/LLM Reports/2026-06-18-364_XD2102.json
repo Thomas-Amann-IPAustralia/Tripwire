@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XD2102",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trans-Tasman IP Attorneys Board (TTIAP) complaints webpage clarify and expand the information about when complaints can be made against IP attorneys, the complaint process, and outcomes. Since the IPFR page discusses when to engage legal professionals including IP attorneys, and the distinctions between IP lawyers and IP attorneys, updating the IPFR page to include or link to the latest authoritative guidance on complaints against IP attorneys would improve accuracy and user guidance. The other changes relate to administrative tribunal rules, privacy, defence, and other legislation that do not specifically affect the content about when to engage legal professionals for IP matters on the IPFR page.",
+  "suggested_changes": [
+    "Add a section or update existing content to include information about the complaint process against IP attorneys as per the latest Trans-Tasman IP Attorneys Board guidance, including grounds for complaints, complaint outcomes, and where to direct complaints if the professional is a lawyer rather than an attorney.",
+    "Include a note that complaints can only be made against registered Australian trade marks attorneys or registered Trans-Tasman patent attorneys, and provide a link to the official TTIAP complaints webpage for further details."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7914,
+  "completion_tokens": 262,
+  "total_tokens": 8176,
+  "processing_time_seconds": 4.009816620000038,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.707661+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to the ASIC webpage about registering a company and the ASBFEO disputes assistance page. The IPFR page is a high-level comparison of IP Australia with other government agencies, listing their main focus and how they help businesses. The changes to ASIC's company registration page add details about director IDs, consent, and fees, but the IPFR page only briefly mentions ASIC as helping with business names and companies without specific procedural or fee details. The ASBFEO page change is about a technical connectivity issue, not content changes. Therefore, none of the specific content or factual statements in the IPFR page are outdated or incorrect due to these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2875,
+  "completion_tokens": 164,
+  "total_tokens": 3039,
+  "processing_time_seconds": 2.135968262999995,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849282+00:00"
+}

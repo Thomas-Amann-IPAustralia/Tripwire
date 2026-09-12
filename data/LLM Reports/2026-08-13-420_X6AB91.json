@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on ACCC public registers and consultation hub pages about exemptions, court enforceable undertakings, and closed consultations on consumer goods safety standards. These changes do not affect the specific guidance or factual content on the IPFR page about preventing risks to public interest related to IP infringement, counterfeit goods, or reporting procedures. The IPFR page content remains accurate and current in light of these ACCC webpage updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3348,
+  "completion_tokens": 117,
+  "total_tokens": 3465,
+  "processing_time_seconds": 1.8027459330000966,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.879600+00:00"
+}

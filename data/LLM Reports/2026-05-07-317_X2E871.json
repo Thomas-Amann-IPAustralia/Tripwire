@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO 'about' webpage consist solely of the addition of a single introductory sentence describing WIPO as a United Nations agency serving innovators and creators, and the removal of a mention of the 'OzIP Protection Service' for Australian small business owners. These changes do not affect any specific factual information, procedural details, or guidance about the WIPO Arbitration and Mediation Center or its ADR services as described in the IPFR page. The IPFR page content remains accurate and up to date regarding WIPO's dispute resolution services, benefits, risks, costs, and procedures. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3836,
+  "completion_tokens": 162,
+  "total_tokens": 3998,
+  "processing_time_seconds": 2.5334072779999133,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.709373+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the publication of IP Australia's Corporate Strategic Plan 2026\u201327 and news items highlighting IP Australia's activities and priorities. The IPFR page content is a general overview comparing IP Australia to other government agencies and explaining its role in protecting IP for small businesses. There are no specific factual details, dates, or procedural information in the IPFR page that are contradicted or rendered outdated by the new strategic plan or news updates. The changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2575,
+  "completion_tokens": 136,
+  "total_tokens": 2711,
+  "processing_time_seconds": 2.6657513549999976,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250231+00:00"
+}

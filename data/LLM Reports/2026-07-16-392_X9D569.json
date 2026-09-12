@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X9D569",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are minor formatting and wording adjustments to the Trans-Tasman IP Attorneys Board webpage section on how to engage an attorney, including details about fees, preparation for meetings, and considerations when choosing an attorney. These changes do not alter any substantive information such as fee amounts, procedural steps, or legal obligations. The IPFR page already contains accurate and consistent information about attorney fees, preparation tips, and considerations for engaging legal professionals. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5757,
+  "completion_tokens": 133,
+  "total_tokens": 5890,
+  "processing_time_seconds": 4.99922261599977,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.227523+00:00"
+}

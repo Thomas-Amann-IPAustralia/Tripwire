@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to a technical coding issue affecting the trade mark bulk data product provided to third party subscribers and an update regarding the Patent Manual of Practice and Procedures with a High Court appeal. These updates do not affect the guidance or procedural advice given in the IPFR page about what to do if someone infringes your IP. The IPFR page content remains accurate and does not mention the bulk data product or specific procedural updates that would require revision.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2474,
+  "completion_tokens": 121,
+  "total_tokens": 2595,
+  "processing_time_seconds": 1.7341308000000026,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713357+00:00"
+}

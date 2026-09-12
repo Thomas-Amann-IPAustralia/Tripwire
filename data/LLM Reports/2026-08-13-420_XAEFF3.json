@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XAEFF3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the listing and update of the effective dates of the Regulations under the Patent Cooperation Treaty (PCT) on the WIPO website, specifically updating the in-force date to January 1, 2026. The IPFR page on patent infringement focuses on Australian patent law, infringement definitions, examples, and exceptions, without referencing the PCT regulations or their effective dates. There is no specific information in the IPFR page that is contradicted or outdated by these changes. Therefore, no update to the IPFR page content is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3491,
+  "completion_tokens": 148,
+  "total_tokens": 3639,
+  "processing_time_seconds": 2.004513870999972,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.878754+00:00"
+}

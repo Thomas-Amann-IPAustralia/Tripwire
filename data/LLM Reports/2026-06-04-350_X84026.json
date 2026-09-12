@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change relates to practice directions issued under the Administrative Review Tribunal Act 2024, describing procedural guidance for tribunal reviews. While this is somewhat related to dispute resolution processes, the IPFR page focuses on complaints about IP Australia service and distinguishes complaints from formal review or appeal processes. The new practice directions do not directly affect the complaint process or the guidance given on how to complain about IP Australia. The second change concerns amendments to intelligence oversight legislation and does not relate to IP Australia or complaint processes. Neither change affects the accuracy or currency of the IPFR page content about complaining to IP Australia or the Commonwealth Ombudsman.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2341,
+  "completion_tokens": 156,
+  "total_tokens": 2497,
+  "processing_time_seconds": 2.0802660260001176,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708774+00:00"
+}

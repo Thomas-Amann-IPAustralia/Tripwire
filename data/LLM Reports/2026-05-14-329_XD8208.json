@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates on the IP Australia official notices page and the design manual, including new approved forms for Olympic designs, publication of newly notified signs under the Paris Convention, and accessibility fixes in the design manual. None of these changes specifically address or alter the procedures, timeframes, fees, or legal grounds for removal of trade marks from the register as described in the IPFR page. There is no indication of amendments to the Trade Marks Act or Regulations that would affect the content on removal of trade marks for non-use or non-intent to use. Therefore, the IPFR page remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4831,
+  "completion_tokens": 159,
+  "total_tokens": 4990,
+  "processing_time_seconds": 2.8226898519999395,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.501743+00:00"
+}

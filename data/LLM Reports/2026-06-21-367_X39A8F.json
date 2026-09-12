@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change relates to the ASBFEO website experiencing a connection issue (ERR_CONNECTION_CLOSED) and does not affect any substantive IP content or legal requirements discussed in the IPFR page. The IPFR page content about what to check before getting registered IP remains accurate and unaffected by this technical connectivity issue. There is no change to IP law, procedures, or guidance that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1926,
+  "completion_tokens": 114,
+  "total_tokens": 2040,
+  "processing_time_seconds": 1.396140191000086,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.914807+00:00"
+}

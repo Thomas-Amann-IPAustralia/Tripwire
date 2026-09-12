@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream sources primarily involve accessibility fixes, broken link updates, and minor content clarifications in the design and plant breeders' rights manuals. There are no substantive changes to the legal requirements, timeframes, or procedural steps for registration that would affect the accuracy of the IPFR page content. The ASIC company registration page updates add some details about company registration but do not impact the IPFR page's focus on registered IP types and their requirements. The ASBFEO dispute page is inaccessible but unrelated to the IPFR page content. Therefore, no changes are needed to the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8186,
+  "completion_tokens": 152,
+  "total_tokens": 8338,
+  "processing_time_seconds": 4.714275572999895,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849013+00:00"
+}

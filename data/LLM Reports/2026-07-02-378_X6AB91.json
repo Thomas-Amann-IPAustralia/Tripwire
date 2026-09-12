@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates on the ACCC public registers and consultation hub pages, including new court enforceable undertakings, exemptions, and consultation invitations on mandatory safety standards. These updates do not affect the specific content of the IPFR page about preventing risks to public interest related to IP infringement, such as reporting counterfeit goods, scams, or serious crime. There are no changes to the legal thresholds, reporting procedures, or agency contacts described in the IPFR page. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6684,
+  "completion_tokens": 137,
+  "total_tokens": 6821,
+  "processing_time_seconds": 2.4048276749999786,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.265581+00:00"
+}

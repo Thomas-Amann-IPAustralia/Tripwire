@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP fraud and corruption webpage is currently unreachable due to a connection error. This change is unrelated to the content of the IPFR page about trade mark opposition procedures. There is no update to legislation, procedures, fees, timeframes, or any other substantive information relevant to trade mark opposition. The relevance scores are low or indirect, and the content of the IPFR page remains accurate and unaffected by this network issue.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2395,
+  "completion_tokens": 121,
+  "total_tokens": 2516,
+  "processing_time_seconds": 3.1424970089999533,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.996044+00:00"
+}

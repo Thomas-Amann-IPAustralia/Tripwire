@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to administrative and procedural updates such as the establishment of the Administrative Review Tribunal, the inclusion of a new international airport in customs regulations, updates to the Plant Breeder's Rights manual regarding portal guidance, and closed consultations on various IP topics. None of these changes directly affect the fundamental definitions, descriptions, or explanations of intellectual property types and protections as presented in the IPFR page. There are no updates to statutory definitions, registration requirements, enforcement mechanisms, or other core content that would require amending the basic explanatory content aimed at small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4507,
+  "completion_tokens": 146,
+  "total_tokens": 4653,
+  "processing_time_seconds": 2.9156548800001474,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.233064+00:00"
+}

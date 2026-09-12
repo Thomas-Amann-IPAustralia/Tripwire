@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Trade Marks Manual of Practice and Procedure, including minor content updates, typographical corrections, and updated legislative references. The IPFR page 'Familiarise yourself with IP laws' provides a broad overview of Australian IP law and mentions the existence of the Trade Marks Manual but does not include specific procedural details or legislative references that have changed. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3410,
+  "completion_tokens": 125,
+  "total_tokens": 3535,
+  "processing_time_seconds": 2.139655728999969,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.502893+00:00"
+}

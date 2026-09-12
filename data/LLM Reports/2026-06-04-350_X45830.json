@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X45830",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to amendments to the Competition and Consumer Act 2010, specifically introducing powers for the Minister and ACCC to respond to exceptional circumstances and increasing penalties related to the Oil Code of Conduct. The IPFR page focuses on trademark issues related to naming tech startups after personal names, discussing trademark distinctiveness, secondary meaning, and branding strategies. There is no mention or discussion of competition law, ACCC authorisations, or the Oil Code of Conduct in the IPFR page. Therefore, the legislative amendments do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2497,
+  "completion_tokens": 149,
+  "total_tokens": 2646,
+  "processing_time_seconds": 1.7490086749999136,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707412+00:00"
+}

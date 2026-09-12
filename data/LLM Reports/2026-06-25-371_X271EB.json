@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the IP Australia manuals for trade marks and designs, including accessibility fixes, updated links, and content reviews following specific court cases. However, none of the changes explicitly amend or update the procedural timeframes, fees, or substantive grounds for removal of trade marks for non-use as described in the IPFR page. The IPFR page's detailed guidance on filing times, fees, opposition periods, and outcomes remains accurate and unaffected by these upstream updates. Therefore, no changes to the IPFR page content are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4162,
+  "completion_tokens": 142,
+  "total_tokens": 4304,
+  "processing_time_seconds": 1.9402161949999481,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.563511+00:00"
+}

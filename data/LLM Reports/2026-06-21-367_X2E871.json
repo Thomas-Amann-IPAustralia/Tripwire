@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change indicates that the ASBFEO dispute support webpage is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). There is no content update or substantive change to the information on dispute resolution or WIPO services. The IPFR page content about WIPO ADR services remains accurate and unaffected by this technical issue with an unrelated government webpage. The change does not affect any specific factual or procedural information presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2834,
+  "completion_tokens": 120,
+  "total_tokens": 2954,
+  "processing_time_seconds": 1.9050934360000156,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.913425+00:00"
+}

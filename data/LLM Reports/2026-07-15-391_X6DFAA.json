@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream changes relate solely to technical connectivity issues and error messages on the Australian Federal Police (AFP) website, specifically changing error text from 'connection closed' to 'timed out' and vice versa. These changes do not affect any substantive content about intellectual property enforcement or dispute resolution options. The IPFR page content about non-court IP dispute resolution remains accurate and unaffected by these technical website access changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2239,
+  "completion_tokens": 114,
+  "total_tokens": 2353,
+  "processing_time_seconds": 1.8634510169999885,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.110761+00:00"
+}

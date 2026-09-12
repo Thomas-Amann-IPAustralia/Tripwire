@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia's official notices page, primarily reflecting procedural updates, court decisions, and administrative changes related to trade marks and patents. The IPFR page content focuses on explaining the difference between an ABN, registered business name, and registered trade mark for new businesses, including the benefits of trade mark registration. There is no specific information in the IPFR page that is contradicted or outdated by the changes in the official notices, nor are there changes to statutory references, procedural steps, or definitions that would affect the accuracy of the IPFR content. The update about the High Court decision in Zip Co Ltd v Firstmac Ltd and other notices do not require amendments to the general guidance provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3062,
+  "completion_tokens": 181,
+  "total_tokens": 3243,
+  "processing_time_seconds": 3.111560339000107,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.564715+00:00"
+}

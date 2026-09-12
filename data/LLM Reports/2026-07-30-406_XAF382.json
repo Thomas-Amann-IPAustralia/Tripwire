@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the IPAustralia trademark manual, specifically sections about divisional applications, prescribed signs, and official notices regarding Aboriginal flags. These changes are procedural and legislative updates within the trademark examination manual and do not directly affect the general explanation of IP infringement provided in the IPFR page. The IPFR page content is a broad overview of infringement concepts across all IP types and does not include specific procedural details about divisional applications or prescribed signs. Therefore, the changes do not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3632,
+  "completion_tokens": 143,
+  "total_tokens": 3775,
+  "processing_time_seconds": 2.977851281000085,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.155045+00:00"
+}

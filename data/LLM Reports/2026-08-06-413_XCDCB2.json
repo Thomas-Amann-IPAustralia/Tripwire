@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia trademark and design manuals involve updates to detailed procedural and legislative guidance, such as divisional applications, prohibited signs, and examination processes. However, the IPFR page 'Register your unregistered trade mark' provides general, high-level information aimed at small business owners about the benefits, risks, costs, and basic steps of registering a trade mark. There are no specific references to the detailed procedural or legislative points updated in the upstream changes, nor are there specific fees, timeframes, or legal thresholds in the IPFR page that conflict with the updated manuals. The changes are more technical and do not affect the accuracy or currency of the IPFR page content as it stands.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4196,
+  "completion_tokens": 173,
+  "total_tokens": 4369,
+  "processing_time_seconds": 3.12382308999986,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.795600+00:00"
+}

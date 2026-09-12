@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to amendments in oversight legislation for intelligence agencies, updates to the IP Australia trademark manual reflecting recent case law, updates to the Plant Breeder's Rights manual, and news items about trademark oppositions and IP reports. None of these changes specifically alter the procedural details, timeframes, fees, or outcomes related to responding to a trade mark opposition as described in the IPFR page. The IPFR content remains accurate and current for its intended audience of small business owners seeking guidance on trade mark opposition responses. There is no direct update to statutory deadlines, fees, or procedural steps in the opposition process that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5752,
+  "completion_tokens": 165,
+  "total_tokens": 5917,
+  "processing_time_seconds": 3.6211157860000185,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.817753+00:00"
+}

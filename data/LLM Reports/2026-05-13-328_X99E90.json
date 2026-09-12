@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-13-328",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document from IP Australia news is a minor update to the number of news results shown on their webpage, which does not affect any substantive content related to the existence or role of a global IP office or WIPO. The IPFR page content about WIPO and national IP offices remains accurate and unaffected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1395,
+  "completion_tokens": 97,
+  "total_tokens": 1492,
+  "processing_time_seconds": 3.531426882000005,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-13T06:04:12.939271+00:00"
+}

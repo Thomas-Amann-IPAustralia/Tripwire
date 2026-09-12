@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-26-372",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes consist of new news items on the IP Australia news page highlighting topics such as design rights, patents, and trade marks, but they do not contain any specific updates or amendments to legal thresholds, procedures, or definitions that would affect the content of the IPFR page. The IPFR page provides general guidance on using IP that is not yours, including infringement risks and licensing options, none of which are contradicted or outdated by the news updates. The changes are informational and promotional rather than regulatory or procedural.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2374,
+  "completion_tokens": 135,
+  "total_tokens": 2509,
+  "processing_time_seconds": 3.971389347000013,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-26T06:24:24.249066+00:00"
+}

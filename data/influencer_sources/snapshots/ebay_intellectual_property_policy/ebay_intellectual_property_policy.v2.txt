@@ -1,0 +1,154 @@
+Intellectual property
+Learn about intellectual property and how to maintain compliant listings.
+Understanding Intellectual property
+Intellectual property (IP) refers to creations of the mind including content and imagery owned by a third party. Sellers are responsible for ensuring that any item they list on our marketplace is authentic and doesn’t infringe on the intellectual property rights of others.
+Any photos, videos, or descriptions should be original and shouldn’t be copied from any websites, third-party catalogs or other sources unless you have approval. For example, if you’re listing a pair of sneakers, take photos from different angles and write a description in your own words.
+Our policy doesn’t allow the following to be listed on our marketplace:
+- Counterfeit or replica items
+- Unauthorized copies or imports
+- Listings that infringe on copyrights, trademarks, designs, patents, and utility models
+Check your listings to avoid IP rights infringement
+Items or listing content that infringe on intellectual property (IP) rights aren't allowed under eBay’s Intellectual Property Rights Policy.
+Rights owners can report potentially infringing listings through the Verified Rights Owner (VeRO) Program. If a listing is reported and found to violate IP rights, it will be removed, and you’ll receive a notification from eBay explaining:
+- Why your listing was removed
+- What aspect of the listing may have infringed on IP rights
+- How to revise your listing, if possible, so it complies with our policy
+You have some options if your listing is removed:
+- Learn more about our Intellectual Property Policy
+- Make an appeal
+- Contact the rights owners directly
+Always list authentic items
+To help keep eBay a safe and trusted global marketplace, it’s essential that all items listed are authentic.
+eBay is committed to keeping the marketplace safe and trustworthy. That means:
+- Counterfeits, fakes, dupes, or replicas of branded items are not allowed
+- If an item displays a brand’s logo or trademark but wasn’t made by that brand, it can’t be listed
+- If you’re unsure whether your item is authentic, it’s best not to list it
+Selling unauthorized copies of media, software, movies, or artwork violates copyright laws. This includes but isn’t limited to backup, pirated, duplicated, or bootlegged copies. Copyright protection prevents others from using creative works without permission and may also limit the right to distribute the copyrighted product. Here are examples of what shouldn’t be listed on eBay:
+- Copies of copyrighted movies or music that have been duplicated without the rights owner's permission
+- Software that is subject to a single-use licensing agreement
+- Unauthorized T-shirts or other merchandise that display a copyrighted characters
+- Copyrights: Protects creative works like books, movies, art, and software, typically owned by the creator. Using these without permission can infringe on intellectual property rights.
+- Trademarks: Distinctive signs like names, images (logos), and sounds that identify a company's goods or services, including geographical indications. Only the trademark owner or a licensed user can use the trademark.
+- Patent: A specific set of rights granted in certain jurisdictions to inventors giving them the right to exclude others from making, using, or selling the same or similar inventions.
+- Design rights: Protects the visual appearance of a product or part of a product, including features such as lines, contours, colors, shape, and surface decoration. Design rights protect designs from being copied and used by someone else.
+- Utility model: A form of a patent that applies to the way a product functions. Third parties aren’t allowed to manufacture, sell, or copy unauthorized items that infringe a registered utility model.
+Listings essentials
+Understand what to avoid including in your listings to avoid infringing on IP rights.
+Brand Name
+Using brand names, makes or model names which are trademark protected to describe your items but not actually manufactured by the brand may infringe on their trademark. Here are some examples to keep in mind.
+1. An item that is a brand product, like sneakers.
+- Only use the brand name if the item is genuinely made by that brand.
+- Don’t use the brand name if the product you're listing isn’t manufactured by that brand.
+- Don’t include additional brand names as a way to compare the product or try to get better search results.
+2. An item that’s compatible with only one brand, like a phone case.
+- If the product is specifically designed to be compatible with products of one brand type, the brand name can be used but you need to add compatibility terms like "compatible with," "fits," or "for" before the brand name.
+- If the product isn’t specifically compatible with the brand, don’t use the brand name.
+3. An item that’s compatible with a limited number of brands, like car parts.
+- Only use one brand name in the title of the listing and use compatibility terms like, "compatible with," "fits," or "for" before any trademarks.
+- Multiple brand names in a title aren’t allowed.
+- If a product is compatible with a limited number of brands, only list the additional brands in the item description and use compatibility terms like, "compatible with," "fits," or "for" before any trademarks.
+- You can also use the eBay fitment chart or create your own compatibility chart to clearly show which models your item works with
+4. An item that's a universally compatible product, like USB-C cable.
+- If your item is a product that works with all brands or models that’s also compatible with the item, don’t use any brand names in the listing that’s in connection with compatibility information to market the item.
+Third-party content
+Using someone else’s image or description without permission could violate copyright laws. If a listing uses text or an image that was created by someone else, be sure that you have written permission to use the content. Here are some helpful do’s and don’ts:
+- Use the eBay catalog to find photos or add a description to a listing.
+- Don’t use images or text copied from other websites or internet searches.
+- Don’t use stock photos without permission.
+- Don’t copy someone else’s text without permission.
+- Don’t use modified or edited stock photos.
+- When taking your own pictures, make sure to avoid copying someone else’s image.
+International selling
+Some products are intended for sale only in specific countries or markets. Even if the item is genuine, selling it outside its designated region (like offering a U.S.-only product(s) to buyers in Europe) could violate trademark or copyright laws.
+To stay compliant:
+- Only list items for regions where they’re authorized for sale
+- Don’t offer international shipping for region-restricted products
+When in doubt, check the manufacturer’s guidelines before listing.
+- Some products are intended for sale in a specific market or country. The sale of these products into another country or market could violate trademark or copyright laws. These may be genuine products but can only be sold in a specific market.
+- Don’t list products intended for sale only in one country, like the United States and offer shipping to buyers in Europe.
+Warranty
+Misrepresenting a product’s warranty can violate trademark laws and mislead buyers. Here’s what you need to know:
+- Warranty info is considered important (material) information—never guess or assume.
+- Always read the warranty details or contact the manufacturer before including warranty claims in your listing.
+If you're offering a warranty:
+- Make it clear whether the warranty is provided by you or a third party and not the manufacturer.
+- If you include a manufacturer’s warranty, confirm it covers resale. If it doesn’t, state clearly that no warranty is available.
+Third-party logos
+Using a third party’s logo without permission is a trademark violation and may mislead your buyers. Even creating a logo that resembles another brand can be considered trademark infringement. To stay compliant, don’t include unauthorized logos in your photos or descriptions.
+Appealing the removal of a listing infringement
+Permission provided by the right’s owner
+- File an appeal
+- Provide evidence from the rights owner to support why you believe you have permission to use the rights owner's intellectual property.
+- Contact the VeRO support team
+- Contact vero@ebay.com with documentation that shows authorization from the rights owner to allow sellers to use their IP on eBay (e.g., a copy of the contract with the rights owner).
+- Contact the rights owner
+- Contact the rights owner to request a retraction. When we contact you about the listing removal, we’ll include the rights owner's information.
+If you don’t have evidence to show your listing was removed in error, you may still be able to revise it. If this is the case, make sure to remove any content that may have caused the issue. You can do this through the Resolution Hub, following eBay’s listing policies.
+- Contact the rights owner
+- Contact the rights owner to request a retraction. When we contact you about the listing removal, we’ll include the rights owner's information.
+- If the rights owner agrees they made a mistake, they should email eBay to retract their report.
+- If your listing was removed due to the way it was described (in image or text), you may be able to edit your listing to remove the content in question and then relist.
+- If an item has been reported as allegedly counterfeit through the VeRO Program, it can’t be relisted. Attempting to list it again may lead to serious consequences, including selling restrictions or even account suspension.
+Get to know the Verified Rights Owner (VeRO) program
+How it works
+Not a rights owner
+The Verified Rights Owner (VeRO) Program is designed for intellectual property (IP) owners and their authorized representatives to protect their rights on eBay. This program allows verified rights owners to report listings that infringe on their copyright, trademark, or other intellectual property rights. If you're a seller and also the owner of IP rights, you can join the VeRO Program to file reports and help ensure your content is properly protected.
+If you’re not the IP rights owner, you can still report through our general content reporting. Here’s how to submit a report:
+- Go to the item and select the question mark icon located on the bottom right
+- Select "Submit report"
+- Sign in or submit as a guest
+- Select from the dropdown menu, “What you would like to report?” and add the relevant reason
+- Fill in the form, including the details of the content you’re reporting, and your reason
+- Select “Submit report”
+VeRO participant profiles
+As a member of the VeRO program, rights owners have the option to create a participant page, so eBay sellers can find out more about their intellectual property, products, and rights protected.
+FAQs
+What happens if I have more than one Intellectual Property violation?
+Sellers who continue to violate intellectual property rights may have escalating consequences, ranging from selling restrictions to permanent suspension from eBay. To avoid further issues, we strongly recommend identifying and addressing the root cause of the violation to help prevent future reports.
+Can eBay verify my item?
+eBay can’t verify the authenticity or legal status of specific items.
+It’s up to you as the seller to make sure your items are genuine and authorized for sale. If you're unsure, it's best to double-check before listing to avoid potential issues.
+I want to contact the rights owner. What should I do?
+If your listing is removed because of an intellectual property report, you’ll get a message from us in My eBay Messages. This email will include the name and contact details of the rights owner who submitted the report.
+If you think the removal was a mistake or just want to understand more, you’re welcome to reach out to the rights owner directly.
+Before you do, check if they have a VeRO participant profile, as it might already answer your questions.
+If you decide to contact them, it’s helpful to include:
+- Your eBay user ID
+- Your eBay email address
+- The listing number(s) removed
+- Images of your product, where possible
+How was my listing reported if I ended it?
+- Ended listings are still visible on the site.
+- Please make sure to edit or remove any content that violates the policy before relisting or taking further action.
+I ended my listing, why do I still have a violation for it?
+If a rights owner has already reported a listing, ending or updating it won’t remove the violation, since the issue was present at the time of the report.
+The best way to avoid this in the future is to make sure your listings follow our policies before publishing. If you're unsure, it's always worth double-checking first.
+Why was my listing removed, but similar ones are still live?
+You might notice other listings on eBay that look similar to yours but haven’t been removed. Here are a few possible reasons:
+- There may be differences between your listing and others that aren't immediately visible.
+- A rights owner may have reported your listing, but hasn’t reported the others yet.
+- The other seller might be authorized by the rights owner.
+Will my fees be refunded?
+If your listing was removed due to a policy violation, you may be eligible for a fee refund. This depends on the specific policy that was violated and whether you’ve had similar issues in the past.
+Why didn’t eBay contact me before removing my listing?
+When eBay receives a report through the VeRO Program that a listing may infringe on intellectual property rights, we're required to remove it as quickly as possible to comply with the law and protect rights owners.
+I revised my listing, why was my appeal denied?
+Your appeal was based on the original version of your listing, the one that was reported. If you’ve since made changes, those updates are reviewed as a separate case.
+Even if the appeal for the original listing was denied, you’ll still be notified of the outcome related to your revised listing.
+I bought this item on eBay. Why wasn’t it removed then?
+Sometimes, listings stay live simply because they haven’t been reported yet by the rights owner.
+If you believe a listing may be infringing and hasn’t been taken down, you’re welcome to report it to us so we can take a closer look. Here’s how to submit a report:
+- Go to the item and select the question mark icon located on the bottom right
+- Select "Submit report"
+- Sign in or submit as a guest
+- Select from the dropdown menu, “What you would like to report?” and add the relevant reason
+- Fill in the form, including the details of the content you’re reporting, and your reason
+- Select “Submit report”
+If your item was removed in the United States and you want to file a Counter Notice.
+- Counter notices can only be submitted for US-based copyright reports, in compliance with the Digital Millennium Copyright Act. Find out what information you need to provide when filing a counter notice as outlined under 17 U.S.C. section 512(g)(3).
+- Once we receive a valid counter notice, we’ll provide a copy of the notice to the VeRO participant and inform them that the listing will be reinstated after 10 business days if they don’t inform us that they have filed an action seeking a court order to restrain you from relisting the item(s).
+- If you wish to file a counter notice, you can contact the intellectual property support team at copyright@ebay.com.
+Why does eBay act on rights owners' reports?
+We're legally required to review and act on reports of alleged intellectual property infringement submitted by rights owners.
+That said, we don’t accept reports based solely on issues like selective distribution agreements, minimum advertised pricing (MAP) policies, or other private contractual terms.
+Our goal is to create a fair and trusted marketplace, and we take every report seriously while working to protect both sellers and rights owners.

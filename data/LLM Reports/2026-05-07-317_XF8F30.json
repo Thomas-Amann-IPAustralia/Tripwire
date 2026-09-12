@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XF8F30",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to ACCC exemptions and undertakings concerning product data sharing obligations and consumer rights under the Competition and Consumer Act and Australian Consumer Law. This content is unrelated to the expedited examination process for IP rights described in the IPFR page. There is no impact on the accuracy or currency of the IPFR page content about requesting early examination of IP applications.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2458,
+  "completion_tokens": 105,
+  "total_tokens": 2563,
+  "processing_time_seconds": 1.484269040999834,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.714274+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X76412",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and consultation hub pages, including new court enforceable undertakings, exemptions, and consultation invitations on safety standards and market regulations. These updates do not affect the specific content of the IPFR page about asking suppliers and sellers to help protect IP, which focuses on informal enforcement actions and practical guidance for IP rights holders. There are no changes to legal thresholds, procedures, or specific advice that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5752,
+  "completion_tokens": 128,
+  "total_tokens": 5880,
+  "processing_time_seconds": 2.587412859000324,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.265861+00:00"
+}

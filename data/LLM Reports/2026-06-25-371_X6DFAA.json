@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates a compilation update to the Australian Border Force Act 2015 but provides no details or explanatory statements about substantive amendments. The IPFR page references the Australian Border Force Notice of Objection as an option for trade marks and copyright enforcement, but there is no indication from the update that the procedures, requirements, or availability of this mechanism have changed. The relevance scores are low to moderate and do not strongly suggest a direct impact on the IPFR content. Therefore, the page remains accurate and up to date regarding this enforcement option.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1404,
+  "completion_tokens": 141,
+  "total_tokens": 1545,
+  "processing_time_seconds": 2.1583684709999034,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.565242+00:00"
+}

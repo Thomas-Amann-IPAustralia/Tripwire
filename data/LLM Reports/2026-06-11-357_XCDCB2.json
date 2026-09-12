@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to Plant Breeder's Rights manuals, a broken or changed dispute resolution webpage, and updates to ASIC company registration guidance and fees. None of these changes directly affect the content of the IPFR page about registering unregistered trade marks, which focuses on trade mark registration processes, fees, benefits, risks, and timeframes with IP Australia. There are no updates to trade mark fees, procedures, or legal references in the provided changes. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4535,
+  "completion_tokens": 134,
+  "total_tokens": 4669,
+  "processing_time_seconds": 2.4318375670000023,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.847968+00:00"
+}

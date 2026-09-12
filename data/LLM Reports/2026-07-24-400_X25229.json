@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "X25229",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the IP Australia news webpage, specifically a reduction in the number of news results shown and an announcement about a new transparency program for patent examination timeframes under the Patent Prosecution Highway. This change does not affect any specific factual content, legal references, or guidance related to joint ownership of IP, which is the focus of the IPFR page. The IPFR page discusses the risks and practical implications of joint IP ownership, including patents, copyright, and know-how, but does not mention patent examination timeframes or procedural updates that would be impacted by this news update. Therefore, no amendment to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3406,
+  "completion_tokens": 166,
+  "total_tokens": 3572,
+  "processing_time_seconds": 2.5233988229999795,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430254+00:00"
+}

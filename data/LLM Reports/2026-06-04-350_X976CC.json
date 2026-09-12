@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO 'about' webpage are minor formatting updates removing a PDF link label and do not affect any substantive information about WIPO's role, functions, or the WIPO Clause Generator described on the IPFR page. The IPFR content remains accurate and up to date regarding WIPO's dispute resolution services and the Clause Generator tool. There is no change to legal references, procedures, or factual details that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2793,
+  "completion_tokens": 125,
+  "total_tokens": 2918,
+  "processing_time_seconds": 2.2820162819998586,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707013+00:00"
+}

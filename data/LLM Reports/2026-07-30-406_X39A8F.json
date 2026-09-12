@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the design manual are primarily accessibility fixes and URL updates without substantive changes to the legal or procedural content relevant to the IPFR page. The IPFR page's content about designs remains accurate and does not reference the specific URLs or detailed procedural points that were updated. The Amazon Brand Registry change involves an increase in the deposit amount for patent evaluation from $4,000 to $5,000, but the IPFR page does not mention Amazon's patent evaluation process, deposit amounts, or related procedures. Therefore, neither change affects the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3204,
+  "completion_tokens": 150,
+  "total_tokens": 3354,
+  "processing_time_seconds": 1.9428895460000604,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.154234+00:00"
+}

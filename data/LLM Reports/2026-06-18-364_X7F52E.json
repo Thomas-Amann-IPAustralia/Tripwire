@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Defence and Veterans\u2019 Service Commissioner Bill 2025 and product recall tools and guidelines. These topics are unrelated to the content of the IPFR page, which focuses on Toyota's approach to counterfeit products and the use of the Australian Border Force's Notice of Objection scheme. There is no impact on the accuracy or currency of the IPFR page content based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3085,
+  "completion_tokens": 113,
+  "total_tokens": 3198,
+  "processing_time_seconds": 1.3743591000002198,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.711217+00:00"
+}

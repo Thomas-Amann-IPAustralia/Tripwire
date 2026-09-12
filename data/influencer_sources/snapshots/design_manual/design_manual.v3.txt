@@ -1,0 +1,39 @@
+| 6.13. Representations: Pairs and mirror images | | Minor adjustments to page. | 
+ 
+ | 12.8. Section 43 refusal to register: Integrated circuits | | Page reviewed and information updated. | 
+ 
+ | Welcome | | Reviewed and updated. | 
+ 
+ | 8.3. Examination and certification: Requesting examination | | Minor formatting update. | 
+ 
+ | 8.9. Examination and certification: Time frame for completion of examination and last-minute responses | | Reviewed and updated guidance included. | 
+ 
+ | Disclaimer | | Review and update Introduction (Disclaimer). | 
+ 
+ | 6.11. Representations: Different views | | fix one minor image issue | 
+ 
+ | Glossary | | Republished to remove fixed font-size styles for accessibility | 
+ 
+ | 8.15. Examination and certification: Examination hearings | | Republished to remove fixed font-size styles for accessibility | 
+ 
+ | 6.2. Representations: General requirements | | Accessibility fix - remove empty headings | 
+ 
+ | 6.5. Representations: Consistency | | Accessibility fix - remove empty headings | 
+ 
+ | 2.6. Application for registration: Types of applications (s 22) | | Accessibility fix - remove empty headings | 
+ 
+ | 25.6. Ownership disputes: Typical situations where ownership disputes arise | | Accessibility fix - remove empty headings | 
+ 
+ | 25.7. Ownership disputes: Revocation after an ownership dispute | | Accessibility fix - remove empty headings | 
+ 
+ | 2.7. Application for registration: Request for registration | | Accessibility fix - remove empty headings | 
+ 
+ | 28.2. Hearings: Filing evidence | | Accessibility fix - remove empty headings | 
+ 
+ | 24.2. Assignments and other interests: Recording changes of ownership | | Accessibility fix - remove empty headings | 
+ 
+ | 27.5. Publication and file access: Prohibition orders | | Accessibility fix - remove empty headings | 
+ 
+ | 20.2. Convention priority: Convention countries | | Accessibility fix - remove empty headings | 
+ 
+ | 25.4. Ownership disputes: Disputes where some designs have been registered or published | | Accessibility fix - remove empty headings |

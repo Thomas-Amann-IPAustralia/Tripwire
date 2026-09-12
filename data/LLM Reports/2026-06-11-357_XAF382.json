@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to IPAustralia manuals related to trade marks and plant breeders' rights, including content updates, examples, accessibility fixes, and link corrections. However, none of these changes indicate any modification to fundamental definitions, infringement criteria, durations of IP rights, or legal thresholds that would affect the accuracy or currency of the IPFR page content. The IPFR page provides a general overview of IP infringement concepts suitable for small business owners, and the changes do not contradict or update any specific factual statements or procedural steps in the page. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6205,
+  "completion_tokens": 154,
+  "total_tokens": 6359,
+  "processing_time_seconds": 2.844874290000007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851350+00:00"
+}

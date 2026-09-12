@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia trade mark manual relate to updates following a High Court case about honest concurrent use and updates to examples and terminology in series trade marks and colour endorsements. These do not directly affect the specific procedural or substantive content about removal of trade marks for non-use as described in the IPFR page. The design manual changes are mostly accessibility fixes and URL updates unrelated to trade marks or removal procedures. Therefore, the IPFR page content about requesting removal of unused trade marks remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3875,
+  "completion_tokens": 133,
+  "total_tokens": 4008,
+  "processing_time_seconds": 2.2393193580001025,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268681+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP (Australian Federal Police) webpages relate solely to technical issues with website accessibility (connection errors and timeouts). There are no substantive content changes or updates to intellectual property laws, procedures, fees, timeframes, or any other information relevant to the trade mark opposition process described in the IPFR page. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4802,
+  "completion_tokens": 112,
+  "total_tokens": 4914,
+  "processing_time_seconds": 1.9387714100000721,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.110476+00:00"
+}

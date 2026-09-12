@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to closed consultations on various IP topics such as patent manual updates, trade mark regulations, design law treaty, Indigenous Knowledge, fee reviews, and plant breeder's rights. The IPFR page content is a general introductory guide on IP infringement aimed at small businesses and creators, focusing on understanding infringement concepts and practical advice. None of the consultation topics or updates specifically address or alter the fundamental explanations or guidance on IP infringement as presented in the page. There are no specific legal thresholds, dates, or procedural steps in the IPFR content that are contradicted or rendered outdated by these consultation summaries.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4387,
+  "completion_tokens": 152,
+  "total_tokens": 4539,
+  "processing_time_seconds": 2.731777804000103,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.230532+00:00"
+}

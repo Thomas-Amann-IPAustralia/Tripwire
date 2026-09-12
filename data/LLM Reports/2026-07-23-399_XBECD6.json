@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change relates to amendments in the Administrative Review Tribunal Rules 2024 concerning migration decisions and fee impositions for NDIS providers, which is unrelated to patent examination or third party notifications under section 27. The second change involves updates to the IP Australia patent manual, including updates on prior art definitions and procedural details, but does not specifically address or alter the rules, timeframes, or procedures for lodging a section 27 notice or third party notifications to prevent a patent from being granted. The IPFR page content about section 27 notices, their timing, and process remains accurate and unaffected by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3967,
+  "completion_tokens": 155,
+  "total_tokens": 4122,
+  "processing_time_seconds": 2.6111202860001868,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.257951+00:00"
+}

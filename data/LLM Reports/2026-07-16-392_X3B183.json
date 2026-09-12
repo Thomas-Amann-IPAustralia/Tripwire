@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X3B183",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes provide detailed new information about what to expect when engaging a patent or trade mark attorney, including typical costs, how to prepare for meetings, and considerations when choosing an attorney. The IPFR page currently gives a general overview but does not include these practical details such as average fees, preparation tips, or the importance of professional indemnity insurance. Adding this information would improve the accuracy and usefulness of the IPFR page for small business owners seeking guidance on engaging legal professionals for IP matters.",
+  "suggested_changes": [
+    "Add a section outlining typical costs for patent and trade mark attorneys, including hourly rates ($400-700 per hour for patent attorneys) and total fees for trade mark registration ($1,000-2,000 for a single trade mark in one or two classes).",
+    "Include advice on how to prepare for a meeting with an attorney, such as explaining your business, your invention or brand, your commercialisation plans, competitors, and relevant invention details.",
+    "Mention factors to consider when choosing an attorney, including their experience, area of expertise, and whether they have Professional Indemnity Insurance (PII).",
+    "Note that some attorneys offer free consultations to assess services and provide cost estimates, and that fee structures may include hourly rates, flat rates, upfront payments, or payment plans.",
+    "Clarify that IP attorneys are bound by a Code of Conduct requiring confidentiality and prioritising client interests."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4213,
+  "completion_tokens": 317,
+  "total_tokens": 4530,
+  "processing_time_seconds": 6.298211320000064,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.227933+00:00"
+}

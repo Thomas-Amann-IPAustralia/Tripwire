@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and reviews of various parts of the IP Australia trade mark manual, including amendments to terminology and case law references following a recent High Court decision. However, the change document does not specifically mention any amendments to the rules, timeframes, fees, or procedural steps for removal of trade marks from the register for non-use or non-intent to use. The IPFR page content on removal of trade marks remains accurate and consistent with the described changes, which appear to focus on other aspects of trade mark examination and evidence requirements rather than removal procedures. Therefore, no update to the IPFR page content is required based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3355,
+  "completion_tokens": 164,
+  "total_tokens": 3519,
+  "processing_time_seconds": 2.73204675199986,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.819666+00:00"
+}

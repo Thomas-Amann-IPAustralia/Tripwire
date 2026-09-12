@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Uniform Domain-Name Dispute-Resolution Policy (UDRP) webpage primarily clarify that the policy was updated on 21 February 2024 to reflect changes required to implement the Registration Data Policy, with implementation deadlines for contracted parties between 21 August 2024 and 21 August 2025. The IPFR page content about dealing with IP issues without going to court does not mention domain name disputes, the UDRP, or specific procedural or timing details related to domain name dispute resolution. The IPFR page focuses on general informal and administrative approaches, ADR, and Australian-specific IP enforcement options. Therefore, the updated UDRP information does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4050,
+  "completion_tokens": 179,
+  "total_tokens": 4229,
+  "processing_time_seconds": 3.3592186799999126,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.794746+00:00"
+}

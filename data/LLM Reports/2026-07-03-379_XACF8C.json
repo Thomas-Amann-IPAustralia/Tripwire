@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change to the AFP fraud and corruption webpage is a technical update about the website's connectivity error message and does not affect any substantive content related to scams, IP infringement, or official IP Australia procedures. The IPFR page content about common scams remains accurate and unaffected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1727,
+  "completion_tokens": 89,
+  "total_tokens": 1816,
+  "processing_time_seconds": 1.5353959530000338,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.997118+00:00"
+}

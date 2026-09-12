@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to accessibility fixes and URL updates in the IPAustralia design manual, specifically concerning design registrations and excluded designs. There is no indication of any changes to trade mark removal procedures, timeframes, fees, or legal requirements. The IPFR page on removing a trade mark from the register focuses on trade mark law and procedures, which are distinct from design registrations. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2927,
+  "completion_tokens": 126,
+  "total_tokens": 3053,
+  "processing_time_seconds": 2.7503600330001063,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712245+00:00"
+}

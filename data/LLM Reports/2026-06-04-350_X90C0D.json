@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to accessibility fixes in the design and plant breeder's rights manuals, updates to ACCC public registers and consultation hub pages, and updated statistics and dates on Amazon Brand Registry's Transparency program. None of these changes affect the fundamental explanations, definitions, or procedural guidance about IP protection for small businesses as presented in the IPFR page. The IPFR page content remains accurate and current in its description of IP rights, enforcement options, and general advice for small businesses. There are no specific statutory references, procedural steps, or factual details in the IPFR page that are contradicted or outdated by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6904,
+  "completion_tokens": 158,
+  "total_tokens": 7062,
+  "processing_time_seconds": 1.8419936720001715,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.706945+00:00"
+}

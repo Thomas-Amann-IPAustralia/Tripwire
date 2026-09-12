@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including customer engagement, agent nomination, types of plant trade marks, and procedural accessibility fixes. The IPFR page concerns informing online platforms about IP rights, focusing on trade marks and other IP types in the context of online marketplaces. There is no mention or discussion of Plant Breeder's Rights or related procedural details in the IPFR page content. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2742,
+  "completion_tokens": 139,
+  "total_tokens": 2881,
+  "processing_time_seconds": 1.9825169729999743,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851827+00:00"
+}

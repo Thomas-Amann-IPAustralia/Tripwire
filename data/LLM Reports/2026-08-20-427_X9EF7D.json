@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the IP Australia's official notices and the Trade Marks Manual of Practice and Procedure, specifically concerning examination of trade mark applications relating to plants or plant materials, updated instruments for fees and filings, and minor procedural updates. The IPFR page 'Familiarise yourself with IP laws' provides a broad overview of Australian IP law, its legislative framework, and general guidance on IP rights and administration. It does not contain specific procedural details, fee schedules, or manual content that would be affected by these updates. Therefore, the page remains accurate and current as a general introduction and does not require amendment based on these specific upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4455,
+  "completion_tokens": 161,
+  "total_tokens": 4616,
+  "processing_time_seconds": 1.957763044000103,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228996+00:00"
+}

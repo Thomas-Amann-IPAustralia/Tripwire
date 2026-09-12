@@ -1,0 +1,112 @@
+READ NEXT
+I want to learn about...
+Application systems and services
+There are four main international cooperation systems that allow applicants to apply for and manage their IP in overseas countries.
+The Madrid System
+Madrid is the international trade mark system. It facilitates the protection of trade marks in a number of countries through one application.
+The Patent Cooperation Treaty (PCT)
+The Patent Cooperation Treaty (PCT) is the international patent application system. It's a streamlined way of applying for a patent in a number of countries at the same time, including Australia.
+The Hague System
+The Hague System is for the international registration of industrial designs. Australia isn't a member of the Hague, so Australian applicants must meet certain eligibility requirements to apply through this system.
+International Union for the Protection of New Varieties of Plants (UPOV)
+The International Union for the Protection of New Varieties, known as UPOV, provides a streamline way to apply for international plant variety protection in other countries.
+The Priority Document Access Service
+For some IP applications, priority documents can be filed electronically with multiple IP offices using the Priority Document Access Service (DAS).
+The Priority Document Access Service (DAS) is administered by WIPO and can be used to file priority documents related to:
+- Trade marks
+- Patents
+- Utility models
+- Industrial designs.
+Participation in the service is voluntary for both patent offices, such as us, and applicants. Priority documents can still be supplied to WIPO's International Bureau (IB) using other means (such as mail or fax). The IB can also ask us to supply certified copies of priority documents.
+What you need to know
+- Priority documents can only be supplied to WIPO via DAS.
+- If DAS can't be used, the priority documents need to be supplied directly to the office requesting them.
+- Where a patent application is filed in Australia (and relies on foreign priority) there's no requirement to provide a certified copy of a foreign priority document, unless it's requested by us. However, if we later request access to the document, you'll be able to meet this obligation by advising us that the priority document is available from DAS.
+Fees
+- The standard fee for trade marks and designs for creating a certified copy of a priority document will still apply when using DAS. However, by using this service, you may not need to order and pay for multiple copies of the one priority document.
+- We don’t charge any additional fees for sending the priority document to, or retrieving it from, WIPO's digital library using DAS.
+- The fee item for making use of the WIPO DAS service is independent of requesting a physical certified copy.
+- A fee applies if you request transmission under the WIPO DAS and a physical certified copy.
+How it works
+- You'll need to submit a request to us to send a certified copy of your priority document to WIPO's digital library. You can submit this through online services or by post.
+- Once we receive the request, we'll create a certified copy of the priority document and electronically transfer it to WIPO’s secure database via a secure data exchange.
+- WIPO will acknowledge receipt of the document by supplying you with a unique access code via an email.
+- You can use your unique access code to authorise participating offices to access your priority document.
+WIPO treaties
+Australia is a signatory on many WIPO treaties that aim to promote the worldwide protection of IP rights.
+Australia is a signatory to many of the multilateral treaties that WIPO administers.
+These treaties are divided into 4 categories:
+IP protection agreements
+This includes the Paris Convention, which sets basic legal standards for IP protection and is incorporated in the TRIPS Agreement.
+Administrative treaties
+Treaties, such as the Patent Law Treaty and the Singapore Treaty on the Law of Trademarks, streamline the process of obtaining rights internationally by setting limits on administrative requirements.
+The Riyadh Design Law Treaty will play a similar role for designs, noting that Australia's participation in this treaty is subject to Government consideration and a Parliamentary process to ratify it, and we are not a signatory at this stage.
+Australia played an active role in negotiations to establish the Riyadh Design Law Treaty in 2024. Find out more: WIPO Design Law Treaty
+Global protection systems
+These provide routes for filing for IP protection in numerous countries, such as the Madrid System for trade marks and the Patent Cooperation Treaty (PCT) for patents.
+Classification treaties
+The Nice Agreement deals with the international classification of goods and services for trade marks, and the Strasbourg Agreement Concerning the International Patent Classification provides classification of international patents.
+We actively contribute to WIPO meetings and initiatives such as the:
+- Intergovernmental Committee on Intellectual Property and Genetic Resources, Traditional Knowledge and Traditional Cultural Expressions (the IGC)
+- PCT Working Group
+- Working Group of the Madrid Union
+- Committee on Development and Intellectual Property (CDIP).
+Intergovernmental Committee on Intellectual Property and Genetic Resources, Traditional Knowledge and Traditional Cultural Expressions (the IGC)
+The WIPO IGC is the forum that allows for negotiations on possible international instruments relevant to Indigenous Knowledge and the IP system occur.
+International instruments are documents agreed at an international level, such as:
+- Treaties
+- Protocols
+- Resolutions
+- Declarations.
+Depending on what type of instrument is negotiated, it might provide recommendations, guidelines, procedures, rights, or rules at the international level.
+Delegates from each WIPO member country are able to share their views on what could be agreed. An Indigenous Caucus, made up of representatives from Indigenous Peoples and Local Communities, also attends and has an important role in these discussions.
+We participate in the IGC negotiations and look to increase Aboriginal and Torres Strait Islander peoples engagement and participation in these conversations.
+Cooperation and agreements
+Australia is a member of a number of cooperation and agreements partnerships that aim to strengthen international IP rights.
+Australia belongs to the International Convention for the Protection of Industrial Property. This is commonly known as the Paris Convention.
+The Paris Convention applies to industrial property, including:
+- Trade marks
+- Patents
+- Industrial designs
+- Utility models
+- Service marks
+- Trade names
+- Geographical indications.
+How it works
+The Paris Convention allows overseas protection in most countries to be back dated to your original Australian filing date.
+If you file in Australia first, and then another country within the time limits provided in the Paris Convention, your priority date will be the date that you originally filed in Australia.
+The time limit is 12 months for patents, 6 months for trade marks and 6 months for designs.
+This means the priority date of any subsequent applications can be the same as the date applied to the original Australian application.
+Here's a quick video that explains what the Paris Convention is and how it works.
+We’re a key participant in a range of development cooperation activities focused on capacity building in the Asia-Pacific region.
+These include:
+- Capacity building under free trade agreement (FTA) economic cooperation arrangements such as the ASEAN-Australia-New Zealand Free Trade Agreement (AANZFTA)
+- WIPO's Australia Funds-in-Trust (FIT) program
+- Strengthening partnerships with other IP offices to advance towards becoming partner of choice.
+The Australian Department of Foreign Affairs and Trade is negotiating free trade agreements (FTAs) with several of Australia's major trading partners.
+We advise the Department on IP issues relating to trade marks, patents, designs and plant breeder's rights as part of these negotiations.
+These FTAs facilitate trade and investment by reducing and/or eliminating tariffs and other barriers to trade.
+Australia and New Zealand signed a bilateral arrangement to support the trans-Tasman patent attorney regime. Known as the Single Economic Market (SEM), this arrangement sets out how the regime is to be implemented in both countries.
+The aim of the SEM is to:
+- Remove regulatory barriers to firms operating in both New Zealand and Australian markets
+- Create a more seamless trans-Tasman business environment
+- Provide a single regulatory framework for patent attorneys in Australia and New Zealand
+- Provide the same accreditation and professional standards in both countries, saving time, money and effort for the profession as a whole.
+As a World Trade Organization member, Australia is a party to the Trade-Related Aspects of Intellectual Property Rights TRIPS Agreement which:
+- Facilitates trade in knowledge and creativity
+- Resolves trade disputes over IP
+- Sets standards for the IP system in terms of innovation, technology transfer and public welfare.
+The Vancouver Group includes us, the Canadian Intellectual Property Office (CIPO) and the Intellectual Property Office of the United Kingdom (UKIPO).
+The Vancouver Group aims to:
+- Share information and experiences on common issues and areas relevant to managing a mid-sized national IP office
+- Contribute to a more effective multilateral approach to work sharing.
+Key features
+Mutual Exploitation
+- Investigating opportunities to reduce the duplication of patents-related work between the offices
+- Access to high-quality search and examination information of other offices
+- The Centralized Access to Search and Examination (WIPO CASE) system — a single portal through which patent examiners can access the search and examination information from other participating offices.
+Economic research
+IP offices can improve the quality of economic and analytical research through:
+- Cooperation
+- Information sharing
+- Sharing of best-practice principles.

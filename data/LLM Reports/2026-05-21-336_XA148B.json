@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in official notices about a High Court case under assessment (Zip Co Ltd v Firstmac Ltd), amendments to patent manual content, and minor updates to the trade mark manual including removal of references to certain sections and minor typographical corrections. None of these changes specify any amendments to the opposition process timelines, fees, procedural steps, or substantive grounds for opposition that would affect the accuracy or currency of the IPFR page content on responding to a trade mark opposition. The IPFR page content remains consistent with the current procedural framework and does not contain any specific statutory references or procedural details contradicted or updated by the changes. Therefore, no update to the IPFR page is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8648,
+  "completion_tokens": 176,
+  "total_tokens": 8824,
+  "processing_time_seconds": 3.979272605999995,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.585221+00:00"
+}

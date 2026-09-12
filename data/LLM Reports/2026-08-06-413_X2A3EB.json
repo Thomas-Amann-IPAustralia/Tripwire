@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X2A3EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change indicates that the Etsy Intellectual Property Policy webpage is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). There is no change to the content or procedures described on the Etsy IP policy page itself. The IPFR page references Etsy's IP policy and removal process but does not include detailed procedural or legal content that would be affected by a temporary or technical outage of the webpage. Therefore, the IPFR content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2287,
+  "completion_tokens": 125,
+  "total_tokens": 2412,
+  "processing_time_seconds": 2.6528399680000803,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.797147+00:00"
+}

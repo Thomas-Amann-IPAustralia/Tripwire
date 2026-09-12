@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IP Australia Trade Marks Manual concerning examination procedures, amendments, and specific sections about plants or plant materials, indexing, and prohibited signs. There is no indication that the opposition process, timeframes, fees, or procedural steps described in the IPFR page have been altered. The IPFR page content about opposing trade mark registrations remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6798,
+  "completion_tokens": 115,
+  "total_tokens": 6913,
+  "processing_time_seconds": 2.535536073000003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.906350+00:00"
+}

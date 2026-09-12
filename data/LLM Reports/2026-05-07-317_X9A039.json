@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the ACCC public registers and Amazon Brand Registry cashback percentages. The IPFR page 'Register your trade mark' focuses on Australian trade mark registration processes, costs, benefits, and risks, without mentioning ACCC exemptions or Amazon Brand Registry cashback offers. Therefore, these changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2417,
+  "completion_tokens": 104,
+  "total_tokens": 2521,
+  "processing_time_seconds": 6.723218751999866,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712640+00:00"
+}

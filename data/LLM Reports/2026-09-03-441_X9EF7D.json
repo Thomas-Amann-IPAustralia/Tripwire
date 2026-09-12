@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Trade Marks Manual of Practice and Procedure, including revisions to sections on examination of trade marks relating to plants or plant materials, updates to prescribed and prohibited signs, and other procedural details. The IPFR page 'Familiarise yourself with IP laws' provides a general overview of Australian IP legislation and the roles of various Acts and agencies, without detailing specific procedural or manual content. There is no specific information in the IPFR page that is contradicted or outdated by these manual updates. Therefore, no amendment to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3419,
+  "completion_tokens": 152,
+  "total_tokens": 3571,
+  "processing_time_seconds": 2.6994270870000037,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039349+00:00"
+}

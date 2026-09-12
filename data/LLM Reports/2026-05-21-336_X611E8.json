@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the IPAustralia patent manual concerning procedural details, links, and case law references such as the Aristocrat decision and Otsuka case. These updates focus on examination practices, amendment allowability, manner of manufacture, and extension of term considerations. The IPFR page content is a general guide for patent holders on responding to oppositions, covering the opposition process, risks, benefits, costs, timelines, and parties involved. There are no specific procedural timeframes, fees, or legal criteria in the IPFR page that are contradicted or outdated by the upstream changes. The changes do not address the opposition process directly or alter the fundamental steps or outcomes described in the IPFR page. Therefore, no update to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5768,
+  "completion_tokens": 194,
+  "total_tokens": 5962,
+  "processing_time_seconds": 2.701131235000048,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.586724+00:00"
+}

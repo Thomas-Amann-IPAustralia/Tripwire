@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the IP Australia Trade Marks Manual of Practice and Procedure, including minor updates to publication timing, amendments before particulars are published, examination of trade marks relating to plants or plant materials, and updates regarding prohibited and prescribed signs. These changes are procedural and technical in nature, focusing on examination and filing details. The IPFR page content concerns the opposition process to challenge the registration of a trade mark, including reasons for opposition, benefits, risks, costs, and procedural timelines. None of the changes specifically address or alter the opposition process, timeframes, fees, or procedural steps described in the IPFR page. Therefore, the IPFR page remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6998,
+  "completion_tokens": 177,
+  "total_tokens": 7175,
+  "processing_time_seconds": 4.551513578999902,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.227481+00:00"
+}

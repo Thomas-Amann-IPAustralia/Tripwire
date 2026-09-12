@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the trade mark and design manuals primarily involve updates to procedural details, formatting, accessibility fixes, and URL changes. There is no indication of changes to substantive legal requirements or thresholds that would affect the guidance given in the IPFR page about responding to AI-generated IP infringement allegations. The IPFR page focuses on practical advice and a checklist for SMEs when receiving such allegations, rather than detailed procedural or legislative specifics that have been updated in the manuals. Therefore, the accuracy and currency of the IPFR page content remain unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4322,
+  "completion_tokens": 142,
+  "total_tokens": 4464,
+  "processing_time_seconds": 2.0531087890001345,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.155134+00:00"
+}

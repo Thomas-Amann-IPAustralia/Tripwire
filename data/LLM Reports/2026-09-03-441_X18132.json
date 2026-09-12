@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and additions to the PBR System User Guides and QP Portal guidance material on the IP Australia website. These changes concern procedural and technical guidance for submitting PBR applications and managing them via the QP Portal. The IPFR page focuses on seeking binding, authoritative decisions in PBR disputes, including court proceedings, enforcement, and litigation risks and outcomes. There is no indication that the changes affect the legal or procedural content related to court proceedings, enforcement, or dispute resolution described in the IPFR page. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2791,
+  "completion_tokens": 153,
+  "total_tokens": 2944,
+  "processing_time_seconds": 2.471705506000035,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039708+00:00"
+}

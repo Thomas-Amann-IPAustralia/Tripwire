@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia manuals for trade marks and designs primarily involve updates to internal examination practices, legislative references, accessibility fixes, and minor content adjustments. There is no indication of changes to fees, timeframes, or procedural steps for registering a trade mark that would affect the accuracy of the IPFR page content. The IPFR page's information on costs, timeframes, benefits, and risks remains consistent with the updated source material. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4184,
+  "completion_tokens": 132,
+  "total_tokens": 4316,
+  "processing_time_seconds": 2.426879427999893,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.795536+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a notice about the Registrar assessing implications of a High Court decision (Zip Co Ltd v Firstmac Ltd) and some administrative updates about office closures and approved forms. There is no specific information in the change about amendments to the removal process, timeframes, fees, or procedural steps described in the IPFR page. The IPFR content remains accurate and current based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2885,
+  "completion_tokens": 114,
+  "total_tokens": 2999,
+  "processing_time_seconds": 1.77790615899994,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.589412+00:00"
+}

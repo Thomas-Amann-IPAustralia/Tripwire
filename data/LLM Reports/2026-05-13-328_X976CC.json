@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-13-328",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of search results shown on an unrelated news page of IP Australia, with no content relevant to the WIPO Clause Generator or dispute resolution clauses. The change does not affect any specific information, legal references, or procedural details in the IPFR page about planning IP disputes via contracts. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2295,
+  "completion_tokens": 111,
+  "total_tokens": 2406,
+  "processing_time_seconds": 2.4755407069999364,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-13T06:04:12.939203+00:00"
+}

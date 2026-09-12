@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates contact email addresses and clarifies procedural details for eBay's Verified Rights Owner (VeRO) program, which is a specific online platform for reporting IP infringement. The IPFR page provides a general overview of IP protection for small businesses and does not mention eBay, the VeRO program, or specific online infringement reporting mechanisms. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2736,
+  "completion_tokens": 120,
+  "total_tokens": 2856,
+  "processing_time_seconds": 2.6554756239997914,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231370+00:00"
+}

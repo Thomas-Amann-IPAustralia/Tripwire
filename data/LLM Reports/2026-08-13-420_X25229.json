@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X25229",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document reflects a removal of references to the APEC Intellectual Property Experts' Group (IPEG) and related resources from the DFAT webpage on intellectual property and the WTO. This change is about international IP cooperation and capacity building programs, which is unrelated to the specific content of the IPFR page about the risks of joint IP ownership in collaborative research and commercialisation. The IPFR page focuses on practical issues and legal implications of joint ownership of IP rights in Australia, including patents, copyright, and know-how, and does not discuss international trade agreements or IP committees. Therefore, the removal of the IPEG references does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3545,
+  "completion_tokens": 170,
+  "total_tokens": 3715,
+  "processing_time_seconds": 2.0421546860000035,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.878584+00:00"
+}

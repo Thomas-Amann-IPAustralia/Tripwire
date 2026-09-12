@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to administrative tribunal rules, oversight of intelligence community legislation, and updates to the Plant Breeder's Rights manual focused on accessibility fixes and link corrections. The IPFR page content provides general guidance on what to check before getting registered IP, including basic requirements for patents, designs, trade marks, and PBRs, but does not include detailed procedural rules, fee structures, or legal references that have been amended. The changes to the PBR manual are mainly accessibility and link fixes without substantive content changes affecting the basic registration requirements or advice given on the IPFR page. Other changes relate to oversight and intelligence legislation unrelated to the IP registration process or requirements. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6918,
+  "completion_tokens": 184,
+  "total_tokens": 7102,
+  "processing_time_seconds": 4.196011033000104,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708413+00:00"
+}

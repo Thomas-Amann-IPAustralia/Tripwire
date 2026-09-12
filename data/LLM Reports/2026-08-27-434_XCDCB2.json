@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to minor updates in the Trade Marks Office Manual of Practice and Procedure, including amendments to procedural sections about amendments after publication, indexing, and examination of trade marks related to plants or plant materials. There are also updates regarding prohibited signs and prescribed signs, and archival of outdated content about the Aboriginal Flag. None of these changes directly affect the specific content of the IPFR page, which focuses on the basics of registering an unregistered trade mark, including benefits, risks, costs, and procedural steps. There is no indication of changes to fees, timeframes, or fundamental registration requirements that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4292,
+  "completion_tokens": 162,
+  "total_tokens": 4454,
+  "processing_time_seconds": 2.437959274999912,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.906529+00:00"
+}

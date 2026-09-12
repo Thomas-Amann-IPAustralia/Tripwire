@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to detailed procedural updates in the IP Australia patent manual, administrative court fee information, and federal court fees. None of these changes directly affect the core content of the IPFR page about enforcing a 'filed' patent, which focuses on the distinction between filed and granted patents, enforceability, benefits, risks, and timelines. There are no updates to the legal status of filed patents, enforceability rules, or timelines that would require changes to the IPFR page. The fee changes and procedural clarifications do not impact the accuracy of the IPFR page's guidance for small business owners regarding enforcement of filed patents.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5154,
+  "completion_tokens": 160,
+  "total_tokens": 5314,
+  "processing_time_seconds": 2.3715150900000026,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850500+00:00"
+}

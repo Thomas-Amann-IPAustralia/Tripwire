@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to the Defence and Veterans' Service Commissioner legislation and to procedural details about complaints against IP attorneys handled by the Trans-Tasman IP Attorneys Board. The IPFR page focuses on advising accused infringers about obtaining legal advice and how to find and engage IP lawyers or attorneys, including general cost and process information. None of the changes update or contradict specific factual content, procedural steps, costs, or advice given in the IPFR page. The complaint process details added or clarified in the changes do not affect the accuracy of the IPFR page's content, which does not discuss complaint procedures against attorneys. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6072,
+  "completion_tokens": 167,
+  "total_tokens": 6239,
+  "processing_time_seconds": 3.220016904000204,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.707978+00:00"
+}

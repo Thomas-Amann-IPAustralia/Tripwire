@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in IP Australia's official notices, including updated manuals and procedural instruments for trade marks, patents, and plant breeders rights, as well as new forms and updated examination guidance. However, the IPFR page 'Free IP tools you can use' is a general informational page listing free IP tools and their purposes, without specific procedural details, dates, or statutory references that would be affected by these updates. There is no indication that the descriptions of the tools, their availability, or their functions have changed. The page does not mention the Trade Marks Manual of Practice and Procedure or specific examination procedures that have been updated. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8806,
+  "completion_tokens": 178,
+  "total_tokens": 8984,
+  "processing_time_seconds": 2.693713412000079,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228181+00:00"
+}

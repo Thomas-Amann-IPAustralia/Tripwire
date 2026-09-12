@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XC8B4D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds a minor detail about types of IP assets and contracts relevant to an IP audit, specifically mentioning contracts with IP provisions and descriptions of IP disputes. The IPFR page already broadly covers the scope and purpose of IP audits, including references to registrations, licences, and agreements. The added detail does not contradict or update any specific factual information on the IPFR page, nor does it require changes to costs, timeframes, or procedural steps. Therefore, the IPFR page remains accurate and comprehensive without amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1828,
+  "completion_tokens": 136,
+  "total_tokens": 1964,
+  "processing_time_seconds": 2.688594297999771,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.711048+00:00"
+}

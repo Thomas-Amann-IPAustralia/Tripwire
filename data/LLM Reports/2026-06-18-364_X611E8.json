@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to amendments in the Administrative Review Tribunal Rules 2024 concerning migration and NDIS provider reviews, updates to trademark manual content, minor formatting changes on IP Australia legislation pages, and updates to trade agreements and oversight legislation unrelated to patent opposition procedures. None of the changes specifically address or alter the patent opposition process, timelines, fees, procedural steps, or outcomes as described in the IPFR page. Therefore, the content on responding to a patent opposition remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9489,
+  "completion_tokens": 133,
+  "total_tokens": 9622,
+  "processing_time_seconds": 2.5320464979999997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.706760+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to minor content updates, typographical corrections, accessibility fixes, and updates to URLs and references in the trademark and design manuals. There are no substantive changes to legal thresholds, time limits, procedural steps, or specific statutory references that would affect the accuracy or currency of the IPFR page content on seeking binding, authoritative decisions in design disputes. The IPFR page's detailed guidance on court proceedings, time limits, costs, and risks remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5388,
+  "completion_tokens": 132,
+  "total_tokens": 5520,
+  "processing_time_seconds": 2.239033447999873,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.710864+00:00"
+}

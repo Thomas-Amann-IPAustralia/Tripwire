@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change involves a minor formatting adjustment and reordering of bullet points on the 'how to engage an attorney' webpage, with no substantive change to the content or advice. The IPFR page 'Why every creative business needs an IP strategy from day one' references engaging experts such as IP commercialisation lawyers and patent/trade mark attorneys but does not include the detailed bullet points or procedural guidance that was changed. Therefore, the IPFR page content remains accurate and does not require updating based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2360,
+  "completion_tokens": 134,
+  "total_tokens": 2494,
+  "processing_time_seconds": 4.953557276999845,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908636+00:00"
+}

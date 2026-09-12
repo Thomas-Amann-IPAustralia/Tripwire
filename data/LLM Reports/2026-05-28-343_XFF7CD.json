@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Plant Breeder's Rights manual primarily involve accessibility fixes, link corrections, and minor content updates that do not affect the accuracy or currency of the IPFR page content. The IPFR page provides a general overview of free IP tools without detailed procedural or statutory information that would be impacted by these manual updates. The news update about the Indigenous Knowledge Panel is unrelated to the content of the IPFR page. Therefore, no specific amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2051,
+  "completion_tokens": 129,
+  "total_tokens": 2180,
+  "processing_time_seconds": 2.6641584740000326,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.492386+00:00"
+}

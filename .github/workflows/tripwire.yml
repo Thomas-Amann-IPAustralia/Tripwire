@@ -1,110 +1,210 @@
-name: Tripwire Check
+name: Tripwire Pipeline
+
+# Main monitoring pipeline — runs daily after the IPFR ingestion workflow
+# has completed and updated the corpus database.
+# See Section 7.1 of the system plan.
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "0 20 * * 0-4" # 6am Sydney (AEST base), weekdays
+    # Run at 02:00 UTC daily (after ingestion at 01:00 UTC).
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+    inputs:
+      run_id_override:
+        description: "Override the auto-generated run ID (optional)"
+        required: false
+        default: ""
+      log_level:
+        description: "Logging level"
+        required: false
+        default: "INFO"
+        type: choice
+        options:
+          - DEBUG
+          - INFO
+          - WARNING
+      check_frequency_override:
+        description: "Force check frequency override — use 'all' to check every source regardless of schedule, or a frequency string (daily, weekly, fortnightly, monthly, quarterly) to treat all sources as if they are on that schedule"
+        required: false
+        default: ""
 
-permissions:
-  contents: write
+# Only one pipeline run at a time — prevents concurrent writes to ipfr.sqlite.
+concurrency:
+  group: tripwire-pipeline
+  cancel-in-progress: false
 
 jobs:
-  run-tripwire:
+  run-pipeline:
+    name: Run Tripwire Pipeline
     runs-on: ubuntu-latest
+    timeout-minutes: 60       # Section 6.6 pipeline timeout
+    permissions:
+      contents: write          # required to commit snapshots back to the repo
 
     steps:
-      - name: Checkout Code
+      # ------------------------------------------------------------------
+      # 1. Checkout — pull latest committed state to get the current corpus.
+      # ------------------------------------------------------------------
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Required for git diff logic
+          fetch-depth: 1
 
-      - name: Set up Python
+      - name: Pull latest committed state
+        run: git pull --rebase origin ${{ github.ref_name }}
+
+      # ------------------------------------------------------------------
+      # 2. Python environment.
+      # ------------------------------------------------------------------
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: "3.9"
-          cache: "pip"
+          python-version: "3.11"
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@latest
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
+      - name: Install Chrome for Selenium
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq google-chrome-stable
 
-      - name: Run Tripwire Script
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt
+
+      # Selenium smoke test — fails the run early if Chrome or
+      # selenium-stealth cannot launch headlessly.  Without this, a broken
+      # driver is only visible after every force_selenium source reports a
+      # failure in its state.json.
+      - name: Selenium smoke test
+        run: |
+          python - <<'PY'
+          from src.scraper import build_selenium_driver
+          d = build_selenium_driver()
+          print("Chrome:", d.capabilities.get("browserVersion"))
+          d.quit()
+          PY
+
+      # ------------------------------------------------------------------
+      # 3. Cache Hugging Face model weights (lazy-load means we pay once).
+      #    Both models are cached together since the bi-encoder is a subset
+      #    of what the cross-encoder run requires.
+      # ------------------------------------------------------------------
+      - name: Cache Hugging Face models
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-models-bge-base-v1-5-gte-reranker
+          restore-keys: |
+            hf-models-bge-base-v1-5-
+            hf-models-bge-base-
+
+      # ------------------------------------------------------------------
+      # 4. Download spaCy model (cached via pip cache above if re-run).
+      # ------------------------------------------------------------------
+      - name: Download spaCy model
+        run: python -m spacy download en_core_web_sm
+
+      # ------------------------------------------------------------------
+      # 5. Run the Tripwire pipeline (Stages 1–9).
+      # ------------------------------------------------------------------
+      - name: Run Tripwire pipeline
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: python tripwire.py
-
-      - name: Commit and Push Changes
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          FEEDBACK_EMAIL: ${{ secrets.FEEDBACK_EMAIL }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          # Optional: residential proxy for gov.au sources that block GHA IPs.
+          # Format: http://user:pass@host:port  Leave unset to disable.
+          SCRAPER_PROXY_URL: ${{ secrets.SCRAPER_PROXY_URL }}
         run: |
-          git config --global user.name "Tripwire Bot"
-          git config --global user.email "actions@github.com"
+          RUN_ID_ARG=""
+          if [ -n "${{ github.event.inputs.run_id_override }}" ]; then
+            RUN_ID_ARG="--run-id ${{ github.event.inputs.run_id_override }}"
+          fi
+          LOG_LEVEL="${{ github.event.inputs.log_level || 'INFO' }}"
+          FREQ_ARG=""
+          if [ -n "${{ github.event.inputs.check_frequency_override }}" ]; then
+            FREQ_ARG="--check-frequency ${{ github.event.inputs.check_frequency_override }}"
+          fi
+          python -m src.pipeline \
+            --config tripwire_config.yaml \
+            --log-level "$LOG_LEVEL" \
+            $RUN_ID_ARG \
+            $FREQ_ARG
 
-          git add audit_log.csv content_archive/ diff_archive/ handover_packets/ llm_verification_results/ llm_update_suggestions/ update_review_queue.csv 2>/dev/null || true
+      # ------------------------------------------------------------------
+      # 6. Commit updated snapshots back to the repository (Section 7.2).
+      #    The pipeline's _git_commit_snapshots() handles this, but we also
+      #    add a workflow-level safety net here.
+      # ------------------------------------------------------------------
+      - name: Commit updated snapshots and LLM reports (safety net)
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/influencer_sources/snapshots/ data/ipfr_corpus/ipfr.sqlite "data/LLM Reports/" || true
+          git diff --cached --quiet || git commit -m "chore: update snapshots, database and LLM reports [run ${{ github.run_id }}] [skip ci]"
+          git push origin ${{ github.ref_name }} || true
 
-          if git diff --cached --quiet; then
-            echo "No substantive changes."
-          else
-            git commit -m "Tripwire: Detected changes & recorded diffs [skip ci]"
-            git push
+      # ------------------------------------------------------------------
+      # 7. Publish data assets as a GitHub Release so the Render dashboard
+      #    can pull fresh data on its next startup via syncDataFromRelease().
+      # ------------------------------------------------------------------
+      - name: Upload data assets to GitHub Release
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="data-$(date +%Y%m%d-%H%M%S)"
+          FILES=""
+          [ -f data/ipfr_corpus/ipfr.sqlite ]                   && FILES="$FILES data/ipfr_corpus/ipfr.sqlite"
+          [ -f data/influencer_sources/source_registry.csv ]    && FILES="$FILES data/influencer_sources/source_registry.csv"
+          [ -f data/logs/feedback.jsonl ]                       && FILES="$FILES data/logs/feedback.jsonl"
+          [ -f tripwire_config.yaml ]                           && cp tripwire_config.yaml data/tripwire_config.yaml && FILES="$FILES data/tripwire_config.yaml"
+          if [ -d data/influencer_sources/snapshots ] && [ "$(ls -A data/influencer_sources/snapshots 2>/dev/null)" ]; then
+            tar czf data/snapshots.tar.gz -C data/influencer_sources snapshots
+            FILES="$FILES data/snapshots.tar.gz"
+          fi
+          if [ -n "$FILES" ]; then
+            gh release create "$TAG" $FILES \
+              --title "Data sync $TAG" \
+              --notes "Automated data sync from Tripwire pipeline run ${{ github.run_id }}" \
+              --repo ${{ github.repository }}
           fi
 
-      - name: Stage current-run artifacts
+      # ------------------------------------------------------------------
+      # 8. Trigger Render redeploy so the dashboard picks up fresh data.
+      # ------------------------------------------------------------------
+      - name: Trigger Render redeploy
         if: always()
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
         run: |
-          python - <<'EOF'
-          import json, os, shutil
+          if [ -n "$RENDER_DEPLOY_HOOK" ]; then
+            curl -s "$RENDER_DEPLOY_HOOK"
+          else
+            echo "RENDER_DEPLOY_HOOK not set — skipping redeploy"
+          fi
 
-          manifest_path = "current_run_manifest.json"
-          if not os.path.exists(manifest_path):
-              print("No manifest found — nothing to stage.")
-              exit(0)
-
-          with open(manifest_path) as f:
-              manifest = json.load(f)
-
-          staging = {
-              "staging/handover_packets":    manifest.get("handover_packets", []),
-              "staging/verification_results": manifest.get("verification_results", []),
-              "staging/update_suggestions":  manifest.get("update_suggestions", []),
-          }
-
-          for dest_dir, paths in staging.items():
-              if paths:
-                  os.makedirs(dest_dir, exist_ok=True)
-                  for p in paths:
-                      if os.path.exists(p):
-                          shutil.copy2(p, dest_dir)
-                          print(f"Staged: {p} → {dest_dir}")
-                      else:
-                          print(f"Warning: manifest references missing file: {p}")
-
-          print("Staging complete.")
-          EOF
-
-      - name: Upload handover packets
+      # ------------------------------------------------------------------
+      # 9. Upload run logs as artifact (90-day retention).
+      # ------------------------------------------------------------------
+      - name: Upload run logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: handover-packets-${{ github.run_number }}
-          path: staging/handover_packets/
-          retention-days: 90
-          if-no-files-found: ignore
-
-      - name: Upload LLM verification results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: llm-verification-results-${{ github.run_number }}
-          path: staging/verification_results/
-          retention-days: 90
-          if-no-files-found: ignore
-
-      - name: Upload LLM update suggestions
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: llm-update-suggestions-${{ github.run_number }}
-          path: staging/update_suggestions/
+          name: tripwire-run-${{ github.run_id }}
+          path: |
+            data/logs/
           retention-days: 90
           if-no-files-found: ignore

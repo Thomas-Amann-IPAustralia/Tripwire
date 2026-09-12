@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Madrid System page clarify fee structures and emphasize the simplification of international trademark registration, but do not alter the fundamental explanation of the Madrid System or its role in facilitating multi-country trademark protection. The IPFR page already correctly states that WIPO can facilitate filing in multiple countries and that protection is granted under each member's domestic laws. The eBay intellectual property policy update relates to listing practices and IP compliance on an online marketplace, which is relevant to online infringement but does not contradict or update any specific guidance or factual content in the IPFR page. Therefore, no specific factual or procedural content in the IPFR page is outdated or inaccurate due to these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3722,
+  "completion_tokens": 169,
+  "total_tokens": 3891,
+  "processing_time_seconds": 3.3522490679997645,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.709221+00:00"
+}

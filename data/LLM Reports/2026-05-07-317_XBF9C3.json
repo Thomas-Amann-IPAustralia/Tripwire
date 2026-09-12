@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia patent manual involve corrections to links, procedural outlines, and updates related to specific examination practices and case law, none of which directly affect the basic explanation of what a 'filed' patent is or the enforcement rights described in the IPFR page. The ACCC public register update is unrelated to patent enforcement or filing processes. Therefore, the IPFR page content remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2496,
+  "completion_tokens": 122,
+  "total_tokens": 2618,
+  "processing_time_seconds": 1.8919338230000449,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712789+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-04-411",
+  "ipfr_page_id": "XA1EBE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage and an announcement about a new transparency program related to patent examination timeframes for Patent Prosecution Highway requests. This change does not affect any specific information, definitions, procedures, costs, or legal references related to patent re-examination as described in the IPFR page. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2187,
+  "completion_tokens": 118,
+  "total_tokens": 2305,
+  "processing_time_seconds": 1.782262908000007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-04T05:23:48.913427+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia design manual are primarily accessibility fixes involving removal of empty headings and updates to URLs and section titles related to excluded designs. These do not affect the substantive content or procedural details described in the IPFR page about registering designs, certification, renewal, or enforcement. The changes to the Plant Breeder's Rights manual are unrelated to design rights and concern accessibility fixes and minor content updates in a different IP area. Therefore, the IPFR page content remains accurate and up to date with respect to the external changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2984,
+  "completion_tokens": 138,
+  "total_tokens": 3122,
+  "processing_time_seconds": 1.5180524399997921,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708080+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in IP Australia's official notices and the Trade Marks Manual of Practice and Procedure, specifically regarding examination of trade mark applications relating to plants or plant materials, updated instruments for fees and filings, and procedural updates in the Trade Marks Manual. The IPFR page in question provides general guidance on when to seek legal help for IP issues and does not contain specific procedural details, statutory references, or fee information that would be affected by these updates. Therefore, the content remains accurate and no amendments are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3674,
+  "completion_tokens": 135,
+  "total_tokens": 3809,
+  "processing_time_seconds": 1.6511412710001423,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.229108+00:00"
+}

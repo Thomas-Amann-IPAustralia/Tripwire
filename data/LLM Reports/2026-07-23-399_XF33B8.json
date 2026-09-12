@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeders' Rights (PBR) manual, specifically to chapter links and portal submission guidance. The IPFR page mentions PBRs only in a general context as part of the early IP journey stage, without detailed procedural or statutory references. Since the changes are about internal manual navigation and submission portals rather than substantive changes to PBR law or procedures, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2170,
+  "completion_tokens": 125,
+  "total_tokens": 2295,
+  "processing_time_seconds": 2.1586679329998333,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.259458+00:00"
+}

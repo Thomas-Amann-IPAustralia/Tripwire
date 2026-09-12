@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XEB5B5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IP Australia patent manual concerning specific legal decisions (Aristocrat decision [2025] FCAFC 131) and procedural details about patent examination and extensions of term for pharmaceutical substances. The IPFR page provides a general overview of applying for a patent, focusing on basic concepts, benefits, risks, costs, and timelines for small business owners. It does not include detailed legal analysis, specific case law, or procedural nuances that would be affected by these manual updates. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2443,
+  "completion_tokens": 151,
+  "total_tokens": 2594,
+  "processing_time_seconds": 1.5137313950001499,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491856+00:00"
+}

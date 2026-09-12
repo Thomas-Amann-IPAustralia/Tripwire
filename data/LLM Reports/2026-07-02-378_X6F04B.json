@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to WIPO arbitration fee payment methods and procedural notes about the Madrid System's territorial coverage and upcoming events. The IPFR page focuses specifically on the auDA .au domain name dispute resolution process, including fees, timelines, and procedural details specific to the auDRP. There is no mention of WIPO arbitration fees or the Madrid System in the IPFR page content, and the changes do not affect the accuracy of the auDRP-related information presented. Therefore, no update to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3492,
+  "completion_tokens": 144,
+  "total_tokens": 3636,
+  "processing_time_seconds": 1.904689918999793,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.272174+00:00"
+}

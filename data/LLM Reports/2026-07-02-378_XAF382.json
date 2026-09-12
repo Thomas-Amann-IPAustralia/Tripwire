@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns the launch date of a new Qualified Persons (QP) portal for Plant Breeders' Rights and some updates about Patent Cooperation Treaty fees and trade mark practice updates. The IPFR page provides a general overview of IP infringement concepts without specific procedural details or dates related to the QP portal or fee changes. There is no specific mention of the QP portal, its launch date, or related procedural steps in the IPFR content that would require updating. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3071,
+  "completion_tokens": 144,
+  "total_tokens": 3215,
+  "processing_time_seconds": 3.1014947879998545,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269911+00:00"
+}

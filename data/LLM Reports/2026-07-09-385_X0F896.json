@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X0F896",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the 'how_to_engage_an_attorney' webpage from the Trans-Tasman IP Attorneys Board include updated average fee ranges for patent attorneys ($400-700 per hour) and trade marks attorneys ($1,000-2,000 total for filing and registration), which differ from the current IPFR page's stated fees ($500-1,000 per hour for patent attorneys). The IPFR page currently states a higher hourly rate for patent attorneys than the updated source. Since the IPFR page provides specific cost figures to small business owners, these figures should be updated to reflect the latest authoritative data to maintain accuracy and currency. Additionally, the changes emphasize preparation steps and confidentiality obligations, which align with existing content but do not require changes. Therefore, the primary required update is to the cost figures for engaging IP attorneys.",
+  "suggested_changes": [
+    "Update the average fee range for patent attorneys from '$500-1,000 per hour' to '$400-700 per hour' to reflect the amended information from the Trans-Tasman IP Attorneys Board.",
+    "Confirm and update the average fee range for trade marks attorneys to '$1,000-2,000 total for filing and registering a single trade mark in one or two classes' as per the updated source."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5308,
+  "completion_tokens": 287,
+  "total_tokens": 5595,
+  "processing_time_seconds": 4.795971976000146,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.816912+00:00"
+}

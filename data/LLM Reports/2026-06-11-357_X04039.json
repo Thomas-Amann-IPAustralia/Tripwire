@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X04039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external sources primarily concern technical issues with a webpage (ASBFEO site unreachable) and the addition of information about court fee exemptions and filing fees on the Federal Circuit and Family Court of Australia website. The IPFR page content does not currently discuss court filing fees, exemptions, or related procedural costs in detail, nor does it reference the ASBFEO dispute resolution steps page. Therefore, these changes do not affect the accuracy or currency of the IPFR page content about seeking binding, authoritative decisions in trade mark disputes. No specific statutory references, timeframes, or procedural steps in the IPFR page are contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3828,
+  "completion_tokens": 164,
+  "total_tokens": 3992,
+  "processing_time_seconds": 2.6166307420000976,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850058+00:00"
+}

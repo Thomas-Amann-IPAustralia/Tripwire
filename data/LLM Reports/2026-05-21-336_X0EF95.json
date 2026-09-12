@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on ACCC exemptions and WIPO Madrid System news and yearly review dates. These changes do not affect the specific content of the IPFR page about registering design rights in Australia, which focuses on the Designs Act 2003, application process, certification, fees, and timelines. There is no mention of ACCC or Madrid System details in the IPFR page, and the updates do not impact the accuracy of the design registration information provided.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2389,
+  "completion_tokens": 125,
+  "total_tokens": 2514,
+  "processing_time_seconds": 1.8759250299999621,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.588748+00:00"
+}

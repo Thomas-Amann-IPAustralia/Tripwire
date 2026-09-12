@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural details and payment methods for WIPO Arbitration and Mediation Center fees, and to territorial clarifications and upcoming procedural changes in the Madrid System. The IPFR page provides a general overview of WIPO's role and the existence of national IP offices, without specific details on payment procedures, fee structures, or territorial nuances of the Madrid System. None of the changes affect the accuracy or currency of the IPFR page's core content about the global IP office concept or WIPO's functions.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6190,
+  "completion_tokens": 135,
+  "total_tokens": 6325,
+  "processing_time_seconds": 2.559919772000285,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.266529+00:00"
+}

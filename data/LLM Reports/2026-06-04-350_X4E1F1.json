@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to practice directions for the Administrative Review Tribunal, amendments to oversight legislation for intelligence agencies, and updates to ACCC public registers concerning exemptions and undertakings. None of these changes directly affect the content of the IPFR page about using IP that is not yours, which focuses on basic IP infringement concepts, checking ownership, and obtaining permissions. There are no updates to IP laws, infringement definitions, or procedural guidance relevant to the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2989,
+  "completion_tokens": 124,
+  "total_tokens": 3113,
+  "processing_time_seconds": 2.3516078610000477,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708972+00:00"
+}

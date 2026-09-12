@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor textual update to a general IP Australia webpage about preventing IP infringement, specifically adding a trailing space after a sentence about taking action if someone uses your IP without permission. The change does not alter any substantive information, legal thresholds, procedural steps, or timelines related to responding to a trade mark opposition. The IPFR page XA148B focuses specifically on the opposition process, deadlines, and outcomes, none of which are affected by this upstream change. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2527,
+  "completion_tokens": 138,
+  "total_tokens": 2665,
+  "processing_time_seconds": 2.526703022999982,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.611102+00:00"
+}

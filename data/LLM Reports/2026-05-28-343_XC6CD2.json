@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to amendments in the Administrative Review Tribunal Act 2024 and Migration Act concerning oral hearings and decisions on the papers, updates to the patent manual reflecting recent court decisions, and minor updates to the trademark manual including removal of references to a section of the PBR Act and minor typographical corrections. None of these changes specifically affect the opposition process timelines, fees, procedural steps, or substantive grounds for opposing a trade mark registration as described in the IPFR page. The IPFR content about opposing trade mark registrations remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7215,
+  "completion_tokens": 148,
+  "total_tokens": 7363,
+  "processing_time_seconds": 2.22379416900003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.490889+00:00"
+}

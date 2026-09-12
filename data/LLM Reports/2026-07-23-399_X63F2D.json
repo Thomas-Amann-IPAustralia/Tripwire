@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change to the IP Australia Designs Manual primarily involves accessibility fixes, minor image corrections, URL updates, and reorganization of sections related to excluded designs and hearings. There are no substantive changes to the examination or certification process, fees, timeframes, or legal requirements that would affect the accuracy or currency of the IPFR page content. The IPFR page's detailed information about certification, examination fees, timelines, and outcomes remains consistent with the unchanged substantive content of the Designs Manual.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2645,
+  "completion_tokens": 129,
+  "total_tokens": 2774,
+  "processing_time_seconds": 2.561596670999961,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.258588+00:00"
+}

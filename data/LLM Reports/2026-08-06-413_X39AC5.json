@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve updates to the IP Australia manuals and webpages related to trade marks, designs, and legislation references. However, these updates are mostly about structural content revisions, accessibility fixes, and minor clarifications in unrelated sections (e.g., divisional applications, design rights, and filing procedures). There is no specific update or amendment to the procedures, timeframes, or substantive content regarding the revocation of trade mark registrations as described in the IPFR page. The IPFR page's detailed explanation about revocation procedures, timelines, risks, and outcomes remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4639,
+  "completion_tokens": 156,
+  "total_tokens": 4795,
+  "processing_time_seconds": 2.6804171080000287,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.795401+00:00"
+}

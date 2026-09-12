@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to legislative updates about the Defence and Veterans\u2019 Service Commissioner Bill 2025, ACCC enforcement actions and exemptions under the Competition and Consumer Act 2010, minor formatting updates on WIPO treaty pages, and updates to product recall guidelines. None of these changes directly affect the specific content of the IPFR page 'Prevent risks to public interest', which focuses on reporting IP infringement, counterfeit goods, and related consumer harm issues. There are no updates to the criminal offence definitions, reporting procedures, or contact details relevant to IP infringement or enforcement on this page. Therefore, no amendments are required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5902,
+  "completion_tokens": 160,
+  "total_tokens": 6062,
+  "processing_time_seconds": 2.9197769430002154,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708962+00:00"
+}

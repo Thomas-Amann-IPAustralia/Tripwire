@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Amazon Brand Registry webpage updating the percentage of cashback on branded sales from 20% to 10%. The IPFR page 'What does IP protection mean for my business?' does not mention Amazon Brand Registry or any specific cashback percentages or promotional details related to brand protection services. The page focuses on explaining the concept of IP protection, types of IP rights, and general guidance for small businesses without referencing specific commercial programs or incentives. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2056,
+  "completion_tokens": 140,
+  "total_tokens": 2196,
+  "processing_time_seconds": 2.7396667750001598,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713025+00:00"
+}

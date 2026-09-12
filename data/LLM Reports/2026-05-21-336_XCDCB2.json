@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to an update about the Registrar of Trade Marks assessing the implications of a High Court decision (Zip Co Ltd v Firstmac Ltd) and some administrative details about office closures and regulations amendments. There is no specific information in the IPFR page about this case, the legal implications, or procedural details that would require updating. The IPFR page content is general guidance on registering trade marks, fees, and processes, none of which are contradicted or outdated by the new notices. Therefore, no specific amendments are needed based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2881,
+  "completion_tokens": 143,
+  "total_tokens": 3024,
+  "processing_time_seconds": 2.463977229999955,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.589328+00:00"
+}

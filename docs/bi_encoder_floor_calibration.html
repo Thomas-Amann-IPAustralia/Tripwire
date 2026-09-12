@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the 0.63 bi-encoder floor was identified</title>
+<style>html,body{margin:0}</style>
+</head>
+<body>
+<style>
+  :root{
+    color-scheme: light;
+    --plane:#eef0f1; --surface:#fcfcfb; --panel:#f7f8f7;
+    --ink:#0e1417; --secondary:#51565a; --muted:#8a8f92;
+    --grid:#e4e5e2; --baseline:#c3c2b7; --hair:rgba(14,20,23,.10);
+    --signal:#2a78d6; --noise:#eb6834; --good:#006300; --floor:#0e1417;
+    --zone:rgba(14,20,23,.055); --zone-ink:#51565a;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular","Cascadia Code",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:where(:not([data-theme="light"])){
+      color-scheme:dark;
+      --plane:#0b0c0d; --surface:#1a1a19; --panel:#161615;
+      --ink:#ffffff; --secondary:#c3c2b7; --muted:#8a8f92;
+      --grid:#2c2c2a; --baseline:#383835; --hair:rgba(255,255,255,.10);
+      --signal:#3987e5; --noise:#d95926; --good:#0ca30c; --floor:#ffffff;
+      --zone:rgba(255,255,255,.06); --zone-ink:#c3c2b7;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --plane:#0b0c0d; --surface:#1a1a19; --panel:#161615;
+    --ink:#ffffff; --secondary:#c3c2b7; --muted:#8a8f92;
+    --grid:#2c2c2a; --baseline:#383835; --hair:rgba(255,255,255,.10);
+    --signal:#3987e5; --noise:#d95926; --good:#0ca30c; --floor:#ffffff;
+    --zone:rgba(255,255,255,.06); --zone-ink:#c3c2b7;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--plane);color:var(--ink);font-family:var(--sans);
+    line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:44px 24px 64px;}
+
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--signal);display:flex;align-items:center;gap:9px;margin:0 0 14px;}
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--signal);border-radius:2px;}
+  h1{font-size:clamp(26px,4.4vw,38px);line-height:1.12;letter-spacing:-.02em;margin:0 0 14px;
+    text-wrap:balance;font-weight:640;}
+  .thesis{font-size:clamp(16px,2vw,18.5px);color:var(--secondary);margin:0;max-width:62ch;}
+  .thesis b{color:var(--ink);font-weight:620;}
+
+  .rule{height:1px;background:var(--hair);border:0;margin:40px 0;}
+
+  .sec-label{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 18px;}
+
+  /* method steps — a real sequence, so numbered */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .step{background:var(--surface);border:1px solid var(--hair);border-radius:12px;padding:16px 15px 17px;
+    position:relative;display:flex;flex-direction:column;gap:8px;}
+  .step .n{font-family:var(--mono);font-size:12px;color:var(--signal);font-weight:600;
+    display:flex;align-items:center;gap:7px;}
+  .step .n::after{content:"";flex:1;height:1px;background:var(--hair);}
+  .step h3{margin:0;font-size:14.5px;font-weight:620;letter-spacing:-.01em;}
+  .step p{margin:0;font-size:13px;color:var(--secondary);}
+  .step .data{font-family:var(--mono);font-size:12px;color:var(--ink);}
+  @media(max-width:720px){.steps{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:430px){.steps{grid-template-columns:1fr}}
+
+  /* chart card */
+  .chart-card{background:var(--surface);border:1px solid var(--hair);border-radius:16px;
+    padding:22px 20px 14px;position:relative;}
+  .chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px;}
+  .chart-head h2{font-size:16px;font-weight:620;margin:0;letter-spacing:-.01em;}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;font-family:var(--mono);color:var(--secondary);}
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .swatch{width:11px;height:11px;border-radius:3px;flex:none;}
+  .swatch.dot{border-radius:50%;}
+  .svg-wrap{position:relative;width:100%;overflow-x:auto;}
+  svg{width:100%;height:auto;display:block;min-width:560px;}
+  text{font-family:var(--mono);}
+
+  .tip{position:absolute;pointer-events:none;opacity:0;transition:opacity .09s;
+    background:var(--ink);color:var(--surface);font-family:var(--mono);font-size:12px;line-height:1.45;
+    padding:7px 10px;border-radius:8px;white-space:nowrap;z-index:5;transform:translate(-50%,-118%);
+    box-shadow:0 6px 20px rgba(0,0,0,.22);}
+  .tip b{color:var(--surface);}
+  .tip .k{color:#9fbef0;}
+
+  /* outcome tiles */
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .tile{background:var(--surface);border:1px solid var(--hair);border-radius:12px;padding:16px 16px 15px;
+    display:flex;flex-direction:column;gap:5px;}
+  .tile .v{font-size:29px;font-weight:660;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+  .tile .v.good{color:var(--good);}
+  .tile .t{font-size:13px;font-weight:600;}
+  .tile .s{font-size:12px;color:var(--muted);font-family:var(--mono);}
+  @media(max-width:720px){.tiles{grid-template-columns:repeat(2,1fr)}}
+
+  .why{background:var(--panel);border:1px solid var(--hair);border-left:3px solid var(--signal);
+    border-radius:10px;padding:18px 20px;font-size:14.5px;color:var(--secondary);max-width:74ch;}
+  .why b{color:var(--ink);font-weight:620;}
+  .why .mono{font-family:var(--mono);font-size:13.5px;color:var(--ink);}
+
+  .foot{margin-top:34px;font-size:12px;color:var(--muted);font-family:var(--mono);max-width:80ch;line-height:1.6;}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">Tripwire · Stage&nbsp;5 calibration</p>
+  <h1>How we set the bi-encoder floor at 0.63</h1>
+  <p class="thesis">The backfilled scores let us test a threshold against ground truth before shipping it.
+    The result: a floor at 0.63 <b>drops a quarter of the noise while keeping every real signal</b> —
+    because the two classes visibly separate on this one score.</p>
+
+  <hr class="rule">
+
+  <p class="sec-label">The method — four steps from data to threshold</p>
+  <div class="steps">
+    <div class="step">
+      <div class="n">01</div>
+      <h3>Backfill the scores</h3>
+      <p>Replay Stages&nbsp;5–6 over past changes, recording each candidate page's bi-encoder max-chunk score.</p>
+      <div class="data">116 runs · 567 pages</div>
+    </div>
+    <div class="step">
+      <div class="n">02</div>
+      <h3>Label by verdict</h3>
+      <p>Tag every scored page with the LLM's later ruling — the ground-truth proxy for "did this matter?"</p>
+      <div class="data">21 real · 546 noise</div>
+    </div>
+    <div class="step">
+      <div class="n">03</div>
+      <h3>Compare distributions</h3>
+      <p>Plot both classes on the score axis. The real signals sit to the right; the lowest lands at 0.666.</p>
+      <div class="data">separability AUC 0.834</div>
+    </div>
+    <div class="step">
+      <div class="n">04</div>
+      <h3>Place the floor below it</h3>
+      <p>Cut just under the lowest real signal. It clears every true positive and slices off low-scoring noise.</p>
+      <div class="data">floor = 0.63</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <p class="sec-label">The evidence — where each page's score falls</p>
+  <div class="chart-card">
+    <div class="chart-head">
+      <h2>Bi-encoder max-chunk score, by true class</h2>
+      <div class="legend">
+        <span><i class="swatch dot" style="background:var(--signal)"></i>CHANGE_REQUIRED · real (21)</span>
+        <span><i class="swatch" style="background:var(--noise)"></i>NO_CHANGE · noise (546)</span>
+      </div>
+    </div>
+    <div class="svg-wrap">
+      <svg id="chart" viewBox="0 0 900 472" role="img"
+        aria-label="Distribution of bi-encoder max-chunk scores. All 21 real signals score 0.666 or higher; 138 of 546 noise pages score below the 0.63 floor and are removed."></svg>
+      <div class="tip" id="tip"></div>
+    </div>
+  </div>
+
+  <div style="height:26px"></div>
+  <div class="tiles">
+    <div class="tile">
+      <div class="v good">100%</div>
+      <div class="t">Recall preserved</div>
+      <div class="s">0 of 21 signals dropped</div>
+    </div>
+    <div class="tile">
+      <div class="v">138</div>
+      <div class="t">False positives removed</div>
+      <div class="s">25% of the noise</div>
+    </div>
+    <div class="tile">
+      <div class="v">−24%</div>
+      <div class="t">Fewer LLM calls</div>
+      <div class="s">567 → 429 per window</div>
+    </div>
+    <div class="tile">
+      <div class="v">0.036</div>
+      <div class="t">Safety margin</div>
+      <div class="s">floor 0.63 vs lowest 0.666</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <p class="sec-label">Why it holds</p>
+  <div class="why">
+    The floor works because the classes <b>separate on this score</b>. Every real signal scored at least
+    <span class="mono">0.666</span>, so a cut at <span class="mono">0.63</span> keeps all of them; meanwhile a
+    quarter of the noise scored below <span class="mono">0.63</span> and is removed before it ever reaches the
+    LLM. The <b>0.036 gap</b> between the floor and the lowest real signal is the safety margin — deliberately
+    thin, because it rests on just 21 confirmed signals. That is why <b>0.63 was chosen over the tighter 0.65</b>,
+    and why the margin is re-checked as more signals accrue.
+  </div>
+
+  <p class="foot">
+    Source: <span>data/ipfr_corpus/ipfr.sqlite · score_backfill</span> (567 LLM-verdict-labelled webpage
+    candidates). Class = the LLM's CHANGE_REQUIRED / NO_CHANGE ruling. Recall, false-positive and call-reduction
+    figures are exact over this labelled set; recall against changes dropped upstream of the LLM is not measured here.
+  </p>
+</div>
+
+<script>
+(function(){
+  const EDGES=[0.45,0.475,0.5,0.525,0.55,0.575,0.6,0.625,0.65,0.675,0.7,0.725,0.75,0.775,0.8,0.825,0.85,0.875,0.9,0.925,0.95,0.975,1.0];
+  const NC=[0,5,7,9,17,30,61,75,70,97,74,42,28,15,9,1,0,1,2,1,2,0];
+  const CR=[0.6664,0.6674,0.6707,0.7001,0.7082,0.7117,0.7289,0.7446,0.7496,0.7506,0.7506,0.7557,0.7566,0.7767,0.7809,0.7893,0.8056,0.8138,0.8539,0.8608,0.9401];
+  const FLOOR=0.63, LOWTP=0.6664, XMIN=0.45, XMAX=1.0, YMAX=105;
+
+  const SVGNS="http://www.w3.org/2000/svg";
+  const svg=document.getElementById("chart"), tip=document.getElementById("tip");
+  const W=900,H=472, mL=52,mR=22,mT=104,plotB=372, plotT=118;
+  const plotL=mL, plotR=W-mR, plotW=plotR-plotL, plotH=plotB-plotT;
+  const crTop=44, crBot=96;
+
+  const x=s=>plotL+(s-XMIN)/(XMAX-XMIN)*plotW;
+  const y=c=>plotB-(c/YMAX)*plotH;
+  const el=(n,a)=>{const e=document.createElementNS(SVGNS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+  // defs: diagonal hatch for the removed zone
+  const defs=el("defs",{});
+  const pat=el("pattern",{id:"hatch",width:7,height:7,patternTransform:"rotate(45)",patternUnits:"userSpaceOnUse"});
+  pat.appendChild(el("line",{x1:0,y1:0,x2:0,y2:7,stroke:"var(--zone-ink)","stroke-width":1,"stroke-opacity":.16}));
+  defs.appendChild(pat); svg.appendChild(defs);
+
+  // y gridlines + labels
+  [0,25,50,75,100].forEach(c=>{
+    svg.appendChild(el("line",{x1:plotL,y1:y(c),x2:plotR,y2:y(c),stroke:"var(--grid)","stroke-width":1}));
+    const t=el("text",{x:plotL-9,y:y(c)+4,"text-anchor":"end","font-size":11,fill:"var(--muted)"});
+    t.textContent=c; svg.appendChild(t);
+  });
+  const yl=el("text",{x:plotL,y:plotT-13,"text-anchor":"start","font-size":10.5,fill:"var(--muted)"});
+  yl.textContent="pages / bin"; svg.appendChild(yl);
+
+  // removed zone (left of floor) — wash + hatch over full plot height incl. dot band
+  const zx=x(FLOOR);
+  svg.appendChild(el("rect",{x:plotL,y:crTop-8,width:zx-plotL,height:plotB-(crTop-8),fill:"var(--zone)"}));
+  svg.appendChild(el("rect",{x:plotL,y:crTop-8,width:zx-plotL,height:plotB-(crTop-8),fill:"url(#hatch)"}));
+
+  // NC histogram bars
+  const barGap=2.4;
+  for(let i=0;i<NC.length;i++){
+    if(!NC[i])continue;
+    const x0=x(EDGES[i]), x1=x(EDGES[i+1]);
+    const bx=x0+barGap/2, bw=Math.max(1,x1-x0-barGap), by=y(NC[i]), bh=plotB-by;
+    const removed=EDGES[i+1]<=FLOOR;
+    const bar=el("rect",{x:bx,y:by,width:bw,height:bh,rx:2,fill:"var(--noise)",
+      "fill-opacity":removed?.5:.92,"data-lo":EDGES[i],"data-hi":EDGES[i+1],"data-c":NC[i]});
+    bar.style.cursor="crosshair";
+    svg.appendChild(bar);
+  }
+
+  // baseline
+  svg.appendChild(el("line",{x1:plotL,y1:plotB,x2:plotR,y2:plotB,stroke:"var(--baseline)","stroke-width":1.5}));
+
+  // x ticks
+  [0.5,0.6,0.7,0.8,0.9,1.0].forEach(s=>{
+    svg.appendChild(el("line",{x1:x(s),y1:plotB,x2:x(s),y2:plotB+5,stroke:"var(--baseline)","stroke-width":1}));
+    const t=el("text",{x:x(s),y:plotB+19,"text-anchor":"middle","font-size":11,fill:"var(--muted)"});
+    t.textContent=s.toFixed(2); svg.appendChild(t);
+  });
+  const xlab=el("text",{x:(plotL+plotR)/2,y:plotB+40,"text-anchor":"middle","font-size":11.5,fill:"var(--secondary)"});
+  xlab.textContent="bi-encoder max-chunk score  →  higher = more on-topic"; svg.appendChild(xlab);
+
+  // lowest-TP marker (dashed)
+  svg.appendChild(el("line",{x1:x(LOWTP),y1:crTop-8,x2:x(LOWTP),y2:plotB,stroke:"var(--signal)",
+    "stroke-width":1.4,"stroke-dasharray":"4 4","stroke-opacity":.9}));
+  const ltp=el("text",{x:x(LOWTP)+6,y:plotT+4,"font-size":10.5,fill:"var(--signal)"});
+  ltp.textContent="lowest real signal · 0.666"; svg.appendChild(ltp);
+
+  // FLOOR line (bold, ink)
+  svg.appendChild(el("line",{x1:zx,y1:crTop-14,x2:zx,y2:plotB+2,stroke:"var(--floor)","stroke-width":2.4}));
+  const fl=el("text",{x:zx,y:crTop-20,"text-anchor":"middle","font-size":12.5,fill:"var(--floor)","font-weight":700});
+  fl.textContent="FLOOR 0.63"; svg.appendChild(fl);
+
+  // removed-zone label
+  const rz=el("text",{x:(plotL+zx)/2,y:plotB-9,"text-anchor":"middle","font-size":11,fill:"var(--zone-ink)"});
+  rz.textContent="← removed · 138 pages (25% of noise)"; svg.appendChild(rz);
+
+  // CR dots — beeswarm placement in the top band
+  const placed=[];
+  const offs=[0,-15,15,-28,28,-40];
+  function place(px){
+    for(const o of offs){const py=(crTop+crBot)/2+o;
+      if(py<crTop||py>crBot)continue;
+      if(!placed.some(p=>Math.abs(p.x-px)<9 && Math.abs(p.y-py)<11)){placed.push({x:px,y:py});return py;}}
+    const py=(crTop+crBot)/2; placed.push({x:px,y:py}); return py;
+  }
+  const bandLab=el("text",{x:plotR,y:crTop-20,"text-anchor":"end","font-size":10.5,fill:"var(--muted)"});
+  bandLab.textContent="each ● = one real signal (kept)"; svg.appendChild(bandLab);
+  CR.forEach(s=>{
+    const px=x(s), py=place(px);
+    const dot=el("circle",{cx:px,cy:py,r:4.6,fill:"var(--signal)",stroke:"var(--surface)","stroke-width":2,"data-s":s});
+    dot.style.cursor="crosshair"; svg.appendChild(dot);
+  });
+
+  // ---- interaction ----
+  const wrap=svg.parentElement;
+  function show(html,cx,cy){
+    tip.innerHTML=html;
+    const wr=wrap.getBoundingClientRect(), sr=svg.getBoundingClientRect();
+    const sx=sr.width/W, sy=sr.height/H;
+    tip.style.left=((sr.left-wr.left)+cx*sx)+"px";
+    tip.style.top=((sr.top-wr.top)+cy*sy)+"px";
+    tip.style.opacity=1;
+  }
+  svg.addEventListener("mouseover",e=>{
+    const t=e.target;
+    if(t.hasAttribute("data-c")){
+      const lo=(+t.getAttribute("data-lo")).toFixed(3), hi=(+t.getAttribute("data-hi")).toFixed(3), c=t.getAttribute("data-c");
+      const removed=(+t.getAttribute("data-hi"))<=FLOOR;
+      show(`<span class="k">NO_CHANGE</span> · noise<br><b>${c} pages</b> scored ${lo}–${hi}<br>${removed?"below floor → removed":"kept"}`,
+        (+t.getAttribute("x")? +t.getAttribute("x")+ (+t.getAttribute("width"))/2 : x((+lo+ +hi)/2)), +t.getAttribute("y"));
+    } else if(t.hasAttribute("data-s")){
+      const s=(+t.getAttribute("data-s")).toFixed(3);
+      show(`<span class="k">CHANGE_REQUIRED</span> · real signal<br>max-chunk <b>${s}</b> · kept`,
+        +t.getAttribute("cx"), +t.getAttribute("cy"));
+    }
+  });
+  svg.addEventListener("mouseout",()=>{tip.style.opacity=0;});
+})();
+</script>
+</body>
+</html>

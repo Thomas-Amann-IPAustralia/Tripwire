@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to external legislation and manuals that do not directly affect the specific content of the IPFR page. Change 1 concerns amendments to the Australian Securities and Investments Commission Act 2001 and the creation of External Reporting Australia, which is unrelated to the IPFR page's focus on IP laws. Change 2 updates the Plant Breeder's Rights Manual with procedural and portal-related guidance, but the IPFR page only references the existence of such manuals without detailing their content or procedures. Change 3 involves minor formatting corrections in non-legislative patent instruments on the IP Australia website, which does not impact the IPFR page's descriptions or references. None of these changes alter the accuracy or currency of the IPFR page's statements about IP legislation, agencies, or processes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4440,
+  "completion_tokens": 188,
+  "total_tokens": 4628,
+  "processing_time_seconds": 3.7326595659999384,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796443+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-04-411",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news items shown on the IP Australia news webpage and includes information about patent-related initiatives and reports. There is no mention of changes to trade mark opposition procedures, timeframes, fees, or legal requirements that would affect the content of the IPFR page about responding to trade mark oppositions. The IPFR page content remains accurate and current based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2305,
+  "completion_tokens": 117,
+  "total_tokens": 2422,
+  "processing_time_seconds": 1.8771720080000023,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-04T05:23:48.912691+00:00"
+}

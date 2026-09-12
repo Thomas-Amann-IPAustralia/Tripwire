@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to an update of the Australian Securities and Investments Commission Act 2001 compilation and ACCC public register entries about exemptions and deferrals under the Competition and Consumer Act 2010. These changes do not affect the content of the IPFR page, which focuses on explaining the differences between legal names, business names, domain names, and trade marks for Australian businesses. There are no specific references to ASIC Act provisions, ACCC exemptions, or data sharing obligations in the IPFR content that would require updating. The IPFR page's explanations remain accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3293,
+  "completion_tokens": 147,
+  "total_tokens": 3440,
+  "processing_time_seconds": 3.4559856000000764,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232537+00:00"
+}

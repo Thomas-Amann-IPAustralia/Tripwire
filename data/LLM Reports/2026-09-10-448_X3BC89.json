@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Trade Marks Office Manual of Practice and Procedure, specifically concerning examination of trade marks related to plants or plant materials and procedural details such as prohibited signs. The IPFR page content is a general overview for small business owners on how to check if someone else owns a word, logo, or idea, listing general resources and disclaimers. There is no specific mention of plant-related trade marks or detailed procedural content that would be affected by the updated manual. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1587,
+  "completion_tokens": 147,
+  "total_tokens": 1734,
+  "processing_time_seconds": 1.9416149230000883,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.553185+00:00"
+}

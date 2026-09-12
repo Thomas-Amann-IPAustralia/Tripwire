@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural updates, accessibility fixes, and the addition of information about Olympic designs registration and related forms. None of the changes directly affect the substantive content of the IPFR page on design infringement, such as definitions, legal thresholds, or infringement criteria. The IPFR page's explanations about design infringement, protections, and defences remain accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4674,
+  "completion_tokens": 111,
+  "total_tokens": 4785,
+  "processing_time_seconds": 4.356036036999967,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.501187+00:00"
+}

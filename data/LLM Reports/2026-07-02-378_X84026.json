@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page 'I am not happy with IP Australia - what can I do?' provides general guidance on how to raise complaints about IP Australia service and clarifies that complaints do not affect formal review or appeal processes. The upstream changes relate to Federal Court procedural rules amendments and updated Federal Court filing fees effective from 1 July 2026. These changes concern court procedural matters and fees, which are not mentioned or detailed in the IPFR page. The IPFR page does not provide specific fee amounts, procedural steps, or statutory references that are affected by these Federal Court amendments. Therefore, the changes do not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3861,
+  "completion_tokens": 167,
+  "total_tokens": 4028,
+  "processing_time_seconds": 2.4024661299999934,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.270152+00:00"
+}

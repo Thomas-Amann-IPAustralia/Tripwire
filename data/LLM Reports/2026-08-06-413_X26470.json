@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X26470",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds a clarifying question 'Have you completed a search?' and some explanatory text about the importance of conducting a search to avoid infringement. The IPFR page already broadly covers understanding options if accused of IP infringement and checking IP registers for existing rights. The change does not introduce new legal thresholds, procedural steps, or statutory references that would require updating the IPFR page content. It is an enhancement to guidance rather than a correction or update to existing facts.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1349,
+  "completion_tokens": 126,
+  "total_tokens": 1475,
+  "processing_time_seconds": 2.406149565000078,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796862+00:00"
+}

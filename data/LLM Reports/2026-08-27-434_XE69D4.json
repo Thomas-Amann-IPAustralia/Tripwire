@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO IP Diagnostics webpage involve the removal of the phrase 'Industry-specific adaptations' and some event information. These changes are minor editorial updates and do not affect the substantive content or accuracy of the IPFR page on challenging the use of international domain names. The IPFR page's detailed procedural, cost, and outcome information remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3378,
+  "completion_tokens": 109,
+  "total_tokens": 3487,
+  "processing_time_seconds": 2.4347282859998813,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908338+00:00"
+}

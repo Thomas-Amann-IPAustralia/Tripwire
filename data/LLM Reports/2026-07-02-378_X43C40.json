@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to procedural updates and payment methods for WIPO arbitration fees, updates to ACCC public registers and consultations, and clarifications about territorial coverage under the Madrid System. None of these changes directly affect the content of the IPFR page on considerations when responding to international accusations, which provides general guidance and does not include specific procedural details, fee information, or territorial specifics that have been updated. Therefore, the page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8892,
+  "completion_tokens": 122,
+  "total_tokens": 9014,
+  "processing_time_seconds": 3.8478223179999986,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.264665+00:00"
+}

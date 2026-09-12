@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of minor updates, formatting corrections, and additions to external IP-related resources such as the IP Australia trademark manual, ACCC public registers, WIPO treaty texts, ASEAN trade agreements, Amazon Brand Registry, and eBay IP policies. None of these changes provide new or updated specific information that directly contradicts or renders inaccurate any of the detailed content on the IPFR page about registering unregistered trade marks in Australia, including fees, timeframes, benefits, risks, or procedural steps. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11875,
+  "completion_tokens": 149,
+  "total_tokens": 12024,
+  "processing_time_seconds": 3.575596420999773,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708155+00:00"
+}

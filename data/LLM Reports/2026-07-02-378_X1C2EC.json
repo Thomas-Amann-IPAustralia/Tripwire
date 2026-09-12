@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X1C2EC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to amendments in the Criminal Code Act 1995 concerning secrecy provisions, including repealing certain offences and introducing new offences related to improper use or communication of information by Commonwealth officials. The IPFR page is focused on providing access to help tailored to Australian artists, specifically regarding copyright and legal advice through Arts Law and related resources. There is no mention or discussion of secrecy laws, criminal code provisions, or offences related to Commonwealth secrecy in the IPFR page content. Therefore, these legislative changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2192,
+  "completion_tokens": 146,
+  "total_tokens": 2338,
+  "processing_time_seconds": 2.103815247000057,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.273138+00:00"
+}

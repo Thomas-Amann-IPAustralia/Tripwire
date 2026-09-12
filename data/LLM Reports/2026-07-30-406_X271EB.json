@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia design manual are primarily accessibility fixes and updates to headings and URLs related to design registrations, which do not affect the content or procedures related to trade mark removal for non-use. The changes to the Amazon Brand Registry page concern the deposit amount for a neutral evaluator in a patent evaluation process, increasing from $4,000 to $5,000. This is unrelated to trade mark removal procedures under Australian law and does not impact the IPFR page content about trade mark removal for non-use. Therefore, no specific factual or procedural information in the IPFR page is outdated or incorrect due to these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3980,
+  "completion_tokens": 157,
+  "total_tokens": 4137,
+  "processing_time_seconds": 1.9976295909998498,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.153789+00:00"
+}

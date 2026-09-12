@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to various legislative updates, regulatory amendments, and consultation outcomes involving IP Australia and other government agencies. However, the IPFR page content is a general overview comparing IP Australia to other government services, focusing on their roles and how they help small businesses. None of the changes provide new or updated information that directly affects the accuracy or currency of the comparative descriptions, agency functions, or the general advice given on the page. The amendments to regulations, manuals, and exemptions do not impact the fundamental descriptions or the agency roles as presented. Therefore, no update to this IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6124,
+  "completion_tokens": 152,
+  "total_tokens": 6276,
+  "processing_time_seconds": 2.82394733800038,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232363+00:00"
+}

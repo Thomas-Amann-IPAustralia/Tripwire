@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern procedural updates, portal launches (Qualified Persons portal for PBRs), fee changes effective from 1 July 2026, updates to manuals and policy registers, and minor procedural or accessibility fixes. The IPFR page provides general guidance on what to check before getting registered IP, including basic requirements and general advice on timing, ownership, and checks. None of the changes directly affect the accuracy or currency of the specific factual content in the IPFR page, such as registration requirements, timing risks, or procedural advice. There are no updates to the basic registration criteria, statutory references, or procedural steps that would require amending the IPFR page content. The changes to the Qualified Persons portal launch date and fee changes are procedural and do not contradict or invalidate the general advice given. Therefore, no change to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 14371,
+  "completion_tokens": 203,
+  "total_tokens": 14574,
+  "processing_time_seconds": 7.4888600889999,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267290+00:00"
+}

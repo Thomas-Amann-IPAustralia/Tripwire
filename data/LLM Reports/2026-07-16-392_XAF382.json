@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Plant Breeder's Rights (PBR) system user guides and the addition of new guidance pages for the QP Portal, as well as closed consultations on various IP topics including patents, trade marks, and designs. However, these changes do not affect the fundamental definitions, explanations, or legal principles of IP infringement as presented in the IPFR page. The IPFR content provides a general overview of infringement concepts and does not include specific procedural details or references that have been amended in the upstream sources. Therefore, no update to the IPFR page is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4557,
+  "completion_tokens": 156,
+  "total_tokens": 4713,
+  "processing_time_seconds": 2.9700461349998477,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.230327+00:00"
+}

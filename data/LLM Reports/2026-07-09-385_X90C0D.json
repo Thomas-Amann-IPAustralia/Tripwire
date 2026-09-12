@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in IP Australia's manuals and official notices, including procedural updates on computer-implemented inventions, design registration surrenders, and the launch of a new Qualified Persons portal for plant breeders rights. The IPFR page provides a broad overview of IP protection for small businesses without specific procedural details, statutory references, or technical guidance that would be affected by these updates. There are no specific dates, legal thresholds, or procedural steps in the IPFR content that are contradicted or outdated by these upstream changes. Therefore, the page remains accurate and current for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5269,
+  "completion_tokens": 150,
+  "total_tokens": 5419,
+  "processing_time_seconds": 2.754033726999978,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.817473+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X72EB3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates primarily to the launch and content updates of the QP Portal and related guidance pages within the PBR manual, including new pages and updated links. The IPFR page content focuses on explaining the role, benefits, risks, and process of engaging or becoming a Qualified Person (QP) for growing trials, without referencing the QP Portal or specific procedural portals. There is no specific information in the IPFR page about the QP Portal or IVDS system that is now outdated or incorrect. The changes do not affect the accuracy of the IPFR page's descriptions, fees, accreditation duration, or procedural steps as presented. Therefore, no update to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2722,
+  "completion_tokens": 176,
+  "total_tokens": 2898,
+  "processing_time_seconds": 2.8417495230000895,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.818313+00:00"
+}

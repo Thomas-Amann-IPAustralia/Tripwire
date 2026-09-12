@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve minor corrections, accessibility fixes, link updates, and removal of references in unrelated sections (e.g., trademark manual removing references to s27 of the PBR Act). The patent manual changes do not mention any amendments to the process, timing, or substantive requirements for lodging a section 27 notice or third party notification of prior art. There is no indication that the time limits, procedural steps, or outcomes described in the IPFR page have changed. The design manual changes are unrelated to patent examination or section 27 notices. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3945,
+  "completion_tokens": 157,
+  "total_tokens": 4102,
+  "processing_time_seconds": 2.1989729720000923,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.711177+00:00"
+}
