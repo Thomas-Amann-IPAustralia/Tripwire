@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in trademark manual sections, ACCC public register entries about exemptions and undertakings, and updates to the WIPO Madrid System webpage including the addition of the 2026 Yearly Review. None of these changes specifically address or alter the content related to checking products against existing registered designs, design infringement, or the procedures and advice given on the IPFR page. The IPFR page focuses on design clearance and freedom to operate searches, referencing the Australian Designs database and WIPO Global Design Database, none of which are impacted by these upstream changes. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4270,
+  "completion_tokens": 159,
+  "total_tokens": 4429,
+  "processing_time_seconds": 2.9028834189998634,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.588656+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-07-414",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updated fee schedules for WIPO arbitration, updated recommended WIPO contract clauses, and detailed information about WIPO domain name dispute resolution procedures including UDRP and ccTLD policies. The IPFR page 'Is there a global IP office?' provides a general overview of WIPO's role as an international treaty administrator and coordinator, emphasizing that WIPO is not a global IP office granting rights. It mentions the WIPO Arbitration and Mediation Center and international systems like PCT, Madrid, and Hague, but does not provide specific fee details, procedural steps, or dispute resolution specifics that have changed. Therefore, none of the updated fee tables, contract clause details, or domain name dispute procedural updates affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7881,
+  "completion_tokens": 188,
+  "total_tokens": 8069,
+  "processing_time_seconds": 3.221981315999983,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-07T04:35:18.610107+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates in the IPAustralia patent manual concerning prior art, best method, manner of manufacture, and other technical patent examination topics, as well as updates to trademark manuals and Federal Court fees and procedures. None of these changes directly affect the procedural description, fees, timelines, or outcomes described in the IPFR page about responding to a patent opposition. The IPFR page content remains accurate and current regarding the opposition process, fees, timelines, and parties involved. There is no indication of changed fees for opposition hearings or procedural steps that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 16790,
+  "completion_tokens": 152,
+  "total_tokens": 16942,
+  "processing_time_seconds": 4.109374976000026,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.847526+00:00"
+}

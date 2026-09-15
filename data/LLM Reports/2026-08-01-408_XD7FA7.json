@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to a webpage about preventing infringement of IP, specifically mentioning counterfeit goods and brand registries on online platforms. The IPFR page is about opposing the registration of a trade mark application. The change does not affect any specific procedural detail, timeframe, fee, or legal threshold described in the IPFR page. The content and guidance on trade mark opposition remain accurate and unaffected by the upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2208,
+  "completion_tokens": 114,
+  "total_tokens": 2322,
+  "processing_time_seconds": 1.423202141000047,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.812863+00:00"
+}

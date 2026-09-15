@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a technical issue with the ASBFEO website being unreachable due to connection errors. There is no change to substantive content about intellectual property, business names, trade marks, or related legal concepts. The IPFR page content about names and trade marks remains accurate and unaffected by this connectivity problem.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2864,
+  "completion_tokens": 94,
+  "total_tokens": 2958,
+  "processing_time_seconds": 1.11472608400004,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.915236+00:00"
+}

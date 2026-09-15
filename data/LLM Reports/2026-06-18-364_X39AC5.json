@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources are mostly minor updates, formatting corrections, and updates to unrelated sections such as evidence of honest concurrent use, treaty amendment dates, and eBay's VeRO program FAQs. None of these changes specifically address or alter the procedures, timeframes, or substantive content related to revocation of trade mark registrations as described in the IPFR page. The IPFR page's detailed explanation about revocation, timelines, risks, and outcomes remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4369,
+  "completion_tokens": 132,
+  "total_tokens": 4501,
+  "processing_time_seconds": 6.076531332000286,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.712292+00:00"
+}

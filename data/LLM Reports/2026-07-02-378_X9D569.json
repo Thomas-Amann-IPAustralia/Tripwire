@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X9D569",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to announcements on the IP Australia official notices page, including the launch of a new Qualified Persons portal and updates to Patent Cooperation Treaty fees effective from 1 July 2026. The IPFR page 'Obtain legal advice on enforcement options' provides general guidance on engaging legal professionals for IP enforcement and does not contain specific references to the Qualified Persons portal, Patent Cooperation Treaty fees, or related procedural details. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3225,
+  "completion_tokens": 135,
+  "total_tokens": 3360,
+  "processing_time_seconds": 2.2137033139997584,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.274300+00:00"
+}

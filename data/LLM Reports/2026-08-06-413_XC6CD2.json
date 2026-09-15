@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates to practice directions of the Administrative Review Tribunal, archival of outdated content in the IP Australia trademark manual, and minor formatting or procedural clarifications in judicial review application instructions. None of these changes specifically affect the content of the IPFR page on challenging the registration of a new trade mark, which focuses on the opposition process, timelines, costs, risks, and outcomes. There are no updates to opposition timeframes, fees, procedural steps, or legal thresholds that would require amending the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5884,
+  "completion_tokens": 138,
+  "total_tokens": 6022,
+  "processing_time_seconds": 2.5164289350000217,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.792934+00:00"
+}

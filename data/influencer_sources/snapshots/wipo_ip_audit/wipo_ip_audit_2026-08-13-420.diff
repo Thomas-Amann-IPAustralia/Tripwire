@@ -1,0 +1,11 @@
+--- previous+++ current@@ -23,9 +23,8 @@ - A list of key employees creating IP assets and their employment agreements
+ - A list of personnel managing IP assets
+ - A list of IP assets you own and related documentation, including:
+-- registered assets like copyrights, domain names, industrial designs, patents, utility models and trademarks
+-- other unregistered assets like software, trade secrets, and unregistered copyrights
+- 
++ - registered assets like copyrights, domain names, industrial designs, patents, utility models and trademarks
++ - other unregistered assets like software, trade secrets, and unregistered copyrights
+ - Contracts that might have IP provisions, like suppliers, licenses to IP and software, customer and partnership agreements, research arrangements, etc.
+ - A description of any IP related disputes
+ Carrying out an IP audit

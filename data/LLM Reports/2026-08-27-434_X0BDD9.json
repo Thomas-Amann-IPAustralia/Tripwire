@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Paris Convention and Madrid System webpages primarily involve formatting, table of contents updates, and the addition of educational resources and podcasts. There are no substantive changes to the descriptions, procedures, or legal principles related to international IP rights or the Madrid System that would affect the accuracy or currency of the IPFR page content. The IPFR page's explanation about the territorial nature of IP rights and the overview of international systems remains accurate and up-to-date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3637,
+  "completion_tokens": 126,
+  "total_tokens": 3763,
+  "processing_time_seconds": 2.2654363240001203,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907040+00:00"
+}

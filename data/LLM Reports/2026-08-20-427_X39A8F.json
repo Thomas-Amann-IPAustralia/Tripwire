@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to IP Australia's official notices, manuals, and procedural instruments related to trade marks, plant breeders' rights, patents, and designs. These updates include revised examination guidance for trade marks relating to plants or plant materials, new application forms for PBRs, updated instruments for fee payments and document filings, and minor corrections in manuals. However, the IPFR page content is a general introductory guide for small business owners about what to check before getting registered IP, focusing on basic requirements, timing considerations, ownership, and general procedural advice. None of the changes specify amendments to fundamental definitions, basic requirements, or procedural steps as presented in the IPFR page. The updates are more detailed procedural or administrative changes that do not affect the accuracy or currency of the general guidance provided. Therefore, no changes to the IPFR page are required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10217,
+  "completion_tokens": 205,
+  "total_tokens": 10422,
+  "processing_time_seconds": 3.754464246999987,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.227877+00:00"
+}

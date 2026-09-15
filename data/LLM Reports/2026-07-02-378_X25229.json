@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X25229",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update from IP Australia about various IP topics including patents, design rights, and trade marks, with a focus on announcements and reports dated mid-2026. The content of the IPFR page is a detailed explanation of the risks of joint IP ownership, focusing on practical issues and legal principles around joint ownership of patents, copyright, and know-how. The change document does not provide any amendments to the legal framework, procedural rules, or specific statutory provisions related to joint ownership or commercialisation of IP. It is primarily an announcement of news items and reports, none of which directly affect the accuracy or currency of the IPFR page content. Therefore, no update to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3659,
+  "completion_tokens": 181,
+  "total_tokens": 3840,
+  "processing_time_seconds": 2.775065071999961,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.270691+00:00"
+}

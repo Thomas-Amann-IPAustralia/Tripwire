@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns updates to the Plant Breeder's Rights (PBR) manual, specifically the introduction of a new QP Portal replacing the IVDS system and related guidance updates. The IPFR page mentions Qualified Persons (QPs) for PBR and their role in certifying growing trials and submitting detailed descriptions via the IVDS system. However, the IPFR page content does not include detailed procedural instructions or references to the IVDS system by name, nor does it provide specific technical or procedural guidance that would be affected by the portal change. The change is primarily about internal process updates and portal navigation rather than altering the fundamental role or qualifications of QPs or the general description of their functions. Therefore, the IPFR page remains accurate and does not require amendment based on this update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5522,
+  "completion_tokens": 191,
+  "total_tokens": 5713,
+  "processing_time_seconds": 3.5417979979999927,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796043+00:00"
+}

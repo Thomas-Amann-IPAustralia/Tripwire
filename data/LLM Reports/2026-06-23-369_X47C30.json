@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "X47C30",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the external webpage at www.asbfeo.gov.au/five-steps-resolve-your-dispute is currently inaccessible due to server errors (403 Forbidden and connection closed). However, the IPFR page content is a general disclaimer about the nature of the website's information and does not reference or rely on the specific content of the ASBFEO page. The change is an availability issue of an external resource, not a change in substantive IP law or policy that would affect the accuracy or currency of the IPFR disclaimers. Therefore, no update to the IPFR disclaimers page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1591,
+  "completion_tokens": 155,
+  "total_tokens": 1746,
+  "processing_time_seconds": 2.5930354639999678,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.366747+00:00"
+}

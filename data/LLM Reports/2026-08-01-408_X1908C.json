@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "X1908C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates a webpage about preventing infringement by emphasizing the proactive step of listing IP rights with platforms and mentions brand registries like Amazon Brand Registry. The IPFR page focuses on what to do if someone copies your stuff, covering suspected infringement, types of IP, and initial steps to assess infringement. The change does not contradict or update any specific factual content, legal thresholds, or procedural steps in the IPFR page. It is more about prevention and platform-specific tools, which are not currently discussed in the IPFR page. Therefore, the IPFR page remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1438,
+  "completion_tokens": 156,
+  "total_tokens": 1594,
+  "processing_time_seconds": 1.8338517820000106,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.813297+00:00"
+}

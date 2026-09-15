@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to amendments in the Competition and Consumer Act 2010 introducing new powers for the Minister and ACCC regarding exceptional circumstances declarations and authorisations, as well as increased penalties for breaches of the Oil Code of Conduct. These changes do not affect the fundamental protections or legal principles described in the IPFR page about unregistered trade marks, passing off, or the Australian Consumer Law's protection against misleading or deceptive conduct. The ACCC exemptions and undertakings mentioned are procedural and enforcement-related updates that do not alter the substantive legal framework or the guidance provided to small businesses about unregistered trade marks. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3435,
+  "completion_tokens": 164,
+  "total_tokens": 3599,
+  "processing_time_seconds": 1.936713251999663,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.706069+00:00"
+}

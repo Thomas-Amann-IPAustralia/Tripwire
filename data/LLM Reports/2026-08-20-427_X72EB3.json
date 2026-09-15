@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X72EB3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the PBR manual, including acceptance or rejection of PBR applications, fixing a dead link, new guidance content for the QP Portal, and updates to customer engagement and agent nomination details. However, none of these changes specifically amend or update the core information about Qualified Persons (QPs) accreditation, fees, duration, or the requirement to engage a QP as described in the IPFR page. The IPFR page content remains accurate and current regarding QP roles, accreditation process, fees, and responsibilities. Therefore, no direct update to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3038,
+  "completion_tokens": 161,
+  "total_tokens": 3199,
+  "processing_time_seconds": 2.5861586070000158,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228285+00:00"
+}

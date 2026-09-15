@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and corrections in the IP Australia patent manual, including fixing broken links, updating procedural outlines, and removing banner notes related to specific cases. None of these changes affect the content or guidance about making complaints to IP Australia or the complaint handling process described in the IPFR page. The IPFR page focuses on complaint procedures and does not reference or rely on the specific patent manual procedural details or case notes that were updated.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1942,
+  "completion_tokens": 121,
+  "total_tokens": 2063,
+  "processing_time_seconds": 2.2110197609999886,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.714459+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve updates to patent examination guidance, design manual accessibility fixes, broken link updates, and fee schedules unrelated to the specific process of requesting third party examination of registered designs. The IPFR page content about requesting confirmation of a registered design's validity, including procedural steps, fees, timelines, and outcomes, remains accurate and unchanged by these updates. No specific amendments to fees, timelines, or procedural requirements for third party examination of designs were indicated in the changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8506,
+  "completion_tokens": 130,
+  "total_tokens": 8636,
+  "processing_time_seconds": 2.95589672899996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849085+00:00"
+}

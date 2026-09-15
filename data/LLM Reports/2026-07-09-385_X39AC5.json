@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources relate primarily to updates in the patent manual and trade mark manual concerning classification systems, computer implemented inventions, and various procedural and evidentiary updates following recent case law. However, none of the changes specifically address or amend the procedures, timeframes, or substantive criteria for revocation of trade mark registrations as described in the IPFR page. The IPFR page's content about revocation procedures, timelines, risks, and outcomes remains accurate and unaffected by these upstream updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4163,
+  "completion_tokens": 132,
+  "total_tokens": 4295,
+  "processing_time_seconds": 2.321069179999995,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.818532+00:00"
+}

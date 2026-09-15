@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified in the upstream sources primarily relate to updates in IP Australia's manuals and official notices, including accessibility fixes, link corrections, removal of banner notes related to specific cases, and minor editorial updates. None of the changes specifically address or alter the procedural timelines, fees, grounds for opposition, or other substantive details about the patent opposition process described in the IPFR page. There is no indication that the 3-month opposition window, fees, or procedural steps have changed. Therefore, the IPFR page content remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8589,
+  "completion_tokens": 146,
+  "total_tokens": 8735,
+  "processing_time_seconds": 3.057613964999973,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.708927+00:00"
+}

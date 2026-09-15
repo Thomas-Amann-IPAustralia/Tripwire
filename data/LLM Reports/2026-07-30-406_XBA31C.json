@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XBA31C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the WIPO Arbitration fees webpage by reformatting and clarifying some text about fee reductions and payment methods, but it does not change any specific fee amounts or procedural details. The IPFR page currently cites approximate WIPO arbitration costs (US$48,000 for expedited and US$165,000 for standard arbitration) and references the WIPO Arbitration and Mediation Center generally. Since the change does not update these cost figures or introduce new procedural rules or thresholds, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3334,
+  "completion_tokens": 143,
+  "total_tokens": 3477,
+  "processing_time_seconds": 1.9297973979998915,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.156369+00:00"
+}

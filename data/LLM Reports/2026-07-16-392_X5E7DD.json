@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and eBay's VeRO program contact email addresses. The ACCC register update involves exemptions and data sharing obligations unrelated to unjustified threats of IP infringement. The VeRO program update changes the contact email from vero@ebay.com to askvero@ebay.com, which is specific to eBay's infringement reporting process and does not affect the general legal principles or procedural guidance about responding to unjustified threats under Australian law as described in the IPFR page. There is no direct impact on the accuracy or currency of the IPFR content regarding unjustified threats.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4086,
+  "completion_tokens": 156,
+  "total_tokens": 4242,
+  "processing_time_seconds": 2.747134767999796,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234146+00:00"
+}

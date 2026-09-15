@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to updates on the ACCC public registers, including exemptions and undertakings concerning competition and consumer law matters. The IPFR page concerns unjustified threats under Australian IP law, focusing on IP infringement threats and related legal actions. There is no direct or specific information in the change document that affects the content, accuracy, or currency of the IPFR page's guidance on unjustified threats. The ACCC updates do not alter the legal framework or procedural advice given in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2468,
+  "completion_tokens": 133,
+  "total_tokens": 2601,
+  "processing_time_seconds": 2.2931542530000115,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.714118+00:00"
+}

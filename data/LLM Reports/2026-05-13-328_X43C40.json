@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-13-328",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes detected in the upstream source are minor updates to the number of news results shown on the IP Australia news page, specifically increasing from 24 to 25 results. There is no substantive change in content related to international IP infringement considerations or any legal, procedural, or factual information that would affect the IPFR page content. The relevance scores are low and the changes do not impact the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2721,
+  "completion_tokens": 119,
+  "total_tokens": 2840,
+  "processing_time_seconds": 3.135168109999995,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-13T06:04:12.939055+00:00"
+}

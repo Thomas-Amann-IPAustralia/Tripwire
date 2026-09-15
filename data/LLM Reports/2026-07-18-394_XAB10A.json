@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-18-394",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP website (www.afp.gov.au) experienced a technical connectivity issue, changing from a timeout error to a connection closed error. There is no substantive change to intellectual property laws, definitions, or procedures relevant to the IPFR page content about names and trade marks. The IPFR page content focuses on explaining business names, legal names, domain names, and trade marks, none of which are affected by the AFP website connectivity status. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2647,
+  "completion_tokens": 137,
+  "total_tokens": 2784,
+  "processing_time_seconds": 2.1935689000000593,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-18T05:03:28.023155+00:00"
+}

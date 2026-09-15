@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to minor content updates, typographical corrections, and updated references within the trademark manual, including removal of references to a specific section of the Plant Breeders Rights Act and updates to sections about three-dimensional trademarks and procedural details. However, these changes do not affect the specific guidance or factual content presented in the IPFR page about what to do if someone infringes your IP. The IPFR page provides general advice on steps to take, types of IP, and options for response without citing specific legislative sections or procedural details that have been amended. Therefore, no update to the IPFR page content is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4418,
+  "completion_tokens": 163,
+  "total_tokens": 4581,
+  "processing_time_seconds": 2.994429410000066,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.502112+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources primarily involve updates to the IP Australia Trade Marks Manual and consultation summaries related to patents and regulatory reforms. These updates include minor content revisions, typographical corrections, and references to case law or legislation, but do not specifically alter the fundamental distinctions or procedural advice about when to engage legal professionals for IP issues. The IPFR page focuses on general guidance about when to seek legal help and the roles of IP lawyers and attorneys, which remain accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3816,
+  "completion_tokens": 132,
+  "total_tokens": 3948,
+  "processing_time_seconds": 2.2732426799998393,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.588541+00:00"
+}

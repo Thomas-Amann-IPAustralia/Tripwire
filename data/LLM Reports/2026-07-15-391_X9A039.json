@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP webpages are solely about technical accessibility issues (connection errors and timeouts) and do not alter any substantive content related to intellectual property, trade marks, or enforcement procedures. The IPFR page content about registering trade marks remains accurate and unaffected by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2858,
+  "completion_tokens": 88,
+  "total_tokens": 2946,
+  "processing_time_seconds": 1.3835005829998863,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.112126+00:00"
+}

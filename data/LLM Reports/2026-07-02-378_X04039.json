@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X04039",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes include updated Federal Court fees effective from 1 July 2026, with specific increases to filing fees, hearing fees, and other court-related costs. The IPFR page currently states that trade mark litigation costs in the Federal Court of Australia commonly exceed $100,000 but does not provide specific fee figures. Given the significant fee increases reflected in the Federal Court and Federal Circuit and Family Court Regulations 2022 amendments, the IPFR page should be updated to reflect the new fee schedule or at least note the updated fees effective from 1 July 2026 to maintain accuracy and currency for users considering court action. The other changes to procedural rules and human rights statements do not directly affect the IPFR content, which is general guidance rather than procedural detail.",
+  "suggested_changes": [
+    "Update the section 'What might the costs be?' to reflect the new Federal Court filing and hearing fees effective from 1 July 2026, including the increased fees for filing an application, setting down for hearing, daily hearing fees, and other relevant court fees as per the Federal Court and Federal Circuit and Family Court Amendment (Filing Fees) Regulations 2026.",
+    "Add a note that fees are subject to change and advise users to check the Federal Court of Australia website for the most current fee schedule before commencing proceedings."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9923,
+  "completion_tokens": 296,
+  "total_tokens": 10219,
+  "processing_time_seconds": 6.757600454000112,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267490+00:00"
+}

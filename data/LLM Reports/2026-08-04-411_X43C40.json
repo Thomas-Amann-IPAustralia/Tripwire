@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-04-411",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document is a minor update to the number of news results on the IP Australia news webpage and mentions a new transparency program related to patent examination timeframes under the Patent Prosecution Highway. The IPFR page in question discusses considerations when responding to international accusations of IP infringement and does not contain specific information on patent examination timeframes, procedural details, or any data that would be affected by this news update. The relevance scores are low to moderate and the change does not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2241,
+  "completion_tokens": 138,
+  "total_tokens": 2379,
+  "processing_time_seconds": 2.1268556820000413,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-04T05:23:48.913819+00:00"
+}

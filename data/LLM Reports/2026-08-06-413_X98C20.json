@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to the Australian Securities and Investments Commission Act 2001, specifically the creation of External Reporting Australia to handle financial reporting and sustainability standard-setting functions. The IPFR page focuses on explaining the role of IP Australia compared to other government agencies related to intellectual property and business support services. There is no mention of ASIC's internal structural changes or financial reporting standards in the IPFR content. The change does not affect the accuracy or currency of the IPFR page's descriptions or comparisons.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2024,
+  "completion_tokens": 132,
+  "total_tokens": 2156,
+  "processing_time_seconds": 2.335838042999967,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.797636+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP website (www.afp.gov.au) is currently unreachable due to a connection closure error. This is a technical issue with the AFP website and does not affect the content or accuracy of the IPFR page about complaints against IP Australia. The IPFR page references the Commonwealth Ombudsman for complaints escalation, not the AFP. Therefore, there is no direct impact on the IPFR page content or guidance.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1566,
+  "completion_tokens": 119,
+  "total_tokens": 1685,
+  "processing_time_seconds": 2.030162022000013,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.996322+00:00"
+}

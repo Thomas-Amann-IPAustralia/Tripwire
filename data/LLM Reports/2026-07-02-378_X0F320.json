@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X0F320",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to secrecy provisions in the Criminal Code Act 1995, including repealing certain offences and introducing new offences related to improper use or communication of information by Commonwealth officials. However, the IPFR page content focuses on IP Australia's privacy policy and data collection practices related to the IP First Response tool, referencing the Australian Privacy Principles under the Privacy Act 1988. There is no mention or detail about secrecy offences, criminal liability, or the Criminal Code in the IPFR page. Therefore, the legislative changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1638,
+  "completion_tokens": 151,
+  "total_tokens": 1789,
+  "processing_time_seconds": 2.396086480000122,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.272570+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document announces the postponement and rescheduling of the launch date for the Qualified Persons (QP) portal related to Plant Breeders' Rights from 20 June 2026 to 7 July 2026. The IPFR page on PBR infringement does not mention the QP portal, its launch date, or any procedural details about the application system. The change does not affect the substantive content about PBR infringement, rights, or exceptions. Therefore, no update to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2857,
+  "completion_tokens": 141,
+  "total_tokens": 2998,
+  "processing_time_seconds": 2.08166213100003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269703+00:00"
+}

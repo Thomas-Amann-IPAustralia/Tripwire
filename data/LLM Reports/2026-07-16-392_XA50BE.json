@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices and closed consultations pages primarily concern updates to manuals, consultations, fee reviews, and policy reforms related to patents, trade marks, and design rights generally. None of the changes provide specific updates or amendments to the legal procedures, time limits, costs, or court processes related to design disputes or court actions as described in the IPFR page. The IPFR page content about seeking binding, authoritative decisions in design disputes remains accurate and current given the information in the changes. There are no direct references to changes in limitation periods, court jurisdictions, procedural steps, or costs that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5850,
+  "completion_tokens": 161,
+  "total_tokens": 6011,
+  "processing_time_seconds": 3.5527467689998957,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.233971+00:00"
+}

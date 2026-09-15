@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XAEFF3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual concerning specific legal decisions and examination practices, including the Aristocrat decision and procedural details about extensions of term for pharmaceutical patents. However, the IPFR page content on patent infringement provides a general overview aimed at small business owners, focusing on what constitutes infringement, examples, and exceptions under the Patents Act 1990. There is no indication that the changes affect the fundamental definitions, infringement criteria, or exceptions described in the IPFR page. The changes appear to be more technical and procedural updates rather than altering the substantive law or basic guidance on patent infringement. Therefore, no update to the IPFR page is required based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2682,
+  "completion_tokens": 173,
+  "total_tokens": 2855,
+  "processing_time_seconds": 2.049416405999864,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491905+00:00"
+}

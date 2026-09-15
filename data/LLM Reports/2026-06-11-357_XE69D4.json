@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to WIPO arbitration fees and minor formatting or wording updates on WIPO's domain name dispute resolution pages. The IPFR page XE69D4 discusses the Uniform Domain Name Dispute Resolution Policy (UDRP) and related dispute resolution processes, including WIPO's role, but does not provide specific fee schedules or arbitration cost details that have changed. The fee tables updated on the WIPO arbitration fees page concern arbitration costs for disputes up to $10 million and above, which are not referenced or detailed in the IPFR page. The changes to the list of ccTLDs and formatting on the WIPO domain dispute resolution page do not affect the accuracy of the IPFR page's descriptions or advice. Other changes are minor or unrelated to the specific content of the IPFR page. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8641,
+  "completion_tokens": 210,
+  "total_tokens": 8851,
+  "processing_time_seconds": 3.2523453520000203,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849509+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to news updates on the IP Australia website and connectivity issues with AFP webpages. The IPFR page content about free IP tools remains accurate and does not include specific references to the changed news items or the AFP pages. There are no changes to the descriptions, names, or functionalities of the free IP tools listed, nor any procedural or statutory details that would require updating. The connectivity issues on AFP pages do not affect the factual content of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3627,
+  "completion_tokens": 127,
+  "total_tokens": 3754,
+  "processing_time_seconds": 3.6749988200001553,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.110667+00:00"
+}

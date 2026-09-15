@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to amendments to the Competition and Consumer Act 2010 introducing new powers for the ACCC and ministerial declarations concerning exceptional circumstances and penalties related to the Oil Code of Conduct. The IPFR page focuses on explaining the differences between legal names, business names, domain names, and trade marks for Australian businesses, without discussing competition law, ACCC authorisations, or the Oil Code of Conduct. Therefore, the legislative changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3001,
+  "completion_tokens": 134,
+  "total_tokens": 3135,
+  "processing_time_seconds": 1.6770040470000822,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707561+00:00"
+}
