@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a cyclic review and update of the IP Australia patent manual, with minor language changes and removal of some references, but no substantive changes to the procedures or timeframes related to section 27 notices or third party notifications during patent examination. The IPFR page content about lodging section 27 notices, the time window of three months after notice of acceptance, and the process remains accurate and unaffected by these updates. There are no changes to statutory references, deadlines, or procedural steps that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3046,
+  "completion_tokens": 139,
+  "total_tokens": 3185,
+  "processing_time_seconds": 1.5534447850000106,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.935180+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a broad update to the IPAustralia design manual webpage, primarily concerning applicant names, product definitions, and design examination procedures. The IPFR page is focused specifically on registering unregistered trade marks, including fees, benefits, risks, and procedural steps for trade mark registration. There is no indication in the change document of any amendments to trade mark fees, timeframes, or procedural requirements that would affect the accuracy of the IPFR page content. The relevance scores are moderate but the content areas differ (design vs trade marks). Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3007,
+  "completion_tokens": 153,
+  "total_tokens": 3160,
+  "processing_time_seconds": 2.2874387760000445,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.935056+00:00"
+}
