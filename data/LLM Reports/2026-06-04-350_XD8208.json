@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate solely to accessibility fixes and heading removals in the IP Australia design manual, specifically concerning design registrations and excluded designs. These changes do not alter any substantive content, legal requirements, procedural steps, or timeframes related to trade mark removal for non-use. The IPFR page content about trade mark removal remains accurate and unaffected by these accessibility and formatting updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3548,
+  "completion_tokens": 107,
+  "total_tokens": 3655,
+  "processing_time_seconds": 1.608721912999954,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.706745+00:00"
+}

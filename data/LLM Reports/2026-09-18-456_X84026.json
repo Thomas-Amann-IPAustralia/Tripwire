@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates on the WIPO domain name dispute resolution webpage, including procedural details about filing complaints and responses, fees, and new services. However, the IPFR page 'I am not happy with IP Australia - what can I do?' focuses on complaints about IP Australia services and the complaint escalation process to the Commonwealth Ombudsman. There is no direct reference to WIPO domain name dispute procedures or fees in the IPFR page content, and the changes do not affect the accuracy or currency of the guidance given to Australian small business owners about complaining to IP Australia. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1778,
+  "completion_tokens": 160,
+  "total_tokens": 1938,
+  "processing_time_seconds": 2.351858419999985,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.745083+00:00"
+}

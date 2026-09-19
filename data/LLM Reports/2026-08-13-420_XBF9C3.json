@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the titles and versions of non-legislative patent instruments and the dates of regulations under the Patent Cooperation Treaty (PCT). These updates concern administrative and procedural documents and do not affect the substantive content of the IPFR page about enforcing a 'filed' patent, which focuses on the legal status and enforceability of patent applications and granted patents in Australia. There is no indication that the legal principles, timelines, or enforcement rights described in the IPFR page have changed as a result of these updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3024,
+  "completion_tokens": 139,
+  "total_tokens": 3163,
+  "processing_time_seconds": 1.6800217130000874,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.878670+00:00"
+}

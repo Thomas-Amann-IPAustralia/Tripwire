@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to the Amazon Brand Registry webpage, specifically adjusting the percentage of cashback on branded sales from 20% to 10%. The IPFR page 'Is my business name my IP?' focuses on explaining the differences between business names, company names, and registered trade marks in the Australian context, and does not mention Amazon Brand Registry or cashback offers. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1407,
+  "completion_tokens": 123,
+  "total_tokens": 1530,
+  "processing_time_seconds": 1.8236274230000618,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713883+00:00"
+}

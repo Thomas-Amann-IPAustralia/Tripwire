@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to intelligence oversight legislation and related Commonwealth laws, which are unrelated to the procedural or substantive content of IP Australia hearings described in the IPFR page. The change does not affect any specific information about IP hearings, processes, fees, timelines, or appeal rights presented in the IPFR content. The relevance scores are low and the subject matter is distinct, so no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1742,
+  "completion_tokens": 118,
+  "total_tokens": 1860,
+  "processing_time_seconds": 1.9521939569999631,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.820122+00:00"
+}

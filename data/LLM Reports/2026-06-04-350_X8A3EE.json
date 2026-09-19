@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change updates statistics and dates related to Amazon's Transparency program and Brand Protection Report, increasing the number of verified genuine product units and updating the report date. However, the IPFR page 'Pause use of contested IP until resolution' does not contain any specific references to Amazon's Transparency program, product verification statistics, or related dates. The page focuses on general guidance about ceasing use of contested IP and does not include any factual claims or figures that are affected by this update. Therefore, no changes are required to maintain the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2488,
+  "completion_tokens": 148,
+  "total_tokens": 2636,
+  "processing_time_seconds": 2.745311306000076,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707280+00:00"
+}

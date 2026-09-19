@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream sources primarily involve accessibility fixes, link updates, and minor textual consistency improvements in the patent and design manuals. There are no substantive amendments to the examination or certification process for registered designs, no changes to fees, timeframes, or procedural requirements that would affect the accuracy of the IPFR page content. The IPFR page's detailed descriptions of examination, certification, fees, timeframes, and outcomes remain accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3930,
+  "completion_tokens": 125,
+  "total_tokens": 4055,
+  "processing_time_seconds": 1.9180345520001083,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.563338+00:00"
+}

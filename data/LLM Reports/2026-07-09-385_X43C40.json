@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document adds information about WIPO's Expedited Case Processing service for domain name disputes, specifying a one-month timeframe from filing to decision. However, the IPFR page 'Considerations when responding to international accusations' does not specifically discuss domain name dispute procedures, WIPO's UDRP process, or related timeframes or fees. The page provides general guidance on responding to overseas IP infringement accusations without detailing specific dispute resolution mechanisms or timelines. Therefore, the new information about WIPO's expedited domain name dispute processing does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2247,
+  "completion_tokens": 150,
+  "total_tokens": 2397,
+  "processing_time_seconds": 3.034947860000102,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.818208+00:00"
+}

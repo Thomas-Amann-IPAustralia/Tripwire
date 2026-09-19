@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage relate to advice on preventing infringement by listing IP rights with platforms such as Amazon Brand Registry to detect counterfeit goods. The IPFR page 'Infringement 101' provides a broad overview of infringement concepts, trade mark registration, and enforcement but does not currently include specific procedural advice about brand registries or online platform listings. The changes do not affect any specific factual statements, legal thresholds, or procedural steps described in the IPFR content. Therefore, no update to the IPFR page is necessary based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2884,
+  "completion_tokens": 145,
+  "total_tokens": 3029,
+  "processing_time_seconds": 1.8573266130000547,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.812564+00:00"
+}

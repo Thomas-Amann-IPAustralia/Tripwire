@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Plant Breeder's Rights (PBR) manual, specifically updates to accessibility features, link fixes, and additional guidance on surrenders. The IPFR page 'Infringement 101' covers general infringement concepts across multiple IP rights including PBR, but does not contain specific procedural details, statutory references, or guidance on PBR surrenders or application process steps that would be affected by these updates. The changes do not contradict or update any specific factual content in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4277,
+  "completion_tokens": 138,
+  "total_tokens": 4415,
+  "processing_time_seconds": 1.8313514200001464,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491274+00:00"
+}

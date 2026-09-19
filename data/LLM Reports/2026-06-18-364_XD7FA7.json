@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates to the IP Australia Trade Marks Manual of Practice and Procedure, including terminology updates and case law references related to honest concurrent use, as well as minor formatting and typographical corrections on related government and WIPO pages. None of these changes specifically affect the procedural details, timeframes, fees, or substantive guidance on opposing trade mark registrations as described in the IPFR page. The IPFR content remains accurate and current for its intended audience of small business owners seeking basic guidance on trade mark opposition processes. There are no direct amendments to the opposition period, fees, or procedural steps that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8247,
+  "completion_tokens": 160,
+  "total_tokens": 8407,
+  "processing_time_seconds": 2.414485359000082,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.706951+00:00"
+}

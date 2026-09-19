@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XC8F8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the webpage content about how to engage an attorney, including details on costs, preparation for meetings, and attorney conduct. However, the IPFR page 'XC8F8C \u2014 Why is this so expensive?' provides a general overview of enforcement costs and processes without specific cost figures or procedural details that conflict with or require updating based on the new attorney engagement information. The IPFR page does not mention specific hourly rates or fee structures that would need correction or addition. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2138,
+  "completion_tokens": 147,
+  "total_tokens": 2285,
+  "processing_time_seconds": 2.6119050859997515,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.235062+00:00"
+}

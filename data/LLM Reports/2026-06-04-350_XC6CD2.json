@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to amendments in the Competition and Consumer Act 2010 regarding exceptional circumstances declarations and ACCC authorisations, updates to practice directions of the Administrative Review Tribunal, updates to the patent manual including procedural and content clarifications, and updates to the trademark manual focusing on series trade marks, material particulars, and minor typographical corrections. None of these changes directly affect the content of the IPFR page on challenging the registration of a new trade mark, which focuses on the opposition process, timelines, risks, benefits, and procedural guidance specific to trade mark oppositions under IP Australia. There are no changes to the opposition period, fees, procedural steps, or legal thresholds mentioned in the IPFR page that are contradicted or updated by these upstream changes. Therefore, no amendments to the IPFR page are required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10030,
+  "completion_tokens": 200,
+  "total_tokens": 10230,
+  "processing_time_seconds": 2.6537625719997777,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.705297+00:00"
+}

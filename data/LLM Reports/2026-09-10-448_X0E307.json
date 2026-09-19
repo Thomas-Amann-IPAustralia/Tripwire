@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to IP Australia official notices, manuals on trade marks and designs, and news items. These updates include amendments to design registrations, updates to manuals with formatting and alternative text improvements, and archival of outdated notices. None of these changes provide new or altered information that directly affects the content of the IPFR page on addressing overseas infringement. The IPFR page focuses on general guidance about territorial nature of IP rights, enforcement challenges overseas, and practical tips for businesses, none of which are contradicted or outdated by the upstream changes. There are no changes to legal thresholds, procedures, or international enforcement options described in the IPFR page that would require updating based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4967,
+  "completion_tokens": 173,
+  "total_tokens": 5140,
+  "processing_time_seconds": 2.768975834999992,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552366+00:00"
+}

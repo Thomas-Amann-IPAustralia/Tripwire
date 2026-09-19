@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XEB5B5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to detailed procedural and legal guidance updates in the IPAustralia patent manual, including clarifications on examination practice, manner of manufacture, and specific case law impacts. However, the IPFR page is a high-level, introductory guide aimed at small business owners explaining the basics of applying for a patent, including general process steps, benefits, risks, costs, and timelines. None of the changes indicate modifications to fundamental facts such as application fees, timeframes, or procedural steps described in the IPFR page. The changes are more technical and legal in nature, not affecting the accuracy or currency of the basic information presented to the target audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3641,
+  "completion_tokens": 164,
+  "total_tokens": 3805,
+  "processing_time_seconds": 3.9406031919997986,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.502278+00:00"
+}

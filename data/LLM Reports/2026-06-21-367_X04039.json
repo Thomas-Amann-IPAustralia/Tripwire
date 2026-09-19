@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X04039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the ASBFEO dispute support webpage is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). There is no substantive update or amendment to the content of the ASBFEO dispute support page itself. The IPFR page 'Seek binding, authoritative decisions' does not cite or rely on specific content from this ASBFEO page, and the change does not affect any factual or procedural information presented in the IPFR page. Therefore, no update to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3262,
+  "completion_tokens": 140,
+  "total_tokens": 3402,
+  "processing_time_seconds": 1.8404690139999502,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.914312+00:00"
+}

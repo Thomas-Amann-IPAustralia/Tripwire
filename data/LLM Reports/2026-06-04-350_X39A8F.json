@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external sources primarily involve procedural clarifications, accessibility fixes, and updates to practice directions and oversight legislation that do not directly affect the factual content or guidance provided in the IPFR page. The IPFR page focuses on basic checks before getting registered IP, including general requirements and practical advice for small business owners, without referencing specific procedural details or statutory provisions that have changed. None of the changes indicate updates to the basic registration requirements, timeframes, or fees mentioned in the IPFR content. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3902,
+  "completion_tokens": 145,
+  "total_tokens": 4047,
+  "processing_time_seconds": 1.7799119810001685,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708011+00:00"
+}

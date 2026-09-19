@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to WIPO's domain name dispute resolution service, specifically the introduction of an Expedited Case Processing service delivering decisions within one month. The IPFR page focuses on explaining that there is no global IP office and describes WIPO's role in international IP treaties and systems for patents, trademarks, and designs. It does not mention domain name dispute resolution or the timelines for WIPO arbitration or mediation services. Therefore, the new information about expedited domain name dispute processing does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2244,
+  "completion_tokens": 140,
+  "total_tokens": 2384,
+  "processing_time_seconds": 2.320572790999904,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.817586+00:00"
+}

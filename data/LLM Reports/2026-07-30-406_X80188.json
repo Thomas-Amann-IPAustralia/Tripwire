@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the Trade Marks Manual, specifically about divisional applications, prescribed signs, and archival of outdated notices regarding the Aboriginal Flag. The IPFR page content is a general introductory article about IP infringement aimed at small businesses and creators, focusing on broad concepts and practical understanding rather than detailed procedural or legislative specifics about trade mark divisional applications or prescribed signs. There is no specific mention of divisional applications, prescribed signs, or Aboriginal Flag copyright issues in the IPFR page content. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2568,
+  "completion_tokens": 151,
+  "total_tokens": 2719,
+  "processing_time_seconds": 1.934752354000011,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.154871+00:00"
+}

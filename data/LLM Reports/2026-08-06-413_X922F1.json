@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to minor formatting and wording adjustments on external pages about tribunal practice directions, trademark manual updates, and administrative judicial review procedures. None of the changes provide new or updated information specifically about the patent opposition process, timelines, fees, or procedural steps described in the IPFR page. The IPFR page content about challenging a new or amended patent remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7504,
+  "completion_tokens": 115,
+  "total_tokens": 7619,
+  "processing_time_seconds": 3.441115795000087,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793389+00:00"
+}

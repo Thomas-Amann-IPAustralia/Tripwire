@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to formatting updates, accessibility fixes, and the addition of new non-legislative instruments related to design fees and filing procedures. There is no indication of changes to substantive content such as fees, timeframes, legal requirements, or procedural steps that would affect the accuracy or currency of the IPFR page. The WIPO Paris Convention update appears to be a formatting or structural update without changes to substantive provisions relevant to design registration in Australia. Therefore, the IPFR page content remains accurate and does not require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4825,
+  "completion_tokens": 144,
+  "total_tokens": 4969,
+  "processing_time_seconds": 3.197126062000052,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909316+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change updates the Administrative Review Tribunal (ART) practice directions webpage to include more detailed explanations about practice directions and procedural expectations. However, this does not alter the fundamental description of the merits review process or the options available to IP rights holders as described in the IPFR page. The IPFR page's summary of the ART as a merits review body remains accurate and does not require specific procedural details from the practice directions. The second change relates to oversight legislation for intelligence and security agencies, which is unrelated to the IPFR page content about challenging IP Australia examination decisions. Therefore, neither change affects the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2401,
+  "completion_tokens": 162,
+  "total_tokens": 2563,
+  "processing_time_seconds": 1.696120761000202,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708709+00:00"
+}

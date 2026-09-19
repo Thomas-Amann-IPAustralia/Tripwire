@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of expanded and reformatted content on the WIPO Arbitration and Mediation Center website, including additional descriptions of ADR services, contact details, and minor textual corrections. There are no changes to specific procedural steps, fees, timeframes, or binding legal effects that would render any specific factual statement on the IPFR page inaccurate or outdated. The IPFR page's descriptions of WIPO ADR services, benefits, risks, outcomes, costs, timeframes, and procedural options remain accurate and consistent with the updated source content. The minor corrections to contract clause language availability and fee schedule formatting do not affect the IPFR page content. The domain name dispute resolution changes are not directly relevant to this page's focus on arbitration and mediation services. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 21549,
+  "completion_tokens": 194,
+  "total_tokens": 21743,
+  "processing_time_seconds": 5.901862600000186,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.151840+00:00"
+}

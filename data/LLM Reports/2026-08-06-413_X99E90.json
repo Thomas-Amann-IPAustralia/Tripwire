@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Uniform Domain-Name Dispute-Resolution Policy (UDRP) updates on ICANN's website, specifically noting an update date and implementation timeline for the policy. The IPFR page content focuses on explaining that there is no single global IP office and describes WIPO's role and national IP offices' roles. It does not mention domain name dispute resolution, UDRP, or ICANN policies. Therefore, these changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2562,
+  "completion_tokens": 135,
+  "total_tokens": 2697,
+  "processing_time_seconds": 2.015072680000003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.794390+00:00"
+}

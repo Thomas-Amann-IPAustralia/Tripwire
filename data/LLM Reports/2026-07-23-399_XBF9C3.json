@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the patent manual concerning classification systems, computer-implemented inventions, prior art definitions, and procedural details such as excess claims fees and report detail levels. None of these changes specifically address or alter the fundamental concepts of enforcing a 'filed' patent as described in the IPFR page, such as the enforceability only arising upon grant, the significance of publication date, or the general process and implications of filing a patent application. There is no indication that the legal status or enforcement rights of a 'filed' patent have changed, nor that the timelines or costs described require updating. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3248,
+  "completion_tokens": 168,
+  "total_tokens": 3416,
+  "processing_time_seconds": 2.476130762999901,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.258242+00:00"
+}

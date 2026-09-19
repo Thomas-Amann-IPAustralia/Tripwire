@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage at www.asbfeo.gov.au/disputes-assistance/dispute-support is currently unreachable due to technical connection issues (ERR_CONNECTION_CLOSED). There is no substantive content change or update to the information about dispute resolution or WIPO Good Offices services. The IPFR page content about the WIPO Good Offices Program remains accurate and unaffected by this technical outage of an unrelated external site. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2380,
+  "completion_tokens": 129,
+  "total_tokens": 2509,
+  "processing_time_seconds": 1.5093240479999395,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.913287+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to ACCC exemptions under section 56GD of the Competition and Consumer Act 2010 (Cth) concerning data sharing obligations for specific finance entities. These updates do not affect the content of the IPFR page on unregistered trade marks, which focuses on legal protection frameworks such as passing off and the Australian Consumer Law provisions against misleading conduct. There is no mention of data sharing obligations or these specific ACCC exemptions in the IPFR page content, so the changes do not impact the accuracy or currency of the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3068,
+  "completion_tokens": 140,
+  "total_tokens": 3208,
+  "processing_time_seconds": 2.4449645869999586,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232161+00:00"
+}

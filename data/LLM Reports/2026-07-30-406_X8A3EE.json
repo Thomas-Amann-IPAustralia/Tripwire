@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns an update to Amazon's Brand Registry process, specifically increasing the deposit amount from $4,000 to $5,000 for the Amazon Patent Evaluation Express program. The IPFR page 'Pause use of contested IP until resolution' provides general guidance on ceasing use of contested IP and does not mention Amazon, the Brand Registry, or specific deposit amounts for patent evaluations. The content is focused on general principles and risks of stopping use of contested IP rather than procedural details of third-party platforms. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3075,
+  "completion_tokens": 152,
+  "total_tokens": 3227,
+  "processing_time_seconds": 2.508613647999937,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.154041+00:00"
+}

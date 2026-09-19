@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia design manual primarily involve accessibility fixes, removal of empty headings, updates to URLs, and broken link fixes. There are no substantive changes to the legal or procedural content related to design disputes or court proceedings that would affect the accuracy or currency of the IPFR page. The changes to the administrative decisions judicial review page add information about court fee exemptions, which is not directly relevant to the IPFR page content about design disputes in court. The ASBFEO page change is about a website connectivity issue and does not affect IPFR content. Therefore, none of the changes require updates to the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7191,
+  "completion_tokens": 159,
+  "total_tokens": 7350,
+  "processing_time_seconds": 3.5755610490000436,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.848812+00:00"
+}

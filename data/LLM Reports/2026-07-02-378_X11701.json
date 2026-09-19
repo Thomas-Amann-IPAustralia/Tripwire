@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change relates to Amazon Brand Registry's process for handling patent disputes via neutral third-party evaluators, which is specific to Amazon's platform and US store enforcement. The IPFR page provides general guidance on what to do if someone infringes your IP, focusing on Australian IP rights and general dispute resolution options. There is no mention of Amazon Brand Registry or platform-specific dispute mechanisms in the IPFR content. Therefore, the change does not affect the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1915,
+  "completion_tokens": 130,
+  "total_tokens": 2045,
+  "processing_time_seconds": 2.2415142720001313,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.271172+00:00"
+}

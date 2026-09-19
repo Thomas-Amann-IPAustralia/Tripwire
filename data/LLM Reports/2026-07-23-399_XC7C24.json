@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change to the IPAustralia design manual primarily involves accessibility fixes, minor image corrections, URL updates, and reorganization of sections related to excluded designs and examination hearings. There is no indication of substantive changes to the legal requirements, procedures, or definitions that would affect the accuracy or currency of the IPFR page content about checking products against existing designs. The IPFR page does not contain specific references or procedural details that are contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2522,
+  "completion_tokens": 126,
+  "total_tokens": 2648,
+  "processing_time_seconds": 2.1903714490001676,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.258671+00:00"
+}

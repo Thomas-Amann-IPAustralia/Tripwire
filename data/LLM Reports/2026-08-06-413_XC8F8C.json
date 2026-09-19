@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XC8F8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the Federal Court and Federal Circuit and Family Court fees schedule, including filing and hearing fees. However, the IPFR page 'XC8F8C \u2014 Why is this so expensive?' provides general information about factors influencing IP enforcement costs without specifying exact fee amounts or referencing specific court fees. The page discusses cost drivers such as urgency, complexity, legal help, and procedural steps in broad terms, without citing or detailing current fee schedules. Therefore, while the fee changes are relevant to the general topic of enforcement costs, they do not directly affect the accuracy or currency of the IPFR page content as it stands.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3082,
+  "completion_tokens": 158,
+  "total_tokens": 3240,
+  "processing_time_seconds": 2.724573231000022,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.797559+00:00"
+}

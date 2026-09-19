@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X47C30",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the contact email address for eBay's VeRO program from vero@ebay.com to askvero@ebay.com and clarifies some procedural details about reporting and retracting infringement notices. However, the IPFR page content is a general disclaimer about the website's purpose, liability, and advice limitations, and does not mention eBay, the VeRO program, or any specific contact details. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2414,
+  "completion_tokens": 134,
+  "total_tokens": 2548,
+  "processing_time_seconds": 2.251350755999738,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234233+00:00"
+}

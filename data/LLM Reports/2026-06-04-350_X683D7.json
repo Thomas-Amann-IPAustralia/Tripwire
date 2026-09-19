@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the design and plant breeder's rights manuals are primarily accessibility fixes, updates to headings, link corrections, and minor content reorganizations. There are no substantive changes to the procedures, fees, timelines, or legal requirements related to third-party examination of registered designs. The IPFR page content about requesting confirmation of a registered design's validity remains accurate and up to date based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4154,
+  "completion_tokens": 114,
+  "total_tokens": 4268,
+  "processing_time_seconds": 1.761717797000074,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707217+00:00"
+}

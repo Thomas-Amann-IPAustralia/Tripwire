@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO 'about' page consist solely of a minor textual update adding a sentence describing WIPO as a United Nations agency serving innovators and creators. There is also the removal of a mention of the 'OzIP Protection Service' which is not referenced in the IPFR page. The IPFR page's content about WIPO and its alternative dispute resolution services remains accurate and unaffected by these changes. No specific procedural, legal, or factual information in the IPFR page is contradicted or outdated by the upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2829,
+  "completion_tokens": 139,
+  "total_tokens": 2968,
+  "processing_time_seconds": 2.4352952540000388,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.711451+00:00"
+}

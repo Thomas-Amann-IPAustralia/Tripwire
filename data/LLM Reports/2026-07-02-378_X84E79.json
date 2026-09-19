@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to updates in ACCC public registers and consultation hub content, including court enforceable undertakings and reviews of mandatory safety standards for consumer goods. These changes do not pertain to the Australian Border Force's Notice of Objection scheme, trade mark or copyright seizure procedures, or any specific details about IP enforcement at the border. Therefore, the IPFR page content about stopping infringing goods entering the country remains accurate and unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4405,
+  "completion_tokens": 120,
+  "total_tokens": 4525,
+  "processing_time_seconds": 1.9019395240002268,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.273878+00:00"
+}

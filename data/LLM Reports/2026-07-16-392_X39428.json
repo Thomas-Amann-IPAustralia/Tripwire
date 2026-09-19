@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document lists multiple closed consultations and updates related to IP Australia practices, including patents, trade marks, designs, and Indigenous Knowledge. However, none of the changes explicitly amend or update specific procedural steps, statutory references, or guidance directly related to avoiding IP infringement as described in the IPFR page. The IPFR page provides general advice on avoiding infringement, such as conducting searches, creating original work, understanding fair use, and obtaining permissions. The changes do not indicate any modifications to these fundamental principles or to the specific advice given. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3355,
+  "completion_tokens": 151,
+  "total_tokens": 3506,
+  "processing_time_seconds": 2.9001713769998787,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.230439+00:00"
+}

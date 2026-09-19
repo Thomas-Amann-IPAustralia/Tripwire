@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XC87FF",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor formatting adjustment and reordering of bullet points in guidance on what information to provide to an IP attorney. It does not alter any substantive content or introduce new information that affects the IPFR page's explanations about IP as a barrier to entry, types of IP, or steps businesses should take. The IPFR page does not specifically quote or reproduce this attorney engagement guidance, so no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2971,
+  "completion_tokens": 122,
+  "total_tokens": 3093,
+  "processing_time_seconds": 7.529085454000096,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908569+00:00"
+}

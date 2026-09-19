@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the Australian Border Force Act 2015 compilation and amendments to the IPAustralia patent manual, including patent examination guidelines and case law updates. The IPFR page focuses on reporting IP infringement risks to public interest, specifically addressing criminal matters, counterfeit goods, and reporting channels. There is no indication that the legislative or manual updates affect the accuracy or currency of the guidance on reporting IP crime, counterfeit medicines, consumer harm, or scams. The changes do not mention any amendments to reporting procedures, thresholds for criminality, or relevant agencies that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2539,
+  "completion_tokens": 153,
+  "total_tokens": 2692,
+  "processing_time_seconds": 1.8388443020000977,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.564461+00:00"
+}

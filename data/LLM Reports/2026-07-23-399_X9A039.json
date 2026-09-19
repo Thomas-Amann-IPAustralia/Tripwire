@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trade Marks Manual of Practice and Procedure primarily involve reorganization and consolidation of filing requirements and updates to various procedural parts, including amendments to terminology and examples. There is no indication of changes to fees, timeframes, or fundamental registration processes that would affect the IPFR page content about registering a trade mark. The design manual changes are unrelated to trade marks and concern design registrations, which do not impact the trade mark registration guidance. Therefore, the IPFR page content remains accurate and does not require updates based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4219,
+  "completion_tokens": 141,
+  "total_tokens": 4360,
+  "processing_time_seconds": 3.1950716669998656,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.257185+00:00"
+}

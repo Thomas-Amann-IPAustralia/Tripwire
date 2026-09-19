@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP fraud and corruption webpage is currently unreachable due to connection issues (ERR_TIMED_OUT), but there is no substantive content change related to trade mark opposition or IP Australia procedures. The IPFR page on challenging trade mark registration is accurate and unaffected by this network or access issue to an unrelated government webpage. There is no indication of any legal, procedural, or fee changes impacting the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2204,
+  "completion_tokens": 118,
+  "total_tokens": 2322,
+  "processing_time_seconds": 2.106461480000007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.789284+00:00"
+}

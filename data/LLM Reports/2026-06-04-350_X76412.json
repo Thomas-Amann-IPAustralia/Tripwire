@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X76412",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates on external consultation pages by the ACCC and updated statistics and dates on Amazon's Brand Registry page. The IPFR page content focuses on advising IP rights holders on how to engage intermediaries to stop infringement, without referencing specific statistics, dates, or external programs such as Amazon's Transparency program or ACCC consultations. None of the changes affect the accuracy or currency of the procedural or advisory content on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3658,
+  "completion_tokens": 122,
+  "total_tokens": 3780,
+  "processing_time_seconds": 1.6824650899998232,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.704944+00:00"
+}

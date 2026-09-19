@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern amendments to the Administrative Review Tribunal Rules 2024 related to migration review processes, fee impositions for NDIS providers, and authorisation powers within the ART. These changes do not directly affect the IP Australia hearing process described on the IPFR page, which focuses on hearings related to patents, trade marks, and designs. Other changes relate to oversight legislation, trademark manual updates, and trade agreements, none of which alter the procedural or substantive content about IP Australia hearings. The IPFR page content remains accurate and current regarding the hearing process at IP Australia.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10192,
+  "completion_tokens": 147,
+  "total_tokens": 10339,
+  "processing_time_seconds": 2.4989379200001167,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.706547+00:00"
+}

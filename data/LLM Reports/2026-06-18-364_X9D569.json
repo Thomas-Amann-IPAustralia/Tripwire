@@ -1,0 +1,21 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X9D569",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trans-Tasman IP Attorneys Board webpage on reasons to make a complaint against an IP attorney clarify and expand the information about when complaints can be made, the complaint process, and the limitations of the disciplinary processes. The IPFR page 'Obtain legal advice on enforcement options' references the Trans-Tasman IP Attorney Board register as a resource for finding attorneys but does not currently mention the complaint process or the rights of clients to make complaints about attorneys. Given the high significance and relevance scores of these changes, and the fact that the IPFR page aims to guide users on engaging legal professionals and understanding their roles and risks, it is important to update the IPFR page to include information about the complaint process, grounds for complaints, and what clients can expect if they have issues with an attorney. This will provide small business owners with more complete and accurate guidance on enforcement options and legal professional conduct.",
+  "suggested_changes": [
+    "Add a new section explaining that clients can make official complaints against registered Australian trade mark attorneys or Trans-Tasman patent attorneys to the Trans-Tasman IP Attorneys Board if the attorney breaches the Code of Conduct, acts incompetently, or behaves unethically.",
+    "Include details about the complaint process, such as the Board's investigation, referral to a disciplinary tribunal, and possible penalties like suspension or cancellation of registration.",
+    "Clarify that the Board and tribunal cannot order attorneys to pay damages or force resolution, and that clients seeking compensation may need to pursue court action or other avenues.",
+    "Update the references to the Trans-Tasman IP Attorneys Board to link to the complaint information page and encourage users to check registration status and understand their rights regarding attorney conduct."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6288,
+  "completion_tokens": 373,
+  "total_tokens": 6661,
+  "processing_time_seconds": 5.15757935099964,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.707780+00:00"
+}

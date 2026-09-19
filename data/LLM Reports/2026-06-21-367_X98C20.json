@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the ASBFEO dispute support webpage is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). This is a technical accessibility issue rather than a content change. The IPFR page references ASBFEO as an agency providing advocacy and dispute support, which remains accurate. There is no indication that the services, focus, or role of ASBFEO have changed. Therefore, the IPFR page content remains correct and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1772,
+  "completion_tokens": 126,
+  "total_tokens": 1898,
+  "processing_time_seconds": 1.6848927130000675,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.914682+00:00"
+}

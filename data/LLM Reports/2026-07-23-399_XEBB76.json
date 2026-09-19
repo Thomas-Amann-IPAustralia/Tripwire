@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to amendments to the Administrative Review Tribunal Rules 2024, specifically about the ART's operational efficiency, authorisation of powers to registrars and staff, and fee impositions related to NDIS providers. These changes concern administrative procedures and fee settings for reviews of migration and NDIS regulatory decisions. The IPFR page 'What is IP and how does it protect me?' provides a general overview of IP rights and their protections, focusing on types of IP and enforcement basics. There is no mention of the Administrative Review Tribunal, migration decisions, or NDIS provider reviews in the IPFR content. Therefore, the amendments do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5159,
+  "completion_tokens": 171,
+  "total_tokens": 5330,
+  "processing_time_seconds": 2.7140701490000083,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.256815+00:00"
+}

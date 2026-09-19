@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Amazon Brand Registry page clarify and expand on the Patent Evaluation Express program and administrative procedures, but do not contradict or update any specific facts or guidance currently stated on the IPFR page. The IPFR page already notes that Amazon Brand Registry accepts registered or pending trade marks only and does not detail the patent evaluation process, so no update is needed. The eBay VeRO program changes are mostly formatting and minor clarifications without altering substantive content. The IPFR page's description of eBay VeRO remains accurate and comprehensive. No specific dates, fees, or procedural steps in the IPFR page are contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10002,
+  "completion_tokens": 163,
+  "total_tokens": 10165,
+  "processing_time_seconds": 2.4301662289999513,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.706457+00:00"
+}

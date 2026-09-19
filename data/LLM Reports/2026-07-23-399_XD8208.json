@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trade Marks Manual of Practice and Procedure (tm_manual) and the Designs Manual (design_manual) primarily involve structural updates, content consolidation, accessibility fixes, and updates to URLs or minor editorial corrections. There is no indication of any amendments to the substantive legal requirements, timeframes, fees, or procedural steps related to the removal of a trade mark from the register for non-use. The IPFR page content on removal of trade marks remains accurate and current based on the provided change documents.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4685,
+  "completion_tokens": 133,
+  "total_tokens": 4818,
+  "processing_time_seconds": 2.741234974000008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.257000+00:00"
+}

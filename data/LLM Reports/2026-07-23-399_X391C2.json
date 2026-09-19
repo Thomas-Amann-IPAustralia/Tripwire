@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a news update from IP Australia highlighting a founder's experience with protecting her brand and the value of IP. It is a general informational piece and does not contain any changes to legislation, procedural steps, statutory references, or specific factual details such as dates, dollar amounts, or legal thresholds that would affect the accuracy or currency of the IPFR page content. The IPFR page provides general guidance on the value and considerations of registering IP, which remains accurate and unaffected by this news update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1666,
+  "completion_tokens": 133,
+  "total_tokens": 1799,
+  "processing_time_seconds": 1.8957522929999868,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.259092+00:00"
+}

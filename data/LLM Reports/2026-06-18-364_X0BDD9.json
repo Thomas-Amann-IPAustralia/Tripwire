@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external IP sources primarily involve minor formatting adjustments, fee details, and updates to trade agreements that do not directly affect the specific content of the IPFR page. The IPFR page provides a general overview of worldwide IP rights protection options, including the PCT, Madrid, and Hague systems, and notes Australia's non-membership in the Hague system. None of the changes update critical legal thresholds, procedural steps, or specific factual details (such as timeframes or eligibility criteria) that would render the IPFR page inaccurate or outdated. The AANZFTA update, while significant for trade, does not impact the IP rights protection content of this page. Therefore, no amendments to the IPFR page content are required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4028,
+  "completion_tokens": 181,
+  "total_tokens": 4209,
+  "processing_time_seconds": 3.150412721000066,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708777+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-24-370",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes consist primarily of updates to IP Australia news items, including new reports, initiatives, and features such as a chatbot, patent examination reminders, and international search options. These updates do not alter the fundamental definitions, types, or protections of IP rights as described in the IPFR page. The IPFR content provides a general overview of IP and its protections for small businesses, which remains accurate and unaffected by the news updates. There are no specific statutory references, procedural steps, or legal thresholds in the IPFR page that are contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6051,
+  "completion_tokens": 146,
+  "total_tokens": 6197,
+  "processing_time_seconds": 2.4158581710000817,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-24T06:22:08.485308+00:00"
+}

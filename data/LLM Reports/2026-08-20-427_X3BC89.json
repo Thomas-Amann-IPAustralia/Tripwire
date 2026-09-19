@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from IP Australia relate to updates in procedural instruments, application forms, and guidance for trade marks, plant breeders' rights, patents, and designs, as well as announcements about surveys and initiatives. However, the IPFR page content is a general introductory guide on how to check if someone else owns a word, logo, or idea, listing the relevant registers and tools without specifying procedural details, fees, forms, or dates. None of the updated information directly contradicts or renders inaccurate any specific factual content on the IPFR page. Therefore, no amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2293,
+  "completion_tokens": 152,
+  "total_tokens": 2445,
+  "processing_time_seconds": 3.3832579969998733,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.229718+00:00"
+}

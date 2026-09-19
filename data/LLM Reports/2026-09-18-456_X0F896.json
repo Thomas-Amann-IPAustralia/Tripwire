@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates on the WIPO domain name dispute resolution webpage, including procedural details and new services related to domain name disputes. The IPFR page 'Obtain legal advice on an accusation of infringement' focuses on general advice about engaging IP lawyers or attorneys when accused of IP infringement, including costs, benefits, and how to find professionals. There is no specific mention of domain name disputes or WIPO procedures in the IPFR page content. The changes do not affect the accuracy or currency of the advice given on this page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2729,
+  "completion_tokens": 140,
+  "total_tokens": 2869,
+  "processing_time_seconds": 2.2455584260000023,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.745173+00:00"
+}

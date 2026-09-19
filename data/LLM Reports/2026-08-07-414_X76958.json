@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-07-414",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to WIPO's recommended contract clauses for dispute resolution and updates to the domain name dispute resolution service, including procedural details and fee information. The IPFR page on considerations before enforcing IP overseas already mentions that alternative dispute resolution options are available through WIPO and relevant IP offices, but it does not provide detailed procedural or fee information about WIPO's services. The changes do not contradict or render any specific statements in the IPFR page inaccurate or outdated. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3583,
+  "completion_tokens": 142,
+  "total_tokens": 3725,
+  "processing_time_seconds": 2.2015990979998605,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-07T04:35:18.610405+00:00"
+}

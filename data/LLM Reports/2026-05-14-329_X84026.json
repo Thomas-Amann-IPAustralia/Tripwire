@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IP Australia patent manual, including procedural outlines, examination practice, and case law updates primarily concerning patent examination and legal principles. The IPFR page in question deals with how to complain about IP Australia service and does not contain specific procedural or legal details about patent examination or decisions. There is no indication that the complaint process or contact details have changed. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1974,
+  "completion_tokens": 127,
+  "total_tokens": 2101,
+  "processing_time_seconds": 2.6869444960000237,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.503377+00:00"
+}

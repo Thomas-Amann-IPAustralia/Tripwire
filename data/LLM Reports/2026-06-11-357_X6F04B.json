@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change updates WIPO's webpage about domain name dispute resolution, clarifying that .au is among ccTLDs that have adopted a variation of the UDRP and must be filed under specific ccTLD policy. This aligns with the IPFR page's existing explanation that .au domain disputes are handled under auDA's auDRP, distinct from the UDRP for gTLDs. The IPFR page's content remains accurate and consistent with this information. The second change relates to a technical connectivity issue with an unrelated government webpage and does not affect the IPFR page content. Neither change affects any specific factual detail, procedure, fee, timeframe, or legal threshold stated in the IPFR page. Therefore, no amendment is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3265,
+  "completion_tokens": 185,
+  "total_tokens": 3450,
+  "processing_time_seconds": 3.5171174710001196,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849853+00:00"
+}

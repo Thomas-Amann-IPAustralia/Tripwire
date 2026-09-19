@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The primary changes relate to updates in the IPAustralia trademark manual reflecting recent case law and procedural clarifications, updates to design manuals, and policy register entries. None of these changes directly affect the specific content of the IPFR page 'Register your trade mark', which focuses on basic guidance for small business owners about trade mark registration costs, benefits, risks, and processes. There are no changes to fees, timeframes, or procedural steps described in the IPFR page. The changes to the IPAustralia manuals are more technical and detailed, and the policy register updates do not alter the practical advice given. The minor changes to Amazon Brand Registry content are unrelated. Therefore, no update to the IPFR page is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8826,
+  "completion_tokens": 180,
+  "total_tokens": 9006,
+  "processing_time_seconds": 2.6361642950000714,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267032+00:00"
+}

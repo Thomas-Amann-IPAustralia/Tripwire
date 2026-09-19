@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the removal of references to section 27 of the Plant Breeder's Rights Act in the trademark manual and minor typographical and link updates. The IPFR page focuses on court proceedings for PBR disputes, including infringement and validity challenges, and does not mention section 27 or any specific statutory references that have been removed or altered. The changes do not affect the accuracy or currency of the IPFR page content regarding PBR court proceedings, outcomes, or processes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3932,
+  "completion_tokens": 129,
+  "total_tokens": 4061,
+  "processing_time_seconds": 1.6551160770000024,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491589+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates and minor corrections in the Trade Marks Manual and consultations on patent manual updates and regulatory simplifications. None of the changes provide new or altered procedural steps, legal thresholds, or specific guidance on what to do if someone infringes your IP that would directly affect the accuracy or currency of the IPFR page content. The IPFR page provides general guidance on responding to IP infringement, which remains valid despite these upstream updates. There is no indication that the changes affect the advice on gathering information, evaluating infringement, or options for dispute resolution.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5348,
+  "completion_tokens": 144,
+  "total_tokens": 5492,
+  "processing_time_seconds": 3.3533212419999927,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.587317+00:00"
+}

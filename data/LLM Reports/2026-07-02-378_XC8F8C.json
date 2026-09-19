@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XC8F8C",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the Federal Court of Australia filing and hearing fees effective from 1 July 2026, increasing various fees such as filing an application, interlocutory applications, setting down for hearing, daily hearing fees, mediation attendance, and others. The IPFR page discusses the costs involved in enforcing IP rights, including court and hearing fees, but currently does not reflect these updated fee amounts or the new effective date. Since the page aims to inform small business owners about the factors influencing enforcement costs, updating the fee amounts and effective date is necessary to maintain accuracy and relevance.",
+  "suggested_changes": [
+    "Update all references to Federal Court filing and hearing fees to reflect the new fee amounts effective from 1 July 2026 as listed in the Federal Court and Federal Circuit and Family Court Amendment (Filing Fees) Regulations 2026.",
+    "Add a note specifying that the fees cited are effective from 1 July 2026 to ensure users are aware of the timing of these costs."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3158,
+  "completion_tokens": 231,
+  "total_tokens": 3389,
+  "processing_time_seconds": 4.005163830000129,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.273678+00:00"
+}

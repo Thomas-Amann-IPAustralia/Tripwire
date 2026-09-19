@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-26-372",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are updates to news headlines and articles on the IP Australia news webpage, including a new article about design rights dated 26 June 2026. These changes do not alter any substantive legal information, definitions, or procedural details about IP rights presented in the IPFR page. The IPFR page content remains accurate and current regarding the types of IP rights and their protections. There is no indication that any statutory references, enforcement options, or descriptions of IP rights have changed in a way that requires updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2375,
+  "completion_tokens": 138,
+  "total_tokens": 2513,
+  "processing_time_seconds": 3.934534934999988,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-26T06:24:24.248645+00:00"
+}

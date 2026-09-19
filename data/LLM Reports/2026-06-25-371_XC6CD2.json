@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to the Trade Marks Manual of Practice and Procedure following the High Court decision in Zip Co Ltd v Firstmac Ltd, updates to patent and plant breeder rights manuals, and some procedural or terminology updates. None of the changes explicitly affect the opposition process timelines, fees, grounds for opposition, or procedural steps described in the IPFR page. The IPFR page content on challenging the registration of a trade mark remains accurate and current based on the provided upstream changes. There is no indication that the 2-month opposition period, fees, or procedural advice has changed. The updates are mostly internal manual revisions or relate to other IP rights or specific case law not directly impacting the opposition process as described.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7929,
+  "completion_tokens": 174,
+  "total_tokens": 8103,
+  "processing_time_seconds": 2.707011613000077,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.562379+00:00"
+}

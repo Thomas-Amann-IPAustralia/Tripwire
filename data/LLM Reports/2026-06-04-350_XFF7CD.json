@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to practice directions of the Administrative Review Tribunal and amendments to oversight legislation concerning intelligence and security agencies. The IPFR page 'Free IP tools you can use' focuses on publicly available IP search tools and resources for small business owners, with no mention of tribunal procedures or intelligence oversight. There is no specific information in the IPFR page that is contradicted or outdated by these changes, nor any procedural or statutory references that require updating.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2500,
+  "completion_tokens": 121,
+  "total_tokens": 2621,
+  "processing_time_seconds": 1.445755176000148,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.709281+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in procedural manuals, official notices, and administrative instruments concerning trade marks, plant breeders rights, patents, and designs. These include updates to examination procedures, application forms, filing instruments, and minor corrections in manuals. The IPFR page 'What is IP and how does it protect me?' provides a general overview of IP types and their protections aimed at small business owners, without specific procedural details, dates, or references that have been changed in the upstream documents. There is no indication that the fundamental definitions, types of IP, or the general descriptions of rights and enforcement options in the IPFR page are outdated or incorrect due to these updates. Therefore, no amendment to the IPFR page content is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9147,
+  "completion_tokens": 182,
+  "total_tokens": 9329,
+  "processing_time_seconds": 3.9729751529998794,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.227966+00:00"
+}

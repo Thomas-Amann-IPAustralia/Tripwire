@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in unrelated legislation (ASIC Act), ACCC public registers, and eBay's VeRO program contact email updates. None of these changes affect the specific content of the IPFR page on common scams, which focuses on scam warning signs, official IP Australia contact details, and scam reporting advice. There are no changes to official IP Australia domains, scam tactics, or reporting procedures mentioned that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4092,
+  "completion_tokens": 122,
+  "total_tokens": 4214,
+  "processing_time_seconds": 2.2807472419999613,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232799+00:00"
+}

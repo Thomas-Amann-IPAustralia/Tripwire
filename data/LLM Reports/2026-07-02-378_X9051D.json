@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to ACCC consultations on mandatory safety standards for toys and water market regulations, and an update to Amazon Brand Registry FAQs mentioning a faster patent dispute process. The IPFR page focuses on educating customers to differentiate genuine products from lookalikes, emphasizing customer education strategies and IP rights awareness. None of the changes affect the accuracy or currency of the IPFR content, which does not discuss regulatory safety standards or Amazon's brand registry dispute processes. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2924,
+  "completion_tokens": 134,
+  "total_tokens": 3058,
+  "processing_time_seconds": 2.469957986999816,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269479+00:00"
+}

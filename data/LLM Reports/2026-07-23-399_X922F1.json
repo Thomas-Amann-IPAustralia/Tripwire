@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to amendments in the Administrative Review Tribunal Rules 2024 concerning migration decisions and fee waivers for NDIS providers, updates to the Patent Manual regarding prior art, excess claims fees, and other procedural clarifications, and updates to the Trade Marks and Design Manuals. None of these changes specifically affect the procedural details, fees, timelines, or substantive grounds for opposing a new or amended patent as described in the IPFR page. The IPFR page content about patent opposition timelines, fees, possible outcomes, and procedural steps remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 15707,
+  "completion_tokens": 148,
+  "total_tokens": 15855,
+  "processing_time_seconds": 3.4634649600000103,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.256429+00:00"
+}

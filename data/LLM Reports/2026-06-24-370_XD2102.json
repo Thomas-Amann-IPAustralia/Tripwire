@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-24-370",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news webpage update listing various IP Australia news items, including new initiatives, reports, and features such as a chatbot and updates to patent processes. None of these changes specifically alter or update the guidance on when to engage a lawyer or attorney for IP issues as presented in the IPFR page. The IPFR content focuses on general advice about when legal professionals may be needed, distinctions between IP lawyers and attorneys, and general recommendations for seeking advice. There is no direct or specific change in the external source that affects the accuracy or currency of this advice or the procedural descriptions in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2530,
+  "completion_tokens": 155,
+  "total_tokens": 2685,
+  "processing_time_seconds": 2.8319041050001488,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-24T06:22:08.485907+00:00"
+}

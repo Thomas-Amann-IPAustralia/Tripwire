@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IPAustralia design manual and news webpage primarily involve updates to alternative text for images, formatting, minor adjustments, and news item counts. There are no substantive changes to the legal or procedural content related to customer education, product differentiation, or IP rights enforcement that would affect the accuracy or currency of the IPFR page content. The IPFR page focuses on customer education strategies and benefits, which remain valid and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2602,
+  "completion_tokens": 123,
+  "total_tokens": 2725,
+  "processing_time_seconds": 2.0308286189999762,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.553268+00:00"
+}

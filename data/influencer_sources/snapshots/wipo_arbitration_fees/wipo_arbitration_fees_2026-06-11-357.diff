@@ -1,0 +1,26 @@
+--- previous+++ current@@ -4,18 +4,16 @@ WIPO Expedited Arbitration provides for fixed arbitration costs when the amount in dispute is up to US$ 10 million.
+ WIPO Expedited Arbitration provides for fixed arbitration costs when the amount in dispute is up to US$ 10 million.
+ (All amounts are in United States dollars)
+-| Type of Fee | Amount in Dispute | Expedited Arbitration | Arbitration |
++| Type of Fee | Amount in Dispute | Expedited Arbitration | Arbitration | 
+ |---|---|---|---|
+-| Registration Fee | Any Amount | $0 | $2,000 |
+-| Administration Fee (*) | Up to $2.5M | $2,000 | $4,000 |
+-| Over $2.5M and up to $10M | $10,000 | $10,000 +0.1% of amount over $2.5M up to a maximum fee of $17,500 |
+-|
+-| Over $10M | $20,000 | $25,000 +0.05% of amount over $10 M up to a maximum fee of $60,000 |
+-|
+-| Arbitrator(s) Fees (*) | Up to $2.5M | $20,000 (fixed fee) (**) |
+-|
++| Registration Fee | Any Amount | $0 | $2,000 | 
++| Administration Fee (*) | Up to $2.5M | $2,000 | $4,000 | 
++| Over $2.5M and up to $10M | $10,000 | $10,000 +0.1% of amount over $2.5M up to a maximum fee of $17,500 | |
++| Over $10M | $20,000 | $25,000 +0.05% of amount over $10 M up to a maximum fee of $60,000 | |
++| Arbitrator(s) Fees (*) | Up to $2.5M | $20,000 (fixed fee) (**) | 
++ | 
+ | Over $2.5M and up to $10M | $40,000 (fixed fee) (**) | ||
+-| Over $10M | As agreed by the Center in consultation with the parties and the arbitrator |
++| Over $10M | As agreed by the Center in consultation with the parties and the arbitrator | 
+ (*) Each bracket indicates the total amount of the fees payable in a dispute, e.g. the administration fee payable in an expedited arbitration when the amount in dispute is $5 million is $10,000 (and not a fee of $12,000 which would have resulted from adding the fees of $10,000 and $2,000).
+ (**) May be reduced or increased based on the complexity of the subject matter of the dispute and the time spent by the arbitrator.
+ (**) May be reduced or increased based on the complexity of the subject matter of the dispute and the time spent by the arbitrator.

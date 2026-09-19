@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to the Customs Amendment Regulations 2026 adding a new international airport definition, updates to ASIC Act compilation, IP Australia consultation updates, ACCC public register exemptions, and eBay VeRO program contact email updates. None of these changes directly affect the content of the IPFR page about considerations when responding to international IP infringement accusations. The IPFR page focuses on general guidance and considerations for overseas IP infringement accusations, without specific references to customs airport definitions, ASIC Act details, ACCC exemptions, or eBay VeRO contact details. Therefore, no specific content in the IPFR page is outdated or inaccurate due to these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7513,
+  "completion_tokens": 161,
+  "total_tokens": 7674,
+  "processing_time_seconds": 3.5336490859999685,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231722+00:00"
+}
