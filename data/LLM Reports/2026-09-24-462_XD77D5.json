@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to a closed consultation summary page on IP Australia's website, covering topics such as updates to the Patent Manual, regulatory streamlining, trade marks amendments, the WIPO Design Law Treaty, and Indigenous Knowledge policy. None of these changes directly affect the specific content of the IPFR page, which focuses on practical advice for SMEs receiving AI-generated IP infringement allegations. The IPFR page does not contain specific legal references, dates, or procedural details that have been altered by the consultation outcomes. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4398,
+  "completion_tokens": 143,
+  "total_tokens": 4541,
+  "processing_time_seconds": 1.5178338030000305,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.207257+00:00"
+}

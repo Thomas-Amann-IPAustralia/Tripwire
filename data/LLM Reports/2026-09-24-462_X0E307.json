@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the design manual mainly concern internal structuring and archival of sections related to applicant names and details, without altering substantive content about overseas infringement or international IP protection. The consultation updates relate to patent manual updates, regulatory streamlining, and WIPO treaties, but do not provide new or changed information that directly affects the guidance on addressing overseas infringement in the IPFR page. The IPFR page content remains accurate regarding the territorial nature of IP rights, enforcement challenges overseas, and practical tips for businesses.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4880,
+  "completion_tokens": 133,
+  "total_tokens": 5013,
+  "processing_time_seconds": 2.1512585670000135,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.205442+00:00"
+}

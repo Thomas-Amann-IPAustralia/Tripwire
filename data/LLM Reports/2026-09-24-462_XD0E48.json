@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the ACCC public registers page relate to court enforceable undertakings and acquisitions under the Competition and Consumer Act, which do not affect the content about notifying online marketplaces of IP infringement. The updates to the Amazon Brand Registry page add new testimonial quotes highlighting user experiences and benefits of the Brand Registry, but do not change any procedural, legal, or substantive information about how to notify marketplaces or the requirements for brand registry enrollment. The IPFR page content remains accurate and current regarding the process and benefits of notifying online marketplaces and using brand registries.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5592,
+  "completion_tokens": 143,
+  "total_tokens": 5735,
+  "processing_time_seconds": 2.9746844430001147,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.206162+00:00"
+}

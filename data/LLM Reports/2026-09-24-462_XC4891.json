@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in procedural information about forms, workflows, and portal guidance for Plant Breeder's Rights applications and management on the IPAustralia website. The IPFR page XC4891 focuses on explaining what constitutes PBR infringement, the scope of rights, examples of infringement and non-infringement, and legal protections under the Plant Breeders\u2019 Rights Act 1994. There is no indication that the legislative provisions, definitions, infringement criteria, or legal thresholds described in the IPFR page have changed. The upstream changes are about administrative and procedural updates rather than substantive changes to infringement law or rights. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3040,
+  "completion_tokens": 172,
+  "total_tokens": 3212,
+  "processing_time_seconds": 1.664482370999849,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.207170+00:00"
+}

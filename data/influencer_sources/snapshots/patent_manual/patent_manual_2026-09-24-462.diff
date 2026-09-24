@@ -1,0 +1,55 @@
+--- previous+++ current@@ -1,10 +1,4 @@-| 5.7.1 What can be amended and when? | | Cyclic review, no changes | 
+- 
+- | 5.4.5 Annex B - Examples of Organisations of Uncertain Status as Legal Persons | | Cyclic review, no changes | 
+- 
+- | Annex J - Examples of Objections under PCT Articles 5 and 6 | | Cyclic review, no changes | 
+- 
+- | 5.7.7.4 Amendments while a decision of the Commissioner is being appealed | | Cyclic review, no changes | 
++| 5.7.7.4 Amendments while a decision of the Commissioner is being appealed | | Cyclic review, no changes | 
+  
+  | 5.4.1 Who can file and who can be granted a patent | | Cyclic review, no changes | 
+  
+@@ -14,6 +8,26 @@  
+  | 5.2 Understanding Legislation | | Cyclic review, no changes | 
+  
++ | 5.7.1 What can be amended and when? | | Cyclic review, no changes | 
++ 
++ | 5.4.5 Annex B - Examples of Organisations of Uncertain Status as Legal Persons | | Cyclic review, no changes | 
++ 
++ | Annex J - Examples of Objections under PCT Articles 5 and 6 | | Cyclic review, no changes | 
++ 
++ | 5.6.1.5 Application of the Balance of Probabilities in Examination | | Cyclic review, minor language change | 
++ 
++ | 5.3.3.1 General requirements for approved forms | | Cyclic review, no changes. | 
++ 
++ | 5.5 Construction of Specifications, Claims, and Claim types | | Cyclic review, no changes | 
++ 
++ | 5.5.3.5 Reject the absurd | | Cyclic review, no changes | 
++ 
++ | 5.5.4.5 Product by process claims | | Cyclic review, link added to international manual | 
++ 
++ | 5.6.1.4 Balance of Probabilities Standard | | Cyclic review, no changes | 
++ 
++ | 5.6.3.3 Omnibus claims – references to the descriptions or drawings | | Cyclic review, no changes | 
++ 
+  | 5.3.5 Return, Deletion, or Redaction of Documents | | Cyclic review, minor language change | 
+  
+  | 5.5.3.4 Dictionary principle | | Cyclic review, no changes | 
+@@ -22,18 +36,4 @@  
+  | 5.5.4.9 Reference Numerals in Claims | | Cyclic review, no changes | 
+  
+- | 5.5.4.6 Parametric claims | | Cyclic review, no changes | 
+- 
+- | 5.3.3 Approved forms (including patent request) | | Removed reference to a "forms officer" | 
+- 
+- | 5.3.3.2 Specific Requirements for the Patent Request | | Cyclic review, no changes | 
+- 
+- | 5.5.3 Rules of construction for a patent specification | | Cyclic review, no changes | 
+- 
+- | 5.5.4.3 Omnibus claims | | Cyclic review, no changes | 
+- 
+- | 5.5.4.12 Appended claims | | Cyclic review, no changes | 
+- 
+- | 5.6.1.5 Application of the Balance of Probabilities in Examination | | Cyclic review, minor language change | 
+- 
+- | 5.3.3.1 General requirements for approved forms | | Cyclic review, no changes. |+ | 5.5.4.6 Parametric claims | | Cyclic review, no changes |

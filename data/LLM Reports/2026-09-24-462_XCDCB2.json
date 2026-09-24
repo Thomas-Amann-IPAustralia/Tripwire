@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve updates to the IP Australia Trade Marks Manual of Practice and Procedure, including amendments related to examination procedures for trade marks concerning plants or plant materials, updates to prohibited signs, and minor procedural clarifications. These updates do not affect the fundamental information presented in the IPFR page about registering unregistered trade marks, such as fees, benefits, risks, or application processes. The ACCC public register updates and Amazon Brand Registry content changes are unrelated to the Australian trade mark registration process described in the IPFR page. Therefore, no specific factual content in the IPFR page is rendered inaccurate or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7592,
+  "completion_tokens": 161,
+  "total_tokens": 7753,
+  "processing_time_seconds": 2.931524142000171,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.204683+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and archival of sections about applicant names and details in the IPAustralia design manual, which is procedural and administrative in nature. The IPFR page 'Check your product against existing designs' focuses on the process and benefits of conducting freedom to operate searches and does not contain specific procedural details about applicant names or filing requirements. There is no direct impact on the accuracy or currency of the IPFR page content based on the described changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2398,
+  "completion_tokens": 124,
+  "total_tokens": 2522,
+  "processing_time_seconds": 1.400407333999965,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.209406+00:00"
+}

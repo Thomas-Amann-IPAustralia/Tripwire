@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream sources primarily involve minor updates, cyclic reviews, formatting, and clarifications in the patent and trade mark manuals, as well as updates to consultation summaries and ACCC public registers. None of the changes specifically address or alter the procedural steps, timelines, fees, or decision-making processes related to IP Australia hearings as described in the IPFR page. There are no updates to the hearing process, fees, or appeal pathways that would require amending the IPFR content. The changes are either indirect, minor, or unrelated to the specific content of the IPFR page on hearings.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6002,
+  "completion_tokens": 152,
+  "total_tokens": 6154,
+  "processing_time_seconds": 1.560069958999975,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.204782+00:00"
+}
