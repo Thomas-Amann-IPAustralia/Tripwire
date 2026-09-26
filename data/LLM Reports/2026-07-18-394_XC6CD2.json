@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-18-394",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to a technical connectivity issue with the Australian Federal Police website on fraud and corruption, which is unrelated to the content of the IPFR page about challenging trade mark registrations. There is no update to legislation, procedures, fees, timeframes, or substantive IP law that would affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2576,
+  "completion_tokens": 102,
+  "total_tokens": 2678,
+  "processing_time_seconds": 1.9464700089999951,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-18T05:03:28.022903+00:00"
+}

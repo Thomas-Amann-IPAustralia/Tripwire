@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external webpage provide detailed guidance on how to find and engage an IP attorney, including considerations for choosing an attorney, typical costs, and how to prepare for a meeting. However, the IPFR page already covers the general circumstances when legal professionals may be helpful and distinguishes between IP attorneys and IP lawyers. The new details do not contradict or update any specific factual claims or thresholds in the IPFR page. They add more granular advice on engaging attorneys, which is beyond the scope of the existing IPFR content. Therefore, no amendment to the IPFR page is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4408,
+  "completion_tokens": 154,
+  "total_tokens": 4562,
+  "processing_time_seconds": 3.3360700779999206,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.227779+00:00"
+}

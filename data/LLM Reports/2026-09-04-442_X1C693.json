@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the publication of IP Australia's Corporate Strategic Plan 2026\u201327 and various news items highlighting IP Australia's priorities and activities. These updates do not contain any specific amendments to the legal scope, territorial effect, or procedural details of Australian IP rights or their overseas protection. The IPFR page's content about Australian IP protection applying only within Australia and the option to apply overseas remains accurate and unaffected by these strategic or news updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2171,
+  "completion_tokens": 120,
+  "total_tokens": 2291,
+  "processing_time_seconds": 2.454363623000063,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250171+00:00"
+}

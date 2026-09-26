@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the external webpage 'five_steps_to_resolve_your_dispute' from asbfeo.gov.au is now inaccessible due to server errors and permission issues. However, the IPFR page 'Prevent risks to public interest' does not reference this source or its content directly. The IPFR page focuses on reporting IP infringement to various Australian authorities and does not rely on or cite the affected webpage. Therefore, the inaccessibility of this external page does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1899,
+  "completion_tokens": 140,
+  "total_tokens": 2039,
+  "processing_time_seconds": 1.8627909329999284,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.366983+00:00"
+}

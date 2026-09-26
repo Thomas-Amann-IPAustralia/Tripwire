@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia manuals primarily concern updates to examination procedures, amendments to references in patent and trade mark manuals, and updates to specific provisions related to plants, prohibited signs, and examination processes. None of these changes specifically address or alter the opposition process timelines, fees, procedural steps, or outcomes described in the IPFR page about challenging the registration of a new trade mark. The ACCC public register updates are unrelated to trade mark opposition procedures. Therefore, the IPFR page content remains accurate and does not require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6221,
+  "completion_tokens": 143,
+  "total_tokens": 6364,
+  "processing_time_seconds": 3.9446435469999415,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552483+00:00"
+}

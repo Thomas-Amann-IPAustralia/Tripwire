@@ -1,0 +1,18 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the eBay Verified Rights Owner (VeRO) program FAQ pages indicate that the email address for submitting Notices of Claimed Infringement (NOCI) and for retractions has changed from vero@ebay.com to askvero@ebay.com. The IPFR page currently references the older email address vero@ebay.com for submitting infringement reports and retractions. This is a specific procedural detail that directly affects the accuracy and currency of the guidance provided to users wishing to notify online marketplaces of infringement on their platform. Updating this contact information is important to ensure users send their complaints to the correct address and avoid delays or rejections. The other changes (ACCC registers, ASIC Act compilation) are unrelated or too indirect to affect the IPFR page content.",
+  "suggested_changes": [
+    "Update all references to the eBay VeRO program email address for submitting Notices of Claimed Infringement (NOCI) and retractions from 'vero@ebay.com' to 'askvero@ebay.com' in the section discussing online marketplace complaint mechanisms."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8715,
+  "completion_tokens": 248,
+  "total_tokens": 8963,
+  "processing_time_seconds": 4.588338266999926,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.230898+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the ASBFEO webpage 'five_steps_to_resolve_your_dispute' is currently inaccessible due to server errors (403 Forbidden and connection closed). However, the IPFR page only references ASBFEO as one example of a public ADR provider without linking to or quoting specific content from that page. The IPFR content remains accurate in describing ADR options and providers, and the unavailability of the external page does not invalidate or contradict any specific factual statements or procedural details in the IPFR page. Therefore, no content update is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1626,
+  "completion_tokens": 145,
+  "total_tokens": 1771,
+  "processing_time_seconds": 1.9878494079999882,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.367215+00:00"
+}

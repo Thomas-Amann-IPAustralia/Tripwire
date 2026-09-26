@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to administrative updates, procedural clarifications, and minor content updates in upstream manuals and regulatory instruments that do not directly affect the specific content of the IPFR page 'What to check before getting registered IP'. The IPFR page provides general guidance on what to check before registering IP, including basic requirements, timing considerations, ownership, and availability checks. None of the changes indicate modifications to these fundamental requirements, timeframes, or procedural steps as described in the IPFR page. For example, the 12-month grace period for patents and designs mentioned remains consistent, and no changes to the basic registrability criteria or ownership rules are indicated. Updates to manuals and official notices do not necessitate changes to the general advice given to small business owners on this page. Therefore, no amendment to the IPFR page is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11153,
+  "completion_tokens": 202,
+  "total_tokens": 11355,
+  "processing_time_seconds": 5.058667468999829,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231156+00:00"
+}

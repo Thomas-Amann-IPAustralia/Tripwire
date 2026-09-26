@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X24592",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The second change document updates the official guidance from the Trans-Tasman IP Attorneys Board (TTIPAB) regarding the grounds for making a complaint, the complaint process, and the limitations of the Board's disciplinary powers. The IPFR page currently summarizes these points but does not reflect the more detailed and clarified language from the updated TTIPAB webpage, such as the specific grounds for complaint, the priority order of obligations, and the explicit mention that the Board and tribunal cannot order compensation or force resolutions. These updates are significant for small business owners seeking accurate and current information on how to make complaints about IP attorneys. The first change document about the Defence and Veterans\u2019 Service Commissioner Bill 2025 is unrelated to the IPFR page content and does not affect it.",
+  "suggested_changes": [
+    "Update the section describing complaints to the Trans-Tasman IP Attorneys Board (TTIPAB) to include the specific grounds for complaint as per the updated TTIPAB guidance, such as breaches of the Code of Conduct, lack of competence, diligence, good fame, integrity, and character.",
+    "Add information that if a registered attorney cannot comply with all obligations, they must prioritise them in a specific order (lawful conduct, client interests, public interest, profession interests).",
+    "Clarify that the Board investigates complaints to determine if an offence against the patent or trade marks attorney regulations is likely, and that complaints may be referred to a disciplinary tribunal which decides guilt and penalties.",
+    "Include that penalties can include suspension, cancellation, or additional training/supervision, but the Board and tribunal cannot order compensation or force resolution actions.",
+    "Mention that if compensation is sought, other avenues such as court action may be necessary, and some professional organisations may offer alternative complaint options."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2609,
+  "completion_tokens": 387,
+  "total_tokens": 2996,
+  "processing_time_seconds": 5.016737210999963,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.709654+00:00"
+}

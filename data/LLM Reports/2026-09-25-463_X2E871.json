@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-25-463",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to procedural details for filing complaints and responses in WIPO domain name dispute resolution, such as submission methods (email vs online form), acknowledgements of receipt, and administrative fee policies. The IPFR page focuses broadly on WIPO Arbitration and Mediation Center services for international IP disputes, describing ADR processes, benefits, risks, costs, and usage. It does not mention domain name dispute complaint filing procedures or specific submission methods. Therefore, these procedural updates do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4512,
+  "completion_tokens": 139,
+  "total_tokens": 4651,
+  "processing_time_seconds": 1.7129442840000593,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-25T07:20:13.034945+00:00"
+}

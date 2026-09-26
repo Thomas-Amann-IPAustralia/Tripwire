@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the patent and design manuals, including formatting and accessibility fixes, URL updates, and content updates related to patents and designs. There are no changes specifically addressing trade mark law, procedures, or fees relevant to removal of trade marks for non-use. The IPFR page content focuses on trade mark removal for non-use, including procedural timelines, fees, and outcomes, none of which are contradicted or updated by the changes in the upstream documents. Therefore, no amendments to the IPFR page are required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4138,
+  "completion_tokens": 145,
+  "total_tokens": 4283,
+  "processing_time_seconds": 2.0942122280000603,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491382+00:00"
+}

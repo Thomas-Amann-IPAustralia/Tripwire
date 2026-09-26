@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a broad update to the IP Australia trademark manual, including minor content updates, typographical corrections, and updated references to legislation. However, the IPFR page in question is a general overview comparing IP Australia to other government services, without specific procedural details, dates, fees, or legal references that have been amended. The changes do not affect the accuracy or currency of the general descriptions or comparisons presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2663,
+  "completion_tokens": 121,
+  "total_tokens": 2784,
+  "processing_time_seconds": 2.0517247569998744,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.503125+00:00"
+}

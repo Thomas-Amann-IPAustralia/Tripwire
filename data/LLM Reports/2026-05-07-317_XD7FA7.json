@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified in the external sources primarily relate to updates in patent and plant breeder's rights manuals, accessibility fixes, broken link corrections, and minor procedural clarifications unrelated to trade mark opposition processes. The only trade mark related change is a notice about a technical coding issue affecting the trade mark bulk data product, which does not impact the procedural or substantive content of the IPFR page on challenging trade mark registrations. There are no amendments to statutory timeframes, fees, procedural steps, or legal thresholds relevant to trade mark oppositions. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7454,
+  "completion_tokens": 150,
+  "total_tokens": 7604,
+  "processing_time_seconds": 3.9419761980000203,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.708566+00:00"
+}

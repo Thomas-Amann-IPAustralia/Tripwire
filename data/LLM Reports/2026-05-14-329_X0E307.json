@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the patent and trade mark manuals, including procedural details, examination guidelines, and minor typographical corrections. Additionally, the changes to the IP Australia legislation page introduce information about Olympic designs and related forms and fees. However, none of these changes affect the core content of the IPFR page on addressing overseas infringement, which focuses on the territorial nature of IP rights, practical considerations for enforcement overseas, and general advice for businesses. There are no specific amendments to the territorial scope of IP rights, enforcement options, or international filing procedures that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4903,
+  "completion_tokens": 153,
+  "total_tokens": 5056,
+  "processing_time_seconds": 2.813142255999992,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.501571+00:00"
+}

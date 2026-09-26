@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the IPAustralia patent manual, including procedural and administrative details about patent examination, oppositions, and search procedures, as well as minor updates to the news page content. None of these changes affect the content of the IPFR page, which focuses on guidance for SMEs receiving AI-generated IP infringement allegations. The IPFR page's advice and checklist are general and do not reference specific procedural details or statutory provisions that have been amended. Therefore, no update to the IPFR page is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4849,
+  "completion_tokens": 138,
+  "total_tokens": 4987,
+  "processing_time_seconds": 2.3480033759999515,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552875+00:00"
+}

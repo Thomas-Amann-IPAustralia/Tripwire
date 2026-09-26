@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a general update to the IP Australia design manual webpage, involving formatting amendments and minor content reviews related to design representations and product definitions. There is no indication that the changes affect trade mark law, procedures, timeframes, fees, or removal processes described in the IPFR page about removing a trade mark from the register. The relevance scores are low to moderate and the content areas differ (designs vs trade marks). Therefore, the IPFR page content remains accurate and no update is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3202,
+  "completion_tokens": 134,
+  "total_tokens": 3336,
+  "processing_time_seconds": 3.817260183000144,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908778+00:00"
+}

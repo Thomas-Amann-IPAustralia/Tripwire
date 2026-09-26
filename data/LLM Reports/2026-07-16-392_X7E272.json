@@ -1,0 +1,21 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X7E272",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes include the establishment of the Administrative Review Tribunal (ART) replacing the Administrative Appeals Tribunal (AAT) starting 14 October 2024. The IPFR page currently references appeals to the Australian Review Tribunal (ART), which is consistent with the new legislation. However, the upstream changes clarify that the ART Act replaces the AAT and that consequential amendments have been made to regulations to align with this. This suggests that the IPFR page should be updated to accurately reflect the new tribunal structure and the correct naming and procedural context for appeals. Additionally, the changes to the Trade Marks Manual and Patents Manual indicate updates to filing and procedural requirements that may affect the hearing process steps or appeal pathways described. Given the high significance of these changes and the direct mention of appeals and hearings, the IPFR page should be updated to clarify the tribunal name, appeal process, and possibly fees or procedural steps to align with the new ART Act and updated manuals.",
+  "suggested_changes": [
+    "Update the 'Appeals' section to clearly state that appeals from IP Australia hearing decisions may be made to the newly established Administrative Review Tribunal (ART), which replaces the Administrative Appeals Tribunal (AAT) from 14 October 2024.",
+    "Review and revise any references to the Australian Review Tribunal (ART) to ensure consistency with the official name and commencement date of the ART Act.",
+    "Verify and update any procedural steps or fees related to hearings and appeals in line with the updated Trade Marks Manual and Patents Manual, especially regarding filing requirements and review processes.",
+    "Add a note or link to official IP Australia resources explaining the transition from AAT to ART and its impact on IP hearings and appeals."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3802,
+  "completion_tokens": 369,
+  "total_tokens": 4171,
+  "processing_time_seconds": 6.472290409999914,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.229432+00:00"
+}

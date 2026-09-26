@@ -1,14 +1,42 @@
-requests
-selenium
-selenium-stealth
-beautifulsoup4
-markdownify
-webdriver-manager
-lxml
-python-docx
-scikit-learn
-numpy
-pandas
-openpyxl
-pytest
-openai
+# ==============================================================
+# Tripwire dependencies
+# ==============================================================
+
+# --- Configuration ---
+pyyaml>=6.0
+
+# --- HTTP and web scraping ---
+requests>=2.31
+trafilatura>=1.8
+selenium>=4.10
+selenium-stealth>=1.0
+selenium-wire>=5.1
+# blinker 1.7 removed _saferef, which selenium-wire 5.1 imports; pin below that.
+blinker>=1.4,<1.7
+pyOpenSSL>=22.0.0
+webdriver-manager>=4.0
+
+# --- NLP and keyword extraction ---
+spacy>=3.7
+yake>=0.4.8
+
+# --- BM25 lexical retrieval ---
+rank-bm25>=0.2.2
+
+# --- Semantic models ---
+# Install PyTorch separately with the CPU-only index before this file:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+sentence-transformers>=3.0
+
+# --- LLM API ---
+openai>=1.30
+
+# --- Testing ---
+pytest>=8.0
+pytest-mock>=3.14
+
+# --- DOCX processing (ES extraction for FRL regulations) ---
+mammoth>=1.6
+
+# --- Utilities ---
+numpy>=1.26

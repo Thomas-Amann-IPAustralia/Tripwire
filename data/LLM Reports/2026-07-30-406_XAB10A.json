@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to ACCC exemptions and declarations under the Competition and Consumer Act 2010 concerning data sharing obligations and declared services. The IPFR page content focuses on explaining the differences between legal names, business names, domain names, and trade marks for Australian businesses. There is no mention or discussion of ACCC regulations, data sharing obligations, or the Competition and Consumer Act in the IPFR page. Therefore, the ACCC-related changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3100,
+  "completion_tokens": 135,
+  "total_tokens": 3235,
+  "processing_time_seconds": 2.374338645999842,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.156658+00:00"
+}

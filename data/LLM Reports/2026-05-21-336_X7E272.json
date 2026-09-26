@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the patent manual concerning procedural details, case law updates, and internal links, including amendments related to divisional applications, manner of manufacture, and pharmaceutical substance patents. However, the IPFR page 'What happens in an IP Australia hearing?' provides a general overview of the hearing process at IP Australia, including steps and outcomes, without specific procedural or legal detail that has been amended in the patent manual. There is no direct update to the hearing process steps, fees, timelines, or appeal routes described in the IPFR page. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5130,
+  "completion_tokens": 162,
+  "total_tokens": 5292,
+  "processing_time_seconds": 2.2433728510000037,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.585801+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Madrid System page mainly update territorial coverage details and add some event and fee information, none of which contradict or require updates to the IPFR page's general explanation about WIPO not being a global IP office but rather a coordinating body. The changes to the WIPO Model Contract Clauses page remove detailed lists of clauses but do not affect the IPFR page content, which does not mention these clauses. The About WIPO page changes remove a repeated sentence but do not alter the fundamental description of WIPO's role. The WIPO IP Diagnostics page changes are formatting and minor content clarifications unrelated to the IPFR page's scope. Overall, none of the upstream changes affect the accuracy or currency of the IPFR page content about the global IP office concept.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7920,
+  "completion_tokens": 189,
+  "total_tokens": 8109,
+  "processing_time_seconds": 2.7936753049998515,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.873584+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X0F35A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to eBay's intellectual property listing policies and product recall guidelines, which are operational or procedural details not directly referenced or detailed in the IPFR page content. The IPFR page focuses on advising about developing an IP strategy, its benefits, risks, and general guidance for IP rights holders, without specific procedural or platform-related instructions. There are no specific statutory references, timeframes, or procedural steps in the IPFR page that are contradicted or outdated by these changes. Hence, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3816,
+  "completion_tokens": 142,
+  "total_tokens": 3958,
+  "processing_time_seconds": 3.9751594969998223,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.710361+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to the ASIC company registration process, including details about company officeholders, director IDs, and fees for registering a company. The IPFR page focuses on checking if someone else owns a word, logo, or idea via IP registers and does not discuss company registration or related procedures. Therefore, the changes to the ASIC company registration page do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1574,
+  "completion_tokens": 116,
+  "total_tokens": 1690,
+  "processing_time_seconds": 1.7775148040000204,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849922+00:00"
+}

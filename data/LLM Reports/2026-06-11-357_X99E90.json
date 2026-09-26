@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to detailed fee schedules for WIPO arbitration and updated lists of ccTLDs adopting UDRP or variations thereof. The IPFR page provides a general overview of WIPO's role as an international coordinator and treaty administrator, without mentioning specific arbitration fees or detailed domain dispute resolution procedures or ccTLD lists. There are no specific figures, procedural steps, or legal thresholds in the IPFR page that are contradicted or outdated by these changes. Therefore, the page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5922,
+  "completion_tokens": 138,
+  "total_tokens": 6060,
+  "processing_time_seconds": 2.7699748219999947,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849580+00:00"
+}

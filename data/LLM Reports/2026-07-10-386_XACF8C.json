@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change to the AFP fraud and corruption webpage is a technical issue related to the website being unreachable or timing out, with no content changes affecting the information about scams or IP infringement. The IPFR page content about common scams remains accurate and unaffected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1536,
+  "completion_tokens": 85,
+  "total_tokens": 1621,
+  "processing_time_seconds": 1.7508673660001932,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.789533+00:00"
+}

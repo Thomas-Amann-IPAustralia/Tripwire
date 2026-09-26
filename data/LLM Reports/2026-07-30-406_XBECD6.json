@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document primarily details updates to references and terminology related to patent search tools (e.g., replacing EPOQUE with AbS), classification symbols, and other procedural or technical updates within the patent manual. There is no indication of changes to the rules, timeframes, or procedures concerning section 27 notices or third party notifications to prevent a patent from being granted. The IPFR page content about lodging section 27 notices, timing, benefits, risks, and outcomes remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2945,
+  "completion_tokens": 136,
+  "total_tokens": 3081,
+  "processing_time_seconds": 2.102461663999975,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.153699+00:00"
+}

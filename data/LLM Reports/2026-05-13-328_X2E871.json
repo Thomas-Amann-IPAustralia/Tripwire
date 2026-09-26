@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-13-328",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of search results shown on an unrelated news page of IP Australia, which does not affect any substantive content, legal references, procedural details, or factual information on the IPFR page about accessing international arbitration and mediation services. The change is indirect and has very low relevance scores, and there is no indication that any specific information on the IPFR page is outdated or incorrect due to this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2626,
+  "completion_tokens": 120,
+  "total_tokens": 2746,
+  "processing_time_seconds": 2.4779962449999857,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-13T06:04:12.939342+00:00"
+}

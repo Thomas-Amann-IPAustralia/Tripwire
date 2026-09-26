@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to procedural updates, fee instruments, application forms, and examination guidance for trade marks, patents, and plant breeders rights, including updates to the Trade Marks Manual of Practice and Procedure. However, the IPFR page content focuses on general advice about the risks of using IP without permission, the importance of checking ownership, and seeking legal advice. There are no specific statutory references, procedural steps, or legal thresholds in the IPFR page that are contradicted or rendered outdated by the changes. The updates do not affect the fundamental advice about infringement risk or the need for permission and professional advice. Therefore, no amendments to the IPFR page are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8315,
+  "completion_tokens": 170,
+  "total_tokens": 8485,
+  "processing_time_seconds": 2.872947477000025,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228060+00:00"
+}

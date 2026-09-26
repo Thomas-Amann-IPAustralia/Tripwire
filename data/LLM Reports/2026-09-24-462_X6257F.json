@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X6257F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document is an update to the ACCC public registers page, listing recent enforcement actions and exemptions related to competition and consumer law matters. There is no mention or indication of changes to trade mark law, trade mark infringement, or the Trade Marks Act 1995. The IPFR page on trade mark infringement focuses on the legal framework and principles under the Trade Marks Act 1995, which are unaffected by the ACCC's competition and consumer law enforcement updates. Therefore, the content of the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4591,
+  "completion_tokens": 140,
+  "total_tokens": 4731,
+  "processing_time_seconds": 1.3475454859999445,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.207814+00:00"
+}

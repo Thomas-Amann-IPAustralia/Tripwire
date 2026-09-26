@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-25-463",
+  "ipfr_page_id": "X9D569",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to procedural updates on the WIPO domain name dispute resolution webpage, specifically about submission methods, acknowledgements, and fee processing details. The IPFR page 'Obtain legal advice on enforcement options' does not mention WIPO domain name dispute procedures or these specific procedural details. It focuses on general advice about engaging legal professionals for IP enforcement, types of professionals, benefits, risks, costs, and how to find them. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3106,
+  "completion_tokens": 138,
+  "total_tokens": 3244,
+  "processing_time_seconds": 1.617591736999998,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-25T07:20:13.035634+00:00"
+}

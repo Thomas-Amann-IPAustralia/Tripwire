@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor reordering and formatting update on the WIPO 'About' webpage, which does not affect any substantive information about the .au Dispute Resolution Policy or domain name disputes under auDA. The IPFR page content is specific to the Australian .au domain dispute process and does not cite or rely on the WIPO page content that was changed. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2414,
+  "completion_tokens": 119,
+  "total_tokens": 2533,
+  "processing_time_seconds": 2.2133859170003234,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232626+00:00"
+}

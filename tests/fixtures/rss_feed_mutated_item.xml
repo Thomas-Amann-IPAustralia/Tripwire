@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>IP Australia News</title>
+    <link>https://www.ipaustralia.gov.au/news</link>
+    <description>Latest news from IP Australia</description>
+    <item>
+      <title>Trade Marks Fee Update 2025 (Revised)</title>
+      <description>IP Australia has updated trade mark application fees effective 1 July 2025. CORRECTION: Fee increased to $350 per class.</description>
+      <pubDate>Mon, 01 Jun 2025 09:00:00 +1000</pubDate>
+      <link>https://www.ipaustralia.gov.au/news/item-001</link>
+      <guid>https://www.ipaustralia.gov.au/news/item-001</guid>
+      <content:encoded><![CDATA[IP Australia has updated trade mark application fees effective 1 July 2025. CORRECTION: The new fee for a standard application will be $350 per class, not $330 as previously stated.]]></content:encoded>
+    </item>
+    <item>
+      <title>Patent Opposition Changes</title>
+      <description>Changes to the patent opposition process take effect from 1 August 2025.</description>
+      <pubDate>Tue, 15 Jun 2025 10:30:00 +1000</pubDate>
+      <link>https://www.ipaustralia.gov.au/news/item-002</link>
+      <guid>https://www.ipaustralia.gov.au/news/item-002</guid>
+      <content:encoded><![CDATA[The Intellectual Property Laws Amendment Act 2025 introduces changes to the patent opposition process, including extended time limits and new grounds of opposition.]]></content:encoded>
+    </item>
+  </channel>
+</rss>

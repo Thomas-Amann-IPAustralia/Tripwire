@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of updates to official notices about design registration amendments and surrenders, updates to the design manual concerning accessibility fixes and minor content adjustments, and updates to the Federal Court and Federal Circuit and Family Court fees effective from 1 July 2026. The IPFR page 'XA50BE \u2014 Seek binding, authoritative decisions' provides general guidance on pursuing court action for design disputes, including procedural considerations, risks, benefits, and timeframes, but does not specify exact fees, statutory references, or procedural details that have been changed in the upstream documents. There are no direct references to court filing fees or specific procedural steps in the IPFR page that are contradicted or outdated due to the fee updates or design registration amendments. The design manual changes are mostly accessibility fixes and minor updates that do not affect the substantive guidance on court proceedings. Therefore, no specific factual content in the IPFR page requires updating based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10686,
+  "completion_tokens": 221,
+  "total_tokens": 10907,
+  "processing_time_seconds": 3.755349067999987,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.794812+00:00"
+}

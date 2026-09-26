@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are primarily updates to the patent manual and trademark manual sections that do not directly affect the content of the IPFR page on challenging the registration of a new trade mark. The changes include updates to patent examination guidelines, examples of series trade marks, and fee tables for general federal law court proceedings, none of which specifically alter the opposition process, timeframes, fees, or procedural details described in the IPFR page. The IPFR page's information about opposition timeframes, costs, parties involved, and process remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 17168,
+  "completion_tokens": 144,
+  "total_tokens": 17312,
+  "processing_time_seconds": 2.9569776949999778,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.847828+00:00"
+}

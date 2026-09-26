@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Amazon Brand Registry webpage add new testimonial quotes highlighting the benefits of the Brand Registry for protecting intellectual property and brand positioning. However, the IPFR page content already provides a general overview of IP protection benefits for small businesses and does not mention Amazon Brand Registry specifically. The new testimonials do not contradict or update any specific factual information or legal guidance in the IPFR page. Therefore, no amendment is required to maintain the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2333,
+  "completion_tokens": 127,
+  "total_tokens": 2460,
+  "processing_time_seconds": 1.4485105530000055,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.207544+00:00"
+}

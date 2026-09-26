@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream sources primarily involve accessibility fixes, link updates, formatting improvements, and some content updates unrelated to the certification process of registered designs. The IPFR page content about requesting examination to certify a registered design, the benefits, risks, costs, timelines, and procedural steps remains accurate and current. There is no indication from the changes that statutory fees, procedural requirements, or substantive examination criteria have changed that would affect the IPFR page. The fee mentioned ($500 effective 1 October 2024) and the description of the certification process are not contradicted or updated by the changes. The policy register changes mention addressing confusion around 'registered' and 'certified' designs and the two-step examination process, but this is noted as closed and does not specify changes that require updating the IPFR content. Therefore, no amendment is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7794,
+  "completion_tokens": 202,
+  "total_tokens": 7996,
+  "processing_time_seconds": 4.141589706000104,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.266127+00:00"
+}

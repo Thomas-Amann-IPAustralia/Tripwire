@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document updates the Amazon Brand Registry webpage with new customer testimonials and promotional content highlighting benefits of the program. There are no changes to eligibility criteria, procedural steps, or specific requirements for enrolment that would affect the accuracy of the IPFR page content. The IPFR page's description of Amazon Brand Registry's acceptance of registered or pending trade marks and the need for a government-issued trade mark registration number remains accurate and unchanged.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2064,
+  "completion_tokens": 118,
+  "total_tokens": 2182,
+  "processing_time_seconds": 1.3250339180001447,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.207437+00:00"
+}

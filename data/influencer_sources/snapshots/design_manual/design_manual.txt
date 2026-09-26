@@ -1,0 +1,39 @@
+| 5.1.1. Applicant name: Is the applicant a 'person'? | | Page review. | 
+ 
+ | 5.1.2. Applicant name: Individual (Australian and overseas, including joint owners) | | Page reviewed and updated. | 
+ 
+ | 5.1.5. Applicant name: Overseas entity | | Page reviewed and updated. | 
+ 
+ | 5.1.7. Applicant name: Trust-Trustee | | Page reviewed and updated. | 
+ 
+ | 5. Applicant details | | Page reviewed and updated. | 
+ 
+ | 5.1.11. Applicant name: Trust/trustee | | Page archived, detail provided at 5.1.7. | 
+ 
+ | 5.1.3. Applicant name: Companies and incorporated bodies | | Page reviewed and updated. | 
+ 
+ | 5.1.9. Applicant name: Designer | | Page reviewed and updated. | 
+ 
+ | 5.1.6. Applicant name: Partnership | | Page reviewed and updated. | 
+ 
+ | 5.1.13. Applicant name: Applicant name and design owner | | Page archived, detail provided at 5.1.9. | 
+ 
+ | 5.1.4. Applicant name: Government entity | | Page reviewed and updated. | 
+ 
+ | 5.1.8. Applicant name: Business names and trading as | | Page reviewed and updated. | 
+ 
+ | 5.1. Applicant name: overview | | Page reviewed and updated. | 
+ 
+ | 5.1.10. Applicant name: Partnership | | Page archived, detail provided at 5.1.6. | 
+ 
+ | 6.4. Representations: Product | | Added alternate text for images | 
+ 
+ | 9.2. Identifying the design: Overall appearance | | Added alternate text for images | 
+ 
+ | 25.7. Ownership disputes: Revocation after an ownership dispute | | Added alternate text for flowchart image | 
+ 
+ | 6.9. Representations: Photographs | | Added alternate text for images | 
+ 
+ | 22.4. Amendments: Inclusion of matter not in substance disclosed | | Added alternative text for image | 
+ 
+ | 17.4. Prior art base: Trade marks and patents as citations | | Updated alternative text for image |

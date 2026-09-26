@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change relates to a minor formatting update in the listing of milestones for the Nice Agreement on the WIPO webpage, specifically the amendment date for the Geneva revision. The IPFR page content about requesting confirmation of a registered design's validity does not mention the Nice Agreement or classification milestones, nor does it contain any specific references to these dates or treaty details. Therefore, this upstream change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1973,
+  "completion_tokens": 122,
+  "total_tokens": 2095,
+  "processing_time_seconds": 1.8640347299997302,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.713056+00:00"
+}

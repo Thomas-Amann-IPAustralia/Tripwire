@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the design_manual source relate to applicant name details and structural updates to the design manual sections, which are specific to design registrations and do not directly affect the content about trade mark registration on the IPFR page. The ACCC public registers update concerns competition and consumer law enforcement actions and exemptions, which are unrelated to trade mark registration procedures, fees, or benefits described on the IPFR page. None of the changes impact the accuracy or currency of the trade mark registration information, fees, timeframes, or procedural guidance provided on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4414,
+  "completion_tokens": 144,
+  "total_tokens": 4558,
+  "processing_time_seconds": 1.7032185149998895,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.205156+00:00"
+}

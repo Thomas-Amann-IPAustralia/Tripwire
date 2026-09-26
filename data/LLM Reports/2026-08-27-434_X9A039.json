@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to the IP Australia Design Manual, involving formatting amendments and updates to sections related to design registrations and representations. The IPFR page in question concerns registering trade marks, which is a distinct area of IP law from designs. The change does not mention any amendments to trade mark fees, procedures, or definitions that would affect the accuracy of the trade mark registration guidance. The relevance scores are low to moderate and the change is indirect. Therefore, no update to the trade mark registration page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2714,
+  "completion_tokens": 134,
+  "total_tokens": 2848,
+  "processing_time_seconds": 2.477796291000004,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908910+00:00"
+}

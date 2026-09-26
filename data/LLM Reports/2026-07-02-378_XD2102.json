@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural amendments in Federal Court rules, secrecy provisions in the Criminal Code, updates to IP Australia's official notices about portal launches and fee changes, and updates to the IP Australia policy register. None of these changes directly affect the guidance on when to seek legal or attorney help for IP issues as presented in the IPFR page. The IPFR page provides general advice on when to consult legal professionals and the distinctions between IP lawyers and attorneys, without referencing specific court rules, fee schedules, or policy details that have changed. Therefore, the page remains accurate and current despite these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5293,
+  "completion_tokens": 152,
+  "total_tokens": 5445,
+  "processing_time_seconds": 2.707576189000065,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268016+00:00"
+}

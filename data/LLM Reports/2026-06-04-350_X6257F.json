@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X6257F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to amendments to the Competition and Consumer Act 2010 and ACCC exemptions and undertakings concerning competition law, consumer data sharing obligations, and penalties under the Oil Code of Conduct. These changes do not affect the content of the IPFR page on trade mark infringement, which focuses on the Trade Marks Act 1995, definitions of infringement, and related trade mark law concepts. There is no overlap or direct impact on the trade mark infringement explanations, statutory references, or examples provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4776,
+  "completion_tokens": 137,
+  "total_tokens": 4913,
+  "processing_time_seconds": 1.8645020789999762,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.706680+00:00"
+}

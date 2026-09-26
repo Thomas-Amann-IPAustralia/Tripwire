@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes described relate to closed consultations and updates to IP Australia's manuals, fee reviews, and regulatory reform proposals. While these are high-level and significant for IP Australia, the IPFR page content is general guidance on what to do if someone infringes your IP, focusing on practical steps for small business owners. There are no specific references to fees, procedural timelines, or legal thresholds in the IPFR page that are contradicted or outdated by the consultation summaries. The consultations do not provide concrete changes to infringement response procedures or legal advice that would require updating the page. Therefore, the page remains accurate and current for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4590,
+  "completion_tokens": 158,
+  "total_tokens": 4748,
+  "processing_time_seconds": 2.9003177380000125,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.230621+00:00"
+}

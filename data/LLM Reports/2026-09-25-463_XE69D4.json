@@ -1,0 +1,21 @@
+{
+  "run_id": "2026-09-25-463",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO domain name dispute resolution webpage include new procedural details about filing complaints and responses, specifically that complaints can now be submitted using an Online Form, a copy must be sent to the Registrar, complaints filed outside working hours will be processed the next working day, and complainants agree to the WIPO Data Privacy Notice upon submission. These procedural updates are relevant to the 'What do you need to proceed?' and 'How much time might be involved?' sections of the IPFR page, which currently mention downloading and submitting a Model Complaint by email but do not mention the Online Form or sending a copy to the Registrar. Including these updated procedural steps will improve the accuracy and currency of the guidance for small business owners using WIPO dispute resolution services.",
+  "suggested_changes": [
+    "Update the 'What do you need to proceed?' section to state that the Model Complaint can be submitted by email or using the WIPO Online Form.",
+    "Add a note that a copy of the complaint must be sent to the Registrar, whose information is available on the ICANN List of Accredited Registrars.",
+    "Include information that complaints filed outside working hours or on holidays/weekends will be processed the next working day.",
+    "Add that by submitting a complaint, the complainant agrees to be bound by the WIPO Data Privacy Notice."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4734,
+  "completion_tokens": 297,
+  "total_tokens": 5031,
+  "processing_time_seconds": 3.05694022900002,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-25T07:20:13.035047+00:00"
+}

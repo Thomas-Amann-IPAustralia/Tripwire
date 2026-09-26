@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of minor content updates, typographical corrections, accessibility fixes, updated links, and removal of references to a specific section of the PBR Act (s 27). There are no changes indicating modifications to fundamental registration requirements, timing, fees, or procedural steps that are explicitly described in the IPFR page. The IPFR page content remains accurate and current regarding the basic requirements for registration, timing considerations, ownership, and availability checks. The changes do not affect the factual accuracy or currency of the IPFR page's guidance for small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5848,
+  "completion_tokens": 146,
+  "total_tokens": 5994,
+  "processing_time_seconds": 2.6270664149999448,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491153+00:00"
+}

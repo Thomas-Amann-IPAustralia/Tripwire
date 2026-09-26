@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-25-463",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to procedural details on the WIPO domain name dispute resolution webpage, specifically about complaint submission methods, processing times, acknowledgements, and data privacy notices. The IPFR page focuses on the WIPO Clause Generator for drafting contract clauses for IP dispute resolution generally, not on domain name dispute procedures or complaint filing specifics. There are no references in the IPFR page to complaint submission processes, filing fees, or administrative procedures that have been updated. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4076,
+  "completion_tokens": 141,
+  "total_tokens": 4217,
+  "processing_time_seconds": 2.933328735000032,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-25T07:20:13.034576+00:00"
+}

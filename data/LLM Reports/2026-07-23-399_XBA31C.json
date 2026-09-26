@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XBA31C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Administrative Review Tribunal Rules 2024, specifically relating to the Migration Act 1958 and the National Disability Insurance Scheme (NDIS) provider fee settings. The IPFR page focuses on arbitration as a method of resolving IP disputes, describing arbitration processes, benefits, risks, costs, and institutions. The ART amendments relate to administrative review processes and fee impositions for NDIS providers, which are unrelated to arbitration or IP dispute resolution as described in the IPFR page. There is no mention of the Administrative Review Tribunal or migration or NDIS matters in the IPFR page content. Therefore, the changes do not affect the accuracy or currency of the arbitration information provided.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3990,
+  "completion_tokens": 172,
+  "total_tokens": 4162,
+  "processing_time_seconds": 3.0429567039998346,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.259009+00:00"
+}

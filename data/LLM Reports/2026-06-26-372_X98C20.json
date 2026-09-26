@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-26-372",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document is a news update listing recent articles on the IP Australia website about design rights, patents, trade marks, and other IP topics. It does not contain any specific changes to IP Australia\u2019s role, services, or how it compares to other government agencies. The IPFR page content is a general overview of IP Australia and other agencies, and remains accurate and current. There is no indication that the descriptions, roles, or services of IP Australia or other agencies have changed based on this update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1747,
+  "completion_tokens": 133,
+  "total_tokens": 1880,
+  "processing_time_seconds": 1.8555211149999877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-26T06:24:24.250021+00:00"
+}

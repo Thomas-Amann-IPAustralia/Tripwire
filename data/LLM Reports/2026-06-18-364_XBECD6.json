@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to the Administrative Review Tribunal Rules 2024, specifically related to migration decisions and National Disability Insurance Scheme provider reviews. These changes do not affect the patent examination process, the section 27 notice procedure, or any content related to patent opposition or examination described in the IPFR page. There is no indication that the ART Rules amendments impact the process of preventing a patent under examination from being granted or the procedural details outlined in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3043,
+  "completion_tokens": 126,
+  "total_tokens": 3169,
+  "processing_time_seconds": 8.52131783699997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.711469+00:00"
+}

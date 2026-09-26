@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and WIPO Madrid System news and reviews, which are not directly related to the Australian registered designs examination process described in the IPFR page. There is no indication that the examination fee, process, timelines, or legal provisions for third-party examination of registered designs have changed. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2353,
+  "completion_tokens": 113,
+  "total_tokens": 2466,
+  "processing_time_seconds": 1.7223492690000057,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.588919+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XAEFF3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual concerning procedural outlines, examination practices, and specific case law interpretations (e.g., Aristocrat and Otsuka decisions). However, these updates focus on examination criteria, manner of manufacture, and extension of term considerations, which are procedural and substantive examination details not directly reflected in the IPFR page content. The IPFR page provides a general overview of patent infringement basics for small business owners, including definitions, examples, and statutory exceptions, none of which are contradicted or outdated by the changes in the patent manual. There is no indication that the statutory references, infringement definitions, or examples require updating based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3008,
+  "completion_tokens": 170,
+  "total_tokens": 3178,
+  "processing_time_seconds": 6.471612526999934,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.502442+00:00"
+}

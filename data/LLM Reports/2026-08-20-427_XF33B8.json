@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices primarily relate to procedural updates, new application forms, updated instruments for fees and filings, and guidance updates for specific IP rights such as trade marks relating to plants, plant breeders rights, patents, and designs. The IPFR page 'Discover where you are in your IP journey' provides a high-level overview of the stages in the IP journey for business owners and does not contain specific procedural details, dates, or fee information that would be affected by these updates. Therefore, the page content remains accurate and does not require amendment based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2358,
+  "completion_tokens": 150,
+  "total_tokens": 2508,
+  "processing_time_seconds": 2.721234640000148,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.229559+00:00"
+}

@@ -1,0 +1,23 @@
+Recent updates
+| Item amended | Date Amended | Amended Reason | 
+|---|---|---|
+| 5.7.4.5 Amendments not otherwise allowable under the Act or Regulations | | Updated to remove references to s104(2) and replace with information on reg 10.2(1)(c) and related information relevant to amendments not otherwise allowable under Act or Regs | 
+| 5.2.4 Practical guide to the interpretation of legislation | | No changes | 
+| 5.3 Formalities and forms | | No changes | 
+| 5.3.1.3 Formalities required and assessed during examination | | No changes | 
+| 5.3.1.2 Credible address for service | | No change | 
+| 5.3.2.4 Substitute pages to comply with formalities | | No change required | 
+| 7.8.7.2 Further Hearings | | New page, content from old page 7.8.7 | 
+| 7.8.7 The scope of opposition proceedings | | New title page 7.8.7 and subpages, removal of old material now located on 7.8.7.2 | 
+| 6.1.11.8 (reserved) | | cyclic review | 
+| 7.8.7.1 Delegates raising new grounds | | New page relating to new grounds in oppositions | 
+| 5.2.1 Modern Australian Law | | cyclic review | 
+| 5.2.3 Working with Statute | | fixed a typo as part of cyclic review | 
+| 5.6.2.5.1 Annex A - Example Verification of Translation Letter | | cyclic review | 
+| 5.6.5.4 Novelty - specific examples | | Addition of paragraphs relating to clinical trial documents as prior art | 
+| 6.3.4.2 Determining Cost of a Top-up Search on EPOQUE | | Page has been archived as procedure is no longer relevant. | 
+| 6.6.4 Search Procedure | | Updated references to AbS following replacement of EPOQUE | 
+| 6.1.12.5.7 Relevant Claim Numbers | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS | 
+| 5.6.4.6 Identifying and raising citations | | Updated references to AbS where previously EPOQUE and updated link to 6.1.12.5.6 | 
+| 6.1.12.5.6 Citing patent Documents Retrieved from AbS | | Renamed URL to match chapter 'Citing patent Documents Retrieved from AbS' title | 
+| 6.1.12.5.3 Citation of Prior Art | | Edited sub-chapter text for 6.1.12.5.6 to reflect change to AbS |

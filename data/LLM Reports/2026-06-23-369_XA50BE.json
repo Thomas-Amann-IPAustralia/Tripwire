@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change indicates that the external webpage at www.asbfeo.gov.au/five_steps_resolve_your_dispute is now inaccessible due to server errors and permission issues. However, the IPFR page XA50BE does not directly reference or rely on specific content, dates, procedures, or legal thresholds from this external page. The IPFR content is comprehensive and self-contained regarding seeking binding, authoritative decisions in design disputes. The broken link or inaccessibility of the external page does not affect the accuracy or currency of the IPFR page's substantive content. Therefore, no amendment to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2901,
+  "completion_tokens": 161,
+  "total_tokens": 3062,
+  "processing_time_seconds": 1.9005102570000645,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.367633+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources relate to updates in the IPAustralia trademark manual (mostly procedural and legislative updates), ACCC public registers (exemptions and regulatory updates unrelated to trademarks), and eBay's intellectual property policy (guidance on listing and trademark use on their platform). None of these changes directly affect the specific content of the IPFR page about registering a trade mark in Australia, including fees, timeframes, benefits, risks, or procedural steps. There are no updates to fees, timeframes, or legal thresholds in the IPFR page content that are contradicted or outdated by these changes. The IPFR page remains accurate and current for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4728,
+  "completion_tokens": 168,
+  "total_tokens": 4896,
+  "processing_time_seconds": 1.9227455759998975,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.877495+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a summary of recent updates to the PBR manual, mostly related to accessibility fixes, link corrections, and minor content additions such as details on nominating an agent, plant trade marks, and guidance on surrenders. There is no indication that any changes affect the legal process, court proceedings, costs, outcomes, or procedural details related to seeking binding, authoritative decisions in PBR disputes. The IPFR page content about court proceedings, outcomes, costs, and risks remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3281,
+  "completion_tokens": 139,
+  "total_tokens": 3420,
+  "processing_time_seconds": 2.47565475600004,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851497+00:00"
+}

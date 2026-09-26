@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document relates to updates in the IP Australia patent manual, including procedural and substantive updates such as amendments conditions, manner of manufacture, and pharmaceutical patent term extensions. However, none of these updates specifically address or alter the fundamental concept that only granted patents can be enforced, or the status and enforcement rights of 'filed' patents as described in the IPFR page. The IPFR page content about enforcement of filed patents remains accurate and unaffected by these procedural or case law updates. Therefore, no change to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2393,
+  "completion_tokens": 142,
+  "total_tokens": 2535,
+  "processing_time_seconds": 2.3003133830000024,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.589165+00:00"
+}

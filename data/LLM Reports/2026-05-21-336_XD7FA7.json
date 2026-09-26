@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the IP Australia official notices about a High Court decision (Zip Co Ltd v Firstmac Ltd) and updates to the patent manual concerning patent examination and procedural details. There are no specific amendments or updates to the trade mark opposition process, timeframes, fees, or procedural steps described in the IPFR page. The IPFR page content about trade mark opposition remains accurate and current based on the provided upstream changes, which do not address or alter trade mark opposition rules or guidance.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7815,
+  "completion_tokens": 134,
+  "total_tokens": 7949,
+  "processing_time_seconds": 2.285337416999937,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.585513+00:00"
+}

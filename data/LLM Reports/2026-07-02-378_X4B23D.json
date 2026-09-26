@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X4B23D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to secrecy provisions in the Criminal Code Act 1995, including repealing certain offences and introducing new offences related to improper use or communication of information by Commonwealth officials. The IPFR page focuses on copyright licensing and rights management organisations in Australia, detailing copyright law, licensing types, and the role of collecting societies. There is no mention or discussion of secrecy laws, criminal offences, or the Criminal Code Act 1995 in the IPFR page content. Therefore, the legislative changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2632,
+  "completion_tokens": 147,
+  "total_tokens": 2779,
+  "processing_time_seconds": 2.1868464350000067,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.272999+00:00"
+}
