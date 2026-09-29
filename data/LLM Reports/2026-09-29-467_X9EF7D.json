@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update from IP Australia about recent reforms and general information on IP's role in business growth. The IPFR page provides a foundational overview of Australian IP laws, their sources, and general guidance on IP rights. The change does not specify any amendments to legislation, procedures, or specific details that would affect the accuracy or currency of the IPFR page content. It is informational and promotional in nature rather than a legislative or procedural update that would require changes to the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2577,
+  "completion_tokens": 131,
+  "total_tokens": 2708,
+  "processing_time_seconds": 1.7616653179999275,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009166+00:00"
+}

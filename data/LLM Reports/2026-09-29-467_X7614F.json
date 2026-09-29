@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the IP Australia webpage on how to commercialise IP, adding detailed explanations of different commercialisation methods such as independent launch, licensing, franchising, and assignment. However, the IPFR page 'Why every creative business needs an IP strategy from day one' focuses on the importance of having an IP strategy, its benefits, and key steps to set one up, without detailing specific commercialisation methods or financial/risk aspects. Since the IPFR page does not contain specific statements or figures contradicted or outdated by the new content, and the change is an expansion rather than a correction or update of existing facts, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3421,
+  "completion_tokens": 168,
+  "total_tokens": 3589,
+  "processing_time_seconds": 2.668167423,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009428+00:00"
+}

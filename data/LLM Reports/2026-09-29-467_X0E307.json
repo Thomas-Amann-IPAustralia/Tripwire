@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily add new content about IP Australia news updates, commercialisation options, and anti-counterfeit measures related to IP rights and enforcement. However, none of these changes specifically update or contradict the existing content on the IPFR page about addressing overseas infringement. The IPFR page's explanations about territorial nature of IP rights, enforcement challenges overseas, and practical tips remain accurate and unaffected by the new information. The added details about Amazon Brand Registry and anti-counterfeit measures do not require changes to the current guidance on overseas infringement enforcement options or considerations. Therefore, no amendments to the IPFR page are necessary based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5731,
+  "completion_tokens": 162,
+  "total_tokens": 5893,
+  "processing_time_seconds": 1.9267807139999604,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.007760+00:00"
+}
