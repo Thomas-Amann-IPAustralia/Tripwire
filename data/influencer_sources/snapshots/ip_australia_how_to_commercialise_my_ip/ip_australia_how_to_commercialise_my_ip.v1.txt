@@ -68,6 +68,40 @@ There's maximum risk involved, as you're investing in the production of the prod
 Return
 The level of return is high if you aren't sharing profit, but you may have limited ability to scale.
 How it works
+You can launch your new product or service independently, and establish your own market presence.
+You might outsource some manufacturing but otherwise, you take on the work, the risk and the benefits associated with launching a new product.
+Commercialising independently might involve:
+- Creating value for under-served customers
+- Developing or acquiring the capabilities to manufacture and market your innovations
+- Building out the standards and supply chain for your industry.
+This might be a good option if your idea:
+- Has the potential to displace existing products
+- Was created in-house and the business has, or can gain, the capabilities to bring it to market.
+Do I still own the IP?
+Yes, and you'll continue to be very involved in the IP's journey.
+Do I have to pay for the IP?
+You'll need to pay for the cost of developing the IP and the future costs of protecting it, such as renewal fees.
+When will I start to make money?
+You'll see a financial return once you start selling your product or delivering your service.
+Risk
+There's maximum risk involved, as you're investing in the production of the product or service. If there aren't any sales, you won't see a profit.
+Return
+The level of return is high if you aren't sharing profit, but you may have limited ability to scale.
+How it works
+Licensing, rather than selling, is a common commercialisation option. This means giving permission for someone else to use your IP on agreed terms and conditions, through one or more licensing agreements.
+Licensing can be an effective strategy when you don’t have the resources or experience to develop and market your product or service yourself.
+Typically, each licensee will pay a percentage of their sales revenue to you on an agreed basis.
+Do I still own the IP?
+Yes, however, your level of involvement will depend on the licensing agreement. If you give someone exclusive licence, then you can't continue to use your idea. If the license is non-exclusive or sole, then you can continue to use it as you'd like, or license it to other parties.
+Do I have to pay for the IP?
+This will depend on the licensing agreement.
+When will I start to make money?
+You'll receive royalty payments once the licensee starts selling the product or service. In addition, you may receive milestone payments before the sales begin if they're included in the licence agreement.
+Risk
+The risk level is reduced as you'll have responsibility for some cost of development and delivery, but if there aren't any sales, you won't receive any royalties.
+Return
+While the return is reduced per sale as a sharing profit with the licensee, there's a potential for greater overall profit from more sales.
+How it works
 An assignment is the sale of your IP. This involves you transferring the ownership of the IP to another entity, and therefore losing the rights to use the IP.
 Do I still own the IP?
 No, and you won't have any involvement moving forward.
@@ -111,6 +145,35 @@ The risk level is reduced as the franchisee is responsible for delivery and sale
 Return
 While the return is reduced per sale as a sharing profit with the franchisee, there's a potential for greater overall profit from more sales.
 How it works
+In a franchise agreement, you give one or more parties the right to use your trade mark or trade name, your business systems and processes.
+The licensed rights are used by the franchisees to provide goods or services to agreed specifications.
+In return, they pay royalties and fees. Franchisees often contribute to marketing costs for the brand as well.
+Do I still own the IP?
+Yes, and you'll continue to be very involved in the IP's journey.
+Do I have to pay for the IP?
+You'll need to pay for the cost of developing the IP and the future costs of protecting it, such as renewal fees.
+When will I start to make money?
+There are usually three categories of payment that you may receive, including:
+- An upfront fee
+- Training equipment and business advisory fees
+- Ongoing royalties as a percentage of operation.
+Risk
+The risk level is reduced as the franchisee is responsible for delivery and sales.
+Return
+While the return is reduced per sale as a sharing profit with the franchisee, there's a potential for greater overall profit from more sales.
+How it works
+An assignment is the sale of your IP. This involves you transferring the ownership of the IP to another entity, and therefore losing the rights to use the IP.
+Do I still own the IP?
+No, and you won't have any involvement moving forward.
+Do I have to pay for the IP?
+The assignee will bear the risk of commercial development, and be responsible for all costs, including renewal fees and production expenses.
+When will I start to make money?
+Once you've signed the agreement, you'll receive payment for the sale.
+Risk
+There's minimal risk involved in assigning the IP to someone else. There's no outlay of funds for development or delivery of the idea. Even if there are future sales that come from the IP, you've already received your payment.
+Return
+You'll receive a guaranteed payment regardless of whether any products or services are sold. However, this is usually at a reduced price compared to what you might make by commercialising the idea yourself, or by licensing or franchising your idea.
+How it works
 You might decide to set up a new company to commercialise your IP, including:
 - An IP start-up — a new entity created specifically to commercialise IP
 - An IP spin-off — an IP start-up created by partitioning it off from an existing (parent) company.
@@ -135,6 +198,16 @@ Risk
 Risk is reduced as the new company burdens the cost of development and delivery of the idea.
 Return
 There's a high return as the company will 'incubate' your idea. This de-risks the development phase and adds value, making it worth more to the acquirer of the company.
+Corporate level options offer ways of deriving value from IP.
+Options include a:
+Merger
+This is a legal consolidation of your business with another to form a single entity
+Acquisition
+Where an entity takes ownership of another smaller company, especially where the deal is forced upon the company. For example:
+You’re an inventor who holds IP as an asset in a small, non-operational company that you own and run for prototyping and demonstration purposes only. When it's time to commercialise the IP, you decide to explore acquisition by or a merger with a larger organisation that has the money or equity to undertake commercialisation.
+Joint venture (JV)
+This involves two or more entities that agree to collaborate on a new entity without altering the ownership of the original companies. For example:
+You want to sell overseas in a market or country that foreigners aren't allowed to enter. You find a local business in that country and set up a JV that allows you to access the new market together. You also benefit from the new partner's local distribution network.
 Corporate level options offer ways of deriving value from IP.
 Options include a:
 Merger

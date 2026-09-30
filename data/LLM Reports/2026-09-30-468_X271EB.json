@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the IP Australia's webpage about preventing infringement of IP, focusing on brand registries, Amazon Brand Registry, and anti-counterfeit measures. The IPFR page in question concerns the process of requesting removal of an unused trade mark for non-use. The changes do not affect any specific procedural, legal, or factual information about removal applications, timeframes, fees, or outcomes described in the IPFR page. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3154,
+  "completion_tokens": 131,
+  "total_tokens": 3285,
+  "processing_time_seconds": 2.1348275880000074,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.355060+00:00"
+}
