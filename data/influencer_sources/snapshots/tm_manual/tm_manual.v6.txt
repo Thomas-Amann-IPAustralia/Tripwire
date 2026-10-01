@@ -1,39 +1,23 @@
+Recent updates
+| Item amended | Date Amended | Amended Reason | 
+|---|---|---|
+| 5.3. Indexing | | Minor update to when an application is deemed to be published. | 
+| 5.2. Data Capture | | Updated publication and notification information. | 
+| Part 9.3. Amendment before particulars of an application are published (Section 64) | | Minor updates to timing and procedure for s 64 amendments. | 
+| Part 32A.6 Information relevant to s 44 considerations in relation to claiming plants or plant materials | | Minor correction made "Fruit; Trees" has been updated to "Fruit trees" within the table for conflicting goods and services list. | 
+| 26.10 Section 44 - non-Roman characters | | Added new part 26.10 - Section 44 - non-Roman characters | 
+| Part 32A.1 Landing Page | | Minor table formatting changes | 
+| Part 32A.2 Introduction to examining trade mark applications relating to plants and plant materials | | The Trade Marks Office Manual of Practice and Procedure has been updated. The chapter Examination of Trade Marks for Plants (in class 31) has been revised and renamed Part 32A – Examination of trade mark applications relating to plants or plant materials. See the official notice on the IP Australia website for details. | 
+| Part 32A.3 Information relevant to s 41 considerations in relation to applications for plants/plants materials | | The Trade Marks Office Manual of Practice and Procedure has been updated. The chapter Examination of Trade Marks for Plants (in class 31) has been revised and renamed Part 32A – Examination of trade mark applications relating to plants or plant materials. See the official notice on the IP Australia website for details. | 
+| Part 32A.5 Information relevant to s 43 considerations in relation to claiming plants or plants materials | | The Trade Marks Office Manual of Practice and Procedure has been updated. The chapter Examination of Trade Marks for Plants (in class 31) has been revised and renamed Part 32A – Examination of trade mark applications relating to plants or plant materials. See the official notice on the IP Australia website for details. | 
+| Part 32A.4 Information relevant to s 42(b) considerations in relation to application plant or plant materials | | The Trade Marks Office Manual of Practice and Procedure has been updated. The chapter Examination of Trade Marks for Plants (in class 31) has been revised and renamed Part 32A – Examination of trade mark applications relating to plants or plant materials. See the official notice on the IP Australia website for details. | 
 | 7. Can the divisional details be deleted from a valid divisional application? | | Part reviewed, content updated. | 
- 
- | 31.2. Prescribed signs - subsection 39(2) | | Whole part reviewed, content updated. | 
- 
- | 31.5. Other information relevant to examining trade marks that contain a prohibited and prescribed sign | | Whole part reviewed, content updated. | 
- 
- | 31.3. When does a ground for rejection exist under subsection 39(2)? | | Whole part reviewed, content updated. | 
- 
- | 31.4. Practice for examining trade marks containing the signs specified in reg 4.15 | | Whole part reviewed, content updated. | 
- 
- | 31.1. Prohibited signs - subsection 39(1) | | Whole part reviewed, content updated. | 
- 
- | 31. Relevant Legislation | | Whole part reviewed, content updated. | 
- 
- | 30. Annex A2 - Official notice re copyright in the Aboriginal Flag | | Archived as content is outdated and no longer required. | 
- 
- | 30.3. Use contrary to law | | Updated content at 3.4.1 in relation to copyright in the Aboriginal and Torres Strait Islander flags. | 
- 
- | 12.1. Divisional applications - general | | Part reviewed, content updated. | 
- 
- | 4. In whose name may a divisional application be filed? | | Part reviewed, content updated. | 
- 
- | Annex A1 Divisional Checklist (for divisional applications filed on or after 27 March 2007) | | Part reviewed, content updated. | 
- 
- | 8. Divisional applications and late citations - additional fifteen months | | Part reviewed, content updated. | 
- 
- | 12. Landing page | | Part reviewed, content updated. | 
- 
- | 5. Convention claims and divisional applications | | Part reviewed, content updated. | 
- 
- | 10. Divisionals and classification | | Part reviewed, content updated. | 
- 
- | 3. Conditions for a valid divisional application | | Part reviewed, content updated. | 
- 
- | 2. Why file a divisional application? | | Part reviewed, content updated. | 
- 
- | 9. Divisional applications and the Intellectual Property Laws Amendment (Raising the Bar) Act 2012 | | Part reviewed, content updated. | 
- 
- | 6. Can a divisional application be based on a parent application which is itself a divisional application? What is the filing date in this situation? | | Part reviewed, content updated. |
+| 31.4. Practice for examining trade marks containing the signs specified in reg 4.15 | | Whole part reviewed, content updated. | 
+| 31.1. Prohibited signs - subsection 39(1) | | Whole part reviewed, content updated. | 
+| 31. Relevant Legislation | | Whole part reviewed, content updated. | 
+| 31.2. Prescribed signs - subsection 39(2) | | Whole part reviewed, content updated. | 
+| 31.5. Other information relevant to examining trade marks that contain a prohibited and prescribed sign | | Whole part reviewed, content updated. | 
+| 31.3. When does a ground for rejection exist under subsection 39(2)? | | Whole part reviewed, content updated. | 
+| 30. Annex A2 - Official notice re copyright in the Aboriginal Flag | | Archived as content is outdated and no longer required. | 
+| 30.3. Use contrary to law | | Updated content at 3.4.1 in relation to copyright in the Aboriginal and Torres Strait Islander flags. | 
+| 12. Landing page | | Part reviewed, content updated. |

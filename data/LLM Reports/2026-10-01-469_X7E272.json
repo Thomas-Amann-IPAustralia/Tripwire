@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are primarily cyclical reviews and minor updates to manuals and non-legislative instruments related to patents, trade marks, and designs. There are no specific amendments to procedural steps, timeframes, fees, or decision-making processes in hearings at IP Australia that would affect the accuracy of the IPFR page content. The IPFR page describes the hearing process in general terms suitable for small business owners, and none of the upstream changes alter these descriptions or introduce new requirements or changes to the hearing process.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4015,
+  "completion_tokens": 133,
+  "total_tokens": 4148,
+  "processing_time_seconds": 2.3082838039999842,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.936040+00:00"
+}

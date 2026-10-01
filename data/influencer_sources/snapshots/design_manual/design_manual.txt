@@ -1,5 +1,7 @@
 | 5.1.1. Applicant name: Is the applicant a 'person'? | | Page review. | 
  
+ | 5.1.10. Applicant name: Partnership | | Page archived, detail provided at 5.1.6. | 
+ 
  | 5.1.2. Applicant name: Individual (Australian and overseas, including joint owners) | | Page reviewed and updated. | 
  
  | 5.1.5. Applicant name: Overseas entity | | Page reviewed and updated. | 
@@ -24,8 +26,6 @@
  
  | 5.1. Applicant name: overview | | Page reviewed and updated. | 
  
- | 5.1.10. Applicant name: Partnership | | Page archived, detail provided at 5.1.6. | 
- 
  | 6.4. Representations: Product | | Added alternate text for images | 
  
  | 9.2. Identifying the design: Overall appearance | | Added alternate text for images | 
@@ -36,4 +36,4 @@
  
  | 22.4. Amendments: Inclusion of matter not in substance disclosed | | Added alternative text for image | 
  
- | 17.4. Prior art base: Trade marks and patents as citations | | Updated alternative text for image |
+ | 6.6. Representations: Text | | Updated alternative text for images |

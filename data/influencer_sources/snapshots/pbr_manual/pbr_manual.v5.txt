@@ -1,6 +1,7 @@
 Recent updates
 | Item amended | Date Amended | Amended Reason | 
 |---|---|---|
+| 4.7 Acceptance or Rejection of PBR Application | | Updated information relating to rejection of PBR applications | 
 | 10.2 QP Portal | | BVT | 
 | 5.1 DUS Test Growing in Australia | | Fixed dead link under 'Guidance on selection of comparator varieties' | 
 | 10.2.4 Portal Statuses | | New page created containing additional guidance content for QP Portal | 
@@ -19,5 +20,4 @@ Recent updates
 | 5.3.4 Ceasing of Provisional Protection | | Updated chapter link to read '5.3.1 QP Portal Submissions' | 
 | 5.3 Detailed Variety Description | | Updated sub chapter link to read 'QP Portal Submissions' | 
 | 2.2 Customer Engagement, Quality Management and Timeliness | | Updated customer feedback response time | 
-| 4.2.2 Agent | | Adding detail on nominating an agent. | 
-| 4.4.2 Plant Trade Marks | | Updated content under ‘Kinds of registered trade marks'. |
+| 4.2.2 Agent | | Adding detail on nominating an agent. |
