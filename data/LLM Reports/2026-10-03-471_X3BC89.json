@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-03-471",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are primarily minor formatting and spacing corrections on the IP Australia news webpage, with no substantive updates to the content or guidance about checking IP ownership or the use of specific registers. There is no new or changed information that affects the accuracy or currency of the IPFR page content about checking ownership of names, logos, inventions, designs, plant breeders' rights, copyright, or domain names. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4855,
+  "completion_tokens": 124,
+  "total_tokens": 4979,
+  "processing_time_seconds": 1.1444899230000374,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-03T07:50:02.181227+00:00"
+}
