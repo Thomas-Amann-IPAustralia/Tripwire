@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to the replacement of the Administrative Appeals Tribunal (AAT) with the new Administrative Review Tribunal (ART) as of 14 October 2024, and minor consequential amendments to regulations. The IPFR page discusses how to complain about IP Australia and mentions the Commonwealth Ombudsman as the body to escalate complaints if dissatisfied with IP Australia's response. It does not mention the AAT or any tribunal review process, focusing instead on complaints and formal review or appeal processes separately. Since the change concerns tribunal structures and the IPFR page does not reference these tribunals or their processes, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1403,
+  "completion_tokens": 166,
+  "total_tokens": 1569,
+  "processing_time_seconds": 2.9855955570001242,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.233883+00:00"
+}

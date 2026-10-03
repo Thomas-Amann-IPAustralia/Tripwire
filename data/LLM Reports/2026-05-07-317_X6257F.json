@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X6257F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to updates on the ACCC public registers, specifically exemptions and undertakings under the Competition and Consumer Act 2010 and Australian Consumer Law. The IPFR page concerns trade mark infringement under the Trade Marks Act 1995 and does not discuss ACCC registers, competition law exemptions, or consumer data sharing obligations. There is no direct or indirect impact on the accuracy or currency of the trade mark infringement content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3854,
+  "completion_tokens": 118,
+  "total_tokens": 3972,
+  "processing_time_seconds": 1.985317559999885,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712547+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve minor textual formatting updates to practice directions of the Administrative Review Tribunal, updates to trademark manual sections unrelated to patent oppositions, and minor clarifications in administrative decision judicial review procedures. None of the changes specifically address or alter the patent opposition process, timelines, fees, or procedural details described in the IPFR page. The changes to the IP Australia legislation and non-legislative instruments page are minor formatting corrections without substantive content changes. Therefore, the IPFR page content about responding to a patent opposition remains accurate and up-to-date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7022,
+  "completion_tokens": 143,
+  "total_tokens": 7165,
+  "processing_time_seconds": 3.0003562820002116,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793310+00:00"
+}

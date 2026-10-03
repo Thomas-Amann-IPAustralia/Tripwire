@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds information about proactive measures to prevent infringement, such as listing IP rights with platforms and using anti-counterfeit measures like QR codes and holograms. The IPFR page focuses on the option to pause use of contested IP after a dispute arises, including the risks and benefits of ceasing use. The new content does not contradict or update any specific factual statements or procedural guidance in the IPFR page about pausing use of contested IP. It is related but does not affect the accuracy or currency of the existing content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2740,
+  "completion_tokens": 139,
+  "total_tokens": 2879,
+  "processing_time_seconds": 1.5827222149999898,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.008691+00:00"
+}

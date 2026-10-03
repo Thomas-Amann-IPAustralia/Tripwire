@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X14C12",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO arbitration fees webpage clarify and slightly reformat the fee table for expedited arbitration and arbitration, but do not introduce new fee amounts or remove existing ones. The IPFR page does not currently include specific fee amounts or detailed cost breakdowns for WIPO arbitration, only a general note that costs may include practitioner's fees and administrative expenses. The changes to the domain name dispute resolution page are minor formatting and listing updates that do not affect the IPFR page content. The changes to the Attorney General's 'Your Guide to Dispute Resolution' page are minor formatting or publication date notes without content changes. Therefore, none of these changes affect the accuracy or currency of the IPFR page content, which remains correct and up to date for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7658,
+  "completion_tokens": 186,
+  "total_tokens": 7844,
+  "processing_time_seconds": 2.9162509819998377,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849719+00:00"
+}

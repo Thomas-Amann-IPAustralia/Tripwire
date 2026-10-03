@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document relates primarily to updates and corrections in the Patent Manual, including procedural outlines, fee details, and specific patent examination guidance. There is no indication of changes to the appeals or hearing processes, or to the options available for challenging IP Australia examination decisions as described in the IPFR page. The IPFR page content focuses on the general pathways for disagreement with examination decisions, including hearings, appeals, merits review, and judicial review, none of which are specifically amended or contradicted by the upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2023,
+  "completion_tokens": 135,
+  "total_tokens": 2158,
+  "processing_time_seconds": 1.8845928079999794,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.714354+00:00"
+}

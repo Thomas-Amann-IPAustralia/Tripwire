@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news page and an announcement about a new transparency program for patent examination timeframes under the Patent Prosecution Highway. The IPFR page 'Is it worth registering my IP?' provides general guidance on the value of registering IP rights and does not include specific details about patent examination timeframes or procedural updates. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1410,
+  "completion_tokens": 128,
+  "total_tokens": 1538,
+  "processing_time_seconds": 2.005494720999991,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430342+00:00"
+}

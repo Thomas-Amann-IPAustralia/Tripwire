@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X4A89E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document details expanded explanations about different ways to commercialise IP, including independent launch, licensing, franchising, and assignment. However, the IPFR page 'Check your idea against existing patents' focuses specifically on the concept of conducting a 'freedom to operate' patent search and its benefits, risks, costs, and processes. The upstream changes do not alter or update any specific information about freedom to operate searches, patent checking procedures, costs, or legal considerations presented in the IPFR page. Therefore, while related to IP commercialisation generally, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2985,
+  "completion_tokens": 160,
+  "total_tokens": 3145,
+  "processing_time_seconds": 1.6387521820000757,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009785+00:00"
+}

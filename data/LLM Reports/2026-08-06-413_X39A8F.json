@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to administrative updates, corrections to design registrations, updates to manuals and portals, and minor formatting or accessibility fixes in official IP Australia documents. None of the changes introduce new substantive legal requirements, alter basic eligibility criteria, timing, or procedural steps for IP registration that are described in the IPFR page. The IPFR page content remains accurate and current for its intended audience of small business owners seeking basic guidance on what to check before getting registered IP.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6081,
+  "completion_tokens": 125,
+  "total_tokens": 6206,
+  "processing_time_seconds": 2.540632421000055,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.795046+00:00"
+}

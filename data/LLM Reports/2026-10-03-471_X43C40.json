@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-03-471",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change to the upstream source involved a minor formatting adjustment to an example about responding to IP infringement threats within Australia, specifically removing blank lines but not altering any substantive content. The IPFR page in question deals with considerations when responding to international accusations of IP infringement and does not include or rely on this specific example or its formatting. There is no change to legal information, procedures, or guidance relevant to international infringement responses. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2453,
+  "completion_tokens": 130,
+  "total_tokens": 2583,
+  "processing_time_seconds": 1.9264239320000343,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-03T07:50:02.181025+00:00"
+}

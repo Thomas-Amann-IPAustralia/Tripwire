@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of minor updates, accessibility fixes, typographical corrections, and updated references in the IP Australia manuals and official notices. There is no indication of changes to the trade mark opposition process, timelines, fees, or procedural details that would affect the accuracy or currency of the IPFR page content. The IPFR page's descriptions of the opposition process, timelines, fees, risks, and outcomes remain consistent with the information in the changes. Therefore, no amendments are required to the IPFR page at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8497,
+  "completion_tokens": 137,
+  "total_tokens": 8634,
+  "processing_time_seconds": 2.3523341819998222,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.500378+00:00"
+}

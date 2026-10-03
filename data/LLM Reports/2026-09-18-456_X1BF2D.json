@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates on the WIPO domain name dispute resolution webpage, including procedural details about complaint filing, fees, and new services. The IPFR page 'Using mediation to resolve IP disputes' discusses mediation broadly in the context of IP disputes but does not provide specific procedural details or references to WIPO domain name dispute processes or fees. There is no direct impact on the accuracy or currency of the IPFR page content from these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3074,
+  "completion_tokens": 122,
+  "total_tokens": 3196,
+  "processing_time_seconds": 1.3386248810001007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.744759+00:00"
+}

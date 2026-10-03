@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to minor updates on WIPO's website such as removal of an event announcement and a slight formatting change in a workforce document title. These do not affect the substantive content or accuracy of the IPFR page about the WIPO Good Offices Program, which focuses on dispute resolution services. There are no changes to the description, procedures, costs, or eligibility of the Good Offices Program or WIPO ADR services that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2299,
+  "completion_tokens": 124,
+  "total_tokens": 2423,
+  "processing_time_seconds": 1.4076064890000453,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707768+00:00"
+}

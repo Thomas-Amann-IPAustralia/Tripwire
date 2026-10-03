@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the trademark manual (Change 1) are unrelated to design registration and do not affect any specific content on the IPFR page about design rights. The changes from the design manual (Change 2) primarily concern accessibility fixes, URL updates, and minor editorial adjustments without substantive changes to the legal or procedural content relevant to design registration or certification. There is no indication of changes to fees, timeframes, renewal periods, or certification requirements that would require updating the IPFR page content. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3032,
+  "completion_tokens": 143,
+  "total_tokens": 3175,
+  "processing_time_seconds": 1.7158262610000747,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.155308+00:00"
+}

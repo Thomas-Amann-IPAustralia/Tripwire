@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-08-07-414",
+  "ipfr_page_id": "X976CC",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center fees page include updated fee structures for registration, administration, and arbitrator fees, with specific new amounts and fee calculation methods. The IPFR page currently mentions that SME\u2019s and individuals are entitled to a 25% reduction of fees but does not specify the updated fee amounts or the new fee brackets and rates. Since the IPFR page discusses possible costs including WIPO administrative fees and arbitrator fees, these fee updates directly affect the accuracy and currency of the cost information presented. Additionally, the changes to the WIPO contract clauses page simplify the list of recommended clauses but do not materially affect the IPFR content. The domain name dispute resolution changes do not impact this page's content. Therefore, the IPFR page should be updated to reflect the new fee structure details to maintain accuracy for small business users.",
+  "suggested_changes": [
+    "Update the section 'What might the costs be?' to reflect the new WIPO Arbitration and Mediation Center fee structure, including the registration fee of $2,000, administration fees ranging from $4,000 up to $60,000 depending on the amount in dispute, and arbitrator fees with fixed fees and indicative hourly rates as per the latest WIPO fees page.",
+    "Clarify that the administration fee and arbitrator fees vary by dispute amount with specific brackets: up to $2.5M, over $2.5M to $10M, and over $10M, including the percentage calculations and maximum caps as per the updated fee schedule.",
+    "Retain the note that SMEs and individuals are entitled to a 25% reduction but ensure it aligns with the updated fee amounts."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10862,
+  "completion_tokens": 370,
+  "total_tokens": 11232,
+  "processing_time_seconds": 5.470476655999846,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-07T04:35:18.610228+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage focus on advice about monitoring the market for IP infringement and proactive listing of IP rights with platforms like Amazon Brand Registry to prevent counterfeit goods. The IPFR page 'Free IP tools you can use' primarily lists and describes free online IP search and monitoring tools without specific guidance on enforcement actions or market monitoring strategies. The updated content does not affect the accuracy or currency of the IPFR page's descriptions or tool listings. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2287,
+  "completion_tokens": 134,
+  "total_tokens": 2421,
+  "processing_time_seconds": 2.64378617400007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.610549+00:00"
+}

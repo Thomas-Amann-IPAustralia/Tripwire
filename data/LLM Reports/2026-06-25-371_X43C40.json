@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Australian Border Force Act 2015 are standard compilation updates without specific amendments or explanatory statements indicating changes relevant to international IP infringement considerations. The updates to the Patent Manual relate to patent examination procedures and case law within Australia, which do not affect the general guidance on responding to international IP infringement accusations. The IPFR page provides general advice about international IP infringement considerations and does not contain specific legislative references or procedural details that have been altered by these updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3079,
+  "completion_tokens": 125,
+  "total_tokens": 3204,
+  "processing_time_seconds": 2.127213026999925,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.564374+00:00"
+}

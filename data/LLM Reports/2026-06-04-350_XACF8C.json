@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to ACCC exemptions and undertakings under the Competition and Consumer Act 2010 concerning data sharing obligations and functional separation undertakings for specific companies. These changes do not affect the content of the IPFR page on common scams, which focuses on warning signs of IP-related scams, how to identify them, and where to report them. There is no mention of ACCC exemptions, data sharing obligations, or related regulatory updates in the IPFR page content. Therefore, the page remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2592,
+  "completion_tokens": 137,
+  "total_tokens": 2729,
+  "processing_time_seconds": 1.531990405000215,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707344+00:00"
+}

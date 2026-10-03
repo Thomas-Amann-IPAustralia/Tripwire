@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to closed consultations on IP Australia webpages about patent manual updates, regulatory simplifications, trade mark amendments, and the WIPO Design Law Treaty, as well as updates to the Amazon Brand Registry webpage. None of these changes provide new or updated procedural steps, legal thresholds, or specific actionable guidance that would directly affect the advice or information given in the IPFR page about what to do if someone infringes your IP. The IPFR page content remains accurate and current for its intended audience of small business owners seeking basic guidance on responding to IP infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4895,
+  "completion_tokens": 144,
+  "total_tokens": 5039,
+  "processing_time_seconds": 1.3620282770000358,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.205746+00:00"
+}

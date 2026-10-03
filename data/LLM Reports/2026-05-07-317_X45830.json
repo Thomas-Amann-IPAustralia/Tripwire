@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X45830",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to Amazon Brand Registry's updated cashback percentages for branded sales (from 20% back to 10% back), which is a commercial detail about Amazon's brand registry program. The IPFR page focuses on the challenges and strategic considerations of naming tech startups after personal names in the context of trademark distinctiveness and protection, without mentioning Amazon Brand Registry or cashback incentives. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2115,
+  "completion_tokens": 127,
+  "total_tokens": 2242,
+  "processing_time_seconds": 2.0373531660000026,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713805+00:00"
+}

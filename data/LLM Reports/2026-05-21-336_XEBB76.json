@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to IP Australia's trademark manual and closed consultation pages, including minor content updates, references to recent case law, and procedural clarifications. However, the IPFR page 'What is IP and how does it protect me?' provides a general overview of IP types and their protective functions without specific procedural details, dates, or legal references that have changed. There is no indication that the core definitions, types of IP, or the general explanations of IP rights and enforcement options have been altered or rendered inaccurate by these updates. Therefore, no specific amendments to the IPFR page content are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4885,
+  "completion_tokens": 154,
+  "total_tokens": 5039,
+  "processing_time_seconds": 2.4550293110000894,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.586979+00:00"
+}

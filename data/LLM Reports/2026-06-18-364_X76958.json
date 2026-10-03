@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to amendments in intelligence oversight legislation, updates to ACCC public registers, minor formatting changes on WIPO treaty pages, updates to the ASEAN-Australia-New Zealand Free Trade Area (AANZFTA) agreement text, and minor formatting on WIPO IP diagnostics. None of these changes directly affect the specific content of the IPFR page on considerations before enforcing IP overseas. The IPFR page discusses general enforcement considerations, international treaties, and practical advice for IP rights holders, but does not contain specific details or procedural steps that are contradicted or outdated by these changes. The AANZFTA update is relevant to international trade but does not alter the IP enforcement guidance or specific IP rights information on the page. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9688,
+  "completion_tokens": 192,
+  "total_tokens": 9880,
+  "processing_time_seconds": 3.1469341639999584,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708664+00:00"
+}

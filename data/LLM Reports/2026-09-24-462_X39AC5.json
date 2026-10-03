@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a webpage update to the IP Australia's design manual, specifically concerning applicant name details and related sections. The IPFR page in question deals with revocation of trade mark registrations, which is a different subject area. The change does not mention any amendments to trade mark revocation procedures, timelines, costs, or legal references that would affect the accuracy or currency of the IPFR page content. The relevance scores indicate a weak indirect relation, and the content of the change does not impact the specific procedural or substantive information presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2778,
+  "completion_tokens": 144,
+  "total_tokens": 2922,
+  "processing_time_seconds": 1.5087000819999048,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.205251+00:00"
+}

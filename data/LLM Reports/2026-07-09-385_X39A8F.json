@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in IP Australia manuals, official notices, and procedural or technical details such as the launch of a new Qualified Persons portal for PBRs, updated guidance on computer-implemented inventions in the Patent Manual, and surrender of certain design registrations. The IPFR page provides general guidance for small business owners on what to check before getting registered IP, focusing on basic concepts and considerations rather than detailed procedural or technical updates. None of the changes indicate a modification to the fundamental requirements or advice given on this page, such as the basic criteria for patents, designs, trade marks, or PBRs, or the general advice about timing, ownership, or clearance checks. Therefore, the page content remains accurate and current for its intended audience and purpose.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9181,
+  "completion_tokens": 185,
+  "total_tokens": 9366,
+  "processing_time_seconds": 6.283708674000081,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.816239+00:00"
+}

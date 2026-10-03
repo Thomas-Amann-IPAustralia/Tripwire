@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream IP Australia webpages primarily involve removal of detailed explanations about commercialisation methods (independent launch, assignment) and reformatting of content about preventing infringement (Amazon Brand Registry and anti-counterfeit measures). The IPFR page 'What to check before getting registered IP' focuses on the basics of IP types, registration requirements, timing considerations, ownership, and availability checks. It does not discuss commercialisation strategies or infringement prevention measures in detail. None of the specific facts, legal thresholds, or procedural steps in the IPFR page are contradicted or rendered outdated by these upstream changes. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4565,
+  "completion_tokens": 165,
+  "total_tokens": 4730,
+  "processing_time_seconds": 1.7516414799999893,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354773+00:00"
+}

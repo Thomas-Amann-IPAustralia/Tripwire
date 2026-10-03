@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XC87FF",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor reformatting and reordering of bullet points in guidance about what information to provide when engaging an IP attorney. The IPFR page mentions engaging an IP commercialisation lawyer and a patent or trade mark attorney but does not provide detailed instructions or bullet points on how to engage them or what information to provide. Therefore, the change does not affect the accuracy or currency of any specific statement in the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2967,
+  "completion_tokens": 121,
+  "total_tokens": 3088,
+  "processing_time_seconds": 2.3503921830001673,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228374+00:00"
+}

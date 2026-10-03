@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to an ACCC exemption and an undertaking concerning product data sharing obligations and unfair contract terms under the Australian Consumer Law. The IPFR page discusses unregistered trade marks and the protection available under passing off and the ACL, focusing on misleading or deceptive conduct related to trade marks. The ACCC update does not affect the accuracy or currency of the IPFR page's content about unregistered trade marks or the ACL provisions relevant to misleading conduct in trade mark contexts. There is no specific amendment needed to the IPFR page based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1914,
+  "completion_tokens": 143,
+  "total_tokens": 2057,
+  "processing_time_seconds": 2.1012008689999675,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712322+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in IPAustralia manuals (patent, design, PBR), accessibility fixes, link corrections, and policy register updates. None of these changes indicate modifications to substantive content about checking products against existing designs, freedom to operate searches, or the enforcement and interpretation of design rights as described in the IPFR page. The changes are mostly technical, editorial, or procedural updates without altering the core guidance or legal thresholds relevant to the IPFR page content. Therefore, the IPFR page remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8660,
+  "completion_tokens": 146,
+  "total_tokens": 8806,
+  "processing_time_seconds": 2.975716048000322,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.266217+00:00"
+}

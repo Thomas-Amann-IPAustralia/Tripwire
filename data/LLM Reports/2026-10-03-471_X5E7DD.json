@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-03-471",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change to the upstream source involved removing some blank lines and reformatting the example story about Mahish and Colette without altering any substantive content or legal information. The IPFR page content on 'Respond to an unjustified threat' remains accurate and consistent with the example scenario. There is no change to legal thresholds, procedures, or definitions that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2676,
+  "completion_tokens": 110,
+  "total_tokens": 2786,
+  "processing_time_seconds": 1.1479737599998998,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-03T07:50:02.180898+00:00"
+}

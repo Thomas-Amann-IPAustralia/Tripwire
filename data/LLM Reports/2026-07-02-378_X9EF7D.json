@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural rules in the Federal Court, amendments to secrecy provisions in the Criminal Code, updates to IP Australia's official notices including a postponed and rescheduled portal launch, and updates to the IP Australia policy register. None of these changes directly affect the foundational descriptions of IP law, the main Acts, or the general guidance on IP rights, enforcement, or administration as presented in the IPFR page. The IPFR page provides a broad overview of IP laws and agencies without specific procedural or fee details that have changed. Therefore, no update to the page content is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5498,
+  "completion_tokens": 152,
+  "total_tokens": 5650,
+  "processing_time_seconds": 3.3487778090002394,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267854+00:00"
+}

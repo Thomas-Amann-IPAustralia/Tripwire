@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are minor updates to the number of news results shown on the IP Australia news page and mention a new transparency program related to Patent Prosecution Highway (PPH) requests. These changes do not affect the factual content or guidance on the IPFR page about enforcing a 'filed' patent, which focuses on the status and enforceability of patent applications prior to grant. There is no update to legal thresholds, timelines, or enforcement rights that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1847,
+  "completion_tokens": 131,
+  "total_tokens": 1978,
+  "processing_time_seconds": 2.3558886779999284,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430151+00:00"
+}

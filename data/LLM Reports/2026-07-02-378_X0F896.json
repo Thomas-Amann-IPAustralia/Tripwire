@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the launch date of the Qualified Persons portal (now 7 July 2026) and a Patent Cooperation Treaty fees update effective 1 July 2026. The IPFR page content focuses on obtaining legal advice on IP infringement accusations and does not mention the Qualified Persons portal, patent fees, or procedural details about patent or trade mark applications. Therefore, these upstream changes do not affect the accuracy or currency of the guidance provided in this IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3251,
+  "completion_tokens": 127,
+  "total_tokens": 3378,
+  "processing_time_seconds": 2.4850738860000092,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267761+00:00"
+}

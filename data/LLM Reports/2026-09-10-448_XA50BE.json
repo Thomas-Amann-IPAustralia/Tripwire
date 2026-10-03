@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern administrative updates such as surrender of design registrations, corrections to design register entries, and minor updates to the IPAustralia design manual including formatting and alternative text improvements. None of these changes affect the substantive content of the IPFR page XA50BE, which focuses on the process, risks, benefits, and considerations of seeking binding authoritative decisions in court for design disputes. There are no changes to legal time limits, procedural steps, or substantive legal principles described in the IPFR page. Therefore, the page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4933,
+  "completion_tokens": 142,
+  "total_tokens": 5075,
+  "processing_time_seconds": 3.3805831370000305,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552336+00:00"
+}

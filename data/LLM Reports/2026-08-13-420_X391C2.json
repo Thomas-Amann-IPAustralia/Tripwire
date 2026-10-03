@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources are minor formatting and content updates that do not affect the factual accuracy or currency of the IPFR page content. Change 1 is a slight reformatting of a list on the WIPO IP audit page, which does not alter the meaning or require updates to the IPFR page. Change 2 is a removal of some resource links from the DFAT WTO IP page, which does not impact the IPFR page's guidance on whether it is worth registering IP. The IPFR page does not reference these specific resources or details that have changed, and its content remains accurate and relevant.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1819,
+  "completion_tokens": 156,
+  "total_tokens": 1975,
+  "processing_time_seconds": 1.9692097769998327,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.878501+00:00"
+}

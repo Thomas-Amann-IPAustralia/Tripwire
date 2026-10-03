@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-02-348",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update about IP Australia's new transparency program for patent examination timeframes and international search options for patents. The IPFR page concerns the certification of registered designs and the examination process related to designs, not patents. There is no mention or impact on design examination fees, procedures, or certification processes. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2241,
+  "completion_tokens": 114,
+  "total_tokens": 2355,
+  "processing_time_seconds": 2.0071074929999213,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-02T06:57:01.162207+00:00"
+}

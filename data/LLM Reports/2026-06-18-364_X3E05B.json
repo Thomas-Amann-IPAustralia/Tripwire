@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to eBay's Verified Rights Owner (VeRO) program and details about submitting infringement reports and handling them on eBay's platform. The IPFR page focuses on reporting scams, fraud, or risks to public interest related to IP infringement and does not mention or provide guidance about eBay's VeRO program or marketplace-specific infringement reporting processes. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3270,
+  "completion_tokens": 123,
+  "total_tokens": 3393,
+  "processing_time_seconds": 2.3672006199999487,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.711999+00:00"
+}

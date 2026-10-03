@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the Patent Manual and Trade Mark Manual reflecting recent court decisions, procedural updates, and terminology changes. None of the changes specifically address or alter the opposition process timelines, fees, procedural steps, or outcomes described in the IPFR page. The IPFR page content about challenging a patent opposition remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7113,
+  "completion_tokens": 107,
+  "total_tokens": 7220,
+  "processing_time_seconds": 1.8963626019999538,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.562558+00:00"
+}

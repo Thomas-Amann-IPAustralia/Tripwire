@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to administrative updates, corrections to specific design registrations, amendments to the IP Australia manuals, and legislative reforms unrelated to the core content of the IPFR page on checking products against existing designs. There are no changes affecting the accuracy of the guidance on how to conduct design searches, the benefits, risks, or procedures described in the IPFR page. The updates to the Designs Register and surrender of specific design registrations do not impact the general advice given to small business owners about freedom to operate searches or infringement risks. Similarly, the legislative reform to the Australian Securities and Investments Commission Act and updates to the Trade Marks Manual and Design Manual do not alter the fundamental information presented on this IPFR page. Therefore, no amendments are required to maintain the accuracy or currency of the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10352,
+  "completion_tokens": 191,
+  "total_tokens": 10543,
+  "processing_time_seconds": 3.239924756000164,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793465+00:00"
+}

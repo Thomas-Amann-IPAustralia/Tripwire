@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers, including new court enforceable undertakings and acquisitions approvals under the Competition and Consumer Act 2010. The IPFR page discusses reporting IP infringement and consumer harm issues to the ACCC but does not provide specific details about ACCC enforcement actions, statutory references, or procedural steps that have changed. The updates do not affect the accuracy or currency of the guidance on reporting IP-related consumer harm or scams. Therefore, no amendment to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4653,
+  "completion_tokens": 137,
+  "total_tokens": 4790,
+  "processing_time_seconds": 1.5798528489999626,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.206262+00:00"
+}

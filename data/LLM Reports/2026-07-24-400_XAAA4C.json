@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage and the addition of a new transparency program related to patent examination timeframes. The IPFR page is about contributor guidelines for blog posts and does not contain specific information about patent examination timeframes, transparency programs, or news result counts. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2080,
+  "completion_tokens": 117,
+  "total_tokens": 2197,
+  "processing_time_seconds": 1.9584517439999445,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430797+00:00"
+}

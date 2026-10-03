@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to an update in the compilation of the Australian Securities and Investments Commission Act 2001 and updates to ACCC public registers concerning exemptions and undertakings under the Competition and Consumer Act 2010. These changes do not affect the factual content or accuracy of the IPFR page about the differences between business names, company names, and registered trade marks. There is no indication of changes to the rights or registration processes for business names or trade marks that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2046,
+  "completion_tokens": 132,
+  "total_tokens": 2178,
+  "processing_time_seconds": 2.3449872850001157,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232451+00:00"
+}

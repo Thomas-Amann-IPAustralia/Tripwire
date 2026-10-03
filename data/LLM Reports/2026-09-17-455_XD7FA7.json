@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern updates to the patent and design manuals, including cyclic reviews, minor language changes, updated references, and corrections to broken links in the trade mark manual. There are no specific amendments or updates related to the trade mark opposition process timelines, fees, grounds for opposition, or procedural details that would affect the accuracy or currency of the IPFR page content. The IPFR page's information about the opposition process, timelines, fees, risks, and outcomes remains consistent with the available changes. Therefore, no update to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9953,
+  "completion_tokens": 150,
+  "total_tokens": 10103,
+  "processing_time_seconds": 3.505105662999995,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.934050+00:00"
+}

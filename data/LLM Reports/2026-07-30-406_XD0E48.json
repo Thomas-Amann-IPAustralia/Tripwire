@@ -1,0 +1,18 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes from the Amazon Brand Registry webpage indicate a specific update to the deposit amount required for participation in the Amazon Patent Evaluation Express program, increasing it from $4,000 to $5,000. The IPFR page discusses notifying online marketplaces of infringement and mentions brand registries such as Amazon's. Since the IPFR page includes information about proactive listing of IP rights on platforms like Amazon and references brand registries, the updated deposit amount is a concrete procedural detail that affects the accuracy of the content. Therefore, the IPFR page should be updated to reflect the new $5,000 deposit requirement to maintain currency and accuracy for users relying on this information.",
+  "suggested_changes": [
+    "Update the deposit amount required for participation in Amazon's Patent Evaluation Express program from '$4,000' to '$5,000' in the section discussing Amazon Brand Registry and related IP complaint mechanisms."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7207,
+  "completion_tokens": 208,
+  "total_tokens": 7415,
+  "processing_time_seconds": 2.724446070999875,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152959+00:00"
+}

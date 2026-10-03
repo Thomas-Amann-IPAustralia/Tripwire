@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to the Australian Securities and Investments Commission Act 2001 related to financial reporting and sustainability standard-setting bodies. This is a governance and regulatory reform in financial reporting standards, which is unrelated to the content of the IPFR page about the value and considerations of registering intellectual property rights. There is no direct impact on the accuracy or currency of the IPFR page content, which focuses on IP registration benefits and options for small businesses.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1900,
+  "completion_tokens": 122,
+  "total_tokens": 2022,
+  "processing_time_seconds": 2.5069605139999567,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.797881+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia trademark manual primarily involve updates to sections about series trade marks, colour endorsements, divisional applications, and other procedural or evidentiary details. These updates do not directly affect the basic explanations of trade mark infringement, registrability, or enforcement strength as presented in the IPFR page. Similarly, the ASIC company registration page updates concern company registration procedures and fees, which are unrelated to the IP infringement content. The IPFR page content remains accurate and current for its intended audience, focusing on infringement basics rather than detailed procedural or fee information.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4319,
+  "completion_tokens": 145,
+  "total_tokens": 4464,
+  "processing_time_seconds": 1.9198803459998999,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851631+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to amendments in customs regulations concerning firearms importation, updates to trademark manual sections, updates to IP Australia legislative instruments, and updates to WIPO PCT regulations effective from 2026. None of these changes directly affect the specific procedural details, fees, timeframes, or legal references related to opposing a new or amended patent in Australia as described in the IPFR page. The IPFR page content about patent oppositions remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6383,
+  "completion_tokens": 130,
+  "total_tokens": 6513,
+  "processing_time_seconds": 2.534579098999984,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.875876+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a general update to the IPAustralia trademark manual, including minor content updates, typographical corrections, and updated legislative links. There is no indication of changes to substantive legal thresholds, procedural steps, or specific guidance that would affect the IPFR page content on avoiding IP infringement. The IPFR page provides general advice on avoiding infringement and does not cite specific statutory provisions or procedural details that have been amended. Therefore, the IPFR page remains accurate and does not require amendment based on the provided upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3269,
+  "completion_tokens": 137,
+  "total_tokens": 3406,
+  "processing_time_seconds": 5.314983684000026,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.501932+00:00"
+}

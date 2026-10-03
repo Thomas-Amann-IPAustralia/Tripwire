@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Australian Border Force Act 2015 are standard compilation updates with no explanatory statements and have very low relevance scores to the IPFR page about seeking binding, authoritative decisions in design disputes. The changes to the IPA design manual relate primarily to accessibility fixes and removal of empty headings, with no substantive content changes affecting court proceedings or legal processes described in the IPFR page. There are no updates to time limits, costs, procedures, or legal thresholds that would impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4116,
+  "completion_tokens": 138,
+  "total_tokens": 4254,
+  "processing_time_seconds": 2.0499421189999794,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.563686+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-25-463",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates procedural details on how to submit complaints and responses for WIPO domain name dispute resolution, such as the introduction of an online form, sending copies to the Registrar, processing times, and privacy notice agreement. However, the IPFR page 'When do I need a lawyer or attorney to deal with IP issues?' provides general guidance on when to seek legal help and the roles of IP lawyers and attorneys. It does not include specific procedural instructions or details about filing domain name disputes with WIPO. Therefore, the procedural updates do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1790,
+  "completion_tokens": 153,
+  "total_tokens": 1943,
+  "processing_time_seconds": 1.3854336690000082,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-25T07:20:13.035761+00:00"
+}

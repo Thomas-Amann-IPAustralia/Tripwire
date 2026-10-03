@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to eBay's intellectual property policy regarding the use of brand names, trademarks, and third-party content in product listings. While it relates to trademark use and infringement, it does not affect the fundamental distinctions between business names, company names, and registered trade marks as explained in the IPFR page. The IPFR page focuses on explaining the nature and legal effect of business names, company names, and trade marks in Australia, rather than listing or marketplace compliance rules. Therefore, no specific factual content in the IPFR page is rendered inaccurate or outdated by the eBay policy update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2533,
+  "completion_tokens": 154,
+  "total_tokens": 2687,
+  "processing_time_seconds": 2.1920139530000142,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.876918+00:00"
+}

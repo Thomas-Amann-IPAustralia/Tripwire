@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of minor updates, typographical corrections, and references to recent case law or procedural clarifications in the IP Australia trademark manual and consultation announcements. There are no specific amendments to fundamental definitions, procedural steps, or legal thresholds related to IP protection that would affect the accuracy or currency of the IPFR page content. The IPFR page provides general guidance on IP protection for small businesses without citing detailed procedural or legislative specifics that have changed. The ACCC exemptions and WIPO Madrid System updates do not impact the content of this page, which focuses on Australian IP protection basics. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7587,
+  "completion_tokens": 161,
+  "total_tokens": 7748,
+  "processing_time_seconds": 2.1841628189999938,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.587401+00:00"
+}

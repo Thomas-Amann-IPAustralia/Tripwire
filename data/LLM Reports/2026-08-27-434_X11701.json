@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Paris Convention text are primarily formatting and table of contents updates without substantive changes to the legal provisions relevant to infringement procedures or advice. The IPFR page provides general guidance on what to do if someone infringes your IP, focusing on practical steps and options rather than detailed international treaty provisions. The change to the 'find an attorney' page clarifies formatting and presentation of information to provide to an attorney but does not alter the substantive advice or procedures described in the IPFR page. Therefore, neither change affects the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3687,
+  "completion_tokens": 149,
+  "total_tokens": 3836,
+  "processing_time_seconds": 3.2956638289999773,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908139+00:00"
+}

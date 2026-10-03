@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X2E871",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page discusses the costs associated with using WIPO ADR processes and refers users to the WIPO Center's fee calculator and latest fees and costs. The upstream changes include detailed updates to the WIPO arbitration fee schedule, specifying registration fees, administration fees, and arbitrator fees for different dispute amounts in US dollars. These changes directly affect the accuracy of the cost information presented on the IPFR page. Additionally, the page mentions a 25% fee reduction for SMEs, which remains relevant but should be cross-checked with the updated fee structure. Other changes related to domain name dispute resolution and minor formatting do not impact the IPFR page content. Therefore, the IPFR page should be updated to reflect the current WIPO arbitration fees to maintain accuracy for small business owners relying on this information.",
+  "suggested_changes": [
+    "Update the section 'What might the costs be?' to include the current WIPO arbitration fee schedule as per the latest WIPO webpage, specifying registration fees ($0 for expedited arbitration, $2,000 for arbitration), administration fees (ranging from $2,000 to $20,000 depending on dispute amount), and arbitrator fees (fixed fees and ranges depending on dispute amount and complexity).",
+    "Confirm and clarify the 25% fee reduction for SMEs applies to the updated fee schedule and mention this explicitly in the costs section.",
+    "Add a direct link or reference to the updated WIPO fee calculator page to ensure users can access the most current fee information."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9064,
+  "completion_tokens": 331,
+  "total_tokens": 9395,
+  "processing_time_seconds": 5.525147395999966,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849645+00:00"
+}

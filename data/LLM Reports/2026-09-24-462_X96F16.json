@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a general update to the IPAustralia design manual webpage, mainly involving reorganization and archival of sections related to applicant names and details. There is no indication of changes to substantive legal content, definitions, infringement criteria, or protection terms that would affect the IPFR page on design infringement. The IPFR page's detailed explanations and statutory references remain accurate and unaffected by these administrative updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3125,
+  "completion_tokens": 113,
+  "total_tokens": 3238,
+  "processing_time_seconds": 1.3913109400000394,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.209547+00:00"
+}

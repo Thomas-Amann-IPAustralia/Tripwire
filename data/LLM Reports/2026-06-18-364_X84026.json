@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes provided relate to amendments in the Administrative Review Tribunal Rules, oversight legislation for intelligence and security agencies, establishment of the Defence and Veterans\u2019 Service Commissioner, and detailed updates to complaint processes against IP attorneys by the Trans-Tasman IP Attorneys Board. However, the IPFR page 'I am not happy with IP Australia - what can I do?' focuses on how to raise complaints about IP Australia service and clarifies that complaints do not affect formal review or appeal processes. None of the changes directly affect the content or accuracy of this page. The changes to complaint processes against IP attorneys are related but do not impact the guidance on complaints about IP Australia itself. Therefore, no updates to the IPFR page content are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4863,
+  "completion_tokens": 177,
+  "total_tokens": 5040,
+  "processing_time_seconds": 2.987935010000001,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.709563+00:00"
+}

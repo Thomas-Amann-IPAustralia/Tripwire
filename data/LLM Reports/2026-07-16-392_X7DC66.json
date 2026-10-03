@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to updates in the Australian Securities and Investments Commission Act 2001 compilation and exemptions granted by the ACCC under the Competition and Consumer Act 2010 concerning consumer data sharing obligations for specific entities. These changes do not affect the content of the IPFR page, which focuses on the differences between an ABN, registered business name, and registered trade mark, and the benefits of trade mark registration. There are no specific references, dates, or procedural details in the IPFR page that are contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3407,
+  "completion_tokens": 141,
+  "total_tokens": 3548,
+  "processing_time_seconds": 2.5379407260002154,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232074+00:00"
+}

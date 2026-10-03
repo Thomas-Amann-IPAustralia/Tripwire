@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update from IP Australia highlighting recent news items including patent reminders and IP reports. The content of the IPFR page is a general guide on why creative businesses need an IP strategy from day one and does not contain specific procedural details, dates, or statutory references that have been changed or updated in the news. The news items do not directly affect the accuracy or currency of the IPFR page content, which remains a general advisory document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2512,
+  "completion_tokens": 124,
+  "total_tokens": 2636,
+  "processing_time_seconds": 1.9774387699999352,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.271090+00:00"
+}

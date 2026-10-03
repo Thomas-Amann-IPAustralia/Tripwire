@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily update and expand information on WIPO's Arbitration and Mediation Center services, including domain name dispute resolution under the UDRP and related contract clauses. However, the IPFR page specifically addresses the .au Dispute Resolution Policy (auDRP) for .au domain names, which is a distinct national policy administered by auDA. The changes do not affect any specific procedural details, fees, timeframes, or criteria stated in the IPFR page about the auDRP. The WIPO changes do not alter or supersede the auDRP process or its particulars as described. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7237,
+  "completion_tokens": 171,
+  "total_tokens": 7408,
+  "processing_time_seconds": 2.2953105120000146,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152766+00:00"
+}

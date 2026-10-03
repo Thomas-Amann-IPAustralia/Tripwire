@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page references the Administrative Review Tribunal (ART) as a body that can conduct merits review of IP Australia decisions. The upstream changes inform that the Administrative Review Tribunal Act 2024 has established the ART as a new federal administrative review body replacing the Administrative Appeals Tribunal (AAT), with commencement on 14 October 2024. This is a significant legislative update affecting the tribunal structure referenced on the IPFR page. The page should be updated to reflect the new tribunal's establishment, its replacement of the AAT, and the commencement date to ensure accuracy and currency for users seeking review options.",
+  "suggested_changes": [
+    "Update the description of the merits review body to clarify that the Administrative Review Tribunal (ART) established by the Administrative Review Tribunal Act 2024 replaces the Administrative Appeals Tribunal (AAT) as of 14 October 2024.",
+    "Add a note about the ART Act receiving Royal Assent on 3 June 2024 and the ART commencing on 14 October 2024 to provide users with current legislative context.",
+    "Review and revise any references to the Administrative Appeals Tribunal (AAT) to reflect that it will be replaced by the ART for merits review of IP Australia decisions."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1785,
+  "completion_tokens": 276,
+  "total_tokens": 2061,
+  "processing_time_seconds": 4.191776691999621,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.233791+00:00"
+}

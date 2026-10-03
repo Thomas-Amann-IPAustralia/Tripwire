@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "XC8F8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage at www.asbfeo.gov.au/disputes-assistance/dispute-support is currently unreachable due to a connection closure error. There is no substantive content change or update to the information on dispute support or IP enforcement costs. The IPFR page content about why enforcing IP is expensive remains accurate and unaffected by this technical issue with the external site. The IPFR page does not rely on specific data or procedural details from the ASBFEO dispute support page that would require updating due to this connectivity problem.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1838,
+  "completion_tokens": 140,
+  "total_tokens": 1978,
+  "processing_time_seconds": 1.6009458949999953,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.913877+00:00"
+}

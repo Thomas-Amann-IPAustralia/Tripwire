@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia trademark manual primarily involve updates to procedural and legislative details about divisional applications and prescribed signs, which do not affect the general guidance on addressing overseas infringement in the IPFR page. The WIPO Arbitration and Mediation Center webpage update expands and elaborates on the ADR services offered but does not introduce new enforcement options or procedural steps that would necessitate changes to the IPFR content. The IPFR page's content on overseas infringement remains accurate and current, focusing on territoriality of IP rights, enforcement challenges, and practical tips without referencing specific procedural details or ADR options that have changed.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4060,
+  "completion_tokens": 155,
+  "total_tokens": 4215,
+  "processing_time_seconds": 2.004561431999946,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.154405+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to detailed procedural updates in the Trade Marks Manual of Practice and Procedure and the listing of non-legislative instruments related to the Designs Act on the IP Australia legislation page. The IPFR page 'How does IP Australia compare to other government services?' provides a high-level overview of IP Australia and other agencies, focusing on general roles and services rather than procedural or legislative specifics. There is no specific information in the IPFR page about the procedural details, statutory references, or fee instruments that have changed. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2986,
+  "completion_tokens": 154,
+  "total_tokens": 3140,
+  "processing_time_seconds": 1.5613039570000637,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.937968+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Administrative Review Tribunal Act 2024 relate to procedural amendments allowing decisions to be made on written materials without oral hearings, primarily in migration cases. This procedural change does not directly affect the description or procedural steps of trade mark opposition in the IPFR page. The updates to the Trade Marks Manual of Practice and Procedure are minor content updates, typographical corrections, and removal of references to a section of the PBR Act, none of which impact the specific content of the IPFR page regarding trade mark opposition timelines, fees, or processes. There is no indication that the opposition period, fees, or procedural rights described in the IPFR page have changed. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4212,
+  "completion_tokens": 178,
+  "total_tokens": 4390,
+  "processing_time_seconds": 1.7995271780000621,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491103+00:00"
+}

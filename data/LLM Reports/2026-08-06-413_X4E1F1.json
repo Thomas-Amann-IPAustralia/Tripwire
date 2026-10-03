@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural updates and internal manual restructuring for Plant Breeder's Rights (PBR) and updates to the Uniform Domain-Name Dispute-Resolution Policy (UDRP) documentation. The IPFR page content is a general overview about the risks of using IP without permission and basic guidance on checking ownership and obtaining permission. None of the changes provide new or updated information that directly contradicts or updates the specific guidance or statements on the IPFR page. There are no changes to legal thresholds, exceptions, or procedural steps that would affect the accuracy of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4964,
+  "completion_tokens": 151,
+  "total_tokens": 5115,
+  "processing_time_seconds": 5.404854756000077,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.794606+00:00"
+}

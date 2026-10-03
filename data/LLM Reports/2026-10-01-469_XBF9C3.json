@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are primarily cyclic reviews and minor language or formatting updates to the IPAustralia patent and design manuals, with no substantive changes to the legal or procedural content relevant to enforcing a 'filed' patent. There are no updates to the enforceability of filed patents, publication effects, or timelines that would affect the accuracy of the IPFR page content. The removal of a reference to a 'forms officer' and archiving of a design manual page do not impact the patent enforcement guidance. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2872,
+  "completion_tokens": 144,
+  "total_tokens": 3016,
+  "processing_time_seconds": 1.406368005999866,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938204+00:00"
+}

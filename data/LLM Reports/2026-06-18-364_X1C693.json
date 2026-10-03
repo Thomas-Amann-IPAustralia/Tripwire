@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Madrid System webpage primarily involve minor formatting and removal of a future dated 'Madrid System Yearly Review 2026' reference. The IPFR page content on 'Does my Australian IP work overseas?' already correctly states that international trademark protection can be pursued via international filing systems like the Madrid System, and that protection is granted by each member's IP office under their domestic laws. There are no specific fees, dates, or procedural details in the IPFR page that conflict with or require updating based on these upstream changes. The changes do not alter the fundamental explanation or accuracy of the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2153,
+  "completion_tokens": 157,
+  "total_tokens": 2310,
+  "processing_time_seconds": 2.3765952649996507,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708865+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources mainly involve updates to other parts of the IP Australia trade mark manual (such as amendments after particulars publication, honest concurrent use criteria, and minor typographical corrections), minor formatting changes in WIPO treaty texts, and clarifications in eBay's VeRO program FAQs. None of these changes specifically affect the content on the IPFR page about removing a trade mark from the register for non-use, including the grounds for removal, timeframes, process steps, costs, or outcomes. There is no indication that the statutory timeframes, fees, or procedural steps described in the IPFR page have been altered or updated in these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4622,
+  "completion_tokens": 165,
+  "total_tokens": 4787,
+  "processing_time_seconds": 2.2429068530000222,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.712208+00:00"
+}

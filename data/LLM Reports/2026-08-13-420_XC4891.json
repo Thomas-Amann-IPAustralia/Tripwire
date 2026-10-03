@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to updates in the IPAustralia PBR manual, specifically to chapter and subchapter links and guidance content related to the QP Portal submissions and application management. There is no indication of any substantive change to the legal framework, definitions, infringement criteria, or procedural rules concerning Plant Breeders' Rights infringement. The IPFR page content focuses on explaining PBR infringement, legal rights, and examples, none of which are contradicted or outdated by the changes to the manual's navigation or guidance links. Therefore, no update to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2894,
+  "completion_tokens": 153,
+  "total_tokens": 3047,
+  "processing_time_seconds": 1.959186192000061,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.879183+00:00"
+}

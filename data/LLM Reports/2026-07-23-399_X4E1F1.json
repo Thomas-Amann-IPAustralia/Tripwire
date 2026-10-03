@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to amendments to the Administrative Review Tribunal Rules 2024, specifically concerning the operation of the ART in relation to migration decisions and National Disability Insurance Scheme (NDIS) provider regulatory decisions. The IPFR page content focuses on general guidance about using IP that is not yours, including infringement, permissions, and licensing. There is no mention of administrative review processes, tribunal rules, or migration or NDIS-related regulatory decisions in the IPFR page. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2521,
+  "completion_tokens": 143,
+  "total_tokens": 2664,
+  "processing_time_seconds": 2.301130263999994,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.259375+00:00"
+}

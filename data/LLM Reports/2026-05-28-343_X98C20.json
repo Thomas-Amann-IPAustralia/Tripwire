@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Plant Breeder's Rights (PBR) manual primarily involve accessibility fixes, link corrections, and additional guidance on surrenders within the PBR process. The IPFR page in question provides a high-level overview comparing IP Australia to other government services, focusing on general descriptions of agency roles and the importance of IP registration. There are no specific details, dates, fees, or procedural steps related to Plant Breeder's Rights or surrenders in the IPFR page that would be affected by these upstream changes. Therefore, the accuracy and currency of the IPFR page content remain unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2601,
+  "completion_tokens": 154,
+  "total_tokens": 2755,
+  "processing_time_seconds": 1.7579282910000984,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.492336+00:00"
+}

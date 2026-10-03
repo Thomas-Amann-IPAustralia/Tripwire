@@ -1,0 +1,57 @@
+--- previous+++ current@@ -1,6 +1,26 @@-| 6.13. Representations: Pairs and mirror images | | Minor adjustments to page. | 
++| 10.4. Product: Things that are not different products | | Formatting amended. | 
++ 
++ | 10.5. Product: Product name | | Formatting amended. | 
++ 
++ | 10.10. Product: Examples - things that are / are not products | | Page reviewed and updated. | 
++ 
++ | 10.3. Product: Things that are not products | | Page reviewed and updated. | 
++ 
++ | 10.7. Product: Component part of a complex product | | Formatting amended. | 
++ 
++ | 10.6. Product: Manufactured or hand made | | Formatting amended. | 
++ 
++ | Citation index | | Page reviewed and updated. | 
++ 
++ | 10.1. Product: overview | | Page reviewed and updated. | 
++ 
++ | 10.8. Product: Assembled set or kit | | Formatting amended. | 
++ 
++ | 10.9. Product: Indefinite dimensions | | Formatting amended. | 
+  
+  | 12.8. Section 43 refusal to register: Integrated circuits | | Page reviewed and information updated. | 
++ 
++ | 6.13. Representations: Pairs and mirror images | | Minor adjustments to page. | 
+  
+  | Welcome | | Reviewed and updated. | 
+  
+@@ -12,28 +32,8 @@  
+  | 6.11. Representations: Different views | | fix one minor image issue | 
+  
++ | 8.15. Examination and certification: Examination hearings | | Republished to remove fixed font-size styles for accessibility | 
++ 
+  | Glossary | | Republished to remove fixed font-size styles for accessibility | 
+  
+- | 8.15. Examination and certification: Examination hearings | | Republished to remove fixed font-size styles for accessibility | 
+- 
+- | 6.2. Representations: General requirements | | Accessibility fix - remove empty headings | 
+- 
+- | 6.5. Representations: Consistency | | Accessibility fix - remove empty headings | 
+- 
+- | 2.6. Application for registration: Types of applications (s 22) | | Accessibility fix - remove empty headings | 
+- 
+- | 25.6. Ownership disputes: Typical situations where ownership disputes arise | | Accessibility fix - remove empty headings | 
+- 
+- | 25.7. Ownership disputes: Revocation after an ownership dispute | | Accessibility fix - remove empty headings | 
+- 
+- | 2.7. Application for registration: Request for registration | | Accessibility fix - remove empty headings | 
+- 
+- | 28.2. Hearings: Filing evidence | | Accessibility fix - remove empty headings | 
+- 
+- | 24.2. Assignments and other interests: Recording changes of ownership | | Accessibility fix - remove empty headings | 
+- 
+- | 27.5. Publication and file access: Prohibition orders | | Accessibility fix - remove empty headings | 
+- 
+- | 20.2. Convention priority: Convention countries | | Accessibility fix - remove empty headings | 
+- 
+- | 25.4. Ownership disputes: Disputes where some designs have been registered or published | | Accessibility fix - remove empty headings |+ | 27.5. Publication and file access: Prohibition orders | | Accessibility fix - remove empty headings |

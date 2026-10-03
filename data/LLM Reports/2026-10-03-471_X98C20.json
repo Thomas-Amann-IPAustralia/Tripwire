@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-03-471",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes consist primarily of formatting corrections and minor spacing adjustments in the IP Australia news webpage content, with no substantive updates to the descriptions or functions of IP Australia or other government agencies. There is mention of the Regulatory Reform Omnibus Act 2026 receiving Royal Assent, but no details or specifics about how this affects the roles or services of IP Australia or other agencies listed on the IPFR page. The IPFR page content remains accurate and up to date regarding the comparative roles of IP Australia and other government services.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5131,
+  "completion_tokens": 136,
+  "total_tokens": 5267,
+  "processing_time_seconds": 1.2605415169999787,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-03T07:50:02.181798+00:00"
+}

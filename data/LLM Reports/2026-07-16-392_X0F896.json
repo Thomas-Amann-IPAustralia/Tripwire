@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trans-Tasman IP Attorneys Board webpage primarily involve formatting, wording clarifications, and minor updates to fee ranges (e.g., patent attorney hourly rates updated from $500-1,000 to $400-700). The IPFR page already provides approximate fee ranges and general advice on choosing an IP lawyer or attorney, which remain accurate and consistent with the updated source. There are no changes to legal thresholds, procedural steps, or statutory references that would require updating the IPFR content. The updated fee ranges are within the same general scale and do not contradict the existing guidance. Therefore, no amendment to the IPFR page is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6036,
+  "completion_tokens": 164,
+  "total_tokens": 6200,
+  "processing_time_seconds": 3.1917105410002478,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.228162+00:00"
+}

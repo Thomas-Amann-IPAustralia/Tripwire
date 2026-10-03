@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page is a set of contributor guidelines for blog posts on the IP First Response platform. The upstream changes relate to updates in IP Australia consultations and WIPO Madrid System news, which do not affect the procedural or content guidelines for contributors. There are no specific references to consultation processes, patent manual updates, or Madrid System details in the contributor guidelines that would require amendment. The changes do not impact the accuracy or currency of the contributor instructions or submission process described in the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3198,
+  "completion_tokens": 129,
+  "total_tokens": 3327,
+  "processing_time_seconds": 7.157122703000141,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.590014+00:00"
+}

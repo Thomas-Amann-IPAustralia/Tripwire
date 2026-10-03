@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "XEEFCF",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change in the external source adds some detail about market monitoring and the use of brand registries on platforms like Amazon to detect counterfeit goods. However, the IPFR page already covers supply chain monitoring broadly, including scanning online marketplace listings for unauthorized items and engaging third-party services. The new details do not contradict or update any specific factual statements, procedures, or thresholds in the IPFR page. Therefore, the IPFR page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2205,
+  "completion_tokens": 125,
+  "total_tokens": 2330,
+  "processing_time_seconds": 1.892194315000097,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.612125+00:00"
+}

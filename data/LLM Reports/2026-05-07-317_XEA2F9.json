@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO 'About' webpage consist solely of adding a new introductory sentence describing WIPO as a United Nations agency serving innovators and creators, and the removal of a line about an OzIP Protection Service for Australian small business owners. None of these changes affect the accuracy or currency of the IPFR page content about the WIPO Good Offices Program or its ADR services. The IPFR page does not mention the OzIP Protection Service or make claims contradicted or outdated by the added introductory sentence. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3382,
+  "completion_tokens": 146,
+  "total_tokens": 3528,
+  "processing_time_seconds": 2.4761103509999884,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.709279+00:00"
+}

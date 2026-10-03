@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and corrections in the Trade Marks Office Manual of Practice and Procedure, specifically sections about prohibited signs, prescribed signs, and examination of trade marks related to plants or plant materials. The IPFR page in question deals with handling AI-generated allegations of IP infringement and provides practical advice and a checklist for SMEs on how to respond to such allegations. There is no specific information in the IPFR page about trade mark examination procedures, prohibited signs, or the detailed legislative provisions that have been updated in the upstream change. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3720,
+  "completion_tokens": 156,
+  "total_tokens": 3876,
+  "processing_time_seconds": 1.3990650800001276,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.934930+00:00"
+}

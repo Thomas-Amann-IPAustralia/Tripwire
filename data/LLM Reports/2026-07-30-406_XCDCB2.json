@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia trademark manual concern divisional applications and prescribed signs, which are not topics covered in the IPFR page about registering unregistered trade marks. The ACCC public registers update and the Amazon Brand Registry changes relate to competition law and Amazon's patent evaluation process, respectively, which are unrelated to the content of the IPFR page focused on Australian trade mark registration costs, benefits, risks, and procedures. None of the changes affect the accuracy or currency of the specific information presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4664,
+  "completion_tokens": 137,
+  "total_tokens": 4801,
+  "processing_time_seconds": 2.303196114000002,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.153232+00:00"
+}

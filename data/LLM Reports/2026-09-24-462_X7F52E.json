@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers, including court enforceable undertakings and acquisitions involving various companies, including Mazda Australia and others. These changes do not mention Toyota, counterfeit products, the Australian Border Force Notice of Objection scheme, or any specific IP enforcement mechanisms relevant to the Toyota story described in the IPFR page. There is no indication that the changes affect the accuracy or currency of the information about Toyota's approach to counterfeit products or their collaboration with the ABF. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4076,
+  "completion_tokens": 144,
+  "total_tokens": 4220,
+  "processing_time_seconds": 1.5537310339998385,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.205921+00:00"
+}

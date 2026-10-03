@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IP Australia Trade Marks Manual of Practice and Procedure, consultations on patent manual updates, regulatory reforms, and international treaties. These are technical and procedural updates that do not affect the general descriptive content of the IPFR page about how IP Australia compares to other government services. The IPFR page provides a high-level overview aimed at small business owners, focusing on the role of IP Australia relative to other agencies, without specific procedural or legislative details that have changed. Therefore, no update to the IPFR page content is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5322,
+  "completion_tokens": 148,
+  "total_tokens": 5470,
+  "processing_time_seconds": 1.4830236800000876,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.206648+00:00"
+}

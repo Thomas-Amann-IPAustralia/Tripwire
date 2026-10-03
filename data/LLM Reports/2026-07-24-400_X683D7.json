@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news page and mentions unrelated topics such as battery circularity innovation and patent examination timeframes. There is no mention or indication of changes to the third-party examination process for registered designs, fees, timelines, or procedures described in the IPFR page. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1916,
+  "completion_tokens": 114,
+  "total_tokens": 2030,
+  "processing_time_seconds": 1.7526289490000408,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430058+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to amendments in intelligence oversight legislation and exemptions for defence officials regarding computer-related activities. These changes concern national security and intelligence oversight frameworks and do not pertain to intellectual property enforcement or international IP rights. The IPFR page focuses on considerations for enforcing IP rights overseas, including practical steps and legal advice related to IP infringement in foreign jurisdictions. There is no overlap or direct impact on the content of the IPFR page from the described legislative amendments.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2661,
+  "completion_tokens": 124,
+  "total_tokens": 2785,
+  "processing_time_seconds": 2.204871762000039,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.819965+00:00"
+}

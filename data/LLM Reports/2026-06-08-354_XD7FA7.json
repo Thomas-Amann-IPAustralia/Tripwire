@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates general advice on monitoring the market and taking action if someone uses your IP without permission, including mentioning brand registries on platforms like Amazon. However, the IPFR page focuses specifically on the trade mark opposition process to challenge registration of a new trade mark. The upstream change does not alter any specific procedural details, timeframes, fees, or legal thresholds related to trade mark opposition. It is more about general IP monitoring and enforcement strategies rather than the opposition process itself. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2483,
+  "completion_tokens": 144,
+  "total_tokens": 2627,
+  "processing_time_seconds": 2.840761575999977,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.611010+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified are primarily cyclic reviews, minor language updates, corrections of broken links, archiving of outdated content, and updates to manuals related to trademarks and designs. The only direct patent manual change is a cyclic review with no changes to substantive content relevant to the opposition process described in the IPFR page. There are no updates to timeframes, fees, procedures, or legal grounds for opposition that would affect the accuracy of the IPFR page content. The trademark and design manual changes are unrelated to patent oppositions. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7600,
+  "completion_tokens": 147,
+  "total_tokens": 7747,
+  "processing_time_seconds": 1.545798257999877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.934429+00:00"
+}
