@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to minor technical amendments to regulations, updates to IP Australia instruments, policy register updates, ASIC company registration procedural clarifications, ACCC public registers and consultations, and updates to third-party platforms like Amazon and eBay regarding their IP policies. None of these changes directly affect the substantive content of the IPFR page 'Infringement 101', which provides a foundational overview of IP infringement concepts, trade mark registration basics, and enforcement considerations. There are no updates to legal thresholds, definitions, procedural steps, or statutory references in the IPFR content that are contradicted or outdated by the changes. The changes are mostly administrative, procedural, or platform-specific and do not impact the accuracy or currency of the IPFR page's guidance for small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 21582,
+  "completion_tokens": 188,
+  "total_tokens": 21770,
+  "processing_time_seconds": 2.1661508380000214,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.485450+00:00"
+}

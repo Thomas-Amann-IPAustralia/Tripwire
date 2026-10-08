@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and consultation hub, including enforcement undertakings and reviews of consumer goods safety standards. These changes do not affect the specific content of the IPFR page about the Notice of Objection scheme for stopping infringing goods entering Australia. There are no updates to the legal framework, procedural timeframes, costs, or requirements related to the Notice of Objection or Australian Border Force seizure processes described in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4228,
+  "completion_tokens": 125,
+  "total_tokens": 4353,
+  "processing_time_seconds": 1.584970402000181,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.488337+00:00"
+}

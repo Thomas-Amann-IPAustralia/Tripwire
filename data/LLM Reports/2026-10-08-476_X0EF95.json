@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of minor formatting corrections, updates to official notices about specific design registrations, amendments to instruments related to fees and filing procedures, and updates to policy registers and manuals. None of these changes indicate any alteration to the substantive content of the Designs Act 2003 or the fundamental processes, fees, timeframes, or legal requirements described in the IPFR page. There is no update to the duration of design registration, renewal periods, certification requirements, or application procedures that would require amending the IPFR content. The changes are administrative or procedural updates without direct impact on the guidance provided to small business owners in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7560,
+  "completion_tokens": 161,
+  "total_tokens": 7721,
+  "processing_time_seconds": 1.726920955999958,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.484872+00:00"
+}

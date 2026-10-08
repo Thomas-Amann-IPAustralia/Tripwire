@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily concern corrections to specific design registrations, amendments to design instruments related to fees and filing procedures, and updates to policy registers and manuals. None of these changes directly affect the general guidance or factual content presented in the IPFR page about checking products against existing designs, such as the process, benefits, risks, outcomes, costs, or timeframes. There is no update to substantive legal thresholds, procedural steps, or definitions that would require amending the IPFR page content. The changes are mostly administrative or technical updates to official registers and manuals without impact on the user-facing guidance.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7437,
+  "completion_tokens": 157,
+  "total_tokens": 7594,
+  "processing_time_seconds": 1.578742494999915,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.484685+00:00"
+}

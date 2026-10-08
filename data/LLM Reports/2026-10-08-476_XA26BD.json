@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XA26BD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to the WTO TRIPS Agreement webpage, specifically restructuring the content and updating navigation elements related to TRIPS topics and transparency mechanisms. The IPFR page 'Agree to a formal commercial arrangement' focuses on practical negotiation and commercial resolution of IP disputes, including licensing, assignment, and other agreements. The change does not update or alter any substantive legal provisions, procedural steps, or specific guidance on negotiation or commercial arrangements. Therefore, the IPFR page content remains accurate and current despite the upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3263,
+  "completion_tokens": 134,
+  "total_tokens": 3397,
+  "processing_time_seconds": 1.3477643390001504,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.490048+00:00"
+}

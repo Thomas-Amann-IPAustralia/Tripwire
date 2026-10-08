@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document relates to updates on the ACCC public registers, including court enforceable undertakings and exemptions under the Competition and Consumer Act 2010. These updates concern specific enforcement actions and regulatory decisions unrelated to scams or frauds involving intellectual property rights. The IPFR page focuses on reporting scams and fraudulent IP infringement claims, providing guidance on where to report and what to expect. There is no direct impact on the accuracy or currency of the IPFR page content from these ACCC register updates, as they do not alter the reporting process, agencies involved, or the nature of IP-related scams discussed.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3024,
+  "completion_tokens": 154,
+  "total_tokens": 3178,
+  "processing_time_seconds": 1.6264884870001879,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489137+00:00"
+}

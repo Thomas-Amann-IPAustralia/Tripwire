@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to complaint processes and standards for IP attorneys, including details about the Trans-Tasman IP Attorneys Board and complaint grounds against attorneys. However, the IPFR page focuses on complaints about IP Australia as an agency, not about attorneys. The page's content about how to complain to IP Australia and the Commonwealth Ombudsman remains accurate and unaffected by these changes. There is no specific information in the IPFR page about attorney complaints or the disciplinary process that would require updating based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3308,
+  "completion_tokens": 132,
+  "total_tokens": 3440,
+  "processing_time_seconds": 1.4887376259998746,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.485720+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X45830",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the ASIC company registration page clarify procedural details about company name reservation and officeholder requirements but do not affect the trademark distinctiveness or personal name trademark issues discussed in the IPFR page. The Amazon Brand Registry update adds a new Seller Success program and slightly modifies patent dispute process wording, which is unrelated to the IPFR page content about naming tech startups after people. The eBay intellectual property policy update refines listing guidelines and trademark use in listings, but does not impact the trademark distinctiveness or personal name trademark challenges described in the IPFR page. None of the upstream changes alter or contradict the core trademark principles or advice about personal names as trademarks presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5182,
+  "completion_tokens": 170,
+  "total_tokens": 5352,
+  "processing_time_seconds": 2.5376441580001483,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.487872+00:00"
+}

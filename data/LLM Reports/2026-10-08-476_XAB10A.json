@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural details and fee placeholders on the ASIC company registration page and an update to the ICANN Uniform Domain Name Dispute Resolution Policy effective dates. The IPFR page provides a high-level, simplified explanation of names and trade marks for Australian business owners without specific fee amounts, form numbers beyond a general mention, or detailed procedural timelines. The IPFR content does not include the specific fee codes ({R01}, {I01}, {I02}) or detailed form naming conventions that changed, nor does it mention the exact effective dates of the UDRP policy. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content as it stands.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5009,
+  "completion_tokens": 171,
+  "total_tokens": 5180,
+  "processing_time_seconds": 2.359219868000082,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.482871+00:00"
+}

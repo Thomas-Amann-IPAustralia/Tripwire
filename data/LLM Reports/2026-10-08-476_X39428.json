@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to eBay's intellectual property policy, providing detailed guidance on listing items without infringing IP rights, including use of brand names, third-party content, international selling, warranty claims, and logos. While the IPFR page discusses general principles on avoiding IP infringement, it does not include specific procedural or legal details about online marketplace listing practices or e-commerce platform policies. The eBay policy update does not contradict or invalidate any specific statements in the IPFR page, nor does it require changes to the general advice given. Therefore, the IPFR page remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3274,
+  "completion_tokens": 159,
+  "total_tokens": 3433,
+  "processing_time_seconds": 2.0632477829999516,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.487086+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to Amazon Brand Registry and eBay's intellectual property policies, including new programs, procedural details, and listing guidelines. The IPFR page provides a general overview of IP protection for small businesses, focusing on the types of IP rights, their benefits, and general enforcement options. None of the changes introduce new legal thresholds, statutory references, or procedural steps that contradict or update the general guidance given in the IPFR page. The IPFR page does not mention Amazon Brand Registry or eBay policies specifically, so these upstream changes do not affect the accuracy or currency of the page's content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6777,
+  "completion_tokens": 153,
+  "total_tokens": 6930,
+  "processing_time_seconds": 1.7641622809999262,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.486999+00:00"
+}

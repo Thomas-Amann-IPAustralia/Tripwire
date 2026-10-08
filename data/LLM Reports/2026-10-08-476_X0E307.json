@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of minor formatting corrections, updates to IP Australia procedural instruments, amendments to design manual page organization and image alt text, and updates to policy register entries and eBay's intellectual property policy guidance. None of these changes alter the fundamental facts or guidance about addressing overseas IP infringement, territorial nature of IP rights, enforcement options, or practical considerations described in the IPFR page. There are no updates to legal thresholds, statutory references, or enforcement procedures that would require changes to the IPFR content. The IPFR page remains accurate and current in light of these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10494,
+  "completion_tokens": 149,
+  "total_tokens": 10643,
+  "processing_time_seconds": 2.708282863000022,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.485178+00:00"
+}
