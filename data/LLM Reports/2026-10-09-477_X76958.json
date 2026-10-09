@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-09-477",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the WIPO Arbitration and Mediation Center webpage and fee schedule, including the introduction of WIPO Wallet as a payment method and minor editorial adjustments. The IPFR page mentions WIPO ADR as an option for alternative dispute resolution but does not provide specific procedural details, fee information, or payment methods. Therefore, the changes do not affect the accuracy or currency of the IPFR page content, which remains a general overview for small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3564,
+  "completion_tokens": 126,
+  "total_tokens": 3690,
+  "processing_time_seconds": 2.515264677999994,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-09T08:43:19.315074+00:00"
+}

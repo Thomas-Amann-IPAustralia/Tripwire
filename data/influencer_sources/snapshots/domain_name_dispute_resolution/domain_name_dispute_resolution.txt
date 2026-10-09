@@ -75,20 +75,14 @@ Arbitration and Mediation Center (Geneva)
 34, chemin des Colombettes
 1211 Geneva 20
 Switzerland
-34, chemin des Colombettes
-1211 Geneva 20
-Switzerland
 T
  +41 22 338 8247 or +41 800 888 549 (Free line within Switzerland)
-F +41 22 740 3700 or +41 800 888 550 (Free line within Switzerland)
-E domain.info@wipo.int
-F +41 22 740 3700 or +41 800 888 550 (Free line within Switzerland)
-E domain.info@wipo.int
+F
+ +41 22 740 3700 or +41 800 888 550 (Free line within Switzerland)
+E
+ domain.info@wipo.int
 Opening hours: 09:00 - 18:00 (CET)
 Arbitration and Mediation Center (Singapore)
-Maxwell Chambers Suites
-28 Maxwell Road #02-14
-Singapore 069120
 Maxwell Chambers Suites
 28 Maxwell Road #02-14
 Singapore 069120

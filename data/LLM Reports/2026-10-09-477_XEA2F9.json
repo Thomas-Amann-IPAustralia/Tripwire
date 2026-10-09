@@ -1,0 +1,18 @@
+{
+  "run_id": "2026-10-09-477",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center webpage and the WIPO arbitration fees page introduce a new payment method 'WIPO Wallet' for arbitration, mediation, and expert determination fees. The IPFR page currently states payment options without mentioning WIPO Wallet. Since the IPFR page provides guidance on costs and payment methods for WIPO ADR services, this new payment method is a material update that should be reflected to keep the content accurate and current for users. Other changes such as the announcement of WIPO Wallet going live in 2026 and minor formatting changes do not affect the IPFR content. The changes to fees themselves do not alter fee amounts or discounts, so no fee amount updates are needed.",
+  "suggested_changes": [
+    "Update the 'What does it cost?' section to include 'WIPO Wallet' as a payment option alongside credit card, bank transfer, and PayPal for arbitration, mediation, and expert determination fees."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8414,
+  "completion_tokens": 219,
+  "total_tokens": 8633,
+  "processing_time_seconds": 2.098930378000091,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-09T08:43:19.314540+00:00"
+}
