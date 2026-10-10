@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to practice directions of the Administrative Review Tribunal, amendments to patent manual content related to technical patent examination details, and updates to trademark manual sections mostly about series trade marks and procedural refinements. None of the changes specifically address or alter the procedural steps, fees, timelines, or decision-making processes described for IP Australia hearings in the IPFR page. The IPFR page content focuses on the hearing process at IP Australia, including filing oppositions, requesting hearings, hearing scheduling, and decisions, without detailed procedural or legislative references that have been amended. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12386,
+  "completion_tokens": 163,
+  "total_tokens": 12549,
+  "processing_time_seconds": 2.4440635880000627,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.705648+00:00"
+}

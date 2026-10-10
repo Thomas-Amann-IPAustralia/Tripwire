@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are announcements about new reforms to streamline Australia's IP system and general promotional content about the role of IP in business growth. They do not provide specific details or amendments to the processes, definitions, or tools referenced in the IPFR page. The IPFR page content remains accurate and current regarding the use of registers and checking for existing IP rights. There is no indication that any statutory references, procedural steps, or specific guidance in the IPFR page are outdated or contradicted by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2081,
+  "completion_tokens": 132,
+  "total_tokens": 2213,
+  "processing_time_seconds": 2.108547934999933,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.007467+00:00"
+}

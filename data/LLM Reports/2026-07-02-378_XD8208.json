@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources relate primarily to updates in the trademark manual regarding honest concurrent use criteria, series trade marks, colour endorsements, divisional applications, and accessibility fixes in the design manual. None of these changes specifically address or alter the rules, timeframes, fees, or procedures for removing a trade mark from the register for non-use or related grounds. The IPFR page content on removal of trade marks remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3978,
+  "completion_tokens": 127,
+  "total_tokens": 4105,
+  "processing_time_seconds": 2.0040300129999196,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268510+00:00"
+}

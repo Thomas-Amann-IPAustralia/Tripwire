@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate exclusively to updates in the Trade Marks Office Manual of Practice and Procedure, focusing on trade mark examination, amendments, indexing, and prescribed signs. These changes do not pertain to patent oppositions, the patent opposition process, timelines, fees, or legal grounds for opposition as described in the IPFR page. The IPFR page content is specifically about challenging a new or amended patent, which is distinct from trade mark examination procedures. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5888,
+  "completion_tokens": 140,
+  "total_tokens": 6028,
+  "processing_time_seconds": 2.5888971529998344,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.038937+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates primarily to updates in the patent manual concerning definitions of prior art, procedural outlines, and case law updates, including removal of references to confidential information and clarifications on publicly available information. However, the IPFR page content on 'Prevent a patent under examination from being granted' focuses on the practical process of lodging a section 27 notice, its timing, benefits, risks, and outcomes. There is no specific amendment or change in the statutory timeframes, procedural steps, or definitions directly referenced in the IPFR page that would be rendered inaccurate by the upstream changes. The changes do not alter the described process or requirements for lodging a section 27 notice or the time window for doing so. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2877,
+  "completion_tokens": 186,
+  "total_tokens": 3063,
+  "processing_time_seconds": 2.3411310379997303,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707634+00:00"
+}

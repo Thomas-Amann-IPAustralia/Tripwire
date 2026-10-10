@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change relates to amendments to the Administrative Review Tribunal Rules concerning migration decisions and fee waivers for NDIS providers, which is unrelated to the content of the IPFR page about what to check before getting registered IP. The second change concerns accessibility fixes and minor content updates in the IP Australia design manual, including updates to excluded designs sections and URLs, but does not introduce substantive changes to the basic requirements or procedural advice for design registration that would affect the IPFR page content. The IPFR page provides general guidance on IP types and registration considerations without detailed procedural or legislative references that would be impacted by these upstream changes. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3626,
+  "completion_tokens": 168,
+  "total_tokens": 3794,
+  "processing_time_seconds": 2.5550263729999187,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.258417+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in procedural instruments, manuals, and forms concerning design rights, plant breeder's rights, and trade mark examination details, including specific dates for new forms and updated manuals. The IPFR page in question provides a high-level overview comparing IP Australia to other government agencies and explains the general role of IP Australia in helping businesses protect their IP. It does not contain specific procedural details, dates, or references to manuals or instruments that have been updated. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3900,
+  "completion_tokens": 145,
+  "total_tokens": 4045,
+  "processing_time_seconds": 2.4369400040000073,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908206+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the 'How to prevent infringement of my IP' page by adding some formatting and spacing improvements and slightly rephrasing the sentence about taking action if someone uses your IP without permission. It also adds a few bullet points about the harms of counterfeit goods. However, these changes do not alter any specific factual information, procedural steps, or legal references that would affect the accuracy or currency of the IPFR page content on notifying online marketplaces of infringement. The IPFR page already covers the concept of listing IP rights with platforms and taking action against infringement. Therefore, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2865,
+  "completion_tokens": 157,
+  "total_tokens": 3022,
+  "processing_time_seconds": 2.978735897999968,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.612212+00:00"
+}

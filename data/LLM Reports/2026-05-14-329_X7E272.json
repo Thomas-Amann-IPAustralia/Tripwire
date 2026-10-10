@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in official notices, patent manual procedural details, and plant breeder's rights manual accessibility fixes and minor content clarifications. None of the changes specifically address or alter the procedural steps, fees, timelines, or decision-making processes described in the IPFR page about hearings at IP Australia. There is no indication that the hearing process, fees, or appeal routes have changed, so the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4507,
+  "completion_tokens": 121,
+  "total_tokens": 4628,
+  "processing_time_seconds": 2.1127856050002265,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.500466+00:00"
+}

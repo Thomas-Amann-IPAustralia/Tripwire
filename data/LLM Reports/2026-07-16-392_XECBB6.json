@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to administrative updates, amendments to customs regulations defining international airports, minor consequential amendments to regulations due to the establishment of the Administrative Review Tribunal, updates to IP Australia manuals and closed consultations, and ACCC public register updates about exemptions and deferrals. None of these changes directly affect the substantive content of the IPFR page 'Infringement 101', which focuses on explaining the basics of IP infringement, trade mark registration, and enforcement in Australia. There are no updates to infringement definitions, legal thresholds, procedural steps, or specific statutory references that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11615,
+  "completion_tokens": 153,
+  "total_tokens": 11768,
+  "processing_time_seconds": 3.498768605999885,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.230062+00:00"
+}

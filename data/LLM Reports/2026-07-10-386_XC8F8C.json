@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "XC8F8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates a technical issue with the Australian Federal Police (AFP) website (connection timeout vs. connection closed) and does not contain any substantive changes to IP enforcement content, legal procedures, costs, or related information. The IPFR page discusses the costs and processes of enforcing IP rights, but the AFP webpage change is unrelated to IP enforcement guidance or content accuracy. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1642,
+  "completion_tokens": 119,
+  "total_tokens": 1761,
+  "processing_time_seconds": 1.700713303999919,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790846+00:00"
+}

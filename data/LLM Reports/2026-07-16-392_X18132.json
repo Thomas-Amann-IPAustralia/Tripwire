@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the PBR System User Guides and the introduction of new guidance content for the QP Portal, which is focused on application processes and portal usage. The IPFR page content is about seeking binding, authoritative decisions in court for PBR disputes, covering legal proceedings, outcomes, costs, and considerations. There is no indication that the changes affect the legal dispute resolution process, court procedures, or substantive legal information presented in the IPFR page. Therefore, the IPFR page remains accurate and current despite the updates to the PBR manual regarding application and portal guidance.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2752,
+  "completion_tokens": 151,
+  "total_tokens": 2903,
+  "processing_time_seconds": 3.6527078789999905,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234712+00:00"
+}

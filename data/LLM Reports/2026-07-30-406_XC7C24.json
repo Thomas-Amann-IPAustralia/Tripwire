@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the trademark manual (Change 1) relate to divisional applications and prescribed signs in trademarks, which are not relevant to the content of the IPFR page about checking products against existing designs. The changes from the design manual (Change 2) are mostly accessibility fixes, URL updates, and minor content reorganizations without substantive changes to the legal or procedural content about design searches or infringement. There is no indication that the guidance on conducting freedom to operate searches, interpreting design similarities, or the use of Australian and overseas design databases has changed. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2951,
+  "completion_tokens": 157,
+  "total_tokens": 3108,
+  "processing_time_seconds": 1.9553169359999174,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.155221+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change involves the removal of detailed explanatory content about commercialising IP from the IP Australia webpage. However, the IPFR page in question focuses on the risks of using IP that is not yours and the need for permission or licences, rather than on the commercialisation process itself. The removed content does not affect the accuracy or currency of the IPFR page's guidance on infringement risks, permission, or licensing. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2204,
+  "completion_tokens": 127,
+  "total_tokens": 2331,
+  "processing_time_seconds": 1.8441469629999574,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354343+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change to the IP Australia webpage concerns general advice about preventing infringement of IP, specifically mentioning brand registries on online platforms like Amazon. The IPFR page on 'Stop infringing goods entering the country' focuses specifically on the Notice of Objection scheme with the Australian Border Force to seize infringing goods at the border. The upstream change does not affect any specific procedural detail, timeframe, or legal requirement described in the IPFR page. Therefore, the IPFR content remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2533,
+  "completion_tokens": 138,
+  "total_tokens": 2671,
+  "processing_time_seconds": 1.924584278999987,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.813477+00:00"
+}

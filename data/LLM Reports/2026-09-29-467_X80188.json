@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on IP Australia news items, commercialisation options, and anti-counterfeit measures including Amazon Brand Registry details. The IPFR page 'Infringement 101' is a general educational article focused on explaining what IP infringement is and how people commonly encounter it. It does not contain specific procedural details, statutory references, or commercialisation guidance that are affected by these updates. The new information about reforms, commercialisation methods, or anti-counterfeit technologies does not contradict or render any specific statements in the IPFR page inaccurate or outdated. Therefore, no changes to the IPFR page content are required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4611,
+  "completion_tokens": 162,
+  "total_tokens": 4773,
+  "processing_time_seconds": 1.8723041120000516,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.008409+00:00"
+}

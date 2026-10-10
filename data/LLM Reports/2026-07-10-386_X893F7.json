@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to a technical issue with the Australian Federal Police (AFP) website about fraud and corruption, specifically an error message change from 'connection closed' to 'timed out'. This change does not affect any legal, procedural, or substantive information about patent litigation or court proceedings described in the IPFR page. The IPFR page content about seeking binding, authoritative decisions in patent disputes remains accurate and unaffected by this unrelated website technical issue.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2885,
+  "completion_tokens": 122,
+  "total_tokens": 3007,
+  "processing_time_seconds": 1.6411413399998764,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790962+00:00"
+}

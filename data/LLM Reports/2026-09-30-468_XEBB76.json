@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes involve removal of detailed explanatory text about commercialisation methods (independent launch, assignment) from the IP Australia 'How to commercialise my IP' webpage. However, the IPFR page 'What is IP and how does it protect me?' does not contain this detailed commercialisation content; it only provides a general overview of IP types and their protective function. There is no specific information in the IPFR page that is contradicted or rendered outdated by the upstream changes. The changes are about commercialisation strategies and do not affect the accuracy of the IP definitions or the description of IP rights in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4364,
+  "completion_tokens": 158,
+  "total_tokens": 4522,
+  "processing_time_seconds": 1.9655842030000485,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354426+00:00"
+}

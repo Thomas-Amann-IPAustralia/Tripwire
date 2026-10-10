@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XBA31C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Administrative Review Tribunal Rules 2024, specifically related to migration review processes and fee impositions for NDIS providers. The IPFR page focuses on arbitration as an alternative dispute resolution method for IP disputes, describing arbitration processes, benefits, risks, costs, and relevant institutions. There is no mention of the Administrative Review Tribunal, migration reviews, or NDIS-related fee rules in the IPFR content. The change does not affect the accuracy or currency of the arbitration-related information provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3990,
+  "completion_tokens": 140,
+  "total_tokens": 4130,
+  "processing_time_seconds": 1.8301465650001774,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.711136+00:00"
+}

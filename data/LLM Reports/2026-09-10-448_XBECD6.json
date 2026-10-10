@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change relates to the removal of 'Treaty Preparatory Documents' and 'Patent Law Treaty milestones' from the WIPO Patent Law Treaty webpage. There is no direct impact on the specific procedural or substantive details about lodging a section 27 notice under Australian patent law as described in the IPFR page. The IPFR content focuses on the Australian patent examination process and third party notifications, which are not affected by the removal of these WIPO webpage sections. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1868,
+  "completion_tokens": 136,
+  "total_tokens": 2004,
+  "processing_time_seconds": 2.135690158999978,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.553015+00:00"
+}

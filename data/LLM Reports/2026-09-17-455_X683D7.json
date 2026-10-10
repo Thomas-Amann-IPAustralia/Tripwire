@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes reported in the IP Australia official notices relate to corrections of entries in the Designs Register and amendments to design registrations to correct published design representations. These are specific administrative updates to individual design registrations and do not affect the general procedural or substantive information provided on the IPFR page about requesting third party examination of registered designs. There is no indication that fees, processes, timelines, or legal thresholds described on the IPFR page have changed. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3274,
+  "completion_tokens": 133,
+  "total_tokens": 3407,
+  "processing_time_seconds": 1.3742507689999002,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.935315+00:00"
+}

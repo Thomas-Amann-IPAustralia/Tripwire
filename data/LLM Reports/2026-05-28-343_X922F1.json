@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to amendments in the Administrative Review Tribunal Act 2024 and Migration Act 1958 concerning oral hearings and decisions on the papers, as well as updates to the IPAustralia patent and trademark manuals reflecting case law updates and minor content corrections. None of these changes specifically affect the procedural details, timelines, fees, or substantive grounds for opposing a patent as described in the IPFR page. The IPFR page content about patent opposition remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6324,
+  "completion_tokens": 133,
+  "total_tokens": 6457,
+  "processing_time_seconds": 2.9130875920000108,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.490999+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X0F35A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the formatting and order of bullet points in guidance about what information to provide to an IP attorney, but does not alter the substantive content or introduce new information that affects the IPFR page. The IPFR page 'Obtain advice to help manage your IP' provides general advice on developing an IP strategy and engaging professionals but does not include the detailed bullet points or procedural steps that were changed upstream. Therefore, the IPFR page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1922,
+  "completion_tokens": 129,
+  "total_tokens": 2051,
+  "processing_time_seconds": 1.9304571019999912,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.229471+00:00"
+}

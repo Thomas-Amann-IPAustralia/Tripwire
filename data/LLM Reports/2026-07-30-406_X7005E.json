@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to ACCC exemptions and declarations under the Competition and Consumer Act 2010 (Cth) concerning data sharing obligations and declared services, which are unrelated to the content of the IPFR page about unregistered trade marks. The IPFR page focuses on legal protection for unregistered trade marks, passing off, and misleading conduct under the Australian Consumer Law, but does not discuss ACCC exemptions, data sharing obligations, or declared services. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2328,
+  "completion_tokens": 141,
+  "total_tokens": 2469,
+  "processing_time_seconds": 1.8303435000000263,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.155856+00:00"
+}

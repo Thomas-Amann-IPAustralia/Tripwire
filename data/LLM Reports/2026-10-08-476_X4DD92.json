@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X4DD92",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the content of the Trans-Tasman IP Attorneys Board website pages about how to find an attorney and reasons to make a complaint against an attorney. The IPFR page 'Assert your rights, as a response to an accusation' discusses the general concept of responding to infringement accusations and mentions seeking legal advice but does not provide specific details about attorney qualifications, complaint processes, or fee structures. The changes do not affect any specific factual statements, procedural steps, or legal thresholds in the IPFR page. Therefore, no update to the IPFR page content is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3346,
+  "completion_tokens": 153,
+  "total_tokens": 3499,
+  "processing_time_seconds": 1.8433848260001469,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.482772+00:00"
+}

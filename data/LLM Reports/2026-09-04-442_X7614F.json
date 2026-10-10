@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a general announcement about IP Australia's Corporate Strategic Plan 2026-27 and some news highlights related to patents, trademarks, and startup ecosystem surveys. The IPFR page content is a detailed guide on why creative businesses need an IP strategy from day one, focusing on practical advice and steps for small businesses. The change does not provide any updates or amendments to the definitions, procedures, legal thresholds, or specific advice given in the IPFR page. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2410,
+  "completion_tokens": 136,
+  "total_tokens": 2546,
+  "processing_time_seconds": 5.300727128999938,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250621+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily relate to specific amendments and corrections to individual design registrations, updates to instruments related to fees and filing procedures, and new forms for plant breeder's rights applications. The patent manual changes are cyclic reviews and minor language updates without substantive changes to patent procedures or definitions. The IPFR page 'Free IP tools you can use' provides general information about free IP tools and examples of such tools without referencing specific design registrations, fees, forms, or procedural details. None of the changes affect the accuracy or currency of the general descriptions or tool listings on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5714,
+  "completion_tokens": 154,
+  "total_tokens": 5868,
+  "processing_time_seconds": 1.7435841430001346,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.934842+00:00"
+}

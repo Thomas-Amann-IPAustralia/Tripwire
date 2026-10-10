@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates on the WIPO Intergovernmental Committee on Intellectual Property and Indigenous Knowledge, and Australia's participation in international cooperation agreements. The IPFR page on 'Using mediation to resolve IP disputes' focuses on mediation as a dispute resolution method and does not discuss international cooperation, treaties, or Indigenous IP issues. There is no specific information in the IPFR page that is contradicted or outdated by the change. The change is only indirectly related and does not affect the accuracy or currency of the mediation content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2760,
+  "completion_tokens": 136,
+  "total_tokens": 2896,
+  "processing_time_seconds": 1.5142772489998606,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489667+00:00"
+}

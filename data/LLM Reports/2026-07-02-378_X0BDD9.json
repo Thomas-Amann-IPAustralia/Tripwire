@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document adds detailed information about territorial coverage nuances within certain countries under the Madrid System, such as specific territories included or excluded from protection. However, the IPFR page provides a general overview of the Madrid System and international IP rights without listing or detailing territorial exceptions or specific coverage areas. The IPFR content remains accurate and appropriate for its audience as it does not specify territorial details that have changed. Therefore, no update is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1729,
+  "completion_tokens": 123,
+  "total_tokens": 1852,
+  "processing_time_seconds": 1.7623942899999747,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268899+00:00"
+}

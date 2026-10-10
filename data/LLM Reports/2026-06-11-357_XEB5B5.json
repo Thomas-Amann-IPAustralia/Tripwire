@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XEB5B5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to detailed procedural and legal updates in the IP Australia patent manual, administrative court fee exemptions, and general federal law fees. The IPFR page is a high-level guide for small business owners about applying for a patent, covering basics such as what a patent is, benefits, risks, costs, and timelines. None of the changes specify updates to key factual elements such as patent duration, provisional application period, costs for filing patents with IP Australia, or procedural steps described on the IPFR page. The patent manual updates mention amendments to internal guidance and legal interpretations but do not indicate changes to the fundamental patent application process or timelines described. The court fee and administrative fee changes are unrelated to the patent application process itself and do not affect the IPFR page content. Therefore, the IPFR page remains accurate and does not require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5440,
+  "completion_tokens": 206,
+  "total_tokens": 5646,
+  "processing_time_seconds": 2.843056198000113,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850636+00:00"
+}

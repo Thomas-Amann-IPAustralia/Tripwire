@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document is an update to the ACCC public registers webpage, listing recent enforcement actions and decisions related to the Australian Consumer Law and Competition and Consumer Act. While the IPFR page discusses the Australian Consumer Law as a legal framework protecting unregistered trade marks against misleading or deceptive conduct, the change does not alter any substantive legal provisions, definitions, or procedural requirements relevant to unregistered trade mark protection. The update is primarily informational about recent ACCC actions and exemptions, which does not affect the accuracy or currency of the IPFR page content regarding unregistered trade marks and their protection under the ACL.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2652,
+  "completion_tokens": 152,
+  "total_tokens": 2804,
+  "processing_time_seconds": 1.511908485000049,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.207639+00:00"
+}

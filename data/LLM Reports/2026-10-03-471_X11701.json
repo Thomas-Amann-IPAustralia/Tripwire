@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-03-471",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change involves a minor textual edit to an example about responding to unjustified IP infringement claims, specifically removing some blank lines and slightly condensing the narrative. The IPFR page 'What to do if someone infringes your IP' does not include this example or any specific mention of unenforceable registered designs or compensation claims related to unjustified threats. The IPFR page content remains accurate and does not contain any specific statements contradicted or outdated by this change. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2219,
+  "completion_tokens": 138,
+  "total_tokens": 2357,
+  "processing_time_seconds": 1.095737267000004,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-03T07:50:02.181612+00:00"
+}

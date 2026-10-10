@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X6257F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern administrative updates, practice notes, and procedural updates related to the Trade Marks Manual of Practice and Procedure following the High Court decision in Zip Co Ltd v Firstmac Ltd, as well as other unrelated updates such as Olympic Insignia Protection forms and patent examination updates. There is no indication from the change documents that the fundamental legal principles, definitions, or explanations of trade mark infringement as presented in the IPFR page have been altered. The IPFR page content remains accurate and current for its intended audience, as the changes do not affect the substantive content or guidance on trade mark infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6031,
+  "completion_tokens": 153,
+  "total_tokens": 6184,
+  "processing_time_seconds": 2.1574313000000984,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.562174+00:00"
+}

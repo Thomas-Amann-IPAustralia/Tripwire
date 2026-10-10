@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X1908C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change clarifies and reorganizes information about proactive measures to prevent IP infringement, including listing IP rights on platforms and details about Amazon Brand Registry, as well as anti-counterfeit measures. However, the IPFR page focuses on what to do if someone copies your stuff, emphasizing identifying infringement and seeking legal advice. The upstream change does not contradict or update any specific factual claims or procedural steps in the IPFR page. It adds detail about prevention and platform-specific services which are not currently covered in the IPFR page, but does not invalidate or require changes to the existing content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2131,
+  "completion_tokens": 149,
+  "total_tokens": 2280,
+  "processing_time_seconds": 1.6305076849999978,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.357525+00:00"
+}

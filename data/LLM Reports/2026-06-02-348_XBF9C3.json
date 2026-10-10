@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-02-348",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to IP Australia's news about joining the PPH eXtra Initiative and new transparency programs for patent examination timeframes, as well as new international search options. However, the IPFR page content focuses on explaining the enforcement status of a 'filed' patent in Australia, the rights before and after grant, and general procedural information. None of the changes specifically update or contradict any factual statements, dates, or procedural details in the IPFR page. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2525,
+  "completion_tokens": 142,
+  "total_tokens": 2667,
+  "processing_time_seconds": 3.481753972999968,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-02T06:57:01.161685+00:00"
+}

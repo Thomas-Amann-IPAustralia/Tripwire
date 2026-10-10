@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update listing recent articles and announcements from IP Australia, including stories about trade marks, copyright, and IP reports. However, it does not contain any specific amendments to legislation, procedural rules, or substantive guidance that would affect the accuracy or currency of the IPFR page content. The IPFR page provides practical advice and a checklist for SMEs receiving AI-generated IP infringement allegations, which remains valid and unaffected by the news items. There is no indication that any statutory references, timeframes, or procedural steps mentioned in the IPFR page have changed as a result of the news update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3458,
+  "completion_tokens": 153,
+  "total_tokens": 3611,
+  "processing_time_seconds": 2.4138778290000573,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.111268+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document adds a new informational snippet about handling patent disputes through Amazon Brand Registry, mentioning neutral third-party evaluators and enforcement in the US store. The IPFR page already broadly describes Amazon Brand Registry as accepting registered or pending trade marks only and does not detail dispute resolution processes or patent enforcement mechanisms. Since the new information does not contradict or update any specific statements on the IPFR page, and the page does not currently discuss patent disputes or enforcement specifics, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1956,
+  "completion_tokens": 134,
+  "total_tokens": 2090,
+  "processing_time_seconds": 2.2064422679995914,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269102+00:00"
+}

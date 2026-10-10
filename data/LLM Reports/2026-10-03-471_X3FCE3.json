@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-03-471",
+  "ipfr_page_id": "X3FCE3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external source consist solely of a minor formatting adjustment in an example narrative about an unfounded IP infringement threat and compensation claim. There are no changes to substantive content, legal thresholds, procedural steps, or advice that would affect the accuracy or currency of the IPFR page. The IPFR page does not include this example and its general guidance remains accurate and unaffected by the upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3669,
+  "completion_tokens": 112,
+  "total_tokens": 3781,
+  "processing_time_seconds": 1.809730439999953,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-03T07:50:02.180560+00:00"
+}

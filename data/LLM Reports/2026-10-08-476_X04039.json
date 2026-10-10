@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X04039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external sources are either minor formatting or content updates unrelated to the specific procedural, legal, or factual details presented in the IPFR page about seeking binding, authoritative decisions in trade mark disputes. The changes to the IP Australia legislation page do not alter any substantive legal provisions or procedural steps relevant to court actions described in the IPFR page. The changes to the dispute resolution guide are minor textual adjustments without impact on the court proceedings content. The ACCC public registers update relates to competition and consumer law enforcement undertakings, which do not affect the trade mark court action guidance. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4568,
+  "completion_tokens": 161,
+  "total_tokens": 4729,
+  "processing_time_seconds": 1.7902960090000306,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489316+00:00"
+}

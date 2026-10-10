@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X58101",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document is from the IP Australia webpage on how to commercialise IP, describing different commercialisation methods such as independent launch, licensing, franchising, and assignment. The IPFR page in question focuses on identifying and tracking patents and competitor IP activity, including freedom to operate and monitoring tools. The commercialisation content does not directly affect or contradict any specific factual statements, procedures, or guidance in the IPFR page about patent monitoring or competitor tracking. There are no changes to statutory references, timeframes, costs, or procedural steps related to monitoring or FTO in the IPFR page. Therefore, no update is required to maintain accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3322,
+  "completion_tokens": 170,
+  "total_tokens": 3492,
+  "processing_time_seconds": 1.6231171729999687,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.010249+00:00"
+}

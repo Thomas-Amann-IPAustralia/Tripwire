@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates to external source webpages such as the WIPO Madrid System page, WIPO contract clauses, and policy registers, but none of these changes directly affect the specific content or advice given in the IPFR page about considerations before enforcing IP overseas. The IPFR page does not contain detailed procedural steps, statutory references, or specific dates/fees that have been altered in the changes. The removal of the Bailiwick of Jersey from the UK coverage in the Madrid System and the addition of new webinars or podcasts do not require updates to the general guidance provided. Similarly, the removal of recommended WIPO contract clauses and minor editorial changes to WIPO's description do not impact the accuracy of the IPFR page. The DFAT page simplification does not affect the IPFR content either. Therefore, no amendments are needed to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6529,
+  "completion_tokens": 204,
+  "total_tokens": 6733,
+  "processing_time_seconds": 2.4265674910000143,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.874566+00:00"
+}

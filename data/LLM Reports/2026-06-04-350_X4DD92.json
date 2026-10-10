@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X4DD92",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to updated statistics and dates on Amazon's Brand Registry page, specifically the number of product units verified through the Transparency program and the date of the data source. The IPFR page 'Assert your rights, as a response to an accusation' does not contain any specific references to Amazon's Transparency program, product verification statistics, or related data. The content is general guidance on responding to IP infringement accusations and does not include specific figures or dates that are now outdated by these changes. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2583,
+  "completion_tokens": 149,
+  "total_tokens": 2732,
+  "processing_time_seconds": 2.300076699000101,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.705053+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to IP Australia manuals, procedural instruments, and filing forms related to trade marks, designs, patents, and plant breeder's rights. These updates include new electronic forms, updated manuals, and new non-legislative instruments for designs. However, the IPFR page 'Familiarise yourself with IP laws' provides a high-level overview of Australian IP law, its sources, and general guidance without specific procedural details or references to exact forms, filing dates, or manual content. There are no specific dates, fees, or procedural steps in the IPFR page that are contradicted or outdated due to these changes. Therefore, the page remains accurate and current as a general introduction to IP laws.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6417,
+  "completion_tokens": 175,
+  "total_tokens": 6592,
+  "processing_time_seconds": 3.2317112020000422,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907406+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO 'about' webpage involve a minor reordering of a phrase ('Inventing the future: How WIPO is supporting innovators and creators around the world') without any alteration to factual content about WIPO's services, structure, or dispute resolution offerings. The IPFR page content focuses on the WIPO Good Offices Program and ADR services, which remain unaffected by this cosmetic textual change. There is no update to fees, procedures, or service descriptions that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3378,
+  "completion_tokens": 136,
+  "total_tokens": 3514,
+  "processing_time_seconds": 2.618813360999866,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.229529+00:00"
+}

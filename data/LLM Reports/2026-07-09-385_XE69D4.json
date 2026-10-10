@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page currently states that the UDRP dispute process at WIPO normally should be completed within 2 months from the date WIPO receives the complaint. The upstream change introduces a new WIPO Expedited Case Processing service that delivers panel decisions in one month from start to finish. This is a significant update to the timeframe information provided on the IPFR page and should be reflected to keep the guidance accurate and current for users.",
+  "suggested_changes": [
+    "Add information about WIPO's Expedited Case Processing service that delivers panel decisions in one month from start to finish (filing to decision) in UDRP cases, alongside the existing standard timeframe of approximately 2 months.",
+    "Clarify that the expedited service is an option for faster resolution and provide a link or reference to WIPO's fees and services page for more details."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2987,
+  "completion_tokens": 201,
+  "total_tokens": 3188,
+  "processing_time_seconds": 3.280018564999864,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.818153+00:00"
+}

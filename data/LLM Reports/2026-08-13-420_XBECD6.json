@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates to references and links within the IP Australia patent manual, specifically replacing references from EPOQUE to AbS and updating URLs. There are no changes to substantive procedural rules, timeframes, or statutory requirements related to lodging section 27 notices or third party notifications of prior art. The other changes relate to design manuals and WIPO PCT regulations with no direct impact on the described process or time limits for section 27 notices in Australia. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4513,
+  "completion_tokens": 137,
+  "total_tokens": 4650,
+  "processing_time_seconds": 2.248079394999877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.876076+00:00"
+}

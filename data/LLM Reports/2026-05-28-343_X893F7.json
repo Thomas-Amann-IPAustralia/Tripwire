@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual concerning specific patent examination topics such as discoveries, scientific theories, manner of manufacture, and amendments following hearing decisions, including references to the Aristocrat decision and changes in extension of term considerations. The IPFR page focuses on general guidance about seeking binding court decisions in patent disputes, including procedural aspects, risks, benefits, costs, and timelines. There is no specific information in the IPFR page about patent examination practice, divisional applications, or extension of term processing that would be affected by these manual updates. Therefore, the changes do not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3156,
+  "completion_tokens": 164,
+  "total_tokens": 3320,
+  "processing_time_seconds": 2.1324591590000637,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.492051+00:00"
+}

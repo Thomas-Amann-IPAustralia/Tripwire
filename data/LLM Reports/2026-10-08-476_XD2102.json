@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes from the Trans-Tasman IP Attorneys Board website primarily involve minor formatting and wording adjustments, clarifications about attorney fees, how to prepare for meetings, and details about complaints against attorneys. The IPFR page 'When do I need a lawyer or attorney to deal with IP issues?' provides general guidance on when to seek legal help and the differences between IP lawyers and attorneys, but does not include specific fee ranges, complaint procedures, or detailed instructions on engaging attorneys. None of the changes contradict or update any specific factual statements or thresholds in the IPFR page. Therefore, the IPFR page remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7883,
+  "completion_tokens": 159,
+  "total_tokens": 8042,
+  "processing_time_seconds": 2.2135269499999595,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.482240+00:00"
+}

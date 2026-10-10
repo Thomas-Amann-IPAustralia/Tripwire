@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the 'how_to_engage_an_attorney' webpage are minor formatting adjustments to the list describing what information to provide to an attorney, specifically about patent protection. These changes do not affect any factual content or guidance related to addressing overseas infringement as described in the IPFR page. The IPFR page content remains accurate and up-to-date, and there is no direct impact on its statements or advice.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2665,
+  "completion_tokens": 115,
+  "total_tokens": 2780,
+  "processing_time_seconds": 2.463026801000069,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228643+00:00"
+}

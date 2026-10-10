@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Administrative Review Tribunal Rules 2024, specifically relating to the ART's powers under the Migration Act and fee impositions for NDIS providers. The IPFR page XD2102 focuses on when to seek legal professionals for IP issues, describing roles of IP lawyers and attorneys and general guidance on legal help. There is no mention of the Administrative Review Tribunal, migration law, or NDIS-related regulatory reviews in the IPFR content. The change does not affect the accuracy or currency of the IPFR page's content about IP legal assistance.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2634,
+  "completion_tokens": 146,
+  "total_tokens": 2780,
+  "processing_time_seconds": 2.4644803279998087,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.259291+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XAEFF3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in IP Australia's official notices about patent instruments, fee payments, filing documents, and procedural manuals, as well as updates to the Plant Breeder's Rights manual and portal guidance. None of these changes specifically affect the definitions, legal explanations, or examples of patent infringement as described in the IPFR page. There are no amendments to statutory provisions, infringement criteria, or patent term durations that would require updating the IPFR content on patent infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3583,
+  "completion_tokens": 125,
+  "total_tokens": 3708,
+  "processing_time_seconds": 1.855651738000006,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907570+00:00"
+}

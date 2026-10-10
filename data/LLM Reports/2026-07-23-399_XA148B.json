@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern amendments to the Administrative Review Tribunal Rules 2024 related to migration and NDIS provider reviews, updates to the Patent Manual and Design Manual for accessibility and content refinements, and extensive updates to the Trade Marks Manual including filing requirements, procedural updates, and references to recent case law. None of these changes specifically address or alter the procedural steps, timeframes, fees, or substantive grounds related to responding to a trade mark opposition as described in the IPFR page. The IPFR page content about responding to trade mark oppositions remains accurate and up to date based on the provided changes, which do not mention any amendments to the opposition process, deadlines, fees, or outcomes. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 16761,
+  "completion_tokens": 183,
+  "total_tokens": 16944,
+  "processing_time_seconds": 3.9874722659999406,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.256186+00:00"
+}

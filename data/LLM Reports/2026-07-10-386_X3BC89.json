@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates a technical issue with the AFP website (connection timeout) and does not contain any substantive updates or changes to intellectual property information or procedures relevant to the IPFR page. The IPFR page content about checking existing IP ownership remains accurate and unaffected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1300,
+  "completion_tokens": 88,
+  "total_tokens": 1388,
+  "processing_time_seconds": 1.4452146619998985,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790300+00:00"
+}

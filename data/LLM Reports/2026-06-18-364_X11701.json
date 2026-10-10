@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the WIPO IGC webpage are minor formatting and scheduling updates that do not affect the substantive guidance on what to do if someone infringes your IP. The eBay intellectual property policy updates clarify listing practices and trademark use on their platform, which are specific to e-commerce compliance and do not directly impact the general advice or procedural guidance given on the IPFR page about responding to IP infringement. There are no changes to legal thresholds, statutory references, procedural steps, or timeframes in the IPFR content that would require updating based on these external changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4757,
+  "completion_tokens": 145,
+  "total_tokens": 4902,
+  "processing_time_seconds": 2.771075491999909,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.707576+00:00"
+}

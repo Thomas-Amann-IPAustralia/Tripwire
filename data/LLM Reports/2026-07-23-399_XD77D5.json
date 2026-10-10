@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual, including amendments to sections on excess claims fees, prior art, computer implemented inventions, and procedural outlines. However, the IPFR page content focuses on guidance for SMEs receiving AI-generated IP infringement allegations, with emphasis on practical steps and checklists for responding to such allegations. There are no specific references to patent manual procedural details, fees, or patent examination criteria that have been changed in the IPFR page. Therefore, the changes to the patent manual do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3935,
+  "completion_tokens": 149,
+  "total_tokens": 4084,
+  "processing_time_seconds": 2.68673727700002,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.257539+00:00"
+}

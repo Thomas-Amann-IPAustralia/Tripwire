@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia design and plant breeder's rights manuals primarily involve accessibility fixes, removal of empty headings, updated URLs, and minor content clarifications or additions unrelated to the core guidance on checking products against existing designs. There are no changes to substantive content such as legal thresholds, procedures, or definitions that would affect the accuracy or currency of the IPFR page content. The IPFR page focuses on practical guidance for small businesses on conducting design clearance or freedom to operate searches, and none of the upstream changes alter this guidance or the factual information presented.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4109,
+  "completion_tokens": 145,
+  "total_tokens": 4254,
+  "processing_time_seconds": 2.230570279999938,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707080+00:00"
+}

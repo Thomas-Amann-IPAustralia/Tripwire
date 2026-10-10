@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a review and minor update of the IPAustralia trademark manual, including typographical corrections, updated links, and removal of references to a specific section of the Plant Breeders' Rights Act. However, the IPFR page 'What is IP infringement?' provides a general introduction to IP infringement concepts without specific statutory references or procedural details that were amended. The changes do not affect the accuracy or currency of the IPFR page's explanations about infringement, its elements, or examples. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3898,
+  "completion_tokens": 143,
+  "total_tokens": 4041,
+  "processing_time_seconds": 5.59021857100015,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.502195+00:00"
+}

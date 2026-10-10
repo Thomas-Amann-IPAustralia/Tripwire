@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "X06BD4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the external webpage at www.asbfeo.gov.au/five-steps-resolve-your-dispute is currently inaccessible due to server errors (403 Forbidden and connection closed). However, the IPFR page 'About the AI Chatbot' does not reference this external page or its content directly, nor does it provide any procedural or legal information that depends on this source. The IPFR page focuses on explaining how the chatbot works, its data sources (IP First Response content and IP Australia webpages), privacy, and user guidance. Since the inaccessible page is not cited or integrated into the chatbot's described knowledge base, the outage or change in that external page does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2308,
+  "completion_tokens": 180,
+  "total_tokens": 2488,
+  "processing_time_seconds": 2.2689231800000016,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.367852+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in procedural manuals and non-legislative instruments concerning trade marks, designs, and patents, including updates to examination procedures, filing requirements, and non-legislative instruments. The IPFR page content is a general introductory guide on IP infringement aimed at small businesses and creators, focusing on explaining the concept of infringement and general principles rather than detailed procedural or legislative specifics. There are no specific dates, dollar amounts, statutory references, or procedural steps in the IPFR page that are contradicted or rendered outdated by these upstream changes. Therefore, the page remains accurate and does not require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4573,
+  "completion_tokens": 160,
+  "total_tokens": 4733,
+  "processing_time_seconds": 1.911453235999943,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.937716+00:00"
+}

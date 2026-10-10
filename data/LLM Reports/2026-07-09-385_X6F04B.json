@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds information about WIPO's Expedited Case Processing service for UDRP cases, which delivers panel decisions within one month. However, the IPFR page content specifically addresses the .au Dispute Resolution Policy (auDRP) administered by auDA and does not discuss WIPO's UDRP process or timelines. Since the change relates to WIPO's UDRP and not the auDRP process described in the IPFR page, it does not affect the accuracy or currency of the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2378,
+  "completion_tokens": 139,
+  "total_tokens": 2517,
+  "processing_time_seconds": 2.266861272000142,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.818261+00:00"
+}

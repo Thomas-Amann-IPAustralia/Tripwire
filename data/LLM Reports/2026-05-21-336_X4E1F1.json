@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates in IP Australia manuals, consultations, and regulatory reform proposals, including updates to procedural manuals and references to case law. However, none of these changes directly affect the specific content of the IPFR page, which provides general guidance on the risks of using IP without permission, basic advice on checking ownership, and seeking legal advice. There are no changes to legal thresholds, definitions, exceptions, or procedural steps mentioned in the IPFR page that are contradicted or outdated by the upstream changes. The changes are mostly administrative updates and consultation announcements without direct impact on the factual accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6023,
+  "completion_tokens": 161,
+  "total_tokens": 6184,
+  "processing_time_seconds": 2.83533029299997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.587063+00:00"
+}

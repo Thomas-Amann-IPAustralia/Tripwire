@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources primarily involve updates to general information about international IP cooperation, WIPO committees, and procedural documents such as the Uniform Domain Name Dispute Resolution Policy and the TRIPS Agreement. None of the changes provide new or updated specific details about the WIPO Arbitration and Mediation Center's ADR services, fees, procedures, or timelines that are described in the IPFR page. The changes do not affect the accuracy or currency of the IPFR page content, which focuses on the WIPO Center's ADR services for dispute resolution. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4425,
+  "completion_tokens": 153,
+  "total_tokens": 4578,
+  "processing_time_seconds": 1.7854654449999998,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.485807+00:00"
+}

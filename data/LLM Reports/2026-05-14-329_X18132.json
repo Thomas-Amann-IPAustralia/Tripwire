@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change to the PBR manual primarily involves accessibility fixes such as alternative text for images, link corrections, and removal of extraneous spaces. There is no substantive change to the legal or procedural content related to PBR court proceedings, enforcement, or dispute resolution. Therefore, the IPFR page content about seeking binding, authoritative decisions in PBR disputes remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2806,
+  "completion_tokens": 110,
+  "total_tokens": 2916,
+  "processing_time_seconds": 2.592027924000149,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.503210+00:00"
+}

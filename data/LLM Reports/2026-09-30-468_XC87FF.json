@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "XC87FF",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document shows removal of detailed explanatory content about commercialisation methods (independent launch, licensing, assignment) from the IP Australia webpage. However, the IPFR page 'IP as a barrier to entry: What really stops competitors' does not contain this detailed commercialisation process information. It focuses on explaining IP as a barrier to entry, types of IP, and how IP adds value to business, without describing commercialisation methods or their risks and returns. Therefore, the removal of these sections from the upstream source does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3687,
+  "completion_tokens": 149,
+  "total_tokens": 3836,
+  "processing_time_seconds": 1.6444515169999931,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.355213+00:00"
+}

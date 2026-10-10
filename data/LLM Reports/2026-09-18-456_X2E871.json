@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates on the WIPO domain name dispute resolution webpage, including procedural details, fee schedules, and new services related to domain name disputes under the UDRP framework. The IPFR page content focuses broadly on WIPO Arbitration and Mediation Center services for international IP disputes, describing ADR processes, benefits, risks, outcomes, costs, and procedural assistance. There is no specific mention of domain name dispute procedures, fees, or the UDRP in the IPFR page. The changes do not affect the accuracy or currency of the IPFR page content, which remains correct and relevant for its intended audience. Therefore, no amendment is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5048,
+  "completion_tokens": 165,
+  "total_tokens": 5213,
+  "processing_time_seconds": 2.4947323069999356,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.744483+00:00"
+}

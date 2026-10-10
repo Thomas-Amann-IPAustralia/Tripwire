@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the 'how to prevent infringement of my IP' page by adding more detail about market monitoring and the risks of counterfeit goods, including mentioning brand registries like Amazon Brand Registry. However, the IPFR page 'Register your unregistered trade mark' does not contain specific information about market monitoring, counterfeit goods, or brand registries. The change does not affect any specific factual content, fees, timeframes, or procedural steps described in the IPFR page. Therefore, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2413,
+  "completion_tokens": 140,
+  "total_tokens": 2553,
+  "processing_time_seconds": 2.0352208429999337,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.611194+00:00"
+}

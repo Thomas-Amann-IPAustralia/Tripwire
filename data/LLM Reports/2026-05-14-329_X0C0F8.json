@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates primarily to detailed procedural and substantive updates in the IP Australia patent manual, including examination practice, manner of manufacture, and specific case law updates. The IPFR page in question provides general guidance on options for disagreeing with IP Australia's examination decisions, focusing on procedural pathways such as hearings, appeals, merits review, and judicial review. There is no indication in the change document that the procedural options, appeal pathways, or general descriptions of how to challenge decisions have changed. The changes are technical and specific to patent examination details rather than the procedural overview presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2055,
+  "completion_tokens": 151,
+  "total_tokens": 2206,
+  "processing_time_seconds": 3.0251950429999397,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.503294+00:00"
+}

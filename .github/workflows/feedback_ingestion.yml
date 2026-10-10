@@ -1,0 +1,78 @@
+name: Tripwire Feedback Ingestion
+
+# Polls the dedicated Gmail mailbox for Tripwire feedback replies,
+# parses them, and appends records to data/logs/feedback.jsonl.
+# See Section 7.3 of the system plan.
+
+on:
+  schedule:
+    # Every 6 hours.
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+# Only one feedback ingestion run at a time.
+concurrency:
+  group: feedback-ingestion
+  cancel-in-progress: false
+
+jobs:
+  ingest-feedback:
+    name: Ingest Feedback Replies
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write   # required to commit feedback.jsonl back to the repo
+
+    steps:
+      # ------------------------------------------------------------------
+      # 1. Checkout — pull latest committed state.
+      # ------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Pull latest committed state
+        run: git pull --rebase origin ${{ github.ref_name }}
+
+      # ------------------------------------------------------------------
+      # 2. Python environment (standard library only — no pip install needed).
+      # ------------------------------------------------------------------
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ------------------------------------------------------------------
+      # 3. Run feedback ingestion.
+      # ------------------------------------------------------------------
+      - name: Run feedback ingestion
+        env:
+          FEEDBACK_GMAIL_USER: ${{ secrets.FEEDBACK_GMAIL_USER }}
+          FEEDBACK_GMAIL_APP_PASSWORD: ${{ secrets.FEEDBACK_GMAIL_APP_PASSWORD }}
+        run: |
+          python -m src.feedback_ingestion \
+            --feedback-log data/logs/feedback.jsonl
+
+      # ------------------------------------------------------------------
+      # 4. Commit updated feedback log back to the repository.
+      # ------------------------------------------------------------------
+      - name: Commit feedback log
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/logs/feedback.jsonl
+          git diff --cached --quiet || git commit -m "chore: ingest feedback replies [run ${{ github.run_id }}]"
+          git push origin ${{ github.ref_name }}
+
+      # ------------------------------------------------------------------
+      # 5. Upload feedback log as artifact (90-day retention).
+      # ------------------------------------------------------------------
+      - name: Upload feedback log artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: feedback-log-${{ github.run_id }}
+          path: data/logs/feedback.jsonl
+          retention-days: 90
+          if-no-files-found: ignore

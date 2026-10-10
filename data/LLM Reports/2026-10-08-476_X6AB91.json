@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and consultation hub, including new enforceable undertakings, exemptions, and consultation notices. These updates concern ACCC enforcement actions and regulatory consultations under the Competition and Consumer Act and Australian Consumer Law but do not alter the fundamental guidance or factual content on the IPFR page about reporting IP infringement risks to public interest, including reporting counterfeit goods, scams, or consumer harm. There are no changes to statutory references, reporting procedures, or thresholds directly affecting the IPFR content. The IPFR page remains accurate and current in its advice.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5426,
+  "completion_tokens": 148,
+  "total_tokens": 5574,
+  "processing_time_seconds": 1.709535070000129,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.488250+00:00"
+}

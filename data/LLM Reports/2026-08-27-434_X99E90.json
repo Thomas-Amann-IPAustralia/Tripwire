@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO Madrid System webpage primarily involve the removal of a blank line and the addition of promotional and educational resources such as podcasts, success stories, and distance learning courses. These updates do not alter any factual or procedural information about the Madrid System or WIPO's role that would affect the accuracy of the IPFR page content. The other changes relate to the removal of the phrase 'Industry-specific adaptations' from the WIPO IP Diagnostics page, which is unrelated to the core content of the IPFR page. There are no changes to legal references, procedural steps, or definitions that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2603,
+  "completion_tokens": 159,
+  "total_tokens": 2762,
+  "processing_time_seconds": 2.5995291730000645,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907336+00:00"
+}

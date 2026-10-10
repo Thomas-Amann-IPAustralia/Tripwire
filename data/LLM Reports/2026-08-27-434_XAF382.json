@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to procedural updates and administrative details such as updated filing instruments, new electronic application forms, updated manuals and portals for plant breeders' rights, and minor editorial changes on external websites. None of these changes affect the fundamental definitions, explanations, or legal principles of IP infringement as described in the IPFR page. The IPFR content focuses on explaining what infringement is, its key elements, and common misconceptions, none of which are contradicted or rendered outdated by the procedural or administrative updates in the changes. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6831,
+  "completion_tokens": 148,
+  "total_tokens": 6979,
+  "processing_time_seconds": 2.5239669070001582,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907641+00:00"
+}

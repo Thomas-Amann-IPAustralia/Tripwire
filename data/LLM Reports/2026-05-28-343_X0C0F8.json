@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Administrative Review Tribunal Act 2024 and the Migration Act 1958 concern procedural amendments expanding circumstances under which the Tribunal may decide on the papers without oral hearings, primarily related to migration decisions. These changes do not specifically affect the general description of the merits review process by the Administrative Review Tribunal as presented in the IPFR page, which is focused on IP Australia decisions. The patent manual update relates to patent examination practice and case law but does not impact the content about challenging IP Australia examination decisions or the appeal pathways described. Therefore, the IPFR page content remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2722,
+  "completion_tokens": 159,
+  "total_tokens": 2881,
+  "processing_time_seconds": 2.4401142729998355,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491537+00:00"
+}

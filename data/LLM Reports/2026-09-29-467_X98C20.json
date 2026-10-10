@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update from IP Australia announcing the Regulatory Reform Omnibus Act 2026 and highlighting IP Australia's strategic priorities and success stories. The IPFR page content is a general overview comparing IP Australia to other government services, focusing on the roles and services of these agencies rather than specific legislative details or procedural changes. The change does not provide specific amendments to the descriptions, roles, or functions of IP Australia or other agencies listed on the page. Therefore, the page remains accurate and does not require updates based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1830,
+  "completion_tokens": 140,
+  "total_tokens": 1970,
+  "processing_time_seconds": 1.533137088999979,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009256+00:00"
+}

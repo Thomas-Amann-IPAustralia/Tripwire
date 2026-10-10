@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-09-477",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center website and the domain name dispute resolution page mainly involve minor formatting adjustments, contact details presentation, and the addition of a new service called 'WIPO Wallet'. There are no changes to procedural steps, fees, timelines, or substantive rules related to domain name dispute resolution under the UDRP or auDRP. The IPFR page content about challenging international domain names remains accurate and up to date with respect to the dispute resolution process, costs, timelines, and outcomes. Therefore, no amendments to the IPFR page are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9843,
+  "completion_tokens": 153,
+  "total_tokens": 9996,
+  "processing_time_seconds": 1.7712185169999657,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-09T08:43:19.314768+00:00"
+}

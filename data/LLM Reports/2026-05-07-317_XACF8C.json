@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to ACCC public registers and exemptions under the Competition and Consumer Act 2010, specifically about product data sharing obligations and consumer rights remedies. These changes do not affect the content of the IPFR page on common scams related to IP infringement, which focuses on scam warning signs, official IP Australia communications, and reporting scams. There is no direct impact on the accuracy or currency of the scam-related guidance provided.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1910,
+  "completion_tokens": 117,
+  "total_tokens": 2027,
+  "processing_time_seconds": 2.0058030889999827,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712095+00:00"
+}

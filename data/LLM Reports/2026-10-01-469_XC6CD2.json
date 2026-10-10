@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are primarily updates and minor revisions to manuals and procedural documents related to patents, trade marks, designs, and plant breeder's rights, including updates to examination practices, forms, and non-legislative instruments. None of the changes specifically address or alter the opposition process, timelines, fees, or procedural details related to challenging the registration of a trade mark as described in the IPFR page. The IPFR page content about opposition timelines, costs, parties involved, and process remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8402,
+  "completion_tokens": 137,
+  "total_tokens": 8539,
+  "processing_time_seconds": 3.386455784999953,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.936078+00:00"
+}

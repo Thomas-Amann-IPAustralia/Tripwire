@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to procedural and administrative updates such as the establishment of the Administrative Review Tribunal replacing the AAT, the addition of a new international airport in Customs regulations, updates to the Plant Breeder's Rights Manual with new guidance pages, and closed consultations on various IP topics. None of these changes affect the fundamental descriptions, definitions, or legislative references provided in the IPFR page about Australian IP laws. The IPFR page content remains accurate and current in describing the main Acts, their purposes, and the roles of government agencies. There are no specific amendments to the Acts or Regulations cited that would require updating the IPFR page's content or references.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5315,
+  "completion_tokens": 164,
+  "total_tokens": 5479,
+  "processing_time_seconds": 2.9101650039997367,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232888+00:00"
+}

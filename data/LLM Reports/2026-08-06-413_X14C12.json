@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X14C12",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the Uniform Domain-Name Dispute-Resolution Policy (UDRP) webpage to note an updated policy version dated 21 February 2024, with implementation deadlines for contracted parties between 21 August 2024 and 21 August 2025. The IPFR page discusses ADR generally and mentions WIPO's Arbitration and Mediation Center as an ADR provider but does not provide specific details about the UDRP, its dates, or procedural rules. Since the IPFR page content remains accurate and does not include specific references to the UDRP version or implementation dates, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3168,
+  "completion_tokens": 161,
+  "total_tokens": 3329,
+  "processing_time_seconds": 2.7793290429999615,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796714+00:00"
+}

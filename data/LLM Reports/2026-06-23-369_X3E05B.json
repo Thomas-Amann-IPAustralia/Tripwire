@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the external webpage 'five_steps_to_resolve_your_dispute' is currently inaccessible due to server errors (connection closed and 403 Forbidden). However, this page is only indirectly related to the IPFR page on reporting scams and fraud, with low relevance scores and no direct references or specific content from that page included in the IPFR content. The IPFR page does not cite or rely on this external page for any factual or procedural information that would now be outdated or incorrect. Therefore, the inaccessibility of the external page does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2475,
+  "completion_tokens": 158,
+  "total_tokens": 2633,
+  "processing_time_seconds": 2.0616460160000543,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.367085+00:00"
+}

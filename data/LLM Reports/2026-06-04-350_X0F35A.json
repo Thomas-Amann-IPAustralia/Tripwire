@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X0F35A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updated statistics and dates on Amazon's Brand Registry webpage, specifically the number of product units verified through the Transparency program and the date of the Amazon Brand Protection Report. The IPFR page 'Obtain advice to help manage your IP' does not mention Amazon, the Transparency program, or any specific statistics or dates that would be affected by these updates. The page provides general guidance on developing an IP strategy without referencing specific external programs or data points that have changed.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2230,
+  "completion_tokens": 128,
+  "total_tokens": 2358,
+  "processing_time_seconds": 1.38916607200008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.707942+00:00"
+}

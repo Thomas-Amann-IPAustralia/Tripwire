@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage clarify and slightly reformat the description of the Amazon Brand Registry and related anti-counterfeit measures, but do not alter any factual information or procedural guidance that conflicts with or updates the IPFR page content. The IPFR page already accurately describes the proactive listing of IP rights with platforms and mentions brand registries like Amazon's. The changes do not introduce new requirements, remove existing advice, or change any timeframes, costs, or legal references that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6100,
+  "completion_tokens": 136,
+  "total_tokens": 6236,
+  "processing_time_seconds": 4.515418271000044,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.353812+00:00"
+}

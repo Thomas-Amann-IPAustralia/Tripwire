@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change relates to updates in the IP Australia design manual, including formatting and alternative text for images, with no direct mention or update to trade mark revocation procedures or relevant statutory references. The second change concerns updates to the ACCC public registers and decisions on acquisitions and exemptions under the Competition and Consumer Act, which are unrelated to trade mark revocation processes or IP Australia trade mark registration procedures. Neither change affects the accuracy or currency of the IPFR page content about removing a trade mark from the register.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3737,
+  "completion_tokens": 134,
+  "total_tokens": 3871,
+  "processing_time_seconds": 1.8654520269999466,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552846+00:00"
+}

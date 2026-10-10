@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a news update listing recent IP-related stories and initiatives from IP Australia, including case studies and reports. It does not contain any amendments to laws, procedures, or specific guidance that would affect the accuracy or currency of the 'What to do if someone infringes your IP' page. The IPFR page provides general advice on responding to IP infringement, and the news items do not contradict or update any specific content or instructions in the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2124,
+  "completion_tokens": 124,
+  "total_tokens": 2248,
+  "processing_time_seconds": 1.7656799170001705,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.110575+00:00"
+}

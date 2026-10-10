@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XBA31C",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The first upstream change updates the detailed fee structure for WIPO arbitration and expedited arbitration, including registration fees, administration fees, and arbitrator fees. The IPFR page currently cites approximate WIPO arbitration costs (US$48,000 for expedited and US$165,000 for arbitration) but does not reflect the updated fee schedule or the detailed breakdown now provided by WIPO. This affects the accuracy and currency of the cost information presented to small business owners considering arbitration. The second change is a minor formatting update with no substantive content change and does not affect the IPFR page. Therefore, only the fee-related content requires updating.",
+  "suggested_changes": [
+    "Update the section 'What might the costs be?' to reflect the new WIPO arbitration fee schedule, including registration fees, administration fees, and arbitrator fees as per the latest WIPO Arbitration and Mediation Center webpage.",
+    "Replace the approximate cost figures (US$48,000 for expedited arbitration and US$165,000 for arbitration) with the detailed fee table or a summary of the updated fee structure to provide more accurate and current cost expectations."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3634,
+  "completion_tokens": 253,
+  "total_tokens": 3887,
+  "processing_time_seconds": 3.6712472970000363,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850767+00:00"
+}

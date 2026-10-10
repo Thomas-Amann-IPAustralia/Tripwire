@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to ACCC exemptions and undertakings concerning data sharing obligations and unfair contract terms under the Competition and Consumer Act 2010. These changes do not affect the content of the IPFR page, which focuses on reporting IP-related scams and fraud, and does not mention or rely on ACCC data sharing exemptions or undertakings. Therefore, the page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2772,
+  "completion_tokens": 111,
+  "total_tokens": 2883,
+  "processing_time_seconds": 2.11710481099999,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.709033+00:00"
+}

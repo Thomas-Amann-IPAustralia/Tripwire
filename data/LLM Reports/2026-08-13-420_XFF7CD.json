@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO IP Diagnostics webpage primarily involve formatting, language translations, and additional information about partnerships and events, without altering the fundamental description or functionality of the tool. The IPFR page does not currently mention WIPO IP Diagnostics specifically, so these updates do not affect its accuracy or currency. The changes to the DFAT WTO intellectual property page involve removal of resource links and minor text edits, which do not impact the IPFR page content about free IP tools. Therefore, no specific factual or procedural content in the IPFR page is rendered inaccurate or outdated by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2911,
+  "completion_tokens": 150,
+  "total_tokens": 3061,
+  "processing_time_seconds": 1.9543419400001767,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.878836+00:00"
+}

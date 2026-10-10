@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "XC87FF",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds detailed information about different methods of commercialising IP, such as independent launch, licensing, franchising, and assignment, including their risks, returns, and ownership implications. However, the IPFR page 'IP as a barrier to entry: What really stops competitors' focuses primarily on explaining how IP acts as a barrier to entry, types of IP, their features, and how IP adds value to a business. It does not discuss commercialisation methods or the financial and operational details of commercialising IP. Therefore, while the topics are related, the new content does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4032,
+  "completion_tokens": 161,
+  "total_tokens": 4193,
+  "processing_time_seconds": 1.6736363490000485,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009343+00:00"
+}

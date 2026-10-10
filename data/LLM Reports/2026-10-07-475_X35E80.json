@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-07-475",
+  "ipfr_page_id": "X35E80",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns the Online Safety Amendment Bill 2026, which strengthens enforcement powers related to social media minimum age compliance and discusses digital duty of care and privacy rights in that context. The IPFR page is a Privacy Notice specifically about the IP First Response chatbot's data handling and privacy practices under the Privacy Act 1988 and Australian Privacy Principles. There is no mention of social media, age restrictions, or enforcement powers related to social media platforms in the IPFR page. The change does not affect the accuracy or currency of the chatbot's privacy notice or its described data handling practices. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2377,
+  "completion_tokens": 162,
+  "total_tokens": 2539,
+  "processing_time_seconds": 3.236653101999991,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-07T08:23:21.768742+00:00"
+}

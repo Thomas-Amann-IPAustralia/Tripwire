@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates and accessibility fixes in the Plant Breeder's Rights (PBR) manual, including new sections on what may be protected by PBR and guidance on surrenders, as well as fixed links and alternative text for images. However, the IPFR page content is a general overview about checking if someone else owns a word, logo, or idea, listing various IP registers including PBR, but does not provide detailed procedural or legal information about PBR processes or surrenders. There is no specific outdated or incorrect information in the IPFR page that these upstream changes would affect. The changes do not alter the fundamental advice or the list of registers to check, so no update to the IPFR page is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2974,
+  "completion_tokens": 181,
+  "total_tokens": 3155,
+  "processing_time_seconds": 2.7402199110001675,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491204+00:00"
+}

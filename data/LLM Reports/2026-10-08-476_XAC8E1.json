@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the ASIC 'register a company' webpage primarily involve minor formatting updates, clarifications about reserving company names, and procedural details such as director ID requirements and fees. These do not alter the fundamental facts presented in the IPFR page about what a company name is, its legal effect, or its distinction from trade marks and business names. The IPFR page's statements about company names not conferring intellectual property rights remain accurate. The changes to Amazon Brand Registry and eBay intellectual property policies are unrelated to the content of this IPFR page, which focuses on Australian business names, company names, and trade marks. Therefore, no update to the IPFR page is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6617,
+  "completion_tokens": 170,
+  "total_tokens": 6787,
+  "processing_time_seconds": 3.3759692189998987,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.484302+00:00"
+}

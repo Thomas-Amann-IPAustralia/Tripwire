@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the WIPO domain name dispute resolution webpage, including updates to procedural details, fee payment options, and new services such as Legal Rights Objections and String Confusion Objections. However, the IPFR page focuses on the WIPO Clause Generator for drafting contract clauses for IP dispute resolution, primarily arbitration and mediation services, not domain name disputes or the specific procedural and fee details of domain name complaint filings. There is no direct impact on the accuracy or currency of the IPFR page content, which remains correct and relevant for its intended purpose.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4612,
+  "completion_tokens": 144,
+  "total_tokens": 4756,
+  "processing_time_seconds": 3.6273711059999414,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.744155+00:00"
+}

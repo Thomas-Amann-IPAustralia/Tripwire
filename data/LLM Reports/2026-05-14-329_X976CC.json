@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual, specifically concerning procedural outlines, patent application conditions, manner of manufacture, and related patent examination guidance. The IPFR page focuses on the WIPO Clause Generator for drafting contract clauses related to IP dispute resolution via ADR methods. There is no direct mention or reliance on patent manual procedural details or patent examination criteria in the IPFR page content. Therefore, the changes in the patent manual do not affect the accuracy or currency of the IPFR page content about WIPO dispute resolution clauses.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2885,
+  "completion_tokens": 141,
+  "total_tokens": 3026,
+  "processing_time_seconds": 3.9913142069999594,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.502524+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-13-328",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates an update to the number of news results shown on the IP Australia news page, increasing from 24 to 25. This change is minor, relates to the news listing interface, and does not affect any substantive IP content or guidance relevant to the IPFR page. The IPFR page content about the IP journey stages remains accurate and unaffected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1739,
+  "completion_tokens": 108,
+  "total_tokens": 1847,
+  "processing_time_seconds": 1.8374986039999612,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-13T06:04:12.939482+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XA0A31",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor formatting adjustment in the introductory text of the 'Your Guide to Dispute Resolution' webpage, with no substantive changes to content, procedures, or data. The IPFR page 'Access help tailored to resolve business disputes' does not contain any specific information contradicted or outdated by this change. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1964,
+  "completion_tokens": 108,
+  "total_tokens": 2072,
+  "processing_time_seconds": 1.4083156170001985,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850704+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and a modification in the Amazon Brand Registry cashback offer from '20% back on branded sales' to '10% back on branded sales'. The IPFR page mentions Amazon Brand Registry as an example of a platform where rights owners can register their IP to help detect infringement, but it does not specify any cashback percentages or financial incentives. The ACCC register updates are unrelated to the content of the IPFR page, which focuses on notifying online marketplaces about infringement rather than consumer law or competition exemptions. Therefore, none of the changes affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3198,
+  "completion_tokens": 160,
+  "total_tokens": 3358,
+  "processing_time_seconds": 2.347367055999939,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712018+00:00"
+}

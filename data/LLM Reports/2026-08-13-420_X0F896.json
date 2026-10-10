@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change from the WIPO IP audit webpage is a minor formatting adjustment in the bullet points listing types of IP assets (removal of a blank line). There is no change in substantive content or legal information that affects the guidance on obtaining legal advice on an accusation of infringement. The IPFR page content remains accurate and current with respect to the advice on engaging IP lawyers or attorneys and the costs involved.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2344,
+  "completion_tokens": 113,
+  "total_tokens": 2457,
+  "processing_time_seconds": 1.7021916479998254,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.877924+00:00"
+}

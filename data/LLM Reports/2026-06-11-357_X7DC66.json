@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from ASIC's 'register a company' page primarily clarify procedural details about company registration, officeholder obligations, director IDs, and fees, without altering the fundamental distinctions between business names, ABNs, and trade marks. The IPFR page focuses on explaining the difference between a registered business name and a registered trade mark, emphasizing the stronger protection trade marks provide. None of the upstream changes update or contradict any specific statements or legal thresholds in the IPFR content. The ASBFO dispute assistance page change is unrelated to the IPFR content. Therefore, no update to the IPFR page is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4442,
+  "completion_tokens": 158,
+  "total_tokens": 4600,
+  "processing_time_seconds": 2.788161579999951,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.848041+00:00"
+}
