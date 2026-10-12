@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the Etsy intellectual property policy webpage is currently unreachable due to a connection timeout error. There is no substantive content change or update to the IP policy itself. The IPFR page content about challenging trade mark registrations is based on Australian trade mark law and IP Australia procedures, and does not rely on or cite the Etsy IP policy. Therefore, the unavailability of the Etsy webpage does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2327,
+  "completion_tokens": 125,
+  "total_tokens": 2452,
+  "processing_time_seconds": 1.4552925880000203,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.018641+00:00"
+}

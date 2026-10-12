@@ -1,13 +1,9 @@
 {
   "probe_signals": {
-    "register_id": "C2026C00323",
-    "compilation_number": "165",
-    "start": "2026-07-01T00:00:00"
+    "etag": "W/\"14c500-2LbYZizPyJwk4KaGddd40kUGHRw\"",
+    "content_length": "1361152"
   },
-  "last_checked": "2026-09-03T06:55:48.629103+00:00",
-  "previous_hash": "34e88dc4f2ba574bce155108ae71c783ea1c33155bcba3ea3ec41f1ff117f26b",
-  "previous_text": "Competition and Consumer Act 2010No. 51, 1974\nAdministered by \n- Attorney-General's Department\n- Department of Climate Change, Energy, the Environment and Water\n- Department of Industry, Science and Resources\n- Department of Infrastructure, Transport, Regional Development, Communications, Sport and the Arts\n- Department of the Treasury\nLegislation text\n Table of contents",
-  "last_error": "PermanentError: Dramatic content size change at https://www.legislation.gov.au/C2004A00109/latest/text: 373 \u2192 137676 chars",
-  "last_error_at": "2026-10-11T08:21:40.637405+00:00",
-  "consecutive_failures": 32
+  "last_checked": "2026-10-12T08:43:37.688295+00:00",
+  "previous_hash": "21dc9c41f7e6036459e84d323acb14572eeeed3aaca9039dfe8d9631925739bc",
+  "previous_text": "Competition and Consumer Act 2010No. 51, 1974\nAdministered by \n- Attorney-General's Department\n- Department of Climate Change, Energy, the Environment and Water\n- Department of Industry, Science and Resources\n- Department of Infrastructure, Transport, Regional Development, Communications, Sport and the Arts\n- Department of the Treasury"
 }

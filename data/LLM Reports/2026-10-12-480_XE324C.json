@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to the IPTA website's free consultation service page becoming unreachable or timing out, indicating a technical or availability issue with the external site. The IPFR page 'XE324C \u2014 Choosing the right IP professional' does not mention or link to this IPTA free consultation service, nor does it provide specific procedural or service details that are now outdated. Therefore, the IPFR content remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5806,
+  "completion_tokens": 123,
+  "total_tokens": 5929,
+  "processing_time_seconds": 1.315686917999983,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.015896+00:00"
+}
