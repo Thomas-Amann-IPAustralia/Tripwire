@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update about Australia's potential ratification of the GRATK Treaty and other reforms to streamline Australia's IP system. The IPFR page discusses addressing overseas infringement with a focus on the territorial nature of IP rights, practical considerations, and enforcement options. The change does not provide specific amendments to the territoriality principle, enforcement procedures, or practical guidance that would render the current IPFR content inaccurate or outdated. The news is relevant to the broader IP landscape but does not directly affect the accuracy or currency of the specific guidance on overseas infringement presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2384,
+  "completion_tokens": 148,
+  "total_tokens": 2532,
+  "processing_time_seconds": 1.5418198250000046,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.732182+00:00"
+}
