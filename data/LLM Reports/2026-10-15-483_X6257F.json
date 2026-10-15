@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X6257F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates exclusively to design rights registrations, specifically the surrender and amendment of design registrations under the Designs Act 2003. The IPFR page concerns trade mark infringement under the Trade Marks Act 1995 and does not discuss design rights or their registration status. There is no indication that the changes to design registrations affect the content or accuracy of the trade mark infringement guidance. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4564,
+  "completion_tokens": 120,
+  "total_tokens": 4684,
+  "processing_time_seconds": 1.3550152320001416,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.635912+00:00"
+}

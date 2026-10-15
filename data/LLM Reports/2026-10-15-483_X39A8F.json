@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to minor technical amendments to regulations, updates to official notices about specific design registrations, updates to manuals (design and PBR) including page reviews, alternate text additions, and updated links or chapter references. None of these changes affect the fundamental content or guidance provided in the IPFR page about what to check before getting registered IP. The IPFR page provides general advice on IP types, basic requirements, timing considerations, ownership, and availability checks, none of which are contradicted or outdated by the changes. There are no changes to statutory thresholds, timeframes, or procedural steps that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8404,
+  "completion_tokens": 161,
+  "total_tokens": 8565,
+  "processing_time_seconds": 1.5725697739999305,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.634990+00:00"
+}
