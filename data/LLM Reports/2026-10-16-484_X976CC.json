@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-16-484",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to the WIPO domain name dispute resolution webpage, specifically removing detailed procedural steps, fee information, and contact details related to domain name disputes under the UDRP and ccTLD policies. The IPFR page content focuses on the WIPO Clause Generator for drafting contract clauses for IP dispute resolution via ADR methods such as mediation and arbitration, and does not mention domain name disputes, UDRP, or related procedural or fee details. Therefore, these changes do not affect the accuracy or currency of the IPFR page content about the WIPO Clause Generator and contract dispute resolution clauses.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7672,
+  "completion_tokens": 152,
+  "total_tokens": 7824,
+  "processing_time_seconds": 1.6386123419999876,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-16T06:54:00.569790+00:00"
+}
