@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and consultations on IP Australia manuals and regulations, including patent manual updates and trade marks regulations, as well as historical consultation records. The IPFR page focuses on considerations before enforcing IP overseas, providing general guidance on enforcement options, risks, benefits, and procedural steps. There is no specific information in the IPFR page that is contradicted, outdated, or directly affected by the changes in the IP Australia consultation summaries. The changes do not mention amendments to enforcement procedures overseas or international IP enforcement guidance that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3321,
+  "completion_tokens": 146,
+  "total_tokens": 3467,
+  "processing_time_seconds": 2.144117280000046,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.590096+00:00"
+}

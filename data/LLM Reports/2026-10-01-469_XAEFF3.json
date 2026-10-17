@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XAEFF3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including amendments to application forms, definitions of breeders and applicants, and procedural workflows. The IPFR page concerns patent infringement under the Patents Act 1990 and does not discuss plant breeder's rights or related application procedures. Therefore, the changes do not affect the accuracy or currency of the patent infringement content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2836,
+  "completion_tokens": 113,
+  "total_tokens": 2949,
+  "processing_time_seconds": 1.355180560000008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.936373+00:00"
+}

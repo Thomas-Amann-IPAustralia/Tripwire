@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes described in the upstream documents are mostly minor, technical, or procedural updates to regulations, official notices, and policy registers. They do not alter the fundamental descriptions or explanations of Australian IP law, the main Acts, or the general framework as presented in the IPFR page. There are no specific amendments to the core legislation or substantive changes to the rights, processes, or definitions that would require updating the IPFR content. The IPFR page provides a broad overview and does not include detailed procedural or form-related information that these changes affect. Therefore, the page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5745,
+  "completion_tokens": 150,
+  "total_tokens": 5895,
+  "processing_time_seconds": 2.013700835000236,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489489+00:00"
+}

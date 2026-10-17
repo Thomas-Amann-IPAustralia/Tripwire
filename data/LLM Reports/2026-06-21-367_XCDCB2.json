@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change relates to the ASBFEO website being unreachable due to a connection error. The IPFR page content about registering trade marks does not reference ASBFEO or any dispute support services from that site. The change is about website accessibility and does not affect any factual or procedural information in the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2330,
+  "completion_tokens": 107,
+  "total_tokens": 2437,
+  "processing_time_seconds": 1.5820874700000331,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.914936+00:00"
+}

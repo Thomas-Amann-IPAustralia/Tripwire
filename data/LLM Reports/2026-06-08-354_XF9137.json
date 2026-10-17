@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage add some detail about the risks of counterfeit goods and the suggestion to proactively list IP rights with platforms such as Amazon Brand Registry to detect infringing goods before listing. However, the IPFR page content already broadly covers monitoring the trade mark register and market for competitor activity, including the use of commercial watch services and monitoring tools. The new details about counterfeit goods and brand registries do not contradict or render any specific statements in the IPFR page inaccurate or outdated. They are additional practical tips rather than changes to fundamental monitoring concepts or procedures described in the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2732,
+  "completion_tokens": 164,
+  "total_tokens": 2896,
+  "processing_time_seconds": 2.689751851999972,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.610914+00:00"
+}

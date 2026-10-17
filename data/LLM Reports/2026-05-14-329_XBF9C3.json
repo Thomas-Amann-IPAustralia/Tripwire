@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to detailed procedural and substantive examination guidelines, including updates on manner of manufacture, divisional applications, and specific case law decisions (e.g., Aristocrat and Otsuka). However, the IPFR page 'Enforcing a filed patent' focuses on the basic concept that only granted patents can be enforced, the significance of filing and publication dates, and general procedural timelines and risks for small business owners. There is no indication in the changes that the fundamental enforcement principles or the status of 'filed' versus 'granted' patents have changed. The changes do not affect the accuracy of the IPFR page's statements about enforceability, timelines, or applicant rights at the filing stage.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3087,
+  "completion_tokens": 175,
+  "total_tokens": 3262,
+  "processing_time_seconds": 2.7293098539998937,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.502360+00:00"
+}

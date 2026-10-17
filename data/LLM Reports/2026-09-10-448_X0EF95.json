@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily concern specific design registrations being surrendered or amended, and updates to design instruments and manuals. These are specific administrative updates and corrections that do not affect the general procedural or substantive information presented on the IPFR page about registering design rights, the process, benefits, risks, costs, or timelines. There is no indication of changes to fees, timeframes, legal requirements, or substantive rights that would require updating the IPFR content. The design manual updates noted are minor formatting and accessibility changes without substantive content changes affecting the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5176,
+  "completion_tokens": 148,
+  "total_tokens": 5324,
+  "processing_time_seconds": 4.6133167779998985,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.551891+00:00"
+}

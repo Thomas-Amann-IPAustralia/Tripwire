@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X3DA92",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change involves removal of some explanatory text about commercialisation options such as independent launch and assignment, and retains the section on licensing as a common commercialisation option. The IPFR page on licensing remains accurate and comprehensive in describing licensing types, benefits, risks, and processes. The removed content does not contradict or affect the licensing-specific content on the IPFR page. There is no specific factual or procedural information in the IPFR page that is outdated or incorrect due to this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3008,
+  "completion_tokens": 130,
+  "total_tokens": 3138,
+  "processing_time_seconds": 2.4598116360000404,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354161+00:00"
+}

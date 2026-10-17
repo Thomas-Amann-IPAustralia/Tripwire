@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X3B183",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external sources primarily clarify and provide additional detail on how to find and engage an IP attorney, typical costs, preparation for meetings, and the complaint process against attorneys. However, the IPFR page content is a general overview of what to expect from a lawyer or attorney, focusing on their roles and general advice about costs and qualifications. There are no specific figures, procedural steps, or legal thresholds in the IPFR page that conflict with or require updating based on the new detailed cost ranges or complaint process information. The IPFR page remains accurate and current as a high-level introduction for small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7688,
+  "completion_tokens": 155,
+  "total_tokens": 7843,
+  "processing_time_seconds": 2.148065433000056,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.482382+00:00"
+}

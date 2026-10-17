@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update about IP Australia's Corporate Strategic Plan 2026-27 and other news items related to patents, trade marks, and innovation. There is no specific information in the change about enforcement of IP overseas, legal procedures, or international IP enforcement options that would affect the accuracy or currency of the IPFR page content. The IPFR page focuses on considerations before enforcing IP overseas, including practical steps and risks, none of which are contradicted or updated by the news items provided. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2438,
+  "completion_tokens": 145,
+  "total_tokens": 2583,
+  "processing_time_seconds": 2.154217847000041,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250402+00:00"
+}

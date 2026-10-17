@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to ACCC public registers and consultation hub updates concerning competition and consumer law enforcement, exemptions, and safety standards unrelated to Toyota's IP enforcement or the Australian Border Force's Notice of Objection scheme described in the IPFR page. There is no direct impact on the factual content about Toyota's approach to counterfeit products or the ABF scheme. The IPFR page's information remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3927,
+  "completion_tokens": 114,
+  "total_tokens": 4041,
+  "processing_time_seconds": 1.4799984070000392,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.488076+00:00"
+}

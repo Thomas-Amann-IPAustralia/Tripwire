@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and additions in the PBR Manual, specifically about the QP Portal and submission processes for Plant Breeder's Rights applications. The IPFR page section on Qualified Persons (QP) for Plant Breeder's Rights already provides a general overview of their role and functions but does not include detailed procedural guidance or portal submission instructions. Since the IPFR page is aimed at small business owners and provides a high-level explanation rather than detailed procedural content, the changes to the PBR Manual do not affect the accuracy or currency of the IPFR content. Therefore, no update is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4981,
+  "completion_tokens": 153,
+  "total_tokens": 5134,
+  "processing_time_seconds": 2.549806292000085,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909618+00:00"
+}

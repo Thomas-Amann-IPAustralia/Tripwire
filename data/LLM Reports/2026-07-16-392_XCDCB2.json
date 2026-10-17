@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the IP Australia's Trade Marks Manual of Practice and Procedure, including consolidation of filing requirements chapters, and updates to official notices about filing requirements. However, the IPFR page content is a general overview aimed at small business owners about registering unregistered trade marks, including benefits, risks, costs, and process basics. There are no specific procedural steps, fees, or timeframes in the IPFR page that are contradicted or outdated by the changes. The updates to the manual and official notices do not specify any changes to fees, timeframes, or application requirements that would affect the accuracy of the IPFR page. Other changes (e.g., ACCC exemptions, eBay VeRO program email updates) are unrelated to trade mark registration content. Therefore, no amendment to the IPFR page is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9409,
+  "completion_tokens": 202,
+  "total_tokens": 9611,
+  "processing_time_seconds": 3.854414802000065,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.229127+00:00"
+}

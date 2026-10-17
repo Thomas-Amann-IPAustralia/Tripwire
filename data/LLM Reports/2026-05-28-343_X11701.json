@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates primarily to updates and accessibility fixes in the Plant Breeder's Rights (PBR) manual, including sections on the PBR process, objections, fees, and surrender offers. The IPFR page 'What to do if someone infringes your IP' provides general guidance on responding to IP infringement and mentions plant breeder's rights only in passing as one type of IP. There are no specific details, procedures, or legal references about PBR infringement or enforcement in the IPFR page that are contradicted or outdated by the changes. The changes do not affect the accuracy or currency of the advice given on this page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2326,
+  "completion_tokens": 159,
+  "total_tokens": 2485,
+  "processing_time_seconds": 1.5954197759999715,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.492099+00:00"
+}

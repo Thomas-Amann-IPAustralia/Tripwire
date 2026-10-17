@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the ACCC public registers, including announcements of acquisitions, exemptions, and enforceable undertakings under the Competition and Consumer Act 2010. These changes do not pertain to the Australian Border Force, Notices of Objection, or the procedures and requirements for stopping infringing goods entering the country as described in the IPFR page. There is no indication that any legal thresholds, timeframes, costs, or procedural steps relevant to the Notice of Objection scheme have changed. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3138,
+  "completion_tokens": 148,
+  "total_tokens": 3286,
+  "processing_time_seconds": 2.027427787999841,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.553322+00:00"
+}

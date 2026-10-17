@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "XC8F8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP fraud and corruption webpage is currently unreachable due to a connection closure error. This technical issue with the AFP website does not affect the content or accuracy of the IPFR page 'XC8F8C \u2014 Why is this so expensive?'. The IPFR page discusses the costs and processes involved in enforcing IP rights, and there is no direct or indirect content overlap with the AFP fraud and corruption page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1833,
+  "completion_tokens": 131,
+  "total_tokens": 1964,
+  "processing_time_seconds": 2.92682331900005,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.996402+00:00"
+}

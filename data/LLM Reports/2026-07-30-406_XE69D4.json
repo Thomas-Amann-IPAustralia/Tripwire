@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center webpage and related WIPO pages primarily involve expanded descriptions of alternative dispute resolution options, updated contact information, formatting and language clarifications, and minor editorial corrections. The domain name dispute resolution page updates clarify lists of ccTLDs adopting UDRP or variations, add punctuation, and improve readability without altering substantive procedural or cost information. The IPFR page content on challenging international domain names remains accurate and consistent with the updated WIPO information. No specific procedural steps, fees, timelines, or outcomes described in the IPFR page are contradicted or outdated by these changes. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 20554,
+  "completion_tokens": 169,
+  "total_tokens": 20723,
+  "processing_time_seconds": 9.786914994999961,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152094+00:00"
+}

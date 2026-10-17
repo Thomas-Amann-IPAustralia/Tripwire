@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the PBR manual concerning application forms, workflows, portal statuses, and user guides primarily focused on procedural and administrative aspects of PBR applications and management. The IPFR page 'Seek binding, authoritative decisions' deals with court proceedings for PBR disputes, including infringement and validity challenges, and does not contain specific procedural details about application forms or portal workflows. There is no indication that the changes affect the accuracy or currency of the legal dispute resolution content, costs, outcomes, or court processes described in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2874,
+  "completion_tokens": 143,
+  "total_tokens": 3017,
+  "processing_time_seconds": 1.5529865480000353,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.207083+00:00"
+}

@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X3B183",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes provide detailed new information about how to engage an attorney, including average fee ranges for patent and trade mark attorneys, considerations when choosing an attorney, and how to prepare for a meeting with an attorney. The IPFR page currently provides general statements about legal professionals and attorneys but does not include specific guidance on costs, preparation, or considerations when engaging an attorney. Since the changes include concrete figures (e.g., $400-700 per hour for patent attorneys, $1,000-2,000 total for trade mark registration) and practical advice that would benefit small business owners, the IPFR page should be updated to incorporate these specifics to improve accuracy and usefulness.",
+  "suggested_changes": [
+    "Add information about typical attorney costs, including $400-700 per hour for patent attorneys and $1,000-2,000 total for trade mark attorney services to file and register a single trade mark in one or two classes.",
+    "Include guidance on factors to consider when choosing an attorney, such as areas of expertise, industry knowledge, and whether the attorney has Professional Indemnity Insurance (PII).",
+    "Add advice on how to prepare for a meeting with an attorney, including preparing an explanation of your business, commercialization plans, market intentions, competitors, licensing intentions, and detailed information about your invention if applicable.",
+    "Mention that some attorneys offer free consultations to assess services and estimate costs, and that payment plans may be available.",
+    "Reinforce that IP attorneys are bound by a Code of Conduct requiring confidentiality and prioritizing client interests."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5061,
+  "completion_tokens": 344,
+  "total_tokens": 5405,
+  "processing_time_seconds": 6.215693934000001,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.816980+00:00"
+}

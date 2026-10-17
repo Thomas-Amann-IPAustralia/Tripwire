@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the content on the IP Australia webpage about preventing IP infringement by listing IP rights with platforms and using brand registries for automated detection of counterfeit goods. While this is related to the general topic of IP enforcement and counterfeit goods, the IPFR page about Toyota's approach focuses specifically on Toyota's use of the Australian Border Force's Notice of Objection scheme and their enforcement strategy. The change does not affect any specific factual statements, dates, procedures, or legal references in the IPFR page. Therefore, no update to the IPFR page is required based on this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2253,
+  "completion_tokens": 151,
+  "total_tokens": 2404,
+  "processing_time_seconds": 2.0217283300000872,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.813386+00:00"
+}

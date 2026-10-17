@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a broad update to the IPAustralia trademark manual, including reordering and updating examples and minor typographical corrections. There is no indication of changes to fundamental procedures, timeframes, or specific legal thresholds that would affect the general guidance on avoiding IP infringement presented in the IPFR page. The IPFR content is high-level and advisory, focusing on practical steps for small businesses rather than detailed legal provisions or procedural specifics that were updated in the upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3372,
+  "completion_tokens": 127,
+  "total_tokens": 3499,
+  "processing_time_seconds": 2.1529480280000826,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851695+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of minor formatting corrections, updates to IP Australia instruments related to fees and filing procedures, updates to policy register entries, and additions of alternative text for images in the design manual. None of these changes affect the substantive content of the IPFR page regarding seeking binding, authoritative decisions in design disputes, such as legal procedures, time limits, costs, or court processes. The official notices about amendments to design registrations and surrenders do not impact the guidance on court actions. The ACCC register updates relate to consumer law enforcement and do not affect the IPFR page content. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9502,
+  "completion_tokens": 163,
+  "total_tokens": 9665,
+  "processing_time_seconds": 2.327468410999927,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.484778+00:00"
+}

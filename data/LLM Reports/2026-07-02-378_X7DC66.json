@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the Australian Competition and Consumer Commission (ACCC) public registers, including court enforceable undertakings and exemptions under the Competition and Consumer Act 2010. These changes concern competition law enforcement and exemptions, which do not affect the content of the IPFR page about the differences between an ABN, registered business name, and registered trade mark. The IPFR page focuses on trade mark registration benefits and distinctions from business name registration, with no mention or reliance on ACCC enforcement actions or competition law provisions. Therefore, the accuracy and currency of the IPFR page content remain unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2781,
+  "completion_tokens": 155,
+  "total_tokens": 2936,
+  "processing_time_seconds": 2.10939449100033,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.271628+00:00"
+}

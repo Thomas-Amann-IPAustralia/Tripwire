@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a technical connectivity issue with the ASBFEO website, indicating that the site unexpectedly closed the connection. There is no change to the substantive content, services, or information provided by ASBFEO regarding dispute support or ADR processes. Therefore, the IPFR page content about ADR and ASBFEO remains accurate and does not require any amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1720,
+  "completion_tokens": 104,
+  "total_tokens": 1824,
+  "processing_time_seconds": 1.2616329359999554,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.913634+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to a webpage about how to engage an attorney, including details about attorney qualifications, fees, and preparation for meetings. The IPFR page in question is about how to complain if unhappy with IP Australia, focusing on complaint procedures and escalation to the Commonwealth Ombudsman. There is no overlap in specific procedural details, statutory references, or guidance that would require updating the complaint process or content on the IPFR page. The change does not affect the accuracy or currency of the complaint information provided.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1825,
+  "completion_tokens": 133,
+  "total_tokens": 1958,
+  "processing_time_seconds": 1.3349665900000218,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636555+00:00"
+}

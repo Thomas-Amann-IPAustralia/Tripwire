@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to ASIC's company registration webpage, ACCC public registers, Amazon Brand Registry features, and eBay intellectual property policies. The ASIC changes clarify company registration processes, fees, and officeholder obligations but do not alter the fundamental distinction between business names and trade marks or the need for trade mark registration described in the IPFR page. The ACCC and marketplace policy updates relate to enforcement and platform-specific IP protections, which are not directly relevant to the IPFR page's focus on the difference between business names and trade marks and the benefits of trade mark registration. No specific statutory references, fees, or procedural steps in the IPFR content are contradicted or outdated by these changes. Therefore, the IPFR page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8211,
+  "completion_tokens": 187,
+  "total_tokens": 8398,
+  "processing_time_seconds": 2.5673378419999153,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.484398+00:00"
+}

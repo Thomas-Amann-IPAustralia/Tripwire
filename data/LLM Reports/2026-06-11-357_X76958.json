@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on WIPO's Indigenous Knowledge negotiations and detailed listings of country code top-level domains (ccTLDs) that have adopted the Uniform Domain-Name Dispute-Resolution Policy (UDRP) or variations thereof. The IPFR page 'Considerations before enforcing your IP overseas' provides general guidance on enforcement options overseas but does not specify or detail domain name dispute resolution procedures or ccTLD lists. The changes do not affect any specific factual content, legal references, or procedural steps currently described on the IPFR page. Therefore, no update to the page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3935,
+  "completion_tokens": 157,
+  "total_tokens": 4092,
+  "processing_time_seconds": 2.210101682999948,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849785+00:00"
+}

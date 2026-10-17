@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XA1EBE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a cyclic review of the IP Australia patent manual with mostly minor language changes and no substantive amendments to the content relevant to patent re-examination. There are no changes to procedural steps, costs, timelines, or legal thresholds related to patent re-examination that would affect the accuracy of the IPFR page. The IPFR page content remains accurate and up to date based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2812,
+  "completion_tokens": 115,
+  "total_tokens": 2927,
+  "processing_time_seconds": 1.3933201049999298,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.208078+00:00"
+}

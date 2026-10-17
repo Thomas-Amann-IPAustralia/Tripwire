@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia trademark manual primarily involve updates to divisional applications and prohibited signs sections, which are not directly referenced or detailed in the IPFR page content about registering unregistered trade marks. The ACCC public registers update and the eBay intellectual property policy update are unrelated to the specific content of the IPFR page, which focuses on the basics of trade mark registration, benefits, costs, and processes in Australia. There are no specific fee changes, timeframe changes, or procedural changes reflected in the IPFR page that are contradicted or outdated by the changes. Therefore, no update to the IPFR page is required based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5443,
+  "completion_tokens": 166,
+  "total_tokens": 5609,
+  "processing_time_seconds": 2.782821753999997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.875449+00:00"
+}

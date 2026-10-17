@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change to the WIPO IP Diagnostics page is minor and mostly involves correcting a typographical error ('two-levelquestionnaires' to 'two-level questionnaires') and adding Italian (Italy) to the list of languages. The IPFR page 'Free IP tools you can use' does not mention WIPO IP Diagnostics specifically, nor does it include detailed descriptions of this tool's questionnaire structure or language availability. Therefore, the accuracy and currency of the IPFR page content are not affected by this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1677,
+  "completion_tokens": 133,
+  "total_tokens": 1810,
+  "processing_time_seconds": 1.7620537309999236,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.156455+00:00"
+}

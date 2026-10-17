@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-26-372",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update on the IP Australia website highlighting recent articles about design rights, patents, trade marks, and IP legislation consultations. The IPFR page provides a general overview of IP laws and their legislative framework without referencing specific news items, dates, or procedural changes. The change does not alter any legislative content, statutory references, or procedural details presented in the IPFR page. Therefore, the page remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2514,
+  "completion_tokens": 122,
+  "total_tokens": 2636,
+  "processing_time_seconds": 1.605280658999959,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-26T06:24:24.249936+00:00"
+}

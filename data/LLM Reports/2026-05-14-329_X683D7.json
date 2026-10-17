@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the patent manual, design manual accessibility fixes, URL updates, and the addition of information about Olympic designs and related forms. None of these changes directly affect the specific procedural details, fees, timelines, or substantive content about requesting third-party examination of registered designs as described in the IPFR page. There are no updates to fees, timeframes, or procedural steps for third-party examination or certification of designs that would require amending the IPFR content. The Olympic designs information is unrelated to the third-party examination process described.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5746,
+  "completion_tokens": 143,
+  "total_tokens": 5889,
+  "processing_time_seconds": 3.746681780000017,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.500639+00:00"
+}

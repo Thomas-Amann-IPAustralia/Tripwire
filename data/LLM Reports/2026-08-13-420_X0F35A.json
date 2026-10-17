@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X0F35A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change to the WIPO IP audit webpage involves a minor formatting adjustment to the list of IP assets, specifically the removal of a blank line between two list items. There is no change to the substantive content or the types of IP assets listed. The IPFR page content on obtaining advice to help manage IP already aligns with the general concept of conducting an IP audit and does not include the specific list details that were modified. Therefore, the IPFR page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1786,
+  "completion_tokens": 131,
+  "total_tokens": 1917,
+  "processing_time_seconds": 1.767866432000119,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.877840+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an update to the ACCC public registers webpage content, primarily listing recent ACCC actions and exemptions under the Competition and Consumer Act 2010 (Cth). While the IPFR page discusses the Australian Consumer Law (ACL) as part of the protection framework for unregistered trade marks, the change does not alter any substantive legal provisions, definitions, or procedural details relevant to unregistered trade mark protection or passing off actions. The IPFR page's content remains accurate and current, as the change is an update to enforcement actions and exemptions unrelated to the core legal principles or guidance provided in the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2565,
+  "completion_tokens": 156,
+  "total_tokens": 2721,
+  "processing_time_seconds": 2.029236001999834,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.271255+00:00"
+}

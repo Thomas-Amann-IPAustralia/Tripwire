@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns the Defence and Veterans\u2019 Service Commissioner Bill 2025 and related legislative developments about the Defence and Veterans\u2019 Service Commission. This topic is unrelated to the content of the IPFR page, which focuses on checking ownership of IP rights such as trade marks, patents, designs, and domain names. There is no overlap in subject matter that would affect the accuracy or currency of the IPFR page content. The relevance scores are low and the legislative change does not impact any specific IPFR guidance or factual statements.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1734,
+  "completion_tokens": 137,
+  "total_tokens": 1871,
+  "processing_time_seconds": 2.672282209000059,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.713136+00:00"
+}

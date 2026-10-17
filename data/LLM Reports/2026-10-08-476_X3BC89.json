@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve minor technical amendments to regulations, updates to official notices about design registrations and instruments, and updates to policy registers and legislative instrument descriptions. None of the changes provide new or updated information that directly affects the specific guidance or factual content on the IPFR page about checking ownership of IP such as trade marks, patents, designs, plant breeders' rights, copyright, or domain names. The IPFR page content remains accurate and current for its intended audience, and no specific statutory references, procedures, or thresholds mentioned in the page are contradicted or updated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7316,
+  "completion_tokens": 148,
+  "total_tokens": 7464,
+  "processing_time_seconds": 1.493495393999865,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.485360+00:00"
+}

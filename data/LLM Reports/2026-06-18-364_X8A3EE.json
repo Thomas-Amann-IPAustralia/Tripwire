@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to Amazon Brand Registry's patent evaluation process and eBay's VeRO program reporting procedures. While both concern IP enforcement mechanisms, the IPFR page focuses on the general concept of ceasing use of contested IP and the risks and benefits involved, without detailing specific platform dispute resolution processes or reporting tools. The updated details about Amazon's Patent Evaluation Express program and eBay's VeRO reporting steps do not affect the accuracy or currency of the IPFR page content, which remains correct and relevant for its intended audience of small business owners. There is no specific procedural or legal information in the IPFR page contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4484,
+  "completion_tokens": 162,
+  "total_tokens": 4646,
+  "processing_time_seconds": 2.5119569150001553,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708579+00:00"
+}

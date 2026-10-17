@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor formatting update to an example illustrating unjustified threats of IP infringement, clarifying the spacing and paragraph breaks but not altering any substantive information. The IPFR page content already accurately reflects the principle that a registered but uncertified design is unenforceable and that threats based on such designs can be unjustified. There is no new or changed factual information, legal threshold, fee, timeframe, or procedural step in the IPFR page that requires updating based on this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2381,
+  "completion_tokens": 132,
+  "total_tokens": 2513,
+  "processing_time_seconds": 2.1205849359998865,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.611736+00:00"
+}

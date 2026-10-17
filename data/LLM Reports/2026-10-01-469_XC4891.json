@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to procedural and administrative updates in the PBR manual, such as application forms, workflows, and clarifications about legal persons and breeders. These changes do not affect the substantive content of the IPFR page about PBR infringement, which focuses on what constitutes infringement, examples, and defences. There is no indication that the legal definitions, infringement criteria, or rights described in the IPFR page have changed. Therefore, no update to the infringement guidance is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3722,
+  "completion_tokens": 130,
+  "total_tokens": 3852,
+  "processing_time_seconds": 1.5039781160000985,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.936301+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document updates the WIPO Arbitration and Mediation Center webpage with expanded information about alternative dispute resolution (ADR) services, including mediation, arbitration, and domain name dispute resolution. However, the IPFR page 'Can I protect my ideas with a worldwide IP right?' focuses on explaining the territorial nature of IP rights and international filing systems like the PCT, Madrid, and Hague systems. It does not discuss dispute resolution mechanisms or WIPO ADR services. Therefore, the updated content about WIPO ADR does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2161,
+  "completion_tokens": 147,
+  "total_tokens": 2308,
+  "processing_time_seconds": 1.8333994649999568,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.154519+00:00"
+}

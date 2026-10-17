@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IPAustralia trademark manual relate to divisional applications and prescribed signs, which are technical details not covered in the IPFR page content. The ACCC public registers update concerns exemptions and declarations under the Competition and Consumer Act, unrelated to trade mark registration processes or fees. The IPFR page focuses on basic trade mark registration information, costs, benefits, and risks, none of which are impacted by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3122,
+  "completion_tokens": 119,
+  "total_tokens": 3241,
+  "processing_time_seconds": 1.6054151120001734,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.155768+00:00"
+}

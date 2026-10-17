@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are mostly cyclic reviews, minor wording adjustments, policy register updates, and eBay's intellectual property policy clarifications. None of these changes directly affect the specific procedural details, timeframes, fees, or legal thresholds described in the IPFR page about opposing trade mark registrations. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6084,
+  "completion_tokens": 105,
+  "total_tokens": 6189,
+  "processing_time_seconds": 1.5314842350001072,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.487435+00:00"
+}

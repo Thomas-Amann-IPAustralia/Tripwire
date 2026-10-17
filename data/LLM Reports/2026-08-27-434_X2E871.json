@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO IP Diagnostics webpage involve the removal of the phrase 'Industry-specific adaptations' and do not affect any substantive information related to the WIPO Arbitration and Mediation Center or its ADR services. The IPFR page content about accessing international arbitration and mediation services remains accurate and unaffected by this minor textual change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3156,
+  "completion_tokens": 97,
+  "total_tokens": 3253,
+  "processing_time_seconds": 2.4472024050000982,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908406+00:00"
+}

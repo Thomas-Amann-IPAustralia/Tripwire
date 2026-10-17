@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in practice directions of the Administrative Review Tribunal, updates to the Trade Marks Manual of Practice and Procedure regarding divisional applications and prohibited signs, and minor accessibility fixes in the Design Manual. None of these changes specifically affect the content of the IPFR page on challenging the registration of a new trade mark, which focuses on the opposition process, timelines, costs, risks, and outcomes. There are no changes to the opposition period, fees, procedural steps, or legal thresholds mentioned in the IPFR page. The changes to judicial review procedures and filing requirements do not directly impact the opposition process described. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8498,
+  "completion_tokens": 168,
+  "total_tokens": 8666,
+  "processing_time_seconds": 3.244493840000132,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793101+00:00"
+}

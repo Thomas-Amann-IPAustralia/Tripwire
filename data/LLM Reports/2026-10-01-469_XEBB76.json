@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural and administrative updates in the Trade Marks Office Manual of Practice and Procedure and the listing of non-legislative instruments related to filing and formal requirements under the Designs Act and Patents Act. The IPFR page provides a general overview of IP types and their protections aimed at small business owners, without specific procedural details or references to these administrative instruments. There is no outdated or incorrect information in the IPFR page content that these upstream changes would affect.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3429,
+  "completion_tokens": 127,
+  "total_tokens": 3556,
+  "processing_time_seconds": 2.31515751500001,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.937997+00:00"
+}

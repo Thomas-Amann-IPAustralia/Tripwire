@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Patents Regulations 1991 compilation and official notices from IP Australia, including a surrender of design registrations and updated guidance on computer-implemented inventions in the Patent Manual. The IPFR page provides a general overview of IP types and their protections without specific procedural, regulatory, or detailed guidance that would be affected by these updates. There are no specific dates, procedural steps, or legal thresholds mentioned in the IPFR page that are contradicted or outdated due to these changes. The other legislative changes noted (e.g., telecommunications act amendments) are unrelated to the IPFR page content. Therefore, no amendments are required to maintain accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3261,
+  "completion_tokens": 173,
+  "total_tokens": 3434,
+  "processing_time_seconds": 2.737092271999927,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.817094+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the Competition and Consumer Act 2010 including Australian Consumer Law, which is only indirectly related to the IPFR page about business names and trade marks. The IPFR page focuses on the differences between ABN, registered business names, and trade marks, and the benefits of trade mark registration. There is no specific mention or reliance on the Competition and Consumer Act or Australian Consumer Law provisions in the IPFR content, nor any specific legal thresholds, dates, or procedural details from that legislation that would be affected by the update. Therefore, the page content remains accurate and does not require amendment based on this legislative update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1989,
+  "completion_tokens": 162,
+  "total_tokens": 2151,
+  "processing_time_seconds": 2.182467999000096,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.016307+00:00"
+}

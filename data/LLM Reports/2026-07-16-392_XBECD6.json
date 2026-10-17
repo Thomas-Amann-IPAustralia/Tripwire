@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document is a summary listing of various closed consultations by IP Australia, including some on patents and other IP matters. However, it does not provide any specific amendments, procedural changes, or updated statutory references related to the 'section 27 notice' process or the timing, fees, or outcomes described in the IPFR page. The IPFR page content about third party notifications under section 27 remains accurate and current based on the information provided. There is no direct evidence in the change document that the process, time limits, or other key details have changed.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3124,
+  "completion_tokens": 146,
+  "total_tokens": 3270,
+  "processing_time_seconds": 2.485646387000088,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234355+00:00"
+}

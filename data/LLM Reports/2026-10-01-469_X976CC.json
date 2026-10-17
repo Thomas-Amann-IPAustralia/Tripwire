@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia international cooperation webpage add information about capacity building activities and partnerships in the Asia-Pacific region, including references to FTAs and WIPO's Funds-in-Trust program. However, these updates do not affect the accuracy or currency of the IPFR page content about the WIPO Clause Generator and how to plan IP dispute resolution via contracts. The IPFR page focuses on practical use of the WIPO Clause Generator tool for drafting dispute resolution clauses, and does not discuss international cooperation programs or capacity building activities. Therefore, no specific content on the IPFR page is outdated or contradicted by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2573,
+  "completion_tokens": 156,
+  "total_tokens": 2729,
+  "processing_time_seconds": 1.7860138969999753,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938114+00:00"
+}

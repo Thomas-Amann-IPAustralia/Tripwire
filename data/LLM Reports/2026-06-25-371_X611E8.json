@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to the Patent Manual related to examination criteria, case law references (e.g., Aristocrat decision, NOCO v Brown), and procedural updates in trade marks and plant breeders rights manuals. The IPFR page on responding to a patent opposition focuses on the procedural overview, risks, benefits, costs, timelines, and parties involved in the opposition process. None of the changes indicate amendments to the opposition process itself, fees, timeframes, or procedural steps described in the IPFR page. The updates to the Patent Manual and trade mark manuals do not directly affect the accuracy or currency of the opposition response guidance provided. Therefore, no changes to the IPFR page are required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6706,
+  "completion_tokens": 174,
+  "total_tokens": 6880,
+  "processing_time_seconds": 4.99255964300005,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.562469+00:00"
+}

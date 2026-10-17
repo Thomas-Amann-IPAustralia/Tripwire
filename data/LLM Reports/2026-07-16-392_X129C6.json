@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X129C6",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the eBay VeRO program FAQs update the contact email address for submitting Notices of Claimed Infringement (NOCI), retracting reports, and submitting VeRO participant page content from vero@ebay.com to askvero@ebay.com. The IPFR page currently lists the VeRO program but does not specify the contact email. However, since the page mentions that different marketplaces require different types of information and proof of ownership, and it references the VeRO program specifically, updating the contact email for submitting infringement reports and retractions is important for accuracy and usability for small business owners relying on this guidance.",
+  "suggested_changes": [
+    "Update the contact email address for submitting a Notice of Claimed Infringement (NOCI) to eBay's VeRO program from 'vero@ebay.com' to 'askvero@ebay.com' in the section describing the eBay VeRO Program.",
+    "Update the contact email address for submitting a retraction of a report in error to 'askvero@ebay.com' instead of 'vero@ebay.com' in the relevant section about the VeRO program.",
+    "Update the contact email address for sending content to create a VeRO participant page from 'vero@ebay.com' to 'askvero@ebay.com' in the relevant section."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4036,
+  "completion_tokens": 302,
+  "total_tokens": 4338,
+  "processing_time_seconds": 5.796844857999986,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.231270+00:00"
+}

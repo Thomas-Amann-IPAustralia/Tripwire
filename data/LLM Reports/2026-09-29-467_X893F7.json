@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document updates the content of an IP Australia webpage about how to commercialise IP, describing different commercialisation methods such as independent launch, licensing, franchising, and assignment. However, the IPFR page in question focuses specifically on seeking binding, authoritative decisions through court proceedings related to patent disputes, including litigation processes, benefits, risks, outcomes, costs, and timelines. The change document does not address any legal procedural changes, court processes, timelines, costs, or other specific details related to patent litigation or court actions. Therefore, the IPFR page content remains accurate and unaffected by the commercialisation guidance update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4026,
+  "completion_tokens": 157,
+  "total_tokens": 4183,
+  "processing_time_seconds": 1.8915077510000629,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.010067+00:00"
+}

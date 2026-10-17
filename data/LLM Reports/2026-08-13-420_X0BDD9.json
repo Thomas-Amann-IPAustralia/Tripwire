@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Madrid System webpage primarily involve updates to territorial coverage details (removal of Bailiwick of Jersey until August 1, 2026), upcoming events, fees, and additional resources such as webinars and podcasts. These changes do not affect the fundamental explanation of the Madrid System or the description of international IP rights on the IPFR page. The IPFR content accurately states that the Madrid System covers 131 member countries and enables extension of Australian trade marks abroad, which remains correct. The change to the WIPO 'about' page is a minor textual adjustment with no impact on the IPFR page content. Therefore, no update is needed to the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3220,
+  "completion_tokens": 171,
+  "total_tokens": 3391,
+  "processing_time_seconds": 1.9818149019999964,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.874656+00:00"
+}

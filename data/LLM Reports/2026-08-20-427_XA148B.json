@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources primarily concern updates to the Trade Marks Office Manual of Practice and Procedure related to examination practices, amendments before publication, indexing, and specific considerations for plant-related trade marks. These updates do not directly affect the procedural guidance, timelines, or substantive content about responding to a trade mark opposition as presented in the IPFR page. The IPFR page focuses on the opposition response process, timelines, risks, benefits, and outcomes, none of which are contradicted or rendered outdated by the manual updates. Additionally, the PBR manual update is unrelated to trade mark oppositions. Therefore, no specific amendments to the IPFR page are required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7054,
+  "completion_tokens": 169,
+  "total_tokens": 7223,
+  "processing_time_seconds": 6.322640794000108,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.226733+00:00"
+}

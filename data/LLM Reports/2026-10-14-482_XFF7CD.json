@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change announces a parliamentary committee recommendation for Australia to ratify the GRATK Treaty and mentions a recent IP reform act, but does not provide any specific updates or changes to the free IP tools described on the IPFR page. The IPFR page content focuses on describing existing free IP tools and their functionalities, without referencing treaties or legislative reforms that would affect the tools' descriptions or usage instructions. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1678,
+  "completion_tokens": 130,
+  "total_tokens": 1808,
+  "processing_time_seconds": 1.2179522499999962,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.732441+00:00"
+}

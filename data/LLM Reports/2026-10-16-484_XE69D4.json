@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-16-484",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO domain name dispute resolution webpage primarily involve removal of some explanatory text about the UDRP and ccTLDs, formatting and contact details updates, and removal of specific fee details and procedural steps. The IPFR page content already provides a comprehensive overview of the domain name dispute resolution process, including references to the UDRP, auDRP, WIPO as a provider, costs, timelines, and outcomes. None of the removed or altered details in the upstream changes contradict or invalidate any specific factual statements or figures in the IPFR page. The IPFR page does not include the detailed fee breakdown or the exact procedural steps that were removed from the WIPO page, so no factual corrections or updates are needed. Therefore, the IPFR page remains accurate and current despite these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9771,
+  "completion_tokens": 196,
+  "total_tokens": 9967,
+  "processing_time_seconds": 2.017283047000035,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-16T06:54:00.569923+00:00"
+}

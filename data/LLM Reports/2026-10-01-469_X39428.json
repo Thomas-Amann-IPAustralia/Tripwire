@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in procedural manuals and non-legislative instruments concerning filing, amendments, and examination practices for trade marks, designs, and patents. The IPFR page provides general guidance on avoiding IP infringement for small business owners, focusing on practical steps like conducting searches, creating original work, understanding fair use, and obtaining permissions. None of the changes indicate modifications to substantive legal thresholds, timeframes, or specific procedural steps that would affect the accuracy or currency of the IPFR page content. The updates are mostly technical or administrative and do not alter the fundamental advice given to the audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3995,
+  "completion_tokens": 152,
+  "total_tokens": 4147,
+  "processing_time_seconds": 1.5813227500000266,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.937877+00:00"
+}

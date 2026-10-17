@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates wording and formatting related to proactive listing of IP rights on brand registries and details about Amazon Brand Registry, as well as anti-counterfeit measures. However, the IPFR page 'Register your unregistered trade mark' does not mention these specific brand registries, Amazon Brand Registry, or anti-counterfeit measures. The change does not affect any specific factual information, fees, procedures, or legal references in the IPFR page. Therefore, no update to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2830,
+  "completion_tokens": 138,
+  "total_tokens": 2968,
+  "processing_time_seconds": 2.2037372640000967,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354917+00:00"
+}

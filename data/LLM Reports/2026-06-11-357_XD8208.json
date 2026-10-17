@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources primarily involve updates to other parts of the IP Australia manuals related to trade marks, designs, and court fees. The trade mark manual updates focus on series trade marks, colour endorsements, divisional applications, and other procedural or example-based content, none of which directly affect the specific procedural details, timeframes, fees, or outcomes described in the IPFR page about removing a trade mark for non-use. The design manual changes are unrelated to trade marks. The court fees update does not affect the $350 removal application fee stated on the IPFR page, nor does it alter the procedural steps or timelines described. Therefore, the IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6718,
+  "completion_tokens": 177,
+  "total_tokens": 6895,
+  "processing_time_seconds": 6.602808153000069,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850278+00:00"
+}

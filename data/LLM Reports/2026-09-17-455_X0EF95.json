@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change document reports corrections to specific design registrations in the Designs Register and updates to procedural instruments related to fees and filings. These changes are administrative corrections and updates to individual design registrations or procedural instruments, without any indication of changes to the general process, fees, timeframes, or legal requirements for registering or enforcing design rights. The IPFR page content provides general guidance on registering design rights, including process, fees, timeframes, and enforcement, none of which are contradicted or rendered outdated by these specific corrections or updates. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2565,
+  "completion_tokens": 150,
+  "total_tokens": 2715,
+  "processing_time_seconds": 1.523289714000157,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.935402+00:00"
+}

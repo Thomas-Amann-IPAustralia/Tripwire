@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X58101",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor reformatting of bullet points on the 'how to engage an attorney' webpage, specifically reordering and adding a blank line before a list. There is no change to substantive content, legal requirements, or procedural steps related to identifying and tracking patents or competitor activity. The IPFR page content remains accurate and does not reference or rely on the specific bullet point order or formatting changed upstream.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2240,
+  "completion_tokens": 116,
+  "total_tokens": 2356,
+  "processing_time_seconds": 1.9642353330000333,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909688+00:00"
+}

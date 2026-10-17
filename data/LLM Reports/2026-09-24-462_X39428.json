@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document relates to closed consultations and updates to IP Australia manuals and regulations, including patent manual updates, trade mark amendments, and design law treaty information. However, the IPFR page content focuses on general advice for small businesses on how to avoid infringing others' intellectual property, covering practical steps and general principles without referencing specific procedural details, dates, or regulatory thresholds that have changed. There is no specific information in the IPFR page that is contradicted or outdated by the consultation outcomes or regulatory updates mentioned. Therefore, no amendment to the IPFR page is required based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3306,
+  "completion_tokens": 154,
+  "total_tokens": 3460,
+  "processing_time_seconds": 1.5401542459999291,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.205560+00:00"
+}

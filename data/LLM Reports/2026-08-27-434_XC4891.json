@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to procedural updates about application forms, portal guidance, and administrative instruments for Plant Breeder's Rights (PBR) applications and related processes. There is no indication of changes to substantive law, infringement definitions, exceptions, or rights that would affect the accuracy of the IPFR page content on PBR infringement. The IPFR page focuses on explaining infringement concepts, examples, and legal provisions, none of which are contradicted or outdated by the procedural updates in the changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4655,
+  "completion_tokens": 130,
+  "total_tokens": 4785,
+  "processing_time_seconds": 2.0925797879999664,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907492+00:00"
+}

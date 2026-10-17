@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the ACCC registers and consultation hub, Amazon Brand Registry updates, and eBay intellectual property policy updates relate broadly to consumer protection, enforcement policies, and platform-specific IP enforcement tools. However, none of these changes directly affect the specific guidance or factual content on the IPFR page about educating customers to differentiate genuine products from lookalikes. The IPFR page focuses on customer education strategies and benefits rather than legal enforcement details, statutory references, or procedural steps that have changed. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6139,
+  "completion_tokens": 147,
+  "total_tokens": 6286,
+  "processing_time_seconds": 1.7508506310000485,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.488164+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-09-477",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to WIPO's Arbitration and Mediation Center webpage and fee schedule, including the introduction of WIPO Wallet as a payment method and minor formatting changes. The IPFR page concerns the .au Dispute Resolution Policy (auDRP) for .au domain names, which is a separate process administered by auDA and its approved resolution providers. There is no mention of WIPO ADR procedures, fees, or payment methods in the IPFR page content. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content about disputing .au domain names under the auDRP.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3592,
+  "completion_tokens": 157,
+  "total_tokens": 3749,
+  "processing_time_seconds": 1.8443520760000638,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-09T08:43:19.315172+00:00"
+}

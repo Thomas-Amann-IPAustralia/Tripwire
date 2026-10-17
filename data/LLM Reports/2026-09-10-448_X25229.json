@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X25229",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage, reducing from 38 to 36 results. This change does not affect any substantive content related to joint IP ownership, patent law, or the risks of sharing IP as discussed in the IPFR page. There is no update to legal provisions, procedural steps, or guidance that would impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3400,
+  "completion_tokens": 121,
+  "total_tokens": 3521,
+  "processing_time_seconds": 1.683123304999981,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.553045+00:00"
+}

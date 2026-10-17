@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the Competition and Consumer Act 2010 including Australian Consumer Law, which is only indirectly related to trade marks. The IPFR page focuses specifically on registering trade marks with IP Australia, including costs, processes, and benefits. There is no indication that the legislative update affects any specific procedural detail, fees, timeframes, or legal thresholds mentioned in the IPFR page. Therefore, the content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2019,
+  "completion_tokens": 122,
+  "total_tokens": 2141,
+  "processing_time_seconds": 1.1989462090000416,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.016842+00:00"
+}

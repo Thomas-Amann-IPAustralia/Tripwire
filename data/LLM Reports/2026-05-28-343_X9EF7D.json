@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and accessibility fixes in the Plant Breeder's Rights Manual of Practice and Procedure, including content reordering, link fixes, and additional guidance on surrenders. However, the IPFR page 'Familiarise yourself with IP laws' provides a high-level overview of IP legislation and does not include detailed procedural or manual content that would be affected by these specific updates. There is no outdated or incorrect information in the IPFR page as a result of these manual updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2699,
+  "completion_tokens": 132,
+  "total_tokens": 2831,
+  "processing_time_seconds": 1.8750210879998122,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.492282+00:00"
+}

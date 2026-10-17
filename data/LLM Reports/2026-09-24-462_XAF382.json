@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document relates to updates and consultations on IP Australia manuals, regulatory reforms, and international treaties, including the Patent Manual and design law treaties. However, the IPFR page 'What is IP infringement?' provides a general overview of infringement concepts without specific procedural details, statutory references, or thresholds that are directly affected by these updates. The changes do not indicate any amendments to the fundamental definitions or explanations of infringement, nor do they specify changes to infringement criteria or timeframes that would require updating this general guidance page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3900,
+  "completion_tokens": 136,
+  "total_tokens": 4036,
+  "processing_time_seconds": 2.074345063999999,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.205832+00:00"
+}

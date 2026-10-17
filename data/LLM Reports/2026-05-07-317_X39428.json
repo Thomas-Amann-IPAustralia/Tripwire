@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns a technical coding issue affecting the trade mark bulk data product and an update to the Patent Manual of Practice and Procedures with a special leave appeal to the High Court. The IPFR page provides general guidance on avoiding IP infringement for small business owners, focusing on practical steps such as conducting searches, creating original work, understanding permissions, and seeking advice. There are no specific references to the trade mark bulk data product, detailed procedural guidelines, or the Patent Manual that would require updating. The change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2297,
+  "completion_tokens": 147,
+  "total_tokens": 2444,
+  "processing_time_seconds": 2.3044896489998337,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713186+00:00"
+}

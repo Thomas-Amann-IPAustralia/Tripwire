@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern amendments to the Administrative Review Tribunal Rules 2024 relating to migration and NDIS provider reviews, updates to oversight legislation for intelligence and security agencies, and accessibility and link fixes in the Plant Breeder's Rights manual. None of these changes affect the fundamental definitions, explanations, or descriptions of intellectual property types, rights, or enforcement options as presented in the IPFR page. The IPFR page content is general and introductory, without specific procedural or statutory details that would be impacted by these upstream changes. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9862,
+  "completion_tokens": 153,
+  "total_tokens": 10015,
+  "processing_time_seconds": 3.9379789879999407,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708243+00:00"
+}

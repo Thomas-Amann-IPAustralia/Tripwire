@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes update the Uniform Domain-Name Dispute-Resolution Policy (UDRP) to a new version effective from 21 February 2024, with implementation deadlines for contracted parties between 21 August 2024 and 21 August 2025. The IPFR page currently references the UDRP but does not mention this recent update or the implementation timeline. Since the IPFR page is intended to provide current and accurate guidance to small business owners about domain name dispute resolution, it should be updated to reflect the existence of this updated UDRP version and the relevant dates to ensure users are aware of the most current policy framework.",
+  "suggested_changes": [
+    "Add a note in the section describing the UDRP that the policy was updated on 21 February 2024 to reflect changes required to implement the Registration Data Policy, with contracted parties required to implement the updated policy between 21 August 2024 and 21 August 2025.",
+    "Update any references to the UDRP to clarify that the current policy version is effective from 21 February 2024, replacing the previous version effective from 24 October 1999 through 20 August 2025."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4669,
+  "completion_tokens": 270,
+  "total_tokens": 4939,
+  "processing_time_seconds": 5.562296230999891,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793867+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-07-475",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Online Safety Act related to enforcement powers of the eSafety Commissioner and social media minimum age regulations. The IPFR page is about contributor guidelines for blog posts on IP First Response, focusing on intellectual property topics and content submission processes. There is no mention or discussion of online safety laws, social media age restrictions, or enforcement powers in the IPFR page content. Therefore, the legislative changes do not affect the accuracy or currency of the contributor guidelines page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2331,
+  "completion_tokens": 129,
+  "total_tokens": 2460,
+  "processing_time_seconds": 2.0600208350000457,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-07T08:23:21.769684+00:00"
+}

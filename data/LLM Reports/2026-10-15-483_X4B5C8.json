@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X4B5C8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the 'how_to_engage_an_attorney' webpage primarily involve minor formatting and wording adjustments without altering substantive content. The IPFR page already contains detailed and accurate information about engaging IP professionals, including cost ranges, preparation for meetings, and considerations when choosing an attorney. The updated fee ranges and advice on preparation remain consistent with the IPFR content. There are no changes to legal thresholds, statutory references, or procedural steps that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4952,
+  "completion_tokens": 128,
+  "total_tokens": 5080,
+  "processing_time_seconds": 2.331479677000061,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.634916+00:00"
+}

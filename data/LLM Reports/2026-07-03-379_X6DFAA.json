@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the Australian Federal Police (AFP) website for fraud and corruption is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). This is a technical issue with the AFP website and does not relate to intellectual property enforcement methods, procedures, or legal information. The IPFR page content about dealing with IP issues without going to court does not reference the AFP or fraud and corruption matters, nor does it rely on any specific information from that site. Therefore, there is no impact on the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1715,
+  "completion_tokens": 144,
+  "total_tokens": 1859,
+  "processing_time_seconds": 3.743878061000032,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.996238+00:00"
+}

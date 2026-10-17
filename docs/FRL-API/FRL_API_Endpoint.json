@@ -1,0 +1,100 @@
+{
+  "@odata.context": "https://api.prod.legislation.gov.au/v1/$metadata",
+  "value": [
+    {
+      "name": "Affect",
+      "kind": "EntitySet",
+      "url": "Affect"
+    },
+    {
+      "name": "Content",
+      "kind": "EntitySet",
+      "url": "Content"
+    },
+    {
+      "name": "Departments",
+      "kind": "EntitySet",
+      "url": "Departments"
+    },
+    {
+      "name": "Documents",
+      "kind": "EntitySet",
+      "url": "Documents"
+    },
+    {
+      "name": "DocumentPrints",
+      "kind": "EntitySet",
+      "url": "DocumentPrints"
+    },
+    {
+      "name": "PublicFeedback",
+      "kind": "EntitySet",
+      "url": "PublicFeedback"
+    },
+    {
+      "name": "_SearchContexts",
+      "kind": "EntitySet",
+      "url": "_SearchContexts"
+    },
+    {
+      "name": "_FullTextVersionSearch",
+      "kind": "EntitySet",
+      "url": "_FullTextVersionSearch"
+    },
+    {
+      "name": "_PointInTimeSearch",
+      "kind": "EntitySet",
+      "url": "_PointInTimeSearch"
+    },
+    {
+      "name": "_AffectsSearch",
+      "kind": "EntitySet",
+      "url": "_AffectsSearch"
+    },
+    {
+      "name": "_TextSearchContexts",
+      "kind": "EntitySet",
+      "url": "_TextSearchContexts"
+    },
+    {
+      "name": "_DisallowanceSearch",
+      "kind": "EntitySet",
+      "url": "_DisallowanceSearch"
+    },
+    {
+      "name": "_OpenForDisallowanceSearch",
+      "kind": "EntitySet",
+      "url": "_OpenForDisallowanceSearch"
+    },
+    {
+      "name": "_FutureSunsetDateSearch",
+      "kind": "EntitySet",
+      "url": "_FutureSunsetDateSearch"
+    },
+    {
+      "name": "Sessions",
+      "kind": "EntitySet",
+      "url": "Sessions"
+    },
+    {
+      "name": "TextApplies",
+      "kind": "EntitySet",
+      "url": "TextApplies"
+    },
+    {
+      "name": "Titles",
+      "kind": "EntitySet",
+      "url": "Titles"
+    },
+    {
+      "name": "Users",
+      "kind": "EntitySet",
+      "url": "Users"
+    },
+    {
+      "name": "Versions",
+      "kind": "EntitySet",
+      "url": "Versions"
+    }
+  ]
+}

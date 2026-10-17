@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor formatting adjustment and reordering of bullet points on a webpage about how to engage an attorney. It does not alter any substantive information about monitoring trade marks, the process, costs, or outcomes. The IPFR page content about monitoring trade marks remains accurate and unaffected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1999,
+  "completion_tokens": 94,
+  "total_tokens": 2093,
+  "processing_time_seconds": 2.2859581309999157,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909826+00:00"
+}

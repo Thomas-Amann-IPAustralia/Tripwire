@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-16-484",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the WIPO domain name dispute resolution webpage by removing detailed procedural steps and fee information, consolidating contact details, and simplifying the presentation of the UDRP and ccTLD dispute resolution information. The IPFR page 'Considerations before enforcing your IP overseas' mentions WIPO as a provider of alternative dispute resolution options but does not provide specific procedural details, fee amounts, or step-by-step instructions related to domain name disputes. Therefore, the changes to the WIPO webpage do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3455,
+  "completion_tokens": 145,
+  "total_tokens": 3600,
+  "processing_time_seconds": 1.974197853000021,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-16T06:54:00.570183+00:00"
+}
