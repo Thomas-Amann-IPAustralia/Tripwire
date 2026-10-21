@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-21-489",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the IP Australia news page consist solely of an update to the number of news items displayed (from 39 to 41) and the addition of a news story about a medical pioneer patenting spray-on skin technology. These changes do not affect any factual or procedural content on the IPFR page regarding what to check before getting registered IP. There are no updates to legal requirements, timeframes, fees, or procedural steps that would impact the guidance given to small business owners in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2240,
+  "completion_tokens": 135,
+  "total_tokens": 2375,
+  "processing_time_seconds": 2.2522030750000113,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-21T07:15:33.370046+00:00"
+}

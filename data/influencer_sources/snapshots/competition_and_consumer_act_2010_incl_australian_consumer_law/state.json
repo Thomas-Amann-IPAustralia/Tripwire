@@ -7,6 +7,6 @@
   "previous_hash": "21dc9c41f7e6036459e84d323acb14572eeeed3aaca9039dfe8d9631925739bc",
   "previous_text": "Competition and Consumer Act 2010No. 51, 1974\nAdministered by \n- Attorney-General's Department\n- Department of Climate Change, Energy, the Environment and Water\n- Department of Industry, Science and Resources\n- Department of Infrastructure, Transport, Regional Development, Communications, Sport and the Arts\n- Department of the Treasury",
   "last_error": "PermanentError: Dramatic content size change at https://www.legislation.gov.au/C2004A00109/latest/text: 337 \u2192 137676 chars",
-  "last_error_at": "2026-10-20T07:14:51.020795+00:00",
-  "consecutive_failures": 2
+  "last_error_at": "2026-10-21T07:09:05.186104+00:00",
+  "consecutive_failures": 3
 }
