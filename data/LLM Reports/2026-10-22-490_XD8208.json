@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a general update to the Trade Marks Manual of Practice and Procedure, consolidating content on revocation of acceptance, revocation of registration, and amendment or cessation of protection into a new Part 36. However, the IPFR page focuses specifically on removal of a trade mark from the register for non-use, detailing procedural steps, timelines, and costs relevant to applicants. The change does not specify any amendments to the grounds, timeframes, fees, or procedural details for removal applications for non-use. Therefore, the IPFR page content remains accurate and current based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3759,
+  "completion_tokens": 154,
+  "total_tokens": 3913,
+  "processing_time_seconds": 2.163572922999947,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551754+00:00"
+}

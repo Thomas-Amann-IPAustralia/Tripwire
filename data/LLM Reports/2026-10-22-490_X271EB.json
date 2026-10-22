@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia Trade Marks Manual consolidate and update procedural chapters related to revocation, amendment, and cessation of protection, but do not specify any changes to the substantive grounds, timeframes, fees, or procedural steps for removal of a trade mark for non-use. The IPFR page content about removal for non-use remains accurate and current based on the information provided. The Amazon Brand Registry page changes are unrelated to Australian trade mark removal procedures and do not affect the IPFR page content. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3899,
+  "completion_tokens": 144,
+  "total_tokens": 4043,
+  "processing_time_seconds": 1.7211345579999033,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551709+00:00"
+}

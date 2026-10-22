@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the DFAT webpage content to emphasize Australia's international IP engagement and the role of the WTO TRIPS Agreement, including some rephrasing and updated statistics. However, the IPFR page 'Addressing overseas infringement' focuses on practical guidance for Australian businesses dealing with overseas IP infringement, territorial nature of IP rights, and enforcement options. The changes in the DFAT page do not alter any specific facts, procedures, or legal thresholds mentioned in the IPFR page. There is no conflicting or outdated information in the IPFR content that requires correction or update based on the DFAT content changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3116,
+  "completion_tokens": 153,
+  "total_tokens": 3269,
+  "processing_time_seconds": 1.7847684270000173,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550971+00:00"
+}
