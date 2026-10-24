@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Amazon Brand Registry page add new promotional and support program details (New Seller Success program) and clarify the utility patent dispute process, but do not affect the core eligibility criteria or enrollment requirements described in the IPFR page. The changes to the eBay Intellectual Property Policy clarify listing essentials and compliance details, but these do not impact the IPFR page content which focuses on enrollment and reporting through IP protection programs rather than listing rules. The IPFR page content remains accurate and up-to-date regarding the types of IP rights accepted, enrollment requirements, benefits, risks, and processes for online platform IP protection programs.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5630,
+  "completion_tokens": 156,
+  "total_tokens": 5786,
+  "processing_time_seconds": 2.0094930449999993,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.486906+00:00"
+}

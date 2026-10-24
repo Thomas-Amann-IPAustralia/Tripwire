@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the patent, trade mark, and design manuals primarily involving procedural clarifications, formatting, link corrections, and updates following recent court decisions. None of these changes specifically address or alter the guidance on handling AI-generated IP infringement allegations, the checklist provided, or the advice on engaging registered attorneys. The IPFR page content focuses on practical advice for SMEs receiving AI-generated infringement allegations, which remains accurate and unaffected by these upstream manual updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5139,
+  "completion_tokens": 125,
+  "total_tokens": 5264,
+  "processing_time_seconds": 1.8776630410000053,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.563961+00:00"
+}

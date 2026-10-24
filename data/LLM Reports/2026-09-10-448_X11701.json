@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Trade Marks Office Manual of Practice and Procedure, specifically regarding examination of trade mark applications relating to plants or plant materials, and minor updates to news content on the IP Australia website. None of these changes affect the substantive guidance or factual content of the IPFR page on what to do if someone infringes your IP. The IPFR page provides general advice on steps to take, types of IP, and options for response, without referencing specific procedural details or statutory provisions that have been updated. Therefore, no amendments to the IPFR page are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2750,
+  "completion_tokens": 153,
+  "total_tokens": 2903,
+  "processing_time_seconds": 2.485101907000171,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552986+00:00"
+}

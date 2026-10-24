@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in policy registers at IP Australia, WIPO contract clauses, and a minor wording change in the WIPO about page. None of these changes affect the specific procedural details, fees, timelines, or criteria described in the IPFR page about disputing .au domain names under the auDRP. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4129,
+  "completion_tokens": 112,
+  "total_tokens": 4241,
+  "processing_time_seconds": 1.7256496019999759,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.876163+00:00"
+}

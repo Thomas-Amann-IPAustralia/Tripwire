@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "X04039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change relates to the Australian Federal Police website's accessibility and connection errors, which is unrelated to the content of the IPFR page about seeking binding, authoritative decisions in trade mark disputes. There is no impact on the legal information, procedures, or advice provided in the IPFR page. The change does not affect any specific statements, legal references, or procedural details in the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3257,
+  "completion_tokens": 111,
+  "total_tokens": 3368,
+  "processing_time_seconds": 2.4118790079999144,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.996638+00:00"
+}

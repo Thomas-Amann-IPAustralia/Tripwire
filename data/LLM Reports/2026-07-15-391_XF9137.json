@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP webpages relate solely to error messages and connectivity issues (e.g., ERR_TIMED_OUT, ERR_CONNECTION_CLOSED) and do not affect any substantive content about intellectual property crime or trade mark monitoring. The IPFR page content about monitoring trade marks and competitor activity remains accurate and unaffected by these technical changes to external webpages.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2694,
+  "completion_tokens": 101,
+  "total_tokens": 2795,
+  "processing_time_seconds": 2.48588574900009,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.112016+00:00"
+}

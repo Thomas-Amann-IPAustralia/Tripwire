@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes add information about anti-counterfeit measures such as verification and traceability solutions, overt and covert features to identify genuine products. However, the IPFR page already advises being proactive by listing IP rights with platforms and mentions brand registries like Amazon's. The added details about anti-counterfeit measures are supplementary and do not contradict or invalidate any specific statements in the IPFR page. There are no changes to procedural steps, legal thresholds, or specific platform requirements that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4164,
+  "completion_tokens": 133,
+  "total_tokens": 4297,
+  "processing_time_seconds": 3.778961824000021,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.006950+00:00"
+}

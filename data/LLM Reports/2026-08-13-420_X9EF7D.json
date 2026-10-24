@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to specific regulatory amendments concerning customs importation of firearms, updates to the Plant Breeder's Rights manual links, updates to non-legislative patent instruments, and updates to the IP Australia policy register. The IPFR page 'Familiarise yourself with IP laws' provides a broad overview of Australian IP legislation and the general framework of IP law without delving into detailed procedural, regulatory, or policy specifics. None of the changes affect the accuracy of the general descriptions, lists of Acts, or the roles of agencies as presented in the page. There are no specific references to the Customs Act or firearms importation, detailed procedural manuals, or specific policy register items that would require updating the page content. Therefore, the page remains accurate and current in its general overview.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5702,
+  "completion_tokens": 189,
+  "total_tokens": 5891,
+  "processing_time_seconds": 2.545129268999972,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.877117+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page 'Common scams' focuses on warning small business owners about scam messages impersonating IP Australia and related scams. The upstream changes relate to ACCC public registers and Amazon Brand Registry procedures, including updated deposit amounts for patent evaluation and some ACCC exemptions. None of these changes affect the accuracy or currency of the scam warning content, which does not mention Amazon's Brand Registry, ACCC exemptions, or any specific monetary amounts or procedural details that have changed. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3976,
+  "completion_tokens": 139,
+  "total_tokens": 4115,
+  "processing_time_seconds": 1.6732301079998706,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.156121+00:00"
+}

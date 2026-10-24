@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources primarily relate to updates in design rights surrender notices and minor corrections or cyclic reviews in the patent manual, such as fixing broken links and minor language changes. None of these changes affect the specific procedural details, timeframes, or substantive content about lodging a section 27 notice to prevent a patent under examination from being granted. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3436,
+  "completion_tokens": 117,
+  "total_tokens": 3553,
+  "processing_time_seconds": 1.303699922000078,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636123+00:00"
+}

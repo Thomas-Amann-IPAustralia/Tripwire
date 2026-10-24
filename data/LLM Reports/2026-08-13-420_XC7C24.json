@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to amendments in the Customs (Prohibited Imports) Regulations 1956 concerning firearms importation, updates to the Trade Marks Manual, and multiple minor updates and accessibility fixes to the Designs Manual on IPAustralia's website. None of these changes directly affect the content of the IPFR page 'Check your product against existing designs', which focuses on conducting freedom to operate searches for registered designs, the benefits, risks, and procedures involved. There are no updates to the legal thresholds, procedural steps, or specific statutory references related to design searches or infringement that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5858,
+  "completion_tokens": 155,
+  "total_tokens": 6013,
+  "processing_time_seconds": 2.251494198000046,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.873864+00:00"
+}

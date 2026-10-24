@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern detailed regulatory amendments related to firearms importation under the Customs Act, updates to non-legislative patent instruments by IP Australia, and updates to the IP policy register. None of these changes affect the fundamental definitions, types, or basic explanations of intellectual property rights presented in the IPFR page. The IPFR page provides a general overview of IP types and their protections for small business owners, without referencing specific legislative instruments, fees, or procedural details that have changed. Therefore, the accuracy and currency of the IPFR page content remain unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6083,
+  "completion_tokens": 148,
+  "total_tokens": 6231,
+  "processing_time_seconds": 2.026256697000008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.877407+00:00"
+}

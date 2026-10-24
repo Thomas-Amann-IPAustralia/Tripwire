@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of updates to IP Australia official notices, amendments and corrections to design registrations, updates to the Trade Marks Office Manual of Practice and Procedure, and minor formatting and accessibility updates to the design manual. None of these changes provide new or revised information that directly affects the specific content of the IPFR page 'What to check before getting registered IP'. The IPFR page provides general guidance on what to check before registering IP, including basic requirements and procedural advice, without referencing specific statutory sections, fees, timeframes, or procedural steps that have been changed. The changes do not alter the fundamental requirements or advice given on the IPFR page, nor do they update any specific dates, fees, or legal thresholds mentioned in the page. Therefore, no update to the IPFR page is required based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4714,
+  "completion_tokens": 199,
+  "total_tokens": 4913,
+  "processing_time_seconds": 2.915927537000016,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552136+00:00"
+}

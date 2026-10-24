@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The external changes relate primarily to administrative tribunal rules, oversight legislation, and updates to the Plant Breeder's Rights manual and eBay's VeRO program FAQs. None of these changes directly affect the specific content of the IPFR page, which provides general guidance on using IP that is not yours, including infringement risks, checking ownership, and obtaining permission. There are no updates to legal thresholds, procedures, or definitions in the provided changes that would require amending the IPFR page content. The changes to the PBR manual are mostly accessibility fixes and link corrections, and the eBay VeRO FAQ changes are minor formatting adjustments without substantive content changes. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7289,
+  "completion_tokens": 173,
+  "total_tokens": 7462,
+  "processing_time_seconds": 3.7795448030001353,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708327+00:00"
+}

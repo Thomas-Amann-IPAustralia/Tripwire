@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP webpages concern technical issues with website accessibility (connection timeouts and errors) and do not affect any substantive content related to patent oppositions or the procedural, legal, or cost details described in the IPFR page. There is no update to the patent opposition process, fees, timelines, or legal references that would require amending the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3877,
+  "completion_tokens": 107,
+  "total_tokens": 3984,
+  "processing_time_seconds": 2.120073947000037,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.110262+00:00"
+}

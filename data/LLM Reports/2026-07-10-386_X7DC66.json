@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the Australian Federal Police (AFP) webpage on fraud and corruption is currently unreachable due to a connection timeout error. This technical issue does not affect the content or accuracy of the IPFR page about business names and trade marks. The IPFR page does not reference the AFP or fraud and corruption topics, and the change does not involve any legislative or procedural updates relevant to trade marks or business names. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2091,
+  "completion_tokens": 128,
+  "total_tokens": 2219,
+  "processing_time_seconds": 2.3331725030000143,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790569+00:00"
+}

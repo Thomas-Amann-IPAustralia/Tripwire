@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XC1C6F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds a brief mention about a faster and less expensive way to handle patent disputes through Amazon Brand Registry, involving neutral third-party evaluators. However, the IPFR page content focuses on rebranding to avoid trade mark conflicts and does not discuss Amazon Brand Registry, patent disputes, or related dispute resolution mechanisms. The change is tangential and does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2228,
+  "completion_tokens": 116,
+  "total_tokens": 2344,
+  "processing_time_seconds": 1.97054019899997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.273504+00:00"
+}

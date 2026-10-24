@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the patent manual concerning examination details, legal decisions, formatting, and procedural clarifications, as well as accessibility fixes and updates to design manual links and Olympic designs administrative details. None of the changes specifically address or alter the procedural aspects, timeframes, or substantive content related to lodging a section 27 notice (Third Party Notification of Prior Art) to prevent a patent under examination from being granted. The IPFR page content about section 27 notices remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4485,
+  "completion_tokens": 138,
+  "total_tokens": 4623,
+  "processing_time_seconds": 2.8033622880000166,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.501105+00:00"
+}

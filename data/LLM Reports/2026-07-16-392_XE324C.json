@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trans-Tasman IP Attorneys Board webpage primarily involve formatting and minor textual adjustments without altering substantive content about how to find or engage an IP attorney, their qualifications, or fee structures. The IPFR page already provides comprehensive and accurate guidance on choosing IP professionals, including references to the Trans-Tasman IP Attorneys Board website for finding attorneys. There are no changes to legal thresholds, fees, procedural steps, or definitions that would require updating the IPFR content. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7214,
+  "completion_tokens": 139,
+  "total_tokens": 7353,
+  "processing_time_seconds": 2.4822202089999337,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.228060+00:00"
+}

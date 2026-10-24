@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from IP Australia webpages provide detailed guidance on commercialisation methods (independent launch, licensing, franchising, assignment) and anti-counterfeit measures including Amazon Brand Registry and product verification features. However, the IPFR page 'What does IP protection mean for my business?' provides a broad overview of IP protection concepts without specific procedural or financial details about commercialisation or anti-counterfeiting measures. The new detailed content does not contradict or render inaccurate any specific statements in the IPFR page. Instead, it supplements more advanced topics beyond the scope of this introductory page. Therefore, no update to the existing IPFR content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6375,
+  "completion_tokens": 159,
+  "total_tokens": 6534,
+  "processing_time_seconds": 2.3868178870000065,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.007854+00:00"
+}

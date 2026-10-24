@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-24-370",
+  "ipfr_page_id": "XECBF7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change in the upstream source is a minor formatting adjustment (adding a trailing space) with no substantive change to the content or guidance about infringement or searching for existing rights. The IPFR page content about searching for existing rights and understanding infringement remains accurate and unaffected by this trivial edit.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1580,
+  "completion_tokens": 89,
+  "total_tokens": 1669,
+  "processing_time_seconds": 2.417188023000108,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-24T06:22:08.486476+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the Patent Manual, Trade Marks Manual sections on examination of trade marks related to plants, amendments procedures, costs determination, and design applicant details. None of the changes specifically address the opposition process, opposition timeframes, costs, or procedural details for challenging trade mark registrations as described in the IPFR page. The IPFR page content about opposing trade marks, including the 2-month opposition period, costs, and process steps, remains accurate and unaffected by these upstream changes. There is no indication of amendments to opposition periods, fees, or procedural rules that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12269,
+  "completion_tokens": 157,
+  "total_tokens": 12426,
+  "processing_time_seconds": 3.037174850999918,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.204584+00:00"
+}

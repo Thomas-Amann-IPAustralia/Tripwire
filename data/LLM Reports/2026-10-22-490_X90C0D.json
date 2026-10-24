@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the DFAT webpage update clarify and slightly rephrase the description of Australia's international IP engagement, the role of DFAT, and the WTO TRIPS agreement. They update some statistics (e.g., Australia's Global Innovation Index ranking) and emphasize broader public interest considerations in IP protection. However, these changes do not contradict or render inaccurate any specific statements in the IPFR page about what IP protection means for a business, the types of IP, or practical aspects of protection and enforcement. The IPFR page does not include the detailed international or governmental agency descriptions or statistics that were updated. The Amazon Brand Registry change removes a program description that is not mentioned in the IPFR page. Therefore, no specific factual update or correction is required to maintain the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4159,
+  "completion_tokens": 193,
+  "total_tokens": 4352,
+  "processing_time_seconds": 1.761016343999927,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550895+00:00"
+}

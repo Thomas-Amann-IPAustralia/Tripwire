@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to amendments in the Administrative Review Tribunal Act 2024 and Migration Act 1958 concerning decisions made without oral hearings, and minor updates to the IP Australia trademark manual including removal of references to a section of the PBR Act and minor typographical corrections. None of these changes specifically affect the procedural details, timeframes, fees, or outcomes described in the IPFR page about responding to a trade mark opposition. The IPFR page content remains accurate and up to date regarding the opposition process, deadlines, and possible outcomes. There is no indication that the amendments impact the opposition process or the guidance provided to small business owners on this page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4742,
+  "completion_tokens": 164,
+  "total_tokens": 4906,
+  "processing_time_seconds": 2.342661528000008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491051+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update about a parliamentary committee recommending Australia ratify the GRATK Treaty, which is a future event (October 2026) and does not currently affect the factual content of the IPFR page. The IPFR page explains the current state of worldwide IP rights and international systems available to Australians, including the PCT, Madrid, and Hague systems. The change does not provide any new or updated procedural details, dates, or legal thresholds that would require amending the existing guidance. The page's content remains accurate and up to date as of now.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1600,
+  "completion_tokens": 148,
+  "total_tokens": 1748,
+  "processing_time_seconds": 1.8386068130000126,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.732313+00:00"
+}

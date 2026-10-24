@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-07-475",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Online Safety Act 2021, specifically strengthening enforcement powers related to social media minimum age requirements and the eSafety Commissioner's powers. The IPFR page is about using mediation to resolve IP disputes and does not mention social media age restrictions, online safety enforcement, or related regulatory frameworks. There is no direct or indirect impact on the content, advice, or legal context provided in the IPFR page. Therefore, no update is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2901,
+  "completion_tokens": 126,
+  "total_tokens": 3027,
+  "processing_time_seconds": 1.3231580120000217,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-07T08:23:21.769296+00:00"
+}

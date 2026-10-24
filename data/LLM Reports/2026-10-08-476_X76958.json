@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the WIPO Intergovernmental Committee on Intellectual Property and Indigenous Knowledge, and updates to the Uniform Domain Name Dispute Resolution Policy (UDRP) documents. The IPFR page discusses general considerations before enforcing IP overseas, including informal enforcement, ADR options, and legal enforcement, but does not mention the IGC, Indigenous Knowledge negotiations, or the UDRP specifically. There are no specific references to the UDRP or these WIPO negotiations in the IPFR page content that would require updating. The changes do not affect the accuracy or currency of the guidance provided on this page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2878,
+  "completion_tokens": 155,
+  "total_tokens": 3033,
+  "processing_time_seconds": 1.7762537610001345,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.486200+00:00"
+}

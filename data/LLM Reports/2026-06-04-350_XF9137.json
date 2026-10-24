@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates statistics and dates related to Amazon's Brand Registry and Transparency program, specifically the number of product units verified and the date of the data source. The IPFR page content focuses on monitoring the Australian Trade Marks Register and general trade mark monitoring practices, without referencing Amazon Brand Registry or specific brand protection statistics from Amazon. Therefore, the updated Amazon data does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2123,
+  "completion_tokens": 118,
+  "total_tokens": 2241,
+  "processing_time_seconds": 1.6334549200000765,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708578+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve accessibility fixes, link updates, and minor content clarifications in the design manual and patent manual, as well as a compilation update for the Australian Border Force Act 2015. None of these changes specifically affect the accuracy or currency of the IPFR page content about checking products against existing designs, such as procedural steps, legal thresholds, or specific statutory references. The IPFR page content remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3939,
+  "completion_tokens": 126,
+  "total_tokens": 4065,
+  "processing_time_seconds": 1.854039393999983,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.562645+00:00"
+}

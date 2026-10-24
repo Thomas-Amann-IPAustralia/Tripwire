@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates on ACCC public registers, consultation announcements, removal of a specific Amazon Brand Registry program, and revisions to a DFAT webpage describing Australia's international IP engagement and WTO/TRIPS context. None of these changes affect the core content or specific factual details of the IPFR 'Infringement 101' page, which focuses on explaining infringement basics, trade mark registration and enforcement, and related IP concepts for small businesses. There are no updates to Australian IP legislation, infringement definitions, enforcement procedures, or trade mark registrability criteria that would require amending the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9668,
+  "completion_tokens": 154,
+  "total_tokens": 9822,
+  "processing_time_seconds": 1.9545200470001873,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550576+00:00"
+}

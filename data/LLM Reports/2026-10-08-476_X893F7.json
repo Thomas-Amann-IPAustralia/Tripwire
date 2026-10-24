@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia legislation and non-legislative instruments page clarify the current non-legislative patent instruments but do not alter any substantive legal provisions or procedural details relevant to court proceedings or patent litigation described in the IPFR page. The ACCC public registers update relates to competition and consumer law enforcement actions and court enforceable undertakings, which are unrelated to patent litigation or court dispute resolution processes covered by the IPFR page. Neither change affects the accuracy or currency of the IPFR content on seeking binding, authoritative decisions in patent disputes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3849,
+  "completion_tokens": 143,
+  "total_tokens": 3992,
+  "processing_time_seconds": 1.7300156100000095,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489227+00:00"
+}

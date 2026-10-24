@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to closed consultations on IP Australia webpages, including updates to the Patent Manual, streamlining IP regulations, trade mark amendment regulations, the WIPO Design Law Treaty, and Indigenous Knowledge initiatives. However, the IPFR page content is a general educational article on IP infringement aimed at small businesses and creators, focusing on understanding infringement concepts rather than procedural or regulatory details. There are no specific references to the Patent Manual, trade mark regulations, or procedural timelines that are contradicted or outdated by these changes. Therefore, the page remains accurate and does not require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4289,
+  "completion_tokens": 151,
+  "total_tokens": 4440,
+  "processing_time_seconds": 1.863277996000079,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.205653+00:00"
+}

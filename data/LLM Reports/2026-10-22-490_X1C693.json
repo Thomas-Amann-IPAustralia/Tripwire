@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes update the description of Australia's international IP engagement and the role of the WTO TRIPS Agreement, including updated rankings and a slight rephrasing of the objectives of TRIPS. However, these changes do not affect the specific content of the IPFR page, which focuses on the territorial nature of Australian IP rights and the need to apply in other countries or use international systems for overseas protection. There are no changes to the fundamental principles about Australian IP protection being limited to Australia or the practical advice given to small businesses. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3239,
+  "completion_tokens": 150,
+  "total_tokens": 3389,
+  "processing_time_seconds": 1.5532878129999972,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551022+00:00"
+}

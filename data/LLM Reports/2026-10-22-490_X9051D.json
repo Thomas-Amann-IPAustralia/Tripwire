@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to ACCC consultations on various consumer safety standards and market inquiries, such as pedal bicycles safety standards and mobile services inquiry. These changes do not affect the content of the IPFR page, which focuses on educating customers to differentiate genuine products from lookalikes and counterfeit goods. There is no mention or update to IP rights, customer education strategies, or enforcement procedures that would impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2490,
+  "completion_tokens": 122,
+  "total_tokens": 2612,
+  "processing_time_seconds": 1.3595099780000055,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.552210+00:00"
+}

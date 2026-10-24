@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a cyclic review of the IPAustralia patent manual with mostly minor language changes and no substantive amendments to legal or procedural content. The IPFR page on seeking binding, authoritative decisions in patent disputes focuses on court proceedings, costs, timelines, and practical advice for small businesses. The changes in the patent manual do not affect any specific factual or procedural information in the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3567,
+  "completion_tokens": 124,
+  "total_tokens": 3691,
+  "processing_time_seconds": 1.284002141999963,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.208166+00:00"
+}

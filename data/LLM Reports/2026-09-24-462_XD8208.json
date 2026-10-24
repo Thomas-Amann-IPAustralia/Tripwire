@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream sources primarily involve updates to procedural details, formatting, and minor clarifications in the Trade Marks Manual and the Design Manual, such as amendments to sections on costs, amendments, applicant names, and examination of plant-related trade marks. None of these changes specifically address or alter the substantive grounds, timeframes, fees, or procedural steps related to the removal of trade marks for non-use as described in the IPFR page. The IPFR content on removal of trade marks remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5077,
+  "completion_tokens": 141,
+  "total_tokens": 5218,
+  "processing_time_seconds": 1.629049010999779,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.204970+00:00"
+}

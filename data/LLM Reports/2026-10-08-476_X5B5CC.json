@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X5B5CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change to the 'Your Guide to Dispute Resolution' webpage is a minor formatting adjustment that does not alter any substantive content related to mediation or dispute resolution processes. The IPFR page content remains accurate and up to date, and no specific factual or procedural information in the IPFR page is contradicted or outdated by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3029,
+  "completion_tokens": 100,
+  "total_tokens": 3129,
+  "processing_time_seconds": 1.3635483580001164,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489579+00:00"
+}

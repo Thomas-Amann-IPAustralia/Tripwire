@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to minor technical amendments to regulations, updates to IP Australia instruments and forms, and updates to ASIC company registration procedures. None of the changes affect the core comparative content of the IPFR page, which provides a high-level overview of IP Australia versus other government agencies. There are no updates to the descriptions, roles, or services of IP Australia or other agencies that would require changes to the page's content. The changes do not alter any specific facts, dates, fees, or procedural steps mentioned in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6483,
+  "completion_tokens": 140,
+  "total_tokens": 6623,
+  "processing_time_seconds": 1.6065836880000006,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.485269+00:00"
+}

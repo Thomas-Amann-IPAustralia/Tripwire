@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-18-394",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a technical issue with the Australian Federal Police website (connection closed error) and does not relate to substantive content about IP dispute resolution or enforcement options. The IPFR page discusses informal and administrative approaches to IP disputes, including ADR and notices of objection, but the change does not affect any factual or procedural information presented. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1524,
+  "completion_tokens": 112,
+  "total_tokens": 1636,
+  "processing_time_seconds": 2.0340978120000273,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-18T05:03:28.023255+00:00"
+}

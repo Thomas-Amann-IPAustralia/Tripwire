@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the ASBFEO dispute support webpage is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). There is no substantive content change or update to the information on dispute resolution or court proceedings. The IPFR page XA50BE discusses seeking binding, authoritative decisions in court for design disputes and does not rely on or cite specific content from the ASBFEO dispute support page. The change is purely technical (website availability) and does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2995,
+  "completion_tokens": 137,
+  "total_tokens": 3132,
+  "processing_time_seconds": 1.4782722669999657,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.914186+00:00"
+}

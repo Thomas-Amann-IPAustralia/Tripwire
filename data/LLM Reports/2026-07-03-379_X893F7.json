@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-03-379",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP webpage on fraud and corruption is currently unreachable due to a connection issue (ERR_CONNECTION_CLOSED). This is a technical access problem and does not reflect any substantive change in intellectual property law, court procedures, or patent litigation processes relevant to the IPFR page content. The IPFR page on seeking binding, authoritative decisions in patent disputes remains accurate and unaffected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3076,
+  "completion_tokens": 113,
+  "total_tokens": 3189,
+  "processing_time_seconds": 3.4802833260000625,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-03T06:10:01.996479+00:00"
+}

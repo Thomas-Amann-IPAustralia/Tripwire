@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to ACCC exemptions under the Competition and Consumer Act and updates to Amazon's Brand Registry deposit amounts for patent evaluations. The IPFR page focuses on reporting scams and fraud related to IP rights in Australia and does not mention ACCC exemptions or Amazon's internal dispute resolution deposit amounts. Therefore, these changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5733,
+  "completion_tokens": 109,
+  "total_tokens": 5842,
+  "processing_time_seconds": 1.9347893500000737,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152859+00:00"
+}

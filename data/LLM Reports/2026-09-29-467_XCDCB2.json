@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds information about anti-counterfeit measures and the Amazon Brand Registry on a related IP Australia webpage. However, the IPFR page 'Register your unregistered trade mark' does not currently discuss anti-counterfeit measures, brand registries, or related enforcement tools beyond basic registration benefits and costs. The new content does not contradict or update any specific factual claims, fees, procedures, or timelines in the IPFR page. Therefore, while the topics are related, the IPFR page remains accurate and complete as is.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2508,
+  "completion_tokens": 137,
+  "total_tokens": 2645,
+  "processing_time_seconds": 1.9853912239999545,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.008075+00:00"
+}

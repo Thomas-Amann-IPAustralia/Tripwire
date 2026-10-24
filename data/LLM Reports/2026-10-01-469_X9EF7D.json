@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia manuals and non-legislative instruments primarily update procedural details, forms, and administrative practices related to trade marks, plant breeder's rights, and designs. The IPFR page provides a general overview of Australian IP laws, their legislative framework, and the roles of agencies without delving into specific procedural details or citing exact forms, fees, or filing requirements. There are no specific dates, dollar amounts, statutory references, or procedural steps in the IPFR page that are contradicted or outdated by these updates. Therefore, the page remains accurate and current for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5110,
+  "completion_tokens": 152,
+  "total_tokens": 5262,
+  "processing_time_seconds": 1.7402007460000277,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.936219+00:00"
+}

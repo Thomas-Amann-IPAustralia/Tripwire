@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to the IPTA website being unreachable (timed out) and do not indicate any substantive change to the availability, terms, or nature of the free initial consultation service offered by IPTA members. The IPFR page mentions that some services offer free or low-cost initial advice but does not specifically reference IPTA or provide detailed instructions or links to that service. Therefore, the IPFR page content remains accurate and does not require amendment based on the current changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2979,
+  "completion_tokens": 127,
+  "total_tokens": 3106,
+  "processing_time_seconds": 1.2682571939999434,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.015662+00:00"
+}

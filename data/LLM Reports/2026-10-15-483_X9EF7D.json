@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Copyright Regulations 2017 are minor, technical, and consequential amendments related to prescribed forms, with no substantive changes to the law or its interpretation. The updates to the Plant Breeder's Rights Manual concern procedural and workflow updates, links, and chapter references, without altering the fundamental legal framework or the description of the Plant Breeder's Rights Act 1994 in the IPFR page. The IPFR page provides a general overview of IP laws and does not include specific procedural details or form requirements that would be affected by these changes. Therefore, no update to the IPFR page content is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4842,
+  "completion_tokens": 156,
+  "total_tokens": 4998,
+  "processing_time_seconds": 2.3096177710001484,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636189+00:00"
+}

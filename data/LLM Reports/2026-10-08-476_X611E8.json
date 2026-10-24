@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve cyclic reviews, minor language edits, removal of outdated references (such as 'forms officer'), and updates to policy register entries unrelated to the patent opposition process. There are no amendments to procedural timeframes, fees, legal thresholds, or substantive steps in the opposition process described on the IPFR page. The changes to the IP Australia legislation and non-legislative instruments page are minor formatting or content clarifications without impact on opposition procedures. Therefore, the IPFR page content about responding to a patent opposition remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4818,
+  "completion_tokens": 145,
+  "total_tokens": 4963,
+  "processing_time_seconds": 1.7665900930001044,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.488423+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern updates to official notices about trade mark practice updates following the High Court decision in Zip Co Ltd v Firstmac Ltd, postponement of a Plant Breeders Rights portal release, updates to patent examination technology areas, and terminology changes in trade mark image indexing. The IPFR page 'Infringement 101' provides general, foundational information about IP infringement and trade marks aimed at small business owners, without referencing specific cases, procedural updates, or detailed legal practice changes. None of the changes indicate amendments to the basics of infringement, trade mark registrability criteria, or enforcement guidance that would render the IPFR content inaccurate or outdated. Therefore, no update to the IPFR page content is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6062,
+  "completion_tokens": 181,
+  "total_tokens": 6243,
+  "processing_time_seconds": 2.954901927000037,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.562073+00:00"
+}

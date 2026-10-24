@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to the IP Australia design manual, involving formatting amendments and minor updates to sections about designs and products. The IPFR page concerns removal of trade marks for non-use, which is a distinct IP area from designs. The change does not mention trade marks, removal procedures, timeframes, fees, or any content directly related to the IPFR page's subject matter. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3050,
+  "completion_tokens": 123,
+  "total_tokens": 3173,
+  "processing_time_seconds": 2.0524910350000027,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909044+00:00"
+}

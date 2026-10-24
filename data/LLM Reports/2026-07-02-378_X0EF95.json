@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve updates to manuals and policy registers related to patents, plant breeder rights, and design examination procedures, including accessibility fixes and link updates. There is no indication of changes to substantive legal provisions, fees, timeframes, or procedural steps directly affecting the design registration process as described in the IPFR page. The IPFR page content about design registration, certification, fees, timeframes, and enforcement remains accurate and current based on the provided change documents.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6164,
+  "completion_tokens": 129,
+  "total_tokens": 6293,
+  "processing_time_seconds": 3.0288178780001545,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268194+00:00"
+}

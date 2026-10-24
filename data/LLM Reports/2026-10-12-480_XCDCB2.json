@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to an update of the Competition and Consumer Act 2010 including Australian Consumer Law, but the IPFR page content is focused specifically on registering trade marks with IP Australia, including fees, processes, and benefits. There is no specific mention or reliance on the Competition and Consumer Act or Australian Consumer Law provisions in the page content. The update does not indicate any changes to trade mark registration procedures, fees, or legal rights directly referenced in the IPFR page. Therefore, the page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2202,
+  "completion_tokens": 136,
+  "total_tokens": 2338,
+  "processing_time_seconds": 1.3307572499999196,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.016744+00:00"
+}

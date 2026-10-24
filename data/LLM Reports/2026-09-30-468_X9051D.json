@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change clarifies and slightly reorganizes information about IP rights listing on platforms like Amazon Brand Registry and anti-counterfeit measures, but it does not introduce new legal requirements, change any statutory references, or alter specific procedural steps. The IPFR page already mentions customer education tools such as QR codes and security tags, which aligns with the updated content. There is no specific outdated or incorrect information in the IPFR page that needs correction based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2512,
+  "completion_tokens": 124,
+  "total_tokens": 2636,
+  "processing_time_seconds": 1.6319177289999516,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.357260+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-13-328",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage, increasing from 24 to 25 results. This change is unrelated to the substantive content of the IPFR page about disputing .au domain names under the auDRP. There is no impact on any factual information, procedures, fees, timeframes, or legal criteria described in the IPFR page. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2303,
+  "completion_tokens": 127,
+  "total_tokens": 2430,
+  "processing_time_seconds": 3.36062420799999,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-13T06:04:12.939412+00:00"
+}

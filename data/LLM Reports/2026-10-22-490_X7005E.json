@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to updates on the ACCC public registers, including exemptions and undertakings under the Competition and Consumer Act 2010 (Cth), but it does not provide any new or amended information about the Australian Consumer Law provisions relevant to unregistered trade marks or passing off. The IPFR page content on unregistered trade marks and ACL protections remains accurate and unaffected by these administrative updates to ACCC registers.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2255,
+  "completion_tokens": 116,
+  "total_tokens": 2371,
+  "processing_time_seconds": 1.352493147000132,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551378+00:00"
+}

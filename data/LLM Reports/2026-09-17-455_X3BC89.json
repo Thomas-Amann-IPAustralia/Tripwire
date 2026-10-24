@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document reports routine updates and corrections to design registrations and updated instruments related to fees and filing procedures for trade marks, patents, and plant breeders' rights. These changes are administrative and procedural updates without any impact on the fundamental guidance or specific factual content presented in the IPFR page. The IPFR page provides general advice on checking IP ownership using various registers and does not include details about specific design registrations, procedural fees, or filing requirements that would be affected by these updates. Therefore, no amendment to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1850,
+  "completion_tokens": 142,
+  "total_tokens": 1992,
+  "processing_time_seconds": 1.245660996999959,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.935530+00:00"
+}

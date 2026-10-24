@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates and formatting amendments to the IP Australia design manual, additions of new non-legislative instruments related to designs fees and filing, minor formatting changes to the WIPO Paris Convention text, and a small clarification in the guidance on engaging an attorney. None of these changes directly affect the specific content of the IPFR page 'Check your product against existing designs'. The IPFR page does not include detailed procedural steps, fee schedules, or legislative references that are altered by these updates. The page's guidance on conducting freedom to operate searches, benefits, risks, and outcomes remains accurate and unaffected by the upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5076,
+  "completion_tokens": 158,
+  "total_tokens": 5234,
+  "processing_time_seconds": 2.938516871000047,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909111+00:00"
+}

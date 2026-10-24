@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X5B5CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change to the 'Your Guide to Dispute Resolution' webpage is minimal and purely formatting-related, involving the repositioning of the 'Publication date' text without any substantive content update. The IPFR page content referencing this guide remains accurate and unaffected by this minor change. Therefore, no update to the IPFR page is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3065,
+  "completion_tokens": 99,
+  "total_tokens": 3164,
+  "processing_time_seconds": 1.6052284980000877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850837+00:00"
+}

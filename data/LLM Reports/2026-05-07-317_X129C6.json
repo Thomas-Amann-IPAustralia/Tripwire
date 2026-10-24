@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the Amazon Brand Registry webpage to reduce the cashback offer from 20% to 10% on branded sales. The IPFR page mentions Amazon Brand Registry in the context of IP protection programs and their eligibility rules but does not mention any cashback or sales incentives. Therefore, this change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1898,
+  "completion_tokens": 106,
+  "total_tokens": 2004,
+  "processing_time_seconds": 2.1586488520001694,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712948+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to IP Australia's internal manuals and official notices about revocation of acceptance and registration, amendments to the Trade Marks Manual of Practice and Procedure, and updates to DFAT's description of Australia's international IP engagement. None of these changes affect the specific content of the IPFR page about registering unregistered trade marks, such as fees, timeframes, benefits, risks, or procedural steps. There are no updates to fees, timelines, or procedural requirements for trade mark registration that would require amending the IPFR page. The changes are mostly procedural consolidations and minor formatting or policy clarifications, which do not impact the practical guidance given to small business owners on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10178,
+  "completion_tokens": 172,
+  "total_tokens": 10350,
+  "processing_time_seconds": 2.6384569360000114,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550213+00:00"
+}

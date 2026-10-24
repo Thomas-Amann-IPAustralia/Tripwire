@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change in the upstream source is a minor correction in the number of search results displayed on the IP Australia news page (from 38 to 36 results). This does not affect any specific content, guidance, or factual information in the IP First Response blog contributor guidelines page. The IPFR page content is about contributor instructions and editorial policy, which remains accurate and unaffected by this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2074,
+  "completion_tokens": 111,
+  "total_tokens": 2185,
+  "processing_time_seconds": 1.7786364029998367,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.553296+00:00"
+}

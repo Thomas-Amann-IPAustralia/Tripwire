@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System Lookbook</title>
+    <!-- Importing the specified fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <style>
+        /* ─── CSS Variables — Dark mode (default) ───────────────────────────────── */
+        :root {
+            --bg-primary:    #0e0e0d;
+            --bg-secondary:  #161614;
+            --bg-tertiary:   #1e1e1b;
+            --bg-accent:     #272722;
+
+            --text-primary:   #e8e8e8;
+            --text-secondary: #999999;
+            --text-tertiary:  #777777;
+
+            --rule:         #333333;
+            --rule-accent:  #444444;
+
+            /* Stage accent colours — 9 stages, 6 distinct colours (by design). */
+            --stage-1: #4ADE80;
+            --stage-2: #F87171;
+            --stage-3: #FBBF24;
+            --stage-4: #60A5FA;
+            --stage-5: #A78BFA;
+            --stage-6: #F3701E;
+            --stage-7: #4ADE80;
+            --stage-8: #F87171;
+            --stage-9: #FBBF24;
+
+            --state-alert:    #F87171;
+            --state-warn:     #FBBF24;
+            --state-ok:       #4ADE80;
+            --state-error:    #EF4444;
+            --state-inactive: #777777;
+
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-mono:    'DM Mono', monospace;
+            --font-body:    'Lora', serif;
+        }
+
+        /* ─── Light mode overrides ──────────────────────────────────────────────── */
+        [data-theme="light"] {
+            --bg-primary:    #F5F5F5;
+            --bg-secondary:  #FFFFFF;
+            --bg-tertiary:   #FAFAFA;
+            --bg-accent:     #EEEEEE;
+
+            --text-primary:   #111111;
+            --text-secondary: #333333;
+            --text-tertiary:  #666666;
+
+            --rule:         #CCCCCC;
+            --rule-accent:  #BBBBBB;
+
+            --stage-1: #16A34A;
+            --stage-2: #DC2626;
+            --stage-3: #D97706;
+            --stage-4: #2563EB;
+            --stage-5: #7C3AED;
+            --stage-6: #F3701E;
+            --stage-7: #16A34A;
+            --stage-8: #DC2626;
+            --stage-9: #D97706;
+
+            --state-alert:    #DC2626;
+            --state-warn:     #D97706;
+            --state-ok:       #16A34A;
+            --state-error:    #B91C1C;
+            --state-inactive: #9CA3AF;
+        }
+
+        /* ─── Reset ─────────────────────────────────────────────────────────────── */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            border-radius: 0;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-size: 15px;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* ─── Typography ─────────────────────────────────────────────────────────── */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 400;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        h1 { font-size: 4rem; }
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--rule); }
+        h3 { font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+
+        code, pre, .mono {
+            font-family: var(--font-mono);
+            font-size: 0.9em;
+        }
+
+        a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--text-primary);
+        }
+
+        p { line-height: 1.6; margin-bottom: 1.5rem; }
+
+        /* Pills and badges only get a small radius */
+        .pill, .badge {
+            border-radius: 2px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            background: var(--bg-accent);
+            display: inline-block;
+        }
+
+        /* ─── Scrollbars ─────────────────────────────────────────────────────────── */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--rule-accent);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-tertiary);
+        }
+
+        /* ─── Grain texture on panels ───────────────────────────────────────────── */
+        .panel {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid var(--rule);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+            opacity: 0.025;
+            border-radius: inherit;
+        }
+
+        /* ─── Animations ─────────────────────────────────────────────────────────── */
+        @keyframes sectionEnter {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-enter {
+            animation: sectionEnter 400ms ease-out both;
+        }
+
+        @keyframes healthPulse {
+            0%, 100% { opacity: 1; }
+            50%        { opacity: 0.7; }
+        }
+
+        .pulse {
+            animation: healthPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes graphNodePulse {
+            0%   { transform: scale(1);   opacity: 0.8; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        .node-pulse {
+            width: 12px;
+            height: 12px;
+            background: var(--state-ok);
+            border-radius: 50% !important;
+            position: relative;
+            display: inline-block;
+        }
+        .node-pulse::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: inherit;
+            border-radius: 50% !important;
+            animation: graphNodePulse 1.5s infinite ease-out;
+        }
+
+        @keyframes docAnchorGlow {
+            0%   { background-color: transparent; }
+            20%  { background-color: rgba(212, 168, 32, 0.18); }
+            100% { background-color: transparent; }
+        }
+
+        .anchor-arrival {
+            animation: docAnchorGlow 1.5s ease-out both;
+            border-radius: 2px;
+            padding: 0 4px;
+        }
+
+        @keyframes configPulse {
+            0%   { background-color: transparent;           box-shadow: inset 3px 0 0 transparent; }
+            15%  { background-color: rgba(212, 168, 32, 0.12); box-shadow: inset 3px 0 0 var(--state-warn); }
+            100% { background-color: transparent;           box-shadow: inset 3px 0 0 var(--state-warn); }
+        }
+
+        .config-pulse {
+            animation: configPulse 1.5s ease-in-out both;
+            padding: 8px;
+        }
+
+        /* ─── Verdict pills ─────────────────────────────────────────────────────── */
+        .verdict-change-required {
+            color: var(--state-alert);
+            border: 1px solid var(--state-alert);
+            padding: 1px 6px;
+            border-radius: 2px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            display: inline-block;
+        }
+
+        .verdict-uncertain {
+            color: var(--state-warn);
+            border: 1px solid var(--state-warn);
+            padding: 1px 6px;
+            border-radius: 2px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            display: inline-block;
+        }
+
+        .verdict-no-change {
+            color: var(--state-ok);
+            border: 1px solid var(--state-ok);
+            padding: 1px 6px;
+            border-radius: 2px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            display: inline-block;
+        }
+
+        /* ─── Lookbook Specific Layout ─────────────────────────────────────────── */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--text-primary);
+            color: var(--bg-primary);
+            border: none;
+            padding: 8px 16px;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .color-swatch {
+            height: 80px;
+            border: 1px solid var(--rule);
+            display: flex;
+            align-items: flex-end;
+            padding: 8px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .swatch-label {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 4px;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .spacing-y { margin-bottom: 2rem; }
+
+        header {
+            margin-bottom: 4rem;
+            border-left: 4px solid var(--stage-4);
+            padding-left: 1.5rem;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">Switch to Light</button>
+
+    <div class="container section-enter">
+        <header>
+            <span class="section-label">Documentation / Lookbook</span>
+            <h1>Global Design System</h1>
+            <p class="intro-text">
+                A brutalist, high-contrast interface designed for technical monitoring and state tracking. 
+                Built with <i>Lora</i> for legibility and <i>Bebas Neue</i> for industrial hierarchy.
+            </p>
+        </header>
+
+        <!-- Typography Section -->
+        <section class="spacing-y">
+            <h2>01. Typography</h2>
+            <div class="panel">
+                <h1>The Quick Brown Fox</h1>
+                <h3>Subheader in Bebas Neue</h3>
+                <p>
+                    This is the body font (Lora). It is a contemporary serif with roots in calligraphy. 
+                    It is designed to be highly readable for long-form content. 
+                    <span class="anchor-arrival">Here is an inline anchor arrival highlight effect.</span>
+                </p>
+                <div class="mono" style="margin-bottom: 1rem;">
+                    DM Mono: Function calls and system data look like this.
+                </div>
+                <div class="flex-row">
+                    <span class="pill">System Badge</span>
+                    <span class="pill" style="background: var(--bg-tertiary); border: 1px solid var(--rule);">Metadata</span>
+                    <a href="#">Hover Link Effect</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Color Stages Section -->
+        <section class="spacing-y">
+            <h2>02. Stage Progression</h2>
+            <span class="section-label">9 Stages (6 Distinct Colors)</span>
+            <div class="color-grid">
+                <div class="color-swatch" style="background: var(--stage-1);"><span class="swatch-label">Stage 1</span></div>
+                <div class="color-swatch" style="background: var(--stage-2);"><span class="swatch-label">Stage 2</span></div>
+                <div class="color-swatch" style="background: var(--stage-3);"><span class="swatch-label">Stage 3</span></div>
+                <div class="color-swatch" style="background: var(--stage-4);"><span class="swatch-label">Stage 4</span></div>
+                <div class="color-swatch" style="background: var(--stage-5);"><span class="swatch-label">Stage 5</span></div>
+                <div class="color-swatch" style="background: var(--stage-6);"><span class="swatch-label">Stage 6</span></div>
+                <div class="color-swatch" style="background: var(--stage-7);"><span class="swatch-label">Stage 7</span></div>
+                <div class="color-swatch" style="background: var(--stage-8);"><span class="swatch-label">Stage 8</span></div>
+                <div class="color-swatch" style="background: var(--stage-9);"><span class="swatch-label">Stage 9</span></div>
+            </div>
+        </section>
+
+        <!-- UI States Section -->
+        <section class="spacing-y">
+            <h2>03. System States</h2>
+            <div class="color-grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));">
+                <div class="color-swatch" style="background: var(--state-ok);"><span class="swatch-label">OK</span></div>
+                <div class="color-swatch" style="background: var(--state-warn);"><span class="swatch-label">WARN</span></div>
+                <div class="color-swatch" style="background: var(--state-alert);"><span class="swatch-label">ALERT</span></div>
+                <div class="color-swatch" style="background: var(--state-error);"><span class="swatch-label">ERROR</span></div>
+                <div class="color-swatch" style="background: var(--state-inactive);"><span class="swatch-label">INACTIVE</span></div>
+            </div>
+        </section>
+
+        <!-- Components Section -->
+        <section class="spacing-y">
+            <h2>04. Components & Verdicts</h2>
+            <div class="panel">
+                <span class="section-label">Verdict Pills</span>
+                <div class="flex-row spacing-y" style="margin-top: 10px;">
+                    <span class="verdict-change-required">CHANGE REQUIRED</span>
+                    <span class="verdict-uncertain">UNCERTAIN</span>
+                    <span class="verdict-no-change">NO CHANGE</span>
+                </div>
+
+                <span class="section-label">Config Pulse Interaction</span>
+                <div class="config-pulse" style="margin-top: 10px; border: 1px solid var(--rule);">
+                    <div class="mono">system_override: true</div>
+                    <div class="mono" style="font-size: 11px; color: var(--text-tertiary);">Modified 2m ago by root</div>
+                </div>
+
+                <div class="flex-row" style="margin-top: 2rem;">
+                    <div>
+                        <span class="section-label">Health Pulse</span>
+                        <div class="pulse" style="width: 40px; height: 10px; background: var(--state-ok); border-radius: 2px;"></div>
+                    </div>
+                    <div style="margin-left: 2rem;">
+                        <span class="section-label">Node Status</span>
+                        <div class="node-pulse"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layout Surfaces Section -->
+        <section class="spacing-y">
+            <h2>05. Surfaces</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div style="background: var(--bg-secondary); border: 1px solid var(--rule); padding: 1.5rem;">
+                    <span class="section-label">Secondary BG</span>
+                    <p style="font-size: 13px; margin: 0;">Main panel background.</p>
+                </div>
+                <div style="background: var(--bg-tertiary); border: 1px solid var(--rule); padding: 1.5rem;">
+                    <span class="section-label">Tertiary BG</span>
+                    <p style="font-size: 13px; margin: 0;">In-set content or secondary sidebar.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const btn = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        btn.addEventListener('click', () => {
+            const isLight = html.getAttribute('data-theme') === 'light';
+            if (isLight) {
+                html.removeAttribute('data-theme');
+                btn.textContent = 'Switch to Light';
+            } else {
+                html.setAttribute('data-theme', 'light');
+                btn.textContent = 'Switch to Dark';
+            }
+        });
+
+        // Trigger animations again on theme change to see them
+        const observer = new MutationObserver((mutations) => {
+            document.querySelectorAll('.section-enter').forEach(el => {
+                el.style.animation = 'none';
+                el.offsetHeight; /* trigger reflow */
+                el.style.animation = null;
+            });
+        });
+        observer.observe(html, { attributes: true, attributeFilter: ['data-theme'] });
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia trademark manual primarily involve updates to examples, minor typographical corrections, references to recent case law, and removal of certain references to the Plant Breeder's Rights Act. The IPFR page content is a general introductory guide to IP infringement aimed at small businesses and creators, focusing on broad concepts and practical understanding rather than detailed procedural or legislative specifics. There are no specific statutory references, procedural steps, or detailed trademark law content in the IPFR page that are contradicted or outdated by these manual updates. Therefore, the IPFR page remains accurate and does not require amendment based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4421,
+  "completion_tokens": 158,
+  "total_tokens": 4579,
+  "processing_time_seconds": 3.1645413880000888,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851218+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change relates to the unavailability of a webpage on the Australian Small Business and Family Enterprise Ombudsman site, which is not directly referenced or linked in the IPFR page content. The second change concerns fee schedules for the Federal Circuit and Family Court of Australia, which are unrelated to the complaint process against IP Australia described on the IPFR page. The IPFR page focuses on how to raise complaints about IP Australia service and the role of the Commonwealth Ombudsman, without mentioning fees or the ASBFEO dispute resolution steps. Therefore, these external changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3296,
+  "completion_tokens": 157,
+  "total_tokens": 3453,
+  "processing_time_seconds": 3.7185350570000537,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851025+00:00"
+}

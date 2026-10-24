@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X35E80",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage, increasing from 26 to 27 results. This change does not affect any substantive content, legal references, privacy practices, or procedural details described in the IP First Response Chatbot Privacy Notice. Therefore, the IPFR page remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2057,
+  "completion_tokens": 105,
+  "total_tokens": 2162,
+  "processing_time_seconds": 3.701975894000043,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.492436+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to official notices about surrender of design registrations, updates to the Patent Manual regarding computer-implemented inventions, and updates to the Design Manual about excluded designs and priority dates. None of these changes directly affect the content of the IPFR page 'Check your product against existing designs', which focuses on guidance for conducting design clearance or freedom to operate searches, the benefits and risks of such searches, and practical steps for users. There are no changes to the legal thresholds, procedural steps, or specific statutory references cited in the IPFR page that would require updating. The changes are either procedural updates or relate to other IP rights (patents, plant breeders rights) or internal manual updates that do not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7566,
+  "completion_tokens": 186,
+  "total_tokens": 7752,
+  "processing_time_seconds": 3.7866439110000556,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.816442+00:00"
+}

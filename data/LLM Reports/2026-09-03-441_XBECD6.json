@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates primarily to updates in the IP Australia patent manual concerning internal procedures, references to search tools (EPOQUE and AbS), citation examples, and corrections to links and dates. There is an addition about clinical trial documents as prior art, but this does not directly affect the procedural or timing details described in the IPFR page about lodging a section 27 notice to prevent a patent from being granted. The IPFR page focuses on the process, timing, and practical considerations for third party notifications under section 27, none of which are contradicted or rendered outdated by the upstream changes. Therefore, no specific factual or procedural content in the IPFR page requires updating based on the provided upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2913,
+  "completion_tokens": 175,
+  "total_tokens": 3088,
+  "processing_time_seconds": 3.481912267000098,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039293+00:00"
+}

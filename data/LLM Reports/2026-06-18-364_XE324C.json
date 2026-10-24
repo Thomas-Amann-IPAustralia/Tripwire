@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the webpage about reasons to make a complaint against IP attorneys, including details about the complaint process and limitations of the disciplinary board. However, the IPFR page 'XE324C \u2014 Choosing the right IP professional' does not currently include specific information about complaint procedures, disciplinary processes, or how to lodge complaints against IP attorneys. The change does not affect the accuracy or currency of the existing content, which focuses on describing the roles and qualifications of IP professionals rather than complaint mechanisms.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4883,
+  "completion_tokens": 131,
+  "total_tokens": 5014,
+  "processing_time_seconds": 2.200682585999857,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.711550+00:00"
+}

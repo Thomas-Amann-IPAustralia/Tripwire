@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds information about WIPO's Expedited Case Processing service for domain name disputes, specifying a one-month timeline for UDRP cases. However, the IPFR page focuses on the WIPO Good Offices Program and general ADR services for IP disputes, without discussing domain name dispute fees, timelines, or the UDRP process specifically. Therefore, the new detail about expedited domain name dispute processing does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2148,
+  "completion_tokens": 127,
+  "total_tokens": 2275,
+  "processing_time_seconds": 2.0402790539999387,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.819784+00:00"
+}

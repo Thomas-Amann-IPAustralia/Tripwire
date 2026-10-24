@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes update the DFAT webpage content to emphasize Australia's international IP engagement, economic importance of IP, and the role of the WTO TRIPS Agreement. However, these changes do not alter any specific factual details or definitions presented in the IPFR page about what IP is, the types of IP rights, or how IP protects businesses. The IPFR page provides a general overview suitable for small business owners, and the changes do not contradict or require updates to the page's content. The changes mainly rephrase and update economic rankings and institutional descriptions without affecting the core IP concepts or protections described.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4667,
+  "completion_tokens": 151,
+  "total_tokens": 4818,
+  "processing_time_seconds": 1.629218020000053,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551148+00:00"
+}

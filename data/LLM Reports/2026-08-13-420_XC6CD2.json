@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to amendments in customs regulations concerning firearms importation, updates to IP Australia manuals about divisional applications and prohibited signs, updates to patent-related legislative instruments, and updates to WIPO PCT regulations. None of these changes directly affect the specific content of the IPFR page on challenging the registration of a new trade mark, which focuses on opposition procedures, timelines, costs, and risks related to trade mark registration oppositions. There are no updates to opposition periods, fees, procedural steps, or legal thresholds mentioned in the changes that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6098,
+  "completion_tokens": 150,
+  "total_tokens": 6248,
+  "processing_time_seconds": 2.342552898000122,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.875621+00:00"
+}

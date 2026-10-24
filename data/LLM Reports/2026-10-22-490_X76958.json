@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes update the DFAT webpage content to emphasize Australia's international IP engagement and the importance of effective IP rules for trade and economic growth. They also update some statistics and slightly rephrase descriptions of TRIPS and related international cooperation. However, these changes do not affect any specific factual statements, procedural guidance, or legal references in the IPFR page about enforcing IP overseas. The IPFR page remains accurate and current in its advice and references. The changes are general background updates and do not require amendments to the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4333,
+  "completion_tokens": 138,
+  "total_tokens": 4471,
+  "processing_time_seconds": 2.1227485500000967,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550618+00:00"
+}

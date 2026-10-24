@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a routine compilation update of the Competition and Consumer Act 2010 including the Australian Consumer Law, with no specific amendments or explanatory statements provided. The IPFR page content accurately describes the relevant provisions of the ACL as they relate to unregistered trade marks, including misleading or deceptive conduct and false representations. Since no substantive legal changes or updates to the ACL provisions were indicated, there is no need to amend the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1773,
+  "completion_tokens": 121,
+  "total_tokens": 1894,
+  "processing_time_seconds": 1.5925757710000426,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.016109+00:00"
+}

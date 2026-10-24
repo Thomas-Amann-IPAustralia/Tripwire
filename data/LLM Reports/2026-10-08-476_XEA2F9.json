@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external sources are either minor textual updates or relate to other IP topics such as the WIPO Intergovernmental Committee on Intellectual Property, the Uniform Domain Name Dispute Resolution Policy (UDRP) update effective from August 2024, and a minor formatting update to a general dispute resolution guide. None of these changes directly affect the specific content of the IPFR page about the WIPO Good Offices Program, its description, services, costs, or procedures. There are no updates to fees, procedural rules, or the scope of the Good Offices Program that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3373,
+  "completion_tokens": 155,
+  "total_tokens": 3528,
+  "processing_time_seconds": 1.8070493089999218,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.486102+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to updates on the Amazon Brand Registry webpage, specifically the removal of the 'New Seller Success' program details. The IPFR page 'Pause use of contested IP until resolution' discusses general guidance on ceasing use of contested IP and does not mention Amazon Brand Registry or any specific programs related to Amazon. The content and advice on the IPFR page remain accurate and unaffected by the removal of this Amazon program information.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2426,
+  "completion_tokens": 119,
+  "total_tokens": 2545,
+  "processing_time_seconds": 1.5861230049999904,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551835+00:00"
+}

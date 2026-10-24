@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to amendments in intelligence and security oversight legislation, specifically the Strengthening Oversight of the National Intelligence Community Bill 2025, which affects oversight bodies like IGIS and PJCIS and certain intelligence agencies. This change does not pertain to IP Australia examination decisions, appeal processes, or intellectual property law procedures. Therefore, it does not impact the accuracy or currency of the IPFR page content about disagreeing with IP Australia's examination decisions or the appeal pathways described.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1761,
+  "completion_tokens": 129,
+  "total_tokens": 1890,
+  "processing_time_seconds": 1.993508552000094,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.820019+00:00"
+}

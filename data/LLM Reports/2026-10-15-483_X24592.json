@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X24592",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to how to engage an attorney, including considerations for choosing one, fee structures, and preparation for meetings. The IPFR page in question deals with making complaints about lawyers or attorneys, focusing on the complaint process, regulators, and what to expect. There is no overlap in specific procedural details, time limits, or regulatory references that would require updating the complaint guidance. The change does not affect the accuracy or currency of the complaint process described on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1899,
+  "completion_tokens": 129,
+  "total_tokens": 2028,
+  "processing_time_seconds": 1.5068153059999077,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636481+00:00"
+}

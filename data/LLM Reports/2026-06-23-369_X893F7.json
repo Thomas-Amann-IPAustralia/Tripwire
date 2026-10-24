@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the external webpage at www.asbfeo.gov.au/disputes-assistance/five-steps-resolve-your-dispute is no longer accessible due to server errors (403 Forbidden and connection closed). However, the IPFR page content does not reference or rely on this specific external page for any factual or procedural information. The IPFR page provides detailed, self-contained guidance on seeking binding, authoritative decisions in patent disputes, including court processes, benefits, risks, outcomes, costs, and timelines. The unavailability of the external page does not affect the accuracy or currency of the IPFR page content itself. Therefore, no update to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2987,
+  "completion_tokens": 175,
+  "total_tokens": 3162,
+  "processing_time_seconds": 1.9853076020000344,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.367521+00:00"
+}

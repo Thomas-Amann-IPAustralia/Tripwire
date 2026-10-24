@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO webpages are minor and editorial in nature, such as removing a dated event announcement and a minor formatting change in a document title. They do not affect any substantive information about the WIPO Arbitration and Mediation Center or its ADR services described in the IPFR page. There are no updates to procedures, fees, timelines, or other specific details that would require amending the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2831,
+  "completion_tokens": 116,
+  "total_tokens": 2947,
+  "processing_time_seconds": 1.310285600000043,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708645+00:00"
+}

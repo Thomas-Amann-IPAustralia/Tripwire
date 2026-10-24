@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trade Marks Manual of Practice and Procedure primarily concern updates to sections related to examination of trade marks for plants or plant materials, amendments to procedural parts, indexing, and updates to legislation references. There is no indication that the opposition process, timeframes, fees, or procedural steps described in the IPFR page have been altered. The IPFR page content about opposing trade mark registrations remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5861,
+  "completion_tokens": 122,
+  "total_tokens": 5983,
+  "processing_time_seconds": 2.5026354859999174,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039119+00:00"
+}

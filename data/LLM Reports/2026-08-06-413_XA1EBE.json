@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XA1EBE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor formatting correction on the IP Australia legislation and non-legislative instruments webpage, specifically correcting spacing and line breaks in the description of the Patents Act provisions. There is no change to substantive content, legal thresholds, procedures, costs, or timelines related to patent re-examination. The IPFR page content remains accurate and up to date based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2239,
+  "completion_tokens": 110,
+  "total_tokens": 2349,
+  "processing_time_seconds": 2.3254703729999164,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.797491+00:00"
+}

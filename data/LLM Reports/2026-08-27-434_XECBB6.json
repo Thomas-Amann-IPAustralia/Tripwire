@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in IP Australia procedural instruments, manuals, and official notices concerning filing, examination, and administrative details for designs, plant breeders rights, patents, and trade marks, including specific updates to the Trade Marks Manual of Practice and Procedure. There are also updates to WIPO documents and Madrid System educational resources. However, none of these changes directly affect the fundamental explanations or practical guidance on infringement basics, trade mark registrability, or enforcement as presented in the IPFR page. The IPFR content is a general introductory guide aimed at small business owners and does not contain specific procedural details, dates, fees, or statutory references that have been amended in the source documents. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 13711,
+  "completion_tokens": 186,
+  "total_tokens": 13897,
+  "processing_time_seconds": 3.2510684179999316,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.906686+00:00"
+}

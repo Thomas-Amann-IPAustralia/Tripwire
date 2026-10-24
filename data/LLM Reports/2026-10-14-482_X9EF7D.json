@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change announces a parliamentary committee recommendation for Australia to ratify the GRATK Treaty and mentions the Regulatory Reform Omnibus Act 2026 that streamlines parts of Australia's IP system. However, the IPFR page content is a general overview of Australian IP laws, their sources, and involved agencies without specific procedural, statutory, or threshold details that are affected by this update. There is no mention of the GRATK Treaty or the 2026 reforms in the page, and no specific content in the page is rendered inaccurate or outdated by this news. The page remains accurate as a general introduction to IP laws.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2488,
+  "completion_tokens": 155,
+  "total_tokens": 2643,
+  "processing_time_seconds": 1.5068676540000183,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.732354+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to trade marks revocation, amendments, and design rights, as well as updates to the Trade Marks Manual of Practice and Procedure. These changes do not pertain to the patent opposition process described in the IPFR page, which focuses on challenging new or amended patents. There are no changes to the patent legislation, procedures, fees, timeframes, or outcomes relevant to patent oppositions. The ACCC register changes are unrelated to patent oppositions. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8751,
+  "completion_tokens": 139,
+  "total_tokens": 8890,
+  "processing_time_seconds": 1.9651096309999048,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550406+00:00"
+}

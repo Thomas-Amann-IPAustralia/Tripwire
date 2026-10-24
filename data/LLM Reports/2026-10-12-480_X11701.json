@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external website www.copyright.org.au is currently unreachable due to connection timeout issues. There is no change to the substantive content or legal information on the site, only an accessibility issue. The IPFR page content does not cite or quote specific legal provisions or data from the Australian Copyright Council's legal advice page that would now be inaccurate or outdated. Therefore, the IPFR page remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2086,
+  "completion_tokens": 125,
+  "total_tokens": 2211,
+  "processing_time_seconds": 1.2690627900001346,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.018245+00:00"
+}

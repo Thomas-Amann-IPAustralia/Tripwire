@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X06BD4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to the asbfeo.gov.au website becoming unreachable due to a connection error (ERR_CONNECTION_CLOSED). This is a technical issue with the external site and does not affect the content, accuracy, or functionality of the IP First Response chatbot page. The IPFR page does not reference or rely on the asbfeo.gov.au site, nor does it contain any specific information that is contradicted or outdated by this change. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2402,
+  "completion_tokens": 133,
+  "total_tokens": 2535,
+  "processing_time_seconds": 1.5484051949999866,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.914426+00:00"
+}

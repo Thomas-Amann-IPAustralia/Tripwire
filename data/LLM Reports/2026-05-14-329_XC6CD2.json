@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates on the IP Australia official notices page, including publication of new instruments, signs notified under the Paris Convention, and amendments to regulations. Other changes are updates to manuals related to patents, plant breeder's rights, and trademarks, mostly involving minor content updates, accessibility fixes, link corrections, and references to recent case law or procedural clarifications. None of these changes specifically alter the opposition process timelines, fees, grounds for opposition, procedural steps, or outcomes as described in the IPFR page. The IPFR page content about challenging trade mark registrations remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9193,
+  "completion_tokens": 156,
+  "total_tokens": 9349,
+  "processing_time_seconds": 4.9125347469998815,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.499789+00:00"
+}

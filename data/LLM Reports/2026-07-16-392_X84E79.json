@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Customs Amendment (International Airport Definition) Regulations 2026, which add Western Sydney International Airport to the definition of 'international airport' for Customs functions, and an update to the Australian Securities and Investments Commission Act 2001 compilation. These changes do not affect the substantive content of the IPFR page about the Notice of Objection scheme, its procedures, timeframes, or costs. The IPFR page focuses on the process and legal aspects of Notices of Objection to stop infringing goods, not on airport definitions or ASIC legislation. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3328,
+  "completion_tokens": 157,
+  "total_tokens": 3485,
+  "processing_time_seconds": 2.2794673200000943,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234798+00:00"
+}

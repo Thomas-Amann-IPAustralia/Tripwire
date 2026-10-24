@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are described as cyclic reviews with no substantive changes to the content relevant to the section 27 notice process or the timing and procedural details for preventing a patent under examination from being granted. The changes mainly involve minor language edits and removal of a reference to a 'forms officer' in approved forms, which does not affect the accuracy or currency of the IPFR page content. The IPFR page's detailed explanation of section 27 notices, timing, benefits, risks, and procedures remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2846,
+  "completion_tokens": 139,
+  "total_tokens": 2985,
+  "processing_time_seconds": 1.4185653100000764,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938233+00:00"
+}

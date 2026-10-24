@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-21-489",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the IP Australia news page, including the number of news results shown and a news story about a medical pioneer patenting spray-on skin technology. These updates do not affect the factual accuracy or currency of the IPFR page content, which provides general guidance on checking existing IP rights. There are no changes to statutory references, procedures, or specific guidance that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1831,
+  "completion_tokens": 116,
+  "total_tokens": 1947,
+  "processing_time_seconds": 1.1888682179999819,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-21T07:15:33.370240+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the Trade Marks Manual, consultations on patent manual updates and regulatory simplifications, and ACCC exemptions under the Competition and Consumer Act. None of these changes provide specific amendments or updates to the definitions, explanations, or legal thresholds of IP infringement as described in the IPFR page. The IPFR page content provides a general introduction to IP infringement across various IP types, and the changes do not affect the accuracy or currency of this general information. There are no changes to statutory definitions, infringement criteria, or examples that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5408,
+  "completion_tokens": 149,
+  "total_tokens": 5557,
+  "processing_time_seconds": 2.304879137000171,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.586811+00:00"
+}
