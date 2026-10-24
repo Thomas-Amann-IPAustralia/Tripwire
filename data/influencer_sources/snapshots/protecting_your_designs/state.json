@@ -1,9 +1,6 @@
 {
   "probe_signals": {},
-  "last_checked": "2026-10-12T08:47:50.136681+00:00",
-  "previous_hash": "c7a587a75c1bb9917e2116d2233830be696ca7094345d63a8eb223cf79dbe370",
-  "previous_text": "This site can\u2019t be reached\nwww.artslaw.com.au unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\n devices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\n settings.\nIf it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.artslaw.com.au unexpectedly closed the connection.",
-  "last_error": "RetryableError: All fetch attempts failed for https://www.artslaw.com.au/information-sheet/protecting-your-designs",
-  "last_error_at": "2026-10-23T07:05:22.937028+00:00",
-  "consecutive_failures": 5
+  "last_checked": "2026-10-24T06:57:42.956395+00:00",
+  "previous_hash": "e3f836d508d2796c69f61ab1c9c9a93468de5358e69202c5a2a481c42f4099b7",
+  "previous_text": "There is an unknown connection issue between Cloudflare and the origin web server. As a result, the web page can not be displayed.\nPlease try again in a few minutes.\nThere is an issue between Cloudflare's cache and your origin web server. Cloudflare monitors for these errors and automatically investigates the cause. To help support the investigation, you can pull the corresponding error log from your web server and submit it our support team. Please include the Ray ID (which is at the bottom of this error page). Additional troubleshooting resources."
 }
