@@ -32,7 +32,6 @@ Registering a trade mark through TM Headstart costs a minimum of $330. This cove
 | Step 3 - Conversion to a standard application (Part 2 fee) | $130 | 
 Standard application fees
 A standard trade mark application costs a minimum of $250. 
- 
 Your fees will be lower if you use the picklist . The picklist is a searchable list of 60,000+ goods and services categorised into 45 classes relevant to trade marks. This helps examiners to know exactly which goods the trade mark is intended to apply. 
 | Action | Fees (per class) with picklist | Fees (per class) without picklist | 
 |---|---|---|
