@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-27-495",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia news page involve updates to the number of news results displayed and highlight a recent story about a medical pioneer patenting technology. These updates do not affect the factual content or descriptions on the IPFR page about how IP Australia compares to other government services. There are no changes to the roles, functions, or services of IP Australia or other agencies listed on the IPFR page, nor any changes to legal or procedural information that would require updating the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1839,
+  "completion_tokens": 128,
+  "total_tokens": 1967,
+  "processing_time_seconds": 2.217757927999969,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-27T07:30:52.780576+00:00"
+}

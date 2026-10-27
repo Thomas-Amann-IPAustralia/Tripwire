@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-27-495",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the IP Australia news page, specifically about the Australian IP Report 2026 and a story about a medical pioneer patenting spray-on skin technology. These updates do not affect the factual content or guidance provided on the IPFR page about checking if someone else owns a word, logo, or idea. There are no changes to the processes, definitions, or tools referenced in the IPFR page that would require an update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1831,
+  "completion_tokens": 122,
+  "total_tokens": 1953,
+  "processing_time_seconds": 1.6911509239999987,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-27T07:30:52.779985+00:00"
+}
