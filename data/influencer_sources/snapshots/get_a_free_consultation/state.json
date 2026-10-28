@@ -4,6 +4,6 @@
   "previous_hash": "b0bd6c99283d9f3830021c3ea348f25cf2252e95077aacb9331a57bf563747a5",
   "previous_text": "This site can\u2019t be reached\nipta.org.au took too long to respond.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_TIMED_OUT\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\n devices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\n settings.\nIf it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\nipta.org.au took too long to respond.",
   "last_error": "RetryableError: All fetch attempts failed for https://ipta.org.au/community/get-free-consultation/",
-  "last_error_at": "2026-10-27T07:30:10.510821+00:00",
-  "consecutive_failures": 2
+  "last_error_at": "2026-10-28T08:06:44.944553+00:00",
+  "consecutive_failures": 3
 }
