@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the tabling of the IP Australia's Annual Report 2025\u201326 and some news items about treaty recommendations and IP reports. These updates do not affect the specific content of the IPFR page on dealing with IP issues without going to court, which focuses on informal and administrative dispute resolution methods. There are no changes to procedures, timeframes, or legal references that would require updating the guidance provided.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2148,
+  "completion_tokens": 116,
+  "total_tokens": 2264,
+  "processing_time_seconds": 1.205332080000062,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.239245+00:00"
+}

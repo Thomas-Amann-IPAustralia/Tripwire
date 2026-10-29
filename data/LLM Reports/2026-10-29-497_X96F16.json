@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and corrections in the IPAustralia patent manual, including fixing broken links, clarifying grace period information, and cyclic reviews of patent specification requirements. There is no indication that these changes affect the content or accuracy of the IPFR page on design infringement, which focuses on registered designs under the Designs Act 2003, not patents. The change is indirect and does not alter any specific legal references, definitions, or procedural steps relevant to design infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3298,
+  "completion_tokens": 128,
+  "total_tokens": 3426,
+  "processing_time_seconds": 1.2888140789998488,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.240810+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the Trade Marks Manual of Practice and Procedure, specifically consolidating revocation and amendment procedures into a new Part 36, and updates regarding examination of trade mark applications relating to plants or plant materials. These changes are procedural and technical updates to the manual and do not affect the basic information, fees, timeframes, or benefits described in the IPFR page. The IPFR page content is aimed at small business owners and provides general guidance on registering trade marks, costs, benefits, and risks, none of which are contradicted or outdated by the upstream changes. There is no specific information in the IPFR page that is incorrect or requires updating based on the changes to the manual.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6015,
+  "completion_tokens": 175,
+  "total_tokens": 6190,
+  "processing_time_seconds": 2.6331230860000687,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.238044+00:00"
+}

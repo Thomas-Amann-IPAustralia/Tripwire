@@ -1,4 +1,22 @@
-| 10.1. Product: overview | | Page reviewed and updated. | 
+| 17.4. Prior art base: Trade marks and patents as citations | | Updated alternative text for image | 
+ 
+ | 15.4. Statement of newness and distinctiveness: Using the SoND to assess distinctiveness | | Added alternate text for images | 
+ 
+ | 6.6. Representations: Text | | Updated alternative text for images | 
+ 
+ | 2.6. Application for registration: Types of applications (s 22) | | Added alternative text for images | 
+ 
+ | 5.2. Applicant address | | Page reviewed and updated. | 
+ 
+ | 10.3. Product: Things that are not products | | Page reviewed and updated. | 
+ 
+ | 10.7. Product: Component part of a complex product | | Formatting amended. | 
+ 
+ | 10.6. Product: Manufactured or hand made | | Formatting amended. | 
+ 
+ | Citation index | | Page reviewed and updated. | 
+ 
+ | 10.1. Product: overview | | Page reviewed and updated. | 
  
  | 10.8. Product: Assembled set or kit | | Formatting amended. | 
  
@@ -10,30 +28,12 @@
  
  | 10.10. Product: Examples - things that are / are not products | | Page reviewed and updated. | 
  
- | 10.3. Product: Things that are not products | | Page reviewed and updated. | 
- 
- | 10.7. Product: Component part of a complex product | | Formatting amended. | 
- 
- | 10.6. Product: Manufactured or hand made | | Formatting amended. | 
- 
- | Citation index | | Page reviewed and updated. | 
+ | 6.13. Representations: Pairs and mirror images | | Minor adjustments to page. | 
  
  | 12.8. Section 43 refusal to register: Integrated circuits | | Page reviewed and information updated. | 
  
- | 6.13. Representations: Pairs and mirror images | | Minor adjustments to page. | 
+ | 8.3. Examination and certification: Requesting examination | | Minor formatting update. | 
  
  | Welcome | | Reviewed and updated. | 
  
- | 8.3. Examination and certification: Requesting examination | | Minor formatting update. | 
- 
- | 8.9. Examination and certification: Time frame for completion of examination and last-minute responses | | Reviewed and updated guidance included. | 
- 
- | Disclaimer | | Review and update Introduction (Disclaimer). | 
- 
- | 6.11. Representations: Different views | | fix one minor image issue | 
- 
- | 8.15. Examination and certification: Examination hearings | | Republished to remove fixed font-size styles for accessibility | 
- 
- | Glossary | | Republished to remove fixed font-size styles for accessibility | 
- 
- | 2.7. Application for registration: Request for registration | | Accessibility fix - remove empty headings |
+ | 8.9. Examination and certification: Time frame for completion of examination and last-minute responses | | Reviewed and updated guidance included. |

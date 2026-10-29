@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an announcement about IP Australia's Annual Report 2025\u201326 being tabled in Parliament, along with some other news items related to patents, trade marks, and IP reports. However, there are no specific amendments to legislation, procedural steps, legal thresholds, or factual details that would affect the accuracy or currency of the 'Infringement 101' IPFR page content. The IPFR page provides general guidance on infringement and trade marks, and the change document does not indicate any updates to these substantive areas that would require changes to the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2768,
+  "completion_tokens": 147,
+  "total_tokens": 2915,
+  "processing_time_seconds": 1.4937531289999697,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.240215+00:00"
+}

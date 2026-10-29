@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve cyclic reviews, formatting updates, broken link fixes, and archival of certain detailed pages in the patent and design manuals. There are no specific amendments to fundamental registration requirements, timeframes, or procedural steps that would affect the accuracy of the IPFR page content. The news updates relate to reports and treaty recommendations but do not impact the guidance on what to check before getting registered IP. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4071,
+  "completion_tokens": 131,
+  "total_tokens": 4202,
+  "processing_time_seconds": 1.342931450999913,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.239912+00:00"
+}
