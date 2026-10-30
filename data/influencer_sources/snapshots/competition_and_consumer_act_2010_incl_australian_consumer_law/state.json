@@ -6,7 +6,7 @@
   "last_checked": "2026-10-12T08:43:37.688295+00:00",
   "previous_hash": "21dc9c41f7e6036459e84d323acb14572eeeed3aaca9039dfe8d9631925739bc",
   "previous_text": "Competition and Consumer Act 2010No. 51, 1974\nAdministered by \n- Attorney-General's Department\n- Department of Climate Change, Energy, the Environment and Water\n- Department of Industry, Science and Resources\n- Department of Infrastructure, Transport, Regional Development, Communications, Sport and the Arts\n- Department of the Treasury",
-  "last_error": "PermanentError: Content at https://www.legislation.gov.au/C2004A00109/latest/text is too short (132 chars < minimum 200)",
-  "last_error_at": "2026-10-29T08:06:22.139471+00:00",
-  "consecutive_failures": 11
+  "last_error": "PermanentError: Content at https://www.legislation.gov.au/C2004A00109/latest/text is too short (134 chars < minimum 200)",
+  "last_error_at": "2026-10-30T08:09:22.393917+00:00",
+  "consecutive_failures": 12
 }
