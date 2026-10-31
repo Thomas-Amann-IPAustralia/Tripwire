@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IP Australia manuals for trade marks and plant breeder's rights, including procedural clarifications and updated workflows, as well as closed consultations on patent and trade mark regulations. The IPFR page provides a high-level overview of Australian IP laws, their legislative framework, and the roles of agencies without delving into specific procedural details or manual content. None of the changes indicate amendments to the core legislative acts or fundamental principles described in the IPFR page. Therefore, the page content remains accurate and up to date for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5346,
+  "completion_tokens": 144,
+  "total_tokens": 5490,
+  "processing_time_seconds": 1.7466236140001001,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.206442+00:00"
+}

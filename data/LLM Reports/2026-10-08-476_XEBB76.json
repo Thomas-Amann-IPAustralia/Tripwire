@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve minor technical amendments to regulations, updates to official notices about design registrations and instruments, and updates to policy registers and non-legislative instruments. None of the changes provide new or altered substantive information about the fundamental concepts or definitions of IP rights, their types, or how they protect owners, as described in the IPFR page. There are no changes to the descriptions of IP types, registration requirements, enforcement options, or other core content that would affect the accuracy or currency of the IPFR page. The changes are mostly procedural, administrative, or technical and do not impact the basic explanatory content aimed at small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7446,
+  "completion_tokens": 160,
+  "total_tokens": 7606,
+  "processing_time_seconds": 1.70266165299995,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.485539+00:00"
+}

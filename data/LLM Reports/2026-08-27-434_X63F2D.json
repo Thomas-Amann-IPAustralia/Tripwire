@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia legislation and non-legislative instruments page add references to new or updated design instruments for 2026 and 2022, such as fee payment determinations and document filing instruments. However, these changes do not specify any amendments to fees, procedures, or substantive examination requirements that would affect the IPFR page content about requesting design certification. The IPFR page already states the examination fee as $500 effective 1 October 2024 and describes the examination process and outcomes without referencing these specific instruments. Therefore, the IPFR page content remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2390,
+  "completion_tokens": 157,
+  "total_tokens": 2547,
+  "processing_time_seconds": 3.0182674189998124,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909956+00:00"
+}

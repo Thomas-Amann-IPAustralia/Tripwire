@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The external changes all add a note about WIPO's Expedited Case Processing service for UDRP domain name disputes, stating that panel decisions are delivered within one month from filing to decision. The IPFR page content focuses broadly on WIPO ADR services for IP disputes, including mediation and arbitration, but does not specifically mention UDRP domain name dispute processing times or fees. Since the new information concerns a specific domain name dispute procedure and timing not currently covered or referenced in the IPFR page, there is no direct conflict or outdated information that requires updating. The IPFR page remains accurate and current regarding the general WIPO ADR services it describes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3454,
+  "completion_tokens": 162,
+  "total_tokens": 3616,
+  "processing_time_seconds": 2.42991727499998,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.817644+00:00"
+}

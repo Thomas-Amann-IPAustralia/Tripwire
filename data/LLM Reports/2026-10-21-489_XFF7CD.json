@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-21-489",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage and includes a new article about a medical pioneer patenting technology. This update does not affect any specific factual content, dates, procedures, or tool descriptions on the IPFR page about free IP tools. The IPFR page content remains accurate and current as it does not reference the number of news items or specific patent case studies.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1508,
+  "completion_tokens": 118,
+  "total_tokens": 1626,
+  "processing_time_seconds": 1.925419790000035,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-21T07:15:33.370598+00:00"
+}

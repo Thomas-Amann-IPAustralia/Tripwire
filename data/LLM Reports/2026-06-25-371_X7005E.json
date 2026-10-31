@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia's official notices page, primarily concerning procedural updates, case assessments, and terminology changes related to trade marks and patents. The specific update mentioning Zip Co Ltd v Firstmac Ltd and other notices do not provide any substantive changes to the legal principles, definitions, or protections related to unregistered trade marks as described in the IPFR page. There is no indication that the legal tests, statutory references, or protections for unregistered trade marks under passing off or the Australian Consumer Law have changed. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2846,
+  "completion_tokens": 150,
+  "total_tokens": 2996,
+  "processing_time_seconds": 2.1138417900001514,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.564627+00:00"
+}

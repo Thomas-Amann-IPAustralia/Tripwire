@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to procedural details about filing applications for judicial review and exemptions from court fees, specifically minor formatting adjustments and clarifications on affidavit requirements. The IPFR page 'Discover where you are in your IP journey' provides a broad overview of IP journey stages for business owners and does not include specific procedural or legal filing details about judicial review or court fee exemptions. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2329,
+  "completion_tokens": 124,
+  "total_tokens": 2453,
+  "processing_time_seconds": 2.3535632680000163,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.795733+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the 'how_to_engage_an_attorney' webpage involve minor formatting adjustments and reordering of bullet points related to information to provide to an IP attorney. These changes do not affect any specific factual content, legal thresholds, or procedural steps described in the IPFR page 'Infringement 101'. The IPFR page does not discuss how to engage an attorney or the specific details to provide to one, so the changes do not impact the accuracy or currency of the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3007,
+  "completion_tokens": 134,
+  "total_tokens": 3141,
+  "processing_time_seconds": 2.1836284400001205,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228553+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes provided relate primarily to amendments in customs regulations for firearms importation, updates to IP Australia policy registers, changes to non-legislative patent instruments, updates to WIPO Madrid System information, and eBay's intellectual property policy guidance. The IPFR page 'Infringement 101' focuses on general infringement concepts, trade mark registration basics, and enforcement in Australia, aimed at small business owners. None of the changes directly affect the accuracy or currency of the infringement explanations, trade mark registrability criteria, or enforcement guidance presented in the IPFR page. The customs regulations on firearms, patent instrument updates, and policy register changes do not impact the infringement content or trade mark enforcement information. The WIPO Madrid System updates are minor and do not alter the fundamental infringement concepts. The eBay IP policy changes relate to online marketplace listing practices and do not affect the infringement basics or legal principles described. Therefore, no amendments to the IPFR page are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 13764,
+  "completion_tokens": 229,
+  "total_tokens": 13993,
+  "processing_time_seconds": 3.0592910329999086,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.874811+00:00"
+}

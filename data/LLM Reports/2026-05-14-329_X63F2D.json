@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve accessibility fixes, URL updates, and the addition of information about Olympic designs and related non-legislative instruments. None of these changes affect the specific content of the IPFR page regarding the process, fees, timelines, or legal implications of requesting examination and certification of a registered design. There are no updates to fees, procedures, or legal requirements that would require amending the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4998,
+  "completion_tokens": 116,
+  "total_tokens": 5114,
+  "processing_time_seconds": 4.957128995000176,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.501020+00:00"
+}

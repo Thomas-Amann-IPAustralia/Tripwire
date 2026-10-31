@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of search results shown on the IP Australia news webpage and an announcement about a new transparency program related to patent examination timeframes under the Patent Prosecution Highway. The IPFR page content focuses on seeking binding, authoritative decisions in court for patent disputes, including litigation processes, benefits, risks, costs, and timelines. The change does not affect any specific legal, procedural, or factual information presented in the IPFR page about court proceedings or patent litigation. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2843,
+  "completion_tokens": 145,
+  "total_tokens": 2988,
+  "processing_time_seconds": 2.987724384000103,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.431000+00:00"
+}

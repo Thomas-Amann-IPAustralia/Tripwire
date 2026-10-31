@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO domain name dispute resolution webpage primarily involve updates to procedural details, fee payment options, and the addition of new services like Legal Rights Objections and String Confusion Objections. The IPFR page 'When do I need a lawyer or attorney to deal with IP issues?' provides general guidance on when to seek legal help and the roles of IP lawyers and attorneys, without specific procedural or fee details about domain name disputes or WIPO processes. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1924,
+  "completion_tokens": 144,
+  "total_tokens": 2068,
+  "processing_time_seconds": 1.5787237270000105,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.745000+00:00"
+}

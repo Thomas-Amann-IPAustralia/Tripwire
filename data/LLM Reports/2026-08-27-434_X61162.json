@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X61162",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to formatting and minor updates on the IP Australia design manual webpage, focusing on design registrations and product definitions. The IPFR page in question discusses the use of trade marks for brand recognition and protection, which is a distinct topic from design registrations. There is no specific information in the IPFR page that is contradicted or rendered outdated by the changes to the design manual. The changes do not affect trade mark usage guidelines, symbols, or legal risks mentioned in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2439,
+  "completion_tokens": 132,
+  "total_tokens": 2571,
+  "processing_time_seconds": 2.5529786360000344,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908844+00:00"
+}

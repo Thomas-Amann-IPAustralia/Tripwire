@@ -1,0 +1,19 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X893F7",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes include an update to the Federal Court fees effective from 1 July 2026, with specific fee amounts for filing applications, responses, interlocutory applications, setting down for hearing, daily hearing fees, and other court-related fees increasing. The IPFR page currently states that patent litigation costs can range from $100k to $500k for simple cases and millions for major litigation, but it does not specify court fees explicitly. However, the page does mention that court proceedings are expensive and time-consuming, and it discusses costs generally. Since the Federal Court fees are a direct component of the costs involved in patent litigation and legal claims in the Federal Court of Australia, the updated fees should be reflected or at least noted in the IPFR page to maintain accuracy and currency for small business owners considering court action. The changes to the Federal Court Rules 2011 are procedural and do not affect the substantive content of the IPFR page. Therefore, the main required update is to the cost information section to reflect the new fee schedule effective 1 July 2026.",
+  "suggested_changes": [
+    "Update the 'What might the costs be?' section to note that Federal Court filing and hearing fees have increased effective 1 July 2026, with specific fees such as filing an application now $2,085 (corporations) and $870 (others), setting down for hearing fee $2,495 (corporations) and $1,035 (others), and daily hearing fees similarly increased, reflecting the Federal Court and Federal Circuit and Family Court Amendment (Filing Fees) Regulations 2026.",
+    "Add a note or link in the costs section directing readers to the Federal Court's official fees webpage for the most current fee information."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9763,
+  "completion_tokens": 381,
+  "total_tokens": 10144,
+  "processing_time_seconds": 5.749551157000042,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267670+00:00"
+}

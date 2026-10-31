@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to the tabling of IP Australia's Annual Report 2025-26 and mention of various news items including patent and trade mark cases. However, there are no specific amendments to definitions, legal thresholds, registration requirements, or procedural details about IP rights that would affect the accuracy or currency of the IPFR page content. The IPFR page provides general foundational information about IP types and protections, which remains accurate and unaffected by the new Annual Report or news items.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2033,
+  "completion_tokens": 128,
+  "total_tokens": 2161,
+  "processing_time_seconds": 1.255402378000099,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.240304+00:00"
+}

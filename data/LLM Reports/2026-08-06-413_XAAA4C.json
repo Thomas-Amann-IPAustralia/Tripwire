@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, specifically about the QP Portal, application processing, and some procedural details. The IPFR page is about contributor guidelines for blog posts on IP First Response and does not contain specific procedural or statutory details about PBR or the QP Portal. Therefore, the changes to the PBR manual do not affect the accuracy or currency of the contributor guidelines page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3214,
+  "completion_tokens": 122,
+  "total_tokens": 3336,
+  "processing_time_seconds": 2.6252463400001034,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796580+00:00"
+}

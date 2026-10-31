@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change to the IP Australia design manual webpage primarily involves accessibility fixes, removal of empty headings, and updates to URLs and section titles related to excluded designs and ownership disputes. There is no substantive change to the legal content or procedural information about design infringement, registration, or protection. The IPFR page content on design infringement remains accurate and unaffected by these formatting and structural updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3057,
+  "completion_tokens": 108,
+  "total_tokens": 3165,
+  "processing_time_seconds": 1.605573406000076,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491637+00:00"
+}

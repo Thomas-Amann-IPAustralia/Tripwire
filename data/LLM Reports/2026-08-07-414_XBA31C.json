@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-08-07-414",
+  "ipfr_page_id": "XBA31C",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the fee structure for WIPO arbitration, specifically the administration fees and arbitrator fees for different dispute amount brackets. The IPFR page currently cites WIPO arbitration costs with specific dollar amounts (e.g., US$48,000 for expedited arbitration and US$165,000 for regular arbitration) but does not detail the updated fee brackets or the new indicative hourly rates for arbitrators. Since the IPFR page provides specific cost figures and references WIPO arbitration fees, these figures are now outdated and should be updated to reflect the new fee schedule and fee calculation method as per the WIPO webpage update.",
+  "suggested_changes": [
+    "Update the section 'What might the costs be?' to reflect the new WIPO arbitration fee structure, including the revised administration fees and arbitrator fees for different dispute amounts as per the latest WIPO Arbitration and Mediation Center fees schedule.",
+    "Add information about the indicative hourly rates for arbitrators ($300 to $600 per hour) as now indicated by WIPO, replacing or supplementing the previous fixed fee descriptions.",
+    "Revise or remove the specific cost examples (US$48,000 for expedited arbitration and US$165,000 for regular arbitration) to align with the updated fee brackets and fee calculation method."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3284,
+  "completion_tokens": 285,
+  "total_tokens": 3569,
+  "processing_time_seconds": 6.282722872000022,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-07T04:35:18.610625+00:00"
+}

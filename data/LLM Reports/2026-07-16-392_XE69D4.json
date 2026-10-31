@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO 'about' webpage are minor textual rearrangements and do not affect any substantive information relevant to the IPFR page content on challenging the use of international domain names. There are no updates to procedures, fees, timelines, or policies related to domain name dispute resolution. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4139,
+  "completion_tokens": 102,
+  "total_tokens": 4241,
+  "processing_time_seconds": 2.203449121000176,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.229797+00:00"
+}

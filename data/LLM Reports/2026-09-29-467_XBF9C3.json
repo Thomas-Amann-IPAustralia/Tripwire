@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document is an update to the IP Australia's 'how to commercialise my IP' webpage, adding detailed explanations about different commercialisation methods such as independent launch, licensing, franchising, and assignment. However, the IPFR page 'Enforcing a filed patent' focuses specifically on the status and enforceability of a filed patent application, the rights arising only upon grant, and the procedural aspects of patent filing and examination. The commercialisation content does not affect the accuracy or currency of the IPFR page's statements about enforcement rights, timelines, or patent application status. There is no direct conflict or outdated information in the IPFR page caused by the commercialisation guidance update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2757,
+  "completion_tokens": 169,
+  "total_tokens": 2926,
+  "processing_time_seconds": 1.8765899310000123,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009870+00:00"
+}

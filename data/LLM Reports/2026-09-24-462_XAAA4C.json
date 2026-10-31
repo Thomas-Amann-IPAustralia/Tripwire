@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document lists closed consultations and updates related to IP Australia, including patent manual updates, regulatory reform consultations, and other IP-related initiatives. However, the IPFR page content is about contributor guidelines for blog posts on the IP First Response platform, focusing on writing style, submission process, and content scope. There is no specific information in the IPFR page about consultation outcomes, regulatory changes, or procedural details that would be affected by the listed closed consultations or updates. Therefore, the changes do not impact the accuracy or currency of the contributor guidelines page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3225,
+  "completion_tokens": 144,
+  "total_tokens": 3369,
+  "processing_time_seconds": 1.484006231000194,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.207901+00:00"
+}

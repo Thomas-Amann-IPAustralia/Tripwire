@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve minor content updates, typographical corrections, accessibility fixes, and URL updates in the IP Australia manuals related to trademarks and designs. There are no specific amendments to examination fees, timeframes, procedural steps, or legal thresholds related to the certification of registered designs. The IPFR page's detailed information about examination fees, timelines, outcomes, and procedural guidance remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4359,
+  "completion_tokens": 116,
+  "total_tokens": 4475,
+  "processing_time_seconds": 1.7200051049999274,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.711100+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily relate to administrative updates such as design registration surrenders and corrections, updates to the Trade Marks Manual of Practice and Procedure, and news article counts. None of these changes affect the fundamental definitions, explanations, or legal principles of IP infringement as described in the IPFR page. There are no changes to statutory provisions, infringement criteria, or legal thresholds that would require updating the IPFR content. The IPFR page provides general, foundational information about IP infringement that remains accurate despite these upstream updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4079,
+  "completion_tokens": 138,
+  "total_tokens": 4217,
+  "processing_time_seconds": 1.7770808669999951,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552621+00:00"
+}

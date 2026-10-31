@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the IPAustralia patent manual, including corrections to links, procedural details on divisional applications, amendments related to manner of manufacture, and updates reflecting recent court decisions. However, none of these changes specifically address or alter the opposition process timelines, fees, procedural steps, or outcomes described in the IPFR page. The IPFR page content about challenging a new or amended patent opposition process remains accurate and current based on the provided changes. The changes do not directly affect the specific procedural or cost information presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5903,
+  "completion_tokens": 146,
+  "total_tokens": 6049,
+  "processing_time_seconds": 3.2123083359999782,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.585900+00:00"
+}

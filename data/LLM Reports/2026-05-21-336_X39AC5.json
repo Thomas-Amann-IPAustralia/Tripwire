@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a brief update notice about the Registrar of Trade Marks assessing the implications of a High Court decision (Zip Co Ltd v Firstmac Ltd) and some administrative updates about public holidays and approved forms. There is no detailed information or specific changes to the procedures, timeframes, or substantive grounds for revocation of trade marks. The IPFR page content about revocation procedures, timelines, risks, and outcomes remains accurate and unaffected by this notice. The change is informational and does not alter any specific statutory references, procedural steps, or factual details presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2571,
+  "completion_tokens": 150,
+  "total_tokens": 2721,
+  "processing_time_seconds": 2.182650398000078,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.589494+00:00"
+}

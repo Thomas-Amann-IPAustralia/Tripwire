@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the ACCC consultation hub relate to various consumer product safety standards and water market decisions, which are unrelated to the content of the IPFR page about notifying online marketplaces of IP infringement. The changes to the Amazon Brand Registry page involve the removal of the 'New Seller Success' program description, which is a support program unrelated to the core function of the Brand Registry as described in the IPFR page. The IPFR page's mention of Amazon Brand Registry as a mechanism to list IP rights and detect infringing goods remains accurate and unaffected by the removal of this support program. Therefore, no updates to the IPFR page content are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5076,
+  "completion_tokens": 166,
+  "total_tokens": 5242,
+  "processing_time_seconds": 2.2790471920000073,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550494+00:00"
+}

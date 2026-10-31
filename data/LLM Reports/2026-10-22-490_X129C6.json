@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the Amazon Brand Registry webpage remove information about the 'New Seller Success' program, which offers one-to-one support and other launch services for select brands. The IPFR page content focuses on the general process and benefits of enrolling in online platforms' IP protection programs, specifically mentioning Amazon Brand Registry's acceptance of registered or pending trade marks. It does not mention the 'New Seller Success' program or related support services. Therefore, the removal of this program information does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2308,
+  "completion_tokens": 140,
+  "total_tokens": 2448,
+  "processing_time_seconds": 1.7740433510000457,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550786+00:00"
+}

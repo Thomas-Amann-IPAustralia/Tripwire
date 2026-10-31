@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to formatting and scheduling updates on WIPO's Madrid Protocol and Intergovernmental Committee (IGC) webpages, which do not affect the substantive content or guidance provided on the IPFR page about the WIPO Clause Generator and handling IP disputes via contracts. There are no changes to the WIPO dispute resolution services, ADR clauses, or procedural details referenced in the IPFR page. Therefore, no amendments to the IPFR content are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2595,
+  "completion_tokens": 123,
+  "total_tokens": 2718,
+  "processing_time_seconds": 1.8926168489997508,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.712818+00:00"
+}

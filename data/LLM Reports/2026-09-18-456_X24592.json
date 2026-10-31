@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X24592",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the WIPO domain name dispute resolution webpage, including procedural details and fee information for domain name complaints and responses. The IPFR page concerns complaints about lawyers or attorneys and the relevant Australian regulators, specifically the Trans-Tasman IP Attorneys Board and state legal services commissioners. There is no overlap in subject matter or procedural guidance that would affect the accuracy or currency of the IPFR page content. The WIPO domain name dispute process is unrelated to complaints about lawyer or attorney conduct.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1852,
+  "completion_tokens": 134,
+  "total_tokens": 1986,
+  "processing_time_seconds": 1.498413649999975,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.744906+00:00"
+}

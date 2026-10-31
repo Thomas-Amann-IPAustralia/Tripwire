@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to amendments in customs regulations (adding a new international airport), updates to the patent manual (mostly about computer-implemented inventions and classification systems), accessibility fixes and link updates in the design manual, updates to plant breeder's rights manuals, and closed consultations on various IP topics. None of these changes specifically address or alter the procedures, fees, timeframes, or legal requirements related to requesting examination or certification of registered designs by IP Australia. The IPFR page content about requesting design certification, examination fees, timelines, and outcomes remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6361,
+  "completion_tokens": 150,
+  "total_tokens": 6511,
+  "processing_time_seconds": 3.0161325639996903,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.233619+00:00"
+}

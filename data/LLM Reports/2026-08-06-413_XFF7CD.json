@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to amendments in financial reporting legislation, updates to the Plant Breeder's Rights manual including portal and process link updates, and minor formatting corrections on the IP Australia legislation and non-legislative instruments page. None of these changes directly affect the content of the IPFR page 'Free IP tools you can use', which focuses on listing and describing free IP search and monitoring tools. There are no updates to tool names, functionalities, or descriptions that would require changes to the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6047,
+  "completion_tokens": 134,
+  "total_tokens": 6181,
+  "processing_time_seconds": 2.428770945999986,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796379+00:00"
+}

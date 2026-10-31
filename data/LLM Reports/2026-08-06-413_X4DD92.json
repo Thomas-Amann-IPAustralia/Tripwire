@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X4DD92",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change updates the wording and formatting on the IP Australia webpage about responding to accusations of IP infringement, adding a question about completing a search. This is related but does not contradict or update any specific factual content or guidance in the IPFR page. The second change is a technical connectivity error message update for the Etsy IP policy page, which is unrelated to the IPFR content. Neither change affects the accuracy, currency, or specific details of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2755,
+  "completion_tokens": 127,
+  "total_tokens": 2882,
+  "processing_time_seconds": 2.477329257000065,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796650+00:00"
+}

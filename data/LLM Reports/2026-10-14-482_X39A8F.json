@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news items about Australia's potential ratification of the GRATK Treaty and recent reforms to streamline the IP system, as well as general IP news updates. The IPFR page content focuses on practical guidance for small business owners on what to check before getting registered IP, including basic requirements and procedural advice. None of the changes provide specific updates to the legal requirements, timeframes, or procedural steps described in the IPFR page. There is no indication that the basic registration criteria, grace periods, or other detailed guidance in the page have changed. Therefore, the page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2750,
+  "completion_tokens": 152,
+  "total_tokens": 2902,
+  "processing_time_seconds": 3.0523534300000392,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.731824+00:00"
+}

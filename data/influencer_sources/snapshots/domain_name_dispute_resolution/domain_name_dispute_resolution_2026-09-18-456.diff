@@ -1,0 +1,37 @@
+--- previous+++ current@@ -24,11 +24,7 @@ - We can only begin processing your case when we have received the filing fee.
+ - Once a Complaint has been registered, our administrative fees are nonrefundable.
+ - A breakdown of the fees is available on the WIPO Schedule of Fees.
+-- Download a Model Complaint and submit it by email or using this Online Form.
+-- Send a copy to the Registrar, whose information can be found on the ICANN List of Accredited Registrars.
+-- Complaints filed outside working hours or on holidays or weekends will be processed the next working day.
+-- You will get an acknowledgement of receipt once your case is registered, and the filing fee is received.
+-- By submitting a Complaint, the Complainant agrees to be bound to the WIPO Data Privacy Notice.
++- Download a Model Complaint and submit it by email or using this
+ The main steps to filing a Response are:
+ - You may request an additional 4 calendar days to submit your response.
+ - You may also request an additional extension that may be granted in exceptional cases further to paragraph 5(e) of the Rules.
+@@ -44,6 +40,7 @@ - You are not required to make any payment if you agree with the Complainant's single-member panel selection.
+ - If you ask for a three-member panel, you must pay half of the filing fees (typically USD 2,000) and provide a list of three co-panelists in order of your preference. Refer to WIPO Domain Name Panelists List.
+ - A breakdown of the fees is available on the WIPO Schedule of Fees.
++ use WIPO services, then a Current Account at WIPO – managed in Swiss francs – is perfect for you. It’s secure, fast, and free of charge and provides access to all your payment activity.
+ - Download a Model Response and submit it by email or using this Online Form.
+ - Responses filed outside working hours or on holidays or weekends will be processed the next working day.
+ - You will get an acknowledgement of receipt once your response is received.
+@@ -58,14 +55,15 @@  or check our website
+  where all domain name cases administered by WIPO are listed by case number.
+ WIPO Domain Name Disputes
+-Case filing tools
++UDRP Case filing tools
+ - Model Complaint [DOCX]
+ - Model Response [DOCX]
+ - Guide to the UDRP
+-- 
+- Early Case Termination
++New WIPO Services
+ Research UDRP case law
++Legal Rights Objections (LRO)
+ country code Top-Level Domains (ccTLD)
++String Confusion Objections (SCO)
+ Additional resources
+ Filing resources
+ New gTLDs

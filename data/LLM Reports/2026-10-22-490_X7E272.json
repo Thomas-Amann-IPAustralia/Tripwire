@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in official notices about trade mark revocation, registration amendments, and design rights surrender, as well as updates to the Trade Marks Manual of Practice and Procedure and ACCC public registers. However, these changes do not directly affect the procedural description, timelines, or outcomes of hearings at IP Australia as described in the IPFR page. The IPFR page content focuses on the hearing process steps, decision-making, and appeal options, none of which are contradicted or rendered outdated by the upstream changes. There are no specific changes to hearing procedures, fees, timeframes, or decision outcomes that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3653,
+  "completion_tokens": 163,
+  "total_tokens": 3816,
+  "processing_time_seconds": 1.7514269479997893,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550450+00:00"
+}

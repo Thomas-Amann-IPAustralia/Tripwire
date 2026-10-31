@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate solely to fixing internal links and references within the Plant Breeder's Rights (PBR) manual on the IP Australia website. There are no substantive changes to the legal content, definitions, durations, or infringement criteria for PBR or any other IP rights. The IPFR page content on IP infringement, including PBR infringement, remains accurate and up to date. The changes do not affect any specific factual statements, legal thresholds, or procedural steps described in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3136,
+  "completion_tokens": 132,
+  "total_tokens": 3268,
+  "processing_time_seconds": 1.9510726500000146,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.563877+00:00"
+}

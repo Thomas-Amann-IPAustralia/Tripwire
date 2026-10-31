@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-02-348",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to a news update about IP Australia joining the PPH eXtra Initiative and new transparency programs for patent examination timeframes. The change does not mention any updates to design rights, third party examination procedures, fees, timelines, or legal requirements relevant to the IPFR page content about requesting confirmation of a registered design's validity. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2117,
+  "completion_tokens": 116,
+  "total_tokens": 2233,
+  "processing_time_seconds": 1.950222804999953,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-02T06:57:01.162130+00:00"
+}

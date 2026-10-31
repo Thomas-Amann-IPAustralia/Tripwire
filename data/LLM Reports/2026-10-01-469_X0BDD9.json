@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes describe Australia's participation in international IP cooperation and capacity building activities, such as under FTAs and WIPO programs. However, the IPFR page focuses on explaining the absence of a worldwide IP right and the main international systems available for protecting IP overseas. The new information about Australia's cooperative roles and partnerships does not affect the accuracy or currency of the IPFR page's content about how individuals can protect their ideas internationally. There are no changes to the international systems, procedures, or territorial nature of IP rights described in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1806,
+  "completion_tokens": 140,
+  "total_tokens": 1946,
+  "processing_time_seconds": 2.027902111000003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938483+00:00"
+}

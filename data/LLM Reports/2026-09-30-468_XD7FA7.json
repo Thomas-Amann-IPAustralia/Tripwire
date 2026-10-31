@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to proactive measures to prevent IP infringement, such as listing IP rights on brand registries and anti-counterfeit measures, which is a different topic from the IPFR page's focus on opposing trade mark registrations. The IPFR page specifically addresses the opposition process, timelines, fees, risks, and outcomes related to challenging a trade mark application, none of which are affected or contradicted by the updated content on IP Australia's 'how to prevent infringement' page. Therefore, no specific factual or procedural content in the IPFR page is impacted by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2901,
+  "completion_tokens": 146,
+  "total_tokens": 3047,
+  "processing_time_seconds": 2.2369823579999775,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.355136+00:00"
+}

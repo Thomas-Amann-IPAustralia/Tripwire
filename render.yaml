@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: tripwire-dashboard
+    env: node
+    buildCommand: cd dashboard && npm install && npm run build
+    startCommand: cd dashboard && npm start
+    disk:
+      name: tripwire-data
+      mountPath: /data
+      sizeGB: 1

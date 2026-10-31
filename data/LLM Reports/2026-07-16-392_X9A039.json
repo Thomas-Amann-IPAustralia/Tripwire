@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to an update to the Trade Marks Manual of Practice and Procedure with a new chapter on filing requirements, and ACCC exemptions related to data sharing obligations under the Competition and Consumer Act. The IPFR page content focuses on general guidance for registering a trade mark, including benefits, risks, costs, and procedural steps, but does not include specific procedural details, filing requirements, or regulatory exemptions that have changed. There is no indication that the updated manual or ACCC exemptions affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4611,
+  "completion_tokens": 140,
+  "total_tokens": 4751,
+  "processing_time_seconds": 3.2772154709996357,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.229336+00:00"
+}

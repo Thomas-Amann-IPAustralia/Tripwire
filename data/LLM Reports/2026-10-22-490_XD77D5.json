@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to the Amazon Brand Registry webpage content, specifically removing details about the 'New Seller Success' program. The IPFR page is about handling AI-generated IP infringement allegations and provides a checklist and guidance for SMEs on responding to such allegations. There is no mention of Amazon Brand Registry or related programs in the IPFR page content, and the change does not affect any specific legal references, procedures, or advice given in the IPFR page. Therefore, the change does not impact the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3356,
+  "completion_tokens": 140,
+  "total_tokens": 3496,
+  "processing_time_seconds": 2.058294939999996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551543+00:00"
+}

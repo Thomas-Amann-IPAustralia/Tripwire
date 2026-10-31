@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the WIPO Intergovernmental Committee on Intellectual Property and Indigenous Knowledge, Australia's participation in international IP cooperation, and updates to the ICANN Uniform Domain Name Dispute Resolution Policy (UDRP) documents. However, the IPFR page focuses specifically on the WIPO Clause Generator tool for drafting contract clauses for IP dispute resolution, describing its features, benefits, risks, and usage. None of the changes affect the accuracy or currency of the information about the WIPO Clause Generator, its processes, or the guidance provided on this page. The updates to international cooperation and UDRP policy do not alter the content or advice given about the WIPO Clause Generator or its use in contracts. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3176,
+  "completion_tokens": 186,
+  "total_tokens": 3362,
+  "processing_time_seconds": 1.8879479570000512,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.486012+00:00"
+}

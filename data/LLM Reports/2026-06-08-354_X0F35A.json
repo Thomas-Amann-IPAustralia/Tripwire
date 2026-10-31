@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X0F35A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the external source relate to additional detail about market monitoring and counterfeit goods, including the suggestion to list IP rights with platforms such as Amazon Brand Registry. The IPFR page already broadly covers market monitoring and enforcement preparation as part of an IP strategy, but does not provide specific platform recommendations or detailed procedural steps. Since the IPFR page content remains accurate and does not contain outdated or incorrect information about these topics, no direct update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2542,
+  "completion_tokens": 127,
+  "total_tokens": 2669,
+  "processing_time_seconds": 2.091031348999877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.611557+00:00"
+}

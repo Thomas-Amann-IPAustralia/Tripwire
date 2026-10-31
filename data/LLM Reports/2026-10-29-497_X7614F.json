@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update about the tabling of the IP Australia's Annual Report 2025-26 and some news items related to patents, trademarks, and IP reports. However, the IPFR page 'Why every creative business needs an IP strategy from day one' is a general guidance article focused on the importance of having an IP strategy and practical steps for creative businesses. The change does not provide any new or updated legal thresholds, procedural steps, or specific factual information that would affect the accuracy or currency of the IPFR page content. The news update is informational and does not impact the advice or content of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2445,
+  "completion_tokens": 160,
+  "total_tokens": 2605,
+  "processing_time_seconds": 1.4094345710000198,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.239727+00:00"
+}

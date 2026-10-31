@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Plant Breeder's Rights (PBR) manual, including new guidance content for the QP Portal and updated links, as well as minor formatting and typographical corrections on the IP Australia legislation and non-legislative instruments page. The IPFR page provides a general overview of IP types and their protections without specific procedural details, dates, or references to the QP Portal or the detailed PBR application process. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3533,
+  "completion_tokens": 142,
+  "total_tokens": 3675,
+  "processing_time_seconds": 2.693902990999959,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796512+00:00"
+}

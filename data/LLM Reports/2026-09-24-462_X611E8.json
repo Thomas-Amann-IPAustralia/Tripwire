@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia Patent Manual and related manuals are mostly cyclic reviews with no substantive amendments affecting the patent opposition process described in the IPFR page. The changes to the trademark and design manuals, as well as updates to other IP areas, do not impact the patent opposition content. There are no updates to fees, timeframes, procedural steps, or legal criteria relevant to responding to a patent opposition. The minor language and formatting changes in the patent manual do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10929,
+  "completion_tokens": 138,
+  "total_tokens": 11067,
+  "processing_time_seconds": 3.043082517999892,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.203947+00:00"
+}

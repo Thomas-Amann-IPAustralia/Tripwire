@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-04-411",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news updates about IP Australia's participation in the PPH eXtra Initiative and general IP report findings, which concern patent examination timeframes and innovation trends. These updates do not affect the procedural details, steps, or outcomes described in the IPFR page about hearings at IP Australia. There is no indication that the hearing process, fees, timelines, or appeal routes have changed. The relevance scores are low to moderate and the content changes do not address hearings or oppositions directly.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1746,
+  "completion_tokens": 131,
+  "total_tokens": 1877,
+  "processing_time_seconds": 2.030685755000036,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-04T05:23:48.912394+00:00"
+}

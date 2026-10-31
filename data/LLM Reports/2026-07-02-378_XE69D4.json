@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to WIPO's payment methods for arbitration fees and additional clarifications about the Madrid System's territorial coverage and upcoming procedural changes. The IPFR page on challenging international domain names primarily discusses domain name dispute resolution policies, processes, and timelines, particularly focusing on UDRP and auDRP. It does not provide specific payment instructions, fee payment methods, or detailed Madrid System trademark registration territorial coverage. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4080,
+  "completion_tokens": 134,
+  "total_tokens": 4214,
+  "processing_time_seconds": 2.1494656860004397,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.272020+00:00"
+}

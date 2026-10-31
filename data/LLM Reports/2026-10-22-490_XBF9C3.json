@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the Australian Competition and Consumer Commission (ACCC) public registers, specifically about exemptions and enforcement actions under the Competition and Consumer Act 2010. These changes do not pertain to patent law, patent filing, examination, or enforcement processes described in the IPFR page about 'filed' patents. Therefore, the content about patent filing and enforcement remains accurate and unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1975,
+  "completion_tokens": 114,
+  "total_tokens": 2089,
+  "processing_time_seconds": 1.298681914999861,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.552341+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia patent manual primarily involve updates to guidance on prior art definitions, formatting, and links, with no direct amendments to the procedural or timing details of lodging a section 27 notice as described in the IPFR page. The design manual changes and administrative fee updates relate to other IP rights or court fees and do not impact the specific content about section 27 notices for patent examination. The IPFR page's description of the process, timing, and costs remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6671,
+  "completion_tokens": 136,
+  "total_tokens": 6807,
+  "processing_time_seconds": 2.0181279029998223,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849217+00:00"
+}

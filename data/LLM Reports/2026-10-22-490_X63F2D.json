@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the ACCC public registers and exemptions under the Competition and Consumer Act 2010, which are unrelated to the content of the IPFR page about requesting IP Australia to confirm a registered design is valid. There is no mention or impact on design examination procedures, fees, timeframes, or certification processes. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2441,
+  "completion_tokens": 115,
+  "total_tokens": 2556,
+  "processing_time_seconds": 1.4541376139998192,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.552089+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the Trade Marks Manual of Practice and Procedure with a new chapter on filing requirements, as noted in the official notices. The IPFR page XF9137 focuses on monitoring the trade mark register and market for competitor activity, including practical advice on how to monitor and the benefits and risks involved. The change does not specify any amendments to monitoring procedures, tools, or timelines that would affect the accuracy or currency of the IPFR page content. Therefore, the IPFR page remains accurate and does not require updating based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2138,
+  "completion_tokens": 144,
+  "total_tokens": 2282,
+  "processing_time_seconds": 2.471571893000146,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234453+00:00"
+}

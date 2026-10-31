@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia Trade Marks Manual and Design Manual primarily involve updates to navigation links, corrections of broken links, alternative text for images, and minor content updates unrelated to the substantive grounds, procedures, or timeframes for removal of trade marks for non-use. There is no indication that the statutory timeframes, fees, procedural steps, or legal thresholds described in the IPFR page have been amended. Therefore, the IPFR page content remains accurate and up to date with respect to the grounds and process for requesting removal of an unused trade mark.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4008,
+  "completion_tokens": 143,
+  "total_tokens": 4151,
+  "processing_time_seconds": 1.5049402829999963,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.935359+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates and reorganizations in the IP Australia's Trade Marks Manual of Practice and Procedure, including the consolidation of revocation and amendment procedures into a new Part 36, minor formatting and typographical corrections, and updates to examination chapters related to plants and plant materials. There is no indication of changes to the opposition process timelines, fees, grounds for opposition, or procedural steps described in the IPFR page. The IPFR page content about challenging the registration of a new trade mark remains accurate and current based on the provided upstream changes. The news update about the Annual Report and other IP Australia news items do not affect the opposition process content. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10576,
+  "completion_tokens": 175,
+  "total_tokens": 10751,
+  "processing_time_seconds": 1.7254405099999985,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.237903+00:00"
+}

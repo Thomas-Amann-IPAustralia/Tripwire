@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X2A3EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily update detailed procedural and policy information on Amazon Brand Registry and eBay's VeRO program, including clarifications on reporting processes, appeal mechanisms, and administrative details. The IPFR page already provides a general overview of how to oppose IP infringement notices on online marketplaces, mentioning Amazon, eBay, Etsy, and Shein with broad descriptions of their processes. None of the changes introduce new deadlines, fees, or procedural steps that contradict or invalidate the existing IPFR content. The changes do not affect the accuracy of the IPFR page's guidance or require updating specific details such as timeframes, fees, or procedural steps. Therefore, no amendment to the IPFR page is necessary at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10140,
+  "completion_tokens": 175,
+  "total_tokens": 10315,
+  "processing_time_seconds": 3.426592337999864,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.706231+00:00"
+}

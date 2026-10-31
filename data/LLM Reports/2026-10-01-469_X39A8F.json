@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to procedural and administrative updates in the IP Australia manuals and legislative instrument listings, such as amendments to examination procedures, applicant definitions, and filing processes for trade marks, designs, and plant breeders' rights. The IPFR page provides general guidance on what to check before getting registered IP, focusing on basic definitions, timing considerations, ownership, and availability checks. None of the changes indicate modifications to the fundamental requirements, definitions, or timing (e.g., grace periods) described in the IPFR page. There are no updates to statutory thresholds, timeframes, or substantive legal criteria that would require altering the IPFR content. Therefore, the page remains accurate and current for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5488,
+  "completion_tokens": 174,
+  "total_tokens": 5662,
+  "processing_time_seconds": 1.7226417709998714,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.936264+00:00"
+}

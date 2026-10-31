@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-04-411",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to an update on the number of news items shown on the IP Australia news webpage and mention a new transparency program about patent examination timeframes for Patent Prosecution Highway requests. These updates do not affect the content of the IPFR page about responding to a patent opposition, which focuses on the opposition process, timelines, costs, and outcomes. There is no indication that the opposition process, fees, timeframes, or procedural details have changed as a result of these news updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2299,
+  "completion_tokens": 130,
+  "total_tokens": 2429,
+  "processing_time_seconds": 3.661642895,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-04T05:23:48.912119+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Madrid System webpage primarily concern updates to territorial coverage details (removal of Bailiwick of Jersey from UK coverage after August 1, 2026), upcoming webinars and events, and the addition of a podcast series. These updates do not affect the general guidance provided on the IPFR page about considerations when responding to international accusations of IP infringement. The IPFR page does not mention specific Madrid System territorial coverage, fees, or event dates, nor does it provide detailed procedural or legal references that are impacted by these changes. Therefore, no amendments to the IPFR page content are required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3711,
+  "completion_tokens": 161,
+  "total_tokens": 3872,
+  "processing_time_seconds": 2.1816941060001227,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.876420+00:00"
+}

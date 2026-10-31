@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Paris Convention page are mostly formatting and table of contents updates without substantive changes to the legal content relevant to infringement basics. The changes to the IP attorney engagement page are minor formatting adjustments with no changes to substantive advice or procedural steps. The IPFR page is a general introductory guide on IP infringement aimed at non-experts and does not contain specific legal references, procedural steps, or statutory details that are impacted by these upstream changes. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3837,
+  "completion_tokens": 136,
+  "total_tokens": 3973,
+  "processing_time_seconds": 2.194959153999889,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908070+00:00"
+}

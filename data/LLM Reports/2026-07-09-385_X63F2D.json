@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to notices about surrender of design registrations, updates to the Patent Manual concerning computer-implemented inventions, and updates to the Design Manual including URL changes and content restructuring. None of the changes provide updates or amendments to the process, fees, timelines, or legal requirements for requesting certification or examination of registered designs as described in the IPFR page. The IPFR page content about requesting examination to certify a registered design, associated fees, timelines, and outcomes remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6586,
+  "completion_tokens": 134,
+  "total_tokens": 6720,
+  "processing_time_seconds": 2.790045710999948,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.816520+00:00"
+}

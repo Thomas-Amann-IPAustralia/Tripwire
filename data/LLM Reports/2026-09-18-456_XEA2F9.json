@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the WIPO domain name dispute resolution webpage, including updates to procedural details, fee payment options, and new services such as Legal Rights Objections and String Confusion Objections. However, the IPFR page focuses on the WIPO Good Offices Program as an alternative dispute resolution mechanism for IP and technology disputes generally, without specific reference to domain name dispute procedures or fee payment methods. There is no direct or specific information in the IPFR page that is contradicted or outdated by the changes in the domain name dispute resolution content. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4594,
+  "completion_tokens": 158,
+  "total_tokens": 4752,
+  "processing_time_seconds": 2.141498619999993,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.744406+00:00"
+}

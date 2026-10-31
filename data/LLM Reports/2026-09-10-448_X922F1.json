@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified are primarily updates to the IPAustralia patent and trademark manuals, including procedural clarifications, reorganization, and updates to trademark examination chapters. The patent manual changes mention amendments related to sections and regulations, but do not specifically alter the opposition process timelines, fees, or procedural steps described in the IPFR page. The trademark manual changes are unrelated to patent oppositions. Therefore, the IPFR page content about challenging a new or amended patent remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4952,
+  "completion_tokens": 134,
+  "total_tokens": 5086,
+  "processing_time_seconds": 2.6444652300001508,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552397+00:00"
+}

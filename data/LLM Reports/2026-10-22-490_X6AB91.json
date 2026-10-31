@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to new ACCC consultations on various consumer product safety standards and inquiries, such as pedal bicycles and mobile services, as well as water market decisions. These updates do not affect the specific content of the IPFR page, which focuses on reporting IP infringement risks to public interest, including counterfeit goods, IP crime, and related reporting channels. There is no indication that the ACCC consultation changes impact the accuracy or currency of the IPFR guidance on IP infringement or reporting procedures.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3357,
+  "completion_tokens": 129,
+  "total_tokens": 3486,
+  "processing_time_seconds": 1.3952873480000108,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.552252+00:00"
+}

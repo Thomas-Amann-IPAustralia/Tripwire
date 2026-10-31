@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to corrections and amendments to specific design registrations and updates to instruments related to fees and filing documents. There is no indication that these changes affect the procedural details, fees, timelines, or substantive content described in the IPFR page about requesting third-party examination of registered designs. The IPFR page content remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3901,
+  "completion_tokens": 105,
+  "total_tokens": 4006,
+  "processing_time_seconds": 1.225897218,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.485630+00:00"
+}

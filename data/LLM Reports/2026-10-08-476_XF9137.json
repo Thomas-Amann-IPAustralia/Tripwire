@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the formatting and wording of policy register entries on the IP Australia policy register webpage. It does not introduce any new policies or amendments that affect the content of the IPFR page about monitoring trade mark registers and competitor activity. The IPFR page focuses on practical guidance for small businesses on monitoring trade marks, and the policy register changes do not alter any specific procedures, fees, timeframes, or legal thresholds mentioned in the IPFR content. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3027,
+  "completion_tokens": 139,
+  "total_tokens": 3166,
+  "processing_time_seconds": 1.472501634999844,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489852+00:00"
+}

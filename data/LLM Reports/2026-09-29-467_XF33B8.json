@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds detailed explanations about different commercialisation methods (independent launch, licensing, franchising, assignment) including risks, returns, and ownership aspects. However, the IPFR page content already broadly covers the commercialisation stage in general terms without specific procedural or legal details. The new detailed content does not contradict or render inaccurate any specific statements in the IPFR page. The IPFR page is designed as a high-level guide to help business owners identify their IP journey stage, not a detailed commercialisation guide. Therefore, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2892,
+  "completion_tokens": 148,
+  "total_tokens": 3040,
+  "processing_time_seconds": 1.6413866729999427,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009700+00:00"
+}

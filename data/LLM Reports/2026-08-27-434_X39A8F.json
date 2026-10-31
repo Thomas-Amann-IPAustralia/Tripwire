@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of updates to procedural instruments, manuals, and forms related to design rights, plant breeders' rights, patents, and trade marks, as well as minor formatting and guidance updates. The IPFR page provides general, high-level guidance on what to check before getting registered IP, including basic requirements and considerations for different IP types. None of the changes specify amendments to the fundamental legal requirements, timeframes, or definitions that would directly affect the accuracy or currency of the IPFR page content. The updated dates for forms or instruments (e.g., new PBR application form date) do not impact the general advice given to small business owners in this IPFR page. Therefore, no specific content corrections or updates are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 14172,
+  "completion_tokens": 179,
+  "total_tokens": 14351,
+  "processing_time_seconds": 3.183761438000147,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.907119+00:00"
+}

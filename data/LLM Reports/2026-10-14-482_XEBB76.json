@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news updates about Australia's potential ratification of the GRATK Treaty and recent reforms to streamline the IP system. However, the IPFR page content is a general overview of what IP is and how it protects individuals and businesses, without specific references to treaties, legislative dates, or procedural details that have changed. The updates do not affect the accuracy or currency of the general explanations provided in the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2471,
+  "completion_tokens": 115,
+  "total_tokens": 2586,
+  "processing_time_seconds": 2.4321106869999767,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.732098+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the Department of Foreign Affairs and Trade (DFAT) webpage content regarding Australia's international intellectual property engagement, including updated descriptions of Australia's IP system, international rankings, and cooperation with other agencies. However, the IPFR page 'Familiarise yourself with IP laws' focuses on explaining the domestic Australian IP legislative framework, the roles of Australian government agencies, and the basics of IP rights and protections. The changes do not affect any specific legislative references, procedural details, or factual statements in the IPFR page. The IPFR page remains accurate and current in its description of Australian IP laws and agencies. The updated international context and statistics do not require amendments to the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3220,
+  "completion_tokens": 172,
+  "total_tokens": 3392,
+  "processing_time_seconds": 1.8208384269998987,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551583+00:00"
+}

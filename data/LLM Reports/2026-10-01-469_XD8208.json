@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a general update to the IP Australia Trade Marks Manual of Practice and Procedure, including minor updates to various sections and formatting changes. The change document does not mention any amendments to the rules, timeframes, fees, or procedures related to removal of trade marks for non-use. The IPFR page content on removal of trade marks for non-use remains accurate and consistent with the described procedures and timelines. Therefore, no update to the IPFR page is required based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3451,
+  "completion_tokens": 132,
+  "total_tokens": 3583,
+  "processing_time_seconds": 1.251101902000073,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938350+00:00"
+}

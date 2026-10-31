@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.9,
+  "reasoning": "The upstream change is an announcement about IP Australia's Annual Report 2025\u201326 being tabled in Parliament, along with some news items about patents, trademarks, and IP reports. However, the change does not provide any specific updates or amendments to the legal framework, registration processes, or guidance related to the value or registration of IP rights. The IPFR page content about whether it is worth registering IP remains accurate and unaffected by this general news update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1596,
+  "completion_tokens": 123,
+  "total_tokens": 1719,
+  "processing_time_seconds": 1.2385256360000767,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.239553+00:00"
+}

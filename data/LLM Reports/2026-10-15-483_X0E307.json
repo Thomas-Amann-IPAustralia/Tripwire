@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve administrative updates such as design registration surrenders, corrections to design register entries, updates to application forms, and the addition or update of alternate text for images in the design manual. None of these changes affect the substantive content or guidance provided in the IPFR page about addressing overseas infringement, which focuses on the territorial nature of IP rights, enforcement challenges, and practical tips for overseas IP protection. There are no updates to legal principles, procedural steps, or enforcement options that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4410,
+  "completion_tokens": 143,
+  "total_tokens": 4553,
+  "processing_time_seconds": 1.5944553150000047,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.635624+00:00"
+}

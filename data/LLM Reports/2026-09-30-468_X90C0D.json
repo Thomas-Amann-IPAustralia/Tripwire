@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve removal of explanatory paragraphs about commercialisation options (independent launch, assignment) and some reformatting or rephrasing of content related to preventing infringement, such as clarifications about Amazon Brand Registry. However, the IPFR page 'What does IP protection mean for my business?' provides a broad overview of IP protection concepts without detailed procedural or financial specifics about commercialisation or infringement prevention platforms. None of the removed or altered content directly contradicts or updates any specific factual statement, date, or procedural step in the IPFR page. The IPFR page remains accurate and current in its general explanations of IP rights, enforcement, and commercialisation options. Therefore, no change is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7701,
+  "completion_tokens": 174,
+  "total_tokens": 7875,
+  "processing_time_seconds": 2.768368095000028,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354261+00:00"
+}

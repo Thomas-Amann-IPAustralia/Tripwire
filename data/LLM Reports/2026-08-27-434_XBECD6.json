@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IP Australia patent manual concerning internal references, links, and naming conventions related to patent document citation and search procedures (e.g., changes to AbS references and corrected links). The IPFR page content focuses on the process and practical guidance for lodging a section 27 notice to raise prior art concerns during patent examination. There is no specific information in the IPFR page about citation tools, internal manual references, or procedural details that have been changed in the upstream document. Therefore, the IPFR page remains accurate and does not require amendment based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2525,
+  "completion_tokens": 152,
+  "total_tokens": 2677,
+  "processing_time_seconds": 2.5235724799999844,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909383+00:00"
+}

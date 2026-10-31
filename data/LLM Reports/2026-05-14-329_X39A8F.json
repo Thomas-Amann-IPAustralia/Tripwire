@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates to procedural manuals for patents, trade marks, and designs, including accessibility fixes, minor typographical corrections, and updated references to case law or legislation. There is also the addition of information about Olympic designs and related non-legislative instruments. However, the IPFR page content is a high-level overview aimed at small business owners, focusing on basic checks before seeking IP registration. None of the changes directly alter the fundamental requirements, timing, or procedural advice given in the IPFR page. The page does not mention Olympic designs or the detailed procedural or legal nuances updated in the manuals. Therefore, the page remains accurate and current for its intended audience and purpose.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5456,
+  "completion_tokens": 169,
+  "total_tokens": 5625,
+  "processing_time_seconds": 4.08679078199998,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.501270+00:00"
+}

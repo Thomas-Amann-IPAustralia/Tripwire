@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and fixes in the patent manual, including broken link corrections and cyclic reviews of patent examination content. There is no direct mention or indication of changes affecting the registered design examination process, fees, timelines, or certification procedures described in the IPFR page. The IPFR page focuses specifically on design certification, while the change document pertains to patent manual content. Therefore, the IPFR page content remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2719,
+  "completion_tokens": 127,
+  "total_tokens": 2846,
+  "processing_time_seconds": 1.303544772999885,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.240893+00:00"
+}

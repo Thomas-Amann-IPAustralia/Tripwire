@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the DFAT webpage primarily update general descriptions of Australia's international IP engagement, the role of DFAT, and Australia's standing in global innovation indices. They clarify and modernize language about international IP standards, the TRIPS Agreement, and Australia's IP system, but do not introduce any new procedural steps, legal thresholds, or specific guidance relevant to responding to international IP infringement accusations. The IPFR page focuses on practical considerations for individuals accused of infringement overseas, emphasizing variability by jurisdiction and recommending legal advice. The upstream changes do not affect the accuracy or currency of this practical guidance or introduce new information that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5421,
+  "completion_tokens": 160,
+  "total_tokens": 5581,
+  "processing_time_seconds": 1.7321159860000535,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550660+00:00"
+}

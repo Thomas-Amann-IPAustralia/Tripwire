@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia trademark manual and news page mainly involve updates to internal procedural details, terminology, and case law references related to trade mark examination and amendments, as well as a news item about a trade mark opposition case. The IPFR page content is a general guide for small business owners about registering unregistered trade marks, covering benefits, risks, costs, and procedural basics. None of the changes indicate updates to fees, timeframes, or fundamental procedural steps described in the IPFR page. Therefore, the IPFR page remains accurate and current for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4281,
+  "completion_tokens": 148,
+  "total_tokens": 4429,
+  "processing_time_seconds": 2.078004693999901,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.817995+00:00"
+}

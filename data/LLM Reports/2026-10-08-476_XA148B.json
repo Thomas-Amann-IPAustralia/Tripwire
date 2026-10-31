@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified are mostly cyclic reviews, minor language edits, or updates to policy register entries that do not directly affect the specific procedural details, timeframes, or costs described in the IPFR page about responding to a trade mark opposition. There are no amendments to the Trade Marks Act or Regulations that alter the opposition response process, deadlines, fees, or outcomes as described. The changes to patent manuals, policy registers, and ACCC public registers are unrelated to the trade mark opposition process guidance provided. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7402,
+  "completion_tokens": 143,
+  "total_tokens": 7545,
+  "processing_time_seconds": 1.485407629999827,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.488511+00:00"
+}

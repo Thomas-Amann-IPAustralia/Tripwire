@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-07-475",
+  "ipfr_page_id": "X25229",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Online Safety Act 2021, specifically strengthening enforcement powers related to the social media minimum age framework and associated penalties. The IPFR page discusses joint ownership risks in intellectual property, focusing on patents, copyright, and know-how in collaborative research and commercialisation contexts. There is no overlap or direct impact of the Online Safety Amendment Bill on the content of the IPFR page, which does not address social media regulation, online safety, or age restrictions. Therefore, the IPFR page remains accurate and does not require amendment based on this legislative change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3657,
+  "completion_tokens": 148,
+  "total_tokens": 3805,
+  "processing_time_seconds": 3.197626623000019,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-07T08:23:21.769009+00:00"
+}

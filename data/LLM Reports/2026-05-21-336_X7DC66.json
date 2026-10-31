@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page and the ACCC public registers relate to specific legal updates, exemptions, and administrative notices that do not directly affect the content of the IPFR page. The IPFR page focuses on explaining the difference between an ABN, registered business name, and registered trade mark, and the benefits of trade mark registration for small businesses. The upstream changes do not update or contradict any specific factual statements, legal thresholds, or procedural guidance given in the IPFR content. Therefore, no amendments to the IPFR page are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2671,
+  "completion_tokens": 148,
+  "total_tokens": 2819,
+  "processing_time_seconds": 2.437388370000008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.586431+00:00"
+}

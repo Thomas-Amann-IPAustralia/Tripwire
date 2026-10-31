@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center webpages and related resources provide updated and expanded information about WIPO ADR services, fees, contract clauses, and domain name dispute resolution. However, the IPFR page 'Using mediation to resolve IP disputes' focuses on explaining the general benefits and nature of mediation in IP disputes, rather than providing specific procedural details, fee schedules, or WIPO-specific contractual clauses. None of the changes contradict or render inaccurate any specific statements or guidance in the IPFR page. The IPFR content remains accurate and relevant without requiring updates based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6648,
+  "completion_tokens": 151,
+  "total_tokens": 6799,
+  "processing_time_seconds": 2.2839675309999166,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152575+00:00"
+}

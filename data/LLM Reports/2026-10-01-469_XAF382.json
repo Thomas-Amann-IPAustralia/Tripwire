@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to procedural manuals and administrative details related to trade marks, designs, and plant breeders' rights, such as amendments to examination procedures, filing requirements, and non-legislative instruments. The IPFR page 'What is IP infringement?' provides a general, introductory explanation of IP infringement concepts for small business owners, focusing on the basics of infringement, types of IP, and common misconceptions. None of the changes indicate modifications to the substantive legal definitions, infringement criteria, or examples that would affect the accuracy or currency of the IPFR content. Therefore, no specific updates to the IPFR page are necessary based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5288,
+  "completion_tokens": 163,
+  "total_tokens": 5451,
+  "processing_time_seconds": 1.9861056090001057,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.936185+00:00"
+}

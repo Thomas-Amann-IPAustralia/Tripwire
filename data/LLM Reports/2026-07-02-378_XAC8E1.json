@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the ACCC public registers page, including new court enforceable undertakings and exemptions under the Competition and Consumer Act 2010. These changes concern competition law enforcement and consumer data sharing obligations, which are unrelated to the content of the IPFR page about business names, company names, and trade marks. The IPFR page focuses on explaining the differences between business names, company names, and registered trade marks as forms of intellectual property rights, and none of the ACCC updates affect the accuracy or currency of this information.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2189,
+  "completion_tokens": 143,
+  "total_tokens": 2332,
+  "processing_time_seconds": 2.0716140079998695,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.271340+00:00"
+}

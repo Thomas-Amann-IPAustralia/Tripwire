@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-30-498",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are minor updates to the IP Australia news page, specifically adding two more news results to the listing count. There is no substantive update to trade mark registration procedures, fees, timeframes, or legal requirements. The IPFR page content about registering a trade mark remains accurate and unaffected by these news listing changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2679,
+  "completion_tokens": 96,
+  "total_tokens": 2775,
+  "processing_time_seconds": 1.2434801770000377,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-30T08:17:16.712298+00:00"
+}
