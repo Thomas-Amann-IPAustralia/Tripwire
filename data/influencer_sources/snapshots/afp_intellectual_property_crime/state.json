@@ -8,6 +8,6 @@
   "previous_hash": "ffc360ec76e524576f1f71dcbccf370a2f813a8a34028652957f129b881ef52a",
   "previous_text": "This site can\u2019t be reached\nwww.afp.gov.au unexpectedly closed the connection.\nTry:\n- Checking the connection\n- Checking the proxy and the firewall\nERR_CONNECTION_CLOSED\nCheck your Internet connection\nCheck any cables and reboot any routers, modems, or other network\n devices you may be using.\nAllow Chrome to access the network in your firewall or antivirus\n settings.\nIf it is already listed as a program allowed to access the network, try\n removing it from the list and adding it again.\nIf you use a proxy server\u2026\nGo to\n the Chrome menu >\n Settings\n >\n System\n >\n Open your computer's proxy settings\n and make sure your configuration is set to \"no proxy\" or \"direct.\"\nwww.afp.gov.au unexpectedly closed the connection.",
   "last_error": "RetryableError: All fetch attempts failed for https://www.afp.gov.au/crimes/fraud-and-corruption/intellectual-property-crime",
-  "last_error_at": "2026-10-30T08:15:04.709292+00:00",
-  "consecutive_failures": 12
+  "last_error_at": "2026-10-31T08:08:34.197962+00:00",
+  "consecutive_failures": 13
 }
