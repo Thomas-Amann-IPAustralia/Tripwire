@@ -1,12 +1,10 @@
 {
   "probe_signals": {
-    "etag": "W/\"14c500-2LbYZizPyJwk4KaGddd40kUGHRw\"",
-    "content_length": "1361152"
+    "register_id": "C2026C00405",
+    "compilation_number": "167",
+    "start": "2026-09-16T00:00:00"
   },
-  "last_checked": "2026-10-12T08:43:37.688295+00:00",
-  "previous_hash": "21dc9c41f7e6036459e84d323acb14572eeeed3aaca9039dfe8d9631925739bc",
-  "previous_text": "Competition and Consumer Act 2010No. 51, 1974\nAdministered by \n- Attorney-General's Department\n- Department of Climate Change, Energy, the Environment and Water\n- Department of Industry, Science and Resources\n- Department of Infrastructure, Transport, Regional Development, Communications, Sport and the Arts\n- Department of the Treasury",
-  "last_error": "PermanentError: Content at https://www.legislation.gov.au/C2004A00109/latest/text is too short (134 chars < minimum 200)",
-  "last_error_at": "2026-11-02T08:57:26.752084+00:00",
-  "consecutive_failures": 15
+  "last_checked": "2026-11-03T09:04:56.395852+00:00",
+  "previous_hash": "142e3865d1c0b8453fee755c8d3f3fc59d2dd60b8b2ea104d5fa4a3daafb797e",
+  "previous_text": "Have your say on the Federal Register of Legislation. Complete our annual survey and tell us about your experience using the Register.\nMaintenance is scheduled from 8:30pm to 11pm AEDT on Tuesday 3 November 2026. The site may be unavailable or slow during this time."
 }
