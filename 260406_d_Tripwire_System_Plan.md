@@ -684,6 +684,8 @@ This provides identical inference performance at ~200 MB, saving disk space and 
 
 GitHub Actions runners are ephemeral: the workspace is wiped at the end of every job. Any file that is not explicitly persisted is lost. `actions/cache` (used for Hugging Face model weights) is not a reliable persistence mechanism for data that must survive across runs — cache entries can be evicted at any time without notice.
 
+> **Amendment (November 2026): the SQLite database is stored in Cloudflare R2.** It passed GitHub's 100 MB file limit in September 2026, after which every push containing it was rejected. `ipfr.sqlite` is no longer tracked in git; workflows run `python -m src.r2_storage pull` before and `push` after every job that writes it, with optimistic locking and dated backups (`storage.r2` in the config, `docs/runbook-r2-storage.md`). Influencer snapshots and other text artefacts are still committed as described below.
+
 **Persistence strategy: commit to the repository.**
 
 Both categories of state that must survive between runs are committed back to the repository at the end of each workflow run:

@@ -32,12 +32,10 @@ on:
           - INFO
           - WARNING
 
-# Share the main pipeline's concurrency group so this never writes ipfr.sqlite
-# at the same time as a scheduled pipeline run. Avoid dispatching it during the
-# 01:00 UTC ingestion window, which writes the same database under a different
-# group.
+# Share the concurrency group of every job that writes ipfr.sqlite (pipeline,
+# ingestion, recovery) so this never overlaps with them.
 concurrency:
-  group: tripwire-pipeline
+  group: tripwire-db
   cancel-in-progress: false
 
 jobs:
@@ -76,6 +74,15 @@ jobs:
           pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install -r requirements.txt
 
+      # The database lives in Cloudflare R2, not git.
+      - name: Pull database from R2
+        id: pull_db
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage pull
+
       # Reuse the pipeline's model cache so the weights are already present.
       - name: Cache Hugging Face models
         uses: actions/cache@v4
@@ -103,14 +110,23 @@ jobs:
             $RUN_ID_ARG \
             $LIMIT_ARG
 
-      - name: Commit backfill results (database + report)
+      - name: Push database to R2
+        if: always() && steps.pull_db.outcome == 'success'
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage push --label "backfill-${{ github.run_id }}"
+
+      - name: Commit backfill report
         if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ipfr_corpus/ipfr.sqlite data/logs/ || true
+          git add data/logs/ || true
           git diff --cached --quiet || git commit -m "chore: historical semantic-score backfill [run ${{ github.run_id }}] [skip ci]"
-          git push origin ${{ github.ref_name }} || true
+          git pull --rebase --autostash origin ${{ github.ref_name }}
+          git push origin ${{ github.ref_name }}
 
       - name: Upload backfill report
         if: always()

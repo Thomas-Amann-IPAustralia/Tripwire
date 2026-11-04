@@ -406,7 +406,7 @@ The system manages the following categories of information:
 
 | Asset | Location | Format | Description |
 |---|---|---|---|
-| IPFR corpus database | `data/ipfr_corpus/ipfr.sqlite` | SQLite (binary, WAL mode) | 10 tables: `pages`, `chunks`, `entities`, `keyphrases`, `graph_edges`, `sections`, `pipeline_runs`, `deferred_triggers`, `llm_assessments`, `ingestion_runs`. Committed to Git after each ingestion run. |
+| IPFR corpus database | `data/ipfr_corpus/ipfr.sqlite` | SQLite (binary, WAL mode) | 10 tables: `pages`, `chunks`, `entities`, `keyphrases`, `graph_edges`, `sections`, `pipeline_runs`, `deferred_triggers`, `llm_assessments`, `ingestion_runs`. Stored in Cloudflare R2 (not git) since November 2026; pulled before and pushed after every job, with dated backups. |
 | Influencer source snapshots | `data/influencer_sources/snapshots/<source_id>/` | Plain text (`<source_id>.txt`), JSON (`state.json`), versioned text (`.v1.txt`–`.v6.txt`) | Current content snapshot and state (hash, last probe signals, last checked timestamp) for each monitored source. Committed after each pipeline run. |
 | LLM assessment reports | `data/LLM Reports/<run_id>_<page_id>.json` | JSON | One file per (run, IPFR page) pair with full LLM verdict, reasoning, suggested changes, token counts, and confidence. Committed after each run. |
 | Feedback log | `data/logs/feedback.jsonl` | JSONL | Structured feedback from content owner email replies: run_id, page_id, source_id, feedback category, free-text comment, ingestion timestamp. Appended by feedback ingestion workflow. |
@@ -486,7 +486,7 @@ This is a net-new data capability. No existing data stores are being modified or
 │  │    Alibaba-NLP/gte-reranker-modernbert-base  ~600 MB               │  │
 │  └────────────────────────────────────────────────────────────────────┘  │
 │                    ↓  git commit + push                                    │
-│  data/ipfr_corpus/ipfr.sqlite   (binary, committed after ingestion)       │
+│  data/ipfr_corpus/ipfr.sqlite   (binary, stored in Cloudflare R2)         │
 │  data/influencer_sources/snapshots/  (text, committed after pipeline run) │
 │  data/LLM Reports/  (JSON, committed after pipeline run)                  │
 │  data/logs/feedback.jsonl  (JSONL, committed after feedback ingestion)    │
@@ -551,7 +551,7 @@ No VPN, private network, or internal network traversal is required. The system d
 
 | Asset | Recovery Mechanism | RTO Estimate | RPO |
 |---|---|---|---|
-| SQLite corpus database | Restored from most recent Git commit (`git checkout HEAD -- data/ipfr_corpus/ipfr.sqlite`). Committed after every ingestion run. | Minutes (single git checkout) | 24 hours (one ingestion run's data) |
+| SQLite corpus database | Restored from a dated R2 backup (`backups/ipfr_corpus/`, one per push; see `docs/runbook-r2-storage.md`). | Minutes (single download) | 24 hours (one ingestion run's data) |
 | Influencer source snapshots | Restored from Git history. 6 versions of each source snapshot are retained in the repository. | Minutes | 24 hours |
 | LLM assessment reports | Stored as JSON files in `data/LLM Reports/`; committed to Git. | Minutes | 24 hours |
 | Feedback log | `data/logs/feedback.jsonl` committed to Git after each feedback ingestion run. | Minutes | 6 hours |
@@ -567,7 +567,7 @@ No VPN, private network, or internal network traversal is required. The system d
 | GitHub Actions runner failure mid-run | Partial run; some sources not processed | Re-run via `workflow_dispatch`; no data corruption risk (SQLite committed atomically) |
 | OpenAI API unavailable | Stage 8 skipped; triggers deferred | Automatic retry at start of next run; deferred triggers table |
 | Gmail SMTP failure | Email not sent | Email written to `data/logs/health_alert_<run_id>.txt`; health alert attempted via alternative path |
-| SQLite corruption | Pipeline aborts with `Cannot open SQLite database` | Restore from Git: `git checkout HEAD -- data/ipfr_corpus/ipfr.sqlite` |
+| SQLite corruption | Pipeline aborts with `Cannot open SQLite database` | Restore from an R2 backup (`docs/runbook-r2-storage.md`) |
 | GitHub Actions concurrency conflict | Second workflow waits (not cancelled) | Concurrency group `tripwire-pipeline` with `cancel-in-progress: false` prevents parallel writes |
 
 > **Note:** Formal RTO/RPO targets have not been specified by the business owner. The estimates above reflect the technical recovery capabilities of the system as designed. The business owner should confirm whether these are adequate for operational requirements.

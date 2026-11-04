@@ -16,9 +16,11 @@ on:
           - "false"
           - "true"
 
-# Only one ingestion run at a time — prevents concurrent writes to ipfr.sqlite.
+# One group for every job that writes ipfr.sqlite (pipeline, ingestion,
+# backfill, recovery) so they never overlap. The R2 push also refuses to
+# overwrite a database that changed since it was pulled.
 concurrency:
-  group: ipfr-ingestion
+  group: tripwire-db
   cancel-in-progress: false
 
 jobs:
@@ -27,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
-      contents: write        # required to commit ipfr.sqlite back to the repo
+      contents: write        # required to commit sitemap.csv and snapshots back to the repo
 
     steps:
       # ------------------------------------------------------------------
@@ -69,6 +71,19 @@ jobs:
           pip install -r requirements-ingestion.txt
 
       # ------------------------------------------------------------------
+      # The database lives in Cloudflare R2, not git (it outgrew GitHub's
+      # 100 MB file limit). Fails the run if it cannot be fetched, so the
+      # job never runs against a stale or missing database.
+      # ------------------------------------------------------------------
+      - name: Pull database from R2
+        id: pull_db
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage pull
+
+      # ------------------------------------------------------------------
       # 3. Cache Hugging Face model weights (lazy-load means we pay once).
       # ------------------------------------------------------------------
       - name: Cache Hugging Face models
@@ -102,16 +117,28 @@ jobs:
             $FORCE_FLAG
 
       # ------------------------------------------------------------------
-      # 6. Commit updated database and sitemap back to the repository.
+      # 6a. Save the updated database back to R2.
       # ------------------------------------------------------------------
-      - name: Commit updated database and sitemap
+      - name: Push database to R2
+        if: always() && steps.pull_db.outcome == 'success'
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage push --label "ingestion-${{ github.run_id }}"
+
+      # ------------------------------------------------------------------
+      # 6b. Commit the sitemap and page snapshots back to the repository.
+      #     The database is NOT committed; it is in R2 (step 6a).
+      # ------------------------------------------------------------------
+      - name: Commit updated sitemap and snapshots
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ipfr_corpus/ipfr.sqlite
           git add data/ipfr_corpus/sitemap.csv
           git add data/ipfr_corpus/snapshots/ || true
           git diff --cached --quiet || git commit -m "chore: update IPFR corpus [run ${{ github.run_id }}]"
+          git pull --rebase --autostash origin ${{ github.ref_name }}
           git push origin ${{ github.ref_name }}
 
       # ------------------------------------------------------------------

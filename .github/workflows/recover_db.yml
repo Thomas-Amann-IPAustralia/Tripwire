@@ -1,0 +1,122 @@
+name: Recover database into R2
+
+# One-off (re-runnable) recovery of run history lost while ipfr.sqlite was
+# over GitHub's 100 MB file limit (from 22 September 2026 every push of the
+# database was rejected, so each run's new rows were discarded).
+#
+# Every pipeline run uploaded its full database to a GitHub Release
+# (data-YYYYMMDD-HHMMSS). This workflow pulls the canonical database from R2,
+# merges the history rows from each release copy in date order (pipeline_runs,
+# llm_assessments, ingestion_runs, deferred_triggers, score_backfill) and
+# pushes the result back. Rows are matched on natural keys, so it is safe to
+# run again (e.g. right after cutover, to pick up the last few releases).
+# Release assets are private, which is why this runs here with GITHUB_TOKEN.
+
+on:
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "Only merge releases created on or after this date (YYYY-MM-DD)"
+        required: true
+        default: "2026-05-01"
+      dry_run:
+        description: "Merge and report, but do not upload the result to R2"
+        required: true
+        default: true
+        type: boolean
+
+# Same group as every other job that writes ipfr.sqlite.
+concurrency:
+  group: tripwire-db
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    name: Merge release history into R2 database
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install "boto3>=1.35" "pyyaml>=6.0"
+
+      - name: Pull database from R2
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage pull
+
+      - name: Merge history from release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SINCE: ${{ inputs.since }}
+        run: |
+          set -euo pipefail
+          python - <<'PY' > summary.md
+          from src.recover_db import summary_header
+          print("## Database recovery from GitHub Releases\n")
+          print(summary_header(), end="")
+          PY
+
+          gh release list --repo "$GITHUB_REPOSITORY" --limit 1000 \
+              --json tagName,createdAt \
+              --jq ".[] | select(.tagName | startswith(\"data-\")) | select(.createdAt >= \"$SINCE\") | [.createdAt, .tagName] | @tsv" \
+            | sort > releases.tsv
+          echo "Releases to merge: $(wc -l < releases.tsv)"
+
+          while IFS=$'\t' read -r created tag; do
+            dir="rel/$tag"
+            if ! gh release download "$tag" --repo "$GITHUB_REPOSITORY" -p ipfr.sqlite -D "$dir" 2>/dev/null; then
+              echo "| $tag | (no ipfr.sqlite asset) | | | | | |" >> summary.md
+              continue
+            fi
+            python -m src.recover_db --into data/ipfr_corpus/ipfr.sqlite \
+              --from "$dir/ipfr.sqlite" --label "$tag" --summary summary.md
+            rm -rf "$dir"
+          done < releases.tsv
+
+          python - <<'PY' >> summary.md
+          import sqlite3
+          c = sqlite3.connect("data/ipfr_corpus/ipfr.sqlite")
+          print("\n### Result\n")
+          for t in ("pipeline_runs", "llm_assessments", "ingestion_runs", "deferred_triggers", "score_backfill"):
+              print(f"- `{t}`: {c.execute(f'SELECT COUNT(*) FROM {t}').fetchone()[0]} rows")
+          lo, hi, n = c.execute("SELECT MIN(timestamp), MAX(timestamp), COUNT(DISTINCT run_id) FROM pipeline_runs").fetchone()
+          print(f"- pipeline runs: {n} distinct run IDs, {lo[:10]} to {hi[:10]}")
+          pending = c.execute("SELECT COUNT(*) FROM deferred_triggers WHERE processed = 0").fetchone()[0]
+          print(f"- pending deferred triggers: {pending} (the pipeline discards any older than "
+                "`deferred_trigger_max_age_days` on its next run)")
+          print(f"- integrity: {c.execute('PRAGMA integrity_check').fetchone()[0]}")
+          PY
+          cat summary.md >> "$GITHUB_STEP_SUMMARY"
+          cat summary.md
+
+      - name: Push merged database to R2
+        if: ${{ !inputs.dry_run }}
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage push --label "recovery-${{ github.run_id }}"
+
+      - name: Upload recovery summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-recovery-${{ github.run_id }}
+          path: summary.md
+          retention-days: 90
+          if-no-files-found: ignore

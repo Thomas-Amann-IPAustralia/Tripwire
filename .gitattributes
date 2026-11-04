@@ -1,7 +1,6 @@
-# Mark the SQLite database as binary so Git does not attempt text diffs or
-# line-ending normalisation.  Upgrade to Git LFS if the file exceeds ~50 MB:
-#   data/ipfr_corpus/ipfr.sqlite  filter=lfs diff=lfs merge=lfs -text
-data/ipfr_corpus/ipfr.sqlite  binary
+# Treat any SQLite file as binary. The main database (ipfr.sqlite) is no
+# longer tracked; it is stored in Cloudflare R2 (see src/r2_storage.py).
+*.sqlite  binary
 
 # Ensure consistent line endings for text files.
 * text=auto
