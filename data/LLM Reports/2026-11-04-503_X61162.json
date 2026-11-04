@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-04-503",
+  "ipfr_page_id": "X61162",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage and does not contain any substantive changes to trade mark law, usage guidelines, or enforcement that would affect the content of the IPFR page. The IPFR page discusses best practices for trade mark use and the benefits and risks of consistent branding, none of which are impacted by the news feed update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1829,
+  "completion_tokens": 112,
+  "total_tokens": 1941,
+  "processing_time_seconds": 1.0784569669999655,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-04T08:51:07.739377+00:00"
+}
