@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia news webpage indicating the tabling of the Annual Report 2025\u201326 and other news items. There is no specific information in the change about patent litigation procedures, timeframes, costs, or legal processes that would affect the detailed content of the IPFR page on seeking binding, authoritative decisions. The IPFR page content remains accurate and up to date based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3050,
+  "completion_tokens": 119,
+  "total_tokens": 3169,
+  "processing_time_seconds": 1.2499427230000038,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.240645+00:00"
+}

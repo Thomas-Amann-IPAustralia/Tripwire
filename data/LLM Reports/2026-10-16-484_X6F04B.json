@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-16-484",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO domain name dispute resolution webpage primarily involve removal of detailed procedural steps, fee information, and contact details related to WIPO's UDRP and ccTLD dispute resolution services. The IPFR page focuses specifically on the .au Dispute Resolution Policy (auDRP) administered by auDA, including its process, costs, timelines, and outcomes. The WIPO changes do not affect the accuracy or currency of the auDRP-specific information presented in the IPFR page. There is no conflicting or outdated information about the auDRP process, fees, or timelines that would require updating based on these changes. The WIPO page changes relate to the global UDRP and ccTLD variants generally, not the Australian .au domain dispute process described in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4903,
+  "completion_tokens": 195,
+  "total_tokens": 5098,
+  "processing_time_seconds": 2.1009283650000157,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-16T06:54:00.570243+00:00"
+}

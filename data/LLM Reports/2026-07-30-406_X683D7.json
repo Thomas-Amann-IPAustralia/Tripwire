@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change to the Designs Examiners' Manual primarily involves accessibility fixes, removal of empty headings, URL updates, and minor editorial adjustments. There is no indication of substantive changes to the procedural, fee, or legal content relevant to third-party examination or certification of registered designs. The IPFR page content about requesting confirmation of a registered design's validity remains accurate and up-to-date given the nature of the changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2428,
+  "completion_tokens": 116,
+  "total_tokens": 2544,
+  "processing_time_seconds": 1.5278601649999928,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.155593+00:00"
+}

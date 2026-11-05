@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update from IP Australia highlighting their strategic priorities and recent news items, including topics like AI governance, startup surveys, and patent success stories. There is no specific information or amendment related to overseas IP infringement, territorial nature of IP rights, enforcement options, or international IP protection that would affect the accuracy or currency of the IPFR page content. The IPFR page content remains accurate and relevant based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2370,
+  "completion_tokens": 122,
+  "total_tokens": 2492,
+  "processing_time_seconds": 2.892393855000023,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250279+00:00"
+}

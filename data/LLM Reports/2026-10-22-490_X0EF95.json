@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to updates on the Australian Competition and Consumer Commission (ACCC) public registers, specifically about exemptions and undertakings under the Competition and Consumer Act 2010. This content is unrelated to the registration, certification, or enforcement of design rights under the Designs Act 2003, which is the focus of the IPFR page. There is no indication that any statutory references, fees, timeframes, or procedural steps for design registration have changed. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2395,
+  "completion_tokens": 140,
+  "total_tokens": 2535,
+  "processing_time_seconds": 1.6848189049999291,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.552043+00:00"
+}

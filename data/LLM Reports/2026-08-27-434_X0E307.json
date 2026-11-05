@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external sources mainly involve formatting updates, minor accessibility fixes, and additions of educational resources or podcasts related to the Madrid System and WIPO conventions. The Paris Convention content changes are limited to formatting and table of contents adjustments without substantive changes to the legal provisions. The design manual changes are formatting and minor content updates unrelated to overseas infringement guidance. The changes to the IP attorneys' guidance are minor text formatting improvements. None of these changes affect the factual accuracy, legal thresholds, or procedural guidance currently provided in the IPFR page on addressing overseas infringement. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11684,
+  "completion_tokens": 157,
+  "total_tokens": 11841,
+  "processing_time_seconds": 3.317411054000104,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.906761+00:00"
+}

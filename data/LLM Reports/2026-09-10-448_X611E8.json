@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IP Australia manuals concerning patent examination procedures, amendments, and trademark examination, including specific updates to sections on prohibited signs and examination of trade marks related to plants. The IPFR page content focuses on the patent opposition process, its benefits, risks, outcomes, costs, and procedural aspects. None of the changes indicate modifications to the opposition process, timelines, fees, or procedural steps described in the IPFR page. Therefore, the page content remains accurate and current with respect to the opposition process.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4774,
+  "completion_tokens": 138,
+  "total_tokens": 4912,
+  "processing_time_seconds": 1.878208276000123,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552514+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "XEB5B5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news page and an announcement about a new transparency program for patent examination timeframes under the Patent Prosecution Highway (PPH) initiative. The IPFR page content does not mention the PPH, examination timeframes in detail, or the number of news items, and does not contain any specific information that is contradicted or outdated by this change. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2170,
+  "completion_tokens": 138,
+  "total_tokens": 2308,
+  "processing_time_seconds": 2.6229652509999823,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.429694+00:00"
+}

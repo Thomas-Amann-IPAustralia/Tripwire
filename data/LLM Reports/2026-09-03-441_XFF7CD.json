@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia Trade Marks Manual of Practice and Procedure, including amendments to sections related to examination of trade marks, plants, prescribed signs, and procedural details. However, the IPFR page 'Free IP tools you can use' is a general informational page listing free IP tools and their uses, without specific procedural or legislative details. The changes do not affect the accuracy or currency of the tool descriptions or the general guidance provided on the IPFR page. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2630,
+  "completion_tokens": 142,
+  "total_tokens": 2772,
+  "processing_time_seconds": 5.060408531999883,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039655+00:00"
+}

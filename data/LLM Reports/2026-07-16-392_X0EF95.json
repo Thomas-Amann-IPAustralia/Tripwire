@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in customs regulations, IP Australia official notices, patent and design manuals, plant breeder's rights manuals, and closed consultations. None of these changes specifically alter the substantive content of the IPFR page regarding the registration process, certification, renewal periods, fees, or enforcement of design rights under the Designs Act 2003. The customs amendment concerns airport definitions and customs officers' availability, which is unrelated to design registration. The IP Australia official notices update includes a surrender of certain design registrations but does not affect the general guidance on design registration. Updates to manuals and consultations do not indicate changes to the statutory or procedural information presented in the IPFR page. Therefore, no specific amendments to the IPFR page content are required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6688,
+  "completion_tokens": 185,
+  "total_tokens": 6873,
+  "processing_time_seconds": 3.138018758000271,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.233530+00:00"
+}

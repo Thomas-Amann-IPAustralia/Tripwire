@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-04-503",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news webpage, increasing from 42 to 43 results. This change does not affect any substantive content related to the IPFR page's guidance on what to check before getting registered IP. There are no updates to legal requirements, timeframes, fees, or procedural details that would impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1713,
+  "completion_tokens": 118,
+  "total_tokens": 1831,
+  "processing_time_seconds": 1.3522556269999768,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-04T08:51:07.739221+00:00"
+}

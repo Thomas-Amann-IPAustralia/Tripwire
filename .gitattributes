@@ -1,0 +1,11 @@
+# Treat any SQLite file as binary. The main database (ipfr.sqlite) is no
+# longer tracked; it is stored in Cloudflare R2 (see src/r2_storage.py).
+*.sqlite  binary
+
+# Ensure consistent line endings for text files.
+* text=auto
+*.py text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.csv text eol=lf
+*.md text eol=lf

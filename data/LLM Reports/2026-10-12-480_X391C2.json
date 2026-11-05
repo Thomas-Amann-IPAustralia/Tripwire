@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage www.copyright.org.au/legal-advice/ is currently unreachable due to a connection timeout. There is no change to the substantive content or legal information about copyright or IP rights. The IPFR page content about the value of registering IP and the nature of copyright protections remains accurate and unaffected by this technical outage. Therefore, no update to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1567,
+  "completion_tokens": 118,
+  "total_tokens": 1685,
+  "processing_time_seconds": 1.6188350070001434,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.017816+00:00"
+}

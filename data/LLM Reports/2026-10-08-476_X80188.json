@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document is an update to eBay's intellectual property policy webpage, specifically detailing listing essentials and examples of trademark and copyright infringement in online listings. The IPFR page is a general educational article about IP infringement aimed at small businesses and creators, providing broad principles and guidance rather than platform-specific rules or detailed procedural steps. The eBay policy changes do not contradict or invalidate any specific statements in the IPFR page, nor do they provide new legal thresholds or statutory references that would require updating the IPFR content. The IPFR page remains accurate and relevant as a general introduction to IP infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2860,
+  "completion_tokens": 151,
+  "total_tokens": 3011,
+  "processing_time_seconds": 1.6578425239999888,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.487173+00:00"
+}

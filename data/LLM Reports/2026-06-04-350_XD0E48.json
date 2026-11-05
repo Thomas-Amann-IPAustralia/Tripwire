@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of updates to ACCC public registers and consultation hub pages, which do not directly relate to the content of the IPFR page about notifying online marketplaces of infringement. The changes to Amazon Brand Registry data reflect updated statistics on the number of product units verified as genuine (from 2.5 billion to 2.7 billion), but the IPFR page does not include these specific figures or detailed statistics about Amazon's Transparency program. Therefore, the IPFR page content remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6497,
+  "completion_tokens": 142,
+  "total_tokens": 6639,
+  "processing_time_seconds": 3.9181250939998336,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.704652+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO 'about' webpage add a new introductory sentence describing WIPO as a United Nations agency serving innovators and creators globally. This is a general enhancement of the description and does not contradict or alter any specific factual content on the IPFR page about WIPO's role, functions, or the absence of a global IP office. The IPFR page remains accurate and up to date in its explanation of WIPO's role as a treaty administrator and coordinator rather than a global IP office. No specific dates, procedures, or legal references in the IPFR page are affected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2605,
+  "completion_tokens": 153,
+  "total_tokens": 2758,
+  "processing_time_seconds": 3.149851902999899,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.709561+00:00"
+}

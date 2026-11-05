@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily describe a consolidation and reorganization of the Trade Marks Manual of Practice and Procedure into a new Part 36 covering revocation of acceptance, revocation of registration, and amendment or cessation of protection. The IPFR page content already covers the revocation of trade mark registration process in detail, including the circumstances, benefits, risks, outcomes, and procedural aspects. There is no indication in the change documents that any substantive procedural rules, timeframes, or legal thresholds have changed that would render the IPFR page inaccurate or outdated. The changes appear to be structural and formatting updates to the manual rather than changes to the substantive content relevant to the IPFR page. The design manual changes are unrelated to trade mark revocation and thus irrelevant. Therefore, no update to the IPFR page is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4212,
+  "completion_tokens": 197,
+  "total_tokens": 4409,
+  "processing_time_seconds": 1.7731333530000484,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.238257+00:00"
+}

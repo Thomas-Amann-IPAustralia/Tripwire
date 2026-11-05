@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X60682",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage provide detailed explanations about different commercialisation methods for IP, including independent launch, licensing, franchising, and assignment. However, the IPFR page 'Does IP help me to make or save money?' contains general, high-level information about how IP can help a business financially, without specific procedural details or commercialisation pathways. The new detailed content does not contradict or render any specific statement on the IPFR page inaccurate or outdated. Therefore, no update to the IPFR page is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3887,
+  "completion_tokens": 141,
+  "total_tokens": 4028,
+  "processing_time_seconds": 1.5879453610000382,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.008961+00:00"
+}

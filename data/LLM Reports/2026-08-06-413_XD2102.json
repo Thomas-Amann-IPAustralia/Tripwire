@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Plant Breeder's Rights (PBR) manual, including new guidance content for the QP Portal, updated links, and corrections of dead links, as well as minor formatting and content updates in non-legislative patent instruments. None of these changes affect the core content or advice given in the IPFR page about when to seek legal or attorney assistance for IP issues. The IPFR page provides general guidance on legal professional involvement and distinctions between IP lawyers and attorneys, which remains accurate and unaffected by these procedural or manual updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4402,
+  "completion_tokens": 146,
+  "total_tokens": 4548,
+  "processing_time_seconds": 3.192953919000047,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796114+00:00"
+}

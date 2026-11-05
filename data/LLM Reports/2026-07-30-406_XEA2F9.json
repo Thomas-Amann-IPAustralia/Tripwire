@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center webpage and related WIPO pages primarily involve expanded descriptions, additional sector-specific information, formatting and language corrections, and minor clarifications. There are no changes to the fundamental description, procedural steps, costs, or eligibility criteria of the WIPO Good Offices Program as described in the IPFR page. The IPFR page content remains accurate and up-to-date regarding the nature, purpose, and cost structure of the Good Offices service and WIPO ADR options. The minor textual updates and added resources do not affect the correctness or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 19491,
+  "completion_tokens": 154,
+  "total_tokens": 19645,
+  "processing_time_seconds": 3.0623419009998543,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152454+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X4DD92",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the IPTA webpage offering free initial consultations with IP attorneys is currently unreachable due to a server timeout error. However, the IPFR page content does not specifically reference or link to this IPTA consultation service, nor does it provide details about this service that would now be outdated or incorrect. The IPFR page generally advises consulting an IP lawyer or attorney but does not mention IPTA or the free consultation service. Therefore, the inaccessibility of the IPTA webpage does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2446,
+  "completion_tokens": 144,
+  "total_tokens": 2590,
+  "processing_time_seconds": 1.4079476200000727,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.016936+00:00"
+}

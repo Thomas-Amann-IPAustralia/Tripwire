@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-25-463",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to procedural details about filing complaints and responses for domain name dispute resolution on the WIPO website, such as submission methods, acknowledgements, and fee payment processing. The IPFR page focuses on explaining that there is no global IP office and describes WIPO's role in international IP coordination and treaty administration. It does not discuss domain name dispute procedures or specific WIPO administrative processes. Therefore, these procedural updates do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2760,
+  "completion_tokens": 130,
+  "total_tokens": 2890,
+  "processing_time_seconds": 1.2954672239999354,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-25T07:20:13.035153+00:00"
+}

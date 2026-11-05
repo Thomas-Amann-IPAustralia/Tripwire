@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the IP Australia news webpage, specifically a reduction in the number of news results shown. It does not contain any substantive changes related to the process, fees, timeframes, or legal aspects of requesting examination or certification of registered designs. Therefore, the IPFR page content about requesting IP Australia to confirm a registered design is valid remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2036,
+  "completion_tokens": 112,
+  "total_tokens": 2148,
+  "processing_time_seconds": 1.667755800000009,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.429922+00:00"
+}

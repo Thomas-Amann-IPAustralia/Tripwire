@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Uniform Domain-Name Dispute-Resolution Policy (UDRP) webpage, specifically minor formatting and updated implementation dates for the policy (updated 21 February 2024, with implementation between 21 August 2024 and 21 August 2025). The IPFR page focuses on the WIPO Clause Generator for planning IP dispute resolution clauses in contracts, emphasizing ADR options like mediation and arbitration through WIPO. The UDRP changes concern domain name disputes and registrar obligations, which are a different dispute resolution mechanism and not directly referenced or described in the IPFR page. There is no mention of UDRP or domain name dispute policies in the IPFR content, so these updates do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3357,
+  "completion_tokens": 188,
+  "total_tokens": 3545,
+  "processing_time_seconds": 3.069283051999946,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.794313+00:00"
+}

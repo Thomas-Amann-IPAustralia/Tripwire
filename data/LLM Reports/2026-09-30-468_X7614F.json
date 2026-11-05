@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes involve removal of detailed explanatory content about commercialisation methods (independent launch, assignment, licensing) from the IP Australia webpage. However, the IPFR page 'Why every creative business needs an IP strategy from day one' does not contain specific details or descriptions of these commercialisation methods. Instead, it focuses on the importance of having an IP strategy, key steps to set one, and general advice on managing IP. Since the removed content does not directly affect any specific statements, dates, or procedural guidance in the IPFR page, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4124,
+  "completion_tokens": 152,
+  "total_tokens": 4276,
+  "processing_time_seconds": 1.896291466999969,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354696+00:00"
+}

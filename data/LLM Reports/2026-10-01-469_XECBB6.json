@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the IP Australia manuals and procedural details about trade mark examination, amendments, and design filings, as well as additions to non-legislative instruments and international cooperation activities. None of these changes directly affect the factual content, definitions, or explanations about infringement basics, trade mark registrability, or enforcement as presented in the IPFR page. The IPFR page content remains accurate and current for its intended audience of small business owners seeking foundational understanding of IP infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7269,
+  "completion_tokens": 130,
+  "total_tokens": 7399,
+  "processing_time_seconds": 1.4944389699999192,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.937846+00:00"
+}

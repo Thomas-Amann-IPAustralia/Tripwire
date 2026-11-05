@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to corrections of specific design registrations, surrender of particular registrations, and accessibility fixes in the IPAustralia design manual. There are no updates to the fundamental procedural steps, fees, timeframes, or legal requirements for registering or certifying designs that would affect the accuracy or currency of the IPFR page content. The IPFR page content remains accurate and up to date for its intended audience of small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8995,
+  "completion_tokens": 118,
+  "total_tokens": 9113,
+  "processing_time_seconds": 2.0979366740000387,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793696+00:00"
+}

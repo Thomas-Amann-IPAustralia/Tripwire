@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Amazon Brand Registry webpage update the number of product units verified through the Transparency program from 'over 2.5 billion' to 'more than 2.7 billion' and update the date of the internal data from 2024 to May 2026. However, the IPFR page does not mention these specific figures or dates. The IPFR page provides general guidance on enrolling in online platform IP protection programs and does not include detailed statistics or data points that are now outdated. Therefore, these changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2671,
+  "completion_tokens": 151,
+  "total_tokens": 2822,
+  "processing_time_seconds": 2.682114165999792,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.705138+00:00"
+}

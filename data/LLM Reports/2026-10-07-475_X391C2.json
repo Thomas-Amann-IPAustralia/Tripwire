@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-07-475",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to the Online Safety Act related to social media minimum age enforcement and penalties. The IPFR page 'Is it worth registering my IP?' focuses on explaining the value and considerations of registering intellectual property rights such as trade marks, patents, designs, and plant breeder's rights. There is no mention or discussion of online safety, social media regulations, or related enforcement powers in the IPFR page content. The change does not affect any specific information, legal references, or procedural guidance provided on the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1661,
+  "completion_tokens": 151,
+  "total_tokens": 1812,
+  "processing_time_seconds": 1.8430703090000407,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-07T08:23:21.769183+00:00"
+}

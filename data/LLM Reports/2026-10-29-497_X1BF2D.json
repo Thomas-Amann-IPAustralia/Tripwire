@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an update to the IP Australia news page, primarily announcing the tabling of the Annual Report 2025-26 and other news items related to patents, trademarks, and IP reports. There is no specific information or procedural detail related to mediation or dispute resolution processes that would affect the content of the IPFR page on using mediation to resolve IP disputes. The IPFR page focuses on explaining mediation as an alternative to litigation for IP disputes, without referencing any specific legislative changes, procedural timelines, or statutory details that have been updated in the news. Therefore, the change does not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2836,
+  "completion_tokens": 163,
+  "total_tokens": 2999,
+  "processing_time_seconds": 1.6568974089998392,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.239637+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to firearms import regulations, trademark manual updates, and design manual accessibility and formatting improvements. None of the changes provide updated or corrected information about the design registration process, certification, renewal periods, fees, or enforcement rights as described in the IPFR page. The design manual updates appear to be minor formatting, accessibility fixes, and general content reviews without substantive changes to the core design registration information. Therefore, the IPFR page content remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5981,
+  "completion_tokens": 133,
+  "total_tokens": 6114,
+  "processing_time_seconds": 1.742551765999906,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.874257+00:00"
+}

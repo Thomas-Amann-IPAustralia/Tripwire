@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern updates to procedural manuals and non-legislative instruments related to trade marks, designs, and patents, including minor updates to examination procedures and filing requirements. The IPFR page 'What to do if someone infringes your IP' provides general guidance on steps to take when infringement is suspected, focusing on practical advice for small business owners rather than detailed procedural or legislative specifics. None of the changes indicate modifications to infringement definitions, enforcement options, or procedural timeframes that would directly affect the accuracy or currency of the IPFR page content. Therefore, no update to the IPFR page is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4776,
+  "completion_tokens": 159,
+  "total_tokens": 4935,
+  "processing_time_seconds": 2.4234416989997953,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.937776+00:00"
+}

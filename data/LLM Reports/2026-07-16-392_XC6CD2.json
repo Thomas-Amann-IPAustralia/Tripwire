@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the Trade Marks Manual of Practice and Procedure, including consolidation of filing requirements chapters and minor text edits, as well as accessibility fixes and minor consequential amendments related to the Administrative Review Tribunal Act 2024. There is no indication of changes to the opposition process timelines, fees, procedural steps, or substantive grounds for opposition that would affect the accuracy of the IPFR page content. The IPFR page's description of opposition timelines, costs, risks, and procedures remains accurate and consistent with the changes observed. Therefore, no update to the IPFR page is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10794,
+  "completion_tokens": 154,
+  "total_tokens": 10948,
+  "processing_time_seconds": 3.087834192000173,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.228384+00:00"
+}

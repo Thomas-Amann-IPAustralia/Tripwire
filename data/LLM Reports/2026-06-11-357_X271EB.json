@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia trademark manual (tm_manual) mainly involve reordering and updating examples and minor typographical corrections, without any specific amendments to the rules or timeframes for removal of trade marks for non-use. The design manual changes are unrelated to trade marks and concern design procedures and accessibility fixes. The general federal law fees update does not mention any change to the $350 fee for filing a removal application or any other fees directly relevant to the IPFR page content. Therefore, none of the changes affect the accuracy or currency of the specific procedural details, timeframes, or fees described in the IPFR page about requesting removal of a trade mark for non-use.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6594,
+  "completion_tokens": 167,
+  "total_tokens": 6761,
+  "processing_time_seconds": 2.6520325300000422,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850131+00:00"
+}

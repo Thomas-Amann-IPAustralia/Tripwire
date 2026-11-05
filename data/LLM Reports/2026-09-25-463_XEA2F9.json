@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-25-463",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes pertain to procedural details and submission methods for domain name dispute complaints and responses on the WIPO website, such as the introduction of an online form, processing times, and data privacy notices. The IPFR page focuses on the WIPO Good Offices Program as an alternative dispute resolution service for IP disputes generally, without specific procedural details about domain name dispute filings or complaint submission processes. There are no specific references in the IPFR page to complaint submission methods, filing fees, or procedural steps that are affected by these changes. Therefore, the IPFR page content remains accurate and does not require updates based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4058,
+  "completion_tokens": 158,
+  "total_tokens": 4216,
+  "processing_time_seconds": 2.47867964999989,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-25T07:20:13.034824+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to practice directions for the Administrative Review Tribunal, updates to the patent manual including procedural and substantive patent examination guidance, and updates to the trademark and design manuals focusing on examples, accessibility fixes, and minor content updates. None of the changes specifically address or alter the trade mark opposition process timelines, fees, grounds for opposition, procedural steps, or outcomes as described in the IPFR page. The IPFR page content about opposing trade mark registrations remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9483,
+  "completion_tokens": 134,
+  "total_tokens": 9617,
+  "processing_time_seconds": 2.244975826999962,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.705724+00:00"
+}

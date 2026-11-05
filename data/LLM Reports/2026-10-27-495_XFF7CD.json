@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-27-495",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor update to the IP Australia news webpage, specifically a reduction in the number of news results shown and the addition of a news article about a medical pioneer patenting spray-on skin technology. This change does not affect any factual information, descriptions, or guidance provided in the IPFR page about free IP tools. There are no updates to tool names, functionalities, or processes that would require amending the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1508,
+  "completion_tokens": 121,
+  "total_tokens": 1629,
+  "processing_time_seconds": 2.387252475999958,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-27T07:30:52.780481+00:00"
+}

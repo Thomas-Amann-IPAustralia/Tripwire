@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates and cyclic reviews in the Patent and Trade Marks Manuals of Practice and Procedure, including fixing broken links, formatting, and consolidations in trademark manual parts. None of the changes specifically address the patent opposition process, its timeframes, fees, procedural steps, or outcomes as described in the IPFR page. The changes to the patent manual are minor and do not affect the opposition process content. The trademark manual changes are unrelated to patents. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7755,
+  "completion_tokens": 138,
+  "total_tokens": 7893,
+  "processing_time_seconds": 2.9962268520000634,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.237224+00:00"
+}

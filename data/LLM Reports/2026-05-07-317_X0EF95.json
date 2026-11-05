@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are primarily accessibility fixes, removal of empty headings, URL updates, and minor typographical corrections in the IP Australia manuals related to designs and trademarks. There are no substantive changes to the content regarding design registration procedures, fees, terms, or enforcement that would affect the accuracy or currency of the IPFR page. The IPFR page's detailed descriptions of the design registration process, terms, certification, fees, and timelines remain consistent with the unchanged substantive content of the manuals.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4313,
+  "completion_tokens": 129,
+  "total_tokens": 4442,
+  "processing_time_seconds": 1.5976237209999908,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.711024+00:00"
+}

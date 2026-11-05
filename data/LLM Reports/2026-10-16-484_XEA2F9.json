@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-16-484",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the WIPO domain name dispute resolution webpage, specifically removing detailed lists of ccTLDs adopting UDRP or variations, procedural steps for filing complaints and responses, fee details, and contact information formatting. The IPFR page focuses on the WIPO Good Offices Program as an alternative to IP litigation and does not discuss domain name dispute resolution, UDRP, or related procedural or fee details. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7654,
+  "completion_tokens": 135,
+  "total_tokens": 7789,
+  "processing_time_seconds": 1.8353814820000025,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-16T06:54:00.569867+00:00"
+}

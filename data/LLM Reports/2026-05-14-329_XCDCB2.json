@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the publication of approved forms for Olympic designs and the biannual publication of newly notified signs under Article 6ter of the Paris Convention, as well as amendments to Trade Marks Regulations. However, the IPFR page content focuses on the basics of registering an unregistered trade mark, including costs, benefits, risks, and procedural steps. There is no specific information in the IPFR page about Olympic insignia, Article 6ter signs, or the detailed procedural or regulatory amendments mentioned. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2911,
+  "completion_tokens": 151,
+  "total_tokens": 3062,
+  "processing_time_seconds": 3.0862374490000093,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.500552+00:00"
+}

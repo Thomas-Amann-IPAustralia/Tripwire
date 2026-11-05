@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia international cooperation page add information about capacity building activities and partnerships in the Asia-Pacific region, including specific programs like the ASEAN-Australia-New Zealand Free Trade Agreement and WIPO's Australia Funds-in-Trust program. However, the IPFR page 'Considerations when responding to international accusations' focuses on practical considerations for individuals accused of IP infringement overseas, including legal and procedural advice. The added content relates to IP Australia's international cooperation and development activities, which do not directly affect the accuracy or currency of the guidance provided on responding to international IP infringement accusations. There are no changes to legal thresholds, procedures, or advice that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2555,
+  "completion_tokens": 169,
+  "total_tokens": 2724,
+  "processing_time_seconds": 1.982963707999943,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938408+00:00"
+}

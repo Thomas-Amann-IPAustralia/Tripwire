@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Customs Amendment (International Airport Definition) Regulations 2026, which add a new international airport to the Customs Regulation 2015, and a compilation update to the Australian Securities and Investments Commission Act 2001. Neither change affects the content of the IPFR page, which focuses on Toyota's use of the Australian Border Force's Notice of Objection scheme to combat counterfeit products. The amendment about airport definitions does not impact the description or procedures of the Notice of Objection scheme or Toyota's enforcement strategy. The ASIC Act compilation update is unrelated to the IPFR page content. Therefore, no specific factual or procedural content in the IPFR page is outdated or inaccurate due to these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3027,
+  "completion_tokens": 174,
+  "total_tokens": 3201,
+  "processing_time_seconds": 2.642165185999602,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234888+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily concern updates to design, trade mark, patent, and plant breeder's rights instruments and corrections to design registrations. These are procedural or administrative updates without specific impact on the guidance about when to seek legal help. The patent manual changes are mostly cyclic reviews and minor language edits, with no substantive changes to the legal advice or procedural steps relevant to the IPFR page content. The IPFR page focuses on general advice about when to consult legal professionals, not on detailed procedural or fee instrument changes. Therefore, the accuracy and currency of the IPFR page content remain unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3403,
+  "completion_tokens": 155,
+  "total_tokens": 3558,
+  "processing_time_seconds": 1.4051599709998754,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.935491+00:00"
+}

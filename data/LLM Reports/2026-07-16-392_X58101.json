@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X58101",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates on the IP Australia's Official Notices page, including updates to the Trade Marks Manual of Practice and Procedure and other notices about design registrations and trade mark data products. However, the IPFR page content focuses broadly on monitoring competitors' IP and freedom to operate, without referencing specific procedural details, dates, or fees that have changed. The changes do not affect the accuracy or currency of the guidance provided in the IPFR page, which remains general and high-level. Therefore, no update to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2340,
+  "completion_tokens": 145,
+  "total_tokens": 2485,
+  "processing_time_seconds": 2.6821389120000276,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234540+00:00"
+}

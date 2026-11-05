@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the DFAT webpage content about Australia's international IP engagement, WTO TRIPS agreement, and IP's economic role. However, the IPFR page 'Free IP tools you can use' focuses on listing and describing free IP search and monitoring tools, their uses, and data sources. It does not contain specific factual statements about Australia's international IP policy, WTO agreements, or economic statistics that have been changed in the DFAT content. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2410,
+  "completion_tokens": 139,
+  "total_tokens": 2549,
+  "processing_time_seconds": 1.5009015050000016,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.552132+00:00"
+}

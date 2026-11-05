@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-21-489",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia news webpage primarily involve updates to the number of news items shown and the addition of recent news articles about patents and the Australian IP Report 2026. These updates do not affect the factual content or descriptions on the IPFR page about how IP Australia compares to other government services. There are no changes to the roles, functions, or services of IP Australia or other agencies listed on the IPFR page. Therefore, the IPFR page remains accurate and up-to-date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1839,
+  "completion_tokens": 132,
+  "total_tokens": 1971,
+  "processing_time_seconds": 2.2818157309999947,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-21T07:15:33.370664+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the source webpage involve the removal of blank lines between bullet points describing the harms of counterfeit goods and a slight reformatting of the text. The core content about being proactive by listing IP rights with platforms and the mention of brand registries remains unchanged. The IPFR page already accurately reflects this information, including the advice to list IP rights with platforms and the use of brand registries for automated detection. There are no changes to specific procedures, timeframes, or legal requirements that would necessitate updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3605,
+  "completion_tokens": 140,
+  "total_tokens": 3745,
+  "processing_time_seconds": 3.5722943719999876,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.811383+00:00"
+}

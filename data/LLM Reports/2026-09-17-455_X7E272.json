@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream IP Australia manuals and webpages primarily involve cyclic reviews, minor language updates, corrections of broken links, archival of outdated content, and updates to examination procedures or applicant details. None of the changes specifically address or alter the procedural steps, fees, timelines, or decision-making processes related to IP Australia hearings as described in the IPFR page. The IPFR page content about hearings remains accurate and current based on the provided change documents, which do not indicate any amendments to the hearing process, fees, or appeal rights. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8159,
+  "completion_tokens": 151,
+  "total_tokens": 8310,
+  "processing_time_seconds": 1.609653637000065,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.934374+00:00"
+}

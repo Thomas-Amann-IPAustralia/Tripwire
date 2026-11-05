@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the IP Australia Trade Marks Manual, consultations on patent manual updates, and ACCC public register entries. The IPFR page 'Free IP tools you can use' provides general information about free IP tools and lists common tools without specific procedural, legal, or regulatory details that have been amended in the source documents. There are no specific dates, fees, procedural steps, or statutory references in the IPFR page content that are contradicted or outdated by these changes. The updates to the manuals and consultations do not directly affect the accuracy or currency of the general descriptions or tool listings on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7817,
+  "completion_tokens": 159,
+  "total_tokens": 7976,
+  "processing_time_seconds": 2.7447281039999325,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.587230+00:00"
+}

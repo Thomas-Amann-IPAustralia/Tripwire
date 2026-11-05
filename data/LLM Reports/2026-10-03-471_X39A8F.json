@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-03-471",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page primarily involve formatting and minor textual spacing corrections without substantive updates to the content about IP registration requirements, processes, or timelines. There is mention of the Regulatory Reform Omnibus Act 2026 receiving Royal Assent, but no details are provided about specific changes to registration criteria, grace periods, ownership rules, or procedural steps that would impact the accuracy of the IPFR page. The IPFR page content remains accurate and up-to-date based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5264,
+  "completion_tokens": 133,
+  "total_tokens": 5397,
+  "processing_time_seconds": 1.2026790579999442,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-03T07:50:02.181130+00:00"
+}

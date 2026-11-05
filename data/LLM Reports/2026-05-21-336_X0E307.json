@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia trademark manual and consultation page updates primarily involve minor content updates, typographical corrections, and procedural clarifications related to trade mark examination, international applications, and patent manual updates. There is no indication of substantive changes affecting the territorial nature of IP rights, enforcement options, or practical advice for addressing overseas infringement as described in the IPFR page. The IPFR content remains accurate and up-to-date regarding the challenges and considerations for Australian businesses dealing with overseas IP infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4457,
+  "completion_tokens": 130,
+  "total_tokens": 4587,
+  "processing_time_seconds": 1.9908305060000657,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.589687+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the 'How to prevent infringement of my IP' page by adding details about market monitoring and proactive listing of IP rights with platforms to detect counterfeit goods early. While this is relevant to the general topic of IP infringement and prevention, the IPFR page 'Addressing overseas infringement' already covers enforcement options including platform takedown notices and practical tips on prevention. The new content does not contradict or render any specific statements in the IPFR page inaccurate or outdated. It is more of an additional detail rather than a change requiring updates to the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2441,
+  "completion_tokens": 147,
+  "total_tokens": 2588,
+  "processing_time_seconds": 2.218003537999948,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.612918+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Patent Manual concerning computer-implemented inventions, updates to design and plant breeder rights manuals, and some notices about design registration surrenders. None of these changes specifically affect the procedural details, timeframes, or substantive content about lodging a section 27 notice to prevent a patent under examination from being granted. The IPFR page content about section 27 notices, their timing, process, and effects remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4573,
+  "completion_tokens": 128,
+  "total_tokens": 4701,
+  "processing_time_seconds": 6.527210056000058,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.817698+00:00"
+}

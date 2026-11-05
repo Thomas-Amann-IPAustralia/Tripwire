@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are minor formatting and wording adjustments to the 'how to engage an attorney' webpage, including details about attorney fees, considerations when choosing an attorney, and preparation for meetings. These changes do not alter any substantive facts or guidance that would affect the content of the IPFR page 'When do I need a lawyer or attorney to deal with IP issues?'. The IPFR page provides general advice on when legal professionals may be helpful and the differences between IP lawyers and attorneys, which remains accurate and unaffected by these upstream edits.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4863,
+  "completion_tokens": 139,
+  "total_tokens": 5002,
+  "processing_time_seconds": 1.580620584000144,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.634652+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream sources mainly involve updates to IP Australia manuals and official notices, including minor content updates, link corrections, and procedural clarifications. None of these changes specifically affect the content of the IPFR page, which focuses on practical advice for SMEs receiving AI-generated IP infringement allegations. There are no changes to legal thresholds, statutory references, or procedural steps directly mentioned in the IPFR page that are contradicted or outdated due to these upstream changes. The Amazon Brand Registry update is unrelated to the IPFR page content. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5321,
+  "completion_tokens": 150,
+  "total_tokens": 5471,
+  "processing_time_seconds": 3.3268904730000486,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713556+00:00"
+}

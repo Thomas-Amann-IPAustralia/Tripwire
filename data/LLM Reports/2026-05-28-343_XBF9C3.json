@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IP Australia patent manual concerning specific legal decisions and examination practices, including the Aristocrat decision and procedural notes on pharmaceutical patents and amendments. The IPFR page on 'Enforcing a filed patent' provides general guidance about the status and enforceability of filed patent applications, focusing on the distinction between filed and granted patents, timelines, and procedural basics for small businesses. There is no indication in the change document that the fundamental principles about enforceability of filed patents, publication timing, or applicant rights have changed. The changes are more about detailed examination practices and legal interpretations that do not affect the basic explanatory content of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1889,
+  "completion_tokens": 165,
+  "total_tokens": 2054,
+  "processing_time_seconds": 2.199275336000028,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.491953+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to trade marks and design rights, including consolidation of guidance on revocation of acceptance and registration, and updates to the Trade Marks Manual of Practice and Procedure. There is no indication of changes to the patent opposition process or related procedures. The IPFR page concerns responding to patent oppositions, but the changes do not address patent oppositions, timelines, fees, or procedural details relevant to patents. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7899,
+  "completion_tokens": 129,
+  "total_tokens": 8028,
+  "processing_time_seconds": 1.608776159999934,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550362+00:00"
+}

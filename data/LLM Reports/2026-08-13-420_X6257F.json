@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X6257F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to exemptions granted by the ACCC under the Competition and Consumer Act 2010 (Cth) concerning data sharing obligations and court enforceable undertakings for various companies. This content is unrelated to trade mark infringement or the Trade Marks Act 1995 (Cth), which is the focus of the IPFR page. There is no indication that any legal thresholds, definitions, or procedural steps regarding trade mark infringement have been amended or affected by this change. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4333,
+  "completion_tokens": 140,
+  "total_tokens": 4473,
+  "processing_time_seconds": 1.7549134519999825,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.878240+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified are primarily updates to IPAustralia manuals related to patents, trademarks, and designs, including corrections of broken links, updates to examination procedures, and archival of outdated content. None of the changes specifically address or alter the opposition process timelines, fees, procedural steps, or legal grounds for opposing a trade mark registration as described in the IPFR page. The IPFR page content about opposition to trade mark registrations remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7966,
+  "completion_tokens": 127,
+  "total_tokens": 8093,
+  "processing_time_seconds": 1.8712998710000193,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.934476+00:00"
+}

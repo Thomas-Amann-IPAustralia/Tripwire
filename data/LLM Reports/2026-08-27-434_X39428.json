@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Paris Convention document are formatting and structural updates to the table of contents without substantive changes to the content or legal principles. The IPFR page provides general guidance on avoiding IP infringement without referencing specific international treaties or detailed procedural rules that would be affected by these changes. The update to the 'find an attorney' page clarifies the formatting of a list describing what information to provide to an attorney but does not alter the substantive advice or requirements. The IPFR page's advice to seek professional help remains accurate and does not require modification based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3898,
+  "completion_tokens": 147,
+  "total_tokens": 4045,
+  "processing_time_seconds": 2.439849759000026,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908000+00:00"
+}

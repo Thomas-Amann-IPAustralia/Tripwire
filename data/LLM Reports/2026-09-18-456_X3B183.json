@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X3B183",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to procedural details and fee structures for WIPO domain name dispute resolution, including updates to complaint and response filing processes and new services. The IPFR page 'What can I expect from a lawyer or attorney?' provides general guidance on what to expect from legal professionals in IP matters, without specific procedural or fee details about WIPO domain name disputes. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1729,
+  "completion_tokens": 123,
+  "total_tokens": 1852,
+  "processing_time_seconds": 1.4327692020000313,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.745041+00:00"
+}

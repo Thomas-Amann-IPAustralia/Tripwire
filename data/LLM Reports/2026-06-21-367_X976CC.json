@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change indicates that the ASBFEO dispute support webpage is currently unreachable due to a connection error (ERR_CONNECTION_CLOSED). This is a technical availability issue rather than a content update or legal change. The IPFR page content about the WIPO Clause Generator and IP dispute resolution remains accurate and unaffected by this connectivity problem. There is no indication that the substantive information or guidance on the IPFR page needs updating based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2503,
+  "completion_tokens": 120,
+  "total_tokens": 2623,
+  "processing_time_seconds": 1.809790774000021,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.912359+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the 'how_to_engage_an_attorney' webpage primarily involve minor formatting and wording adjustments without altering substantive content. The average fee ranges for patent and trade marks attorneys have been updated slightly (e.g., patent attorney hourly rates changed from $500-1,000 to $400-700), but the IPFR page already provides a range and notes that fees vary significantly depending on complexity and other factors. The IPFR page's guidance remains accurate and consistent with the updated source. No procedural steps, legal thresholds, or critical factual information in the IPFR page are contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5647,
+  "completion_tokens": 157,
+  "total_tokens": 5804,
+  "processing_time_seconds": 1.9987724390000494,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.634837+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the ACCC public registers and the Amazon Brand Registry webpage content. The ACCC register changes are about exemptions and statuses under the Competition and Consumer Act, which do not affect the IPFR page's content about business names, ABNs, and trade marks. The Amazon Brand Registry update removes a 'New Seller Success' program description but does not impact the IPFR page's explanation of trade mark registration benefits or procedures. The IPFR page focuses on Australian business names, ABNs, and trade mark registrations, and these upstream changes do not alter any specific facts, legal references, or procedural guidance in the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2805,
+  "completion_tokens": 163,
+  "total_tokens": 2968,
+  "processing_time_seconds": 1.5233595119998427,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551419+00:00"
+}

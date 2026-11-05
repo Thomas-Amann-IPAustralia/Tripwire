@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to corrections of entries in the Designs Register and amendments to design representations for specific design registration numbers. These are administrative updates and corrections to individual design records and do not affect the general procedural, fee, or legal information presented in the IPFR page about requesting certification of registered designs. There is no indication that the process, fees, timelines, or legal rights described in the IPFR page have changed as a result of these notices.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3398,
+  "completion_tokens": 121,
+  "total_tokens": 3519,
+  "processing_time_seconds": 1.184207471000036,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.935272+00:00"
+}

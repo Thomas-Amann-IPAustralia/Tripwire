@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the Australian patent and trade mark manuals, including procedural outlines, definitions, examples, and minor corrections. However, these changes do not specifically address or alter the guidance, checklists, or advice provided in the IPFR page about handling AI-generated IP infringement allegations. The IPFR page focuses on practical advice for SMEs on how to respond to potentially false or AI-generated infringement claims, emphasizing the need for proper substantiation and professional legal advice. Since the upstream changes do not update or contradict any specific factual or procedural detail in the IPFR content, no amendment is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5272,
+  "completion_tokens": 153,
+  "total_tokens": 5425,
+  "processing_time_seconds": 1.5182145190001393,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708362+00:00"
+}

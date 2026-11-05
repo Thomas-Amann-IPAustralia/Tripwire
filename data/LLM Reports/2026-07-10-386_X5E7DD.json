@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to the Australian Federal Police (AFP) webpage on fraud and corruption, which is currently inaccessible due to a technical issue (timeout). There is no substantive change to the content of the AFP page or any IP law or procedure relevant to unjustified threats of IP infringement. The IPFR page content about responding to unjustified threats remains accurate and unaffected by this technical access issue.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2428,
+  "completion_tokens": 111,
+  "total_tokens": 2539,
+  "processing_time_seconds": 1.695393858999978,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.789629+00:00"
+}

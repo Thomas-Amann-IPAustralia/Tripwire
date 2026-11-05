@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X84026",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to intelligence oversight legislation and related matters, which are unrelated to the content of the IPFR page about complaints against IP Australia. The IPFR page focuses on complaint procedures and does not mention or rely on any intelligence or national security legislation. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1680,
+  "completion_tokens": 103,
+  "total_tokens": 1783,
+  "processing_time_seconds": 1.7366049939998902,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.820070+00:00"
+}

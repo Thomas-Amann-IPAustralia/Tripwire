@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to the addition of a new international airport to the Customs Regulation 2015, updates to IP Australia's official notices including a new chapter in the Trade Marks Manual of Practice and Procedure, and closed consultations on various IP topics. None of these changes directly affect the content of the IPFR page on 'Addressing overseas infringement', which focuses on the territorial nature of IP rights, practical considerations for overseas enforcement, and general guidance for Australian businesses. The Customs Amendment adding Western Sydney International Airport does not alter the substantive enforcement options or processes described. The updates to manuals and consultations do not provide specific changes to overseas infringement procedures or advice that would require updating the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6114,
+  "completion_tokens": 167,
+  "total_tokens": 6281,
+  "processing_time_seconds": 3.116838413000096,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.230198+00:00"
+}

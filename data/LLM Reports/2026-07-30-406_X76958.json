@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily update and expand information on WIPO's Arbitration and Mediation Center services, including more detailed descriptions of ADR options, contract clauses, and domain name dispute resolution procedures. The IPFR page already references WIPO ADR as an enforcement option overseas and links to WIPO ADR services. There are no specific procedural steps, dates, fees, or legal thresholds in the IPFR page that are contradicted or outdated by these changes. The addition of details about the AANZFTA Upgrade and its ratification status does not affect the general guidance on overseas IP enforcement given in the IPFR page. Therefore, while the upstream sources have been updated with more comprehensive information, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7130,
+  "completion_tokens": 180,
+  "total_tokens": 7310,
+  "processing_time_seconds": 2.9218342350000057,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152670+00:00"
+}

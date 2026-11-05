@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# Ephemeral Tripwire run artifacts — not for version control
+current_run_manifest.json
+staging/
+
+# SQLite WAL auxiliary files
+*.sqlite-shm
+*.sqlite-wal
+
+# The IPFR corpus database lives in Cloudflare R2, not git (it outgrew
+# GitHub's 100 MB file limit). Fetch it with `python -m src.r2_storage pull`.
+data/ipfr_corpus/ipfr.sqlite
+*.sqlite.r2-etag
+*.sqlite.download

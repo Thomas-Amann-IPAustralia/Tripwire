@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news updates about a parliamentary committee recommending Australia ratify the GRATK Treaty and the Regulatory Reform Omnibus Act 2026 receiving Royal Assent, which introduces reforms to streamline Australia's IP system. However, the IPFR page content is a general guide on how to check if someone else owns a word, logo, or idea, focusing on the use of free online registers and basic IP categories. There are no specific references to the GRATK Treaty, the Regulatory Reform Omnibus Act, or procedural details that would be affected by these legislative or treaty developments. Therefore, the page remains accurate and current for its intended audience.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2341,
+  "completion_tokens": 160,
+  "total_tokens": 2501,
+  "processing_time_seconds": 1.4661944720000406,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.731983+00:00"
+}

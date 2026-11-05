@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X24592",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external sources clarify and slightly reformat information about attorneys, their qualifications, complaint reasons, and complaint processes. However, the IPFR page content already accurately reflects the key points about complaint eligibility, the role of the Trans-Tasman IP Attorneys Board, the types of complaints, and the limitations on remedies such as compensation. There are no specific factual inaccuracies or outdated details in the IPFR page that the changes would correct or update. The changes do not introduce new procedural steps, time limits, or statutory references that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2632,
+  "completion_tokens": 148,
+  "total_tokens": 2780,
+  "processing_time_seconds": 1.6991835159999482,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.486378+00:00"
+}

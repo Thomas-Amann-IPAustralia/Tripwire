@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XAEFF3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to procedural information about filing fees and exemptions for court proceedings on the Federal Circuit and Family Court of Australia website. These changes do not affect the substantive content of the IPFR page on patent infringement, which focuses on the definition, examples, and legal principles of patent infringement under Australian law. There is no direct impact on the accuracy or currency of the patent infringement content, statutory references, or procedural steps described in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2715,
+  "completion_tokens": 122,
+  "total_tokens": 2837,
+  "processing_time_seconds": 2.415482546000021,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850573+00:00"
+}

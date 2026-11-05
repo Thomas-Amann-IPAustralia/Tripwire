@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in official notices about trade mark practice following a High Court decision (Zip Co Ltd v Firstmac Ltd), updates to the Australian Border Force Act compilation, and updates to the patent manual. The IPFR page content focuses on practical guidance for registering unregistered trade marks, including costs, benefits, risks, and procedures, without referencing specific case law, legal interpretations, or procedural changes that would be affected by these updates. There is no indication that fees, timeframes, or procedural steps described in the IPFR page have changed. The updates to the Trade Marks Manual of Practice and Procedure and official notices do not directly impact the factual content presented to small business owners in this page. Therefore, no amendment is required at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8825,
+  "completion_tokens": 184,
+  "total_tokens": 9009,
+  "processing_time_seconds": 4.555063167000071,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.561558+00:00"
+}

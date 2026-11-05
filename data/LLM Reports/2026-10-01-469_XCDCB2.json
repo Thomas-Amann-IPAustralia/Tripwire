@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia manuals relate primarily to procedural details, amendments, and updates in examination practices for trade marks, designs, and plant breeder rights. None of the changes specifically affect the factual content, fees, timeframes, or procedural steps described in the IPFR page about registering an unregistered trade mark. The IPFR page's information on costs, benefits, risks, and application processes remains accurate and unaffected by these upstream updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4056,
+  "completion_tokens": 121,
+  "total_tokens": 4177,
+  "processing_time_seconds": 2.59062768900003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.936147+00:00"
+}

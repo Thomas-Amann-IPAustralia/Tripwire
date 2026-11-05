@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-16-484",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to WIPO's domain name dispute resolution service webpage, specifically removing detailed procedural steps, fee information, and contact details. The IPFR page focuses on explaining the concept that there is no global IP office and describes WIPO's role in international IP coordination and treaty administration. It does not mention domain name dispute resolution procedures, fees, or contact details. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5457,
+  "completion_tokens": 124,
+  "total_tokens": 5581,
+  "processing_time_seconds": 1.6405653260000008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-16T06:54:00.569976+00:00"
+}

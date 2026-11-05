@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream changes update a government webpage describing Australia's international IP engagement, including the role of DFAT, the WTO TRIPS Agreement, and Australia's IP system's economic importance. These changes focus on high-level policy descriptions, international cooperation, and economic data updates (e.g., Australia's ranking on the Global Innovation Index). The IPFR page 'Check if someone else already owns a word, logo or idea you want' provides practical guidance on how small businesses can check existing IP rights using Australian registers and tools. It does not include specific references to international agreements, government agency roles, or economic statistics that have changed. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3367,
+  "completion_tokens": 172,
+  "total_tokens": 3539,
+  "processing_time_seconds": 1.686957234999909,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551630+00:00"
+}

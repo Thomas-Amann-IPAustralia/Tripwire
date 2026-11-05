@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the Etsy intellectual property policy webpage is currently unreachable due to a connection timeout error. There is no substantive update or modification to the content of the Etsy IP policy itself. The IPFR page's description of Etsy's IP protection portal remains accurate as it is based on the policy content, not the availability of the webpage. Therefore, no content update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2057,
+  "completion_tokens": 114,
+  "total_tokens": 2171,
+  "processing_time_seconds": 1.3421248390000073,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.018737+00:00"
+}

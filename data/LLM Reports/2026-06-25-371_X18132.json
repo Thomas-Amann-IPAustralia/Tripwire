@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change involves fixing internal links and references within the PBR manual webpage, specifically to chapters and forms related to PBR applications and tests. There is no indication of changes to substantive content about PBR court proceedings, legal processes, costs, or outcomes. The IPFR page content about seeking binding, authoritative decisions in PBR disputes remains accurate and unaffected by these link corrections.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2478,
+  "completion_tokens": 109,
+  "total_tokens": 2587,
+  "processing_time_seconds": 1.461501922000025,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.565048+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-23-399",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The amendment to the Administrative Review Tribunal Rules 2026 primarily concerns procedural and administrative changes related to the ART's operation, including authorisation of staff and registrars to exercise certain powers under the Migration Act and fee impositions related to NDIS providers. The IPFR page discusses the option of merits review by the Administrative Review Tribunal in a general sense, without detailing procedural rules, authorisations, or fee structures. There is no specific information in the IPFR page about ART rules, fees, or procedural authorisations that would be affected by these amendments. Therefore, the page remains accurate and does not require updating based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2569,
+  "completion_tokens": 159,
+  "total_tokens": 2728,
+  "processing_time_seconds": 2.8341828929999338,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-23T05:44:41.258842+00:00"
+}

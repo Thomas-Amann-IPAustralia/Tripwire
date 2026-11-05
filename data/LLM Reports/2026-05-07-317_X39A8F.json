@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia manuals for trade marks, designs, and plant breeders' rights are mostly minor content updates, accessibility fixes, link corrections, and removal of references to specific sections without altering the fundamental registration requirements or procedural advice. The IPFR page provides general guidance on what to check before getting registered IP, including basic requirements and procedural considerations, none of which are contradicted or outdated by these upstream changes. The changes to the Amazon Brand Registry page concern promotional details (e.g., percentage back on branded sales) which are unrelated to the IPFR page content. Therefore, no specific factual or procedural updates are required to maintain accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4526,
+  "completion_tokens": 168,
+  "total_tokens": 4694,
+  "processing_time_seconds": 2.0612512809998407,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.711775+00:00"
+}

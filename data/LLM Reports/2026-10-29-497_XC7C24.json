@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates and cyclic reviews in the IPAustralia patent manual, including fixing broken links and clarifying prior art and specification requirements. However, the IPFR page 'Check your product against existing designs' focuses on design searches and freedom to operate for registered designs, not patents. The changes do not affect any specific content, dates, procedures, or legal references in the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2592,
+  "completion_tokens": 126,
+  "total_tokens": 2718,
+  "processing_time_seconds": 1.5002209730000686,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.240999+00:00"
+}

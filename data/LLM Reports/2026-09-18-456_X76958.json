@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to updates on the WIPO domain name dispute resolution webpage, including procedural details about complaint filing, fees, and new services. The IPFR page discusses general considerations for enforcing IP overseas, including mentioning WIPO as a possible ADR option, but does not provide specific procedural details or fee information about WIPO domain name disputes. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2690,
+  "completion_tokens": 119,
+  "total_tokens": 2809,
+  "processing_time_seconds": 1.2343540919999896,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.744644+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to administrative updates such as the replacement of the Administrative Appeals Tribunal with the Administrative Review Tribunal, updates to manuals concerning trade marks and patents, and minor procedural or editorial updates. None of the changes specifically amend the statutory timeframes, fees, procedural steps, or substantive grounds for opposing a patent as described in the IPFR page. The IPFR page content about the opposition process, timelines, fees, and outcomes remains accurate and current based on the provided changes. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7121,
+  "completion_tokens": 141,
+  "total_tokens": 7262,
+  "processing_time_seconds": 3.0157130659999893,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.228940+00:00"
+}

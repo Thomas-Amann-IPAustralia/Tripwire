@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the IP Australia news webpage, specifically a reduction in the number of news results displayed and an announcement about a new transparency program for patent examination timeframes under the Patent Prosecution Highway. The IPFR page 'Why every creative business needs an IP strategy from day one' provides general guidance on the importance of having an IP strategy and does not mention patent examination timeframes, the Patent Prosecution Highway, or any specific procedural details that would be affected by this change. Therefore, the content remains accurate and no update is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2259,
+  "completion_tokens": 145,
+  "total_tokens": 2404,
+  "processing_time_seconds": 2.361360915999967,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430524+00:00"
+}

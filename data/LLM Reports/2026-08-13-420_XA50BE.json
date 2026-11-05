@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to amendments in customs regulations for firearms importation, updates to trademark manual sections on divisional applications and prohibited signs, and minor updates to the design manual including accessibility fixes and formatting. None of these changes directly affect the content of the IPFR page XA50BE, which focuses on seeking binding, authoritative decisions in design disputes, court proceedings, and related legal considerations. There are no specific changes to limitation periods, court procedures, costs, or other legal thresholds mentioned in the IPFR page that are contradicted or updated by the provided upstream changes. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7489,
+  "completion_tokens": 158,
+  "total_tokens": 7647,
+  "processing_time_seconds": 2.0278728939999837,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.874167+00:00"
+}

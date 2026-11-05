@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XEB5B5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a general update to the IP Australia patent manual, including corrections to links, procedural clarifications, and updates reflecting recent court decisions. However, none of these updates specifically affect the basic procedural or factual information about applying for a patent as presented in the IPFR page. The IPFR page provides a high-level overview suitable for small business owners, and the changes do not alter the fundamental steps, costs, timeframes, or benefits described. There is no indication that any statutory references, fees, time periods, or procedural steps described in the IPFR page are now incorrect or outdated due to these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2947,
+  "completion_tokens": 158,
+  "total_tokens": 3105,
+  "processing_time_seconds": 2.248178446000111,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.589000+00:00"
+}

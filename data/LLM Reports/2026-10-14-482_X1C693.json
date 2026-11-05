@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes report that a parliamentary committee has recommended Australia ratify the GRATK Treaty, which is an important step in the treaty process. However, the IPFR page content simply states that Australian IP rights protect only within Australia and that international protection requires separate applications or international systems. There is no specific mention of the GRATK Treaty or details about its effect on overseas protection in the IPFR page. Since the page does not currently discuss the GRATK Treaty or any specific international treaties by name, and the change is about a recommendation rather than a completed ratification or change in law, the page content remains accurate and does not require update at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2213,
+  "completion_tokens": 163,
+  "total_tokens": 2376,
+  "processing_time_seconds": 1.5942490809999867,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.732142+00:00"
+}

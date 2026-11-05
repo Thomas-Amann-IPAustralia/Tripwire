@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X60682",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia 'How to commercialise my IP' webpage involve removal of detailed explanations about independent commercialisation, assignment, and associated risks and returns. However, the IPFR page 'Does IP help me to make or save money?' provides a high-level overview of how IP can protect business value and aid in commercial success without going into the detailed commercialisation methods or risks. The removed content does not contradict or invalidate any specific statements on the IPFR page, nor does it affect the accuracy of the general information presented. Therefore, no update to the IPFR page is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4266,
+  "completion_tokens": 156,
+  "total_tokens": 4422,
+  "processing_time_seconds": 1.728804179000008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354611+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the DFAT webpage focus on Australia's international IP engagement, the role of DFAT and other agencies including IP Australia, and updated statistics on Australia's ranking and economic contributions of IP-related industries. However, the IPFR page is a general overview comparing IP Australia to other government services, aimed at small business owners, and does not include specific statistics, rankings, or detailed descriptions of international IP policy or agency roles beyond a basic mention of IP Australia. The changes do not affect the accuracy or currency of the IPFR page content, which remains a high-level comparison and introduction to IP Australia and related agencies.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4792,
+  "completion_tokens": 155,
+  "total_tokens": 4947,
+  "processing_time_seconds": 1.7659940119999646,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551108+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the patent manual concerning computer implemented inventions, classification systems, and related examination sections, as well as oversight legislation unrelated to patent oppositions. The IPFR page focuses on the procedural aspects of opposing a patent after acceptance but before grant, including timelines, costs, and possible outcomes. None of the changes indicate amendments to the opposition process, timelines, fees, or legal grounds for opposition as described in the IPFR page. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4763,
+  "completion_tokens": 137,
+  "total_tokens": 4900,
+  "processing_time_seconds": 2.1587449590001597,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.818100+00:00"
+}

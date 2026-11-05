@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to amendments to the Competition and Consumer Act 2010 introducing new powers for the ACCC and ministerial declarations regarding exceptional circumstances, as well as ACCC exemptions and undertakings related to consumer data sharing and competition law. The IPFR page focuses specifically on the distinction between business names, company names, and registered trade marks as forms of intellectual property and brand protection. None of the changes affect the legal status, rights, or registration processes of business names, company names, or trade marks as described on the page. There is no impact on the accuracy of the IPFR content regarding intellectual property rights or the roles of ASIC and IP Australia. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3081,
+  "completion_tokens": 176,
+  "total_tokens": 3257,
+  "processing_time_seconds": 2.3251859290003267,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.706136+00:00"
+}

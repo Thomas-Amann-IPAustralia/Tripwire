@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to WIPO's recommended contract clauses webpage, minor editorial changes to the WIPO About page, and updates to the WIPO IP Diagnostics tool information. None of these changes affect the specific content of the IPFR page on accessing international arbitration and mediation services via the WIPO Center. The IPFR page does not contain outdated or incorrect information about WIPO contract clauses or procedural details that have changed. The changes do not impact the descriptions of ADR processes, benefits, risks, costs, or procedural steps as presented in the IPFR page. Therefore, no amendments are required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10596,
+  "completion_tokens": 158,
+  "total_tokens": 10754,
+  "processing_time_seconds": 2.5752738180001415,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.873487+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to administrative updates (e.g., establishment of the Administrative Review Tribunal), customs regulations concerning airport definitions, updates to IP Australia manuals and consultations, and fee reviews. None of these changes affect the fundamental guidance or specific procedural or definitional content presented in the IPFR page about checking if someone else owns a word, logo, or idea. The IPFR page provides general advice on using Australian IP registers and notes the absence of a copyright register, which remains accurate. There are no changes to the names, URLs, or availability of the registers mentioned, nor to the basic advice on searching IP rights. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4377,
+  "completion_tokens": 170,
+  "total_tokens": 4547,
+  "processing_time_seconds": 2.4812093450000248,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.232976+00:00"
+}

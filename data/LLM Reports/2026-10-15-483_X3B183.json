@@ -1,0 +1,22 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X3B183",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes provide detailed, specific information about the costs associated with engaging patent and trade mark attorneys, including average hourly rates and total costs for filing and registering trade marks. The current IPFR page mentions that costs vary and that some professionals charge fixed fees or hourly rates but does not provide any indicative cost ranges. Adding these cost details would improve the accuracy and usefulness of the IPFR page for small business owners seeking practical guidance on what to expect when engaging an attorney. The changes also include useful preparatory advice for meetings with attorneys and reinforce the confidentiality and code of conduct obligations, which align with the IPFR page's content but do not contradict it. Therefore, updating the IPFR page to include the new cost information and some preparatory tips is warranted.",
+  "suggested_changes": [
+    "Add a section or paragraph under 'You should ask early about the costs, timing, and what\u2019s included in their services' that includes the average fees: '$400-700 per hour for a patent attorney' and '$1,000-2,000 total for a trade marks attorney to file and register a single trade mark in one or two classes.'",
+    "Include a note that costs can increase significantly depending on the complexity and specialization of the work required.",
+    "Add brief guidance on how to prepare for a meeting with an attorney, such as preparing an explanation of your business, a plan to commercialise your idea, and information about similar products or patents, to help reduce fees and get the most out of the consultation.",
+    "Mention that some attorneys offer a free initial consultation to assess services and provide cost estimates.",
+    "Reinforce that IP attorneys are bound by a Code of Conduct requiring confidentiality and prioritising client interests."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4668,
+  "completion_tokens": 377,
+  "total_tokens": 5045,
+  "processing_time_seconds": 3.50682688400002,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.634748+00:00"
+}

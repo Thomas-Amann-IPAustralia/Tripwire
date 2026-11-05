@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X61162",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia trademark manual, specifically sections about series of trade marks, material particulars, and procedural parts such as evidence for defensive applications and opposition processes. The IPFR page focuses on the practical use of trade marks to build recognition and protection, emphasizing consistent branding, use of TM and \u00ae symbols, and general best practices for trade mark owners. There is no direct reference to series marks, procedural timelines, or legal thresholds that have changed in the IPFR content. The changes in the manual do not affect the accuracy or currency of the advice given on this page about trade mark use and branding consistency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2781,
+  "completion_tokens": 160,
+  "total_tokens": 2941,
+  "processing_time_seconds": 1.8095365799999854,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708843+00:00"
+}

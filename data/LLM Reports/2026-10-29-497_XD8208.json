@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "XD8208",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates and reorganization in the Trade Marks Manual of Practice and Procedure and design manuals, including formatting and archiving of certain sections. The key content of the IPFR page about removal of trade marks for non-use, including timeframes, fees, processes, and outcomes, is not contradicted or updated by these changes. There is no indication that statutory timeframes, fees, or procedural steps described in the IPFR page have changed. The changes are mostly administrative or formatting updates in upstream manuals and do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5377,
+  "completion_tokens": 151,
+  "total_tokens": 5528,
+  "processing_time_seconds": 1.6196024239998223,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.238547+00:00"
+}

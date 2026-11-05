@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to an update of the Australian Border Force Act 2015 compilation without any specific amendments or explanatory statements provided. The IPFR page discusses customs enforcement as one of the options for addressing overseas infringement, but there is no indication that the legal framework or procedures under the Australian Border Force Act have changed in a way that affects the accuracy or currency of the IPFR content. The relevance scores are low to moderate and the changes are standard compilation updates rather than substantive amendments. Therefore, no update to the IPFR page is required based on the provided information.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2273,
+  "completion_tokens": 145,
+  "total_tokens": 2418,
+  "processing_time_seconds": 2.1200533589999395,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.565130+00:00"
+}

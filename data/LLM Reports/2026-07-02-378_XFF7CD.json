@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern procedural amendments to Federal Court Rules, secrecy provisions in the Criminal Code, updates to IP Australia official notices including portal launch dates and fee changes, news updates, and policy register entries. The IPFR page 'Free IP tools you can use' provides general information about free IP tools and lists common tools available for IP rights searches and monitoring. None of the changes indicate a modification to the availability, functionality, or descriptions of the free IP tools listed on the page. The updates about the Qualified Persons portal launch date and Patent Cooperation Treaty fees do not affect the accuracy of the IPFR page content. Similarly, policy register updates and court procedural rules do not impact the general guidance or tool listings. Therefore, no specific amendments to the IPFR page content are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12086,
+  "completion_tokens": 188,
+  "total_tokens": 12274,
+  "processing_time_seconds": 2.802487144999759,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.266762+00:00"
+}

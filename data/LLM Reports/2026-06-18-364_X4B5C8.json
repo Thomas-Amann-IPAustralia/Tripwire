@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X4B5C8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the Trans-Tasman IP Attorneys Board's complaint process against IP attorneys, detailing when complaints can be made, the complaint process, and limitations of the board's disciplinary powers. The IPFR page 'Obtain advice to help manage your IP' does not currently include specific information about complaint procedures, disciplinary processes, or the Trans-Tasman IP Attorneys Board's role in complaints. Therefore, while the subject matter overlaps (IP attorneys and their conduct), the changes do not affect the accuracy or currency of the IPFR page content, which focuses on engaging IP professionals and their roles rather than complaint mechanisms.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5125,
+  "completion_tokens": 157,
+  "total_tokens": 5282,
+  "processing_time_seconds": 3.5752422149998893,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.708062+00:00"
+}

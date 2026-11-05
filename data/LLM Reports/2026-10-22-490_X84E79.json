@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to ACCC consultations on consumer product safety standards and market regulations, such as pedal bicycles and water markets. These topics are unrelated to the Notice of Objection scheme for stopping infringing goods entering Australia, which is governed by the Australian Border Force and IP legislation. There is no indication that the ACCC consultation affects the accuracy or currency of the IPFR page content about Notices of Objection, their procedures, or legal requirements.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3183,
+  "completion_tokens": 122,
+  "total_tokens": 3305,
+  "processing_time_seconds": 1.5769671289999678,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.552292+00:00"
+}

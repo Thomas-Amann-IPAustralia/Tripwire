@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the patent manual, trademark manual (mostly about series marks, classification, and evidence), and court fee schedules for general federal law proceedings. The IPFR page concerns the process of responding to a trade mark opposition, including procedural steps, timelines, risks, and costs specific to trade mark oppositions handled by IP Australia. None of the changes provide new or updated information that directly affects the accuracy or currency of the opposition response process described in the IPFR page. The fee changes pertain to court filing fees and general federal law fees, which are not referenced or detailed in the IPFR page. The trademark manual updates focus on series marks and classification, not opposition procedures. Therefore, no specific factual content in the IPFR page is rendered incorrect or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 15124,
+  "completion_tokens": 193,
+  "total_tokens": 15317,
+  "processing_time_seconds": 6.5774450530000195,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.847261+00:00"
+}

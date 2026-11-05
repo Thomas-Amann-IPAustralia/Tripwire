@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Trade Marks Office Manual of Practice and Procedure, including amendments to sections on examination of trade marks relating to plants or plant materials, procedural updates, and archival of outdated notices. However, the IPFR page provides general guidance on what to check before getting registered IP, including basic requirements for trade marks, patents, designs, and plant breeders' rights, without referencing specific procedural details, statutory sections, or examination practices. The changes do not affect the accuracy or currency of the general advice given on the IPFR page, which remains valid and appropriate for its intended audience of small business owners. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2826,
+  "completion_tokens": 170,
+  "total_tokens": 2996,
+  "processing_time_seconds": 5.688423596000121,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039593+00:00"
+}

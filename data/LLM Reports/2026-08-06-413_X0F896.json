@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) Manual, including new guidance content for the QP Portal, updates to links, and some content adjustments related to plant trade marks and agent nomination. The IPFR page in question focuses on obtaining legal advice on an accusation of IP infringement generally, with emphasis on lawyers and attorneys, costs, and procedural advice. There is no specific mention of Plant Breeder's Rights or the QP Portal in the IPFR page content. The changes do not affect the accuracy or currency of the advice given on this page, nor do they alter any specific legal or procedural information presented. Therefore, no update to this IPFR page is required based on the provided upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3517,
+  "completion_tokens": 181,
+  "total_tokens": 3698,
+  "processing_time_seconds": 4.510424315000137,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.796182+00:00"
+}

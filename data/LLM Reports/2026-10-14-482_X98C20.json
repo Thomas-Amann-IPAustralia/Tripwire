@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-14-482",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news updates about Australia's potential ratification of the GRATK Treaty and recent reforms to streamline the IP system, as well as reports and case studies. The IPFR page provides a general overview comparing IP Australia to other government agencies and explains the role of IP Australia in protecting IP rights. There are no specific details, dates, or procedural steps in the IPFR page that are contradicted or outdated by the new information. The updates do not affect the accuracy of the comparative or explanatory content on the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2179,
+  "completion_tokens": 137,
+  "total_tokens": 2316,
+  "processing_time_seconds": 1.2865829649999796,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-14T07:15:42.732396+00:00"
+}

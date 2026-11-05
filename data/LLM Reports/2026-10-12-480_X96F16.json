@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage www.copyright.org.au/legal-advice/ is currently unreachable due to a connection timeout or closure. There is no substantive change to the content of Australian legislation, WIPO documents, or government agency webpages relevant to design infringement. The IPFR page content on design infringement is based on the Designs Act 2003 and related legal principles, which remain unchanged. The change is a technical availability issue of an unrelated copyright advice webpage and does not affect the accuracy or currency of the IPFR page content on design infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2776,
+  "completion_tokens": 143,
+  "total_tokens": 2919,
+  "processing_time_seconds": 2.6083645720000277,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.017308+00:00"
+}

@@ -1,0 +1,29 @@
+--- previous+++ current@@ -1,10 +1,4 @@-| 5.7.7.4 Amendments while a decision of the Commissioner is being appealed | | Cyclic review, no changes | 
+- 
+- | 5.4.1 Who can file and who can be granted a patent | | Cyclic review, no changes | 
+- 
+- | 5.6.1.2 Effect of Publication and OPI | | Cyclic review, no changes | 
+- 
+- | 5.4.4 Annex A - Examples of Legal Persons | | Cyclic review, no changes | 
++| 5.4.4 Annex A - Examples of Legal Persons | | Cyclic review, no changes | 
+  
+  | 5.2 Understanding Legislation | | Cyclic review, no changes | 
+  
+@@ -14,7 +8,11 @@  
+  | Annex J - Examples of Objections under PCT Articles 5 and 6 | | Cyclic review, no changes | 
+  
+- | 5.6.1.5 Application of the Balance of Probabilities in Examination | | Cyclic review, minor language change | 
++ | 5.7.7.4 Amendments while a decision of the Commissioner is being appealed | | Cyclic review, no changes | 
++ 
++ | 5.4.1 Who can file and who can be granted a patent | | Cyclic review, no changes | 
++ 
++ | 5.6.1.2 Effect of Publication and OPI | | Cyclic review, no changes | 
+  
+  | 5.3.3.1 General requirements for approved forms | | Cyclic review, no changes. | 
+  
+@@ -36,4 +34,6 @@  
+  | 5.5.4.9 Reference Numerals in Claims | | Cyclic review, no changes | 
+  
+- | 5.5.4.6 Parametric claims | | Cyclic review, no changes |+ | 5.5.4.6 Parametric claims | | Cyclic review, no changes | 
++ 
++ | 5.3.3 Approved forms (including patent request) | | Removed reference to a "forms officer" |

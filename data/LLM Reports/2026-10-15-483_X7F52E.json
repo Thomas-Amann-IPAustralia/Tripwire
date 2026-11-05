@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to amendments in the Customs Act 1901 concerning the transfer of responsibility for safeguard inquiries from the Productivity Commission to the Australian Trade Remedies Commission (formerly the Anti-Dumping Commission). This concerns safeguard actions related to import surges and domestic industry injury investigations. The IPFR page focuses on Toyota's use of the Australian Border Force's Notice of Objection scheme to combat counterfeit products, which is a different enforcement mechanism and context. There is no mention or discussion of safeguard inquiries, the Productivity Commission, or the Australian Trade Remedies Commission in the IPFR page. Therefore, the legislative changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2468,
+  "completion_tokens": 166,
+  "total_tokens": 2634,
+  "processing_time_seconds": 1.594691672999943,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.637182+00:00"
+}

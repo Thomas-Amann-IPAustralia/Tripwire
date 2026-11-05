@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia international cooperation webpage describe Australia's participation in development cooperation activities and partnerships related to IP capacity building in the Asia-Pacific region. These changes do not affect the specific content of the IPFR page on challenging the use of international domain names, which focuses on domain name dispute resolution procedures, policies, costs, timelines, and outcomes. There is no direct impact on the accuracy or currency of the procedural or substantive information provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3231,
+  "completion_tokens": 125,
+  "total_tokens": 3356,
+  "processing_time_seconds": 1.4409179229999154,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938055+00:00"
+}

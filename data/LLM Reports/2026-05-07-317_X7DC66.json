@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and Amazon Brand Registry cashback percentages. The IPFR page discusses the difference between business name registration and trade mark registration in Australia, focusing on legal protections and registration processes. The ACCC exemption and undertaking, and the Amazon Brand Registry cashback rate change, do not affect the accuracy or currency of the IPFR page content about Australian business names and trade marks. There are no specific references to ACCC exemptions or Amazon cashback rates in the IPFR page that would require updating.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2390,
+  "completion_tokens": 137,
+  "total_tokens": 2527,
+  "processing_time_seconds": 2.3196314699998766,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.712457+00:00"
+}

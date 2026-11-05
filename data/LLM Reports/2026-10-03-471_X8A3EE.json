@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-03-471",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external IP Australia webpage involve a specific example about responding to unjustified claims of IP infringement, focusing on a case where a registered design was unexamined and thus unenforceable. This example clarifies the potential for compensation claims related to unjustified threats. However, the IPFR page 'Pause use of contested IP until resolution' provides general guidance on ceasing use of contested IP, risks, benefits, and procedural considerations without referencing specific case examples or legal nuances about unenforceable registered designs. The changes do not contradict or update any specific factual or procedural content in the IPFR page. Therefore, the IPFR page remains accurate and does not require amendment based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3718,
+  "completion_tokens": 174,
+  "total_tokens": 3892,
+  "processing_time_seconds": 1.9267800439999974,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-03T07:50:02.180695+00:00"
+}

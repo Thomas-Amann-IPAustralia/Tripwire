@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-04-503",
+  "ipfr_page_id": "X7DC66",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor update to the IP Australia news page, adding one more news item to the list of results. It does not contain any substantive changes to legislation, procedures, or factual information about business names, ABNs, or trade marks. Therefore, the IPFR page content about the differences and benefits of business name registration versus trade mark registration remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2095,
+  "completion_tokens": 111,
+  "total_tokens": 2206,
+  "processing_time_seconds": 1.784963040999969,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-04T08:51:07.738906+00:00"
+}

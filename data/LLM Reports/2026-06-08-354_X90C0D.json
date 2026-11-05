@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage primarily add detail about market monitoring and the use of brand registries like the Amazon Brand Registry to detect counterfeit goods. The IPFR page already broadly covers the importance of monitoring the market for suspected infringement and mentions early resolution options. There are no specific factual inaccuracies or outdated information in the IPFR page that require correction or updating based on these upstream changes. The changes do not alter any legal thresholds, procedural steps, or statutory references mentioned in the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3017,
+  "completion_tokens": 132,
+  "total_tokens": 3149,
+  "processing_time_seconds": 4.515228560000196,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.610299+00:00"
+}

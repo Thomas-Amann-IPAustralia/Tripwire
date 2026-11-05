@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates on ACCC public registers, WIPO Madrid System fee details and statistics, and eBay's intellectual property policy guidance on listing items to avoid IP infringement. None of these changes introduce new legal thresholds, statutory references, or procedural steps that directly affect the accuracy or currency of the IPFR page content on 'Infringement 101'. The IPFR page provides general, foundational information about IP infringement and trade marks in Australia, without specific references to ACCC undertakings, Madrid System fee amounts, or eBay listing rules. Therefore, these external changes do not require amendments to the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6380,
+  "completion_tokens": 160,
+  "total_tokens": 6540,
+  "processing_time_seconds": 3.8891274960001283,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.709137+00:00"
+}

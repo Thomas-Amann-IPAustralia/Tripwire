@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updated official notices about trade mark and design registrations, removal of a specific Amazon Brand Registry support program, and updated wording on Australia's international IP engagement and WTO/TRIPS involvement. None of these changes affect the specific factual content or guidance in the IPFR page about what to check before getting registered IP, such as timing, basic requirements, ownership, or clearance checks. The IPFR page does not mention the Amazon program or the detailed international policy language that was updated. The changes do not alter any statutory references, timeframes, or procedural steps described in the IPFR page. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5191,
+  "completion_tokens": 165,
+  "total_tokens": 5356,
+  "processing_time_seconds": 1.7859390300000086,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550744+00:00"
+}

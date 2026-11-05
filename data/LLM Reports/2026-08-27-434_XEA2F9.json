@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO IP Diagnostics webpage involve the removal of the phrase 'Industry-specific adaptations' from a list and do not affect any substantive content related to the WIPO Good Offices Program or alternative dispute resolution services described in the IPFR page. The IPFR page focuses on the WIPO Arbitration and Mediation Center's Good Offices Program and its ADR services, which are not impacted by this minor textual change. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2702,
+  "completion_tokens": 129,
+  "total_tokens": 2831,
+  "processing_time_seconds": 2.333779333999928,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908496+00:00"
+}

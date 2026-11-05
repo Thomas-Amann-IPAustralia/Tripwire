@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-16-484",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO domain name dispute resolution webpage primarily involve removal of detailed procedural steps, fee information, and contact details related to domain name disputes under the UDRP and ccTLD variants. The IPFR page 'Access international arbitration and mediation services' focuses on WIPO's ADR services for international disputes generally, including mediation and arbitration, but does not discuss domain name dispute resolution specifics, UDRP procedures, or fee structures. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8108,
+  "completion_tokens": 140,
+  "total_tokens": 8248,
+  "processing_time_seconds": 2.888260446000004,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-16T06:54:00.569549+00:00"
+}

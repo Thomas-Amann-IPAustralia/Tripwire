@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "XC1C6F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updated wording and additional detail on IP rights listing with platforms, Amazon Brand Registry, and anti-counterfeit measures. The IPFR page on rebranding to avoid potential IP conflicts does not contain specific information about these topics, nor does it provide procedural steps, statutory references, or specific advice that conflicts with or is outdated by these changes. The changes are about proactive IP enforcement and counterfeit prevention, which are related but do not affect the accuracy or currency of the rebranding guidance provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2903,
+  "completion_tokens": 138,
+  "total_tokens": 3041,
+  "processing_time_seconds": 1.9042901930000653,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.357330+00:00"
+}

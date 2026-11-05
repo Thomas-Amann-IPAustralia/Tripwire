@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to updates on the Australian Competition and Consumer Commission (ACCC) public registers, including statuses of exemptions and undertakings under the Competition and Consumer Act 2010. The IPFR page concerns checking products against existing registered designs and freedom to operate searches related to design rights. There is no direct mention or reliance on ACCC registers, exemptions, or competition law provisions in the IPFR page content. Therefore, the ACCC register updates do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2314,
+  "completion_tokens": 137,
+  "total_tokens": 2451,
+  "processing_time_seconds": 1.897724014000005,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551913+00:00"
+}

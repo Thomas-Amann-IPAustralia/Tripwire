@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to accessibility fixes and minor content updates in the Plant Breeder's Rights manual and a formatting correction in the WIPO Madrid Protocol page. The IPFR page content is a high-level overview of the IP journey stages for business owners and does not include specific procedural details, statutory references, or dates that have been altered in the source documents. Therefore, the IPFR page remains accurate and does not require updates based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2412,
+  "completion_tokens": 122,
+  "total_tokens": 2534,
+  "processing_time_seconds": 1.7067170079999414,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.711384+00:00"
+}

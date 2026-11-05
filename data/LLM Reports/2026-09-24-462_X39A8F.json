@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in procedural manuals for trade marks, designs, and plant breeders' rights, including updates to forms, workflows, and examination procedures. These are detailed internal procedural updates that do not affect the basic explanatory content of the IPFR page, which provides general guidance on what to check before getting registered IP. There are no changes to the fundamental requirements, timelines, or definitions that would require updating the IPFR page. The Amazon Brand Registry update adds testimonials but does not alter the basic IP registration guidance. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7367,
+  "completion_tokens": 148,
+  "total_tokens": 7515,
+  "processing_time_seconds": 1.609607804999996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.206735+00:00"
+}

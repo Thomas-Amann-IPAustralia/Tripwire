@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the Trade Marks Office Manual of Practice and Procedure, including amendments to sections on examination of trade marks relating to plants or plant materials, indexing, amendments procedures, and prescribed signs. These changes do not specifically address the opposition process, timeframes, fees, or procedural steps described in the IPFR page. There is no indication that the opposition response process, deadlines, or costs have changed. Therefore, the IPFR page content about responding to a trade mark opposition remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5905,
+  "completion_tokens": 137,
+  "total_tokens": 6042,
+  "processing_time_seconds": 4.622218000999965,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.038693+00:00"
+}

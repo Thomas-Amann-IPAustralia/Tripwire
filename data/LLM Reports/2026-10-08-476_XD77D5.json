@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes include minor technical amendments to copyright regulations, updates to the IPAustralia design manual mostly about applicant names and image alt text, updates to ASIC company registration guidance, and changes to Amazon and eBay IP policy pages. None of these changes directly affect the substantive content of the IPFR page about handling AI-generated IP infringement allegations. The IPFR page focuses on practical advice and a checklist for SMEs dealing with potentially false or AI-generated IP infringement claims, without citing specific statutory forms, fees, or procedural details that have changed. The changes to regulations and manuals are minor or technical and do not alter the legal principles or practical guidance given. The Amazon and eBay changes relate to their platforms' IP enforcement policies and do not impact the general advice on responding to AI-generated allegations. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8301,
+  "completion_tokens": 203,
+  "total_tokens": 8504,
+  "processing_time_seconds": 2.0925653469998906,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.487784+00:00"
+}

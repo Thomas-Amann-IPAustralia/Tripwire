@@ -1,0 +1,18 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X2A3EB",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page mentions Amazon Brand Registry as a tool for listing IP rights and detecting infringing goods. The upstream change updates the cashback benefit from '20% back on branded sales' to '10% back on branded sales' with additional details on the tiered cashback structure. This is a specific, factual update about Amazon Brand Registry benefits that affects the accuracy of the IPFR content referencing this program. Since the IPFR page currently does not specify the cashback details, adding the updated and accurate cashback information will improve the page's currency and usefulness for small business owners.",
+  "suggested_changes": [
+    "Update the description of Amazon Brand Registry benefits to reflect the new cashback offer: 'Get 10% back on your first $50,000 in branded sales, then 5% back through your first year until you reach $1,000,000' instead of the previous '20% back on branded sales'."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2037,
+  "completion_tokens": 215,
+  "total_tokens": 2252,
+  "processing_time_seconds": 2.9170482810000067,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713105+00:00"
+}

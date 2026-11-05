@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X3DA92",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds detailed explanations about different commercialisation methods including licensing, independent launch, franchising, and assignment, with descriptions of risks, returns, ownership, and payment timing. However, the IPFR page on licensing already provides comprehensive coverage of licensing concepts, benefits, risks, outcomes, costs, and involved parties. The new upstream content does not contradict or update any specific factual detail or statutory reference in the IPFR page. Instead, it provides broader context on commercialisation options beyond licensing. Therefore, no specific amendment to the licensing-focused IPFR page is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3353,
+  "completion_tokens": 152,
+  "total_tokens": 3505,
+  "processing_time_seconds": 1.6071265079999648,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009519+00:00"
+}

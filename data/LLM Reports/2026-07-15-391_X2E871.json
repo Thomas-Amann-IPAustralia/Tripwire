@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-15-391",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the AFP webpages concern technical connectivity errors (ERR_TIMED_OUT, ERR_CONNECTION_CLOSED) and do not alter any substantive content related to intellectual property, arbitration, mediation, or dispute resolution. The IPFR page on accessing international arbitration and mediation services via WIPO is unaffected by these connectivity error messages. There is no change to any factual or procedural information presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3374,
+  "completion_tokens": 113,
+  "total_tokens": 3487,
+  "processing_time_seconds": 1.6093550650000452,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-15T05:09:05.111837+00:00"
+}

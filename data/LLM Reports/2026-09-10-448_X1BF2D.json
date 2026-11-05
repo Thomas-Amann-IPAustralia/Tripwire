@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of search results shown on an IP Australia news page, reducing from 38 to 36 results. This change is unrelated to the substantive content of the IPFR page on mediation for IP disputes. There are no changes to legal procedures, mediation processes, or any factual information that would affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2644,
+  "completion_tokens": 111,
+  "total_tokens": 2755,
+  "processing_time_seconds": 1.9378850059999877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.553104+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a cyclic review and minor corrections to the IP Australia patent manual, including fixing broken links and clarifying some sections such as the grace period and amendments. There is no indication of any change to the rules or procedures regarding section 27 notices or the timing and process for third party notifications of prior art. The IPFR page content about lodging section 27 notices, timing, and process remains accurate and unaffected by these minor editorial and structural updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2557,
+  "completion_tokens": 125,
+  "total_tokens": 2682,
+  "processing_time_seconds": 1.2856106400001863,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551335+00:00"
+}

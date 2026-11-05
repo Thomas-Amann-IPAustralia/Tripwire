@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified are primarily updates and cyclic reviews to various manuals related to patents, trademarks, and designs, including updates to alternative text for images, minor language changes, and corrections of broken links. The patent manual changes include removal of references to a specific section and replacement with regulation references, but no direct changes to the opposition process or procedural timeframes, fees, or outcomes described in the IPFR page. The trademark and design manual changes are unrelated to patent oppositions. The IPFR page content about responding to a patent opposition remains accurate and current based on the changes provided.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7422,
+  "completion_tokens": 148,
+  "total_tokens": 7570,
+  "processing_time_seconds": 1.6622532540000066,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.934533+00:00"
+}

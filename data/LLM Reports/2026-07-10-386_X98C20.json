@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP fraud and corruption webpage is currently unreachable due to a connection timeout, but this does not affect the content or accuracy of the IPFR page about how IP Australia compares to other government services. The IPFR page does not reference the AFP or fraud and corruption services, and the change is about website availability rather than substantive content changes. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1576,
+  "completion_tokens": 117,
+  "total_tokens": 1693,
+  "processing_time_seconds": 1.980353968999907,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790389+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Trade Marks Office Manual of Practice and Procedure, specifically regarding examination of trade mark applications related to plants or plant materials, and minor updates to news listing counts on the IP Australia news page. The IPFR page content is a general overview about IP infringement aimed at small businesses and creators, focusing on understanding infringement concepts broadly rather than procedural or technical examination details. There are no specific references to plant-related trade marks, procedural steps, or detailed examination criteria in the IPFR content that would require updating. The news page changes are minor and do not affect the substantive content of the IPFR page. Therefore, no amendments to the IPFR page are necessary based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2772,
+  "completion_tokens": 175,
+  "total_tokens": 2947,
+  "processing_time_seconds": 3.0496752110000216,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552956+00:00"
+}

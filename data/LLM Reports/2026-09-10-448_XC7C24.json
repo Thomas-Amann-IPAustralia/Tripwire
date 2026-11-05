@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily concern specific design registrations being surrendered or amended, and updates to design instruments and manuals. These are administrative updates and corrections to particular design registrations and procedural details. The IPFR page content is general guidance on checking products against existing designs and does not reference specific design registrations, dates, or procedural details that have changed. The changes do not affect the accuracy or currency of the general advice, steps, or warnings provided in the IPFR page. Therefore, no update to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5074,
+  "completion_tokens": 147,
+  "total_tokens": 5221,
+  "processing_time_seconds": 3.1327036000000135,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552275+00:00"
+}

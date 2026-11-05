@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change involves fixing internal links and chapter references within the IPAustralia PBR manual webpage. There is no indication of changes to substantive content, legal provisions, or procedural details that would affect the accuracy or currency of the IPFR page content on Plant Breeder's Rights infringement. The IPFR page's detailed explanations, examples, and statutory references remain valid and unaffected by these link corrections.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2623,
+  "completion_tokens": 112,
+  "total_tokens": 2735,
+  "processing_time_seconds": 1.8290675040000224,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.564965+00:00"
+}

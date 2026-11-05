@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X45830",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the ASEAN-Australia-New Zealand Free Trade Agreement (AANZFTA) and the eBay intellectual property policy do not directly affect the specific content of the IPFR page about naming tech startups after a person. The IPFR page focuses on trademark distinctiveness, challenges with personal names as trademarks, and branding strategy for AI and tech startups. The AANZFTA update relates to trade agreements and tariff preferences, which are unrelated to trademark distinctiveness or naming strategies. The eBay IP policy update concerns listing practices and infringement avoidance on an e-commerce platform, which does not impact the trademark distinctiveness or naming advice given in the IPFR page. Therefore, no amendments are required to maintain accuracy or currency of the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4682,
+  "completion_tokens": 183,
+  "total_tokens": 4865,
+  "processing_time_seconds": 2.622261599000012,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.710190+00:00"
+}

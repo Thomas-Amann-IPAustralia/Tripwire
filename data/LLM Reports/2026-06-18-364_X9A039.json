@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to IP Australia manuals, ACCC public registers, WIPO treaty dates formatting, Amazon Brand Registry procedural clarifications, and eBay's intellectual property policies and VeRO program FAQs. None of these changes provide new or updated specific information about Australian trade mark registration fees, timeframes, procedures, or requirements that are directly reflected in the IPFR page content. The IPFR page's detailed fee schedules, application steps, and general guidance remain accurate and unaffected by these upstream changes. The changes are either minor textual updates, formatting corrections, or pertain to other IP rights or platforms without impacting the Australian trade mark registration process described.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12505,
+  "completion_tokens": 164,
+  "total_tokens": 12669,
+  "processing_time_seconds": 2.471614393999971,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.707488+00:00"
+}

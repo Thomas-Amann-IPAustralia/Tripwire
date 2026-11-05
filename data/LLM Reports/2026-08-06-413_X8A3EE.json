@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a technical connectivity issue with the Etsy intellectual property policy webpage, indicating the site is unreachable or the connection was closed unexpectedly. There is no substantive change to the content of the Etsy IP policy or any IP legal principles. The IPFR page content about pausing use of contested IP remains accurate and unaffected by this connectivity issue.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2622,
+  "completion_tokens": 101,
+  "total_tokens": 2723,
+  "processing_time_seconds": 2.7591595930000494,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.797283+00:00"
+}

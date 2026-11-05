@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in ACCC public registers, exemptions, court undertakings, consultation events, and procedural notes on the WIPO Madrid System including territorial clarifications and upcoming procedural changes. None of these changes directly affect the content of the IPFR page 'Considerations before enforcing your IP overseas', which focuses on general guidance for IP enforcement overseas, international treaties, and practical considerations for rights holders. There are no specific references, dates, fees, or procedural steps in the IPFR page that are contradicted or outdated by these changes. The IPFR page does not mention ACCC enforcement undertakings or the detailed territorial scope of the Madrid System that has been updated. Therefore, no amendments to the IPFR page are required based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5663,
+  "completion_tokens": 186,
+  "total_tokens": 5849,
+  "processing_time_seconds": 5.698263279999992,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.268395+00:00"
+}

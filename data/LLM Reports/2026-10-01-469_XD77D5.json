@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates and archival of sections in the IPAustralia design manual and the listing of non-legislative instruments related to filing and formalities under the Designs Act. The IPFR page focuses on practical advice for SMEs receiving AI-generated IP infringement allegations, including a checklist for assessing such allegations. It does not provide detailed procedural or legislative references about filing documents, formalities, or non-legislative instruments. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3972,
+  "completion_tokens": 137,
+  "total_tokens": 4109,
+  "processing_time_seconds": 1.6017894270000852,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.937815+00:00"
+}

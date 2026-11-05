@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Trade Marks Manual following a High Court decision and news updates about IP Australia activities and reports. The IPFR page focuses on practical advice for SMEs receiving AI-generated IP infringement allegations, emphasizing the need for substantiated claims and proper legal representation. There are no specific references to the legal standards, case law, or procedural details in the IPFR page that are contradicted or outdated due to these upstream changes. The updates do not affect the accuracy or currency of the checklist or guidance provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4328,
+  "completion_tokens": 142,
+  "total_tokens": 4470,
+  "processing_time_seconds": 2.0998576299998604,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269572+00:00"
+}

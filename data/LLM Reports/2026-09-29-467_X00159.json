@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X00159",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes provide detailed explanations about different methods of commercialising IP, including independent launch, licensing, franchising, and assignment. While these additions enrich the understanding of commercialisation options, the IPFR page 'Can I buy, sell or license IP?' already covers the basic concepts of buying, selling, licensing, and lapsing IP ownership in a clear and accessible manner. The changes do not contradict or render any specific statement on the IPFR page inaccurate or outdated. Instead, they offer more granular detail that could be used to expand or supplement the IPFR content but are not necessary to maintain its current accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3987,
+  "completion_tokens": 158,
+  "total_tokens": 4145,
+  "processing_time_seconds": 1.818362832000048,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009074+00:00"
+}

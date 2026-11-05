@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to amendments in the Competition and Consumer Act 2010, specifically about exceptional circumstances declarations, ACCC authorisations, class exemptions, and penalties related to the Oil Code of Conduct and data sharing obligations. The IPFR page 'Infringement 101' focuses on explaining the basics of intellectual property infringement, trade marks, and related concepts for small businesses. There is no mention or discussion of competition law, ACCC exemptions, or the Oil Code of Conduct in the IPFR content. Therefore, these legislative and regulatory changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3565,
+  "completion_tokens": 155,
+  "total_tokens": 3720,
+  "processing_time_seconds": 1.7080765850000716,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.706508+00:00"
+}

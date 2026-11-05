@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the copyright regulations are minor, technical, and do not affect substantive legal requirements or guidance relevant to the IPFR page content. The amendments to the design manual relate to updates in page structure and alternative text for images, which do not impact the substantive advice or checklist items in the IPFR page. There is no indication that any specific statutory references, procedural steps, or legal thresholds mentioned in the IPFR page are outdated or incorrect due to these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4604,
+  "completion_tokens": 126,
+  "total_tokens": 4730,
+  "processing_time_seconds": 1.44246178100002,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636622+00:00"
+}

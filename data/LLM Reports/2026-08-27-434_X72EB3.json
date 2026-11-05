@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X72EB3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the PBR Manual, specifically the addition of new guidance pages for the QP Portal and updates to chapter links. These changes concern procedural and navigational aspects of the PBR system user guides and portal submissions. The IPFR page 'Choosing a Qualified Person (QP) to conduct growing trials' focuses on explaining what a QP is, the benefits, risks, costs, and how to engage or become a QP. There is no specific information in the IPFR page about the QP Portal submission process or links that would be affected by the updated manual pages. Therefore, the changes do not directly affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2651,
+  "completion_tokens": 173,
+  "total_tokens": 2824,
+  "processing_time_seconds": 2.8736343059999854,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.909545+00:00"
+}

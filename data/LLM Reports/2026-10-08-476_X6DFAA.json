@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The first change is a minor formatting update to the publication date line of a general ADR guide, which does not affect the substantive content or accuracy of the IPFR page's explanation of ADR options. The second change relates to updates on the ACCC public registers and court enforceable undertakings concerning consumer law and competition matters, which are unrelated to the IP dispute resolution methods described in the IPFR page. Neither change impacts the specific guidance on IP dispute resolution without court provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2474,
+  "completion_tokens": 132,
+  "total_tokens": 2606,
+  "processing_time_seconds": 1.393926416999875,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489405+00:00"
+}

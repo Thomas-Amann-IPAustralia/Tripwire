@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO 'about' webpage consist solely of a minor addition of a sentence describing WIPO's role and the removal of a mention of the 'OzIP Protection Service'. These changes do not affect any specific factual content on the IPFR page regarding international IP rights, territoriality, or the international systems described (PCT, Madrid, Hague). The IPFR page content remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1908,
+  "completion_tokens": 123,
+  "total_tokens": 2031,
+  "processing_time_seconds": 2.1188116629998603,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.711539+00:00"
+}

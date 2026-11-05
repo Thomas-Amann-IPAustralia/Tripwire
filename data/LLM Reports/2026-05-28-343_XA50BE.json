@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-28-343",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve accessibility fixes, URL updates, and content updates related to patent examination and design manual sections such as excluded designs and priority dates. None of the changes specifically address or alter the procedural, legal, or substantive information about seeking binding, authoritative decisions in design disputes or court proceedings as described in the IPFR page. There are no updates to limitation periods, court procedures, costs, or outcomes that would affect the accuracy or currency of the IPFR content. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4420,
+  "completion_tokens": 139,
+  "total_tokens": 4559,
+  "processing_time_seconds": 5.19244033200016,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-28T06:36:06.490353+00:00"
+}

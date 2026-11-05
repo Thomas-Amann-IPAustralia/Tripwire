@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to an ACCC public register update about exemptions and undertakings under the Competition and Consumer Act 2010, specifically mentioning Credabl Pty Ltd and Aidacare Pty Ltd. This change does not affect any specific content in the IPFR page about reporting IP scams, fraud, or risks to public interest. The IPFR page focuses on scam reporting procedures and relevant agencies, without referencing ACCC exemptions, undertakings, or the Competition and Consumer Act. Therefore, the page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2392,
+  "completion_tokens": 140,
+  "total_tokens": 2532,
+  "processing_time_seconds": 2.3035026110001127,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.714040+00:00"
+}

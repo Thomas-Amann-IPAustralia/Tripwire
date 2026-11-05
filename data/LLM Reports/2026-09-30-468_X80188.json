@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page 'Infringement 101' is a general educational article about understanding IP infringement, its nature, and the mindset needed to approach it. The upstream changes relate to detailed procedural or commercialisation guidance on the IP Australia website, such as how to commercialise IP and how to prevent infringement via brand registries and anti-counterfeit measures. These changes do not affect the general explanations or principles described in the IPFR page. There are no specific factual inaccuracies, statutory references, or procedural steps in the IPFR page that are contradicted or outdated by the changes. The IPFR page remains accurate and current as a high-level introduction to IP infringement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3534,
+  "completion_tokens": 167,
+  "total_tokens": 3701,
+  "processing_time_seconds": 2.26731005299996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.355288+00:00"
+}

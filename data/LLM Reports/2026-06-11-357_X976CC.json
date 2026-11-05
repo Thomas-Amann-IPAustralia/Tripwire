@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates to WIPO arbitration fees tables, minor formatting adjustments, and lists of ccTLDs related to domain name dispute resolution. The IPFR page content about the WIPO Clause Generator and general ADR options does not include specific fee amounts, fee structures, or detailed domain dispute resolution policies that would be affected by these updates. The changes to the IP Australia international cooperation page and other indirect sources do not impact the accuracy or currency of the IPFR page content. Therefore, no specific amendments to the IPFR page are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9395,
+  "completion_tokens": 146,
+  "total_tokens": 9541,
+  "processing_time_seconds": 2.3512615639999694,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849425+00:00"
+}

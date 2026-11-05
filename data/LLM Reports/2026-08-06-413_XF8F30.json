@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XF8F30",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to procedural details about filing applications for extensions of time and affidavits in the context of administrative decisions and judicial review, including court fee exemptions. The IPFR page content focuses on expedited examination requests for patents, trade marks, and designs at IP Australia, describing the process, benefits, risks, and requirements for such requests. There is no mention or discussion of judicial review procedures, court filings, or fee exemptions in the IPFR page. The change does not affect the accuracy or currency of the information about expedited examination requests provided on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2525,
+  "completion_tokens": 148,
+  "total_tokens": 2673,
+  "processing_time_seconds": 2.8094189380001353,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.797079+00:00"
+}

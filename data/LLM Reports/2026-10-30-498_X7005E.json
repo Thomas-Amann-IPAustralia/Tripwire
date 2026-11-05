@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-30-498",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a news update from IP Australia about trade mark opposition and copyright disputes, specifically referencing a recent case involving 'Clothing The Gaps' and The Gap, as well as a general IP Report on Australia's economic resilience. This content does not alter or update any legal principles, statutory provisions, or procedural details related to unregistered trade marks as described in the IPFR page. The IPFR page focuses on explaining the legal protection frameworks for unregistered trade marks, including passing off and Australian Consumer Law, none of which are contradicted or updated by the news content. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1879,
+  "completion_tokens": 161,
+  "total_tokens": 2040,
+  "processing_time_seconds": 3.017984103999993,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-30T08:17:16.711611+00:00"
+}

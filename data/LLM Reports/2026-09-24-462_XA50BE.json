@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a review and update of sections related to applicant names and applicant details on the IP Australia design manual webpage. The IPFR page 'XA50BE \u2014 Seek binding, authoritative decisions' focuses on court proceedings for design disputes, including the process, risks, benefits, and outcomes of litigation. There is no specific information in the IPFR page about applicant names, applicant details, or procedural requirements that would be affected by the updates to the applicant name sections in the design manual. The change does not impact any factual statements, timeframes, or legal thresholds described in the IPFR page. Therefore, no update to the IPFR page is required based on this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3284,
+  "completion_tokens": 170,
+  "total_tokens": 3454,
+  "processing_time_seconds": 1.9507966589999342,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.209654+00:00"
+}

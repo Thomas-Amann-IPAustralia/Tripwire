@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to a webpage about preventing infringement of IP, specifically about counterfeit goods and brand registries on platforms like Amazon. The IPFR page is about common scams targeting IP owners, focusing on scam messages and how to identify them. The change does not affect any specific information, warnings, or procedural details on the IPFR page about scams. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1474,
+  "completion_tokens": 118,
+  "total_tokens": 1592,
+  "processing_time_seconds": 1.735907883999971,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.812476+00:00"
+}

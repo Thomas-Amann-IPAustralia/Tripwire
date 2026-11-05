@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an update to the IP Australia news webpage, highlighting the Corporate Strategic Plan 2026\u201327 and other news items related to patents, trademarks, and innovation. However, the IPFR page content is about contributor guidelines for blog posts on IP First Response, focusing on how to write and submit content. There is no specific information in the IPFR page about IP Australia's strategic priorities, news items, or content that would be outdated or inaccurate due to this change. The change does not affect any procedural, legal, or factual details in the contributor guidelines.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2252,
+  "completion_tokens": 147,
+  "total_tokens": 2399,
+  "processing_time_seconds": 8.88229954999997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.249997+00:00"
+}

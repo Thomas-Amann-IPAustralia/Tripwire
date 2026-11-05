@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-09-385",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern administrative updates such as a request to surrender specific design registrations, updates to patent manuals related to computer-implemented inventions, and updates to plant breeder rights portals. The design manual changes relate to excluded designs and priority date redirections but do not alter the fundamental registration process, duration, certification requirements, or grace periods described in the IPFR page. There is no indication that the statutory provisions, fees, timeframes, or procedural steps described in the IPFR page have changed. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6481,
+  "completion_tokens": 143,
+  "total_tokens": 6624,
+  "processing_time_seconds": 2.941571114999988,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-09T06:37:53.816651+00:00"
+}

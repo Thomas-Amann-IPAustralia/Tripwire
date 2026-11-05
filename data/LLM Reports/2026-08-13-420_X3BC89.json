@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to firearms import regulations, updates to IP Australia legislative instrument listings, and updates to the IP policy register. None of these changes affect the basic guidance on checking if someone else owns a word, logo, or idea, nor do they impact the descriptions or references to IP registers and search tools provided on the IPFR page. The page content is general and introductory, and no specific statutory references, procedures, or thresholds mentioned in the changes appear in the page content. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5584,
+  "completion_tokens": 141,
+  "total_tokens": 5725,
+  "processing_time_seconds": 2.3229078350000236,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.877201+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Plant Breeders' Rights manual (notably acceptance or rejection of applications) and minor formatting adjustments in a page about engaging an IP attorney. None of these changes affect the definitions, explanations, or examples of IP infringement as described in the IPFR page. The IPFR content focuses on explaining infringement concepts broadly and does not include procedural details about PBR applications or attorney engagement steps that were updated. Therefore, no specific content in the IPFR page is rendered inaccurate or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3606,
+  "completion_tokens": 139,
+  "total_tokens": 3745,
+  "processing_time_seconds": 2.2334386130000894,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.227580+00:00"
+}

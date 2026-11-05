@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "XC1C6F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change involves a minor update to the IP Australia webpage about preventing IP infringement, specifically removing some bullet points about the harms of counterfeit goods and adding a note about proactive listing of IP rights with platforms like Amazon Brand Registry. The IPFR page on rebranding to avoid IP conflicts does not contain specific information about counterfeit goods, brand registries, or automated detection of infringing goods. The change does not affect any specific statements, dates, or procedural steps in the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2210,
+  "completion_tokens": 142,
+  "total_tokens": 2352,
+  "processing_time_seconds": 1.7100469579999071,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.813039+00:00"
+}

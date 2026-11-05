@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to procedural rules and fee updates for the Federal Court and Federal Circuit and Family Court of Australia effective from 1 July 2026. The IPFR page discusses options for challenging IP Australia decisions, including appeals to these courts and tribunals, but does not specify any fees, procedural timelines, or detailed rules that would be affected by these amendments. The page's content remains accurate and does not contain specific fee amounts or procedural details that require updating based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3921,
+  "completion_tokens": 129,
+  "total_tokens": 4050,
+  "processing_time_seconds": 2.69011258799992,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269996+00:00"
+}

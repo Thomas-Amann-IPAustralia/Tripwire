@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern the consolidation and update of IP Australia's Trade Marks Manual of Practice and Procedure, specifically the creation of a new Part 36 covering revocation of acceptance, revocation of registration, and amendment or cessation of protection. These updates do not directly affect the opposition process described in the IPFR page, which focuses on challenging the registration of a new trade mark within the opposition period. The IPFR page content about opposition timelines, procedures, risks, and outcomes remains accurate and is not contradicted or outdated by the changes. Additionally, the official notices and ACCC register changes do not impact the opposition process details. Therefore, no amendments to the IPFR page are required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11639,
+  "completion_tokens": 174,
+  "total_tokens": 11813,
+  "processing_time_seconds": 2.3870640269999512,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550270+00:00"
+}

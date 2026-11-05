@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of news updates about reforms to Australia's IP system and additional information about anti-counterfeit measures and Amazon Brand Registry. The IPFR page 'What to do if someone infringes your IP' provides general guidance on steps to take when infringement is suspected, focusing on gathering information, evaluating options, and seeking professional advice. None of the changes introduce specific legal thresholds, procedural steps, or statutory references that contradict or update the existing guidance on this page. The new content about anti-counterfeit measures and platform brand registries is relevant to preventing infringement but does not directly affect the accuracy or currency of the infringement response advice given in the IPFR page. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3379,
+  "completion_tokens": 177,
+  "total_tokens": 3556,
+  "processing_time_seconds": 1.556707754999934,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.008176+00:00"
+}

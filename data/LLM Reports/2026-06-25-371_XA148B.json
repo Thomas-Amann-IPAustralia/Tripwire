@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-25-371",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates following the High Court decision in Zip Co Ltd v Firstmac Ltd, updates to the Trade Marks Manual of Practice and Procedure, and other procedural or technical updates in related IP manuals. However, none of the changes explicitly mention amendments to the opposition process timelines, fees, procedural steps, or outcomes described in the IPFR page. The IPFR page content about responding to a trade mark opposition remains accurate and current based on the information provided. The changes do not indicate any direct impact on the specific guidance given to small business owners about responding to oppositions.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8824,
+  "completion_tokens": 149,
+  "total_tokens": 8973,
+  "processing_time_seconds": 2.9529620069999964,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-25T06:30:12.561784+00:00"
+}

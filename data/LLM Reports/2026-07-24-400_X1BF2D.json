@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news page and an announcement about a new transparency program related to patent examination timeframes. The IPFR page on using mediation to resolve IP disputes does not contain any specific information about patent examination timeframes, procedural steps, or other details affected by this change. The content focuses on mediation as a dispute resolution method and does not reference or rely on the changed information. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2650,
+  "completion_tokens": 135,
+  "total_tokens": 2785,
+  "processing_time_seconds": 1.9978021970000555,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430427+00:00"
+}

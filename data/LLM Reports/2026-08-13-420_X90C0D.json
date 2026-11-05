@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the eBay intellectual property policy webpage provide detailed guidance on listing practices to avoid IP infringement, such as correct use of brand names, third-party content, and international selling restrictions. However, the IPFR page 'What does IP protection mean for my business?' provides a broad overview of IP protection concepts for small businesses without specific procedural or compliance details about online marketplaces or listing practices. The WIPO IP audit changes are minor formatting adjustments without substantive content changes. None of the changes affect the accuracy or currency of the IPFR page's general explanations about IP rights, registration, enforcement, or business implications. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5128,
+  "completion_tokens": 167,
+  "total_tokens": 5295,
+  "processing_time_seconds": 2.2788961629998994,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.875535+00:00"
+}

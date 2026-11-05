@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X4B5C8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to practice directions for the Administrative Review Tribunal and updates to the Plant Breeders Rights (PBR) manual, including portal guidance and links. The IPFR page 'Obtain advice to help manage your IP' provides general guidance on engaging IP professionals and does not contain specific procedural details, statutory references, or application processes that are directly affected by these upstream changes. There is no indication that the cost, roles, or advice about IP professionals in the page are impacted by these updates. Therefore, no amendments are required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4641,
+  "completion_tokens": 144,
+  "total_tokens": 4785,
+  "processing_time_seconds": 2.679471723000006,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.795883+00:00"
+}

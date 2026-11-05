@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document clarifies an example scenario about unjustified threats of IP infringement related to unexamined registered designs. The IPFR page already states that uncertified (unexamined) registered designs do not provide immediate enforceable rights and warns about the risk of unjustified threats. The new example does not introduce new legal requirements, fees, timeframes, or procedural steps that would require updating the IPFR page content. It is consistent with the existing explanation and does not affect any specific factual or procedural information presented.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2360,
+  "completion_tokens": 136,
+  "total_tokens": 2496,
+  "processing_time_seconds": 2.4431767749999835,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.611851+00:00"
+}

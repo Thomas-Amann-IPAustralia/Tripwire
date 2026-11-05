@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to updates on IP Australia news items about patents and transparency programs for patent examination timeframes. The IPFR page content is a general educational article about IP infringement aimed at small businesses and creators, focusing on understanding infringement concepts rather than specific procedural or legislative details. There is no specific mention of patent prosecution, examination timeframes, or related procedural details in the IPFR page that would be affected by the news update. Therefore, the change does not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1747,
+  "completion_tokens": 137,
+  "total_tokens": 1884,
+  "processing_time_seconds": 2.316615322000075,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430706+00:00"
+}

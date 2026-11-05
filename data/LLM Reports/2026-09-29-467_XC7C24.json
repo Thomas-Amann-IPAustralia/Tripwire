@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to detailed explanations of commercialisation options for IP, including independent launch, licensing, franchising, and assignment. The IPFR page 'Check your product against existing designs' focuses on conducting freedom to operate searches and checking existing registered designs to avoid infringement. The commercialisation content does not affect the accuracy or currency of the guidance on searching and interpreting registered designs, nor does it change any specific procedural, legal, or factual information presented in the IPFR page. Therefore, no update is required to the IPFR page based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3075,
+  "completion_tokens": 144,
+  "total_tokens": 3219,
+  "processing_time_seconds": 1.5043063530000609,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.010159+00:00"
+}

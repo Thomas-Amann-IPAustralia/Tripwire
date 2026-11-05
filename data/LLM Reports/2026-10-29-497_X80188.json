@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an announcement about IP Australia's Annual Report 2025\u201326 being tabled in Parliament, along with other news items about patents, trade marks, and IP reports. However, the IPFR page content is a general educational article about IP infringement basics, authored by Dr. Mitchell Adams, and does not contain specific data, dates, procedures, or legal references that would be affected by the Annual Report or the news items. There is no indication that the Annual Report or related news changes any fundamental legal principles or practical guidance on IP infringement as presented in the IPFR page. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1933,
+  "completion_tokens": 164,
+  "total_tokens": 2097,
+  "processing_time_seconds": 1.5146458330000314,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.239817+00:00"
+}

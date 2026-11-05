@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to exemptions and undertakings under the Competition and Consumer Act 2010 (Cth) and updates to the ACCC public registers. The IPFR page content concerns common scams related to IP infringement and fake IP Australia communications. There is no direct or specific information in the IPFR page about ACCC exemptions, competition law, or data sharing obligations that would be affected by this change. The change does not impact the accuracy or currency of the scam warnings or advice given on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1989,
+  "completion_tokens": 136,
+  "total_tokens": 2125,
+  "processing_time_seconds": 2.072116760999961,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.879682+00:00"
+}

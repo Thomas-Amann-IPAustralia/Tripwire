@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-04-411",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news updates about IP Australia's participation in the PPH eXtra Initiative and general patent-related news counts. These updates do not affect the substantive content of the IPFR page about enforcing a 'filed' patent, which focuses on the legal status and enforcement rights of patent applications and granted patents. There is no change to legal thresholds, timeframes, or enforcement rules described in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1904,
+  "completion_tokens": 117,
+  "total_tokens": 2021,
+  "processing_time_seconds": 2.543895715999952,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-04T05:23:48.912974+00:00"
+}

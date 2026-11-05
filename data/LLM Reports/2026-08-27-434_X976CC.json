@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO IP Diagnostics webpage involve the removal of a single phrase 'Industry-specific adaptations' and do not affect any content related to the WIPO Clause Generator or dispute resolution clauses. The IPFR page focuses specifically on the WIPO Clause Generator tool for drafting IP dispute resolution clauses, and none of the upstream changes impact the accuracy or currency of this information. The changes are minor editorial adjustments unrelated to the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2720,
+  "completion_tokens": 121,
+  "total_tokens": 2841,
+  "processing_time_seconds": 2.739345381000021,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.908272+00:00"
+}

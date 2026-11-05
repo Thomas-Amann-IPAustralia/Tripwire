@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X00159",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia 'How to commercialise my IP' page involve removal of detailed explanatory content about commercialisation options such as independent launching, licensing, and assignment of IP. However, the IPFR page 'Can I buy, sell or license IP?' provides a high-level overview suitable for small business owners without going into the detailed procedural or risk/return aspects that were removed upstream. The IPFR content remains accurate and consistent with the general concepts of buying, selling, licensing, and lapsing IP ownership. There is no specific outdated or incorrect information in the IPFR page that requires updating based on the upstream content removal.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3297,
+  "completion_tokens": 160,
+  "total_tokens": 3457,
+  "processing_time_seconds": 2.401632794999955,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354505+00:00"
+}

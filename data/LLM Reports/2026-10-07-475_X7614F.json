@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-07-475",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Online Safety Act 2021, specifically strengthening enforcement of the social media minimum age framework and related regulatory powers. The IPFR page focuses on the importance of having an IP strategy for creative businesses, covering topics such as IP identification, ownership, protection, and commercialisation. There is no mention or discussion of online safety, social media age restrictions, or related enforcement powers in the IPFR content. Therefore, the legislative changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2510,
+  "completion_tokens": 138,
+  "total_tokens": 2648,
+  "processing_time_seconds": 2.5019001640000624,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-07T08:23:21.769398+00:00"
+}

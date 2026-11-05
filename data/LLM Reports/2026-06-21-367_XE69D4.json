@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-21-367",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates solely to the accessibility and connection errors of the ASBFEO website (www.asbfeo.gov.au), indicating that the site unexpectedly closed the connection. There is no change to substantive content, policies, procedures, or legal information relevant to domain name dispute resolution or trade mark infringement. The IPFR page XE69D4 does not reference ASBFEO or its dispute support services, and the change does not affect any factual or procedural information presented in the IPFR page. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3120,
+  "completion_tokens": 144,
+  "total_tokens": 3264,
+  "processing_time_seconds": 3.602054092000003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-21T07:06:33.912043+00:00"
+}

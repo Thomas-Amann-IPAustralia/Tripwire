@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the upstream sources primarily involve updates to procedural details, links, formatting, and minor content clarifications in the patent, trade mark, and plant breeder's rights manuals, as well as some updates to ASIC's company registration page. None of these changes directly affect the content of the IPFR page, which focuses on practical advice for SMEs receiving AI-generated IP infringement allegations. The IPFR page does not contain specific statutory references, fees, or procedural steps that have been amended in the upstream changes. Therefore, the accuracy and currency of the IPFR page content remain unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7619,
+  "completion_tokens": 149,
+  "total_tokens": 7768,
+  "processing_time_seconds": 2.42242408900006,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.850354+00:00"
+}

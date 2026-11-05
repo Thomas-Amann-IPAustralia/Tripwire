@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X72EB3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document indicates updates to the PBR manual related to forms, workflows, and some additions about legal persons and application processes. However, there is no specific mention of changes to the Qualified Person (QP) accreditation process, fees, duration, or requirements that would affect the accuracy of the IPFR page content. The IPFR page focuses on explaining what a QP is, how to become one, and related practical guidance, none of which is contradicted or rendered outdated by the described upstream changes. Therefore, no update to the IPFR page is required based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2444,
+  "completion_tokens": 152,
+  "total_tokens": 2596,
+  "processing_time_seconds": 1.6362068739999813,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938145+00:00"
+}

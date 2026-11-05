@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-18-456",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to procedural details and fee payment options for WIPO's domain name dispute resolution services, including new services like Legal Rights Objections and String Confusion Objections. The IPFR page focuses on explaining that there is no global IP office and describes WIPO's role in administering international treaties and providing streamlined application systems. It does not discuss domain name dispute procedures or fees. Therefore, these changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3162,
+  "completion_tokens": 127,
+  "total_tokens": 3289,
+  "processing_time_seconds": 2.0078835540000455,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-18T07:17:16.744595+00:00"
+}

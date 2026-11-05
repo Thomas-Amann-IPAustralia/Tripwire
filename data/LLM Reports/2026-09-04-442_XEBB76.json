@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-04-442",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are updates to IP Australia's news and strategic priorities for 2026-27, including mentions of AI governance and First Nations engagement, as well as news items about patents and trade marks. However, these changes do not affect the fundamental definitions, descriptions, or procedural information about IP types and protections presented in the IPFR page. There is no indication of changes to legal definitions, registration requirements, enforcement procedures, or other specific factual content in the IPFR page that would require updating.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2005,
+  "completion_tokens": 131,
+  "total_tokens": 2136,
+  "processing_time_seconds": 2.2044695390000015,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-04T07:07:25.250580+00:00"
+}

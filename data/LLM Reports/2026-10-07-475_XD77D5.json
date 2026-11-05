@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-07-475",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change concerns amendments to the Online Safety Act 2021, specifically strengthening enforcement powers related to social media minimum age requirements and the eSafety Commissioner's powers. The IPFR page discusses how SMEs should respond to AI-generated IP infringement allegations, focusing on intellectual property law and practical advice for dealing with such allegations. There is no direct or indirect impact on the content of the IPFR page, as the legislative changes do not affect IP infringement procedures, legal thresholds, or advice about responding to infringement allegations. The relevance scores are low to moderate, reflecting only a tangential connection to online safety rather than IP infringement. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3525,
+  "completion_tokens": 168,
+  "total_tokens": 3693,
+  "processing_time_seconds": 3.0683441969999876,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-07T08:23:21.769492+00:00"
+}

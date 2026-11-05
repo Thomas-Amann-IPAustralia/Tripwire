@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center webpage and related WIPO pages primarily add detailed information about alternative dispute resolution (ADR) options, services, contract clauses, fees, and domain name dispute resolution procedures. However, the IPFR page content on 'Is there a global IP office?' provides a high-level overview of WIPO's role as an international treaty administrator and coordinator, emphasizing that WIPO is not a global IP office granting rights. The changes do not contradict or update any specific factual claims or figures in the IPFR page, nor do they alter the fundamental explanation of WIPO's role. The IPFR page does not include detailed procedural or fee information about WIPO dispute resolution services that would require updating. Therefore, no amendment to the IPFR page is necessary based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 14862,
+  "completion_tokens": 195,
+  "total_tokens": 15057,
+  "processing_time_seconds": 3.1605936980001843,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.152247+00:00"
+}

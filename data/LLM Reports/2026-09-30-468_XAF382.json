@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to advice on preventing IP infringement, specifically about listing IP rights with online platforms, Amazon Brand Registry, anti-counterfeit measures, and lodging notices with Australian Border Force. The IPFR page 'What is IP infringement?' focuses on defining infringement, its elements, why it matters, and common misconceptions. It does not discuss prevention strategies or platform-specific procedures. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3473,
+  "completion_tokens": 125,
+  "total_tokens": 3598,
+  "processing_time_seconds": 1.8185774949999995,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.357183+00:00"
+}

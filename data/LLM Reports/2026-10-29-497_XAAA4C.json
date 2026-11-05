@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an update to the IP Australia's news webpage announcing the tabling of the Annual Report 2025\u201326 and other news items. The IPFR page is about contributor guidelines for blog posts and does not contain specific references to annual reports, financial results, or news items that would be affected by this update. There are no factual inaccuracies or outdated information in the contributor guidelines caused by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2266,
+  "completion_tokens": 115,
+  "total_tokens": 2381,
+  "processing_time_seconds": 1.2032005519999984,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.239053+00:00"
+}

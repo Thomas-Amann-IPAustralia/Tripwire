@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to a technical coding issue affecting the trade mark bulk data product and an update to the Patent Manual of Practice and Procedures, including a procedural note about seeking special leave to appeal to the High Court. The IPFR page 'What is IP infringement?' provides a general introduction to infringement concepts across all IP types but does not include specific procedural details, data product information, or references to the Patent Manual or High Court appeals. Therefore, the changes do not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2926,
+  "completion_tokens": 138,
+  "total_tokens": 3064,
+  "processing_time_seconds": 2.101090875999944,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.713464+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "X04039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document indicates that the external webpage at www.asbfeo.gov.au/disputes-assistance/five-steps-resolve-your-dispute is currently inaccessible due to server errors (connection closed and 403 Forbidden). However, the IPFR page content does not directly cite or rely on specific information from this webpage, nor does it include detailed procedural or statutory information that would be affected by the inaccessibility of this external resource. The IPFR page provides comprehensive guidance on seeking binding, authoritative decisions in trade mark disputes, including court processes, benefits, risks, outcomes, costs, timeframes, and parties involved, none of which are contradicted or rendered inaccurate by the unavailability of the external page. Therefore, no amendment to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3168,
+  "completion_tokens": 192,
+  "total_tokens": 3360,
+  "processing_time_seconds": 2.8584270970000034,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.367748+00:00"
+}

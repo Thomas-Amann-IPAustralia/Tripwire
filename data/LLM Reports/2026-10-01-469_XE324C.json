@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, specifically about application forms, roles of breeders and applicants, and Qualified Person (QP) portal workflows. The IPFR page mentions QPs for PBR and their roles but does not provide detailed procedural or form-related information that would be affected by these updates. The changes do not contradict or invalidate any specific statements on the IPFR page, which focuses on general guidance for choosing IP professionals rather than procedural details of PBR applications.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4774,
+  "completion_tokens": 137,
+  "total_tokens": 4911,
+  "processing_time_seconds": 1.5957346190000408,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938175+00:00"
+}

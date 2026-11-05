@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-26-372",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes consist of updates to the IP Australia news page, adding new articles about design rights and other IP topics, but do not alter any substantive legal requirements, procedures, or factual details relevant to the IPFR page content. The IPFR page provides general guidance on what to check before getting registered IP, including basic requirements and procedural considerations, none of which are contradicted or outdated by the news updates. There are no changes to statutory requirements, timeframes, or procedural steps that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2309,
+  "completion_tokens": 137,
+  "total_tokens": 2446,
+  "processing_time_seconds": 1.867160560000002,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-26T06:24:24.249174+00:00"
+}

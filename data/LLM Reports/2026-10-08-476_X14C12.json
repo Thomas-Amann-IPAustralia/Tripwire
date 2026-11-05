@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X14C12",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor formatting adjustment to the 'Your Guide to Dispute Resolution' webpage, specifically moving the 'Publication date' line. There is no substantive change to the content or guidance on ADR processes. The IPFR page references this guide as an external resource, but since the content of the guide itself has not changed, there is no impact on the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2714,
+  "completion_tokens": 116,
+  "total_tokens": 2830,
+  "processing_time_seconds": 1.4805899120001413,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.486621+00:00"
+}

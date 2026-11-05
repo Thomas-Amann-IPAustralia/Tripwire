@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-03-441",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, specifically about submission processes and portal guidance for PBR applications. The IPFR page XA50BE focuses on design rights enforcement and court proceedings, which is a different IP subject area. There is no direct impact on the content about design infringement court actions, time limits, costs, or procedures described in the IPFR page. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3159,
+  "completion_tokens": 134,
+  "total_tokens": 3293,
+  "processing_time_seconds": 2.0985315529999298,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-03T07:10:24.039871+00:00"
+}

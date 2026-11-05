@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to accessibility fixes, URL updates, and procedural clarifications in the IP Australia design manual and patent manual, as well as the addition of information about Olympic designs forms under the Olympic Insignia Protection Act 1987 on the IP Australia legislation page. None of these changes affect the specific content of the IPFR page about registering design rights, such as application fees, renewal periods, certification process, or grace periods. There are no updates to fees, timeframes, or procedural steps directly impacting the guidance given in the IPFR page. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6176,
+  "completion_tokens": 156,
+  "total_tokens": 6332,
+  "processing_time_seconds": 4.496000575999915,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.500900+00:00"
+}

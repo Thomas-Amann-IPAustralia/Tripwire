@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-01-408",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change in the upstream IP Australia webpage refines the explanation about counterfeit goods and the recommendation to proactively list IP rights with platforms like Amazon Brand Registry. However, the IPFR page content already provides a broad overview of IP protection benefits and enforcement options without specific procedural details about brand registries or platform listings. The change does not contradict or update any specific factual statement or procedural step in the IPFR page, so no amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1762,
+  "completion_tokens": 125,
+  "total_tokens": 1887,
+  "processing_time_seconds": 1.7452100360000031,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-01T05:36:35.813209+00:00"
+}

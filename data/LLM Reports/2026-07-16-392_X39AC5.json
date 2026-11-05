@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the Trade Marks Manual of Practice and Procedure with a new chapter on filing requirements, as well as other unrelated notices. The IPFR page on 'Remove a trade mark from the register' focuses on revocation procedures and does not mention filing requirements or procedural details that would be affected by this update. There is no specific information in the IPFR page that is contradicted or outdated by the change. Therefore, no amendment to the IPFR page is required based on this update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2431,
+  "completion_tokens": 135,
+  "total_tokens": 2566,
+  "processing_time_seconds": 2.403073073000087,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.234061+00:00"
+}

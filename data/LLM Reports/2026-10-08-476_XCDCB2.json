@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to company registration details on ASIC, ACCC public registers, Amazon Brand Registry program updates, and eBay intellectual property listing policies. None of these changes directly affect the specific content of the IPFR page about registering an unregistered trade mark with IP Australia, including fees, processes, benefits, risks, or timelines. The ASIC changes concern company registration, which is a different topic. The ACCC and marketplace policy updates do not alter the trade mark registration process or legal rights as described. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6852,
+  "completion_tokens": 150,
+  "total_tokens": 7002,
+  "processing_time_seconds": 1.6422467690001668,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.484495+00:00"
+}

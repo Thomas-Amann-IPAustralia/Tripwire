@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-17-455",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily relate to amendments and corrections to design registrations, updates to instruments related to fees and filing documents, and new application forms. These are procedural or administrative updates that do not affect the general guidance on using IP that is not yours, as presented in the IPFR page. The patent manual changes are cyclic reviews and minor language changes without substantive changes to legal principles or user-facing guidance. The IPFR page content is general and does not include specific procedural details or statutory references that have been updated. Therefore, no update to the IPFR page is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4822,
+  "completion_tokens": 156,
+  "total_tokens": 4978,
+  "processing_time_seconds": 2.093492420000075,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-17T07:32:08.934794+00:00"
+}

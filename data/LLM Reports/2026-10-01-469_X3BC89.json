@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the Trade Marks Office Manual of Practice and Procedure and the listing of non-legislative instruments related to the Designs Act and other IP legislation. However, the IPFR page content is a high-level overview for small business owners about checking existing IP rights using various registers and does not include specific procedural details, statutory references, or instructions that have been changed. The changes do not affect the accuracy or currency of the general guidance provided on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3299,
+  "completion_tokens": 129,
+  "total_tokens": 3428,
+  "processing_time_seconds": 1.4827555639999446,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.937938+00:00"
+}

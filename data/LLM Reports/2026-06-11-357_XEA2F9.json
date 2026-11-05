@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily update fee tables for WIPO arbitration and domain name dispute resolution details, as well as minor formatting and connectivity notes on unrelated pages. The IPFR page discusses the WIPO Good Offices Program and provides a general overview of WIPO ADR services, including a mention of fees and cost reductions for SMEs and individuals. However, the fee changes in the WIPO arbitration fees page do not directly contradict or specify amounts in the IPFR page, which only refers generally to fees and fee reductions without specific figures. The domain name dispute resolution changes relate to ccTLDs and UDRP policies, which are not covered in the IPFR page. Other changes are unrelated or minor. Therefore, no specific factual update or correction is needed for the IPFR page content based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8521,
+  "completion_tokens": 191,
+  "total_tokens": 8712,
+  "processing_time_seconds": 2.8602408130000185,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.849358+00:00"
+}

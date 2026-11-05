@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve cyclic reviews, minor language edits, link corrections, and updates to policy register entries that do not affect the procedural or substantive content of hearings at IP Australia as described in the IPFR page. There are no changes to hearing procedures, timelines, fees, appeal rights, or decision-making processes that would require updating the IPFR page. The changes to non-legislative instruments and policy register entries do not impact the accuracy of the hearing process content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4244,
+  "completion_tokens": 127,
+  "total_tokens": 4371,
+  "processing_time_seconds": 1.559298058999957,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.488598+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia design manual and the eBay intellectual property policy webpage do not directly affect the specific content of the IPFR page about requesting removal of a trade mark for non-use. The design manual updates relate to design registrations and accessibility fixes, which are unrelated to trade mark removal procedures. The eBay policy changes concern listing practices and trademark use in online sales, which do not impact the procedural or legal details of trade mark removal for non-use as described in the IPFR page. Therefore, no amendments to the IPFR page content are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4279,
+  "completion_tokens": 149,
+  "total_tokens": 4428,
+  "processing_time_seconds": 1.814268052999978,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.874983+00:00"
+}

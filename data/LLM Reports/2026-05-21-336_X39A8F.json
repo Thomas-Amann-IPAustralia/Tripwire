@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates to the IP Australia Trade Marks Manual, closed consultation listings, ACCC public register entries, and WIPO Madrid System news. None of these changes provide new or updated specific information that contradicts or updates the factual content of the IPFR page 'What to check before getting registered IP'. The IPFR page contains general guidance on IP types, registration requirements, timing considerations, and procedural advice, none of which are directly affected by the minor updates, consultation announcements, or register entries in the changes. There are no changes to statutory requirements, fees, timeframes, or procedural steps that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6176,
+  "completion_tokens": 163,
+  "total_tokens": 6339,
+  "processing_time_seconds": 2.320193108000012,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.587146+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to minor and technical amendments to regulations implementing a statute law amendment act, specifically concerning prescribed forms and regulatory procedures. The change does not affect substantive IP rights, definitions, or user-facing guidance about checking ownership of IP such as trade marks, patents, designs, or copyright. The IPFR page content focuses on practical advice for small business owners on how to check existing IP ownership, and this remains accurate and unaffected by the described regulatory amendments.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1941,
+  "completion_tokens": 124,
+  "total_tokens": 2065,
+  "processing_time_seconds": 1.3303412879999996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636825+00:00"
+}

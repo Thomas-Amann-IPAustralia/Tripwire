@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern procedural amendments to Federal Court Rules, updates to IP Australia portals and fees, policy register updates, and unrelated legislative amendments such as secrecy provisions and ACCC consultations. None of these changes directly affect the fundamental definitions, explanations, or descriptions of IP types, rights, or enforcement options as presented in the IPFR page. The IPFR page provides general, foundational information about IP and its protections, which remains accurate and unaffected by these procedural or administrative updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10239,
+  "completion_tokens": 127,
+  "total_tokens": 10366,
+  "processing_time_seconds": 2.024131984000178,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.267119+00:00"
+}

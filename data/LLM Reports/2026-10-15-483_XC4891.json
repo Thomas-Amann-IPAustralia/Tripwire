@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia PBR manual primarily involve updates to procedural guidance, portal workflows, form submissions, and links within the PBR application process. There is no indication of amendments to the substantive legal definitions, infringement criteria, exceptions, or rights under the Plant Breeders\u2019 Rights Act 1994 that would affect the accuracy or currency of the IPFR page content on PBR infringement. The IPFR page focuses on explaining infringement concepts, examples, and legal provisions, none of which are contradicted or updated by the procedural and administrative changes in the upstream source.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4202,
+  "completion_tokens": 148,
+  "total_tokens": 4350,
+  "processing_time_seconds": 1.4859860599999593,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636256+00:00"
+}

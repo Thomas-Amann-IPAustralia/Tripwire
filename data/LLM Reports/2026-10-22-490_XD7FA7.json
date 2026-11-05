@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern consolidation and reorganization of guidance on revocation of acceptance and registration into a new Part 36 in the Trade Marks Manual of Practice and Procedure, along with minor formatting and procedural updates. The IPFR page focuses on the opposition process to challenge a trade mark application within the two-month opposition period, including procedural steps, benefits, risks, outcomes, costs, and timelines. None of the changes indicate any modification to the opposition process, timeframes, fees, or procedural requirements described in the IPFR page. The official notices and manual updates relate to revocation and amendment processes post-registration or acceptance, which are distinct from the opposition process described. Therefore, the IPFR page content remains accurate and current with respect to the opposition process.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11622,
+  "completion_tokens": 183,
+  "total_tokens": 11805,
+  "processing_time_seconds": 3.2409131459999116,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550020+00:00"
+}

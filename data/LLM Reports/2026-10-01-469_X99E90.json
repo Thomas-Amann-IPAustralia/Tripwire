@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes describe Australia's participation in international IP capacity building and cooperation activities, including under FTAs and WIPO programs. The IPFR page focuses on explaining that there is no global IP office and describes WIPO's role as a treaty administrator and facilitator of international IP systems. The new details about Australia's international cooperation and capacity building do not affect the accuracy or currency of the IPFR page's core explanation about the global IP office concept or WIPO's role. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1778,
+  "completion_tokens": 137,
+  "total_tokens": 1915,
+  "processing_time_seconds": 1.7684972090000883,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.938082+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "XEB5B5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to procedural details about filing applications for judicial review and associated affidavits and fee exemptions on the Federal Circuit and Family Court website. These procedural details do not affect the content of the IPFR page about applying for a patent, which focuses on patent application types, costs, benefits, risks, and timelines. There is no direct impact on the patent application process or substantive patent law information presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3103,
+  "completion_tokens": 119,
+  "total_tokens": 3222,
+  "processing_time_seconds": 2.0167386549999264,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.795798+00:00"
+}

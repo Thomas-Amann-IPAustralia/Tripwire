@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "X9D569",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes indicate that the IPTA webpage offering a free 30-minute consultation service is currently unreachable due to technical issues (site timeout). However, the IPFR page content does not provide a direct link or detailed instructions that rely on the IPTA site being accessible. It only references the availability of free consultations through IPTA and suggests contacting them. The outage or inaccessibility of the IPTA website does not invalidate or require changes to the factual content about the availability or nature of the consultation service. There is no update to the service terms, fees, or procedures that would necessitate amending the IPFR page. The IPFR page remains accurate in describing the service and advising users to seek such consultations.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4274,
+  "completion_tokens": 175,
+  "total_tokens": 4449,
+  "processing_time_seconds": 3.0986006560000305,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.015377+00:00"
+}

@@ -1,0 +1,18 @@
+{
+  "run_id": "2026-08-07-414",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page mentions the WIPO Schedule of Fees and notes that fees are charged if parties proceed beyond the Good Offices service to mediation or arbitration. The upstream change to the WIPO Arbitration and Mediation Center fees webpage shows updated fee amounts and structures for registration fees, administration fees, and arbitrator fees. These changes directly affect the accuracy of the IPFR page's statements about costs and fees associated with WIPO ADR services. Therefore, the IPFR page should be updated to reflect the current fee schedule to provide accurate and up-to-date information to users.",
+  "suggested_changes": [
+    "Update the section 'What does it cost?' to reflect the new WIPO Schedule of Fees, including the updated registration fee of $2,000, administration fees ranging up to $4,000 with additional percentage-based fees for disputes over $2.5M and $10M, and the revised arbitrator fee structure with indicative hourly rates and fixed fees as per the latest WIPO fees webpage."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8804,
+  "completion_tokens": 229,
+  "total_tokens": 9033,
+  "processing_time_seconds": 4.074181326000144,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-07T04:35:18.610325+00:00"
+}

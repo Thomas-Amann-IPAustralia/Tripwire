@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-14-329",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IPAustralia patent and design manuals focusing on formatting, accessibility fixes, URL updates, and procedural clarifications that do not directly affect the substantive content of the IPFR page about seeking binding, authoritative decisions in design disputes. The addition of information about Olympic designs and related non-legislative instruments on the IPAustralia legislation page is unrelated to the court proceedings and dispute resolution content of the IPFR page. There are no changes to limitation periods, court procedures, costs, or outcomes that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5884,
+  "completion_tokens": 147,
+  "total_tokens": 6031,
+  "processing_time_seconds": 2.7370522660000915,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-14T06:14:09.500812+00:00"
+}

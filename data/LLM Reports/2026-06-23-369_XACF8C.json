@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-23-369",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage at www.asbfeo.gov.au/five-steps-resolve-your-dispute is currently inaccessible due to server errors (connection closed and 403 Forbidden). However, the IPFR page 'Common scams' does not reference or link to this ASBFEO webpage, nor does it contain any specific information derived from it. The content of the IPFR page focuses on scam warning signs related to IP Australia communications and does not rely on or mention the ASBFEO dispute resolution steps. Therefore, the inaccessibility of the ASBFEO page does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1638,
+  "completion_tokens": 163,
+  "total_tokens": 1801,
+  "processing_time_seconds": 3.8219619760000114,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-23T06:20:06.365661+00:00"
+}

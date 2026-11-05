@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of minor technical amendments to regulations, updates to IP Australia instruments and manuals, policy register updates, and changes to third-party platforms' IP-related policies (Amazon, eBay). None of these changes directly affect the specific content of the IPFR page 'What to check before getting registered IP', which provides general guidance on IP types, basic registration requirements, timing considerations, ownership, and availability checks. There are no updates to statutory requirements, timeframes, fees, or procedural steps that would render the IPFR page content inaccurate or outdated. The changes related to design amendments, policy register statuses, or platform-specific IP enforcement do not impact the general advice given on the IPFR page. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 22128,
+  "completion_tokens": 186,
+  "total_tokens": 22314,
+  "processing_time_seconds": 2.3337756700000227,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.484586+00:00"
+}

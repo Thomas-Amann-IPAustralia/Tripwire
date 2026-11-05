@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-24-400",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news page and an announcement about a new transparency program for patent examination timeframes under the Patent Prosecution Highway. The IPFR page 'Free IP tools you can use' provides a general overview and list of free IP tools without specific details on patent examination timeframes or procedural updates. There is no direct impact on the accuracy or currency of the IPFR page content based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1492,
+  "completion_tokens": 128,
+  "total_tokens": 1620,
+  "processing_time_seconds": 2.059146649000013,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-24T05:29:09.430884+00:00"
+}

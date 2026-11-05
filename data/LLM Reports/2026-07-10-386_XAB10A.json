@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the AFP website (www.afp.gov.au) is currently unreachable due to connection issues (ERR_TIMED_OUT) rather than content changes related to intellectual property or business names. The IPFR page content focuses on explaining differences between legal names, business names, domain names, and trade marks, none of which are affected by the AFP website's connectivity status. There is no indication of any legislative or procedural change impacting the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2647,
+  "completion_tokens": 126,
+  "total_tokens": 2773,
+  "processing_time_seconds": 1.8460765410000022,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.790122+00:00"
+}

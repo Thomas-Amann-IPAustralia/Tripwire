@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-24-462",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and additional testimonials and information about Amazon Brand Registry. These updates do not affect the specific content of the IPFR page, which focuses on educating customers to differentiate genuine products from lookalikes. There are no changes to legal thresholds, statutory references, procedural steps, or specific guidance that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3016,
+  "completion_tokens": 109,
+  "total_tokens": 3125,
+  "processing_time_seconds": 1.2904930580000382,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-24T07:43:32.206007+00:00"
+}

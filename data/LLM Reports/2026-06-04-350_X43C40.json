@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to updates on ACCC exemptions, undertakings, and consultation statuses that are unrelated to international IP infringement considerations or guidance. The IPFR page content focuses on considerations when responding to international IP infringement accusations, including legal and procedural advice, which is not impacted by ACCC administrative updates or exemptions under the Competition and Consumer Act. There are no specific references, dates, or procedural details in the IPFR page that are contradicted or outdated due to these ACCC changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4823,
+  "completion_tokens": 129,
+  "total_tokens": 4952,
+  "processing_time_seconds": 2.022954077000122,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.705998+00:00"
+}

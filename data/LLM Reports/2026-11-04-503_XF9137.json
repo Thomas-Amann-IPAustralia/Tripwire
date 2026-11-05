@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-04-503",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news results shown on the IP Australia news page, increasing from 42 to 43. It does not contain any substantive changes to trade mark monitoring procedures, legal requirements, or guidance that would affect the content of the IPFR page. The IPFR page content remains accurate and current regarding monitoring trade marks and competitor activity.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1902,
+  "completion_tokens": 108,
+  "total_tokens": 2010,
+  "processing_time_seconds": 1.6627584840000509,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-04T08:51:07.739160+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-07-317",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of minor updates such as corrected broken links, accessibility fixes, removal of banner notes, and updates related to other patent manual sections (e.g., excess claims fees, procedural outlines, and specific case references like Otsuka). There is no indication of changes to the patent opposition process itself, its timelines, fees, procedural steps, or outcomes as described in the IPFR page. The changes do not affect the accuracy or currency of the specific information provided about responding to a patent opposition. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8433,
+  "completion_tokens": 148,
+  "total_tokens": 8581,
+  "processing_time_seconds": 3.457177766000086,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-07T05:58:28.708795+00:00"
+}

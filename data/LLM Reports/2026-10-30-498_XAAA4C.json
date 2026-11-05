@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-30-498",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia news webpage, adding two new news items related to trade marks and the Australian IP Report. The IPFR page in question is a contributor guideline document focused on how to write and submit blog posts for IP First Response. It does not contain specific factual information, dates, or procedural details that are affected by the news update. Therefore, the content of the contributor guidelines remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2105,
+  "completion_tokens": 123,
+  "total_tokens": 2228,
+  "processing_time_seconds": 1.4932302280000158,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-30T08:17:16.712581+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XEEFCF",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates formatting and presentation of recall guidelines on a product safety government webpage, but does not alter substantive content related to supply chain monitoring or IP infringement detection. The IPFR page focuses on monitoring supply chains for IP infringement and enforcement, including tools and procedures for detection and response. The updated recall guidelines concern consumer product safety recalls, which is a related but distinct topic. There is no specific information in the IPFR page that conflicts with or requires updating due to this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2150,
+  "completion_tokens": 129,
+  "total_tokens": 2279,
+  "processing_time_seconds": 1.816866346000097,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.712534+00:00"
+}

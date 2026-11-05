@@ -1,0 +1,20 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X7E272",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The IPFR page 'What happens in an IP Australia hearing?' includes references to procedural steps such as filing oppositions, requesting hearings, and paying requisite fees. The upstream changes include updated Federal Court Rules (2026 Measures No. 1) that affect practice and procedure, including livestreaming provisions and harmonisation of appeal filing requirements, which may impact hearing procedures. More importantly, the General Federal Law Fees have been updated with new fee amounts effective from 1 July 2026, including fees for filing applications, setting down hearings, daily hearing fees, and other related fees. Since the IPFR page mentions paying requisite fees for filing oppositions and requesting hearings, these fee updates directly affect the accuracy of the page's content. The other changes to patent and PBR manuals are not directly relevant to the hearing process described in this page. Therefore, the page should be updated to reflect the new fees and any procedural changes in the Federal Court Rules that affect hearings.",
+  "suggested_changes": [
+    "Update all references to fees payable for filing oppositions, requesting hearings, and related procedural steps to reflect the new fee amounts effective from 1 July 2026 as specified in the Federal Court and Federal Circuit and Family Court Amendment (Filing Fees) Regulations 2026.",
+    "Review and update the description of hearing procedures to incorporate any relevant procedural changes from the Federal Court Amendment (2026 Measures No. 1) Rules 2026, such as provisions for livestreaming of proceedings and harmonised appeal filing requirements.",
+    "Update the effective date for fees and procedural rules to indicate that the current fees and procedures are effective from 1 July 2026."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 16023,
+  "completion_tokens": 364,
+  "total_tokens": 16387,
+  "processing_time_seconds": 6.6421116330002405,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.263668+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the ACCC public registers, including court enforceable undertakings and exemptions under the Competition and Consumer Act 2010. These changes concern competition law enforcement and consumer data sharing obligations, which are unrelated to the IP infringement concepts, trade mark registration, or enforcement guidance provided in the IPFR page. There is no indication that the changes affect any specific IPFR content such as trade mark registration criteria, infringement definitions, or enforcement procedures. Therefore, the IPFR page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3293,
+  "completion_tokens": 140,
+  "total_tokens": 3433,
+  "processing_time_seconds": 2.2528010979999635,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.271542+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-12-480",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes indicate that the Australian Copyright Council's legal advice webpage is currently unreachable due to connection timeouts, but there is no change to the substantive content or legal information about IP infringement. The IPFR page content remains accurate and unaffected by this temporary unavailability of the external source. There is no update to legal definitions, timeframes, or procedural details that would require amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3321,
+  "completion_tokens": 113,
+  "total_tokens": 3434,
+  "processing_time_seconds": 1.294327449000093,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-12T08:58:47.017618+00:00"
+}

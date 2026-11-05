@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the description of the WIPO Intergovernmental Committee on Intellectual Property and Genetic Resources, Traditional Knowledge and Traditional Cultural Expressions (IGC) and Australia's participation in international cooperation and agreements. These updates provide additional detail about WIPO's negotiation forums and Australia's engagement with Indigenous peoples in IP discussions. However, the IPFR page focuses on explaining that there is no global IP office and outlines WIPO's role as an administrator of international treaties and systems for IP protection. The changes do not affect the accuracy or currency of the IPFR page's core content about WIPO's role or the existence of national IP offices. There are no changes to key facts, definitions, or procedural information presented in the IPFR page that would require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1858,
+  "completion_tokens": 182,
+  "total_tokens": 2040,
+  "processing_time_seconds": 1.8324135080001724,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.487985+00:00"
+}

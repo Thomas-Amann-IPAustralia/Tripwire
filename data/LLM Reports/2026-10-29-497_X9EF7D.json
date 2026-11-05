@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an announcement about IP Australia's Annual Report 2025\u201326 being tabled in Parliament, outlining performance, achievements, and financial results. This is a general update about IP Australia's activities and does not affect the specific content of the IPFR page, which focuses on explaining the structure and basics of Australian IP law, legislation, and agencies. There are no changes to legislation, procedures, or legal principles described in the IPFR page that would require updating based on this news item.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2488,
+  "completion_tokens": 132,
+  "total_tokens": 2620,
+  "processing_time_seconds": 1.5993115119999857,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.240025+00:00"
+}

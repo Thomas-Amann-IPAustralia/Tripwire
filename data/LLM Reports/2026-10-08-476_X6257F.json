@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X6257F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the ACCC public registers webpage, specifically concerning court enforceable undertakings and exemptions under the Competition and Consumer Act 2010. These changes pertain to competition law and consumer protection matters, not trade mark infringement or the Trade Marks Act 1995. The IPFR page focuses on trade mark infringement under Australian trade mark law, including definitions, examples, and legal thresholds. There is no indication that the ACCC register changes affect the accuracy or currency of the trade mark infringement content. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4465,
+  "completion_tokens": 149,
+  "total_tokens": 4614,
+  "processing_time_seconds": 1.74247576200014,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.488953+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-09-477",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate primarily to updates on the WIPO Arbitration and Mediation Center webpage, including the launch of the WIPO Wallet payment option, minor formatting and contact detail adjustments, and fee payment methods. The IPFR page content focuses on explaining that there is no global IP office and describes WIPO's role in international IP cooperation and treaty administration. None of the changes affect the factual accuracy or currency of the IPFR page's core explanations about WIPO's role, the existence of national IP offices, or the international IP systems (PCT, Madrid, Hague). The changes do not alter any legal thresholds, procedural steps, or definitions presented in the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6882,
+  "completion_tokens": 179,
+  "total_tokens": 7061,
+  "processing_time_seconds": 2.4629834560000745,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-09T08:43:19.314876+00:00"
+}

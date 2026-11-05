@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-11-357",
+  "ipfr_page_id": "X0C0F8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a fee schedule update for the Federal Circuit and Family Court of Australia, detailing various fees for filings, hearings, subpoenas, and other court services. The IPFR page discusses the procedural options for disagreeing with IP Australia's examination decisions, including appeals to the Federal Court and Federal Circuit and Family Court, but does not mention any specific fees, fee amounts, or cost-related information. Since the IPFR page content does not include fee details or guidance on payment amounts, the fee changes do not affect the accuracy or currency of the page's information.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2899,
+  "completion_tokens": 146,
+  "total_tokens": 3045,
+  "processing_time_seconds": 3.1391732980000597,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-11T07:18:46.851565+00:00"
+}

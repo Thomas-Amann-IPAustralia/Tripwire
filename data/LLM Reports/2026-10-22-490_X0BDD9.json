@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X0BDD9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes update the DFAT webpage content to emphasize Australia's international IP engagement and the importance of IP in trade and economic competitiveness, including updated rankings and descriptions of the TRIPS Agreement. However, these changes do not affect the specific content of the IPFR page, which focuses on explaining the absence of a worldwide IP right and the main international systems for seeking IP protection overseas. There are no changes to the international systems described (PCT, Madrid, Hague), no updates to timeframes, member countries, or procedural details that would require amending the IPFR page. The changes are more about Australia's policy stance and international cooperation rather than practical guidance on protecting ideas internationally.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3502,
+  "completion_tokens": 167,
+  "total_tokens": 3669,
+  "processing_time_seconds": 1.7073226919999342,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.550702+00:00"
+}

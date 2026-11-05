@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO Madrid System webpage clarify territorial coverage details for certain countries and territories (e.g., China excluding Hong Kong and Macao, Denmark including Greenland and Faroe Islands, France including various overseas territories, and the UK including certain territories until a specified date). The IPFR page 'Does my Australian IP work overseas?' provides general guidance about Australian IP protection being limited to Australia and mentions international filing systems without detailing specific territorial coverage or exceptions. Since the IPFR page does not specify territorial nuances of the Madrid System or list countries and territories covered, these changes do not affect the accuracy or currency of the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1997,
+  "completion_tokens": 160,
+  "total_tokens": 2157,
+  "processing_time_seconds": 2.1866673070003344,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.269003+00:00"
+}

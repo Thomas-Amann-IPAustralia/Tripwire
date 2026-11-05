@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IP Australia's Trade Marks Manual of Practice and Procedure consolidating revocation and amendment guidance into a new Part 36, and some minor formatting and procedural updates. There are no changes to the fundamental costs, timeframes, or basic procedural steps for registering a trade mark in Australia as described in the IPFR page. The ACCC register changes are unrelated to trade mark registration processes. Therefore, the IPFR page content about registering a trade mark, including costs, benefits, risks, and procedures, remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6392,
+  "completion_tokens": 146,
+  "total_tokens": 6538,
+  "processing_time_seconds": 2.026174654999977,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551291+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are cyclic reviews and minor link fixes in the patent manual, primarily concerning patent specifications, claims, and prior art definitions. They do not mention any amendments or updates related to registered designs, third-party examination procedures, fees, timeframes, or certification processes. The IPFR page content about third-party examination of registered designs remains accurate and unaffected by these patent manual updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3526,
+  "completion_tokens": 108,
+  "total_tokens": 3634,
+  "processing_time_seconds": 1.6108536330000334,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.238823+00:00"
+}

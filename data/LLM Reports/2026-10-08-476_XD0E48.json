@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of updates to ACCC public registers, consultation announcements, and detailed updates to Amazon Brand Registry and eBay intellectual property policy pages. While these changes relate broadly to online marketplaces and IP enforcement, none of the changes provide new or revised procedural steps, legal thresholds, or specific guidance that contradict or update the existing IPFR page content on notifying online marketplaces of infringement. The IPFR page content remains accurate and current in describing the general process, benefits, risks, and outcomes of notifying online marketplaces about IP infringement. The added details about Amazon's New Seller Success program and eBay's listing guidelines do not require changes to the IPFR page, which is focused on the general approach rather than platform-specific programs or policies. Therefore, no amendment to the IPFR page is necessary based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 14102,
+  "completion_tokens": 197,
+  "total_tokens": 14299,
+  "processing_time_seconds": 2.228651608000064,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.486708+00:00"
+}

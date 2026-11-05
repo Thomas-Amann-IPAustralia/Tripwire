@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a detailed expansion of the commercialisation options for IP, including independent commercialisation, licensing, franchising, and assignment. However, the IPFR page in question focuses on the risks of using IP that is not yours and the need for permission or licences to avoid infringement. The change does not contradict or update any specific factual claims or procedural details in the IPFR page. It provides additional guidance on commercialisation strategies rather than altering the fundamental advice about using IP lawfully or the consequences of unauthorized use. Therefore, the IPFR page remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2549,
+  "completion_tokens": 155,
+  "total_tokens": 2704,
+  "processing_time_seconds": 1.6936759349999875,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009606+00:00"
+}

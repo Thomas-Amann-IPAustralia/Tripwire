@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of new news items about reforms and updates to IP Australia priorities and a detailed expansion on commercialisation methods from the 'how to commercialise my IP' page. The IPFR page 'What is IP and how does it protect me?' provides a general overview of IP types and their protective roles without specific procedural, financial, or legislative details that have changed. None of the changes directly contradict or update any specific factual statements or thresholds in the IPFR page. The commercialisation details, while informative, are not currently covered in the IPFR page and thus do not require amendment to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6980,
+  "completion_tokens": 157,
+  "total_tokens": 7137,
+  "processing_time_seconds": 2.3489961569999878,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.007665+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily concern updates to Federal Court procedural rules, amendments to the patent manual relating to examination and prior art guidance, updates to Plant Breeder's Rights manuals, and fee increases effective from 1 July 2026 for Federal Court filings and hearings. The IPFR page on responding to a patent opposition provides general guidance on the opposition process, costs, timelines, and participants but does not specify exact Federal Court fees or detailed procedural rules for appeals or hearings in the Federal Court. The fees mentioned on the IPFR page relate to IP Australia opposition hearing fees ($2000 per day for oral hearing and $1200 for written submissions), which are administrative fees distinct from Federal Court fees. The Federal Court fee changes do not directly affect the IP Australia opposition process fees or timelines described. Similarly, the patent manual updates do not alter the opposition process steps or costs described on the IPFR page. Therefore, no specific factual corrections or updates to the IPFR page content are required based on these external changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12766,
+  "completion_tokens": 233,
+  "total_tokens": 12999,
+  "processing_time_seconds": 4.948444889000257,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.264248+00:00"
+}

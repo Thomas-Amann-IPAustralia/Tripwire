@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-30-406",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to updates in Amazon's Brand Registry process, specifically increasing the deposit amount for patent evaluation from $4,000 to $5,000 and expanding the scope of reportable issues. However, the IPFR page content focuses on reporting IP infringement and related public interest risks in the Australian context, referencing Australian authorities and procedures. There is no mention of Amazon's Brand Registry or related procedures in the IPFR page, nor any specific dollar amounts or procedural details that are contradicted or outdated by the change. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2486,
+  "completion_tokens": 155,
+  "total_tokens": 2641,
+  "processing_time_seconds": 2.2497396040000694,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-30T05:25:12.156568+00:00"
+}

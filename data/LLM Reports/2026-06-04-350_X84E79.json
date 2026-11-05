@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to the ACCC consultation hub webpage, specifically about closed consultations on consumer goods safety standards and water market regulations. There is no mention or indication of changes to the Australian Border Force Notice of Objection scheme, trade mark or copyright enforcement procedures, or any related legal or procedural details that would affect the IPFR page content. The relevance scores are low to moderate and the subject matter does not overlap with the Notice of Objection content. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2902,
+  "completion_tokens": 135,
+  "total_tokens": 3037,
+  "processing_time_seconds": 1.9071553890003088,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.709094+00:00"
+}

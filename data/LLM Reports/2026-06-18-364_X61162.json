@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "X61162",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to detailed procedures and features of Amazon Brand Registry, including patent dispute resolution and reporting mechanisms. The IPFR page focuses on general advice about consistent trade mark use to build recognition and protection, without mentioning Amazon Brand Registry or specific online brand protection tools. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2831,
+  "completion_tokens": 104,
+  "total_tokens": 2935,
+  "processing_time_seconds": 1.9541231200000766,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.712452+00:00"
+}

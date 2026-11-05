@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-30-468",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage clarify and slightly reformat the description of Amazon Brand Registry and the advice about listing IP rights proactively. The IPFR page already accurately describes the need to enrol IP rights with platforms like Amazon Brand Registry, including the requirement for registered or pending trade marks and that IP Australia does not participate in enrolment or verification. The changes do not introduce new eligibility criteria, procedural steps, or costs that would require updating the IPFR page. The additional details about anti-counterfeit measures and Australian Border Force notices are not covered in the IPFR page and do not conflict with its content. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3580,
+  "completion_tokens": 165,
+  "total_tokens": 3745,
+  "processing_time_seconds": 2.4404421950000597,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-30T08:16:04.354847+00:00"
+}

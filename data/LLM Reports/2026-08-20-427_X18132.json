@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the PBR manual concerning acceptance or rejection of PBR applications and other procedural or portal-related details. The IPFR page focuses on seeking binding, authoritative decisions in PBR disputes, particularly court proceedings, enforcement, and litigation aspects. There is no indication that the changes affect the accuracy or currency of the IPFR page's content about legal proceedings, court processes, or enforcement outcomes. The changes do not address court procedures, costs, outcomes, or legal advice sections that the IPFR page covers.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3046,
+  "completion_tokens": 139,
+  "total_tokens": 3185,
+  "processing_time_seconds": 2.266855276999877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.228908+00:00"
+}

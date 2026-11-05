@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-09-477",
+  "ipfr_page_id": "XC8F8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the WIPO Arbitration fees webpage, including minor wording changes and payment method details (e.g., replacing 'Current Account at WIPO' with 'WIPO Wallet'). The IPFR page mentions WIPO Arbitration and Mediation Center as a lower-cost dispute resolution path but does not specify fee amounts, payment methods, or detailed procedural costs. Therefore, the changes do not affect the accuracy or currency of the IPFR page content, which remains a high-level overview for small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2521,
+  "completion_tokens": 133,
+  "total_tokens": 2654,
+  "processing_time_seconds": 1.9460926800001062,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-09T08:43:19.315267+00:00"
+}

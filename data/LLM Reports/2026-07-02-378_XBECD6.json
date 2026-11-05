@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-02-378",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the IPAustralia patent manual and plant breeder's rights manual, including clarifications on prior art definitions, procedural details, and portal system updates. However, the IPFR page content on 'Prevent a patent under examination from being granted' focuses on the practical process and guidance for lodging a section 27 notice to raise prior art concerns during patent examination. The changes do not specify any amendments to the timeframes, procedural steps, or substantive requirements for section 27 notices that would render the IPFR page content inaccurate or outdated. The IPFR page's descriptions of timing, eligibility, process, and outcomes remain consistent with the current official guidance. Therefore, no specific update to the IPFR page is required based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3925,
+  "completion_tokens": 188,
+  "total_tokens": 4113,
+  "processing_time_seconds": 2.7735288479998417,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-02T06:37:14.270332+00:00"
+}

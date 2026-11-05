@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X25229",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an announcement about IP Australia's Annual Report 2025\u201326 being tabled in Parliament, along with some other news items such as treaty recommendations and reports on IP resilience. None of these changes provide updated or corrected information about joint ownership of IP, the legal implications, or practical guidance on sharing IP rights. The IPFR page focuses on the risks and practical issues of joint IP ownership, with detailed explanations and examples, none of which are contradicted or updated by the new Annual Report announcement. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3592,
+  "completion_tokens": 147,
+  "total_tokens": 3739,
+  "processing_time_seconds": 1.521056857999838,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.239463+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily consist of cyclic reviews, minor language changes, corrections of broken links, and alignment of conflict of interest policies. There are no substantive amendments to the opposition process timelines, fees, procedural steps, or legal grounds that would affect the accuracy or currency of the IPFR page content. The changes do not update any specific statutory references, fees, or procedural timeframes mentioned in the IPFR page. Therefore, the IPFR page remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5777,
+  "completion_tokens": 136,
+  "total_tokens": 5913,
+  "processing_time_seconds": 1.554375876999984,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.487697+00:00"
+}

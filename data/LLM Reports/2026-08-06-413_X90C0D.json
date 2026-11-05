@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-06-413",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern amendments to the Australian Securities and Investments Commission Act 2001 related to financial reporting reform, and multiple updates and corrections to IP Australia official notices and design manual content. These changes include corrections to design registrations, updates to manuals of practice and procedure, fee changes, and accessibility fixes in the design manual. However, the IPFR page 'What does IP protection mean for my business?' provides general introductory information about IP protection for small businesses without referencing specific procedural details, statutory provisions, or fees that have changed. None of the changes directly affect the accuracy or currency of the general explanations or advice given on the IPFR page. Therefore, no amendments to the IPFR page are required based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7981,
+  "completion_tokens": 180,
+  "total_tokens": 8161,
+  "processing_time_seconds": 2.9630173569998988,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-06T05:44:12.793541+00:00"
+}

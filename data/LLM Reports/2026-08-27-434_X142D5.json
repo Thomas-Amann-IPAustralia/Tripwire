@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-27-434",
+  "ipfr_page_id": "X142D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the Australian Competition and Consumer Commission's public registers, including decisions on acquisitions, price notifications, and enforceable undertakings under the Competition and Consumer Act. These updates do not pertain to the Australian Copyright Council, copyright law, or the services described on the IPFR page. There is no impact on the accuracy or currency of the information about ACC's copyright-related services or guidance provided on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2267,
+  "completion_tokens": 122,
+  "total_tokens": 2389,
+  "processing_time_seconds": 1.9185650150000129,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-27T12:51:23.910345+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-08-476",
+  "ipfr_page_id": "XA0A31",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change to the external source 'Your Guide to Dispute Resolution' is a minor formatting update that does not alter any substantive content about dispute resolution processes. The IPFR page content about ASBFEO's dispute resolution services remains accurate and unaffected by this change. There is no new or updated information that requires amending the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1963,
+  "completion_tokens": 101,
+  "total_tokens": 2064,
+  "processing_time_seconds": 1.2520492529997682,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-08T09:01:21.489757+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-04-350",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to oversight of intelligence and security legislation, updates to consultation statuses on the ACCC website, and minor formatting changes on the WIPO about page. None of these changes affect the accuracy or currency of the IPFR page content about considerations before enforcing IP overseas. The IPFR page focuses on practical guidance for IP rights holders regarding enforcement overseas, international treaties, and professional advice, none of which are impacted by the legislative or webpage updates provided.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3379,
+  "completion_tokens": 123,
+  "total_tokens": 3502,
+  "processing_time_seconds": 1.8032799509996948,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-04T07:17:58.708909+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-05-21-336",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates on official notices about trade marks and ACCC exemptions regarding data sharing obligations under the Competition and Consumer Act. None of these changes affect the core content of the IPFR page, which explains the difference between business names, company names, and registered trade marks in terms of intellectual property rights. There is no update to the definitions, rights, or legal effects of business names, company names, or trade marks that would require amending the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2459,
+  "completion_tokens": 130,
+  "total_tokens": 2589,
+  "processing_time_seconds": 2.2563854709999305,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-05-21T06:38:49.586179+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-29-497",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates and consolidations in the Trade Marks Manual of Practice and Procedure, including the creation of a new Part 36 on revocation and amendment procedures, and minor formatting and typographical corrections. These changes do not affect the fundamental content of the IPFR page on registering a trade mark, which focuses on explaining the benefits, risks, costs, and process basics for small business owners. There are no changes to fees, timeframes, or procedural steps described in the IPFR page. The design manual changes are unrelated to trade marks and do not impact this page. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6274,
+  "completion_tokens": 164,
+  "total_tokens": 6438,
+  "processing_time_seconds": 3.6364196990000437,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-29T08:23:02.238356+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-16-392",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to customs regulations (Change 1), updates to manuals for patents, designs, plant breeder's rights, and closed consultations at IP Australia. None of these changes specifically address or alter the procedures, fees, timelines, or substantive legal requirements for third-party examination of registered designs as described in the IPFR page. The customs amendment about airport definitions is unrelated to design rights. The manual updates and consultations do not indicate any amendments to the third-party examination process, fees, or certification criteria. Therefore, the IPFR page content remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6199,
+  "completion_tokens": 154,
+  "total_tokens": 6353,
+  "processing_time_seconds": 2.742796016000284,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-16T05:49:04.233238+00:00"
+}

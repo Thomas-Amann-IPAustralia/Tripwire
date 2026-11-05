@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "XF9137",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the Australian Competition and Consumer Commission (ACCC) public registers, specifically about exemptions and undertakings under the Competition and Consumer Act 2010. The IPFR page concerns monitoring the trade mark register and market for competitor activity, focusing on trade mark monitoring tools, benefits, risks, and procedures. There is no direct mention or reliance on ACCC exemptions, competition law details, or consumer data sharing obligations in the IPFR page content. Therefore, the change does not affect the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2278,
+  "completion_tokens": 144,
+  "total_tokens": 2422,
+  "processing_time_seconds": 1.8442826430000423,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551795+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "X129C6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes add information about anti-counterfeit measures such as QR codes, RFID, holograms, and covert features to the IP Australia webpage. However, the IPFR page already covers the process of enrolling IP rights with online platforms and the benefits and risks of such programs. The new content about anti-counterfeit measures is additional advice that does not contradict or invalidate any specific statements in the IPFR page. There are no specific procedural, legal, or eligibility changes to the online platform enrolment process described in the IPFR page that would require updating based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2936,
+  "completion_tokens": 147,
+  "total_tokens": 3083,
+  "processing_time_seconds": 1.544730432999927,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.007944+00:00"
+}

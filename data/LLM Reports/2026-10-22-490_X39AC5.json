@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-22-490",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes indicate a consolidation of guidance on revocation of acceptance and revocation of registration into a single chapter in the Trade Marks Manual of Practice and Procedure, and a related official notice. However, the IPFR page content already accurately describes the revocation of registration process, its circumstances, benefits, risks, and procedural outcomes. There is no specific new statutory reference, procedural timeframe, or legal threshold in the changes that contradicts or updates the IPFR page's current information. The changes appear to be structural and editorial consolidations rather than substantive changes that would affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3814,
+  "completion_tokens": 157,
+  "total_tokens": 3971,
+  "processing_time_seconds": 1.5774984489999042,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-22T07:32:41.551243+00:00"
+}

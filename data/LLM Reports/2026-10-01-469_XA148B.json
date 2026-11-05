@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-01-469",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates and minor revisions in the patent, trade mark, design, and plant breeder's rights manuals, including procedural and formatting updates, amendments to examination practices for plants, and updates to non-legislative instruments. None of the changes specifically address the opposition process for trade marks, the timelines, fees, procedural steps, or outcomes described in the IPFR page. The IPFR page content about responding to a trade mark opposition remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8095,
+  "completion_tokens": 133,
+  "total_tokens": 8228,
+  "processing_time_seconds": 1.8035123110000768,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-01T08:40:43.935998+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-13-420",
+  "ipfr_page_id": "X4B5C8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor formatting adjustment to the WIPO IP audit webpage, specifically reformatting a bulleted list about IP assets and related documentation. This change does not alter any substantive information or introduce new content that would affect the accuracy or currency of the IPFR page 'Obtain advice to help manage your IP'. The IPFR page does not contain specific references or detailed procedural steps related to IP audits that would require updating based on this minor formatting change. Therefore, no amendment to the IPFR page is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3095,
+  "completion_tokens": 138,
+  "total_tokens": 3233,
+  "processing_time_seconds": 1.9119651490000251,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-13T04:40:43.878065+00:00"
+}

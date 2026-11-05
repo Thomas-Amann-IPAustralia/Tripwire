@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-20-427",
+  "ipfr_page_id": "X893F7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) Manual, specifically about acceptance or rejection of PBR applications and other procedural updates within the PBR context. The IPFR page X893F7 focuses on patent litigation and court proceedings in Australia, including the Federal Court and patent infringement and validity challenges. There is no direct mention or discussion of Plant Breeder's Rights or PBR application procedures in the IPFR page content. Therefore, the changes to the PBR Manual do not affect the accuracy or currency of the IPFR page content about patent litigation and court processes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3095,
+  "completion_tokens": 154,
+  "total_tokens": 3249,
+  "processing_time_seconds": 2.3915425909999612,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-20T03:14:24.229384+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document describes minor and technical amendments to regulations across various Commonwealth Acts to implement a statute law amendment related to prescribed forms. These amendments are described as minor, consequential, and not affecting the substance of the law. The IPFR page content is a general overview comparing IP Australia with other government agencies, focusing on their roles and how they help small businesses. It does not include specific procedural details, statutory references, or form requirements that would be impacted by these technical regulatory amendments. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2217,
+  "completion_tokens": 146,
+  "total_tokens": 2363,
+  "processing_time_seconds": 1.5542937979998896,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636901+00:00"
+}

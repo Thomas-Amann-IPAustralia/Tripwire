@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-08-04-411",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the number of news items displayed on the IP Australia news webpage and mentions a new transparency program related to patent examination timeframes. There is no mention of any changes to trade mark opposition procedures, fees, timeframes, or legal requirements that would affect the content of the IPFR page on challenging trade mark registrations. The IPFR page content remains accurate and current based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2261,
+  "completion_tokens": 118,
+  "total_tokens": 2379,
+  "processing_time_seconds": 2.440718189999984,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-08-04T05:23:48.912791+00:00"
+}

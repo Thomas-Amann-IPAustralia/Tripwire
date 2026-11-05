@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-08-354",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the 'how to prevent infringement of my IP' page on IP Australia, focusing on market monitoring and the use of brand registries to detect counterfeit goods. The IPFR page 'What to do if someone infringes your IP' covers steps to take after discovering infringement, including gathering information, considering options, and seeking advice. The changes do not affect any specific factual statements, procedures, or legal thresholds in the IPFR page. They are more about proactive prevention rather than response after infringement. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2646,
+  "completion_tokens": 148,
+  "total_tokens": 2794,
+  "processing_time_seconds": 4.018516886000043,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-08T06:57:10.610786+00:00"
+}

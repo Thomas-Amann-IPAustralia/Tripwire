@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-10-15-483",
+  "ipfr_page_id": "XAB10A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a webpage update to the IPAustralia design manual, specifically sections related to applicant names and design ownership. The IPFR page focuses on explaining the differences between legal names, business names, domain names, and trade marks for Australian businesses, aimed at small business owners. The change document does not indicate any amendments to the definitions, legal effects, or procedural steps related to business names or trade marks that would affect the accuracy or currency of the IPFR content. The IPFR page does not discuss design registrations or applicant name details in the context of design law, so the update to the design manual is not relevant to the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3084,
+  "completion_tokens": 165,
+  "total_tokens": 3249,
+  "processing_time_seconds": 1.897922521000055,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-10-15T07:18:45.636757+00:00"
+}

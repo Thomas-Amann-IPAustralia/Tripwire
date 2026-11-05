@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-10-448",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IP Australia Trade Marks Office Manual of Practice and Procedure concerning examination of trade marks related to plants and prohibited signs, and updates to ACCC public registers about acquisitions and exemptions. None of these changes affect the specific content of the IPFR page 'Register your unregistered trade mark', which focuses on the basics of trade mark registration, benefits, risks, costs, and procedures for small business owners. There are no updates to fees, timeframes, legal references, or procedural steps mentioned in the IPFR page that would require amendment based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4786,
+  "completion_tokens": 151,
+  "total_tokens": 4937,
+  "processing_time_seconds": 2.665376070999855,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-10T07:28:22.552542+00:00"
+}

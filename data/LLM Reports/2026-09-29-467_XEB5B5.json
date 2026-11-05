@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-09-29-467",
+  "ipfr_page_id": "XEB5B5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to a webpage about how to commercialise IP, describing different commercialisation methods such as independent launch, licensing, franchising, and assignment. While the topic is related to patents and IP, the IPFR page focuses specifically on applying for a patent to protect an invention, including the application process, costs, benefits, risks, and timelines. The upstream change does not alter any specific factual information about patent application procedures, fees, timeframes, or legal requirements presented in the IPFR page. Therefore, the IPFR page content remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3332,
+  "completion_tokens": 156,
+  "total_tokens": 3488,
+  "processing_time_seconds": 1.599934765999933,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-09-29T08:06:57.009958+00:00"
+}

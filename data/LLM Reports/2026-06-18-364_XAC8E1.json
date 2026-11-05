@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-06-18-364",
+  "ipfr_page_id": "XAC8E1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in ACCC public registers, amendments to the ASEAN-Australia-New Zealand Free Trade Agreement (AANZFTA), and eBay's intellectual property policy. None of these changes specifically affect the content of the IPFR page 'Is my business name my IP?', which focuses on explaining the differences between business names, company names, and registered trade marks in Australia. There are no updates to the definitions, legal rights, or procedural details regarding business name registration, company registration, or trade mark registration that would require changes to the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6383,
+  "completion_tokens": 148,
+  "total_tokens": 6531,
+  "processing_time_seconds": 6.074579741999969,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-06-18T07:29:50.710012+00:00"
+}

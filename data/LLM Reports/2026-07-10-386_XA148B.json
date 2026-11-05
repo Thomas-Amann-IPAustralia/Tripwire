@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-07-10-386",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document relates to a technical issue with the Australian Federal Police website (www.afp.gov.au) being unreachable or timing out. This is unrelated to the content of the IPFR page about responding to trade mark oppositions. There is no change to legislation, procedures, timeframes, fees, or any substantive IP content that would affect the accuracy or currency of the IPFR page. The relevance scores are low or marginal, and the change is purely about website availability, not IP law or processes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2227,
+  "completion_tokens": 134,
+  "total_tokens": 2361,
+  "processing_time_seconds": 3.9182556440000553,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-07-10T06:21:45.789088+00:00"
+}
