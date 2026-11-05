@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of updates to official notices about specific design registrations being surrendered or amended, and general updates to the patent manual and closed consultations. None of these changes affect the specific content of the IPFR page regarding the process, benefits, risks, costs, timeframes, or legal implications of requesting certification of a registered design. The IPFR page does not mention specific design registration numbers or surrender procedures, nor does it include detailed patent manual procedures or consultation outcomes. The fee mentioned ($500 effective 1 October 2024) remains consistent and is not contradicted or updated by the changes. Therefore, the IPFR page content remains accurate and does not require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9222,
+  "completion_tokens": 173,
+  "total_tokens": 9395,
+  "processing_time_seconds": 1.6627432279999539,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.722099+00:00"
+}

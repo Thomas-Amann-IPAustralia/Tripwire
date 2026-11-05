@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of updates to official notices about design registrations (surrenders and amendments), updates to the Patent Manual reflecting procedural changes, closed consultations on various IP topics, and new features and explanations about Amazon Brand Registry's brand protection programs. None of these changes affect the fundamental explanations or factual content about what IP protection means for a business as presented in the IPFR page. The IPFR page provides general guidance and does not include specific procedural details, dates, or fee information that have changed. The Amazon Brand Registry updates describe new services and automated protections but do not contradict or require modification of the IPFR page's general description of IP protection. Therefore, no amendments to the IPFR page are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11117,
+  "completion_tokens": 180,
+  "total_tokens": 11297,
+  "processing_time_seconds": 2.2026670810000724,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.721151+00:00"
+}

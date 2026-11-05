@@ -20,6 +20,16 @@ Vice President of Ecommerce
 Fay Breedlove
 Co-Founder
 Join our growing list of enrolled brands
+New Seller Success
+Get one-to-one support from Amazon—at no cost
+The New Seller Success program pairs select brands with a dedicated Amazon account representative for up to 12 months in our store. Brands get strategic guidance, plus hands-on launch support and account setup—for $0 added cost.
+What's included
+Listing optimization
+Brand Registry and storefront launch
+A+ Content and Brand Story setup
+Sponsored Products and Sponsored Brands kickstart
+Fulfillment by Amazon (FBA) enrollment and inbound shipment guidance
+*This program is invitation only.
 Enroll your brand with Amazon
 To enroll your brand in Amazon Brand Registry and start unlocking exclusive benefits, you need to meet two basic requirements:
 Brand name and logo: Have a logo that includes your brand name permanently affixed to your products or packaging.
@@ -80,6 +90,12 @@ Counterfeit Crimes Unit
 Work with law enforcement and our global team to stop bad actors and hold them accountable.
 Brand Protection Report
 Read about our latest innovations in helping prevent counterfeit products from reaching customers.
+Automated protections
+Amazon Brand Registry uses the information you provide about your brand to find and remove suspected bad listings before they reach customers. Here's how it works: 
+- A suspected counterfeit listing appears. A product listing appears that uses your registered trademark on a product not made by your brand.
+- Automated protections catch it. Brand Registry's predictive protections monitor for counterfeits and IP violations and removes the suspected listings before a transaction takes place.
+- Report brand violations. Sellers can also report IP infringement, store policy violations, and regulatory compliance concerns through Report a Violation’s guided workflow.
+The more information you provide about your brand and its intellectual property, the more we can help protect it. Accurate submissions strengthen automated protections over time.
 Did you know?
 We can help with patent disputes
 After enrolling in Brand Registry, you can access a faster and less expensive way to handle patent disputes. We use neutral third-party evaluators to determine whether a utility patent has been infringed. The decision will be enforced in our US store.
@@ -128,6 +144,17 @@ The current Administrator has left the company or is no longer associated with t
 If there are no active Administrators for the brand, there are two ways to request access to the brand:
 Option 1: If you have at least one other brand that is already enrolled in Brand Registry and you can access the Brand Registry portal, you can submit your request via Brand Registry Support. Select Update brand ownership as the topic. Your request will be reviewed, and you'll receive a response accordingly.
 Option 2: You can attempt to apply for Brand Registry with the same trademark number as a currently enrolled brand. Once you enter the already registered trademark number, a warning will appear, offering a link to a form for sharing your contact information. Select the link to access the Share Contact Information form. At the bottom of the form, there’s a link available only for eligible users, leading to an Appeal Submission form. If your appeal succeeds, you'll be added to the brand with the Administrator and Rights Owner roles.
+How do sellers use brand protection programs to stop counterfeit listings?
+Most brand protection programs start with enrollment. You register your trademark and the program begins scanning for listings that might misuse it. From there, automated systems will monitor and remove counterfeit listings and you can report suspected violations through guided workflows, like Amazon’s Report a Violation tool.
+What should I evaluate to know whether an online store's brand protection is effective?
+Before you enroll, look at these key areas:
+- Automated protection: Does the program detect counterfeits on its own, or do you have to find every issue yourself? Amazon Brand Registry uses the data you provide and machine learning to proactively find and remove suspected counterfeit or inaccurate listings.
+- Reporting violations: Look for programs with guided reporting workflows that help you submit accurate reports and get faster results. The Report a Violation tool provides a step-by-step process for submitting suspected IP infringement.
+- What’s included: Check which protection tools are included in enrollment and which require an additional investment. Brand Registry includes Report a Violation and self-service counterfeit removal through Project Zero at no cost.
+What criteria should a private label seller use to judge whether brand protection tools are strong enough?
+Private label sellers rely on their brand identity to stand out. Look for programs that offer proactive scanning, not just reactive reporting. Check whether you can remove counterfeit listings yourself or if you have to wait for the program to act. Also review how the program handles repeat offenders. Amazon Brand Registry automatically detects violations, allows you to self-report issues through Report a Violation, and offers self-service counterfeit removal through Project Zero for brands that meet eligibility requirements.
+How do sellers protect a brand from counterfeiters on large online stores?
+Start by enrolling your trademark in a brand protection program. Once enrolled, use reporting tools to flag suspected counterfeits and let automated systems scan for issues across the catalog. For stronger protection, consider product serialization that assigns unique codes to each unit so counterfeits can't be listed or shipped. Amazon offers these protections through Brand Registry, Project Zero, and Transparency.
 Launch your brand with Amazon
 Enroll your brand in Amazon Brand Registry to start unlocking a suite of brand-building tools and protection benefits.
 1Amazon internal data 

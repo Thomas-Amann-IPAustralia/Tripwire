@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the Patent Manual and Trade Marks Manual of Practice and Procedure, including procedural consolidations and editorial updates, as well as updates to classification and search practices in patents. None of the changes specifically address or alter the procedural steps, timelines, fees, or decision-making processes described in the IPFR page about IP Australia hearings. The IPFR page content remains accurate and current for its intended audience of small business owners seeking basic understanding of IP Australia hearings. There is no direct indication that the hearing process, fees, or appeal pathways have changed as per the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10186,
+  "completion_tokens": 152,
+  "total_tokens": 10338,
+  "processing_time_seconds": 2.8366396290000466,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.719801+00:00"
+}

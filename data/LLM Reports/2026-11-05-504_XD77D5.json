@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual concerning internal examination practices, specifically the introduction of a proportionate three-person team practice and related procedural edits. The IPFR page focuses on guidance for SMEs receiving AI-generated IP infringement allegations, emphasizing practical advice on how to respond and verify claims, particularly regarding registration numbers and evidence. There is no specific information in the IPFR page about patent examination procedures or search team practices that would be affected by the upstream changes. Therefore, the IPFR page content remains accurate and does not require amendment based on the provided upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4323,
+  "completion_tokens": 149,
+  "total_tokens": 4472,
+  "processing_time_seconds": 1.704374334000022,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.726512+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the ACCC consultation hub relate to safety standards and consumer protection consultations that do not impact the content of the IPFR page about educating customers to differentiate genuine products from lookalikes. The Amazon Brand Registry update adds detailed information about new seller support programs, automated protections, and brand protection tools on Amazon's platform. While these updates relate to brand protection and counterfeit prevention, the IPFR page content is general and does not mention specific online marketplaces or their programs. Therefore, the page remains accurate and does not require changes based on these updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3368,
+  "completion_tokens": 143,
+  "total_tokens": 3511,
+  "processing_time_seconds": 1.3811884980000286,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.726206+00:00"
+}

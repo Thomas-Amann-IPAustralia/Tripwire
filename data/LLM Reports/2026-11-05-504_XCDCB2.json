@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates in the IP Australia Trade Marks Manual of Practice and Procedure, including consolidation of revocation and amendment procedures, minor formatting and typographical corrections, and updates to examination of trade marks relating to plants. These changes are procedural and technical in nature and do not affect the basic information about trade mark registration fees, benefits, risks, or processes as presented in the IPFR page. The changes to Amazon Brand Registry describe new seller support programs and enhanced automated protections for brand owners on Amazon, which are related to brand protection but do not impact the Australian trade mark registration process or the content of the IPFR page. The IPFR page focuses on Australian trade mark registration basics, costs, and enforcement options, and does not cover detailed procedural manual updates or third-party brand registry programs. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8005,
+  "completion_tokens": 210,
+  "total_tokens": 8215,
+  "processing_time_seconds": 1.8751113460000397,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.722893+00:00"
+}

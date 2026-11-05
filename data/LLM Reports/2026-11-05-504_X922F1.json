@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified relate primarily to updates in the IP Australia Patent Manual and Trade Marks Manual, including procedural clarifications, reorganization of manual parts, and updates to examination practices. None of the changes specifically address or alter the opposition process timelines, fees, procedural steps, or outcomes as described in the IPFR page on challenging a new or amended patent. The IPFR page content remains accurate regarding the 3-month opposition window, fees, hearing procedures, and possible outcomes. The changes to trademark manuals and ACCC exemptions are unrelated to patent oppositions. Therefore, no update to the IPFR page content is required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10959,
+  "completion_tokens": 161,
+  "total_tokens": 11120,
+  "processing_time_seconds": 1.8582216200002222,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.720116+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns administrative updates about the surrender and amendment of specific design registrations under the Designs Act 2003, as published on the IP Australia official notices page. The IPFR page 'What is IP infringement?' provides a general overview of IP infringement concepts, including design rights, but does not mention specific design registrations, dates, or procedural details about surrender or amendments. Therefore, these administrative updates do not affect the accuracy or currency of the general explanatory content on the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3291,
+  "completion_tokens": 130,
+  "total_tokens": 3421,
+  "processing_time_seconds": 1.40002470599984,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.725042+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the ACCC public registers and consultation hub pages, including exemptions granted and new consultations on product safety standards. These updates do not affect the specific guidance or factual content on the IPFR page about reporting IP infringement risks to public interest, nor do they change any legal thresholds, procedures, or contact information provided. The IPFR page content remains accurate and current regarding enforcement and reporting options.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3284,
+  "completion_tokens": 115,
+  "total_tokens": 3399,
+  "processing_time_seconds": 1.2353731559999233,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.725944+00:00"
+}

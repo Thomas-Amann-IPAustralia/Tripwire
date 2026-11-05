@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO about page only update the workforce year from 2025 to 2026. This is a minor update that does not affect any substantive content related to the WIPO Clause Generator, dispute resolution processes, or the guidance provided on the IPFR page. There are no changes to procedures, fees, or legal information that would require updating the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2450,
+  "completion_tokens": 110,
+  "total_tokens": 2560,
+  "processing_time_seconds": 1.130689717999985,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.725406+00:00"
+}

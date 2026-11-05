@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the IP Australia Patent Manual reflecting procedural adjustments (such as the new proportionate three-person team practice) and summaries of closed consultations on various IP topics. The IPFR page in question provides general guidance on when to seek legal advice for IP issues, focusing on the roles of IP lawyers and attorneys and general advice for small businesses. There are no specific references to patent examination procedures, fee structures, or legislative amendments that would directly affect the accuracy or currency of the guidance on when to engage legal professionals. Therefore, the page content remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4101,
+  "completion_tokens": 156,
+  "total_tokens": 4257,
+  "processing_time_seconds": 1.5059194719999596,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.724376+00:00"
+}

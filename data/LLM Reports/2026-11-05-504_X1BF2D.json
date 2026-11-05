@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change to the WIPO webpage updates a minor detail from 'WIPO Workforce 2025' to 'WIPO Workforce 2026'. This is a general organizational update and does not affect any specific content, legal references, procedures, or advice given in the IPFR page about mediation in IP disputes. The IPFR page does not mention WIPO workforce plans or dates, so no content is impacted.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2630,
+  "completion_tokens": 115,
+  "total_tokens": 2745,
+  "processing_time_seconds": 1.1015438350000295,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.727189+00:00"
+}

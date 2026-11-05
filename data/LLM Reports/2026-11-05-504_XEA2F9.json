@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "XEA2F9",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates a minor detail on the WIPO 'about' webpage, changing 'WIPO Workforce 2025' to 'WIPO Workforce 2026'. This is a minor update to a workforce planning term and does not affect any substantive content related to the WIPO Good Offices Program or the ADR services described in the IPFR page. The IPFR page does not mention workforce plans or dates related to WIPO's internal staffing, so no update to the IPFR content is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2122,
+  "completion_tokens": 133,
+  "total_tokens": 2255,
+  "processing_time_seconds": 1.323975204999897,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.727051+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X142D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the Australian Competition and Consumer Commission (ACCC) public registers, specifically about exemptions granted under the Competition and Consumer Act 2010 and other regulatory matters. The IPFR page content focuses on the Australian Copyright Council (ACC) and its services related to copyright law and creative industries. There is no mention of the ACCC, competition law, or exemptions under the Competition and Consumer Act in the IPFR page content. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2091,
+  "completion_tokens": 141,
+  "total_tokens": 2232,
+  "processing_time_seconds": 1.373366686999816,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.728032+00:00"
+}

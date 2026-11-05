@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X8A3EE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates on Amazon Brand Registry's webpage, including new seller support programs, automated protections against counterfeit listings, and guidance on brand protection tools. However, the IPFR page 'Pause use of contested IP until resolution' focuses on general advice for businesses on how to respond to IP infringement claims by ceasing use of contested IP. It does not mention or rely on specific brand registry programs, automated detection tools, or online marketplace protections. Therefore, while the topics are related to IP enforcement, the new Amazon Brand Registry details do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3384,
+  "completion_tokens": 154,
+  "total_tokens": 3538,
+  "processing_time_seconds": 1.4179738589998578,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.725130+00:00"
+}

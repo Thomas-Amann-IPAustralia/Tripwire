@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X24592",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the patent manual concerning search procedures, classification, and examination practices, specifically the introduction of a proportionate three-person team practice. The IPFR page in question deals with how to make a complaint about a lawyer or attorney, focusing on complaint processes and regulatory bodies. There is no overlap in content or specific details that would affect the accuracy or currency of the complaint guidance provided. Therefore, no changes to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2576,
+  "completion_tokens": 126,
+  "total_tokens": 2702,
+  "processing_time_seconds": 1.3340075399999023,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.727444+00:00"
+}

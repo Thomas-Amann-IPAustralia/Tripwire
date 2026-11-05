@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document primarily lists closed consultations and updates related to IP Australia manuals, fee reviews, and policy consultations, including reforms and treaty discussions. However, there is no specific amendment or update to the fundamental description of IP laws, legislation, or the roles of agencies as presented in the IPFR page. The IPFR page content is a general overview of IP law structure, legislation, and agencies, which remains accurate and unaffected by these consultation summaries. No specific dates, fees, procedural steps, or statutory references in the IPFR page are contradicted or rendered outdated by the changes noted.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3581,
+  "completion_tokens": 151,
+  "total_tokens": 3732,
+  "processing_time_seconds": 1.521252653000147,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.724473+00:00"
+}

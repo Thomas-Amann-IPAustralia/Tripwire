@@ -1,0 +1,21 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trade Marks Manual of Practice and Procedure consolidate the previously separate chapters on revocation of acceptance and revocation of registration into a new Part 36. This structural change in the official manual indicates that the IPFR page content referencing revocation procedures, their process, and related details may be outdated or incomplete. The IPFR page currently discusses revocation of registration and acceptance as separate concepts and procedures, but the manual now consolidates these, which could affect the accuracy and clarity of the IPFR guidance. Given the high significance of the manual update and the high cross-encoder relevance scores, it is appropriate to update the IPFR page to reflect the new consolidated Part 36 and ensure that the procedural descriptions, references, and advice align with the current official manual.",
+  "suggested_changes": [
+    "Update the IPFR page to reflect the consolidation of revocation of acceptance and revocation of registration into the new Part 36 of the Trade Marks Manual of Practice and Procedure.",
+    "Revise procedural descriptions to align with the new consolidated chapter, ensuring clarity on how revocation of acceptance and registration are handled together.",
+    "Update references and links to the Trade Marks Manual to point to the new Part 36 rather than separate chapters on revocation of acceptance and revocation of registration.",
+    "Review and adjust any statements about the process, timelines, and outcomes of revocation to ensure they are consistent with the updated manual guidance."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5717,
+  "completion_tokens": 318,
+  "total_tokens": 6035,
+  "processing_time_seconds": 2.4916447360001257,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.722434+00:00"
+}

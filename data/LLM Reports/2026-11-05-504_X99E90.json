@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to updates in the WIPO Madrid Protocol regulations effective November 1, 2025, and a minor update from 'WIPO Workforce 2025' to 'WIPO Workforce 2026' on the about WIPO page. These changes do not affect the factual content or explanations on the IPFR page about the global IP office, WIPO's role, or the description of the Madrid System. There are no changes to the core descriptions, processes, or legal frameworks that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1951,
+  "completion_tokens": 141,
+  "total_tokens": 2092,
+  "processing_time_seconds": 1.2762035870000545,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.725266+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the IPAustralia patent manual concerning procedural practices such as the 'proportionate three-person team practice' and corrections to links and references within the patent manual. The IPFR page 'Obtain legal advice on an accusation of infringement' focuses on guiding users about seeking legal advice for IP infringement, including the roles of IP lawyers and attorneys, costs, and practical advice. There are no specific references to patent examination procedures, search practices, or patent manual procedural details in the IPFR page that would be affected by these upstream changes. Therefore, the changes do not impact the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4775,
+  "completion_tokens": 164,
+  "total_tokens": 4939,
+  "processing_time_seconds": 1.5323802230000183,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.726937+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes mainly involve updates to official notices about design registration surrenders, amendments to IP Australia manuals (patent and design), and closed consultations on various IP topics including patents, designs, and trademarks. None of these changes provide new or updated information that directly contradicts or updates the specific guidance given in the IPFR page about what to check before getting registered IP. The IPFR page provides general, foundational advice for small business owners on IP types, basic requirements, timing considerations, ownership, and checks to perform before registration. The upstream changes do not alter these fundamental points or introduce new statutory requirements, thresholds, or procedural steps that would require updating the IPFR content. Therefore, no amendment to the IPFR page is necessary at this time.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7376,
+  "completion_tokens": 183,
+  "total_tokens": 7559,
+  "processing_time_seconds": 1.8253175859999828,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.721299+00:00"
+}

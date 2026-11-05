@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns the surrender of specific design registrations and corrections to entries in the Designs Register. These are administrative updates about particular design registrations and do not affect the general explanations, definitions, or legal principles about design infringement presented in the IPFR page. The IPFR page content remains accurate and current as it focuses on the legal framework and general guidance rather than specific registrations or procedural updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3133,
+  "completion_tokens": 110,
+  "total_tokens": 3243,
+  "processing_time_seconds": 1.0212062410000726,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.724644+00:00"
+}

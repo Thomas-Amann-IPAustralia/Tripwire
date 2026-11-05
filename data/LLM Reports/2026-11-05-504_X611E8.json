@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the Patent Manual of Practice and Procedure reflecting new internal practices such as the 'proportionate three-person team' for patent examination, and updates to the Trade Marks Manual consolidating revocation and amendment procedures. None of these changes specifically address or alter the patent opposition process, timelines, fees, or procedural steps described in the IPFR page. The IPFR page content about responding to a patent opposition remains accurate and current based on the provided upstream changes. The ACCC public register updates and closed consultations do not impact the patent opposition process content. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9438,
+  "completion_tokens": 160,
+  "total_tokens": 9598,
+  "processing_time_seconds": 1.5277423800000633,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.720635+00:00"
+}

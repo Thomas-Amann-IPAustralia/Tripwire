@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to specific design rights registrations being surrendered or amended, which is a procedural update on the IP Australia official notices page. The IPFR page 'Infringement 101' provides general educational content about infringement concepts and trade marks, without referencing specific design registrations or procedural details about design rights. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3118,
+  "completion_tokens": 113,
+  "total_tokens": 3231,
+  "processing_time_seconds": 1.3991778619999877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.724752+00:00"
+}

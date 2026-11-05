@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-05-504",
+  "ipfr_page_id": "X9D569",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the IPAustralia patent manual, specifically about the new proportionate three-person team practice and some corrections to links and minor edits. The IPFR page 'Obtain legal advice on enforcement options' is a general guidance page about engaging legal professionals for IP enforcement and does not contain specific procedural details about patent examination or search practices. There is no direct impact on the accuracy or currency of the IPFR page content from these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3960,
+  "completion_tokens": 126,
+  "total_tokens": 4086,
+  "processing_time_seconds": 1.3704206780000732,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-05T09:29:18.727756+00:00"
+}
