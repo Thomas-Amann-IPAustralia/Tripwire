@@ -38,6 +38,22 @@ jobs:
           ref: ${{ inputs.source_ref }}
           fetch-depth: 1
 
+      # ipfr.sqlite is stored in Cloudflare R2, not git, so it always comes
+      # from the current canonical copy rather than from source_ref.
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Pull database from R2
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: |
+          pip install "boto3>=1.35" "pyyaml>=6.0"
+          python -m src.r2_storage pull
+
       - name: Prepare release assets
         shell: bash
         run: |
@@ -46,7 +62,7 @@ jobs:
           mkdir -p release-assets
 
           if [ ! -f "data/ipfr_corpus/ipfr.sqlite" ]; then
-            echo "ERROR: data/ipfr_corpus/ipfr.sqlite not found at source_ref '${{ inputs.source_ref }}'" >&2
+            echo "ERROR: data/ipfr_corpus/ipfr.sqlite was not pulled from R2" >&2
             exit 1
           fi
 

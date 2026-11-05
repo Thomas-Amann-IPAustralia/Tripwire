@@ -28,9 +28,11 @@ on:
         required: false
         default: ""
 
-# Only one pipeline run at a time — prevents concurrent writes to ipfr.sqlite.
+# One group for every job that writes ipfr.sqlite (pipeline, ingestion,
+# backfill, recovery) so they never overlap. The R2 push also refuses to
+# overwrite a database that changed since it was pulled.
 concurrency:
-  group: tripwire-pipeline
+  group: tripwire-db
   cancel-in-progress: false
 
 jobs:
@@ -94,6 +96,19 @@ jobs:
           PY
 
       # ------------------------------------------------------------------
+      # The database lives in Cloudflare R2, not git (it outgrew GitHub's
+      # 100 MB file limit). Fails the run if it cannot be fetched, so the
+      # job never runs against a stale or missing database.
+      # ------------------------------------------------------------------
+      - name: Pull database from R2
+        id: pull_db
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage pull
+
+      # ------------------------------------------------------------------
       # 3. Cache Hugging Face model weights (lazy-load means we pay once).
       #    Both models are cached together since the bi-encoder is a subset
       #    of what the cross-encoder run requires.
@@ -143,18 +158,33 @@ jobs:
             $FREQ_ARG
 
       # ------------------------------------------------------------------
-      # 6. Commit updated snapshots back to the repository (Section 7.2).
-      #    The pipeline's _git_commit_snapshots() handles this, but we also
-      #    add a workflow-level safety net here.
+      # 6a. Save the database back to R2. Runs even if the pipeline failed
+      #     part-way (rows already written are worth keeping) but never if the
+      #     pull failed. A failure here fails the job: it is never ignored.
+      # ------------------------------------------------------------------
+      - name: Push database to R2
+        if: always() && steps.pull_db.outcome == 'success'
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage push --label "pipeline-${{ github.run_id }}"
+
+      # ------------------------------------------------------------------
+      # 6b. Commit updated snapshots back to the repository (Section 7.2).
+      #     The pipeline's _git_commit_snapshots() handles this, but we also
+      #     add a workflow-level safety net here. The database is NOT
+      #     committed; it is in R2 (step 6a).
       # ------------------------------------------------------------------
       - name: Commit updated snapshots and LLM reports (safety net)
         if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/influencer_sources/snapshots/ data/ipfr_corpus/ipfr.sqlite "data/LLM Reports/" || true
-          git diff --cached --quiet || git commit -m "chore: update snapshots, database and LLM reports [run ${{ github.run_id }}] [skip ci]"
-          git push origin ${{ github.ref_name }} || true
+          git add data/influencer_sources/snapshots/ "data/LLM Reports/" || true
+          git diff --cached --quiet || git commit -m "chore: update snapshots and LLM reports [run ${{ github.run_id }}] [skip ci]"
+          git pull --rebase --autostash origin ${{ github.ref_name }}
+          git push origin ${{ github.ref_name }}
 
       # ------------------------------------------------------------------
       # 7. Publish data assets as a GitHub Release so the Render dashboard

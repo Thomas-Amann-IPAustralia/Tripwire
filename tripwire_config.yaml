@@ -99,8 +99,20 @@ storage:
   git_persistence:
     enabled: true
     commit_snapshots: true            # commit data/influencer_sources/snapshots/ after each run
-    commit_database: true             # commit data/ipfr_corpus/ipfr.sqlite after each ingestion run
     commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+  # ipfr.sqlite is stored in Cloudflare R2, not git (it outgrew GitHub's 100 MB
+  # file limit). Workflows run `python -m src.r2_storage pull` before and
+  # `push` after any job that writes to it. Credentials come from the
+  # R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY secrets.
+  r2:
+    enabled: true
+    bucket: "tripwire"
+    jurisdiction: "eu"                # bucket was created in the EU jurisdiction ("" for default)
+    database_key: "ipfr_corpus/ipfr.sqlite"
+    backup_prefix: "backups/ipfr_corpus/"      # dated copy after every push
+    conflict_prefix: "conflicts/ipfr_corpus/"  # where a refused (stale) push is parked
+    backup_retention_days: 90
+    backup_min_keep: 14               # never prune below this many backups
 
 # --- Notifications ---
 notifications:

@@ -10,6 +10,7 @@ All nine phases are complete and the full pipeline runs end-to-end.
 
 - **9 stages**, not 5. See Section 2 of the plan.
 - **SQLite** (`ipfr.sqlite`) replaces the flat JSON embeddings file. Schema is in Section 9.
+- **The database lives in Cloudflare R2, not git.** It outgrew GitHub's 100 MB file limit. Workflows `pull` it before and `push` it after every job that writes it (`src/r2_storage.py`, `storage.r2` in config, `docs/runbook-r2-storage.md`). Never re-add `ipfr.sqlite` to git, and never mask a failed push with `|| true`.
 - **`tripwire_config.yaml`** is the single configuration file (Section 7). No env vars for config.
 - **`source_registry.csv`** replaces `sources.json`.
 - **Separate IPFR ingestion pipeline** (`ingestion/`) populates the SQLite corpus; runs daily at 01:00 UTC before the main pipeline.
@@ -41,6 +42,8 @@ src/
   health.py                  — Health alerting
   observability.py           — Weekly score distribution report
   backfill_scores.py         — Historical Stage 5–6 score replay / calibration backfill
+  r2_storage.py              — Pull/push ipfr.sqlite to Cloudflare R2 (ETag locking, backups)
+  recover_db.py              — Merge run history from other ipfr.sqlite copies (releases, conflicts)
 ingestion/
   ingest.py                  — Ingestion orchestrator (Phases 0–6)
   db.py                      — SQLite schema and I/O helpers
@@ -51,7 +54,7 @@ ingestion/
   graph.py                   — Quasi-graph edge construction (Phase 6)
 data/
   ipfr_corpus/
-    ipfr.sqlite              — SQLite database (8 tables; see schema below)
+    ipfr.sqlite              — SQLite database (see schema below); stored in R2, git-ignored
     sitemap.csv              — IPFR page registry (populated by ingestion)
     snapshots/               — Per-page IPFR content snapshots
   influencer_sources/
@@ -95,6 +98,13 @@ python -m src.backfill_scores --since 2026-05-07
 # Feedback ingestion (poll Gmail)
 python -m src.feedback_ingestion
 
+# Fetch / save the database (needs the R2_* environment variables)
+python -m src.r2_storage pull
+python -m src.r2_storage push --label my-change
+
+# Merge run history from another copy of the database
+python -m src.recover_db --into data/ipfr_corpus/ipfr.sqlite --from other.sqlite
+
 # Run all tests
 pytest tests/ -v
 ```
@@ -112,6 +122,9 @@ They are **not** in `tripwire_config.yaml`.
 | `FEEDBACK_EMAIL` | Reply-To address embedded in notification mailto links | `tripwire.yml` |
 | `FEEDBACK_GMAIL_USER` | Gmail address for reading feedback replies | `feedback_ingestion.yml` |
 | `FEEDBACK_GMAIL_APP_PASSWORD` | Gmail App Password for reading feedback replies | `feedback_ingestion.yml` |
+| `R2_ACCOUNT_ID` | Cloudflare account ID for the R2 bucket holding `ipfr.sqlite` | all workflows that read or write the database |
+| `R2_ACCESS_KEY_ID` | R2 API token access key (Object Read and Write on `tripwire`) | as above |
+| `R2_SECRET_ACCESS_KEY` | R2 API token secret | as above |
 | `SCRAPER_PROXY_URL` | Optional residential proxy for gov.au sources that block GHA IPs. Format: `http://user:pass@host:port`. Leave unset to disable proxy fallback. | `tripwire.yml` |
 
 ## Testing
@@ -131,9 +144,10 @@ Test files follow the pattern `tests/test_<module>.py`.
 | `ipfr_ingestion.yml` | Daily cron 01:00 UTC + `workflow_dispatch` (`force_all` flag) | 60 min | Refresh IPFR corpus in SQLite |
 | `tripwire.yml` | Daily cron 02:00 UTC + `workflow_dispatch` | 30 min | Full pipeline run (Stages 1–9) |
 | `feedback_ingestion.yml` | Every 6 hours + `workflow_dispatch` | 10 min | Poll Gmail for feedback replies |
-| `backfill_scores.yml` | `workflow_dispatch` only | 60 min | Replay historical changes to backfill Stage 5–6 scores (`score_backfill`). Shares the `tripwire-pipeline` concurrency group; don't run during the ingestion window. |
+| `backfill_scores.yml` | `workflow_dispatch` only | 60 min | Replay historical changes to backfill Stage 5–6 scores (`score_backfill`). |
+| `recover_db.yml` | `workflow_dispatch` only | 120 min | Merge run history from the `data-*` GitHub Release database copies into the R2 database (re-runnable; dry run by default). |
 
-All three workflows commit updated state back to the repository after running (snapshots, SQLite, `sitemap.csv`, `feedback.jsonl`). Each uses a concurrency group to prevent parallel writes to SQLite.
+Jobs that write `ipfr.sqlite` pull it from R2 first and push it back afterwards; a failed pull or push fails the job. They share the `tripwire-db` concurrency group. Text state (snapshots, `sitemap.csv`, LLM reports, `feedback.jsonl`) is still committed to the repository.
 
 The ingestion workflow runs at 01:00 UTC so the corpus is up to date before the main pipeline starts at 02:00 UTC.
 

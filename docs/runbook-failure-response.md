@@ -151,13 +151,15 @@ The pipeline is configured with `timeout-minutes: 30` in `.github/workflows/trip
 
 2. Enable WAL mode if not already set (`storage.sqlite_wal_mode: true` in config). WAL mode reduces lock contention significantly.
 
-3. If the database is corrupted, restore from the most recent Git commit:
+3. If the local copy is corrupted, pull a fresh one from R2:
 
    ```bash
-   git checkout HEAD -- data/ipfr_corpus/ipfr.sqlite
+   python -m src.r2_storage pull
    ```
 
-   The database is committed after every ingestion run, so at most one run's data will be lost.
+   If the copy in R2 itself is corrupted, restore one of the dated backups that are saved after every push. See `docs/runbook-r2-storage.md`. At most one run's data will be lost.
+
+4. If a workflow fails at **Pull database from R2** or **Push database to R2**, see `docs/runbook-r2-storage.md` (missing secrets, refused pushes and restores).
 
 ---
 

@@ -226,6 +226,19 @@ def _validate_storage(s: dict) -> None:
         raise ConfigError("storage.content_versions_retained must be a positive integer.")
     if not isinstance(s["sqlite_wal_mode"], bool):
         raise ConfigError("storage.sqlite_wal_mode must be a boolean.")
+    r2 = s.get("r2")
+    if r2 is not None:
+        if not isinstance(r2, dict):
+            raise ConfigError("storage.r2 must be a mapping.")
+        if not isinstance(r2.get("enabled", False), bool):
+            raise ConfigError("storage.r2.enabled must be a boolean.")
+        if r2.get("enabled") and not (isinstance(r2.get("bucket"), str) and r2["bucket"]):
+            raise ConfigError("storage.r2.bucket must be set when storage.r2.enabled is true.")
+        if r2.get("jurisdiction", "") not in ("", "eu", "fedramp"):
+            raise ConfigError("storage.r2.jurisdiction must be '', 'eu' or 'fedramp'.")
+        for key in ("backup_retention_days", "backup_min_keep"):
+            if key in r2 and (not isinstance(r2[key], int) or r2[key] < 1):
+                raise ConfigError(f"storage.r2.{key} must be a positive integer.")
 
 
 def _validate_notifications(n: dict) -> None:
