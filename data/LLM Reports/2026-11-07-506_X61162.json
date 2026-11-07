@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-07-506",
+  "ipfr_page_id": "X61162",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to minor textual edits in a product safety recall guidelines webpage, specifically about communications packages and recall guidelines. The IPFR page focuses on trade mark use and branding consistency, with no mention or discussion of product recalls or related communications. The change does not affect any specific information, legal references, or procedural guidance in the IPFR page content. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2000,
+  "completion_tokens": 116,
+  "total_tokens": 2116,
+  "processing_time_seconds": 1.5229863959999648,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-07T08:33:32.719614+00:00"
+}

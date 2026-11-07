@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-07-506",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the product recall guidelines webpage are minor wording adjustments that do not affect the content or accuracy of the IPFR page about 'What is IP and how does it protect me?'. The IPFR page focuses on explaining intellectual property rights and their protections, while the changes relate to product safety recall communications, which is a different subject area. There is no direct impact on the IP definitions, rights, or enforcement information presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1975,
+  "completion_tokens": 124,
+  "total_tokens": 2099,
+  "processing_time_seconds": 2.237837146000061,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-07T08:33:32.719403+00:00"
+}

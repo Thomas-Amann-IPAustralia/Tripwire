@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-07-506",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external product safety recall guidelines webpage are minor textual clarifications and formatting adjustments without any substantive updates to recall procedures, legal requirements, or IP-related enforcement guidance. The IPFR page focuses on customer education to differentiate genuine products from lookalikes and does not discuss product recalls or safety recall processes. Therefore, these upstream changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2751,
+  "completion_tokens": 114,
+  "total_tokens": 2865,
+  "processing_time_seconds": 1.1153583149999804,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-07T08:33:32.719492+00:00"
+}

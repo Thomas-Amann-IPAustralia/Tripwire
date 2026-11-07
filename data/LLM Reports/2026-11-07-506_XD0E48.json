@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-07-506",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the external source relate to minor wording adjustments in a product recall guidelines page, which is indirectly related to product safety and recalls but not directly relevant to the IPFR page content about notifying online marketplaces of IP infringement. There is no update to any IP enforcement procedures, timelines, legal references, or platform-specific complaint mechanisms that would affect the accuracy or currency of the IPFR page. The relevance scores are low to moderate and the changes are editorial rather than substantive.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3059,
+  "completion_tokens": 127,
+  "total_tokens": 3186,
+  "processing_time_seconds": 2.5637232730000505,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-07T08:33:32.719343+00:00"
+}

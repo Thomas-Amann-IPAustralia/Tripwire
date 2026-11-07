@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-07-506",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor textual correction on a product safety recall guidelines page, involving formatting and wording of communications packages and recall guidelines. There is no substantive change to the content or procedures related to IP infringement, enforcement, or reporting counterfeit goods or IP crime. The IPFR page focuses on reporting IP infringement and related serious issues, including counterfeit goods and consumer harm, but does not discuss product recall procedures or communications packages. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1972,
+  "completion_tokens": 135,
+  "total_tokens": 2107,
+  "processing_time_seconds": 1.5104598059999716,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-07T08:33:32.719532+00:00"
+}

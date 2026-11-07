@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-07-506",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor textual correction in the formatting of the 'Communications package' description on the product safety recall guidelines webpage. It does not alter any substantive content, legal requirements, procedures, or factual information related to IP enforcement, counterfeit goods, or the Notice of Objection scheme discussed in the IPFR page. Therefore, the IPFR page content about Toyota's approach to counterfeit products and its use of the ABF Notice of Objection scheme remains accurate and unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2428,
+  "completion_tokens": 129,
+  "total_tokens": 2557,
+  "processing_time_seconds": 2.573992000999965,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-07T08:33:32.719137+00:00"
+}

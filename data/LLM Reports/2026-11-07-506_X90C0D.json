@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-07-506",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the external source relate only to minor textual formatting corrections in a product recall guidelines webpage, which is indirectly related to the IPFR page topic. The IPFR page content focuses on explaining IP protection basics for businesses and does not discuss product recalls or safety guidelines. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2303,
+  "completion_tokens": 105,
+  "total_tokens": 2408,
+  "processing_time_seconds": 1.9997265000000652,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-07T08:33:32.719453+00:00"
+}
