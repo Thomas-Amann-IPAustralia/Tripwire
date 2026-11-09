@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-09-508",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to announcements about the Regulatory Reform Omnibus Act 2026 and the recommendation for Australia to ratify the GRATK Treaty, as reported in IP Australia's news updates. These changes are high-level news items about reforms and treaty ratification processes but do not provide any specific details or amendments to the design rights examination, enforcement, or search procedures described in the IPFR page. The IPFR page content focuses on practical guidance for checking designs against existing registered designs, including search tools, risks, benefits, and procedural advice, none of which are contradicted or updated by the news items. Therefore, no specific content in the IPFR page is rendered inaccurate or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2659,
+  "completion_tokens": 171,
+  "total_tokens": 2830,
+  "processing_time_seconds": 2.0782437970000274,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-09T09:22:49.254390+00:00"
+}

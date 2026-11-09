@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-09-508",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news updates about the Australian IP system, including the recommendation for Australia to ratify the GRATK Treaty and the passage of the Regulatory Reform Omnibus Act 2026. However, the IPFR page content provides general introductory information about IP and its types without specific references to these treaties, legislative acts, or detailed procedural or legal changes. There is no specific date, legal threshold, or procedural detail in the IPFR page that is contradicted or outdated by these news items. Therefore, while the topics are related, the IPFR page remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2615,
+  "completion_tokens": 156,
+  "total_tokens": 2771,
+  "processing_time_seconds": 2.1095903359999966,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-09T09:22:49.253924+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-09-508",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news updates about the tabling of the Annual Report 2025-26, a parliamentary committee recommending Australia ratify the GRATK Treaty, and the Regulatory Reform Omnibus Act 2026 receiving Royal Assent. However, these changes do not provide any specific amendments to the basic requirements, procedures, timeframes, or other detailed guidance currently described in the IPFR page. The IPFR page content remains accurate and up to date for small business owners seeking general guidance on what to check before getting registered IP. There are no specific dates, fees, or procedural steps in the IPFR page that are contradicted or outdated by these news items.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2894,
+  "completion_tokens": 166,
+  "total_tokens": 3060,
+  "processing_time_seconds": 2.092017470000087,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-09T09:22:49.254199+00:00"
+}

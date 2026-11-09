@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-09-508",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to news updates on the IP Australia website about the Regulatory Reform Omnibus Act 2026 receiving Royal Assent and a parliamentary committee recommending Australia ratify the GRATK Treaty. The IPFR page 'Free IP tools you can use' provides an overview of free IP tools and does not mention these legislative reforms, treaty ratifications, or any specific dates or procedural details that would be affected by these changes. Therefore, the accuracy and currency of the IPFR page content are not impacted by these updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3158,
+  "completion_tokens": 136,
+  "total_tokens": 3294,
+  "processing_time_seconds": 2.884204554000007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-09T09:22:49.253692+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-09-508",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a news update about the tabling of IP Australia's Annual Report 2025-26 and a parliamentary committee recommending Australia ratify the GRATK Treaty, as well as the Royal Assent of the Regulatory Reform Omnibus Act 2026. However, the IPFR page content is a general overview of Australian IP laws, their sources, and how they work, aimed at helping users familiarise themselves with IP law basics. The change does not provide any specific amendments to the legislation, procedures, or definitions described in the IPFR page. There are no specific dates, fees, or procedural steps in the IPFR page that are contradicted or outdated by this news. Therefore, no update to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2588,
+  "completion_tokens": 187,
+  "total_tokens": 2775,
+  "processing_time_seconds": 2.157481225000083,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-09T09:22:49.254809+00:00"
+}

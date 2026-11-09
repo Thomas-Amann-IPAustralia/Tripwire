@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-09-508",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a news update about the recommendation for Australia to ratify the GRATK Treaty and the passage of the Regulatory Reform Omnibus Act 2026, which introduces reforms to streamline Australia's IP system. However, the IPFR page content focuses on when to seek legal advice for IP issues and the roles of IP lawyers and attorneys. There are no specific references to the GRATK Treaty, the Regulatory Reform Omnibus Act, or any procedural or substantive changes that would affect the guidance on when to hire legal professionals. Therefore, the page remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1786,
+  "completion_tokens": 153,
+  "total_tokens": 1939,
+  "processing_time_seconds": 1.7384749159999728,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-09T09:22:49.254897+00:00"
+}
