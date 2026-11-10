@@ -6,11 +6,6 @@ name: Email Smoke Test
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ccr-42b83f3c-ma1yli]
-    paths:
-      - .github/workflows/email_smoke_test.yml
-      - .github/scripts/email_smoke_test.py
 
 jobs:
   smoke-test:
