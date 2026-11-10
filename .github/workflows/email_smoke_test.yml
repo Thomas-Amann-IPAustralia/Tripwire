@@ -1,0 +1,32 @@
+name: Email Smoke Test
+
+# Live check that Tripwire can send (SMTP) and receive (IMAP) email using the
+# repository secrets. Sends one labelled test message to the configured
+# notification recipients and the feedback inbox, then confirms arrival.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ccr-42b83f3c-ma1yli]
+    paths:
+      - .github/workflows/email_smoke_test.yml
+      - .github/scripts/email_smoke_test.py
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - name: Send and receive a test email
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          FEEDBACK_EMAIL: ${{ secrets.FEEDBACK_EMAIL }}
+          FEEDBACK_GMAIL_USER: ${{ secrets.FEEDBACK_GMAIL_USER }}
+          FEEDBACK_GMAIL_APP_PASSWORD: ${{ secrets.FEEDBACK_GMAIL_APP_PASSWORD }}
+        run: python .github/scripts/email_smoke_test.py

@@ -61,6 +61,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          # feedback.jsonl is only created once the first reply is ingested.
+          if [ ! -f data/logs/feedback.jsonl ]; then
+            echo "No feedback records yet — nothing to commit."
+            exit 0
+          fi
           git add data/logs/feedback.jsonl
           git diff --cached --quiet || git commit -m "chore: ingest feedback replies [run ${{ github.run_id }}]"
           git push origin ${{ github.ref_name }}
