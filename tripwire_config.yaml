@@ -116,8 +116,8 @@ storage:
 
 # --- Notifications ---
 notifications:
-  content_owner_email: "content-owner@example.gov.au"
-  health_alert_email: "admin@example.gov.au"
+  content_owner_email: "mdb-ipaventures@ipaustralia.gov.au"
+  health_alert_email: "mdb-ipaventures@ipaustralia.gov.au"
   health_alert_conditions:
     error_rate_threshold: 0.30
     consecutive_failures_threshold: 3
