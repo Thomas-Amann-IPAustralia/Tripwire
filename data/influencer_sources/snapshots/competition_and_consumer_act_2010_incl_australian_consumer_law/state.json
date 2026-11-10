@@ -1,10 +1,10 @@
 {
   "probe_signals": {
-    "register_id": "C2026C00405",
-    "compilation_number": "167",
-    "start": "2026-09-16T00:00:00"
+    "register_id": "C2026C00486",
+    "compilation_number": "168",
+    "start": "2026-10-27T00:00:00"
   },
-  "last_checked": "2026-11-03T09:04:56.395852+00:00",
-  "previous_hash": "142e3865d1c0b8453fee755c8d3f3fc59d2dd60b8b2ea104d5fa4a3daafb797e",
-  "previous_text": "Have your say on the Federal Register of Legislation. Complete our annual survey and tell us about your experience using the Register.\nMaintenance is scheduled from 8:30pm to 11pm AEDT on Tuesday 3 November 2026. The site may be unavailable or slow during this time."
+  "last_checked": "2026-11-10T09:21:10.524301+00:00",
+  "previous_hash": "66f423b0c70740c138c4c67b73d64e5ba9c33613cdc0d672e1be7c159413c39a",
+  "previous_text": "Have your say on the Federal Register of Legislation. Complete our annual survey and tell us about your experience using the Register.\nThe feedback form on the Register is currently unavailable. We apologise for any inconvenience."
 }
