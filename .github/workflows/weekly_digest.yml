@@ -1,0 +1,105 @@
+name: Tripwire Weekly Digest
+
+# Sends ONE email per week summarising the past week's pipeline runs — either
+# the flagged IPFR pages (same sections as the per-run Stage 9 email) or a
+# "no noteworthy changes identified" email. Only active when
+# notifications.cadence is "weekly" in tripwire_config.yaml.
+#
+# Target: Monday 09:30 Australia/Sydney. GitHub cron is UTC-only and Sydney
+# moves between AEDT (UTC+11) and AEST (UTC+10), so this fires at both
+# 22:30 and 23:30 UTC on Sunday; src/weekly_digest.py sends only once the
+# local time has reached 09:30 Monday and only once per week, so exactly one
+# of the two firings sends (AEDT: 22:30 UTC, AEST: 23:30 UTC).
+
+on:
+  schedule:
+    - cron: "30 22 * * 0"
+    - cron: "30 23 * * 0"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Send now, ignoring the Monday 09:30 schedule and the once-per-week check"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Compose and print the email in the log without sending it"
+        type: boolean
+        default: false
+
+# Shares the database lock with every other job that writes ipfr.sqlite.
+concurrency:
+  group: tripwire-db
+  cancel-in-progress: false
+
+jobs:
+  send-digest:
+    name: Send weekly digest
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install "pyyaml>=6.0" "boto3>=1.35"
+
+      # Cheap day/time check first, so the firing that is not due (one of
+      # the two Sunday UTC slots) skips the database download entirely.
+      - name: Check schedule
+        id: gate
+        env:
+          FORCE: ${{ github.event.inputs.force }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          ARGS=""
+          [ "$FORCE" = "true" ] && ARGS="$ARGS --force"
+          [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+          python -m src.weekly_digest --config tripwire_config.yaml --schedule-gate $ARGS
+
+      - name: Pull database from R2
+        id: pull_db
+        if: steps.gate.outputs.due == 'true'
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage pull
+
+      - name: Send weekly digest
+        id: digest
+        if: steps.gate.outputs.due == 'true'
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          FEEDBACK_EMAIL: ${{ secrets.FEEDBACK_EMAIL }}
+          FORCE: ${{ github.event.inputs.force }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          ARGS=""
+          [ "$FORCE" = "true" ] && ARGS="$ARGS --force"
+          [ "$DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+          python -m src.weekly_digest --config tripwire_config.yaml $ARGS
+
+      # Records which runs were covered so they are not repeated next week.
+      # Only when an email actually went out (nothing changes otherwise).
+      - name: Push database to R2
+        if: always() && steps.pull_db.outcome == 'success' && steps.digest.outputs.sent == 'true'
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage push --label "weekly-digest-${{ github.run_id }}"
+
+      - name: Upload digest fallback (if SMTP failed)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-digest-${{ github.run_id }}
+          path: data/logs/weekly_digest_*_FAILED.txt
+          retention-days: 90
+          if-no-files-found: ignore

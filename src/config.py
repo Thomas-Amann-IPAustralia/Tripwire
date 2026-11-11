@@ -246,6 +246,27 @@ def _validate_notifications(n: dict) -> None:
     for key in ("content_owner_email", "health_alert_email"):
         if not isinstance(n[key], str) or "@" not in n[key]:
             raise ConfigError(f"notifications.{key} must be a valid email address string.")
+    cadence = n.get("cadence", "per_run")
+    if cadence not in ("per_run", "weekly"):
+        raise ConfigError("notifications.cadence must be 'per_run' or 'weekly'.")
+    wd = n.get("weekly_digest") or {}
+    if cadence == "weekly":
+        day = str(wd.get("day", "monday")).lower()
+        if day not in ("monday", "tuesday", "wednesday", "thursday", "friday",
+                       "saturday", "sunday"):
+            raise ConfigError("notifications.weekly_digest.day must be a weekday name.")
+        t = str(wd.get("time", "09:30"))
+        parts = t.split(":")
+        if (len(parts) != 2 or not all(p.isdigit() for p in parts)
+                or not (0 <= int(parts[0]) < 24 and 0 <= int(parts[1]) < 60)):
+            raise ConfigError("notifications.weekly_digest.time must be HH:MM (24-hour).")
+        try:
+            from zoneinfo import ZoneInfo
+            ZoneInfo(str(wd.get("timezone", "Australia/Sydney")))
+        except Exception as exc:
+            raise ConfigError(
+                f"notifications.weekly_digest.timezone is not a valid IANA zone: {exc}"
+            ) from exc
 
 
 # ---------------------------------------------------------------------------

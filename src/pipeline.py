@@ -328,18 +328,28 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     # 8. Stage 9 — Notification.
     # ------------------------------------------------------------------
     logger.info("--- Stage 9: Email Notification ---")
+    from src.weekly_digest import enqueue_run, is_weekly, run_stats
+    from src.stage9_notification import NotificationResult
+
+    weekly = is_weekly(config)
     page_meta_by_id = _load_page_meta(conn, list(bundles_by_page.keys()))
     run_date = datetime.now(timezone.utc).strftime("%-d %B %Y")
 
-    notification_result = send_notification(
-        assessments=assessments,
-        bundles_by_page=bundles_by_page,
-        page_meta_by_id=page_meta_by_id,
-        rejected_candidates=rejected_candidates,
-        run_id=run_id,
-        run_date=run_date,
-        config=config,
-    )
+    if weekly:
+        logger.info("Stage 9: weekly digest cadence — run queued, no email sent now.")
+        notification_result = NotificationResult(
+            sent=False, observation_data={"reason": "queued_for_weekly_digest"}
+        )
+    else:
+        notification_result = send_notification(
+            assessments=assessments,
+            bundles_by_page=bundles_by_page,
+            page_meta_by_id=page_meta_by_id,
+            rejected_candidates=rejected_candidates,
+            run_id=run_id,
+            run_date=run_date,
+            config=config,
+        )
 
     # ------------------------------------------------------------------
     # 9. Log all run entries to SQLite.
@@ -352,7 +362,7 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
     from src.health import evaluate_and_alert
 
     crossencoder_truncation_pairs = _collect_truncation_pairs(run_log_rows)
-    evaluate_and_alert(
+    health_result = evaluate_and_alert(
         run_id=run_id,
         run_log_rows=run_log_rows,
         llm_failed_count=llm_result.failed_count,
@@ -360,7 +370,24 @@ def _run_pipeline(config_path: str, run_id: str, check_frequency_override: str |
         conn=conn,
         config=config,
         snapshot_dir=snapshot_dir,
+        send_email=not weekly,
     )
+
+    # ------------------------------------------------------------------
+    # 9b. Weekly cadence: queue this run for the Monday digest.
+    # ------------------------------------------------------------------
+    if weekly:
+        enqueue_run(
+            conn,
+            run_id=run_id,
+            run_date=run_date,
+            assessments=assessments,
+            bundles_by_page=bundles_by_page,
+            page_meta_by_id=page_meta_by_id,
+            rejected_candidates=rejected_candidates,
+            health_alerts=health_result.alerts,
+            stats=run_stats(run_log_rows),
+        )
 
     conn.close()
 
@@ -786,15 +813,27 @@ def _process_deferred_triggers(
     if llm_result.assessments:
         page_meta = _load_page_meta(conn, [b.ipfr_page_id for b in bundles])
         run_date = datetime.now(timezone.utc).strftime("%-d %B %Y")
-        send_notification(
-            assessments=llm_result.assessments,
-            bundles_by_page={b.ipfr_page_id: b for b in bundles},
-            page_meta_by_id=page_meta,
-            rejected_candidates=[],
-            run_id=f"{run_id}-deferred",
-            run_date=run_date,
-            config=config,
-        )
+        from src.weekly_digest import enqueue_run, is_weekly
+        if is_weekly(config):
+            enqueue_run(
+                conn,
+                run_id=f"{run_id}-deferred",
+                run_date=run_date,
+                assessments=llm_result.assessments,
+                bundles_by_page={b.ipfr_page_id: b for b in bundles},
+                page_meta_by_id=page_meta,
+                rejected_candidates=[],
+            )
+        else:
+            send_notification(
+                assessments=llm_result.assessments,
+                bundles_by_page={b.ipfr_page_id: b for b in bundles},
+                page_meta_by_id=page_meta,
+                rejected_candidates=[],
+                run_id=f"{run_id}-deferred",
+                run_date=run_date,
+                config=config,
+            )
 
     for rec in deferred_records:
         mark_deferred_trigger_processed(conn, rec["id"])
@@ -1045,6 +1084,8 @@ def _write_github_summary(
 
         if notification_result:
             sent = "Yes" if notification_result.sent else "No"
+            if notification_result.observation_data.get("reason") == "queued_for_weekly_digest":
+                sent = "No — queued for weekly digest"
             lines.append(f"**Email sent:** {sent}")
             if notification_result.fallback_file:
                 lines.append(f"**Email fallback file:** `{notification_result.fallback_file}`")

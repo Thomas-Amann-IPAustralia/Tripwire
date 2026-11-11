@@ -118,6 +118,17 @@ storage:
 notifications:
   content_owner_email: "mdb-ipaventures@ipaustralia.gov.au"
   health_alert_email: "mdb-ipaventures@ipaustralia.gov.au"
+  # "weekly": daily runs queue their results and ONE digest email is sent per
+  # week (weekly_digest.yml), including a "no noteworthy changes identified"
+  # email when nothing was flagged. Health warnings are folded into the digest.
+  # "per_run": original behaviour — email after each run that flags a page,
+  # plus a separate health alert email whenever a health condition fires.
+  cadence: "weekly"
+  weekly_digest:
+    day: "monday"
+    time: "09:30"                   # local time in the timezone below
+    timezone: "Australia/Sydney"    # follows AEDT/AEST daylight saving automatically
+    lookback_days: 7
   health_alert_conditions:
     error_rate_threshold: 0.30
     consecutive_failures_threshold: 3
