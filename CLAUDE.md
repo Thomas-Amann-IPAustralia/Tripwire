@@ -40,6 +40,7 @@ src/
   stage8_llm.py              — Stage 8: LLM assessment
   stage9_notification.py     — Stage 9: email notification
   weekly_digest.py           — Weekly digest: queue per-run results, send one email per week
+  email_html.py              — Outlook-safe HTML email rendering (shared by Stage 9 and the digest)
   feedback_ingestion.py      — Gmail IMAP polling for feedback replies
   health.py                  — Health alerting
   observability.py           — Weekly score distribution report
