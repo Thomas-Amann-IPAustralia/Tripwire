@@ -256,9 +256,38 @@ def test_compose_html_contains_page_id():
 
 
 def test_compose_html_suggested_changes_in_list():
+    _, _, html = _compose(
+        change_required=[_make_assessment(suggested_changes=["First fix.", "Second fix."])]
+    )
+    assert "Suggested changes" in html
+    assert html.index("First fix.") < html.index("Second fix.")
+
+
+def test_compose_html_has_four_feedback_buttons():
     _, _, html = _compose(change_required=[_make_assessment()])
-    assert "<ol>" in html
-    assert "<li>" in html
+    assert html.count('href="mailto:') == 4
+    for text in ("Useful", "Not significant", "Wrong amendment", "Wrong page"):
+        assert f">{text}</a>" in html
+
+
+def test_compose_html_is_email_safe():
+    """Outlook ignores these, so the layout must not depend on them."""
+    _, _, html = _compose(change_required=[_make_assessment()],
+                          uncertain=[_make_assessment(page_id="B2000", verdict="UNCERTAIN")])
+    for unsupported in ("<details", "<div class=", "class=\"page-block", "max-height:300px"):
+        assert unsupported not in html
+    assert 'role="presentation"' in html
+
+
+def test_compose_html_escapes_page_title():
+    from src.stage9_notification import _compose_email, PageMeta
+    _, _, html = _compose_email(
+        [_make_assessment()], [], [], {},
+        {"B1012": PageMeta("B1012", "Patents <&> designs", "https://x/?a=1&b=2")},
+        "run-1", "2026-11-11", "fb@example.com",
+    )
+    assert "Patents &lt;&amp;&gt; designs" in html
+    assert 'href="https://x/?a=1&amp;b=2"' in html
 
 
 def test_compose_no_alerts_returns_empty():

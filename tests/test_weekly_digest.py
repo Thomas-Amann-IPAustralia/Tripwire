@@ -120,7 +120,8 @@ class TestCompose:
         # Feedback links carry the run each item came from.
         assert "2026-11-04-503%20%E2%80%94%20B1012" in text
         assert "2026-11-06-505%20%E2%80%94%20B1012" in text
-        assert "<h2 style=\"color:#c0392b;\">Amendment Required</h2>" in res["body_html"]
+        assert "Amendment required" in res["body_html"]
+        assert "Needs human review" in res["body_html"]
 
     def test_health_warnings_from_latest_run(self, conn):
         _queue(conn, run_id="r1", health=[HealthAlert("consecutive_failures", "warning", "old", "")])

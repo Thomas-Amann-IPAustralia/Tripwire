@@ -53,6 +53,7 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
+from src import email_html as eh
 from src.stage7_aggregation import TriggerBundle, TriggerSource
 from src.stage8_llm import LLMAssessment
 from src.stage9_notification import (
@@ -60,8 +61,7 @@ from src.stage9_notification import (
     RejectedCandidate,
     _build_mime,
     _html_change_required_section,
-    _html_escape,
-    _html_header,
+    _html_footer,
     _html_rejected_section,
     _html_uncertain_section,
     _send_via_smtp,
@@ -335,71 +335,106 @@ def compose_digest(
 
     t: list[str] = [subject, f"Period: {period}", ""]
     h: list[str] = []
-    _html_header(h, subject, ", ".join(p["run_id"] for p in payloads) or "—", period, flagged)
-    # _html_header writes "Run ID" / "N pages require attention"; replace with digest wording.
-    h = h[:1] + [f"<h1>{_html_escape(subject)}</h1>", f"<p>Period: {period}</p>"]
 
     if not flagged:
         msg = ("No noteworthy changes identified. Tripwire found no upstream changes "
                "in the past week that require an amendment to, or human review of, "
                "any IP First Response page.")
         t += [msg, ""]
-        h.append(f'<p style="font-size:1.1em;"><strong>{msg}</strong></p>')
+        h.append(eh.callout(
+            "<strong>No noteworthy changes identified.</strong> Tripwire found no "
+            "upstream changes in the past week that require an amendment to, or human "
+            "review of, any IP First Response page.", "green"))
     else:
         t.append(f"{flagged} IPFR page{'s' if flagged != 1 else ''} require attention.")
         t.append("")
-        h.append(f"<p>{flagged} IPFR page{'s' if flagged != 1 else ''} require attention.</p>")
+        parts_txt = []
+        if change_required:
+            parts_txt.append(f"<strong>{len(change_required)}</strong> need"
+                             f"{'s' if len(change_required) == 1 else ''} an amendment")
+        if uncertain:
+            parts_txt.append(f"<strong>{len(uncertain)}</strong> need"
+                             f"{'s' if len(uncertain) == 1 else ''} human review")
+        h.append(eh.callout(
+            f"<strong>{flagged} IPFR page{'s' if flagged != 1 else ''} require "
+            f"attention</strong> this week: {' and '.join(parts_txt)}.",
+            "red" if change_required else "amber"))
 
     t += ["THIS WEEK'S MONITORING", *[f"  • {line}" for line in activity_lines], ""]
-    h.append("<h2>This week's monitoring</h2><ul>"
-             + "".join(f"<li>{_html_escape(line)}</li>" for line in activity_lines) + "</ul>")
+    h.append(eh.section_heading("This week's monitoring"))
+    h.append(eh.stat_tiles([
+        (str(totals["runs"]), "Pipeline runs", None),
+        (str(totals["sources_checked"]), "Source checks", None),
+        (str(totals["changes_detected"]), "Upstream changes detected", None),
+        (str(totals["assessed"]), f"Pages assessed by the LLM ({totals['no_change']} "
+                                  f"no change needed)", None),
+        (str(len(rejected)), "Rejected at deep analysis", None),
+        (str(totals["errors"]), "Source fetch errors", "amber" if totals["errors"] else None),
+    ]))
 
     if change_required:
         t += ["=" * 70, "AMENDMENT REQUIRED", "=" * 70]
-        h.append('<h2 style="color:#c0392b;">Amendment Required</h2>')
+        h.append(eh.section_heading("Amendment required", "red", len(change_required)))
         for run_id, a, meta, bundle in change_required:
             t.append(f"[Run {run_id}]")
             _txt_change_required_section(t, a, meta, bundle, run_id, feedback_email)
-            h.append(f'<p class="scores">Run {run_id}</p>')
-            _html_change_required_section(h, a, meta, bundle, run_id, feedback_email)
+            _html_change_required_section(h, a, meta, bundle, run_id, feedback_email,
+                                          run_label=run_id)
 
     if uncertain:
         t += ["", "=" * 70, "ITEMS REQUIRING HUMAN REVIEW", "=" * 70]
-        h.append('<h2 style="color:#e67e22;">Items Requiring Human Review</h2>')
+        h.append(eh.section_heading("Items requiring human review", "amber", len(uncertain)))
         for run_id, a, meta, bundle in uncertain:
             t.append(f"[Run {run_id}]")
             _txt_uncertain_section(t, a, meta, bundle, run_id, feedback_email)
-            h.append(f'<p class="scores">Run {run_id}</p>')
-            _html_uncertain_section(h, a, meta, bundle, run_id, feedback_email)
+            _html_uncertain_section(h, a, meta, bundle, run_id, feedback_email,
+                                    run_label=run_id)
 
     if rejected:
         t += ["", "=" * 70, "CANDIDATES REJECTED AT DEEP ANALYSIS",
               "(Surfaced for calibration — potential false positives in upstream stages)",
               "=" * 70]
-        h.append("<h2>Candidates Rejected at Deep Analysis</h2>"
-                 "<p><em>Surfaced for calibration — potential false positives in "
-                 "upstream stages.</em></p><ul>")
+        h.append(eh.section_heading("Candidates rejected at deep analysis", "grey",
+                                    len(rejected)))
+        h.append(eh.paragraph("Surfaced for calibration — potential false positives in "
+                              "upstream stages.", size=13, color=eh.MUTED))
+        items: list[str] = []
         for run_id, rc in rejected:
             _txt_rejected_section(t, rc)
-            _html_rejected_section(h, rc)
-        h.append("</ul>")
+            _html_rejected_section(items, rc)
+        h.append(eh.bullet_list(items))
 
     if health:
         t += ["", "=" * 70, f"SOURCE HEALTH ({len(health)} warning(s) at the latest run, "
               f"{latest.get('run_id', '')})", "=" * 70]
-        h.append(f"<h2>Source health</h2><p>{len(health)} warning(s) at the latest run "
-                 f"(<code>{_html_escape(latest.get('run_id', ''))}</code>):</p><ul>")
+        h.append(eh.section_heading("Source health", "amber", len(health)))
+        h.append(eh.paragraph(f"Warnings at the latest run "
+                              f"({eh.esc(latest.get('run_id', ''))}):",
+                              size=13, color=eh.MUTED, bottom=10))
         for a in health:
             t.append(f"  • {a['summary']}")
-            h.append(f"<li>{_html_escape(a['summary'])}</li>")
-        h.append("</ul>")
+        h.append(eh.bullet_list((eh.esc(a["summary"]) for a in health), "amber"))
 
     runs = ", ".join(p["run_id"] for p in payloads) or "none"
     t += ["", f"Runs covered: {runs} | Generated by Tripwire"]
-    h.append(f'<hr><p style="color:#888;font-size:0.85em;">Runs covered: {runs} '
-             f"| Generated by Tripwire</p></body></html>")
 
-    return subject, "\n".join(t), "\n".join(h), flagged
+    if flagged:
+        heading = f"{flagged} IPFR page{'s' if flagged != 1 else ''} flagged"
+        preheader = f"{flagged} IPFR page{'s' if flagged != 1 else ''} require attention."
+    else:
+        heading = "No noteworthy changes"
+        preheader = "No IPFR pages need attention this week."
+    html_doc = eh.document(
+        title=subject,
+        preheader=preheader,
+        eyebrow="Tripwire · Weekly digest",
+        heading=heading,
+        subheading=period,
+        body="\n".join(h),
+        footer=_html_footer(f"Runs covered: {runs}"),
+    )
+
+    return subject, "\n".join(t), html_doc, flagged
 
 
 # ---------------------------------------------------------------------------
