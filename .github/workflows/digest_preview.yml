@@ -1,0 +1,36 @@
+name: Weekly Digest Preview (one-off)
+
+# Sends a PREVIEW of the weekly digest as it would have gone out on Monday
+# 9 November 2026. Read-only: the database is pulled but never pushed back.
+
+on:
+  push:
+    branches: [ccr-42b83f3c-ma1yli]
+    paths:
+      - .github/workflows/digest_preview.yml
+      - .github/scripts/send_digest_preview.py
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # change documents come from git history
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install "pyyaml>=6.0" "boto3>=1.35"
+      - name: Pull database from R2 (read-only use)
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python -m src.r2_storage pull
+      - name: Send preview digest
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          FEEDBACK_EMAIL: ${{ secrets.FEEDBACK_EMAIL }}
+        run: python .github/scripts/send_digest_preview.py
