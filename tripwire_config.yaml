@@ -116,8 +116,11 @@ storage:
 
 # --- Notifications ---
 notifications:
-  content_owner_email: "mdb-ipaventures@ipaustralia.gov.au"
-  health_alert_email: "mdb-ipaventures@ipaustralia.gov.au"
+  # Recipient addresses are NOT kept here: this repository is public and
+  # naming the recipients makes targeted phishing easy. They come from the
+  # CONTENT_OWNER_EMAIL and HEALTH_ALERT_EMAIL GitHub secrets. For a local
+  # run, set those environment variables (or, locally only, add
+  # content_owner_email / health_alert_email keys here; never commit them).
   # "weekly": daily runs queue their results and ONE digest email is sent per
   # week (weekly_digest.yml), including a "no noteworthy changes identified"
   # email when nothing was flagged. Health warnings are folded into the digest.

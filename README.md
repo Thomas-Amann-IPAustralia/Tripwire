@@ -102,7 +102,8 @@ pip install -r requirements.txt
 # 4. Install ingestion pipeline dependencies
 pip install -r requirements-ingestion.txt
 
-# 5. Edit tripwire_config.yaml — set emails, adjust thresholds as needed
+# 5. Edit tripwire_config.yaml — adjust thresholds as needed (recipient
+#    addresses are secrets, see step 6; never commit them to this public repo)
 
 # 6. Set required environment variables (or store as GitHub Actions secrets)
 export OPENAI_API_KEY=sk-...
@@ -111,6 +112,9 @@ export SMTP_PASSWORD=...              # Gmail App Password for sending notificat
 export FEEDBACK_EMAIL=reply@gmail.com # Reply-To address in notification emails
 export FEEDBACK_GMAIL_USER=feedback@gmail.com
 export FEEDBACK_GMAIL_APP_PASSWORD=...  # Gmail App Password for reading replies
+export CONTENT_OWNER_EMAIL=content-owner@example.gov.au
+export HEALTH_ALERT_EMAIL=admin@example.gov.au
+export TRIPWIRE_EMAIL_PHRASE="..."     # anti-phishing phrase shown in every email
 ```
 
 ### Hugging Face model downloads
@@ -144,8 +148,7 @@ semantic_scoring:
     threshold: 0.60         # Final reranked score needed to reach Stage 7
 
 notifications:
-  content_owner_email: "content-owner@example.gov.au"
-  health_alert_email: "admin@example.gov.au"
+  cadence: "weekly"         # recipients come from the CONTENT_OWNER_EMAIL / HEALTH_ALERT_EMAIL secrets
   health_alert_conditions:
     error_rate_threshold: 0.30
     consecutive_failures_threshold: 3
@@ -241,6 +244,29 @@ GitHub Actions secrets required:
 | `FEEDBACK_EMAIL` | `tripwire.yml` | Reply-To address embedded in notification emails |
 | `FEEDBACK_GMAIL_USER` | `feedback_ingestion.yml` | Gmail address for reading feedback replies |
 | `FEEDBACK_GMAIL_APP_PASSWORD` | `feedback_ingestion.yml` | Gmail App Password for reading replies |
+| `CONTENT_OWNER_EMAIL` | `tripwire.yml`, `weekly_digest.yml`, `feedback_ingestion.yml`, `email_smoke_test.yml` | Recipient of alerts and the weekly digest; also allowed to send feedback |
+| `HEALTH_ALERT_EMAIL` | as above | Recipient of health alerts and the weekly digest; also allowed to send feedback |
+| `TRIPWIRE_EMAIL_PHRASE` | as above | Anti-phishing phrase stamped on every email, and the key for signed feedback links |
+| `FEEDBACK_ALLOWED_SENDERS` | `feedback_ingestion.yml` (optional) | Extra feedback senders, comma-separated addresses or `@domain` entries |
+
+### Email authenticity
+
+Because this repository is public, anyone can copy Tripwire's email layout. Three
+controls (in `src/email_security.py`) depend only on the secrets above:
+
+- **Security phrase.** Every email Tripwire sends starts with `TRIPWIRE_EMAIL_PHRASE`.
+  An email without it, or with a different phrase, is not from Tripwire. The phrase
+  is added only when the message is sent, so it never appears in fallback files,
+  dry-run output, logs or the database.
+- **Authenticated feedback.** `feedback_ingestion` only accepts replies from an
+  allowlisted sender whose message passed DMARC (or aligned DKIM) at Gmail, and
+  whose `token:` line matches the HMAC signed into that email's feedback link.
+  Anything else is marked read and discarded. Replies to emails sent before this
+  control existed have no token and are discarded.
+- **No public recipients.** Addresses come from secrets, and are redacted from the
+  run-log config snapshot, `digest_log`, dry-run output and workflow logs.
+
+Changing the phrase invalidates the feedback links in emails already sent.
 
 ---
 

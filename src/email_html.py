@@ -112,6 +112,9 @@ def document(
         'cellspacing="0" border="0"><tr><td><![endif]-->'
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
         'border="0" style="max-width:680px;width:100%;">'
+        # Security phrase banner (filled in by email_security.stamp_html when
+        # the MIME message is built, so it never reaches fallback files).
+        f"{_security_marker()}"
         # Header band
         f'<tr><td class="tw-pad" bgcolor="{BRAND}" '
         f'style="background-color:{BRAND};padding:28px 32px;font-family:{FONT};">'
@@ -137,6 +140,40 @@ def document(
         "<!--[if mso]></td></tr></table><![endif]-->"
         "</td></tr></table>"
         "</body></html>"
+    )
+
+
+def _security_marker() -> str:
+    from src.email_security import phrase_marker
+    return phrase_marker()
+
+
+def security_banner(phrase: str) -> str:
+    """A full-width row showing the anti-phishing security phrase.
+
+    Emitted as a ``<tr>`` so it sits inside the document's main table; when
+    stamped into an HTML body without that table it still renders, as most
+    clients tolerate a bare row.
+    """
+    if phrase:
+        accent, tint, ink = TONES["green"]
+        content = (
+            f'<span style="font-size:11px;letter-spacing:1px;font-weight:700;'
+            f'text-transform:uppercase;">Security phrase</span><br>'
+            f'<span style="font-size:16px;font-weight:700;">{esc(phrase)}</span><br>'
+            f'<span style="font-size:12px;">If this phrase is missing or different, '
+            f'do not click any links; report the email as phishing.</span>'
+        )
+    else:
+        accent, tint, ink = TONES["amber"]
+        content = (
+            "<strong>No security phrase is configured</strong>, so this email "
+            "cannot be verified. Do not click links unless you are sure it is genuine."
+        )
+    return (
+        f'<tr><td class="tw-pad" bgcolor="{tint}" style="background-color:{tint};'
+        f'border-left:4px solid {accent};padding:12px 32px;font-family:{FONT};'
+        f'font-size:13px;line-height:20px;color:{ink};">{content}</td></tr>'
     )
 
 

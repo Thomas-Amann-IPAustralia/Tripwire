@@ -54,6 +54,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 from src import email_html as eh
+from src import email_security as sec
 from src.stage7_aggregation import TriggerBundle, TriggerSource
 from src.stage8_llm import LLMAssessment
 from src.stage9_notification import (
@@ -116,13 +117,9 @@ def _digest_cfg(config: dict[str, Any]) -> dict[str, Any]:
 
 
 def _recipients(config: dict[str, Any]) -> list[str]:
-    n = config.get("notifications", {})
-    out: list[str] = []
-    for key in ("content_owner_email", "health_alert_email"):
-        addr = n.get(key)
-        if addr and addr not in out:
-            out.append(addr)
-    return out
+    # Addresses come from the CONTENT_OWNER_EMAIL / HEALTH_ALERT_EMAIL secrets
+    # (YAML fallback for local runs); see src/email_security.py.
+    return sec.notification_recipients(config)
 
 
 def ensure_tables(conn: sqlite3.Connection) -> None:
@@ -487,9 +484,15 @@ def send_weekly_digest(
         payloads, period_start, period_end, feedback_email
     )
     recipients = _recipients(config)
+    if not recipients and not dry_run:
+        logger.error("Weekly digest not sent: no recipients. Set the CONTENT_OWNER_EMAIL "
+                     "and HEALTH_ALERT_EMAIL secrets. Queue left unsent.")
+        return {"sent": False, "reason": "no recipients configured",
+                "subject": subject, "recipients": []}
     result: dict[str, Any] = {"sent": False, "subject": subject, "recipients": recipients,
                               "run_count": len(payloads), "flagged_count": flagged,
-                              "body_text": body_text, "body_html": body_html}
+                              "body_text": body_text,
+                              "body_html": sec.strip_marker(body_html)}
     if dry_run:
         result["reason"] = "dry run"
         return result
@@ -512,7 +515,8 @@ def send_weekly_digest(
     except Exception as exc:  # noqa: BLE001 — fail closed: leave queue untouched
         fallback = Path("data/logs") / f"weekly_digest_{local:%Y-%m-%d}_FAILED.txt"
         fallback.parent.mkdir(parents=True, exist_ok=True)
-        fallback.write_text(f"Subject: {subject}\n\n{body_text}", encoding="utf-8")
+        fallback.write_text(f"Subject: {subject}\n\n{sec.redact_tokens(body_text)}",
+                            encoding="utf-8")
         logger.error("Weekly digest SMTP failed (%s); saved to %s. Queue left unsent.",
                      exc, fallback)
         result.update(reason=f"smtp error: {exc}", fallback_file=str(fallback))
@@ -521,14 +525,17 @@ def send_weekly_digest(
     cur = conn.execute(
         "INSERT INTO digest_log (week_key, sent_at, recipients, subject, run_count, "
         "flagged_count) VALUES (?, ?, ?, ?, ?, ?)",
-        (_week_key(local, send_day), now.isoformat(), ", ".join(recipients), subject,
+        (_week_key(local, send_day), now.isoformat(),
+         # Domains only: ipfr.sqlite is published in the public data-* releases.
+         ", ".join(sec.redacted_address(r) for r in recipients), subject,
          len(payloads), flagged),
     )
     digest_id = cur.lastrowid
     conn.executemany("UPDATE notification_queue SET digest_id = ? WHERE id = ?",
                      [(digest_id, r[0]) for r in rows])
     conn.commit()
-    logger.info("Weekly digest sent to %s: %s (%d run(s)).", recipients, subject, len(payloads))
+    logger.info("Weekly digest sent to %d recipient(s): %s (%d run(s)).",
+                len(recipients), subject, len(payloads))
     result.update(sent=True, reason="sent")
     return result
 
@@ -578,12 +585,16 @@ def main(argv: list[str] | None = None) -> int:
         conn.close()
 
     if args.dry_run:
-        print(f"Subject: {result.get('subject')}\nTo: {', '.join(result.get('recipients', []))}\n")
-        print(result.get("body_text", result.get("reason")))
+        # Dry-run output lands in public workflow logs: show recipient domains
+        # only and blank out feedback tokens.
+        to = ", ".join(sec.redacted_address(r) for r in result.get("recipients", []))
+        print(f"Subject: {result.get('subject')}\nTo: {to}\n")
+        print(sec.redact_tokens(result.get("body_text", result.get("reason", ""))))
         return 0
     print(f"Weekly digest: {result['reason']}")
     _github_output("sent", "true" if result.get("sent") else "false")
-    return 1 if result.get("fallback_file") else 0
+    failed = result.get("fallback_file") or result.get("reason") == "no recipients configured"
+    return 1 if failed else 0
 
 
 def _github_output(key: str, value: str) -> None:

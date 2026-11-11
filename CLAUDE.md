@@ -17,6 +17,7 @@ All nine phases are complete and the full pipeline runs end-to-end.
 - **Email notification** (Stage 9) replaces the review queue CSV.
 - **Weekly digest cadence**: with `notifications.cadence: "weekly"` (current setting) the daily run sends no email; it queues its Stage 9 material and health warnings in `notification_queue`, and `weekly_digest.yml` sends ONE email every Monday 09:30 Australia/Sydney — the flagged pages, or "no noteworthy changes identified". `cadence: "per_run"` restores per-run emails and separate health alerts.
 - **Fail-closed**: uncertain → escalate, never silently drop signals.
+- **Email authenticity** (`src/email_security.py`): the repo is public, so recipient addresses are secrets (never put them back in `tripwire_config.yaml`), every outgoing email is stamped with the `TRIPWIRE_EMAIL_PHRASE` security phrase at MIME-build time only (never in fallback files, logs, dry-run output or the database, which is published in public releases), and feedback is accepted only from allowlisted, DMARC/DKIM-authenticated senders carrying a valid HMAC token.
 - **Observation mode**: when `pipeline.observation_mode: true`, Stages 1–7 run fully and scores are logged, but Stage 8 (LLM) and Stage 9 (email) are **completely skipped** — no cost, no alerts. Use for 4–8 weeks of calibration before going live.
 - **Deferred triggers**: if the LLM API fails after all retries, the trigger bundle is stored in the `deferred_triggers` table and retried at the **start of the next run**, before any new sources are processed.
 
@@ -41,6 +42,7 @@ src/
   stage9_notification.py     — Stage 9: email notification
   weekly_digest.py           — Weekly digest: queue per-run results, send one email per week
   email_html.py              — Outlook-safe HTML email rendering (shared by Stage 9 and the digest)
+  email_security.py          — Anti-phishing: security phrase, signed feedback tokens, sender checks, secret recipients
   feedback_ingestion.py      — Gmail IMAP polling for feedback replies
   health.py                  — Health alerting
   observability.py           — Weekly score distribution report
@@ -64,7 +66,7 @@ data/
     source_registry.csv      — All monitored sources
     snapshots/               — Per-source state and content
   logs/                      — Observation summaries, health alerts, feedback.jsonl
-tests/                       — pytest test suite (18 files)
+tests/                       — pytest test suite
 docs/                        — Operational runbooks
 tripwire_config.yaml         — All parameters and thresholds
 requirements.txt             — Main pipeline dependencies
@@ -133,6 +135,10 @@ They are **not** in `tripwire_config.yaml`.
 | `R2_ACCOUNT_ID` | Cloudflare account ID for the R2 bucket holding `ipfr.sqlite` | all workflows that read or write the database |
 | `R2_ACCESS_KEY_ID` | R2 API token access key (Object Read and Write on `tripwire`) | as above |
 | `R2_SECRET_ACCESS_KEY` | R2 API token secret | as above |
+| `CONTENT_OWNER_EMAIL` | Alert and digest recipient (not in the public config); also a permitted feedback sender | `tripwire.yml`, `weekly_digest.yml`, `feedback_ingestion.yml`, `email_smoke_test.yml` |
+| `HEALTH_ALERT_EMAIL` | Health alert and digest recipient; also a permitted feedback sender | as above |
+| `TRIPWIRE_EMAIL_PHRASE` | Anti-phishing phrase stamped on every outgoing email; HMAC key for feedback tokens | as above |
+| `FEEDBACK_ALLOWED_SENDERS` | Optional extra feedback senders (addresses or `@domain`, comma-separated) | `feedback_ingestion.yml` |
 | `SCRAPER_PROXY_URL` | Optional residential proxy for gov.au sources that block GHA IPs. Format: `http://user:pass@host:port`. Leave unset to disable proxy fallback. | `tripwire.yml` |
 
 ## Testing

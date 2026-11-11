@@ -77,6 +77,9 @@ jobs:
           SMTP_USER: ${{ secrets.SMTP_USER }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           FEEDBACK_EMAIL: ${{ secrets.FEEDBACK_EMAIL }}
+          CONTENT_OWNER_EMAIL: ${{ secrets.CONTENT_OWNER_EMAIL }}
+          HEALTH_ALERT_EMAIL: ${{ secrets.HEALTH_ALERT_EMAIL }}
+          TRIPWIRE_EMAIL_PHRASE: ${{ secrets.TRIPWIRE_EMAIL_PHRASE }}
           FORCE: ${{ github.event.inputs.force }}
           DRY_RUN: ${{ github.event.inputs.dry_run }}
         run: |
