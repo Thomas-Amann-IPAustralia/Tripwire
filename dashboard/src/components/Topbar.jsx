@@ -1,84 +1,56 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { useHealthSummary } from '../hooks/useData.js';
 import { useDashboard } from '../App.jsx';
+import { useTheme } from '../hooks/useTheme.js';
 import { formatRelativeTime } from '../lib/dataUtils.js';
+import { NAV_ITEMS } from './NavRail.jsx';
+import { Icon, Badge } from './ui.jsx';
 
 function ThemeToggle() {
-  const [isDark, setIsDark] = useState(() => localStorage.getItem('tw-theme') !== 'light');
-
-  const toggle = () => {
-    const next = !isDark;
-    const theme = next ? 'dark' : 'light';
-    localStorage.setItem('tw-theme', theme);
-    if (theme === 'light') {
-      document.documentElement.setAttribute('data-theme', 'light');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
-    setIsDark(next);
-  };
-
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
   return (
     <button
-      onClick={toggle}
-      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '14px',
-        lineHeight: 1,
-        color: 'var(--text-secondary)',
-        background: 'none',
-        border: '1px solid var(--rule-accent)',
-        padding: '3px 8px',
-        cursor: 'pointer',
-        borderRadius: '2px',
-      }}
-      onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
-      onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+      type="button"
+      className="tw-btn is-sm"
+      onClick={toggleTheme}
+      aria-pressed={isDark}
+      title={isDark ? 'Switch to the light theme' : 'Switch to the dark theme'}
     >
-      {isDark ? '☀' : '☽'}
+      <Icon name={isDark ? 'sun' : 'moon'} />
+      <span className="tw-hide-sm">{isDark ? 'Light' : 'Dark'}</span>
     </button>
   );
 }
 
-function StatusPill({ status }) {
-  const colour = status === 'RUNNING'
-    ? 'var(--state-warn)'
-    : status === 'ERROR'
-      ? 'var(--state-error)'
-      : 'var(--state-ok)';
-
-  return (
-    <span style={{
-      fontFamily: 'var(--font-mono)',
-      fontSize: '12px',
-      letterSpacing: '0.08em',
-      color: colour,
-      border: `1px solid ${colour}`,
-      padding: '2px 6px',
-      borderRadius: '2px',
-    }}>
-      {status || 'IDLE'}
-    </span>
-  );
+function PipelineStatus({ status }) {
+  const s = String(status || 'IDLE').toUpperCase();
+  if (s === 'RUNNING') return <Badge tone="info" dot>Running</Badge>;
+  if (s === 'ERROR')   return <Badge tone="error" dot>Error</Badge>;
+  if (s === 'IDLE')    return <Badge tone="muted" dot>Idle</Badge>;
+  return <Badge tone="ok" dot>{s.charAt(0) + s.slice(1).toLowerCase()}</Badge>;
 }
 
 function StageDots({ stagesCompleted }) {
   return (
-    <span style={{ display: 'flex', gap: '3px', alignItems: 'center' }}>
+    <span
+      style={{ display: 'flex', gap: '4px', alignItems: 'center' }}
+      title={`${stagesCompleted || 0} of 9 stages reached on the last run`}
+      aria-label={`${stagesCompleted || 0} of 9 stages reached on the last run`}
+    >
       {Array.from({ length: 9 }, (_, i) => {
         const n = i + 1;
         const done = stagesCompleted && stagesCompleted >= n;
         return (
           <span
             key={n}
-            title={`Stage ${n}`}
             style={{
-              width: '8px',
-              height: '8px',
+              width: '7px',
+              height: '7px',
               borderRadius: '50%',
-              background: done ? `var(--stage-${n})` : 'var(--bg-accent)',
-              border: `1px solid ${done ? `var(--stage-${n})` : 'var(--rule-accent)'}`,
+              background: done ? `var(--stage-${n})` : 'transparent',
+              border: `1.5px solid ${done ? `var(--stage-${n})` : 'var(--line-strong)'}`,
               display: 'inline-block',
             }}
           />
@@ -91,6 +63,9 @@ function StageDots({ stagesCompleted }) {
 export default function Topbar() {
   const { refresh } = useDashboard();
   const { data: health } = useHealthSummary();
+  const location = useLocation();
+
+  const current = NAV_ITEMS.find(i => location.pathname.startsWith(i.path));
 
   const lastRunData = health?.data?.last_run;
   const lastRun = lastRunData?.timestamp;
@@ -98,68 +73,25 @@ export default function Topbar() {
   const stagesCompleted = lastRunData?.stages_completed ?? 0;
 
   return (
-    <header style={{
-      height: '48px',
-      background: 'var(--bg-secondary)',
-      borderBottom: '1px solid var(--rule)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 16px',
-      flexShrink: 0,
-      gap: '16px',
-    }}>
-      {/* Left — wordmark */}
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px' }}>
-        <span style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: '22px',
-          color: 'var(--text-primary)',
-          letterSpacing: '0.05em',
-        }}>
-          ◈ TRIPWIRE
-        </span>
-        <span style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '12px',
-          color: 'var(--text-tertiary)',
-          letterSpacing: '0.05em',
-        }}>
-          v2.0 · TW-DASHBOARD
-        </span>
+    <header className="tw-topbar">
+      <div className="tw-crumbs">
+        <span className="tw-crumb-root">Tripwire</span>
+        <Icon name="chevron" />
+        <strong>{current?.label ?? 'Dashboard'}</strong>
       </div>
 
-      {/* Right — run info + controls */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        {lastRun && (
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '12px',
-            color: 'var(--text-tertiary)',
-          }}>
-            {formatRelativeTime(lastRun)}
-          </span>
-        )}
-        <StatusPill status={pipelineStatus} />
-        <StageDots stagesCompleted={stagesCompleted} />
+      <div className="tw-topbar-right">
+        <div className="tw-run-meta">
+          Last pipeline run<br />
+          <strong>{lastRun ? formatRelativeTime(lastRun) : 'No runs recorded'}</strong>
+        </div>
+        <PipelineStatus status={pipelineStatus} />
+        <span className="tw-hide-sm"><StageDots stagesCompleted={stagesCompleted} /></span>
+        <div className="tw-topbar-divider tw-hide-sm" />
         <ThemeToggle />
-        <button
-          onClick={refresh}
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '12px',
-            letterSpacing: '0.1em',
-            color: 'var(--text-secondary)',
-            background: 'none',
-            border: '1px solid var(--rule-accent)',
-            padding: '3px 8px',
-            cursor: 'pointer',
-            borderRadius: '2px',
-          }}
-          onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
-          onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
-        >
-          REFRESH
+        <button type="button" className="tw-btn is-sm" onClick={refresh} title="Reload all data">
+          <Icon name="refresh" />
+          <span className="tw-hide-sm">Refresh</span>
         </button>
       </div>
     </header>

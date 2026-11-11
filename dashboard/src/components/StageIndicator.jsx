@@ -17,7 +17,7 @@ export function StageIndicator({ stages, passRates, size = 1 }) {
             width: dotPx, height: dotPx,
             borderRadius: '50%',
             background: 'transparent',
-            border: '1px solid var(--bg-accent)',
+            border: '1.5px solid var(--line-strong)',
             flexShrink: 0,
           },
         };

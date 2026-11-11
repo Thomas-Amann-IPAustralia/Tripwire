@@ -22,7 +22,7 @@ export const systemPlan = [
   // ── §1 Purpose and Scope ─────────────────────────────────────────────────
   {
     id: 'purpose',
-    heading: '1. Purpose and Scope',
+    heading: '1. Purpose and scope',
     level: 1,
     stageRef: null,
     anchor: null,
@@ -44,7 +44,7 @@ export const systemPlan = [
   // ── §2 Architecture Overview ─────────────────────────────────────────────
   {
     id: 'architecture',
-    heading: '2. Architecture Overview',
+    heading: '2. Architecture overview',
     level: 1,
     stageRef: null,
     anchor: null,
@@ -52,7 +52,7 @@ export const systemPlan = [
   },
   {
     id: 'pipeline-stages',
-    heading: '2.1 Pipeline Stages',
+    heading: '2.1 Pipeline stages',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -63,7 +63,7 @@ export const systemPlan = [
   },
   {
     id: 'source-type-routing',
-    heading: '2.2 Source-Type Routing',
+    heading: '2.2 Source-type routing',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -90,7 +90,7 @@ export const systemPlan = [
   },
   {
     id: 'observation-mode',
-    heading: '2.3 Observation Mode',
+    heading: '2.3 Observation mode',
     level: 2,
     stageRef: null,
     anchor: 'doc-observation-mode',
@@ -114,7 +114,7 @@ export const systemPlan = [
   // ── §3 Stage Specifications ──────────────────────────────────────────────
   {
     id: 'stage-specifications',
-    heading: '3. Stage Specifications',
+    heading: '3. Stage specifications',
     level: 1,
     stageRef: null,
     anchor: null,
@@ -124,7 +124,7 @@ export const systemPlan = [
   // Stage 1
   {
     id: 'stage-1',
-    heading: '3.1 Stage 1 — Metadata Probe',
+    heading: '3.1 Stage 1: Metadata probe',
     level: 2,
     stageRef: 1,
     anchor: null,
@@ -148,7 +148,7 @@ export const systemPlan = [
   // Stage 2
   {
     id: 'stage-2',
-    heading: '3.2 Stage 2 — Change Detection',
+    heading: '3.2 Stage 2: Change detection',
     level: 2,
     stageRef: 2,
     anchor: null,
@@ -173,7 +173,7 @@ export const systemPlan = [
   // Stage 3
   {
     id: 'stage-3',
-    heading: '3.3 Stage 3 — Diff Generation',
+    heading: '3.3 Stage 3: Diff generation',
     level: 2,
     stageRef: 3,
     anchor: null,
@@ -193,7 +193,7 @@ export const systemPlan = [
   // Stage 4
   {
     id: 'stage-4',
-    heading: '3.4 Stage 4 — Relevance Scoring',
+    heading: '3.4 Stage 4: Relevance scoring',
     level: 2,
     stageRef: 4,
     anchor: null,
@@ -256,7 +256,7 @@ export const systemPlan = [
   // Stage 5
   {
     id: 'stage-5',
-    heading: '3.5 Stage 5 — Semantic Matching: Bi-Encoder',
+    heading: '3.5 Stage 5: Semantic matching (bi-encoder)',
     level: 2,
     stageRef: 5,
     anchor: 'doc-biencoder',
@@ -285,7 +285,7 @@ export const systemPlan = [
   // Stage 6
   {
     id: 'stage-6',
-    heading: '3.6 Stage 6 — Semantic Matching: Cross-Encoder',
+    heading: '3.6 Stage 6: Semantic matching (cross-encoder)',
     level: 2,
     stageRef: 6,
     anchor: 'doc-crossencoder',
@@ -341,7 +341,7 @@ export const systemPlan = [
   // Stage 7
   {
     id: 'stage-7',
-    heading: '3.7 Stage 7 — Trigger Aggregation',
+    heading: '3.7 Stage 7: Trigger aggregation',
     level: 2,
     stageRef: 7,
     anchor: null,
@@ -360,7 +360,7 @@ export const systemPlan = [
   // Stage 8
   {
     id: 'stage-8',
-    heading: '3.8 Stage 8 — LLM Assessment',
+    heading: '3.8 Stage 8: LLM assessment',
     level: 2,
     stageRef: 8,
     anchor: null,
@@ -414,7 +414,7 @@ export const systemPlan = [
   // Stage 9
   {
     id: 'stage-9',
-    heading: '3.9 Stage 9 — Notification',
+    heading: '3.9 Stage 9: Notification',
     level: 2,
     stageRef: 9,
     anchor: 'doc-notifications',
@@ -449,7 +449,7 @@ export const systemPlan = [
   // ── §4 IPFR Ingestion Pipeline ───────────────────────────────────────────
   {
     id: 'ingestion',
-    heading: '4. IPFR Ingestion Pipeline',
+    heading: '4. IPFR ingestion pipeline',
     level: 1,
     stageRef: null,
     anchor: null,
@@ -459,7 +459,7 @@ export const systemPlan = [
   },
   {
     id: 'ingestion-steps',
-    heading: '4.1 Ingestion Steps',
+    heading: '4.1 Ingestion steps',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -489,7 +489,7 @@ export const systemPlan = [
   },
   {
     id: 'graph-construction',
-    heading: '4.2 Quasi-Graph Construction',
+    heading: '4.2 Quasi-graph construction',
     level: 2,
     stageRef: null,
     anchor: 'doc-graph-edges',
@@ -521,7 +521,7 @@ export const systemPlan = [
   // ── §5 Repository Structure ───────────────────────────────────────────────
   {
     id: 'repo-structure',
-    heading: '5. Repository Structure',
+    heading: '5. Repository structure',
     level: 1,
     stageRef: null,
     anchor: null,
@@ -577,7 +577,7 @@ export const systemPlan = [
   // ── §6 Error Handling ────────────────────────────────────────────────────
   {
     id: 'error-handling',
-    heading: '6. Error Handling, Retries, and Observability',
+    heading: '6. Error handling, retries, and observability',
     level: 1,
     stageRef: null,
     anchor: null,
@@ -585,7 +585,7 @@ export const systemPlan = [
   },
   {
     id: 'error-classification',
-    heading: '6.1 Error Classification',
+    heading: '6.1 Error classification',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -601,7 +601,7 @@ export const systemPlan = [
   },
   {
     id: 'content-validation',
-    heading: '6.2 Content Validation',
+    heading: '6.2 Content validation',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -617,7 +617,7 @@ export const systemPlan = [
   },
   {
     id: 'error-isolation',
-    heading: '6.3 Stage-Level Error Isolation',
+    heading: '6.3 Stage-level error isolation',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -627,7 +627,7 @@ export const systemPlan = [
   },
   {
     id: 'graceful-degradation',
-    heading: '6.4 Graceful Degradation',
+    heading: '6.4 Graceful degradation',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -649,7 +649,7 @@ export const systemPlan = [
   },
   {
     id: 'deferred-triggers',
-    heading: '6.5 Deferred Triggers',
+    heading: '6.5 Deferred triggers',
     level: 2,
     stageRef: null,
     anchor: 'doc-deferred-triggers',
@@ -665,7 +665,7 @@ export const systemPlan = [
   },
   {
     id: 'health-alerting',
-    heading: '6.6 Health Alerting',
+    heading: '6.6 Health alerting',
     level: 2,
     stageRef: null,
     anchor: 'doc-health-alerts',
@@ -815,7 +815,7 @@ normalisation:
   },
   {
     id: 'cicd',
-    heading: '7.1 CI/CD Configuration',
+    heading: '7.1 CI/CD configuration',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -836,7 +836,7 @@ normalisation:
   },
   {
     id: 'persistent-storage',
-    heading: '7.2 Persistent Storage',
+    heading: '7.2 Persistent storage',
     level: 2,
     stageRef: null,
     anchor: 'doc-snapshots',
@@ -876,7 +876,7 @@ normalisation:
   },
   {
     id: 'feedback-ingestion',
-    heading: '7.3 Feedback Ingestion — Gmail IMAP Polling',
+    heading: '7.3 Feedback ingestion: Gmail IMAP polling',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -908,7 +908,7 @@ _, ids = mail.search(None, 'UNSEEN SUBJECT "[TRIPWIRE]"')`),
   },
   {
     id: 'lazy-model-loading',
-    heading: '7.4 Lazy Model Loading',
+    heading: '7.4 Lazy model loading',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -936,7 +936,7 @@ _, ids = mail.search(None, 'UNSEEN SUBJECT "[TRIPWIRE]"')`),
   // ── §8 Pipeline Run Logging ───────────────────────────────────────────────
   {
     id: 'run-logging',
-    heading: '8. Pipeline Run Logging',
+    heading: '8. Pipeline run logging',
     level: 1,
     stageRef: null,
     anchor: null,
@@ -956,7 +956,7 @@ _, ids = mail.search(None, 'UNSEEN SUBJECT "[TRIPWIRE]"')`),
   },
   {
     id: 'logging-tables',
-    heading: '8.1 SQLite Logging Tables',
+    heading: '8.1 SQLite logging tables',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -993,7 +993,7 @@ CREATE TABLE deferred_triggers (
   },
   {
     id: 'job-summary',
-    heading: '8.2 GitHub Actions Job Summary',
+    heading: '8.2 GitHub Actions job summary',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -1014,7 +1014,7 @@ CREATE TABLE deferred_triggers (
   },
   {
     id: 'log-example',
-    heading: '8.3 Example Log Entry',
+    heading: '8.3 Example log entry',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -1069,7 +1069,7 @@ CREATE TABLE deferred_triggers (
   // ── §9 SQLite Schema ─────────────────────────────────────────────────────
   {
     id: 'sqlite-schema',
-    heading: '9. SQLite Schema — IPFR Corpus',
+    heading: '9. SQLite schema: IPFR corpus',
     level: 1,
     stageRef: null,
     anchor: 'doc-sqlite',
@@ -1158,7 +1158,7 @@ CREATE TABLE sections (
   // ── §10 Phased Implementation Plan ───────────────────────────────────────
   {
     id: 'implementation-plan',
-    heading: '10. Phased Implementation Plan',
+    heading: '10. Phased implementation plan',
     level: 1,
     stageRef: null,
     anchor: null,
@@ -1166,7 +1166,7 @@ CREATE TABLE sections (
   },
   {
     id: 'phase-1',
-    heading: 'Phase 1 — Foundation',
+    heading: 'Phase 1: Foundation',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -1190,7 +1190,7 @@ CREATE TABLE sections (
   },
   {
     id: 'phase-2',
-    heading: 'Phase 2 — Change Detection',
+    heading: 'Phase 2: Change detection',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -1210,7 +1210,7 @@ CREATE TABLE sections (
   },
   {
     id: 'phase-3',
-    heading: 'Phase 3 — Relevance and Semantic Scoring',
+    heading: 'Phase 3: Relevance and semantic scoring',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -1229,7 +1229,7 @@ CREATE TABLE sections (
   },
   {
     id: 'phase-4',
-    heading: 'Phase 4 — LLM Assessment and Notification',
+    heading: 'Phase 4: LLM assessment and notification',
     level: 2,
     stageRef: null,
     anchor: null,
@@ -1252,7 +1252,7 @@ CREATE TABLE sections (
   },
   {
     id: 'phase-5',
-    heading: 'Phase 5 — Hardening and Iteration',
+    heading: 'Phase 5: Hardening and iteration',
     level: 2,
     stageRef: null,
     anchor: null,

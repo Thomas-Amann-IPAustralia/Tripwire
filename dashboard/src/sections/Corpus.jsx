@@ -5,12 +5,13 @@ import Embedding3D from '../visualisations/Embedding3D.jsx';
 import KnowledgeGraph from '../visualisations/KnowledgeGraph.jsx';
 import ContentMap from '../visualisations/ContentMap.jsx';
 import BipartiteMap from '../visualisations/BipartiteMap.jsx';
+import { PageHeader, Callout, Icon } from '../components/ui.jsx';
 
 const TABS = [
-  '3D EMBEDDING SPACE',
-  '2D KNOWLEDGE GRAPH',
-  'CONTENT MAP',
-  'SOURCE-CORPUS MAP',
+  { label: 'Embedding space (3D)', icon: 'layers',   hint: 'Every content chunk positioned by meaning; nearby points say similar things.' },
+  { label: 'Knowledge graph',      icon: 'grid',     hint: 'Pages linked by embedding similarity, shared entities and internal links. Select a page for details.' },
+  { label: 'Content map',          icon: 'file',     hint: 'The corpus as a treemap of topic clusters, sized by how much content each page carries.' },
+  { label: 'Source to page map',   icon: 'source',   hint: 'Which monitored sources have triggered which IPFR pages over the full run history.' },
 ];
 
 class TabErrorBoundary extends React.Component {
@@ -30,21 +31,10 @@ class TabErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          flexDirection: 'column',
-          gap: '8px',
-          color: 'var(--state-error)',
-          fontFamily: 'var(--font-mono)',
-          fontSize: '11px',
-        }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: '18px' }}>
-            VISUALISATION ERROR
-          </div>
-          {this.state.error?.message}
+        <div style={{ padding: '24px' }}>
+          <Callout tone="error" icon="alert" title="This visualisation could not be displayed">
+            {this.state.error?.message}
+          </Callout>
         </div>
       );
     }
@@ -83,80 +73,57 @@ export default function Corpus() {
       edgeCount:  edges.length,
       clusters:   clusterSet.size,
       lastIngested: lastIngested
-        ? new Date(lastIngested).toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()
+        ? new Date(lastIngested).toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' })
         : '—',
     };
   }, [pages, edges]);
 
-  return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+  const statItems = [
+    { label: 'Pages', value: stats.pageCount.toLocaleString() },
+    { label: 'Chunks', value: stats.chunkCount.toLocaleString() },
+    { label: 'Graph edges', value: stats.edgeCount.toLocaleString() },
+    { label: 'Clusters', value: stats.clusters },
+    { label: 'Last ingested', value: stats.lastIngested },
+  ];
 
-      {/* Section header */}
-      <div style={{
-        height: '80px', minHeight: '80px',
-        display: 'flex', alignItems: 'center',
-        padding: '0 24px', borderBottom: '1px solid var(--rule)',
-      }}>
-        <div>
-          <div style={{
-            fontFamily: 'var(--font-display)', fontSize: '50px',
-            lineHeight: 1, color: 'var(--text-primary)',
-          }}>
-            CORPUS
-          </div>
-          <div style={{
-            fontFamily: 'var(--font-mono)', fontSize: '13px',
-            color: 'var(--text-tertiary)', letterSpacing: '0.06em',
-          }}>
-            IPFR Knowledge Base
-          </div>
+  return (
+    <div className="tw-page is-full">
+      <PageHeader
+        eyebrow="Monitor · IPFR knowledge base"
+        title="IPFR corpus"
+        description="The IP First Response content Tripwire compares source changes against, shown four ways."
+      >
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 22px', marginTop: '14px' }}>
+          {statItems.map(({ label, value }) => (
+            <div key={label} style={{ fontSize: '12.5px', color: 'var(--muted)' }}>
+              {label} <strong className="tabular" style={{ color: 'var(--ink)', fontWeight: 650, marginLeft: '4px' }}>{value}</strong>
+            </div>
+          ))}
         </div>
-      </div>
+      </PageHeader>
 
       <ErrorBanner error={pagesError} />
 
-      {/* Tab bar */}
-      <div style={{
-        display: 'flex', alignItems: 'flex-end',
-        padding: '0 24px',
-        borderBottom: '1px solid var(--rule)',
-        gap: '32px',
-        flexShrink: 0,
-      }}>
-        {TABS.map((label, i) => (
-          <button
-            key={label}
-            onClick={() => setActiveTab(i)}
-            style={{
-              background: 'none', border: 'none', cursor: 'pointer',
-              padding: '12px 0',
-              fontFamily: 'var(--font-display)',
-              fontSize: '17px',
-              letterSpacing: '0.06em',
-              color: activeTab === i ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              borderBottom: activeTab === i ? '2px solid var(--text-primary)' : '2px solid transparent',
-              marginBottom: '-1px',
-              transition: 'color 120ms ease, border-color 120ms ease',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-
-      {/* Stats strip */}
-      <div style={{
-        padding: '6px 24px',
-        borderBottom: '1px solid var(--rule)',
-        fontFamily: 'var(--font-mono)',
-        fontSize: '13px',
-        color: 'var(--text-tertiary)',
-        letterSpacing: '0.06em',
-        flexShrink: 0,
-      }}>
-        PAGES: {stats.pageCount} · CHUNKS: {stats.chunkCount} · GRAPH EDGES: {stats.edgeCount} · CLUSTERS: {stats.clusters} · LAST INGESTED: {stats.lastIngested}
-      </div>
+      <div className="tw-card is-clip" style={{ flex: 1, minHeight: '560px', display: 'flex', flexDirection: 'column' }}>
+        {/* Tab bar */}
+        <div className="tw-tabs" role="tablist" style={{ padding: '0 12px', flexShrink: 0 }}>
+          {TABS.map((tab, i) => (
+            <button
+              key={tab.label}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === i}
+              className={`tw-tab${activeTab === i ? ' active' : ''}`}
+              onClick={() => setActiveTab(i)}
+            >
+              <Icon name={tab.icon} />
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        <div style={{ padding: '8px 16px', fontSize: '12px', color: 'var(--muted)', borderBottom: '1px solid var(--line-soft)', background: 'var(--surface-subtle)', flexShrink: 0 }}>
+          {TABS[activeTab].hint}
+        </div>
 
       {/* Tab content */}
       <div style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
@@ -183,6 +150,7 @@ export default function Corpus() {
             <BipartiteMap isActive={activeTab === 3} />
           </div>
         </TabErrorBoundary>
+      </div>
       </div>
     </div>
   );

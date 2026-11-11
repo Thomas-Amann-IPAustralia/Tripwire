@@ -4,6 +4,7 @@ import { useSources, useRuns, useSnapshot } from '../hooks/useData.js';
 import { formatRelativeTime } from '../lib/dataUtils.js';
 import SnapshotOverlay from '../visualisations/SnapshotOverlay.jsx';
 import ErrorBanner from '../components/ErrorBanner.jsx';
+import { PageHeader, Card, Badge, OutcomeBadge, VerdictBadge, Caret, Meter, Icon, Loading, EmptyState, Callout, SearchInput, MetricCard } from '../components/ui.jsx';
 
 // ── Barcode SVG: vertical bars representing check frequency cadence ──────────
 const CADENCE_BARS = {
@@ -12,8 +13,8 @@ const CADENCE_BARS = {
 
 function BarcodeColumn({ frequency }) {
   const count = CADENCE_BARS[frequency] ?? 1;
-  const width = 40;
-  const height = 28;
+  const width = 26;
+  const height = 16;
   // Distribute bars evenly across width
   const gap = width / count;
   const barW = Math.max(1, gap * 0.55);
@@ -24,11 +25,12 @@ function BarcodeColumn({ frequency }) {
         <rect
           key={i}
           x={gap * i + (gap - barW) / 2}
-          y={2}
+          y={0}
           width={barW}
-          height={height - 4}
-          fill="var(--stage-4)"
-          opacity={0.6}
+          height={height}
+          rx={1}
+          fill="var(--accent)"
+          opacity={0.55}
         />
       ))}
     </svg>
@@ -36,12 +38,12 @@ function BarcodeColumn({ frequency }) {
 }
 
 // ── Mini sparkline: last 90 days of check history ────────────────────────────
-const OUTCOME_COLOR = { completed: '#3a6b3a', error: '#8b1a1a', no_change: '#5c5a52' };
+const OUTCOME_COLOR = { completed: 'var(--ok)', error: 'var(--error)', no_change: 'var(--line-strong)' };
 
 function SparkLine({ history = [] }) {
-  const w = 80, h = 24;
+  const w = 72, h = 16;
   if (!history.length) {
-    return <svg width={w} height={h}><rect width={w} height={h} fill="none" /></svg>;
+    return <span className="tw-faint tw-small">No history</span>;
   }
   const n = history.length;
   const slotW = Math.max(1, w / n);
@@ -54,52 +56,39 @@ function SparkLine({ history = [] }) {
           y={0}
           width={Math.max(1, slotW - 1)}
           height={h}
-          fill={OUTCOME_COLOR[item.outcome] ?? '#5c5a52'}
-          opacity={0.85}
+          rx={1}
+          fill={OUTCOME_COLOR[item.outcome] ?? 'var(--line-strong)'}
+          opacity={0.9}
         />
       ))}
     </svg>
   );
 }
 
-// ── Type pill ────────────────────────────────────────────────────────────────
-const TYPE_COLOR = { webpage: 'var(--stage-4)', frl: 'var(--stage-3)', rss: 'var(--stage-1)' };
+// ── Type badge ───────────────────────────────────────────────────────────────
+const TYPE_LABEL = { webpage: 'Web page', frl: 'Legislation', rss: 'RSS feed' };
+const TYPE_TONE  = { webpage: 'info', frl: 'accent', rss: 'warn' };
 
 function TypePill({ type }) {
-  return (
-    <span style={{
-      fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.05em',
-      color: TYPE_COLOR[type] ?? 'var(--text-tertiary)',
-      border: `1px solid ${TYPE_COLOR[type] ?? 'var(--text-tertiary)'}`,
-      padding: '1px 5px', borderRadius: '2px',
-      textTransform: 'uppercase',
-    }}>
-      {type ?? '—'}
-    </span>
-  );
+  return <Badge tone={TYPE_TONE[type] ?? 'muted'}>{TYPE_LABEL[type] ?? type ?? '—'}</Badge>;
 }
 
-// ── Importance bar (48px wide) ───────────────────────────────────────────────
+// ── Importance meter ─────────────────────────────────────────────────────────
 function ImportanceBar({ value }) {
-  const pct = Math.max(0, Math.min(1, value ?? 0)) * 100;
+  const v = Math.max(0, Math.min(1, value ?? 0));
   return (
-    <div style={{ width: 48, height: 6, background: 'var(--bg-accent)' }}>
-      <div style={{ width: `${pct}%`, height: '100%', background: 'var(--stage-4)' }} />
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} title={`Importance ${v.toFixed(2)}`}>
+      <Meter value={v} style={{ width: 52 }} label="Importance" />
+      <span className="tabular tw-small tw-muted">{v.toFixed(1)}</span>
     </div>
   );
 }
 
 // ── Status dot ───────────────────────────────────────────────────────────────
 function StatusDot({ failures }) {
-  const color = failures >= 2 ? 'var(--state-error)'
-    : failures === 1 ? 'var(--state-warn)'
-    : 'var(--state-ok)';
-  return (
-    <span style={{
-      display: 'inline-block', width: 8, height: 8, borderRadius: '50%',
-      background: color, flexShrink: 0,
-    }} />
-  );
+  if (failures >= 2) return <Badge tone="error" dot>Failing</Badge>;
+  if (failures === 1) return <Badge tone="warn" dot>1 failure</Badge>;
+  return <Badge tone="ok" dot>Healthy</Badge>;
 }
 
 // ── Expanded row: run records + snapshot ─────────────────────────────────────
@@ -111,79 +100,49 @@ function SourceExpandedDetail({ sourceId }) {
 
   const last10 = runs.slice(0, 10);
 
-  const thStyle = {
-    fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)',
-    letterSpacing: '0.06em', textTransform: 'uppercase',
-    padding: '6px 10px', textAlign: 'left', borderBottom: '1px solid var(--rule)',
-    fontWeight: 400,
-  };
-  const tdStyle = {
-    fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)',
-    padding: '5px 10px', borderBottom: '1px solid var(--rule)',
-  };
-
   return (
-    <td colSpan={11} style={{ background: 'var(--bg-tertiary)', padding: '0' }}>
-      <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--rule-accent)' }}>
-        {/* Run records table */}
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)',
-          letterSpacing: '0.07em', marginBottom: '8px', textTransform: 'uppercase',
-        }}>
-          LAST {last10.length} PIPELINE RUNS
+    <td colSpan={10} style={{ background: "var(--surface-subtle)", padding: 0 }}>
+      <div style={{ padding: '16px 20px 18px', borderBottom: '1px solid var(--line)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '10px' }}>
+          <h3 style={{ fontSize: '13px' }}>Last {last10.length} pipeline run{last10.length !== 1 ? 's' : ''}</h3>
+          <button
+            type="button"
+            className="tw-btn is-sm"
+            onClick={() => setShowSnapshot(true)}
+            disabled={snapLoading || !hasSnapshot}
+          >
+            <Icon name="file" />
+            {snapLoading ? 'Loading snapshot…' : hasSnapshot ? 'View snapshot' : 'No snapshot yet'}
+          </button>
         </div>
         {last10.length === 0 ? (
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', padding: '4px 0 12px' }}>
-            NO RUNS RECORDED
-          </div>
+          <div className="tw-small tw-muted">No runs recorded for this source.</div>
         ) : (
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '12px', background: 'var(--bg-secondary)' }}>
-            <thead>
-              <tr>
-                <th style={thStyle}>RUN ID</th>
-                <th style={thStyle}>TIME</th>
-                <th style={thStyle}>STAGE</th>
-                <th style={thStyle}>OUTCOME</th>
-                <th style={thStyle}>VERDICT</th>
-              </tr>
-            </thead>
-            <tbody>
-              {last10.map(run => (
-                <tr key={run.id}>
-                  <td style={tdStyle}>{run.run_id}</td>
-                  <td style={tdStyle}>{formatRelativeTime(run.timestamp)}</td>
-                  <td style={tdStyle}>S{run.stage_reached ?? '—'}</td>
-                  <td style={{ ...tdStyle, color: run.outcome === 'error' ? 'var(--state-error)' : 'var(--text-secondary)' }}>
-                    {run.outcome ?? '—'}
-                  </td>
-                  <td style={{
-                    ...tdStyle,
-                    color: run.verdict === 'CHANGE_REQUIRED' ? 'var(--state-alert)'
-                      : run.verdict === 'UNCERTAIN' ? 'var(--state-warn)'
-                      : run.verdict === 'NO_CHANGE' ? 'var(--state-ok)'
-                      : 'var(--text-tertiary)',
-                  }}>
-                    {run.verdict ?? '—'}
-                  </td>
+          <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius)', overflow: 'hidden', background: 'var(--surface)' }}>
+            <table className="tw-table is-compact">
+              <thead>
+                <tr>
+                  <th>Run ID</th>
+                  <th>When</th>
+                  <th>Stage reached</th>
+                  <th>Outcome</th>
+                  <th>Verdict</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {last10.map(run => (
+                  <tr key={run.id}>
+                    <td><span className="tw-code" style={{ fontSize: '11px' }}>{run.run_id}</span></td>
+                    <td>{formatRelativeTime(run.timestamp)}</td>
+                    <td className="tabular">{run.stage_reached ?? '—'}</td>
+                    <td><OutcomeBadge outcome={run.outcome} /></td>
+                    <td>{run.verdict ? <VerdictBadge verdict={run.verdict} /> : <span className="tw-faint">—</span>}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
-
-        {/* Snapshot button */}
-        <button
-          onClick={() => setShowSnapshot(true)}
-          disabled={snapLoading || !hasSnapshot}
-          style={{
-            fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.07em',
-            background: 'none', border: '1px solid var(--rule-accent)',
-            color: hasSnapshot ? 'var(--text-secondary)' : 'var(--text-tertiary)',
-            padding: '4px 12px', cursor: hasSnapshot ? 'pointer' : 'default',
-          }}
-        >
-          {snapLoading ? 'LOADING SNAPSHOT…' : hasSnapshot ? 'VIEW SNAPSHOT ↗' : 'NO SNAPSHOT YET'}
-        </button>
       </div>
 
       {showSnapshot && hasSnapshot && (
@@ -245,168 +204,114 @@ function AddSourcePanel({ open, onClose, onSuccess }) {
     }
   };
 
-  const inputStyle = {
-    fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-primary)',
-    background: 'var(--bg-tertiary)', border: '1px solid var(--rule-accent)',
-    padding: '6px 8px', width: '100%', outline: 'none', display: 'block',
-  };
-  const labelStyle = {
-    fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)',
-    letterSpacing: '0.07em', textTransform: 'uppercase', display: 'block', marginBottom: '4px',
-  };
-  const errStyle = {
-    fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--state-error)',
-    marginTop: '3px',
-  };
-  const fieldWrap = { marginBottom: '14px' };
+  const errStyle = { fontSize: '11.5px', color: 'var(--error)', marginTop: '4px' };
+  const fieldWrap = { marginBottom: '16px' };
 
   return (
     <>
-      {/* Backdrop */}
-      {open && (
-        <div
-          onClick={onClose}
-          style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', zIndex: 300,
-          }}
-        />
-      )}
-      {/* Slide-in panel */}
-      <div style={{
-        position: 'fixed', top: 0, right: 0, bottom: 0,
-        width: '360px',
-        background: 'var(--bg-secondary)',
-        borderLeft: '1px solid var(--rule-accent)',
-        zIndex: 301,
-        transform: open ? 'translateX(0)' : 'translateX(100%)',
-        transition: 'transform 250ms ease-out',
-        display: 'flex', flexDirection: 'column',
-        overflow: 'hidden',
-      }}>
-        {/* Header */}
-        <div style={{
-          height: '48px', display: 'flex', alignItems: 'center',
-          padding: '0 16px', gap: '12px',
-          borderBottom: '1px solid var(--rule)',
-          flexShrink: 0,
-        }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: '18px', letterSpacing: '0.06em' }}>
-            ADD SOURCE
-          </span>
-          <div style={{ flex: 1 }} />
-          <button onClick={onClose} style={{
-            background: 'none', border: '1px solid var(--rule)', cursor: 'pointer',
-            color: 'var(--text-secondary)', fontFamily: 'var(--font-mono)', fontSize: '11px',
-            padding: '4px 12px',
-          }}>
-            CANCEL
+      {open && <div className="tw-scrim" onClick={onClose} />}
+      <div
+        className="tw-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Add a source"
+        style={{
+          width: 'min(420px, 100vw)',
+          transform: open ? 'translateX(0)' : 'translateX(105%)',
+          transition: 'transform 250ms ease-out',
+          visibility: open ? 'visible' : 'hidden',
+        }}
+      >
+        <div className="tw-drawer-head" style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+          <div style={{ flex: 1 }}>
+            <div className="tw-overline" style={{ marginBottom: '6px' }}>Source registry</div>
+            <div className="tw-drawer-title">Add a source</div>
+            <p className="tw-small tw-muted" style={{ marginTop: '6px' }}>New sources are checked from the next scheduled pipeline run.</p>
+          </div>
+          <button type="button" className="tw-icon-btn" onClick={onClose} aria-label="Close" style={{ background: 'var(--surface)' }}>
+            <Icon name="close" />
           </button>
         </div>
 
-        {/* Form body */}
-        <form onSubmit={handleSubmit} style={{ flex: 1, overflowY: 'auto', padding: '20px 16px' }}>
-          <div style={fieldWrap}>
-            <label style={labelStyle}>Source ID *</label>
-            <input value={form.source_id} onChange={e => set('source_id', e.target.value)} style={inputStyle} />
-            {errors.source_id && <div style={errStyle}>{errors.source_id}</div>}
-          </div>
-
-          <div style={fieldWrap}>
-            <label style={labelStyle}>URL *</label>
-            <input type="url" value={form.url} onChange={e => set('url', e.target.value)} style={inputStyle} />
-            {errors.url && <div style={errStyle}>{errors.url}</div>}
-          </div>
-
-          <div style={fieldWrap}>
-            <label style={labelStyle}>Title *</label>
-            <input value={form.title} onChange={e => set('title', e.target.value)} style={inputStyle} />
-            {errors.title && <div style={errStyle}>{errors.title}</div>}
-          </div>
-
-          <div style={fieldWrap}>
-            <label style={labelStyle}>Source Type</label>
-            <select value={form.source_type} onChange={e => set('source_type', e.target.value)}
-              style={{ ...inputStyle, cursor: 'pointer' }}>
-              {TYPE_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
-            </select>
-          </div>
-
-          <div style={fieldWrap}>
-            <label style={labelStyle}>Importance (0.0 – 1.0)</label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <input
-                type="range" min={0} max={1} step={0.1} value={form.importance}
-                onChange={e => set('importance', parseFloat(e.target.value))}
-                style={{ flex: 1, accentColor: 'var(--stage-4)' }}
-              />
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-primary)', minWidth: '28px' }}>
-                {form.importance.toFixed(1)}
-              </span>
+        <form onSubmit={handleSubmit} style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+          <div className="tw-drawer-body">
+            <div style={fieldWrap}>
+              <label className="tw-label" htmlFor="src-id">Source ID <span style={{ color: 'var(--alert)' }}>*</span></label>
+              <input id="src-id" className="tw-input" value={form.source_id} onChange={e => set('source_id', e.target.value)} aria-invalid={!!errors.source_id} />
+              {errors.source_id && <div style={errStyle}>{errors.source_id}</div>}
             </div>
+
+            <div style={fieldWrap}>
+              <label className="tw-label" htmlFor="src-url">URL <span style={{ color: 'var(--alert)' }}>*</span></label>
+              <input id="src-url" className="tw-input" type="url" value={form.url} onChange={e => set('url', e.target.value)} aria-invalid={!!errors.url} />
+              {errors.url && <div style={errStyle}>{errors.url}</div>}
+            </div>
+
+            <div style={fieldWrap}>
+              <label className="tw-label" htmlFor="src-title">Title <span style={{ color: 'var(--alert)' }}>*</span></label>
+              <input id="src-title" className="tw-input" value={form.title} onChange={e => set('title', e.target.value)} aria-invalid={!!errors.title} />
+              {errors.title && <div style={errStyle}>{errors.title}</div>}
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div style={fieldWrap}>
+                <label className="tw-label" htmlFor="src-type">Source type</label>
+                <select id="src-type" className="tw-select" value={form.source_type} onChange={e => set('source_type', e.target.value)}>
+                  {TYPE_OPTIONS.map(t => <option key={t} value={t}>{TYPE_LABEL[t] ?? t}</option>)}
+                </select>
+              </div>
+              <div style={fieldWrap}>
+                <label className="tw-label" htmlFor="src-freq">Check frequency</label>
+                <select id="src-freq" className="tw-select" value={form.check_frequency} onChange={e => set('check_frequency', e.target.value)}>
+                  {FREQ_OPTIONS.map(f => <option key={f} value={f}>{f.charAt(0).toUpperCase() + f.slice(1)}</option>)}
+                </select>
+              </div>
+            </div>
+
+            <div style={fieldWrap}>
+              <label className="tw-label" htmlFor="src-imp">Importance <span className="tw-muted" style={{ fontWeight: 400 }}>(0.0 to 1.0)</span></label>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <input
+                  id="src-imp"
+                  type="range" min={0} max={1} step={0.1} value={form.importance}
+                  onChange={e => set('importance', parseFloat(e.target.value))}
+                  style={{ flex: 1 }}
+                />
+                <span className="tabular" style={{ fontSize: '13px', fontWeight: 650, minWidth: '28px' }}>
+                  {form.importance.toFixed(1)}
+                </span>
+              </div>
+            </div>
+
+            <div style={fieldWrap}>
+              <label className="tw-label" htmlFor="src-notes">Notes</label>
+              <textarea id="src-notes" className="tw-textarea" value={form.notes} onChange={e => set('notes', e.target.value)} rows={3} />
+            </div>
+
+            <div style={{ ...fieldWrap, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', padding: '12px 14px', border: '1px solid var(--line)', borderRadius: 'var(--radius)', background: 'var(--surface-subtle)' }}>
+              <div>
+                <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--ink)' }}>Force Selenium</div>
+                <div className="tw-small tw-muted">Use a full browser for pages that need JavaScript to render.</div>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                className="tw-switch"
+                aria-checked={form.force_selenium}
+                aria-label="Force Selenium"
+                onClick={() => set('force_selenium', !form.force_selenium)}
+              />
+            </div>
+
+            {apiError && <Callout tone="error" icon="alert" title="Could not save the source">{apiError}</Callout>}
           </div>
 
-          <div style={fieldWrap}>
-            <label style={labelStyle}>Check Frequency</label>
-            <select value={form.check_frequency} onChange={e => set('check_frequency', e.target.value)}
-              style={{ ...inputStyle, cursor: 'pointer' }}>
-              {FREQ_OPTIONS.map(f => <option key={f} value={f}>{f}</option>)}
-            </select>
-          </div>
-
-          <div style={fieldWrap}>
-            <label style={labelStyle}>Notes</label>
-            <textarea
-              value={form.notes}
-              onChange={e => set('notes', e.target.value)}
-              rows={3}
-              style={{ ...inputStyle, resize: 'vertical', lineHeight: '1.5' }}
-            />
-          </div>
-
-          <div style={{ ...fieldWrap, display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <label style={{ ...labelStyle, marginBottom: 0 }}>Force Selenium</label>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={form.force_selenium}
-              onClick={() => set('force_selenium', !form.force_selenium)}
-              style={{
-                width: '36px', height: '20px', borderRadius: '10px', border: 'none',
-                cursor: 'pointer', outline: 'none',
-                background: form.force_selenium ? 'var(--stage-1)' : 'var(--bg-accent)',
-                position: 'relative', transition: 'background 150ms', flexShrink: 0,
-              }}
-            >
-              <span style={{
-                position: 'absolute', top: '3px',
-                left: form.force_selenium ? '19px' : '3px',
-                width: '14px', height: '14px', borderRadius: '50%',
-                background: 'var(--text-primary)', transition: 'left 150ms', display: 'block',
-              }} />
+          <div className="tw-drawer-foot">
+            <button type="button" className="tw-btn" onClick={onClose}>Cancel</button>
+            <button type="submit" className="tw-btn is-primary" disabled={saving}>
+              {saving ? 'Saving…' : 'Save source'}
             </button>
           </div>
-
-          {apiError && (
-            <div style={{
-              fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--state-error)',
-              border: '1px solid var(--state-error)', padding: '8px 10px', marginBottom: '12px',
-            }}>
-              {apiError}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={saving}
-            style={{
-              width: '100%', padding: '10px',
-              fontFamily: 'var(--font-display)', fontSize: '14px', letterSpacing: '0.08em',
-              background: saving ? 'var(--bg-accent)' : 'var(--stage-1)',
-              color: 'var(--text-primary)', border: 'none', cursor: saving ? 'default' : 'pointer',
-            }}
-          >
-            {saving ? 'SAVING…' : 'SAVE SOURCE'}
-          </button>
         </form>
       </div>
     </>
@@ -414,22 +319,13 @@ function AddSourcePanel({ open, onClose, onSuccess }) {
 }
 
 // ── Main Sources section ──────────────────────────────────────────────────────
-const COL_HEADER = {
-  fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)',
-  letterSpacing: '0.06em', textTransform: 'uppercase',
-  padding: '6px 8px', textAlign: 'left', borderBottom: '1px solid var(--rule)',
-  fontWeight: 400, whiteSpace: 'nowrap',
-};
-
-const CELL = {
-  padding: '7px 8px', borderBottom: '1px solid var(--rule)',
-  verticalAlign: 'middle',
-};
+const FREQ_LABEL = f => f ? f.charAt(0).toUpperCase() + f.slice(1) : '—';
 
 export default function Sources() {
   const { data: sources = [], isLoading, error } = useSources();
   const [expandedId, setExpandedId] = useState(null);
   const [addOpen, setAddOpen] = useState(false);
+  const [query, setQuery] = useState('');
   const queryClient = useQueryClient();
 
   const toggleRow = id => setExpandedId(cur => cur === id ? null : id);
@@ -439,170 +335,128 @@ export default function Sources() {
     setAddOpen(false);
   };
 
+  const q = query.trim().toLowerCase();
+  const visible = q
+    ? sources.filter(s => (s.source_id ?? '').toLowerCase().includes(q) || (s.title ?? '').toLowerCase().includes(q))
+    : sources;
+
+  const failing = sources.filter(s => (s.consecutive_failures ?? 0) >= 2).length;
+  const warning = sources.filter(s => (s.consecutive_failures ?? 0) === 1).length;
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {/* ── Section header ── */}
-      <div style={{
-        height: '80px', minHeight: '80px',
-        display: 'flex', alignItems: 'flex-end',
-        padding: '0 24px 12px',
-        borderBottom: '1px solid var(--rule)',
-        gap: '16px',
-      }}>
-        <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: '42px', lineHeight: 1, letterSpacing: '0.04em' }}>
-            SOURCES
-          </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-secondary)', marginTop: '2px' }}>
-            Influencer Source Registry
-          </div>
-        </div>
-        <div style={{ flex: 1 }} />
-        <button
-          onClick={() => setAddOpen(true)}
-          style={{
-            fontFamily: 'var(--font-display)', fontSize: '14px', letterSpacing: '0.08em',
-            background: 'none', border: '1px solid var(--rule-accent)',
-            color: 'var(--text-secondary)', padding: '6px 16px', cursor: 'pointer',
-          }}
-          onMouseEnter={e => e.currentTarget.style.color = 'var(--text-primary)'}
-          onMouseLeave={e => e.currentTarget.style.color = 'var(--text-secondary)'}
-        >
-          + ADD SOURCE
-        </button>
-      </div>
+    <div className="tw-page">
+      <PageHeader
+        eyebrow="Monitor · Influencer source registry"
+        title="Monitored sources"
+        description="The authoritative pages, legislation and feeds Tripwire checks for changes. Select a source to see its recent runs and latest snapshot."
+        actions={
+          <button type="button" className="tw-btn is-primary" onClick={() => setAddOpen(true)}>
+            <Icon name="plus" /> Add source
+          </button>
+        }
+      />
 
       <ErrorBanner error={error} />
 
-      {/* ── Table ── */}
-      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'auto' }}>
+      {!isLoading && sources.length > 0 && (
+        <div className="tw-metrics" style={{ marginBottom: '18px' }}>
+          <MetricCard label="Sources monitored" value={sources.length} icon="source" />
+          <MetricCard label="Healthy" value={sources.length - failing - warning} tone="ok" context="No recent fetch failures" />
+          <MetricCard label="One recent failure" value={warning} tone={warning ? 'warn' : undefined} context="Will retry on the next run" />
+          <MetricCard label="Failing" value={failing} tone={failing ? 'alert' : undefined} context="Two or more consecutive failures" />
+        </div>
+      )}
+
+      <Card
+        noBody
+        clip
+        title="Source registry"
+        subtitle={`${visible.length} of ${sources.length} sources`}
+        actions={<SearchInput value={query} onChange={setQuery} placeholder="Search by ID or title" width={260} />}
+      >
         {isLoading ? (
-          <div style={{
-            padding: '24px', fontFamily: 'var(--font-mono)', fontSize: '11px',
-            color: 'var(--text-tertiary)',
-          }}>
-            LOADING SOURCES…
-          </div>
+          <div style={{ padding: '8px 20px' }}><Loading>Loading sources…</Loading></div>
         ) : (
-          <table style={{
-            width: '100%', borderCollapse: 'collapse', tableLayout: 'auto',
-            background: 'var(--bg-primary)',
-          }}>
-            <thead style={{ position: 'sticky', top: 0, background: 'var(--bg-secondary)', zIndex: 10 }}>
-              <tr>
-                <th style={{ ...COL_HEADER, width: 40 }} />
-                <th style={COL_HEADER}>ID</th>
-                <th style={COL_HEADER}>TITLE</th>
-                <th style={COL_HEADER}>TYPE</th>
-                <th style={{ ...COL_HEADER, width: 60 }}>IMPORTANCE</th>
-                <th style={COL_HEADER}>FREQUENCY</th>
-                <th style={COL_HEADER}>LAST CHECKED</th>
-                <th style={COL_HEADER}>LAST CHANGED</th>
-                <th style={COL_HEADER}>FAILURES</th>
-                <th style={{ ...COL_HEADER, width: 90 }}>HISTORY</th>
-                <th style={{ ...COL_HEADER, width: 20 }} />
-              </tr>
-            </thead>
-            <tbody>
-              {sources.map(src => {
-                const isExpanded = expandedId === src.source_id;
-                const failures = src.consecutive_failures ?? 0;
-                return (
-                  <React.Fragment key={src.source_id}>
-                    <tr
-                      onClick={() => toggleRow(src.source_id)}
-                      style={{ cursor: 'pointer' }}
-                      onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-secondary)'}
-                      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                    >
-                      {/* Barcode */}
-                      <td style={{ ...CELL, padding: '6px 4px', width: 40 }}>
-                        <BarcodeColumn frequency={src.check_frequency} />
-                      </td>
-
-                      {/* source_id */}
-                      <td style={{ ...CELL, fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
-                        {src.source_id}
-                      </td>
-
-                      {/* Title */}
-                      <td style={{
-                        ...CELL,
-                        fontFamily: 'var(--font-body)', fontSize: '12px', color: 'var(--text-primary)',
-                        maxWidth: '220px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                      }}>
-                        {src.title}
-                      </td>
-
-                      {/* Type */}
-                      <td style={CELL}>
-                        <TypePill type={src.source_type} />
-                      </td>
-
-                      {/* Importance */}
-                      <td style={CELL}>
-                        <ImportanceBar value={src.importance} />
-                      </td>
-
-                      {/* Check frequency */}
-                      <td style={{ ...CELL, fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>
-                        {src.check_frequency ?? '—'}
-                      </td>
-
-                      {/* Last checked */}
-                      <td style={{ ...CELL, fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', whiteSpace: 'nowrap' }}>
-                        {src.last_checked ? formatRelativeTime(src.last_checked) : '—'}
-                      </td>
-
-                      {/* Last changed */}
-                      <td style={{ ...CELL, fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', whiteSpace: 'nowrap' }}>
-                        {src.last_changed ? formatRelativeTime(src.last_changed) : '—'}
-                      </td>
-
-                      {/* Consecutive failures */}
-                      <td style={{
-                        ...CELL,
-                        fontFamily: 'var(--font-mono)', fontSize: '10px',
-                        color: failures >= 2 ? 'var(--state-error)' : 'var(--text-secondary)',
-                        textAlign: 'center',
-                      }}>
-                        {failures}
-                      </td>
-
-                      {/* Check history sparkline */}
-                      <td style={{ ...CELL, padding: '4px 8px' }}>
-                        <SparkLine history={src.check_history ?? []} />
-                      </td>
-
-                      {/* Status dot */}
-                      <td style={{ ...CELL, textAlign: 'center' }}>
-                        <StatusDot failures={failures} />
-                      </td>
-                    </tr>
-
-                    {/* Expanded detail row */}
-                    {isExpanded && (
-                      <tr>
-                        <SourceExpandedDetail sourceId={src.source_id} />
-                      </tr>
-                    )}
-                  </React.Fragment>
-                );
-              })}
-              {!sources.length && (
+          <div className="tw-table-wrap">
+            <table className="tw-table">
+              <thead>
                 <tr>
-                  <td colSpan={11} style={{
-                    padding: '24px', fontFamily: 'var(--font-mono)', fontSize: '11px',
-                    color: 'var(--text-tertiary)', textAlign: 'center',
-                  }}>
-                    NO SOURCES FOUND
-                  </td>
+                  <th style={{ width: 28 }} />
+                  <th>Source</th>
+                  <th>Type</th>
+                  <th>Importance</th>
+                  <th>Frequency</th>
+                  <th>Last checked</th>
+                  <th>Last changed</th>
+                  <th style={{ textAlign: 'center' }}>Failures</th>
+                  <th>Recent history</th>
+                  <th>Status</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {visible.map(src => {
+                  const isExpanded = expandedId === src.source_id;
+                  const failures = src.consecutive_failures ?? 0;
+                  return (
+                    <React.Fragment key={src.source_id}>
+                      <tr
+                        className={`is-clickable${isExpanded ? ' is-expanded' : ''}`}
+                        onClick={() => toggleRow(src.source_id)}
+                        aria-expanded={isExpanded}
+                      >
+                        <td style={{ paddingRight: 0 }}><Caret open={isExpanded} /></td>
+
+                        <td style={{ maxWidth: '300px' }}>
+                          <div className="tw-cell-strong" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={src.title}>
+                            {src.title}
+                          </div>
+                          <div className="tw-code" style={{ fontSize: '11px', color: 'var(--faint)', marginTop: '2px' }}>{src.source_id}</div>
+                        </td>
+
+                        <td><TypePill type={src.source_type} /></td>
+
+                        <td><ImportanceBar value={src.importance} /></td>
+
+                        <td style={{ whiteSpace: 'nowrap' }}>
+                          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                            <BarcodeColumn frequency={src.check_frequency} />
+                            {FREQ_LABEL(src.check_frequency)}
+                          </span>
+                        </td>
+
+                        <td style={{ whiteSpace: 'nowrap' }}>{src.last_checked ? formatRelativeTime(src.last_checked) : '—'}</td>
+
+                        <td style={{ whiteSpace: 'nowrap' }}>{src.last_changed ? formatRelativeTime(src.last_changed) : '—'}</td>
+
+                        <td className="tabular" style={{ textAlign: 'center', fontWeight: failures ? 700 : 400, color: failures >= 2 ? 'var(--error)' : failures ? 'var(--warn)' : 'var(--muted)' }}>
+                          {failures}
+                        </td>
+
+                        <td><SparkLine history={src.check_history ?? []} /></td>
+
+                        <td><StatusDot failures={failures} /></td>
+                      </tr>
+
+                      {isExpanded && (
+                        <tr>
+                          <SourceExpandedDetail sourceId={src.source_id} />
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+                {!visible.length && (
+                  <tr>
+                    <td colSpan={10} style={{ padding: 0 }}>
+                      <EmptyState icon="source" compact title={sources.length ? 'No sources match your search' : 'No sources found'} />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
-      </div>
+      </Card>
 
       <AddSourcePanel
         open={addOpen}

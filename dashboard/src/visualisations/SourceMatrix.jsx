@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { useDashboard } from '../App.jsx';
+import { Card, EmptyState } from '../components/ui.jsx';
 
 // stage_reached from the server tops out at 6 (stage6_complete) — S7–S9
 // columns were permanently blank. The final ⚑ column marks sources whose
 // runs actually bundled IPFR pages for Stages 7–9.
 const STAGES = [1, 2, 3, 4, 5, 6];
-const STAGE_SHORT = ['S1', 'S2', 'S3', 'S4', 'S5', 'S6'];
+const STAGE_SHORT = ['1', '2', '3', '4', '5', '6'];
 
 function computeCell(runs, stage) {
   let passed = 0, rejected = 0, errored = 0, unreached = 0;
@@ -27,19 +28,19 @@ function computeCell(runs, stage) {
 function cellColor(cell, stage) {
   const { passed, rejected, errored } = cell;
   const reached = passed + rejected + errored;
-  if (reached === 0) return { bg: 'var(--bg-tertiary)', opacity: 1 };
+  if (reached === 0) return { bg: 'var(--surface-sunken)', opacity: 1 };
   if (errored > 0 && errored >= passed && errored >= rejected) {
     return { bg: 'var(--state-error)', opacity: 1 };
   }
   if (passed >= rejected) return { bg: `var(--stage-${stage})`, opacity: 1 };
-  return { bg: `var(--stage-${stage})`, opacity: 0.5 };
+  return { bg: `var(--stage-${stage})`, opacity: 0.45 };
 }
 
-const CELL_W  = 22;
-const CELL_H  = 18;
-const BAR_W   = 8;
-const NAME_W  = 130;
-const LEFT_W  = BAR_W + 4 + NAME_W;
+const CELL_W  = 26;
+const CELL_H  = 22;
+const BAR_W   = 4;
+const NAME_W  = 170;
+const LEFT_W  = BAR_W + 8 + NAME_W;
 
 export default function SourceMatrix({ runs = [], sources = [] }) {
   const { setSources: setFilterSources } = useDashboard();
@@ -74,51 +75,38 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
     });
   }, [sourceList, runsBySource]);
 
+  const subtitle = 'Outcome per source at each stage. Bright cells passed, faded cells were mostly rejected, red cells errored. Select a source to filter.';
+
   if (matrixData.length === 0) {
     return (
-      <div className="panel" style={{
-        background: 'var(--bg-secondary)', border: '1px solid var(--rule)',
-        padding: '16px', minHeight: '80px', display: 'flex', alignItems: 'center',
-      }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)' }}>
-          SOURCE MATRIX — no data
-        </span>
-      </div>
+      <Card title="Source matrix" subtitle={subtitle}>
+        <EmptyState icon="grid" compact title="No data in this period" />
+      </Card>
     );
   }
 
   return (
-    <div className="panel" style={{
-      background: 'var(--bg-secondary)', border: '1px solid var(--rule)',
-      padding: '16px', display: 'flex', flexDirection: 'column', overflow: 'hidden',
-    }}>
-      <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)',
-        letterSpacing: '0.1em', marginBottom: '10px', flexShrink: 0,
-      }}>
-        SOURCE MATRIX
-      </div>
-
+    <Card title="Source matrix" subtitle={subtitle} style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <div style={{ overflowY: 'auto', overflowX: 'auto', maxHeight: '440px' }}>
         {/* Column headers */}
         <div style={{
           display: 'flex', alignItems: 'center', marginBottom: '2px',
-          position: 'sticky', top: 0, background: 'var(--bg-secondary)', zIndex: 1,
+          position: 'sticky', top: 0, background: 'var(--surface)', zIndex: 1, paddingBottom: '4px',
         }}>
-          <div style={{ width: LEFT_W, flexShrink: 0 }} />
+          <div style={{ width: LEFT_W, flexShrink: 0, fontSize: '11px', color: 'var(--muted)' }}>Source · stage</div>
           {STAGES.map((s, i) => (
             <div key={s} style={{
               width: CELL_W, flexShrink: 0, textAlign: 'center',
-              fontFamily: 'var(--font-mono)', fontSize: '9px',
-              color: `var(--stage-${s})`, letterSpacing: '0.06em',
+              fontSize: '11px', fontWeight: 700,
+              color: `var(--stage-${s})`,
             }}>
               {STAGE_SHORT[i]}
             </div>
           ))}
           <div title="Runs that triggered IPFR pages (Stage 7+)" style={{
             width: CELL_W, flexShrink: 0, textAlign: 'center',
-            fontFamily: 'var(--font-mono)', fontSize: '9px',
-            color: 'var(--state-alert)', letterSpacing: '0.06em',
+            fontSize: '11px', fontWeight: 700,
+            color: 'var(--alert)',
           }}>
             ⚑
           </div>
@@ -131,7 +119,8 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
             style={{
               display: 'flex', alignItems: 'center',
               height: CELL_H, cursor: 'pointer',
-              background: hoveredRow === srcId ? 'rgba(46,46,40,0.6)' : 'transparent',
+              background: hoveredRow === srcId ? 'var(--surface-hover)' : 'transparent',
+              borderRadius: '4px',
             }}
             onMouseEnter={() => setHoveredRow(srcId)}
             onMouseLeave={() => setHoveredRow(null)}
@@ -141,25 +130,25 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
             <div style={{
               width: BAR_W, height: CELL_H, flexShrink: 0,
               position: 'relative', overflow: 'hidden',
-              background: 'var(--bg-tertiary)',
-            }}>
+              background: 'var(--surface-sunken)', borderRadius: '2px',
+            }} title={`Importance ${importance.toFixed(2)}`}>
               <div style={{
                 position: 'absolute', bottom: 0, left: 0,
                 width: BAR_W,
                 height: `${importance * 100}%`,
-                background: 'var(--stage-4)',
+                background: 'var(--accent)',
               }} />
             </div>
 
-            <div style={{ width: 4, flexShrink: 0 }} />
+            <div style={{ width: 8, flexShrink: 0 }} />
 
             {/* Source name */}
             <div style={{
               width: NAME_W, flexShrink: 0, overflow: 'hidden',
-              fontFamily: 'var(--font-mono)', fontSize: '9px',
-              color: 'var(--text-secondary)', whiteSpace: 'nowrap',
+              fontFamily: 'var(--font-code)', fontSize: '10.5px',
+              color: 'var(--body)', whiteSpace: 'nowrap',
               textOverflow: 'ellipsis', paddingRight: '6px',
-            }}>
+            }} title={srcId}>
               {srcId}
             </div>
 
@@ -171,7 +160,7 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
               return (
                 <div
                   key={stage}
-                  style={{ width: CELL_W, height: CELL_H, flexShrink: 0, padding: '1px' }}
+                  style={{ width: CELL_W, height: CELL_H, flexShrink: 0, padding: '2px' }}
                   onMouseEnter={e => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     setHoveredCell({ srcId, stage, cell, x: rect.left + rect.width / 2, y: rect.top });
@@ -182,7 +171,9 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
                   <div style={{
                     width: '100%', height: '100%',
                     background: bg, opacity,
-                    outline: isHovered ? '1px solid var(--rule-accent)' : 'none',
+                    borderRadius: '4px',
+                    outline: isHovered ? '2px solid var(--accent)' : 'none',
+                    outlineOffset: '1px',
                   }} />
                 </div>
               );
@@ -194,8 +185,8 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
               style={{
                 width: CELL_W, height: CELL_H, flexShrink: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'var(--font-mono)', fontSize: '9px',
-                color: triggered > 0 ? 'var(--state-alert)' : 'var(--text-tertiary)',
+                fontSize: '11px', fontWeight: triggered > 0 ? 700 : 400,
+                color: triggered > 0 ? 'var(--alert)' : 'var(--faint)',
               }}
             >
               {triggered > 0 ? triggered : '·'}
@@ -206,35 +197,22 @@ export default function SourceMatrix({ runs = [], sources = [] }) {
 
       {/* Cell tooltip */}
       {hoveredCell && (
-        <div style={{
+        <div className="tw-chart-tip" style={{
           position: 'fixed',
           top: hoveredCell.y - 8,
           left: hoveredCell.x,
           transform: 'translate(-50%, -100%)',
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--rule-accent)',
-          padding: '8px 10px',
           zIndex: 1200,
-          pointerEvents: 'none',
-          minWidth: '140px',
+          minWidth: '160px',
         }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-primary)', marginBottom: '4px' }}>
-            {hoveredCell.srcId} · S{hoveredCell.stage}
-          </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)' }}>
-            Passed: {hoveredCell.cell.passed}
-          </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)' }}>
-            Rejected: {hoveredCell.cell.rejected}
-          </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--state-error)' }}>
-            Errored: {hoveredCell.cell.errored}
-          </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', marginTop: '4px' }}>
-            Unreached: {hoveredCell.cell.unreached}
-          </div>
+          <div style={{ fontWeight: 650, color: 'var(--ink)' }}>Stage {hoveredCell.stage}</div>
+          <div className="tw-code" style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '4px' }}>{hoveredCell.srcId}</div>
+          <div>Passed: <strong>{hoveredCell.cell.passed}</strong></div>
+          <div>Rejected: <strong>{hoveredCell.cell.rejected}</strong></div>
+          <div style={{ color: 'var(--error)' }}>Errored: <strong>{hoveredCell.cell.errored}</strong></div>
+          <div className="tw-muted">Not reached: {hoveredCell.cell.unreached}</div>
         </div>
       )}
-    </div>
+    </Card>
   );
 }
