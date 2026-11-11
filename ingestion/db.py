@@ -16,6 +16,7 @@ Schema (Section 9 of the system plan):
   sections       — heading hierarchy / section metadata per page
   pipeline_runs  — one row per source per pipeline run (Section 8)
   deferred_triggers — triggers stored when LLM API is unavailable
+  notification_queue / digest_log — weekly digest queue and send log
 """
 
 from __future__ import annotations
@@ -153,6 +154,27 @@ CREATE TABLE IF NOT EXISTS llm_assessments (
     retries                 INTEGER,
     schema_valid            INTEGER,
     generated_at            TEXT NOT NULL
+);
+
+-- Weekly digest queue: one row per live pipeline run awaiting the next digest
+-- (src/weekly_digest.py). digest_id is set once the digest email is sent.
+CREATE TABLE IF NOT EXISTS notification_queue (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    run_id      TEXT NOT NULL,
+    created_at  TEXT NOT NULL,
+    payload     TEXT NOT NULL,
+    digest_id   INTEGER
+);
+
+-- Weekly digest send log: one row per digest email sent (once per week)
+CREATE TABLE IF NOT EXISTS digest_log (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    week_key      TEXT NOT NULL,
+    sent_at       TEXT NOT NULL,
+    recipients    TEXT NOT NULL,
+    subject       TEXT NOT NULL,
+    run_count     INTEGER NOT NULL,
+    flagged_count INTEGER NOT NULL
 );
 
 -- Ingestion run audit log: one row per page per ingestion run

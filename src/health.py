@@ -98,8 +98,13 @@ def evaluate_and_alert(
     conn: sqlite3.Connection,
     config: dict[str, Any],
     snapshot_dir: Path | str | None = None,
+    send_email: bool = True,
 ) -> HealthCheckResult:
     """Evaluate all health conditions and send an alert email if any fire.
+
+    With ``send_email=False`` (weekly digest cadence) the alerts are evaluated
+    and written to ``data/logs/health_alert_<run_id>.txt`` but not emailed; the
+    caller includes them in the weekly digest instead.
 
     Parameters
     ----------
@@ -171,7 +176,14 @@ def evaluate_and_alert(
     # ------------------------------------------------------------------
     if result.alerts:
         result.alert_email = health_email
-        _send_health_alert(result, config)
+        if send_email:
+            _send_health_alert(result, config)
+        else:
+            subject = (
+                f"[Tripwire] {len(result.alerts)} health alert(s) in run {run_id} "
+                "(queued for weekly digest)"
+            )
+            _fallback_write(result, subject, _build_plain_body(result))
 
     return result
 

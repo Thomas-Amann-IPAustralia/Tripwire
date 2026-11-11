@@ -15,6 +15,7 @@ All nine phases are complete and the full pipeline runs end-to-end.
 - **`source_registry.csv`** replaces `sources.json`.
 - **Separate IPFR ingestion pipeline** (`ingestion/`) populates the SQLite corpus; runs daily at 01:00 UTC before the main pipeline.
 - **Email notification** (Stage 9) replaces the review queue CSV.
+- **Weekly digest cadence**: with `notifications.cadence: "weekly"` (current setting) the daily run sends no email; it queues its Stage 9 material and health warnings in `notification_queue`, and `weekly_digest.yml` sends ONE email every Monday 09:30 Australia/Sydney — the flagged pages, or "no noteworthy changes identified". `cadence: "per_run"` restores per-run emails and separate health alerts.
 - **Fail-closed**: uncertain → escalate, never silently drop signals.
 - **Observation mode**: when `pipeline.observation_mode: true`, Stages 1–7 run fully and scores are logged, but Stage 8 (LLM) and Stage 9 (email) are **completely skipped** — no cost, no alerts. Use for 4–8 weeks of calibration before going live.
 - **Deferred triggers**: if the LLM API fails after all retries, the trigger bundle is stored in the `deferred_triggers` table and retried at the **start of the next run**, before any new sources are processed.
@@ -38,6 +39,7 @@ src/
   stage7_aggregation.py      — Stage 7: trigger aggregation
   stage8_llm.py              — Stage 8: LLM assessment
   stage9_notification.py     — Stage 9: email notification
+  weekly_digest.py           — Weekly digest: queue per-run results, send one email per week
   feedback_ingestion.py      — Gmail IMAP polling for feedback replies
   health.py                  — Health alerting
   observability.py           — Weekly score distribution report
@@ -95,6 +97,11 @@ python -m src.observability --days 30
 # webpage changes; writes the score_backfill table + a calibration report)
 python -m src.backfill_scores --since 2026-05-07
 
+# Weekly digest (sends only when due: Monday 09:30 Sydney, once per week)
+python -m src.weekly_digest
+python -m src.weekly_digest --dry-run   # print the email, send nothing
+python -m src.weekly_digest --force     # send now
+
 # Feedback ingestion (poll Gmail)
 python -m src.feedback_ingestion
 
@@ -144,6 +151,8 @@ Test files follow the pattern `tests/test_<module>.py`.
 | `ipfr_ingestion.yml` | Daily cron 01:00 UTC + `workflow_dispatch` (`force_all` flag) | 60 min | Refresh IPFR corpus in SQLite |
 | `tripwire.yml` | Daily cron 02:00 UTC + `workflow_dispatch` | 30 min | Full pipeline run (Stages 1–9) |
 | `feedback_ingestion.yml` | Every 6 hours + `workflow_dispatch` | 10 min | Poll Gmail for feedback replies |
+| `weekly_digest.yml` | Sunday 22:30 + 23:30 UTC (= Monday 09:30 AEDT / AEST) + `workflow_dispatch` (`force`, `dry_run`) | 10 min | Send the weekly digest email |
+| `email_smoke_test.yml` | `workflow_dispatch` only | 10 min | Live SMTP send + IMAP receive check using the repo secrets |
 | `backfill_scores.yml` | `workflow_dispatch` only | 60 min | Replay historical changes to backfill Stage 5–6 scores (`score_backfill`). |
 | `recover_db.yml` | `workflow_dispatch` only | 120 min | Merge run history from the `data-*` GitHub Release database copies into the R2 database (re-runnable; dry run by default). |
 
@@ -164,6 +173,8 @@ The ingestion workflow runs at 01:00 UTC so the corpus is up to date before the 
 | `sections` | Section headings and offsets per page |
 | `pipeline_runs` | Per-source log entry for every run (used by health and observability) |
 | `deferred_triggers` | Trigger bundles queued for LLM retry after API failures |
+| `notification_queue` | One row per live run awaiting the weekly digest (flagged assessments + bundles, rejected candidates, health warnings, run stats); `digest_id` set once sent |
+| `digest_log` | One row per weekly digest email sent (once-per-week guard) |
 | `score_backfill` | Replayed historical Stage 5–6 scores per candidate page, joined to LLM verdicts (calibration dataset; written by `backfill_scores.py`, never overwrites `pipeline_runs`) |
 
 ## Deferred Tasks (do not implement without live data)
