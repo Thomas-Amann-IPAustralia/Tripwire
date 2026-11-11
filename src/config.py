@@ -70,9 +70,22 @@ def load_config(config_path: str | Path | None = None) -> dict[str, Any]:
     return raw
 
 
+_REDACTED_NOTIFICATION_KEYS = ("content_owner_email", "health_alert_email", "feedback_email")
+
+
 def snapshot_config(config: dict[str, Any]) -> str:
-    """Return a compact JSON string of the config for embedding in run logs."""
-    return json.dumps(copy.deepcopy(config), sort_keys=True)
+    """Return a compact JSON string of the config for embedding in run logs.
+
+    Email addresses are redacted: run logs live in ipfr.sqlite, which is
+    published in the public data-* GitHub Releases.
+    """
+    snap = copy.deepcopy(config)
+    notif = snap.get("notifications")
+    if isinstance(notif, dict):
+        for key in _REDACTED_NOTIFICATION_KEYS:
+            if notif.get(key):
+                notif[key] = "[redacted]"
+    return json.dumps(snap, sort_keys=True)
 
 
 def get(config: dict[str, Any], *keys: str, default: Any = None) -> Any:
@@ -242,9 +255,14 @@ def _validate_storage(s: dict) -> None:
 
 
 def _validate_notifications(n: dict) -> None:
-    _require_keys(n, "notifications", ["content_owner_email", "health_alert_email"])
+    # Recipient addresses normally come from the CONTENT_OWNER_EMAIL and
+    # HEALTH_ALERT_EMAIL secrets (src/email_security.py) so the public repo
+    # does not name phishing targets. The YAML keys are an optional fallback.
     for key in ("content_owner_email", "health_alert_email"):
-        if not isinstance(n[key], str) or "@" not in n[key]:
+        value = n.get(key)
+        if value in (None, ""):
+            continue
+        if not isinstance(value, str) or "@" not in value:
             raise ConfigError(f"notifications.{key} must be a valid email address string.")
     cadence = n.get("cadence", "per_run")
     if cadence not in ("per_run", "weekly"):

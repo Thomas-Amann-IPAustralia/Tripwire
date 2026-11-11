@@ -44,6 +44,7 @@ from email.mime.text import MIMEText
 from typing import Any
 
 from src import email_html as eh
+from src import email_security as sec
 from src.errors import RetryableError
 from src.stage7_aggregation import TriggerBundle
 from src.stage8_llm import LLMAssessment
@@ -168,7 +169,7 @@ def send_notification(
     NotificationResult
     """
     notif_cfg = config.get("notifications", {})
-    recipient: str = notif_cfg.get("content_owner_email", "")
+    recipient: str = sec.notification_address(config, "content_owner_email")
     feedback_email: str = os.environ.get(
         "FEEDBACK_EMAIL",
         notif_cfg.get("feedback_email", "tripwire-feedback@gmail.com"),
@@ -210,6 +211,22 @@ def send_notification(
         recipient=recipient,
         reply_to=feedback_email,
     )
+
+    if not recipient:
+        # Fail closed: keep the content in a fallback file and report the error.
+        fallback = _write_fallback(body_text, run_id)
+        logger.error(
+            "Stage 9: no recipient configured (set the CONTENT_OWNER_EMAIL secret) "
+            "— FALLBACK email saved → %s", fallback,
+        )
+        return NotificationResult(
+            sent=False,
+            subject=subject,
+            change_required_count=len(change_required),
+            uncertain_count=len(uncertain),
+            error_message="no recipient configured",
+            fallback_file=fallback,
+        )
 
     # Attempt delivery with retries.
     smtp_cfg = notif_cfg.get("smtp", {})
@@ -730,6 +747,7 @@ def _feedback_body(
         f"page_id: {page_id}\n"
         f"source_id: {source_ids}\n"
         f"category: {category}\n"
+        f"token: {sec.feedback_token(run_id, page_id, category)}\n"
         f"\n"
         f"Additional comments (optional):\n"
     )
@@ -748,13 +766,18 @@ def _build_mime(
     recipient: str,
     reply_to: str,
 ) -> MIMEMultipart:
+    """Build the MIME message, stamping the security phrase into both parts.
+
+    Stamping happens here (not at composition) so the phrase never reaches
+    fallback files or dry-run output, which can become public.
+    """
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"] = sender
     msg["To"] = recipient
     msg["Reply-To"] = reply_to
-    msg.attach(MIMEText(body_text, "plain", "utf-8"))
-    msg.attach(MIMEText(body_html, "html", "utf-8"))
+    msg.attach(MIMEText(sec.stamp_text(body_text), "plain", "utf-8"))
+    msg.attach(MIMEText(sec.stamp_html(body_html), "html", "utf-8"))
     return msg
 
 
@@ -781,7 +804,7 @@ def _write_fallback(body_text: str, run_id: str) -> str:
 
     path = pathlib.Path("data/logs") / f"email_fallback_{run_id}.txt"
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(body_text, encoding="utf-8")
+    path.write_text(sec.redact_tokens(body_text), encoding="utf-8")
     return str(path)
 
 

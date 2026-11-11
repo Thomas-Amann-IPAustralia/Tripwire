@@ -50,6 +50,11 @@ jobs:
         env:
           FEEDBACK_GMAIL_USER: ${{ secrets.FEEDBACK_GMAIL_USER }}
           FEEDBACK_GMAIL_APP_PASSWORD: ${{ secrets.FEEDBACK_GMAIL_APP_PASSWORD }}
+          CONTENT_OWNER_EMAIL: ${{ secrets.CONTENT_OWNER_EMAIL }}
+          HEALTH_ALERT_EMAIL: ${{ secrets.HEALTH_ALERT_EMAIL }}
+          TRIPWIRE_EMAIL_PHRASE: ${{ secrets.TRIPWIRE_EMAIL_PHRASE }}
+          # Optional: extra allowed feedback senders (addresses or @domain), comma-separated.
+          FEEDBACK_ALLOWED_SENDERS: ${{ secrets.FEEDBACK_ALLOWED_SENDERS }}
         run: |
           python -m src.feedback_ingestion \
             --feedback-log data/logs/feedback.jsonl

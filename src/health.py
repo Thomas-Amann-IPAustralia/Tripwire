@@ -13,9 +13,9 @@ Evaluates four alert conditions after every run:
 Condition 3 (pipeline timeout) is enforced by the GitHub Actions
 ``timeout-minutes`` setting rather than in Python code.
 
-Health alerts are sent to the ``notifications.health_alert_email`` address
-configured in ``tripwire_config.yaml``, which is separate from the
-content-owner notification email.
+Health alerts are sent to the ``HEALTH_ALERT_EMAIL`` secret (falling back to
+``notifications.health_alert_email`` in ``tripwire_config.yaml`` for local
+runs), which is separate from the content-owner notification email.
 
 Usage (called by pipeline.py after every run):
 
@@ -43,6 +43,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 from typing import Any
+
+from src import email_security as sec
 
 logger = logging.getLogger(__name__)
 
@@ -133,7 +135,9 @@ def evaluate_and_alert(
     consecutive_threshold: int = int(
         alert_cfg.get("consecutive_failures_threshold", _DEFAULT_CONSECUTIVE_FAILURES_THRESHOLD)
     )
-    health_email: str | None = notif_cfg.get("health_alert_email")
+    health_email: str | None = (
+        sec.notification_address(config, "health_alert_email") or None
+    )
 
     # ------------------------------------------------------------------
     # Condition 1: Error rate
@@ -461,8 +465,10 @@ def _send_health_alert(result: HealthCheckResult, config: dict[str, Any]) -> Non
     msg["Subject"] = subject
     msg["From"] = from_addr
     msg["To"] = to_addr
-    msg.attach(MIMEText(plain_body, "plain", "utf-8"))
-    msg.attach(MIMEText(html_body, "html", "utf-8"))
+    # Security phrase is stamped into the sent message only, never the
+    # fallback file (which is uploaded as a public workflow artifact).
+    msg.attach(MIMEText(sec.stamp_text(plain_body), "plain", "utf-8"))
+    msg.attach(MIMEText(sec.stamp_html(html_body), "html", "utf-8"))
 
     if not smtp_user or not smtp_password:
         _fallback_write(result, subject, plain_body)
@@ -478,7 +484,7 @@ def _send_health_alert(result: HealthCheckResult, config: dict[str, Any]) -> Non
                 server.sendmail(from_addr, [to_addr], msg.as_string())
             logger.info(
                 "Health alert email sent to %s (run %s, %d alert(s)).",
-                to_addr,
+                sec.redacted_address(to_addr),
                 result.run_id,
                 len(result.alerts),
             )

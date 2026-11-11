@@ -26,6 +26,9 @@ from email.mime.text import MIMEText
 
 import yaml
 
+sys.path.insert(0, os.getcwd())
+from src import email_security as sec  # noqa: E402
+
 
 def main() -> int:
     cfg = yaml.safe_load(open("tripwire_config.yaml", encoding="utf-8"))
@@ -37,17 +40,14 @@ def main() -> int:
     env = {k: os.environ.get(k, "") for k in (
         "SMTP_USER", "SMTP_PASSWORD", "FEEDBACK_EMAIL",
         "FEEDBACK_GMAIL_USER", "FEEDBACK_GMAIL_APP_PASSWORD",
+        "CONTENT_OWNER_EMAIL", "HEALTH_ALERT_EMAIL", "TRIPWIRE_EMAIL_PHRASE",
     )}
     print("Secrets present:")
     for k, v in env.items():
         print(f"  {k:<28} {'set' if v else 'MISSING'}")
 
     recipients = sorted({
-        r for r in (
-            notif.get("content_owner_email"),
-            notif.get("health_alert_email"),
-            env["FEEDBACK_GMAIL_USER"],
-        ) if r
+        r for r in (*sec.notification_recipients(cfg), env["FEEDBACK_GMAIL_USER"]) if r
     })
     token = uuid.uuid4().hex[:12]
     subject = f"Tripwire email smoke test {token}"
@@ -59,11 +59,11 @@ def main() -> int:
         print("SEND: FAIL - SMTP_USER / SMTP_PASSWORD not set")
         return 1
     sender = env["FEEDBACK_EMAIL"] or env["SMTP_USER"]
-    msg = MIMEText(
+    msg = MIMEText(sec.stamp_text(
         "This is an automated test of Tripwire's email delivery.\n"
         "No action is needed. It confirms notifications and health alerts can "
         "reach this address.\n\n"
-        f"Token: {token}\nRun: {os.environ.get('GITHUB_RUN_ID', 'local')}\n",
+        f"Token: {token}\nRun: {os.environ.get('GITHUB_RUN_ID', 'local')}\n"),
         "plain", "utf-8",
     )
     msg["Subject"] = subject
@@ -78,10 +78,12 @@ def main() -> int:
             smtp.login(env["SMTP_USER"], env["SMTP_PASSWORD"])
             refused = smtp.sendmail(sender, recipients, msg.as_string())
         accepted = [r for r in recipients if r not in refused]
+        # Workflow logs are public: show domains, not addresses.
         print(f"SEND: OK - {host}:{port} accepted {len(accepted)}/{len(recipients)} "
-              f"recipient(s): {accepted}")
+              f"recipient(s): {[sec.redacted_address(a) for a in accepted]}")
         if refused:
-            print(f"SEND: refused recipients: {refused}")
+            print(f"SEND: refused recipients: "
+                  f"{[sec.redacted_address(a) for a in refused]}")
             ok = False
     except Exception as exc:  # noqa: BLE001
         print(f"SEND: FAIL - {type(exc).__name__}: {exc}")
