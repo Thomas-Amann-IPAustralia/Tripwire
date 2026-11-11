@@ -2,22 +2,24 @@ import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react'
 import * as THREE from 'three';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { useEmbeddings } from '../hooks/useData.js';
+import { Icon, Loading, EmptyState, Callout } from '../components/ui.jsx';
+import { CANVAS_BG } from './KnowledgeGraph.jsx';
 
-// 12 visually distinct colours — mid-range saturation/lightness so they read
-// on both dark and light backgrounds
+// 12 distinct, earthy colours chosen to sit with the warm palette and to stay
+// legible on both the light canvas and the dark theme.
 const CLUSTER_PALETTE = [
-  '#4ADE80', // green
-  '#F87171', // red
-  '#60A5FA', // blue
-  '#FBBF24', // amber
-  '#A78BFA', // purple
-  '#34D399', // emerald
-  '#FB923C', // orange
-  '#F472B6', // pink
-  '#38BDF8', // sky
-  '#E879F9', // fuchsia
-  '#A3E635', // lime
-  '#2DD4BF', // teal
+  '#2f7d6d', // teal
+  '#c0603d', // terracotta
+  '#3b6fa0', // slate blue
+  '#c4952a', // ochre
+  '#7a62b0', // violet
+  '#5b9a52', // sage
+  '#d07a3c', // copper
+  '#b2557c', // plum
+  '#2f93a8', // lagoon
+  '#8a6d3b', // umber
+  '#6f8f2f', // olive
+  '#4a5ea8', // indigo
 ];
 
 function hexToRGB(hex) {
@@ -84,13 +86,10 @@ class Embedding3DErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          height: '100%', flexDirection: 'column', gap: '8px',
-          color: 'var(--state-error)', fontFamily: 'var(--font-mono)', fontSize: '13px',
-        }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: '22px' }}>3D VIEW ERROR</div>
-          {this.state.error?.message}
+        <div style={{ padding: '24px' }}>
+          <Callout tone="error" icon="alert" title="The 3D view could not be displayed">
+            {this.state.error?.message}
+          </Callout>
         </div>
       );
     }
@@ -111,48 +110,43 @@ function FilterSidebar({ documents, hiddenDocs, onToggleDoc, onSelectAll, onClea
 
   return (
     <div style={{
-      width: '240px',
-      minWidth: '240px',
+      width: '260px',
+      minWidth: '260px',
       display: 'flex',
       flexDirection: 'column',
-      borderLeft: '1px solid var(--rule)',
-      background: 'var(--bg-secondary)',
+      borderLeft: '1px solid var(--line)',
+      background: 'var(--surface)',
       overflow: 'hidden',
     }}>
-      {/* Document filter */}
-      <div style={{
-        padding: '10px 12px 6px',
-        borderBottom: '1px solid var(--rule)',
-        flexShrink: 0,
-      }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: '12px',
-          color: 'var(--text-tertiary)', letterSpacing: '0.08em', marginBottom: '8px',
-        }}>
-          DOCUMENTS
+      <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid var(--line-soft)', flexShrink: 0 }}>
+        <div style={{ fontSize: '13px', fontWeight: 650, color: 'var(--ink)', marginBottom: '8px' }}>
+          Documents <span className="tw-muted" style={{ fontWeight: 500 }}>({documents.length - hiddenDocs.size} of {documents.length} shown)</span>
         </div>
-        <div style={{ display: 'flex', gap: '6px', marginBottom: '6px' }}>
-          <button onClick={onSelectAll} style={btnStyle}>SELECT ALL</button>
-          <button onClick={onClearAll} style={btnStyle}>CLEAR ALL</button>
+        <div style={{ display: 'flex', gap: '6px' }}>
+          <button type="button" className="tw-btn is-sm" onClick={onSelectAll}>Select all</button>
+          <button type="button" className="tw-btn is-sm" onClick={onClearAll}>Clear all</button>
         </div>
       </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '4px 0' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '6px 8px' }}>
         {documents.map(doc => (
           <label key={doc.id} style={{
             display: 'flex', alignItems: 'flex-start', gap: '8px',
-            padding: '4px 12px', cursor: 'pointer',
-          }}>
+            padding: '5px 8px', cursor: 'pointer', borderRadius: '6px',
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--surface-hover)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+          >
             <input
               type="checkbox"
               checked={!hiddenDocs.has(doc.id)}
               onChange={() => onToggleDoc(doc.id)}
-              style={{ marginTop: '2px', flexShrink: 0, accentColor: 'var(--stage-4)' }}
+              style={{ marginTop: '2px', flexShrink: 0 }}
             />
             <span style={{
-              fontFamily: 'var(--font-mono)', fontSize: '12px',
-              color: hiddenDocs.has(doc.id) ? 'var(--text-tertiary)' : 'var(--text-secondary)',
-              lineHeight: 1.35, wordBreak: 'break-word',
+              fontSize: '12.5px',
+              color: hiddenDocs.has(doc.id) ? 'var(--faint)' : 'var(--body)',
+              lineHeight: 1.4, wordBreak: 'break-word',
             }}>
               {doc.title}
             </span>
@@ -160,52 +154,26 @@ function FilterSidebar({ documents, hiddenDocs, onToggleDoc, onSelectAll, onClea
         ))}
       </div>
 
-      {/* Cluster legend */}
-      <div style={{
-        borderTop: '1px solid var(--rule)',
-        padding: '10px 12px',
-        flexShrink: 0,
-      }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: '12px',
-          color: 'var(--text-tertiary)', letterSpacing: '0.08em', marginBottom: '8px',
-        }}>
-          CLUSTER LEGEND
+      <div style={{ borderTop: '1px solid var(--line-soft)', padding: '12px 16px', flexShrink: 0, background: 'var(--surface-subtle)' }}>
+        <div style={{ fontSize: '13px', fontWeight: 650, color: 'var(--ink)', marginBottom: '8px' }}>Clusters</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px 10px' }}>
+          {clusters.map(cid => (
+            <div key={cid} style={{ display: 'flex', alignItems: 'center', gap: '7px', minWidth: 0 }}>
+              <div style={{
+                width: '10px', height: '10px', flexShrink: 0,
+                background: CLUSTER_PALETTE[cid % CLUSTER_PALETTE.length],
+                borderRadius: '50%',
+              }} />
+              <span className="tabular" style={{ fontSize: '12px', color: 'var(--body)', whiteSpace: 'nowrap' }}>
+                C{cid} <span className="tw-muted">· {clusterCounts[cid] ?? 0}</span>
+              </span>
+            </div>
+          ))}
         </div>
-        {clusters.map(cid => (
-          <div key={cid} style={{
-            display: 'flex', alignItems: 'center', gap: '8px',
-            marginBottom: '5px',
-          }}>
-            <div style={{
-              width: '12px', height: '12px', flexShrink: 0,
-              background: CLUSTER_PALETTE[cid % CLUSTER_PALETTE.length],
-              borderRadius: '2px',
-            }} />
-            <span style={{
-              fontFamily: 'var(--font-mono)', fontSize: '12px',
-              color: 'var(--text-secondary)',
-            }}>
-              C{cid} · {clusterCounts[cid] ?? 0} chunks
-            </span>
-          </div>
-        ))}
       </div>
     </div>
   );
 }
-
-const btnStyle = {
-  fontFamily: 'var(--font-mono)',
-  fontSize: '11px',
-  letterSpacing: '0.06em',
-  color: 'var(--text-secondary)',
-  background: 'none',
-  border: '1px solid var(--rule-accent)',
-  padding: '2px 6px',
-  cursor: 'pointer',
-  borderRadius: '2px',
-};
 
 // ─── Main component ───────────────────────────────────────────────────────────
 function Embedding3DInner({ isActive }) {
@@ -383,14 +351,18 @@ function Embedding3DInner({ isActive }) {
       if (!centroidLabelObjs.current[cid]) {
         const div = document.createElement('div');
         div.style.cssText = `
-          font-family:'DM Mono',monospace;
-          font-size:12px;
+          font-family:var(--font-sans);
+          font-size:11px;
+          font-weight:700;
           color:${CLUSTER_PALETTE[cid % CLUSTER_PALETTE.length]};
+          background:var(--surface);
+          border:1px solid var(--line);
+          border-radius:99px;
+          box-shadow:var(--shadow-sm);
           pointer-events:auto;
           cursor:pointer;
           user-select:none;
-          text-shadow:0 0 4px rgba(0,0,0,0.8);
-          padding:2px 4px;
+          padding:1px 7px;
         `;
         div.textContent = `C${cid}`;
         div.title = `Double-click to zoom to cluster ${cid}`;
@@ -421,8 +393,13 @@ function Embedding3DInner({ isActive }) {
   }
 
   // ── Scene setup ───────────────────────────────────────────────────────────
+  // The canvas mount only exists once embeddings have loaded, so the scene is
+  // (re)built when the data becomes ready, not just on first mount. Without
+  // this, a cold visit to the page left the 3D view blank until the user
+  // navigated away and back.
+  const sceneReady = !isLoading && chunks.length > 0;
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile || !sceneReady) return;
     const container = mountRef.current;
     if (!container) return;
 
@@ -446,6 +423,10 @@ function Embedding3DInner({ isActive }) {
 
     // Axes helper (small, in corner — positioned via scene add at origin)
     const axesHelper = new THREE.AxesHelper(1.4);
+    const axisGrey = new THREE.Color('#8a9894');
+    axesHelper.setColors(axisGrey, axisGrey, axisGrey);
+    axesHelper.material.transparent = true;
+    axesHelper.material.opacity = 0.55;
     scene.add(axesHelper);
 
     // Axis labels (CSS2D)
@@ -455,7 +436,7 @@ function Embedding3DInner({ isActive }) {
     axisLabels.forEach(([text, pos]) => {
       const div = document.createElement('div');
       div.textContent = text;
-      div.style.cssText = 'font-family:"DM Mono",monospace;font-size:12px;color:#777777;pointer-events:none;text-shadow:0 0 4px rgba(0,0,0,0.7);';
+      div.style.cssText = 'font-family:var(--font-sans);font-size:11px;font-weight:600;color:var(--muted);pointer-events:none;';
       const obj = new CSS2DObject(div);
       obj.position.set(...pos);
       scene.add(obj);
@@ -530,7 +511,7 @@ function Embedding3DInner({ isActive }) {
       if (!isActiveRef.current) return;
 
       // Background colour from CSS var (responds to theme changes)
-      const bgHex = readCSSVar('--bg-primary') || '#0e0e0d';
+      const bgHex = readCSSVar('--surface-subtle') || '#faf8f3';
       renderer.setClearColor(bgHex);
 
       // Auto-orbit
@@ -675,9 +656,9 @@ function Embedding3DInner({ isActive }) {
       if (renderer.domElement.parentNode === container) container.removeChild(renderer.domElement);
       if (css2d.domElement.parentNode === container) container.removeChild(css2d.domElement);
     };
-  // Intentionally run once on mount; rebuildBuffers handles data updates
+  // Runs once the mount exists; rebuildBuffers handles later data updates
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMobile]);
+  }, [isMobile, sceneReady]);
 
   // Rebuild buffers whenever data/filters/selection change
   useEffect(() => {
@@ -686,78 +667,51 @@ function Embedding3DInner({ isActive }) {
 
   if (isMobile) {
     return (
-      <div style={{
-        height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontFamily: 'var(--font-display)', fontSize: '22px', color: 'var(--text-tertiary)',
-      }}>
-        3D VIEW NOT AVAILABLE ON MOBILE
-      </div>
+      <EmptyState icon="grid" title="3D view is not available on small screens">
+        Open the IPFR corpus on a larger display to explore the embedding space.
+      </EmptyState>
     );
   }
 
   if (isLoading) {
-    return (
-      <div style={{
-        height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--text-tertiary)',
-      }}>
-        LOADING EMBEDDINGS…
-      </div>
-    );
+    return <div style={{ padding: '24px' }}><Loading>Loading embeddings…</Loading></div>;
   }
 
   if (chunks.length === 0) {
     return (
-      <div style={{
-        height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontFamily: 'var(--font-display)', fontSize: '22px', color: 'var(--text-tertiary)',
-      }}>
-        NO CHUNK EMBEDDINGS AVAILABLE
-      </div>
+      <EmptyState icon="grid" title="No chunk embeddings available">
+        Embeddings appear after the IPFR corpus has been ingested.
+      </EmptyState>
     );
   }
 
   return (
     <div style={{ height: '100%', display: 'flex', overflow: 'hidden' }}>
       {/* ── Canvas area ─────────────────────────────────────────────────── */}
-      <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+      <div style={{ flex: 1, position: 'relative', overflow: 'hidden', ...CANVAS_BG }}>
         {/* Controls row */}
         <div style={{
           position: 'absolute', top: '12px', left: '12px', zIndex: 5,
-          display: 'flex', gap: '8px',
+          display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap',
         }}>
           <button
+            type="button"
+            className={`tw-btn is-sm${animateMode ? ' is-primary' : ''}`}
             onClick={() => setAnimateMode(m => !m)}
-            style={{
-              background: animateMode ? 'var(--text-primary)' : 'var(--bg-secondary)',
-              color: animateMode ? 'var(--bg-primary)' : 'var(--text-secondary)',
-              border: '1px solid var(--rule-accent)',
-              padding: '4px 10px',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '12px',
-              letterSpacing: '0.06em',
-              cursor: 'pointer',
-            }}
+            aria-pressed={animateMode}
           >
-            {animateMode ? '⏸ AUTO-ORBIT' : '▶ AUTO-ORBIT'}
+            {animateMode
+              ? <><svg viewBox="0 0 24 24" fill="currentColor" stroke="none" style={{ width: 12, height: 12 }}><rect x="6" y="5" width="4" height="14" rx="1" /><rect x="14" y="5" width="4" height="14" rx="1" /></svg> Pause orbit</>
+              : <><Icon name="play" /> Auto-orbit</>}
           </button>
           {selectedDocId && (
-            <button
-              onClick={() => setSelectedDocId(null)}
-              style={{
-                background: 'var(--bg-secondary)',
-                color: 'var(--state-warn)',
-                border: '1px solid var(--state-warn)',
-                padding: '4px 10px',
-                fontFamily: 'var(--font-mono)',
-                fontSize: '12px',
-                letterSpacing: '0.06em',
-                cursor: 'pointer',
-              }}
-            >
-              CLEAR SELECTION
+            <button type="button" className="tw-btn is-sm" onClick={() => setSelectedDocId(null)}>
+              <Icon name="close" /> Clear selection
             </button>
           )}
+          <span className="tw-small tw-muted" style={{ background: 'color-mix(in srgb, var(--surface) 80%, transparent)', padding: '3px 8px', borderRadius: '99px' }}>
+            Drag to rotate, scroll to zoom, double-click a cluster label to fly to it
+          </span>
         </div>
 
         {/* Three.js canvas mount */}
@@ -768,34 +722,24 @@ function Embedding3DInner({ isActive }) {
 
         {/* Hover tooltip */}
         {tooltip && (
-          <div style={{
+          <div className="tw-chart-tip" style={{
             position: 'absolute',
             left: Math.min(tooltip.x + 14, (mountRef.current?.clientWidth ?? 800) - 280),
             top: Math.max(tooltip.y - 10, 8),
-            background: 'var(--bg-secondary)',
-            border: '1px solid var(--rule-accent)',
-            padding: '8px 12px',
-            pointerEvents: 'none',
             zIndex: 6,
             maxWidth: '260px',
           }}>
-            <div style={{
-              fontFamily: 'var(--font-body)', fontSize: '13px',
-              color: 'var(--text-primary)', marginBottom: '4px',
-              fontWeight: 500,
-            }}>
+            <div style={{ fontSize: '13px', color: 'var(--ink)', marginBottom: '2px', fontWeight: 650 }}>
               {tooltip.title}
             </div>
-            <div style={{
-              fontFamily: 'var(--font-mono)', fontSize: '12px',
-              color: 'var(--text-tertiary)', marginBottom: '6px',
-            }}>
-              CLUSTER {tooltip.cluster}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11.5px', color: 'var(--muted)', marginBottom: '6px' }}>
+              <span style={{ width: 8, height: 8, borderRadius: '50%', background: CLUSTER_PALETTE[(tooltip.cluster ?? 0) % CLUSTER_PALETTE.length] }} />
+              Cluster {tooltip.cluster}
             </div>
             {tooltip.text && (
               <div style={{
-                fontFamily: 'var(--font-body)', fontSize: '12px',
-                color: 'var(--text-secondary)',
+                fontSize: '12px',
+                color: 'var(--body)',
                 lineHeight: 1.5,
                 overflow: 'hidden',
                 display: '-webkit-box',

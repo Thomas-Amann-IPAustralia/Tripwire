@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { usePageTitles } from '../hooks/useData.js';
+import { Icon, EmptyState } from '../components/ui.jsx';
 
 // Build sets of added and deleted lines from diff string ("+ new", "- old")
 function buildDiffSets(diff) {
@@ -13,42 +14,31 @@ function buildDiffSets(diff) {
   return { added, deleted };
 }
 
+function PanelHeader({ children }) {
+  return (
+    <div style={{
+      padding: '10px 16px',
+      borderBottom: '1px solid var(--line)',
+      fontSize: '12px',
+      fontWeight: 600,
+      color: 'var(--body)',
+      flexShrink: 0,
+      background: 'var(--surface-subtle)',
+      overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+    }}>
+      {children}
+    </div>
+  );
+}
+
 function TextPanel({ header, text, addedLines = new Set(), deletedLines = new Set() }) {
   const lines = useMemo(() => (text ?? '').split('\n'), [text]);
 
   return (
-    <div style={{
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'hidden',
-      borderRight: '1px solid var(--rule)',
-    }}>
-      {/* Panel header */}
-      <div style={{
-        padding: '8px 12px',
-        borderBottom: '1px solid var(--rule)',
-        fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
-        color: 'var(--text-secondary)',
-        letterSpacing: '0.06em',
-        flexShrink: 0,
-        background: 'var(--bg-tertiary)',
-      }}>
-        {header}
-      </div>
-
-      {/* Scrollable body */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0' }}>
-        {!text && (
-          <div style={{
-            padding: '16px',
-            fontFamily: 'var(--font-mono)', fontSize: '11px',
-            color: 'var(--text-tertiary)',
-          }}>
-            NO DATA
-          </div>
-        )}
+    <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden', borderRight: '1px solid var(--line)' }}>
+      <PanelHeader>{header}</PanelHeader>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '10px 0' }}>
+        {!text && <EmptyState icon="file" compact title="No snapshot text" />}
         {lines.map((line, i) => {
           const isAdded   = line.trim() !== '' && addedLines.has(line);
           const isDeleted = line.trim() !== '' && deletedLines.has(line);
@@ -56,24 +46,16 @@ function TextPanel({ header, text, addedLines = new Set(), deletedLines = new Se
             <div
               key={i}
               style={{
-                fontFamily: '"DM Mono", monospace',
-                fontSize: '11px',
-                lineHeight: '1.6',
-                padding: '0 12px',
+                fontFamily: 'var(--font-code)',
+                fontSize: '12px',
+                lineHeight: '1.65',
+                padding: '0 16px',
                 whiteSpace: 'pre-wrap',
-                wordBreak: 'break-all',
-                // Additions: underlined in --state-ok green
-                // Deletions: struck-through in --state-alert red
-                color: isAdded
-                  ? 'var(--state-ok)'
-                  : isDeleted
-                    ? 'var(--state-alert)'
-                    : 'var(--text-secondary)',
-                textDecoration: isAdded
-                  ? 'underline'
-                  : isDeleted
-                    ? 'line-through'
-                    : 'none',
+                wordBreak: 'break-word',
+                background: isAdded ? 'var(--ok-soft)' : isDeleted ? 'var(--alert-soft)' : 'transparent',
+                color: isAdded ? 'var(--ok)' : isDeleted ? 'var(--alert)' : 'var(--body)',
+                textDecoration: isDeleted ? 'line-through' : 'none',
+                boxShadow: isAdded ? 'inset 3px 0 0 var(--ok)' : isDeleted ? 'inset 3px 0 0 var(--alert)' : 'none',
               }}
             >
               {line || ' '}
@@ -85,30 +67,27 @@ function TextPanel({ header, text, addedLines = new Set(), deletedLines = new Se
   );
 }
 
-function ChunkCard({ text, isMatch }) {
+function ChunkCard({ text }) {
   return (
     <div style={{
-      padding: '10px 12px',
-      marginBottom: '8px',
-      border: `1px solid ${isMatch ? 'var(--state-warn)' : 'var(--rule)'}`,
-      background: isMatch ? 'rgba(212,168,32,0.1)' : 'var(--bg-tertiary)',
+      padding: '12px 14px',
+      marginBottom: '10px',
+      borderRadius: 'var(--radius)',
+      border: '1px solid var(--warn-line)',
+      background: 'var(--warn-soft)',
+      fontSize: '13.5px',
+      color: 'var(--ink)',
+      lineHeight: '1.7',
+      whiteSpace: 'pre-wrap',
+      wordBreak: 'break-word',
     }}>
-      <div style={{
-        fontFamily: 'Lora, serif',
-        fontSize: '13px',
-        color: 'var(--text-primary)',
-        lineHeight: '1.7',
-        whiteSpace: 'pre-wrap',
-        wordBreak: 'break-word',
-      }}>
-        {text}
-      </div>
+      {text}
     </div>
   );
 }
 
 /**
- * SnapshotOverlay — used from the Sources section.
+ * SnapshotOverlay: used from the Sources section.
  *
  * Props:
  *   data  — response object from useSnapshot(sourceId):
@@ -126,7 +105,6 @@ export default function SnapshotOverlay({ data, onClose }) {
     previous_snapshot_text,
     diff,
     best_match_page_id,
-    top_chunk_ids = [],
     chunk_texts   = [],
   } = snapshot;
 
@@ -135,111 +113,59 @@ export default function SnapshotOverlay({ data, onClose }) {
     [diff]
   );
 
+  useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose?.(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
   return (
-    <div style={{
-      position: 'fixed', inset: 0,
-      background: 'rgba(0,0,0,0.6)',
-      zIndex: 200,
-      display: 'flex',
-      flexDirection: 'column',
-    }}>
-      {/* Header bar */}
-      <div style={{
-        height: '48px', minHeight: '48px',
-        background: 'var(--bg-secondary)',
-        borderBottom: '1px solid var(--rule)',
-        display: 'flex', alignItems: 'center',
-        padding: '0 16px',
-        gap: '12px',
-      }}>
+    <>
+      <div className="tw-scrim" style={{ zIndex: 399 }} onClick={onClose} />
+      <div className="tw-dialog" role="dialog" aria-modal="true" aria-label="Source snapshot" style={{ width: 'min(1280px, calc(100vw - 32px))', height: 'calc(100vh - 48px)' }}>
         <div style={{
-          fontFamily: 'var(--font-display)', fontSize: '18px',
-          color: 'var(--text-primary)', letterSpacing: '0.06em',
+          display: 'flex', alignItems: 'center', gap: '14px',
+          padding: '16px 20px', borderBottom: '1px solid var(--line)', flexShrink: 0,
         }}>
-          SNAPSHOT
-        </div>
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: '11px',
-          color: 'var(--text-tertiary)',
-        }}>
-          {source_id ?? '—'}
-        </div>
-        <div style={{ flex: 1 }} />
-        {/* Legend */}
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--state-ok)',
-            textDecoration: 'underline', letterSpacing: '0.04em' }}>
-            ADDITIONS
-          </span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--state-alert)',
-            textDecoration: 'line-through', letterSpacing: '0.04em' }}>
-            DELETIONS
-          </span>
-        </div>
-        <button onClick={onClose} style={{
-          background: 'none', border: '1px solid var(--rule)',
-          cursor: 'pointer', color: 'var(--text-secondary)',
-          fontFamily: 'var(--font-mono)', fontSize: '11px',
-          padding: '4px 12px', letterSpacing: '0.06em',
-        }}>
-          CLOSE
-        </button>
-      </div>
-
-      {/* Two-panel body */}
-      <div style={{
-        flex: 1, display: 'flex', overflow: 'hidden',
-        background: 'var(--bg-secondary)',
-      }}>
-
-        {/* Left panel — current snapshot with diff highlights */}
-        <TextPanel
-          header={`SOURCE: ${source_id ?? '—'}`}
-          text={snapshot_text ?? previous_snapshot_text}
-          addedLines={addedLines}
-          deletedLines={deletedLines}
-        />
-
-        {/* Right panel — matching IPFR chunks */}
-        <div style={{
-          flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden',
-        }}>
-          {/* Panel header */}
-          <div style={{
-            padding: '8px 12px',
-            borderBottom: '1px solid var(--rule)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            color: 'var(--text-secondary)',
-            letterSpacing: '0.06em',
-            flexShrink: 0,
-            background: 'var(--bg-tertiary)',
-          }}>
-            BEST MATCH PAGE: {best_match_page_id
-              ? `${pageTitles.get(best_match_page_id) ?? best_match_page_id}${pageTitles.has(best_match_page_id) ? ` (${best_match_page_id})` : ''}`
-              : '—'}
+          <div style={{ minWidth: 0 }}>
+            <div className="tw-overline">Latest snapshot</div>
+            <div className="tw-drawer-title" style={{ fontSize: '20px' }}>{source_id ?? '—'}</div>
           </div>
+          <div style={{ flex: 1 }} />
+          <div style={{ display: 'flex', gap: '14px', alignItems: 'center', fontSize: '12px' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--ok)' }}>
+              <span style={{ width: 10, height: 10, borderRadius: 2, background: 'var(--ok-soft)', boxShadow: 'inset 3px 0 0 var(--ok)' }} /> Added
+            </span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--alert)' }}>
+              <span style={{ width: 10, height: 10, borderRadius: 2, background: 'var(--alert-soft)', boxShadow: 'inset 3px 0 0 var(--alert)' }} /> Removed
+            </span>
+          </div>
+          <button type="button" className="tw-icon-btn" onClick={onClose} aria-label="Close">
+            <Icon name="close" />
+          </button>
+        </div>
 
-          {/* Chunks */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: '12px' }}>
-            {chunk_texts.length === 0 && (
-              <div style={{
-                fontFamily: 'var(--font-mono)', fontSize: '11px',
-                color: 'var(--text-tertiary)', padding: '4px 0',
-              }}>
-                NO MATCHING CHUNKS
-              </div>
-            )}
-            {chunk_texts.map((text, i) => (
-              <ChunkCard
-                key={i}
-                text={text}
-                isMatch={true}
-              />
-            ))}
+        <div style={{ flex: 1, display: 'flex', overflow: 'hidden', minHeight: 0 }}>
+          <TextPanel
+            header={`Source text: ${source_id ?? '—'}`}
+            text={snapshot_text ?? previous_snapshot_text}
+            addedLines={addedLines}
+            deletedLines={deletedLines}
+          />
+
+          <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <PanelHeader>
+              Best matching IPFR page: {best_match_page_id
+                ? `${pageTitles.get(best_match_page_id) ?? best_match_page_id}${pageTitles.has(best_match_page_id) ? ` (${best_match_page_id})` : ''}`
+                : '—'}
+            </PanelHeader>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px' }}>
+              {chunk_texts.length === 0 && <EmptyState icon="search" compact title="No matching chunks" />}
+              {chunk_texts.map((text, i) => <ChunkCard key={i} text={text} />)}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

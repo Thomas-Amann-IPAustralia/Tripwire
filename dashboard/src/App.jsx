@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 import { HashRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import NavRail from './components/NavRail.jsx';
@@ -11,6 +11,7 @@ import Adjust from './sections/Adjust.jsx';
 import Document from './sections/Document.jsx';
 import Health from './sections/Health.jsx';
 import { useFilters } from './hooks/useFilters.js';
+import { Callout } from './components/ui.jsx';
 
 export const DashboardContext = createContext(null);
 
@@ -31,18 +32,10 @@ class SectionErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{
-          padding: '2rem',
-          color: 'var(--state-error)',
-          fontFamily: 'var(--font-mono)',
-          fontSize: '12px',
-          border: '1px solid var(--state-error)',
-          margin: '1rem',
-        }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: '18px', marginBottom: '0.5rem' }}>
-            SECTION ERROR
-          </div>
-          {this.state.error?.message || 'Unknown error'}
+        <div className="tw-page">
+          <Callout tone="error" icon="alert" title="This page could not be displayed">
+            {this.state.error?.message || 'Unknown error'}. Try refreshing; other pages are unaffected.
+          </Callout>
         </div>
       );
     }
@@ -53,7 +46,7 @@ class SectionErrorBoundary extends React.Component {
 function AnimatedRoutes() {
   const location = useLocation();
   return (
-    <div key={location.pathname} className="section-enter" style={{ flex: 1, overflow: 'auto' }}>
+    <main key={location.pathname} className="tw-route section-enter">
       <Routes location={location}>
         <Route path="/" element={<Navigate to="/consider" replace />} />
         <Route path="/consider" element={<SectionErrorBoundary><Consider /></SectionErrorBoundary>} />
@@ -64,7 +57,7 @@ function AnimatedRoutes() {
         <Route path="/document" element={<SectionErrorBoundary><Document /></SectionErrorBoundary>} />
         <Route path="/health"   element={<SectionErrorBoundary><Health /></SectionErrorBoundary>} />
       </Routes>
-    </div>
+    </main>
   );
 }
 
@@ -105,13 +98,23 @@ function DashboardProvider({ children }) {
   );
 }
 
+const NAV_KEY = 'tripwire-nav-collapsed';
+
 function AppLayout() {
-  const [navExpanded, setNavExpanded] = useState(false);
+  const [navCollapsed, setNavCollapsed] = useState(() => {
+    try { return localStorage.getItem(NAV_KEY) === '1'; } catch { return false; }
+  });
+  const toggleNav = useCallback(() => {
+    setNavCollapsed(c => {
+      try { localStorage.setItem(NAV_KEY, c ? '0' : '1'); } catch { /* storage unavailable */ }
+      return !c;
+    });
+  }, []);
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-      <NavRail expanded={navExpanded} onToggle={() => setNavExpanded(e => !e)} />
-      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden' }}>
+    <div className="tw-shell">
+      <NavRail collapsed={navCollapsed} onToggle={toggleNav} />
+      <div className="tw-main">
         <Topbar />
         <AnimatedRoutes />
       </div>

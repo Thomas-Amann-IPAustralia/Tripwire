@@ -1,6 +1,10 @@
 import React, {
   useState, useEffect, useRef, useCallback, useMemo,
 } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { systemPlan } from '../lib/systemPlan.js';
+import PipelineDiagram from '../components/PipelineDiagram.jsx';
+import { PageHeader, Icon, Callout, SearchInput } from '../components/ui.jsx';
 
 // ── SQL Console ───────────────────────────────────────────────────────────────
 // Actual tables in ipfr.sqlite. Note the chunk table is named `chunks`
@@ -64,145 +68,81 @@ function SqlConsole() {
   }, [run]);
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '20px 24px 16px' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', padding: '20px 24px 18px', minHeight: 0 }}>
+
+      <Callout icon="database" style={{ marginBottom: '14px' }}>
+        Run read-only <strong>SELECT</strong> queries against the Tripwire database. Select a table to load an example query.
+      </Callout>
 
       {/* Table chips */}
       <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', alignItems: 'center', marginBottom: '12px' }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', flexShrink: 0 }}>
-          Tables:
-        </span>
+        <span className="tw-small tw-muted" style={{ flexShrink: 0, marginRight: '2px' }}>Tables</span>
         {Object.entries(KNOWN_TABLES).map(([t, query]) => (
-          <code
+          <button
             key={t}
+            type="button"
             title={query}
             onClick={() => setSql(query)}
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              color: 'var(--text-secondary)',
-              background: 'var(--bg-tertiary)',
-              border: '1px solid var(--rule)',
-              padding: '2px 6px',
-              cursor: 'pointer',
-            }}
+            className="tw-chip"
+            style={{ fontFamily: 'var(--font-code)', fontSize: '11.5px', padding: '3px 9px' }}
           >
             {t}
-          </code>
+          </button>
         ))}
       </div>
 
       {/* Textarea */}
       <textarea
+        className="tw-textarea"
+        aria-label="SQL query"
         value={sql}
         onChange={e => setSql(e.target.value)}
         onKeyDown={handleKeyDown}
         spellCheck={false}
         placeholder="SELECT …"
         style={{
-          width: '100%',
-          height: '120px',
+          height: '130px',
           minHeight: '60px',
-          resize: 'vertical',
-          fontFamily: 'var(--font-mono)',
+          fontFamily: 'var(--font-code)',
           fontSize: '13px',
-          lineHeight: 1.5,
-          background: 'var(--bg-tertiary)',
-          border: '1px solid var(--rule)',
-          color: 'var(--text-primary)',
-          padding: '10px 12px',
-          outline: 'none',
-          boxSizing: 'border-box',
+          lineHeight: 1.6,
+          background: 'var(--surface-subtle)',
+          flexShrink: 0,
         }}
       />
 
       {/* Run bar */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '10px 0 14px' }}>
-        <button
-          onClick={run}
-          disabled={loading}
-          style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '11px',
-            letterSpacing: '0.08em',
-            background: loading ? 'var(--bg-accent)' : 'var(--stage-4)',
-            color: loading ? 'var(--text-tertiary)' : '#000',
-            border: 'none',
-            padding: '6px 18px',
-            cursor: loading ? 'not-allowed' : 'pointer',
-          }}
-        >
-          {loading ? 'RUNNING…' : 'RUN'}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '12px 0 14px', flexShrink: 0 }}>
+        <button type="button" className="tw-btn is-primary" onClick={run} disabled={loading}>
+          <Icon name="play" />
+          {loading ? 'Running…' : 'Run query'}
         </button>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)' }}>
-          Ctrl+Enter · SELECT only · read-only
+        <span className="tw-small tw-muted">
+          <kbd style={{ border: '1px solid var(--line-strong)', borderRadius: 4, padding: '0 5px', background: 'var(--surface)' }}>Ctrl</kbd> + <kbd style={{ border: '1px solid var(--line-strong)', borderRadius: 4, padding: '0 5px', background: 'var(--surface)' }}>Enter</kbd> to run · SELECT only · read-only
         </span>
         {result && timing != null && (
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)', marginLeft: 'auto' }}>
-            {result.rowCount.toLocaleString()} row{result.rowCount !== 1 ? 's' : ''} · {timing}ms
+          <span className="tw-small tabular" style={{ color: 'var(--body)', marginLeft: 'auto' }}>
+            {result.rowCount.toLocaleString()} row{result.rowCount !== 1 ? 's' : ''} in {timing} ms
           </span>
         )}
       </div>
 
-      {/* Row-count warning */}
       {result?.rowWarning && (
-        <div style={{
-          background: 'rgba(251,191,36,0.08)',
-          border: '1px solid rgba(251,191,36,0.35)',
-          color: 'var(--state-warn)',
-          fontFamily: 'var(--font-mono)',
-          fontSize: '11px',
-          padding: '8px 12px',
-          marginBottom: '12px',
-        }}>
-          ⚠ {result.rowWarning}
-        </div>
+        <Callout tone="warn" icon="alert" style={{ marginBottom: '12px' }}>{result.rowWarning}</Callout>
       )}
 
-      {/* Error */}
       {error && (
-        <div style={{
-          background: 'rgba(239,68,68,0.08)',
-          border: '1px solid var(--state-error)',
-          color: 'var(--state-error)',
-          fontFamily: 'var(--font-mono)',
-          fontSize: '12px',
-          padding: '10px 12px',
-          marginBottom: '12px',
-          whiteSpace: 'pre-wrap',
-        }}>
-          {error}
-        </div>
+        <Callout tone="error" icon="alert" title="Query failed" style={{ marginBottom: '12px', whiteSpace: 'pre-wrap' }}>{error}</Callout>
       )}
 
       {/* Results table */}
       {result && (
-        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'auto', border: '1px solid var(--rule)' }}>
-          <table style={{
-            borderCollapse: 'collapse',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '12px',
-            width: 'max-content',
-            minWidth: '100%',
-          }}>
+        <div style={{ flex: 1, overflow: 'auto', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', background: 'var(--surface)', minHeight: 0 }}>
+          <table className="tw-table is-compact" style={{ width: 'max-content', minWidth: '100%', fontSize: '12px' }}>
             <thead>
               <tr>
                 {result.columns.map((col, i) => (
-                  <th key={i} style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: '10px',
-                    letterSpacing: '0.07em',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-secondary)',
-                    padding: '6px 10px',
-                    borderBottom: '2px solid var(--rule)',
-                    borderRight: i < result.columns.length - 1 ? '1px solid var(--rule)' : 'none',
-                    background: 'var(--bg-secondary)',
-                    textAlign: 'left',
-                    whiteSpace: 'nowrap',
-                    position: 'sticky',
-                    top: 0,
-                    zIndex: 1,
-                  }}>
+                  <th key={i} style={{ fontFamily: 'var(--font-code)', textTransform: 'none', letterSpacing: 0, fontSize: '11.5px', color: 'var(--body)' }}>
                     {col}
                   </th>
                 ))}
@@ -211,22 +151,18 @@ function SqlConsole() {
             <tbody>
               {result.rows.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={result.columns.length || 1}
-                    style={{ padding: '24px', textAlign: 'center', color: 'var(--text-tertiary)', fontStyle: 'italic' }}
-                  >
+                  <td colSpan={result.columns.length || 1} style={{ padding: '24px', textAlign: 'center', color: 'var(--muted)' }}>
                     No rows returned
                   </td>
                 </tr>
               ) : (
                 result.rows.map((row, ri) => (
-                  <tr key={ri} style={{ background: ri % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.015)' }}>
+                  <tr key={ri}>
                     {row.map((cell, ci) => (
                       <td key={ci} style={{
-                        padding: '5px 10px',
-                        borderBottom: '1px solid var(--rule)',
-                        borderRight: ci < row.length - 1 ? '1px solid var(--rule)' : 'none',
-                        color: cell === null ? 'var(--text-tertiary)' : 'var(--text-primary)',
+                        fontFamily: 'var(--font-code)',
+                        fontSize: '11.5px',
+                        color: cell === null ? 'var(--faint)' : 'var(--ink)',
                         fontStyle: cell === null ? 'italic' : 'normal',
                         whiteSpace: 'nowrap',
                         maxWidth: '480px',
@@ -247,9 +183,6 @@ function SqlConsole() {
     </div>
   );
 }
-import { useNavigate } from 'react-router-dom';
-import { systemPlan } from '../lib/systemPlan.js';
-import PipelineDiagram from '../components/PipelineDiagram.jsx';
 
 // ── Syntax highlighting ───────────────────────────────────────────────────────
 // Each highlighter returns an array of { k: 'text'|'keyword'|'string'|'comment'|'number'|'key'|'op', v: string }
@@ -318,11 +251,11 @@ function highlight(code, lang) {
 
 const SYN_COLORS = {
   keyword: 'var(--stage-4)',
-  string:  'var(--stage-9)',
-  comment: 'var(--text-tertiary)',
-  number:  'var(--stage-3)',
+  string:  'var(--ok)',
+  comment: 'var(--faint)',
+  number:  'var(--stage-6)',
   key:     'var(--stage-5)',
-  op:      'var(--text-secondary)',
+  op:      'var(--muted)',
   text:    'inherit',
 };
 
@@ -393,10 +326,10 @@ function HighlightText({ text, searchRx }) {
           {part}
           {i < hits.length && (
             <mark style={{
-              background: 'rgba(212,168,32,0.32)',
+              background: 'color-mix(in srgb, var(--ochre) 45%, transparent)',
               color: 'inherit',
-              borderRadius: '1px',
-              padding: '0 1px',
+              borderRadius: '3px',
+              padding: '0 2px',
             }}>
               {hits[i]}
             </mark>
@@ -416,7 +349,7 @@ function InlineNodes({ nodes, searchRx }) {
           return <HighlightText key={i} text={n.v} searchRx={searchRx} />;
         }
         if (n.type === 'strong') {
-          return <strong key={i} style={{ fontWeight: 600, color: 'var(--text-primary)' }}>
+          return <strong key={i} style={{ fontWeight: 650, color: 'var(--ink)' }}>
             <HighlightText text={n.v} searchRx={searchRx} />
           </strong>;
         }
@@ -426,16 +359,18 @@ function InlineNodes({ nodes, searchRx }) {
               <code
                 key={i}
                 data-config-key={n.configKey}
+                title="Open this setting in Configuration"
                 style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.88em',
-                  color: 'var(--stage-3)',
+                  fontFamily: 'var(--font-code)',
+                  fontSize: '0.84em',
+                  color: 'var(--accent-ink)',
+                  background: 'var(--accent-soft)',
+                  border: '1px solid var(--accent-line)',
                   textDecoration: 'underline',
                   textDecorationStyle: 'dotted',
                   textUnderlineOffset: '3px',
-                  cursor: 'default',
-                  borderRadius: '2px',
-                  padding: '0 2px',
+                  borderRadius: '4px',
+                  padding: '1px 5px',
                 }}
               >
                 <HighlightText text={n.v} searchRx={searchRx} />
@@ -446,12 +381,13 @@ function InlineNodes({ nodes, searchRx }) {
             <code
               key={i}
               style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.88em',
-                color: 'var(--text-primary)',
-                background: 'var(--bg-tertiary)',
-                borderRadius: '2px',
-                padding: '1px 4px',
+                fontFamily: 'var(--font-code)',
+                fontSize: '0.84em',
+                color: 'var(--ink)',
+                background: 'var(--surface-sunken)',
+                border: '1px solid var(--line)',
+                borderRadius: '4px',
+                padding: '1px 5px',
               }}
             >
               <HighlightText text={n.v} searchRx={searchRx} />
@@ -499,7 +435,7 @@ function ContentNode({ node, searchRx }) {
         {...dataAnchor}
         style={{
           margin: '0 0 16px 0',
-          color: 'var(--text-primary)',
+          color: 'var(--body)',
           lineHeight: 1.75,
           scrollMarginTop: '80px',
         }}
@@ -519,11 +455,12 @@ function ContentNode({ node, searchRx }) {
       <pre
         {...dataAnchor}
         style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '12px',
-          lineHeight: 1.6,
-          background: 'var(--bg-tertiary)',
-          border: '1px solid var(--rule)',
+          fontFamily: 'var(--font-code)',
+          fontSize: '12.5px',
+          lineHeight: 1.65,
+          background: 'var(--surface-subtle)',
+          border: '1px solid var(--line)',
+          borderRadius: 'var(--radius)',
           padding: '14px 16px',
           margin: '0 0 20px 0',
           overflowX: 'auto',
@@ -549,29 +486,19 @@ function ContentNode({ node, searchRx }) {
         {...dataAnchor}
         style={{ overflowX: 'auto', margin: '0 0 20px 0', scrollMarginTop: '80px' }}
       >
-        <table style={{
-          width: '100%',
-          borderCollapse: 'collapse',
-          border: '1px solid var(--rule)',
-          fontFamily: 'var(--font-body)',
-          fontSize: '14px',
+        <table className="tw-table" style={{
+          border: '1px solid var(--line)',
+          borderRadius: 'var(--radius)',
+          borderCollapse: 'separate',
+          borderSpacing: 0,
+          overflow: 'hidden',
+          fontSize: '13.5px',
+          background: 'var(--surface)',
         }}>
           <thead>
             <tr>
               {node.headers.map((h, i) => (
-                <th key={i} style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '11px',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: 'var(--text-secondary)',
-                  padding: '8px 12px',
-                  borderBottom: '1px solid var(--rule)',
-                  borderRight: i < node.headers.length - 1 ? '1px solid var(--rule)' : 'none',
-                  background: 'var(--bg-secondary)',
-                  textAlign: 'left',
-                  whiteSpace: 'nowrap',
-                }}>
+                <th key={i} style={{ position: 'static' }}>
                   <HighlightText text={h} searchRx={searchRx} />
                 </th>
               ))}
@@ -579,16 +506,12 @@ function ContentNode({ node, searchRx }) {
           </thead>
           <tbody>
             {node.rows.map((row, ri) => (
-              <tr key={ri} style={{
-                background: ri % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.015)',
-              }}>
+              <tr key={ri}>
                 {row.map((cell, ci) => (
                   <td key={ci} style={{
-                    padding: '8px 12px',
-                    borderBottom: '1px solid var(--rule)',
-                    borderRight: ci < row.length - 1 ? '1px solid var(--rule)' : 'none',
-                    color: 'var(--text-primary)',
-                    lineHeight: 1.5,
+                    color: ci === 0 ? 'var(--ink)' : 'var(--body)',
+                    fontWeight: ci === 0 ? 600 : 400,
+                    lineHeight: 1.55,
                     verticalAlign: 'top',
                   }}>
                     <HighlightText text={cell} searchRx={searchRx} />
@@ -612,7 +535,7 @@ function ContentNode({ node, searchRx }) {
           margin: '0 0 16px 0',
           paddingLeft: '24px',
           lineHeight: 1.75,
-          color: 'var(--text-primary)',
+          color: 'var(--body)',
           scrollMarginTop: '80px',
         }}
       >
@@ -644,13 +567,16 @@ function SectionBlock({ section, searchRx }) {
           id={section.id}
           {...dataAnchor}
           style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '42px',
-            lineHeight: 1,
-            letterSpacing: '0.03em',
-            color: 'var(--text-primary)',
-            marginBottom: '20px',
-            scrollMarginTop: '80px',
+            fontFamily: 'var(--font-serif)',
+            fontWeight: 700,
+            fontSize: '30px',
+            lineHeight: 1.2,
+            letterSpacing: '-0.02em',
+            color: 'var(--ink)',
+            marginBottom: '16px',
+            paddingTop: '28px',
+            borderTop: '1px solid var(--line)',
+            scrollMarginTop: '24px',
           }}
         >
           <HighlightText text={heading} searchRx={searchRx} />
@@ -663,15 +589,16 @@ function SectionBlock({ section, searchRx }) {
           id={section.id}
           {...dataAnchor}
           style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '28px',
-            lineHeight: 1,
-            letterSpacing: '0.03em',
-            color: 'var(--text-primary)',
+            fontFamily: 'var(--font-sans)',
+            fontWeight: 650,
+            fontSize: '20px',
+            lineHeight: 1.3,
+            letterSpacing: '-0.015em',
+            color: 'var(--ink)',
             borderLeft: `3px solid ${borderColor}`,
-            paddingLeft: '14px',
-            marginBottom: '16px',
-            scrollMarginTop: '80px',
+            paddingLeft: '12px',
+            marginBottom: '12px',
+            scrollMarginTop: '24px',
           }}
         >
           <HighlightText text={heading} searchRx={searchRx} />
@@ -683,13 +610,13 @@ function SectionBlock({ section, searchRx }) {
         id={section.id}
         {...dataAnchor}
         style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: '20px',
-          lineHeight: 1,
-          letterSpacing: '0.03em',
-          color: 'var(--text-secondary)',
-          marginBottom: '12px',
-          scrollMarginTop: '80px',
+          fontFamily: 'var(--font-sans)',
+          fontWeight: 650,
+          fontSize: '16px',
+          lineHeight: 1.35,
+          color: 'var(--ink)',
+          marginBottom: '10px',
+          scrollMarginTop: '24px',
         }}
       >
         <HighlightText text={heading} searchRx={searchRx} />
@@ -697,7 +624,7 @@ function SectionBlock({ section, searchRx }) {
     );
   })();
 
-  const sectionMarginTop = level === 1 ? '48px' : level === 2 ? '32px' : '20px';
+  const sectionMarginTop = level === 1 ? '40px' : level === 2 ? '30px' : '20px';
 
   return (
     <section style={{ marginTop: sectionMarginTop }}>
@@ -746,18 +673,24 @@ function NavItem({ node, activeId, onNavigate, depth = 0, collapsedH2, toggleH2 
           if (isH2 && hasChildren) toggleH2(node.id);
           onNavigate(node.id);
         }}
+        role="button"
+        tabIndex={0}
+        aria-current={isActive ? 'location' : undefined}
+        onKeyDown={e => { if (e.key === 'Enter') { if (isH2 && hasChildren) toggleH2(node.id); onNavigate(node.id); } }}
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '6px',
-          padding: `5px 12px 5px ${12 + depth * 12}px`,
+          gap: '8px',
+          padding: `6px 10px 6px ${10 + depth * 12}px`,
+          margin: '1px 8px',
           cursor: 'pointer',
-          borderLeft: isActive ? '2px solid var(--stage-3)' : '2px solid transparent',
-          background: isActive ? 'rgba(212,168,32,0.07)' : 'transparent',
+          borderRadius: '6px',
+          boxShadow: isActive ? 'inset 3px 0 0 var(--accent)' : 'none',
+          background: isActive ? 'var(--surface-selected)' : 'transparent',
           transition: 'background 120ms',
         }}
         onMouseEnter={e => {
-          if (!isActive) e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+          if (!isActive) e.currentTarget.style.background = 'var(--surface-hover)';
         }}
         onMouseLeave={e => {
           if (!isActive) e.currentTarget.style.background = 'transparent';
@@ -766,21 +699,19 @@ function NavItem({ node, activeId, onNavigate, depth = 0, collapsedH2, toggleH2 
         {stageColor && (
           <span style={{
             display: 'inline-block',
-            width: '6px',
-            height: '6px',
-            borderRadius: '1px',
+            width: '7px',
+            height: '7px',
+            borderRadius: '50%',
             background: stageColor,
             flexShrink: 0,
           }} />
         )}
         <span style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: node.level === 1 ? '11px' : '10px',
-          color: isActive ? 'var(--text-primary)' : node.level === 1 ? 'var(--text-secondary)' : 'var(--text-tertiary)',
-          letterSpacing: node.level === 1 ? '0.05em' : '0.02em',
-          lineHeight: 1.3,
+          fontSize: node.level === 1 ? '12.5px' : '12px',
+          fontWeight: node.level === 1 ? 650 : isActive ? 600 : 450,
+          color: isActive ? 'var(--accent-ink)' : node.level === 1 ? 'var(--ink)' : 'var(--body)',
+          lineHeight: 1.35,
           flex: 1,
-          textTransform: node.level === 1 ? 'uppercase' : 'none',
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
@@ -789,15 +720,9 @@ function NavItem({ node, activeId, onNavigate, depth = 0, collapsedH2, toggleH2 
           {node.heading}
         </span>
         {isH2 && hasChildren && (
-          <span style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '9px',
-            color: 'var(--text-tertiary)',
-            transform: isCollapsed ? 'none' : 'rotate(90deg)',
-            transition: 'transform 150ms',
-            display: 'inline-block',
-            flexShrink: 0,
-          }}>›</span>
+          <span className={`tw-caret${isCollapsed ? '' : ' is-open'}`} aria-hidden="true">
+            <Icon name="chevron" />
+          </span>
         )}
       </div>
       {hasChildren && !isCollapsed && (
@@ -834,45 +759,19 @@ function Sidebar({ activeId, onNavigate, searchQuery, onSearch, matchInfo }) {
 
   return (
     <div style={{
-      width: '240px',
+      width: '270px',
       flexShrink: 0,
-      borderRight: '1px solid var(--rule)',
+      borderRight: '1px solid var(--line)',
+      background: 'var(--surface-subtle)',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
       overflow: 'hidden',
     }}>
-      {/* Search */}
-      <div style={{
-        padding: '10px 12px',
-        borderBottom: '1px solid var(--rule)',
-        flexShrink: 0,
-      }}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={e => onSearch(e.target.value)}
-          placeholder="Search document…"
-          style={{
-            width: '100%',
-            background: 'var(--bg-tertiary)',
-            border: '1px solid var(--rule)',
-            color: 'var(--text-primary)',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            padding: '6px 8px',
-            outline: 'none',
-            boxSizing: 'border-box',
-          }}
-        />
+      <div style={{ padding: '14px 14px 10px', borderBottom: '1px solid var(--line-soft)', flexShrink: 0 }}>
+        <SearchInput value={searchQuery} onChange={onSearch} placeholder="Search the system plan" width="100%" />
         {searchQuery.trim() && (
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '9px',
-            color: 'var(--text-tertiary)',
-            marginTop: '5px',
-            letterSpacing: '0.03em',
-          }}>
+          <div className="tw-small tw-muted" style={{ marginTop: '6px' }}>
             {matchInfo.total > 0
               ? `${matchInfo.total} match${matchInfo.total !== 1 ? 'es' : ''} in ${matchInfo.sections} section${matchInfo.sections !== 1 ? 's' : ''}`
               : 'No matches'}
@@ -880,8 +779,7 @@ function Sidebar({ activeId, onNavigate, searchQuery, onSearch, matchInfo }) {
         )}
       </div>
 
-      {/* Nav tree */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
+      <nav aria-label="System plan contents" style={{ flex: 1, overflowY: 'auto', padding: '8px 0 16px' }}>
         {navTree.map(node => (
           <NavItem
             key={node.id}
@@ -892,7 +790,7 @@ function Sidebar({ activeId, onNavigate, searchQuery, onSearch, matchInfo }) {
             toggleH2={toggleH2}
           />
         ))}
-      </div>
+      </nav>
     </div>
   );
 }
@@ -986,103 +884,81 @@ export default function Document() {
     [searchQuery]
   );
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {/* ── Header band ── */}
-      <div style={{
-        height: '80px', minHeight: '80px',
-        display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between',
-        padding: '0 24px 0',
-        borderBottom: '1px solid var(--rule)',
-      }}>
-        <div style={{ paddingBottom: '12px' }}>
-          <div style={{
-            fontFamily: 'var(--font-display)',
-            fontSize: '42px',
-            lineHeight: 1,
-            letterSpacing: '0.04em',
-          }}>
-            DOCUMENT
-          </div>
-          <div style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '11px',
-            color: 'var(--text-secondary)',
-            marginTop: '2px',
-          }}>
-            Tripwire System Plan
-          </div>
-        </div>
+  const TABS = [
+    { id: 'plan', label: 'System plan', icon: 'book' },
+    { id: 'sql',  label: 'SQL console', icon: 'database' },
+  ];
 
-        {/* View tabs */}
-        <div style={{ display: 'flex', alignSelf: 'flex-end' }}>
-          {[
-            { id: 'plan', label: 'SYSTEM PLAN' },
-            { id: 'sql',  label: 'SQL CONSOLE' },
-          ].map(tab => (
+  return (
+    <div className="tw-page is-full">
+      <PageHeader
+        eyebrow="Administration · Reference"
+        title="How Tripwire works"
+        description="The full system plan: every stage, threshold and design decision, with links into the live configuration. Use the SQL console to inspect the underlying data."
+      />
+
+      <div className="tw-card is-clip" style={{ flex: 1, minHeight: '560px', display: 'flex', flexDirection: 'column' }}>
+        <div className="tw-tabs" role="tablist" style={{ padding: '0 12px', flexShrink: 0 }}>
+          {TABS.map(tab => (
             <button
               key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={view === tab.id}
+              className={`tw-tab${view === tab.id ? ' active' : ''}`}
               onClick={() => setView(tab.id)}
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: '11px',
-                letterSpacing: '0.07em',
-                background: 'none',
-                border: 'none',
-                borderBottom: view === tab.id ? '2px solid var(--stage-4)' : '2px solid transparent',
-                color: view === tab.id ? 'var(--text-primary)' : 'var(--text-tertiary)',
-                padding: '8px 16px',
-                cursor: 'pointer',
-                transition: 'color 120ms, border-color 120ms',
-              }}
-              onMouseEnter={e => { if (view !== tab.id) e.currentTarget.style.color = 'var(--text-secondary)'; }}
-              onMouseLeave={e => { if (view !== tab.id) e.currentTarget.style.color = 'var(--text-tertiary)'; }}
             >
+              <Icon name={tab.icon} />
               {tab.label}
             </button>
           ))}
         </div>
+
+        <div style={{ flex: 1, display: 'flex', overflow: 'hidden', minHeight: 0 }}>
+          {view === 'plan' && (
+            <>
+              <Sidebar
+                activeId={activeId}
+                onNavigate={navigate}
+                searchQuery={searchQuery}
+                onSearch={setSearchQuery}
+                matchInfo={matchInfo}
+              />
+
+              {/* Scrollable document body */}
+              <div
+                ref={bodyRef}
+                onClick={handleBodyClick}
+                className="tw-doc-body"
+                style={{
+                  flex: 1,
+                  overflowY: 'auto',
+                  padding: '0 56px 80px 48px',
+                  fontSize: '15px',
+                  color: 'var(--body)',
+                  lineHeight: 1.75,
+                }}
+              >
+                <div style={{ maxWidth: '860px' }}>
+                  {systemPlan.map(section => (
+                    <SectionBlock
+                      key={section.id}
+                      section={section}
+                      searchRx={searchRx}
+                    />
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {view === 'sql' && <SqlConsole />}
+        </div>
       </div>
-
-      {/* ── Body ── */}
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-        {view === 'plan' && (
-          <>
-            <Sidebar
-              activeId={activeId}
-              onNavigate={navigate}
-              searchQuery={searchQuery}
-              onSearch={setSearchQuery}
-              matchInfo={matchInfo}
-            />
-
-            {/* Scrollable document body */}
-            <div
-              ref={bodyRef}
-              onClick={handleBodyClick}
-              style={{
-                flex: 1,
-                overflowY: 'auto',
-                padding: '8px 52px 80px 48px',
-                fontFamily: 'var(--font-body)',
-                fontSize: '16px',
-                color: 'var(--text-primary)',
-                lineHeight: 1.75,
-              }}
-            >
-              {systemPlan.map(section => (
-                <SectionBlock
-                  key={section.id}
-                  section={section}
-                  searchRx={searchRx}
-                />
-              ))}
-            </div>
-          </>
-        )}
-
-        {view === 'sql' && <SqlConsole />}
-      </div>
+      <style>{`
+        .tw-doc-body > div > section:first-child h1 { border-top: 0 !important; }
+        .tw-doc-body [data-config-key]:hover { background: var(--accent-line) !important; }
+      `}</style>
     </div>
   );
 }

@@ -4,13 +4,14 @@ import {
 } from 'recharts';
 import { StageIndicator } from '../components/StageIndicator.jsx';
 import { useDashboard } from '../App.jsx';
+import { Card, Segmented, chartAxisTick, chartTooltipStyle } from '../components/ui.jsx';
 
 const LABEL_W     = 148;
 const FUNNEL_W    = 96;
-const ROW_H       = 20;
+const ROW_H       = 24;
 const TICK_H      = 12;
 const CHART_H     = 120;
-const CHART_HDR_H = 32;
+const CHART_HDR_H = 44;
 const PPD_SCROLL  = 20; // pixels-per-day when scrolling (> 30 days)
 const VIRT_PAD    = 200; // px beyond viewport to render
 
@@ -112,7 +113,7 @@ function aggregateMonthly(daily) {
   return Array.from(map.values()).sort((a, b) => a.date.localeCompare(b.date));
 }
 
-const chartTickStyle = { fontFamily: 'var(--font-mono)', fontSize: 9, fill: '#5c5a52' };
+const chartTickStyle = chartAxisTick;
 
 // ---- Component -------------------------------------------------------------
 
@@ -213,34 +214,15 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
   const totalPanelH = swimlaneH + CHART_HDR_H + CHART_H + 8;
 
   return (
-    <div className="panel" style={{
-      background: 'var(--bg-secondary)',
-      border: '1px solid var(--rule)',
-      padding: '16px',
-    }}>
-      {/* Header row */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', letterSpacing: '0.1em' }}>
-          TIMELINE
-        </div>
-        <button
-          onClick={() => setShowAll(s => !s)}
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            color: 'var(--text-tertiary)',
-            background: 'transparent',
-            border: '1px solid var(--rule)',
-            padding: '2px 8px',
-            cursor: 'pointer',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--rule-accent)'; }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rule)'; }}
-        >
-          {showAll ? 'SHOW ACTIVE ONLY' : 'SHOW ALL SOURCES'}
+    <Card
+      title="Timeline"
+      subtitle="Each tick is one source check, coloured by the deepest stage it reached. Select a tick to open the run."
+      actions={
+        <button type="button" className="tw-btn is-sm" onClick={() => setShowAll(s => !s)}>
+          {showAll ? 'Show active sources only' : 'Show all sources'}
         </button>
-      </div>
-
+      }
+    >
       {/* Bounded height: with 150+ sources the unbounded lane list made this
           panel several thousand pixels tall and swamped the whole page. */}
       <div ref={containerRef} style={{ display: 'flex', maxHeight: '520px', overflowY: 'auto' }}>
@@ -252,13 +234,13 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
               height: ROW_H,
               display: 'flex',
               alignItems: 'center',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '9px',
-              color: 'var(--text-secondary)',
+              fontFamily: 'var(--font-code)',
+              fontSize: '10.5px',
+              color: 'var(--body)',
               whiteSpace: 'nowrap',
               paddingRight: '8px',
-              borderBottom: '1px solid var(--rule)',
-            }}>
+              borderBottom: '1px solid var(--line-soft)',
+            }} title={src}>
               {truncate28(src)}
             </div>
           ))}
@@ -291,7 +273,7 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
                   style={{
                     position: 'relative',
                     height: ROW_H,
-                    borderBottom: '1px solid var(--rule)',
+                    borderBottom: '1px solid var(--line-soft)',
                   }}
                 >
                   {visible.map(run => {
@@ -307,8 +289,9 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
                           position: 'absolute',
                           left: x,
                           top: (ROW_H - TICK_H) / 2,
-                          width: 2,
+                          width: 3,
                           height: TICK_H,
+                          borderRadius: 2,
                           background: `var(--stage-${stage})`,
                           cursor: 'pointer',
                         }}
@@ -331,24 +314,17 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
 
             {/* Track 2: daily volume chart */}
             <div style={{ borderTop: '1px solid var(--rule)', paddingTop: '8px' }}>
-              <div style={{ display: 'flex', gap: '4px', marginBottom: '6px', height: CHART_HDR_H - 6 }}>
-                {['DAY', 'WEEK', 'MONTH'].map(z => (
-                  <button
-                    key={z}
-                    onClick={() => setZoomLevel(z)}
-                    style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: '10px',
-                      padding: '2px 6px',
-                      border: '1px solid var(--rule-accent)',
-                      background: zoomLevel === z ? 'var(--bg-accent)' : 'transparent',
-                      color: zoomLevel === z ? 'var(--text-primary)' : 'var(--text-tertiary)',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {z}
-                  </button>
-                ))}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px', height: CHART_HDR_H - 8 }}>
+                <Segmented
+                  ariaLabel="Chart grouping"
+                  value={zoomLevel}
+                  onChange={setZoomLevel}
+                  options={[{ value: 'DAY', label: 'Daily' }, { value: 'WEEK', label: 'Weekly' }, { value: 'MONTH', label: 'Monthly' }]}
+                />
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '11.5px', color: 'var(--muted)' }}>
+                  <span style={{ width: 10, height: 10, borderRadius: 2, background: 'var(--alert)', opacity: 0.75 }} /> Change required
+                  <span style={{ width: 14, height: 2, background: 'var(--muted)', marginLeft: 8 }} /> All checks
+                </span>
               </div>
               <ComposedChart
                 width={Math.max(totalW, contentW)}
@@ -365,21 +341,17 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
                 />
                 <YAxis hide />
                 <RechartsTooltip
-                  contentStyle={{
-                    background: 'var(--bg-secondary)',
-                    border: '1px solid var(--rule-accent)',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '10px',
-                    color: 'var(--text-primary)',
-                  }}
-                  labelStyle={{ color: 'var(--text-tertiary)' }}
+                  contentStyle={chartTooltipStyle}
+                  labelStyle={{ color: 'var(--ink)', fontWeight: 650 }}
+                  cursor={{ fill: 'var(--surface-hover)' }}
                 />
-                <Bar dataKey="alerts" fill="#c94020" opacity={0.7} isAnimationActive={false} />
+                <Bar dataKey="alerts" name="Change required" fill="var(--alert)" opacity={0.75} radius={[3, 3, 0, 0]} isAnimationActive={false} />
                 <Line
                   type="monotone"
                   dataKey="total"
-                  stroke="#5c5a52"
-                  strokeWidth={1}
+                  name="All checks"
+                  stroke="var(--muted)"
+                  strokeWidth={1.5}
                   dot={false}
                   isAnimationActive={false}
                 />
@@ -397,8 +369,8 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
                 height: ROW_H,
                 display: 'flex',
                 alignItems: 'center',
-                paddingLeft: '8px',
-                borderBottom: '1px solid var(--rule)',
+                paddingLeft: '10px',
+                borderBottom: '1px solid var(--line-soft)',
               }}>
                 <StageIndicator stages={stages} size={0.75} />
               </div>
@@ -410,41 +382,30 @@ export default function TimelineSwimLane({ runs = [], sources = [] }) {
 
       {/* Tick hover popover */}
       {hoveredTick && (
-        <div style={{
+        <div className="tw-chart-tip" style={{
           position: 'fixed',
           top: hoveredTick.y,
           left: hoveredTick.x,
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--rule-accent)',
-          padding: '8px 10px',
           zIndex: 1000,
-          pointerEvents: 'none',
-          minWidth: '180px',
+          minWidth: '200px',
         }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-primary)', marginBottom: '4px' }}>
-            Run {hoveredTick.run.run_id ?? hoveredTick.run.id ?? '—'}
+          <div style={{ fontWeight: 650, color: 'var(--ink)' }}>
+            Run <span className="tw-code">{hoveredTick.run.run_id ?? hoveredTick.run.id ?? '—'}</span>
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>
+          <div className="tw-code" style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '4px' }}>
             {hoveredTick.run.source_id ?? hoveredTick.run.source ?? '—'}
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: `var(--stage-${hoveredTick.run.deepest_stage ?? hoveredTick.run.stage_reached ?? 1})`, marginBottom: '2px' }}>
-            Stage {hoveredTick.run.deepest_stage ?? hoveredTick.run.stage_reached ?? '—'}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: `var(--stage-${hoveredTick.run.deepest_stage ?? hoveredTick.run.stage_reached ?? 1})` }} />
+            Reached stage {hoveredTick.run.deepest_stage ?? hoveredTick.run.stage_reached ?? '—'}
           </div>
-          {hoveredTick.run.verdict && (
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '2px' }}>
-              {hoveredTick.run.verdict}
-            </div>
-          )}
-          {hoveredTick.run.score != null && (
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', marginBottom: '2px' }}>
-              Score: {Number(hoveredTick.run.score).toFixed(2)}
-            </div>
-          )}
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', marginTop: '4px' }}>
+          {hoveredTick.run.verdict && <div>{String(hoveredTick.run.verdict).replace(/_/g, ' ').toLowerCase().replace(/^./, c => c.toUpperCase())}</div>}
+          {hoveredTick.run.score != null && <div className="tw-muted">Score: {Number(hoveredTick.run.score).toFixed(2)}</div>}
+          <div className="tw-muted" style={{ fontSize: '11px', marginTop: '4px' }}>
             {hoveredTick.run.timestamp ?? hoveredTick.run.run_at}
           </div>
         </div>
       )}
-    </div>
+    </Card>
   );
 }

@@ -4,6 +4,7 @@ import { useDashboard } from '../App.jsx';
 import { useRun, usePageTitles } from '../hooks/useData.js';
 import { StageIndicator } from './StageIndicator.jsx';
 import { formatRelativeTime, formatScore } from '../lib/dataUtils.js';
+import { Icon, Badge, VerdictBadge, Meter, Loading, Callout } from './ui.jsx';
 
 /* ─── helpers ──────────────────────────────────────────────────────────────── */
 
@@ -29,33 +30,15 @@ function stageSuperscripts(run) {
   return sup;
 }
 
-function confidenceColor(n) {
-  if (n == null) return 'var(--text-tertiary)';
-  if (n >= 0.7) return 'var(--state-ok)';
-  if (n >= 0.4) return 'var(--state-warn)';
-  return 'var(--state-error)';
-}
-
 /* ─── sub-components ────────────────────────────────────────────────────────── */
 
 function SectionHeader({ children }) {
-  return (
-    <div style={{
-      fontFamily: 'var(--font-mono)', fontSize: '10px',
-      color: 'var(--text-tertiary)', letterSpacing: '0.1em',
-      marginBottom: '8px',
-    }}>
-      {children}
-    </div>
-  );
+  return <h3 style={{ fontSize: '13px', fontWeight: 650, color: 'var(--ink)', marginBottom: '10px' }}>{children}</h3>;
 }
 
 function Section({ children, style }) {
   return (
-    <div style={{
-      borderBottom: '1px solid var(--rule)', padding: '12px 16px',
-      ...style,
-    }}>
+    <div style={{ borderBottom: '1px solid var(--line-soft)', padding: '18px 24px', ...style }}>
       {children}
     </div>
   );
@@ -76,21 +59,21 @@ function GraphTrace({ run }) {
     })),
   ];
 
-  const NODE_W = 100;
-  const NODE_H = 22;
-  const GAP    = 60;
+  const NODE_W = 120;
+  const NODE_H = 28;
+  const GAP    = 56;
   const svgW   = nodes.length * NODE_W + (nodes.length - 1) * GAP;
   const svgH   = NODE_H + 30;
   const arrowId = 'drawer-arrow';
 
   return (
     <Section>
-      <SectionHeader>GRAPH PROPAGATION TRACE</SectionHeader>
+      <SectionHeader>Graph propagation trace</SectionHeader>
       <div style={{ overflowX: 'auto' }}>
         <svg width={svgW} height={svgH} style={{ display: 'block' }}>
           <defs>
             <marker id={arrowId} markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6" fill="none" stroke="#4a4a40" strokeWidth={1} />
+              <path d="M0,0 L6,3 L0,6" fill="none" stroke="var(--muted)" strokeWidth={1.2} />
             </marker>
           </defs>
           {nodes.map((node, i) => {
@@ -102,12 +85,14 @@ function GraphTrace({ run }) {
                 <title>{pageTitles.get(node.id) ?? node.id}</title>
                 <rect
                   x={x} y={4} width={NODE_W} height={NODE_H}
-                  fill="#242420" stroke="#4a4a40" strokeWidth={1}
+                  rx={7}
+                  fill={i === 0 ? 'var(--accent-soft)' : 'var(--surface-subtle)'}
+                  stroke={i === 0 ? 'var(--accent-line)' : 'var(--line-strong)'} strokeWidth={1}
                 />
                 <text
                   x={x + NODE_W / 2} y={4 + NODE_H / 2 + 3}
                   textAnchor="middle"
-                  style={{ fontFamily: 'DM Mono, monospace', fontSize: '9px', fill: '#9e9888' }}
+                  style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fill: 'var(--ink)' }}
                 >
                   {node.label}
                 </text>
@@ -116,7 +101,7 @@ function GraphTrace({ run }) {
                     <line
                       x1={x + NODE_W} y1={4 + NODE_H / 2}
                       x2={x + NODE_W + GAP - 2} y2={4 + NODE_H / 2}
-                      stroke="#4a4a40" strokeWidth={1}
+                      stroke="var(--muted)" strokeWidth={1.2}
                       opacity={opacity}
                       markerEnd={`url(#${arrowId})`}
                     />
@@ -124,7 +109,7 @@ function GraphTrace({ run }) {
                       <text
                         x={x + NODE_W + GAP / 2} y={4 + NODE_H / 2 - 4}
                         textAnchor="middle"
-                        style={{ fontFamily: 'DM Mono, monospace', fontSize: '9px', fill: '#5c5a52' }}
+                        style={{ fontFamily: 'var(--font-sans)', fontSize: '10.5px', fontWeight: 600, fill: 'var(--muted)' }}
                       >
                         {formatScore(nextScore)}
                       </text>
@@ -142,56 +127,44 @@ function GraphTrace({ run }) {
 
 function ScorePanel({ run }) {
   const rows = [
-    { signal: 'RRF Score',          raw: run?.scores?.rrf_score,       threshold: null  },
-    { signal: 'Source Importance',  raw: run?.scores?.source_importance, threshold: null },
-    { signal: 'Bi-Encoder Max',     raw: run?.biencoder_max,            threshold: 0.4  },
-    { signal: 'Cross-Encoder',      raw: run?.crossencoder_score,       threshold: 0.5  },
-    { signal: 'Reranked Score',     raw: run?.reranked_score,           threshold: null  },
+    { signal: 'RRF score',          raw: run?.scores?.rrf_score,       threshold: null  },
+    { signal: 'Source importance',  raw: run?.scores?.source_importance, threshold: null },
+    { signal: 'Bi-encoder maximum', raw: run?.biencoder_max,            threshold: 0.4  },
+    { signal: 'Cross-encoder',      raw: run?.crossencoder_score,       threshold: 0.5  },
+    { signal: 'Reranked score',     raw: run?.reranked_score,           threshold: null  },
   ].filter(r => r.raw != null);
 
   if (!rows.length) return null;
 
-  const th = {
-    fontFamily: 'var(--font-mono)', fontSize: '11px',
-    color: 'var(--text-tertiary)', textAlign: 'left',
-    padding: '4px 8px', borderBottom: '1px solid var(--rule)',
-  };
-  const td = {
-    fontFamily: 'var(--font-mono)', fontSize: '11px',
-    color: 'var(--text-secondary)', padding: '4px 8px',
-    borderBottom: '1px solid var(--rule)',
-  };
-
   return (
     <Section>
-      <SectionHeader>SCORE PANEL</SectionHeader>
-      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-        <thead>
-          <tr>
-            {['Signal', 'Raw Score', 'Threshold', 'Pass/Fail'].map(h => (
-              <th key={h} style={th}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(({ signal, raw, threshold }) => {
-            const pass = threshold != null ? Number(raw) >= threshold : null;
-            return (
-              <tr key={signal}>
-                <td style={td}>{signal}</td>
-                <td style={td}>{formatScore(raw)}</td>
-                <td style={td}>{threshold != null ? threshold.toFixed(2) : '—'}</td>
-                <td style={td}>
-                  {pass === null ? '—'
-                    : pass
-                      ? <span style={{ color: 'var(--state-ok)' }}>PASS</span>
-                      : <span style={{ color: 'var(--state-alert)' }}>FAIL</span>}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <SectionHeader>Scores</SectionHeader>
+      <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
+        <table className="tw-table is-compact">
+          <thead>
+            <tr>
+              {['Signal', 'Score', 'Threshold', 'Result'].map(h => <th key={h}>{h}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(({ signal, raw, threshold }) => {
+              const pass = threshold != null ? Number(raw) >= threshold : null;
+              return (
+                <tr key={signal}>
+                  <td className="tw-cell-strong">{signal}</td>
+                  <td className="tabular">{formatScore(raw)}</td>
+                  <td className="tabular">{threshold != null ? threshold.toFixed(2) : '—'}</td>
+                  <td>
+                    {pass === null ? <span className="tw-faint">—</span>
+                      : pass ? <Badge tone="ok" dot>Pass</Badge>
+                      : <Badge tone="alert" dot>Below threshold</Badge>}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </Section>
   );
 }
@@ -201,19 +174,21 @@ function DiffPreview({ diffText }) {
   const lines = diffText.split('\n');
   return (
     <Section>
-      <SectionHeader>DIFF PREVIEW</SectionHeader>
+      <SectionHeader>What changed</SectionHeader>
       <pre style={{
-        maxHeight: '300px', overflowY: 'auto',
-        fontFamily: 'var(--font-mono)', fontSize: '11px',
-        color: 'var(--text-secondary)', margin: 0,
-        lineHeight: 1.5, whiteSpace: 'pre-wrap', wordBreak: 'break-all',
+        maxHeight: '320px', overflowY: 'auto',
+        fontFamily: 'var(--font-code)', fontSize: '11.5px',
+        color: 'var(--body)', margin: 0, padding: '8px 0',
+        background: 'var(--surface-subtle)', border: '1px solid var(--line)', borderRadius: 'var(--radius)',
+        lineHeight: 1.6, whiteSpace: 'pre-wrap', wordBreak: 'break-word',
       }}>
         {lines.map((line, i) => {
           let bg = 'transparent';
-          if (line.startsWith('+')) bg = 'rgba(58,107,58,0.15)';
-          if (line.startsWith('-')) bg = 'rgba(201,64,32,0.15)';
+          let color;
+          if (line.startsWith('+')) { bg = 'var(--ok-soft)'; color = 'var(--ok)'; }
+          if (line.startsWith('-')) { bg = 'var(--alert-soft)'; color = 'var(--alert)'; }
           return (
-            <span key={i} style={{ display: 'block', background: bg }}>
+            <span key={i} style={{ display: 'block', background: bg, color, padding: '0 12px' }}>
               {line || ' '}
             </span>
           );
@@ -231,60 +206,34 @@ function LLMAssessment({ run }) {
   const reason = run.reasoning;
   const sug    = Array.isArray(run.suggested_changes) ? run.suggested_changes : null;
 
-  const VERDICT_S = {
-    CHANGE_REQUIRED: { color: 'var(--state-alert)', border: '1px solid var(--state-alert)' },
-    UNCERTAIN:       { color: 'var(--state-warn)',  border: '1px solid var(--state-warn)'  },
-    NO_CHANGE:       { color: 'var(--state-ok)',    border: '1px solid var(--state-ok)'    },
-  };
-  const vs = VERDICT_S[v] ?? {};
-
   return (
     <Section>
-      <SectionHeader>LLM ASSESSMENT</SectionHeader>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px', flexWrap: 'wrap' }}>
-        <span style={{
-          ...vs, fontFamily: 'var(--font-mono)', fontSize: '11px',
-          padding: '2px 8px', letterSpacing: '0.05em',
-        }}>
-          {v.replace(/_/g, ' ')}
-        </span>
+      <SectionHeader>Language model assessment</SectionHeader>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '12px', flexWrap: 'wrap' }}>
+        <VerdictBadge verdict={v} large />
         {conf != null && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '100px', height: '5px', background: 'var(--bg-tertiary)' }}>
-              <div style={{
-                width: `${conf * 100}%`, height: '100%',
-                background: confidenceColor(conf),
-                transition: 'width 250ms ease',
-              }} />
-            </div>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: confidenceColor(conf) }}>
-              {conf.toFixed(2)}
-            </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span className="tw-small tw-muted">Confidence</span>
+            <Meter value={conf} style={{ width: '110px' }} label="Model confidence" />
+            <span className="tabular" style={{ fontSize: '12px', fontWeight: 650 }}>{conf.toFixed(2)}</span>
           </div>
         )}
       </div>
 
       {reason && (
-        <p style={{
-          fontFamily: 'var(--font-body)', fontSize: '13px',
-          color: 'var(--text-secondary)', lineHeight: 1.6,
-          margin: '0 0 10px',
-        }}>
+        <p style={{ fontSize: '13.5px', color: 'var(--body)', lineHeight: 1.65, margin: '0 0 12px' }}>
           {reason}
         </p>
       )}
 
       {sug && sug.length > 0 && (
         <>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)', marginBottom: '6px' }}>
-            SUGGESTED CHANGES
+          <div style={{ fontSize: '12px', fontWeight: 650, color: 'var(--alert)', marginBottom: '6px' }}>
+            Suggested changes
           </div>
           <ol style={{ margin: 0, paddingLeft: '20px' }}>
             {sug.map((s, i) => (
-              <li key={i} style={{
-                fontFamily: 'var(--font-body)', fontSize: '13px',
-                color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '4px',
-              }}>
+              <li key={i} style={{ fontSize: '13px', color: 'var(--body)', lineHeight: 1.55, marginBottom: '6px' }}>
                 {s}
               </li>
             ))}
@@ -303,9 +252,9 @@ function FeedbackSection({ run }) {
 
   const CATS = [
     { key: 'useful',          label: 'Useful'          },
-    { key: 'not_significant', label: 'Not Significant' },
-    { key: 'wrong_amendment', label: 'Wrong Amendment' },
-    { key: 'wrong_page',      label: 'Wrong Page'      },
+    { key: 'not_significant', label: 'Not significant' },
+    { key: 'wrong_amendment', label: 'Wrong amendment' },
+    { key: 'wrong_page',      label: 'Wrong page'      },
   ];
 
   const submit = useCallback(async (category) => {
@@ -336,44 +285,30 @@ function FeedbackSection({ run }) {
 
   return (
     <Section style={{ borderBottom: 'none' }}>
-      <SectionHeader>FEEDBACK</SectionHeader>
+      <SectionHeader>Was this alert helpful?</SectionHeader>
       {submitted ? (
-        <div style={{
-          fontFamily: 'var(--font-body)', fontSize: '12px',
-          color: 'var(--state-ok)', display: 'flex', alignItems: 'center', gap: '6px',
-        }}>
-          <span>✓</span>
-          <span>
-            Submitted: <strong>{CATS.find(c => c.key === selected)?.label}</strong>
-          </span>
-        </div>
+        <Callout tone="ok" icon="check">
+          Thanks, feedback recorded: <strong>{CATS.find(c => c.key === selected)?.label}</strong>
+        </Callout>
       ) : (
         <>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {CATS.map(({ key, label }) => (
               <button
                 key={key}
+                type="button"
+                className={`tw-btn is-sm${key === 'useful' ? ' is-primary' : ''}`}
                 disabled={posting}
                 onClick={() => submit(key)}
-                style={{
-                  fontFamily: 'var(--font-mono)', fontSize: '10px',
-                  color: 'var(--text-secondary)',
-                  background: 'var(--bg-tertiary)',
-                  border: '1px solid var(--rule)',
-                  padding: '5px 12px', cursor: posting ? 'wait' : 'pointer',
-                  transition: 'border-color 150ms',
-                }}
-                onMouseEnter={e => { if (!posting) e.currentTarget.style.borderColor = 'var(--rule-accent)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rule)'; }}
+                style={{ cursor: posting ? 'wait' : undefined }}
               >
+                {key === 'useful' && <Icon name="check" />}
                 {label}
               </button>
             ))}
           </div>
           {error && (
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--state-error)', marginTop: '6px' }}>
-              Error: {error}
-            </div>
+            <Callout tone="error" icon="alert" style={{ marginTop: '10px' }}>Could not save feedback: {error}</Callout>
           )}
         </>
       )}
@@ -418,115 +353,83 @@ export function EventDrawer() {
   const stages   = buildStages(run);
   const superSup = stageSuperscripts(run);
 
-  const VERDICT_S = {
-    CHANGE_REQUIRED: 'var(--state-alert)',
-    UNCERTAIN:       'var(--state-warn)',
-    NO_CHANGE:       'var(--state-ok)',
-  };
-
   return (
     <>
-      {/* Backdrop */}
-      {drawerOpen && (
-        <div
-          style={{
-            position: 'fixed', inset: 0,
-            background: 'rgba(0,0,0,0.4)',
-            zIndex: 199,
-          }}
-          onClick={close}
-        />
-      )}
+      {drawerOpen && <div className="tw-scrim" style={{ zIndex: 199 }} onClick={close} />}
 
-      {/* Drawer panel */}
       <div
         role="dialog"
         aria-modal="true"
+        aria-label="Run details"
+        className="tw-drawer"
         style={{
-          position: 'fixed',
-          top: 0, right: 0,
-          width: '640px', height: '100vh',
-          background: 'var(--bg-primary)',
-          borderLeft: '1px solid var(--rule-accent)',
+          width: 'min(660px, 100vw)',
           zIndex: 200,
-          transform: drawerOpen ? 'translateX(0)' : 'translateX(100%)',
+          transform: drawerOpen ? 'translateX(0)' : 'translateX(105%)',
           transition: 'transform 250ms ease-out',
-          display: 'flex', flexDirection: 'column',
-          overflowY: 'hidden',
+          visibility: drawerOpen ? 'visible' : 'hidden',
         }}
       >
-        {/* Header strip */}
-        <div style={{
-          flexShrink: 0, display: 'flex', alignItems: 'flex-start',
-          padding: '12px 16px', borderBottom: '1px solid var(--rule)',
-          gap: '8px',
-        }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            {isLoading && !run ? (
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-tertiary)' }}>
-                Loading…
-              </span>
-            ) : run ? (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px' }}>
-                {[
-                  { label: 'RUN',    val: run.run_id },
-                  { label: 'SOURCE', val: run.source_id },
-                  { label: 'PAGE',   val: run.ipfr_page_id
-                      ? `${pageTitles.get(run.ipfr_page_id) ?? run.ipfr_page_id}`
-                      : null },
-                  { label: 'TIME',   val: formatRelativeTime(run.timestamp ?? run.run_at) },
-                ].map(({ label, val }) => (
-                  <div key={label} style={{ display: 'flex', gap: '4px', alignItems: 'baseline' }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', letterSpacing: '0.08em' }}>
-                      {label}
-                    </span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-secondary)' }}>
-                      {val ?? '—'}
-                    </span>
+        <div className="tw-drawer-head">
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="tw-overline" style={{ marginBottom: '6px' }}>Source check</div>
+              {isLoading && !run ? (
+                <Loading style={{ padding: 0 }} />
+              ) : run ? (
+                <>
+                  <div className="tw-drawer-title">
+                    {run.ipfr_page_id ? (pageTitles.get(run.ipfr_page_id) ?? run.ipfr_page_id) : (run.source_id ?? 'Run details')}
                   </div>
-                ))}
-              </div>
-            ) : (
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-tertiary)' }}>
-                No run selected
-              </span>
-            )}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 18px', marginTop: '10px', fontSize: '12px', color: 'var(--muted)' }}>
+                    {[
+                      { label: 'Run',    val: run.run_id, code: true },
+                      { label: 'Source', val: run.source_id, code: true },
+                      { label: 'When',   val: formatRelativeTime(run.timestamp ?? run.run_at) },
+                    ].map(({ label, val, code }) => (
+                      <span key={label}>
+                        {label}{' '}
+                        <span className={code ? 'tw-code' : undefined} style={{ color: 'var(--ink)', fontWeight: code ? 400 : 600, fontSize: code ? '11.5px' : undefined }}>
+                          {val ?? '—'}
+                        </span>
+                      </span>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="tw-drawer-title">No run selected</div>
+              )}
+            </div>
+            <button type="button" className="tw-icon-btn" onClick={close} aria-label="Close" style={{ background: 'var(--surface)' }}>
+              <Icon name="close" />
+            </button>
           </div>
-          <button
-            onClick={close}
-            style={{
-              flexShrink: 0, background: 'none', border: 'none',
-              color: 'var(--text-tertiary)', cursor: 'pointer',
-              fontFamily: 'var(--font-mono)', fontSize: '14px', lineHeight: 1,
-              padding: '0 2px',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-tertiary)'; }}
-            aria-label="Close"
-          >
-            ✕
-          </button>
         </div>
 
-        {/* Scrollable body */}
         <div style={{ flex: 1, overflowY: 'auto' }}>
 
-          {/* Stage Journey */}
           {run && (
             <Section>
-              <SectionHeader>STAGE JOURNEY</SectionHeader>
-              <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              <SectionHeader>Stage journey</SectionHeader>
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
                 {stages.map(({ n, reached, status }) => {
                   const sup = superSup[n];
                   return (
-                    <div key={n} style={{ position: 'relative', flexShrink: 0 }}>
-                      <StageIndicator stages={[{ n, reached, status }]} size={1} />
+                    <div key={n} title={`Stage ${n}: ${reached ? status : 'not reached'}`} style={{
+                      position: 'relative', flexShrink: 0,
+                      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+                      padding: '6px 8px', borderRadius: '8px',
+                      background: reached ? 'var(--surface-subtle)' : 'transparent',
+                      border: `1px solid ${reached ? 'var(--line)' : 'var(--line-soft)'}`,
+                    }}>
+                      <StageIndicator stages={[{ n, reached, status }]} size={1.25} />
+                      <span style={{ fontSize: '10.5px', fontWeight: 600, color: reached ? 'var(--body)' : 'var(--faint)' }}>{n}</span>
                       {sup && (
                         <span style={{
-                          position: 'absolute', top: -4, right: -4,
-                          fontFamily: 'var(--font-mono)', fontSize: '7px',
-                          color: 'var(--text-tertiary)', lineHeight: 1,
-                          background: 'var(--bg-primary)',
+                          position: 'absolute', top: -7, right: -6,
+                          fontSize: '9.5px', fontWeight: 700, lineHeight: 1,
+                          color: 'var(--accent-ink)', background: 'var(--accent-soft)',
+                          border: '1px solid var(--accent-line)', borderRadius: '99px', padding: '2px 4px',
                         }}>
                           {sup}
                         </span>
@@ -534,81 +437,49 @@ export function EventDrawer() {
                     </div>
                   );
                 })}
-                <div style={{ marginLeft: '8px', display: 'flex', gap: '10px' }}>
-                  {[
-                    { sym: 'F', label: 'fast-pass' },
-                    { sym: 'G', label: 'graph-propagated' },
-                    { sym: 'H', label: 'high-significance' },
-                  ].map(({ sym, label }) => (
-                    <span key={sym} style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)' }}>
-                      <sup>{sym}</sup> {label}
-                    </span>
-                  ))}
-                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '14px', marginTop: '10px', flexWrap: 'wrap' }}>
+                {[
+                  { sym: 'F', label: 'Fast pass' },
+                  { sym: 'G', label: 'Graph propagated' },
+                  { sym: 'H', label: 'High significance' },
+                ].map(({ sym, label }) => (
+                  <span key={sym} style={{ fontSize: '11.5px', color: 'var(--muted)' }}>
+                    <strong style={{ color: 'var(--accent-ink)' }}>{sym}</strong> {label}
+                  </span>
+                ))}
               </div>
             </Section>
           )}
 
-          {/* View in Graph link */}
           {run?.ipfr_page_id && (
             <Section>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', letterSpacing: '0.08em', marginBottom: '2px' }}>
-                    IPFR PAGE
-                  </div>
-                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'var(--text-primary)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                <div style={{ minWidth: 0 }}>
+                  <div className="tw-small tw-muted" style={{ marginBottom: '2px' }}>Affected IPFR page</div>
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--ink)' }}>
                     {pageTitles.get(run.ipfr_page_id) ?? run.ipfr_page_id}
                   </div>
                   {pageTitles.has(run.ipfr_page_id) && (
-                    <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)' }}>
-                      {run.ipfr_page_id}
-                    </div>
+                    <div className="tw-code" style={{ fontSize: '11px', color: 'var(--faint)' }}>{run.ipfr_page_id}</div>
                   )}
                 </div>
-                <button
-                  onClick={handleViewInGraph}
-                  style={{
-                    fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.06em',
-                    color: 'var(--stage-4)', background: 'none',
-                    border: '1px solid var(--stage-4)',
-                    padding: '4px 10px', cursor: 'pointer',
-                    transition: 'background 120ms, color 120ms',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = 'var(--stage-4)';
-                    e.currentTarget.style.color = 'var(--bg-primary)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = 'none';
-                    e.currentTarget.style.color = 'var(--stage-4)';
-                  }}
-                >
-                  VIEW IN GRAPH →
+                <button type="button" className="tw-btn is-sm" onClick={handleViewInGraph}>
+                  View in knowledge graph <Icon name="arrow" />
                 </button>
               </div>
             </Section>
           )}
 
-          {/* Graph Trace */}
           {run && <GraphTrace run={run} />}
-
-          {/* Score Panel */}
           {run && <ScorePanel run={run} />}
-
-          {/* Diff Preview */}
           {run?.diff_text && <DiffPreview diffText={run.diff_text} />}
-
-          {/* LLM Assessment */}
           {run && <LLMAssessment run={run} />}
-
-          {/* Feedback */}
           {run && <FeedbackSection run={run} />}
 
-          {/* Empty state */}
           {!isLoading && !run && selectedRunId && (
-            <div style={{ padding: '24px 16px', fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-tertiary)' }}>
-              Run {selectedRunId} not found.
+            <div style={{ padding: '24px' }}>
+              <Callout tone="warn" icon="help">Run <span className="tw-code">{selectedRunId}</span> was not found.</Callout>
             </div>
           )}
         </div>

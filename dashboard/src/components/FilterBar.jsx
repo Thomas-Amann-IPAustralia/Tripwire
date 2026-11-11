@@ -1,27 +1,18 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useDashboard } from '../App.jsx';
 import { useSources } from '../hooks/useData.js';
+import { Segmented, Icon, VERDICTS } from './ui.jsx';
 
-const DATE_PRESETS = ['7D', '30D', '90D', 'ALL'];
+const DATE_PRESETS = [
+  { value: '7D',  label: '7 days' },
+  { value: '30D', label: '30 days' },
+  { value: '90D', label: '90 days' },
+  { value: 'ALL', label: 'All time' },
+];
 
 const STAGE_ENTRIES = [1, 2, 3, 4, 5, 6];
 
-const VERDICT_ENTRIES = [
-  { key: 'CHANGE_REQUIRED', color: 'var(--state-alert)' },
-  { key: 'UNCERTAIN',       color: 'var(--state-warn)' },
-  { key: 'NO_CHANGE',       color: 'var(--state-ok)' },
-  { key: 'ERROR',           color: 'var(--state-error)' },
-];
-
-const chipBase = {
-  fontFamily: 'var(--font-mono)',
-  fontSize: '11px',
-  padding: '3px 8px',
-  border: '1px solid var(--rule-accent)',
-  cursor: 'pointer',
-  background: 'transparent',
-  lineHeight: 1.4,
-};
+const VERDICT_ENTRIES = ['CHANGE_REQUIRED', 'UNCERTAIN', 'NO_CHANGE', 'ERROR'];
 
 export default function FilterBar() {
   const { filters, setDatePreset, setDateRange, setSources, setStageMin, setVerdicts } = useDashboard();
@@ -70,99 +61,76 @@ export default function FilterBar() {
     setVerdicts([]);
   }, [setDatePreset, setSources, setStageMin, setVerdicts]);
 
+  const isFiltered = filters.sources.length > 0 || filters.stageMin != null || filters.verdicts.length > 0 || filters.datePreset !== '30D' || filters.from || filters.to;
+
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: '10px 14px', flexWrap: 'wrap',
+      padding: '12px 14px', background: 'var(--surface)', border: '1px solid var(--line)',
+      borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow)',
+    }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: 650, color: 'var(--body)' }}>
+        <Icon name="filter" size={15} style={{ color: 'var(--muted)' }} /> Filters
+      </span>
 
       {/* Date presets + custom range */}
-      <div style={{ display: 'flex', gap: '3px', alignItems: 'center' }}>
-        {DATE_PRESETS.map(p => (
-          <button
-            key={p}
-            onClick={() => setDatePreset(p)}
-            style={{
-              ...chipBase,
-              background: filters.datePreset === p ? 'var(--bg-accent)' : 'transparent',
-              color: filters.datePreset === p ? 'var(--text-primary)' : 'var(--text-tertiary)',
-            }}
-          >
-            {p}
-          </button>
-        ))}
-        <span style={{ color: 'var(--text-tertiary)', margin: '0 6px', fontFamily: 'var(--font-mono)', fontSize: '11px' }}>·</span>
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <Segmented ariaLabel="Date range" options={DATE_PRESETS} value={filters.datePreset} onChange={setDatePreset} />
         <input
           type="date"
+          className="tw-input"
+          aria-label="From date"
           value={filters.from || ''}
           onChange={e => setDateRange(e.target.value || null, filters.to)}
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            background: 'var(--bg-tertiary)',
-            border: '1px solid var(--rule)',
-            color: filters.from ? 'var(--text-secondary)' : 'var(--text-tertiary)',
-            padding: '2px 4px',
-            colorScheme: 'dark',
-          }}
+          style={{ width: 'auto', height: '30px', fontSize: '12px', padding: '0 8px', color: filters.from ? 'var(--ink)' : 'var(--muted)' }}
         />
-        <span style={{ color: 'var(--text-tertiary)', fontFamily: 'var(--font-mono)', fontSize: '11px', margin: '0 2px' }}>–</span>
+        <span className="tw-muted" style={{ fontSize: '12px' }}>to</span>
         <input
           type="date"
+          className="tw-input"
+          aria-label="To date"
           value={filters.to || ''}
           onChange={e => setDateRange(filters.from, e.target.value || null)}
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            background: 'var(--bg-tertiary)',
-            border: '1px solid var(--rule)',
-            color: filters.to ? 'var(--text-secondary)' : 'var(--text-tertiary)',
-            padding: '2px 4px',
-            colorScheme: 'dark',
-          }}
+          style={{ width: 'auto', height: '30px', fontSize: '12px', padding: '0 8px', color: filters.to ? 'var(--ink)' : 'var(--muted)' }}
         />
       </div>
 
       {/* Source multi-select dropdown */}
       <div ref={dropdownRef} style={{ position: 'relative' }}>
         <button
+          type="button"
+          className={`tw-chip${filters.sources.length ? ' active' : ''}`}
           onClick={() => setDropdownOpen(o => !o)}
-          style={{
-            ...chipBase,
-            background: filters.sources.length ? 'var(--bg-accent)' : 'transparent',
-            color: filters.sources.length ? 'var(--text-primary)' : 'var(--text-tertiary)',
-          }}
+          aria-expanded={dropdownOpen}
         >
-          {filters.sources.length ? `SOURCES (${filters.sources.length})` : 'SOURCES'}{' ▾'}
+          {filters.sources.length ? `Sources (${filters.sources.length})` : 'All sources'}
+          <Icon name="chevronDown" size={13} />
         </button>
         {dropdownOpen && (
           <div style={{
             position: 'absolute',
-            top: 'calc(100% + 4px)',
+            top: 'calc(100% + 6px)',
             left: 0,
-            background: 'var(--bg-secondary)',
-            border: '1px solid var(--rule-accent)',
+            background: 'var(--surface)',
+            border: '1px solid var(--line)',
+            borderRadius: 'var(--radius)',
+            boxShadow: 'var(--shadow-lg)',
             zIndex: 200,
-            width: '220px',
-            maxHeight: '260px',
+            width: '280px',
+            maxHeight: '320px',
             overflowY: 'auto',
+            padding: '6px',
           }}>
             <input
               autoFocus
-              placeholder="Search sources…"
+              className="tw-input"
+              placeholder="Search sources"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '6px 8px',
-                background: 'var(--bg-tertiary)',
-                border: 'none',
-                borderBottom: '1px solid var(--rule)',
-                color: 'var(--text-primary)',
-                fontFamily: 'var(--font-mono)',
-                fontSize: '11px',
-                outline: 'none',
-              }}
+              style={{ marginBottom: '4px' }}
             />
             {filteredSources.length === 0 && (
-              <div style={{ padding: '8px', fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)' }}>
+              <div style={{ padding: '10px', fontSize: '12px', color: 'var(--muted)' }}>
                 No sources found
               </div>
             )}
@@ -173,28 +141,36 @@ export default function FilterBar() {
               return (
                 <div
                   key={id}
+                  role="option"
+                  aria-selected={selected}
                   onClick={() => toggleSource(id)}
                   style={{
-                    padding: '5px 8px',
+                    padding: '6px 8px',
                     cursor: 'pointer',
-                    background: selected ? 'var(--bg-accent)' : 'transparent',
-                    color: selected ? 'var(--text-primary)' : 'var(--text-secondary)',
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '10px',
+                    borderRadius: '6px',
+                    background: selected ? 'var(--accent-soft)' : 'transparent',
+                    color: selected ? 'var(--accent-ink)' : 'var(--body)',
+                    fontSize: '12px',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '6px',
+                    gap: '8px',
                   }}
-                  onMouseEnter={e => { if (!selected) e.currentTarget.style.background = 'var(--bg-tertiary)'; }}
+                  onMouseEnter={e => { if (!selected) e.currentTarget.style.background = 'var(--surface-hover)'; }}
                   onMouseLeave={e => { if (!selected) e.currentTarget.style.background = 'transparent'; }}
                 >
                   <span style={{
-                    width: '8px',
-                    height: '8px',
-                    border: `1px solid ${selected ? 'var(--text-primary)' : 'var(--rule-accent)'}`,
-                    background: selected ? 'var(--text-primary)' : 'transparent',
+                    width: '14px',
+                    height: '14px',
+                    borderRadius: '4px',
+                    border: `1.5px solid ${selected ? 'var(--accent)' : 'var(--line-strong)'}`,
+                    background: selected ? 'var(--accent)' : 'var(--surface)',
+                    color: 'var(--on-accent)',
+                    display: 'grid',
+                    placeItems: 'center',
                     flexShrink: 0,
-                  }} />
+                  }}>
+                    {selected && <Icon name="check" size={10} />}
+                  </span>
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {label}
                   </span>
@@ -205,76 +181,41 @@ export default function FilterBar() {
         )}
       </div>
 
-      {/* Stage reached chips S1–S9 */}
-      <div style={{ display: 'flex', gap: '3px', alignItems: 'center' }}>
-        {STAGE_ENTRIES.map(n => (
-          <button
-            key={n}
-            onClick={() => setStageMin(filters.stageMin === n ? null : n)}
-            style={{
-              ...chipBase,
-              fontSize: '10px',
-              padding: '3px 6px',
-              background: filters.stageMin === n ? 'var(--bg-accent)' : 'transparent',
-              color: filters.stageMin === n ? 'var(--text-primary)' : 'var(--text-tertiary)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
-            }}
-          >
-            <span style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: `var(--stage-${n})`,
-              flexShrink: 0,
-            }} />
-            S{n}
-          </button>
-        ))}
+      {/* Minimum stage reached */}
+      <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+        <span className="tw-small tw-muted">Reached stage</span>
+        <Segmented
+          ariaLabel="Minimum stage reached"
+          value={filters.stageMin}
+          onChange={n => setStageMin(filters.stageMin === n ? null : n)}
+          options={STAGE_ENTRIES.map(n => ({ value: n, label: String(n), dot: `var(--stage-${n})`, title: `Reached stage ${n} or later` }))}
+        />
       </div>
 
       {/* Verdict chips */}
-      <div style={{ display: 'flex', gap: '3px', alignItems: 'center' }}>
-        {VERDICT_ENTRIES.map(({ key, color }) => {
+      <div style={{ display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' }}>
+        {VERDICT_ENTRIES.map(key => {
           const selected = filters.verdicts.includes(key);
+          const cfg = VERDICTS[key];
           return (
             <button
               key={key}
+              type="button"
+              className={`tw-chip${selected ? ' active' : ''}`}
+              aria-pressed={selected}
               onClick={() => toggleVerdict(key)}
-              style={{
-                ...chipBase,
-                fontSize: '10px',
-                padding: '3px 6px',
-                border: `1px solid ${selected ? color : 'var(--rule-accent)'}`,
-                background: selected ? color + '22' : 'transparent',
-                color: selected ? color : 'var(--text-tertiary)',
-              }}
+              style={selected ? { background: `var(--${cfg.tone}-soft)`, borderColor: `var(--${cfg.tone}-line)`, color: cfg.color } : undefined}
             >
-              {key.replace(/_/g, ' ')}
+              <span className="tw-chip-dot" style={{ background: cfg.color }} />
+              {cfg.label}
             </button>
           );
         })}
       </div>
 
       {/* Reset */}
-      <button
-        onClick={reset}
-        style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '10px',
-          color: 'var(--text-tertiary)',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          padding: 0,
-          textDecoration: 'underline',
-          textDecorationStyle: 'dotted',
-        }}
-        onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-secondary)'; }}
-        onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-tertiary)'; }}
-      >
-        RESET
+      <button type="button" className="tw-btn is-quiet is-sm" onClick={reset} disabled={!isFiltered} style={{ marginLeft: 'auto' }}>
+        <Icon name="reset" /> Reset
       </button>
     </div>
   );

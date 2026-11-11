@@ -5,23 +5,24 @@ import {
   ResponsiveContainer, Legend,
 } from 'recharts';
 import { useRuns } from '../hooks/useData.js';
+import { Card, EmptyState, chartAxisTick, chartTooltipStyle } from '../components/ui.jsx';
 
 const THRESHOLD_PARAMS = [
   {
     key: 'biencoder_high_threshold',
-    label: 'Bi-Encoder High',
+    label: 'Bi-encoder high',
     scoreField: 'biencoder_max',
     configPath: ['semantic_scoring', 'biencoder', 'high_threshold'],
   },
   {
     key: 'biencoder_low_medium_threshold',
-    label: 'Bi-Encoder Low/Med',
+    label: 'Bi-encoder low/medium',
     scoreField: 'biencoder_max',
     configPath: ['semantic_scoring', 'biencoder', 'low_medium_threshold'],
   },
   {
     key: 'crossencoder_threshold',
-    label: 'Cross-Encoder',
+    label: 'Cross-encoder',
     scoreField: 'crossencoder_score',
     configPath: ['semantic_scoring', 'crossencoder', 'threshold'],
   },
@@ -31,23 +32,11 @@ function getByPath(obj, path) {
   return path.reduce((acc, k) => acc?.[k], obj);
 }
 
-function StatCard({ label, value, color }) {
+function StatCard({ label, value, color, hint }) {
   return (
-    <div style={{
-      background: 'var(--bg-tertiary)', border: '1px solid var(--rule)', padding: '8px 10px',
-    }}>
-      <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'var(--text-tertiary)',
-        letterSpacing: '0.07em', marginBottom: '3px', textTransform: 'uppercase',
-      }}>
-        {label}
-      </div>
-      <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: '15px',
-        color: color || 'var(--text-primary)',
-      }}>
-        {value}
-      </div>
+    <div className="tw-kv" title={hint}>
+      <div className="tw-kv-label">{label}</div>
+      <div className="tw-kv-value" style={{ color: color || 'var(--ink)' }}>{value}</div>
     </div>
   );
 }
@@ -115,47 +104,33 @@ export default function ThresholdSimulator({ config }) {
     return { precision, recall, deltaVolume };
   }, [filteredRuns, paramDef, currentThreshold, displayThreshold]);
 
-  const recallColor = stats.recall == null ? 'var(--text-secondary)'
-    : stats.recall < 0.8 ? 'var(--state-warn)' : 'var(--state-ok)';
+  const recallColor = stats.recall == null ? 'var(--body)'
+    : stats.recall < 0.8 ? 'var(--warn)' : 'var(--ok)';
   const deltaSign = stats.deltaVolume > 0 ? '+' : '';
-  const deltaColor = stats.deltaVolume === 0 ? 'var(--text-secondary)'
-    : stats.deltaVolume > 0 ? 'var(--state-warn)' : 'var(--state-ok)';
+  const deltaColor = stats.deltaVolume === 0 ? 'var(--body)'
+    : stats.deltaVolume > 0 ? 'var(--warn)' : 'var(--ok)';
 
   const refX = currentThreshold.toFixed(2);
 
-  const dateInputStyle = {
-    fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-primary)',
-    background: 'var(--bg-tertiary)', border: '1px solid var(--rule-accent)',
-    padding: '4px 6px', width: '100%', display: 'block', outline: 'none',
-    marginTop: '4px',
-  };
-
   return (
-    <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--rule)' }}>
-      <div style={{
-        padding: '10px 16px', borderBottom: '1px solid var(--rule)',
-        fontFamily: 'var(--font-display)', fontSize: '14px',
-        letterSpacing: '0.08em', color: 'var(--text-primary)',
-      }}>
-        THRESHOLD SENSITIVITY SIMULATOR
-      </div>
-
-      <div style={{ display: 'flex', minHeight: '280px' }}>
-        {/* ── Left: controls ── */}
+    <Card
+      noBody
+      clip
+      title="Threshold sensitivity simulator"
+      subtitle="Replay recorded scores to see how many alerts a different threshold would have produced. Nothing here changes the configuration."
+    >
+      <div className="tw-sim" style={{ display: 'grid', gridTemplateColumns: '260px minmax(0, 1fr)', minHeight: '300px' }}>
         <div style={{
-          width: '220px', flexShrink: 0, borderRight: '1px solid var(--rule)',
-          padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px',
+          borderRight: '1px solid var(--line-soft)', background: 'var(--surface-subtle)',
+          padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: '16px',
         }}>
           <div>
-            <div style={ctrlLabelStyle}>THRESHOLD PARAMETER</div>
+            <label className="tw-label" htmlFor="sim-param">Threshold</label>
             <select
+              id="sim-param"
+              className="tw-select"
               value={selectedKey}
               onChange={e => { setSelectedKey(e.target.value); setSimThreshold(null); }}
-              style={{
-                fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-primary)',
-                background: 'var(--bg-tertiary)', border: '1px solid var(--rule-accent)',
-                padding: '5px 8px', width: '100%', cursor: 'pointer', outline: 'none',
-              }}
             >
               {THRESHOLD_PARAMS.map(p => (
                 <option key={p.key} value={p.key}>{p.label}</option>
@@ -164,102 +139,83 @@ export default function ThresholdSimulator({ config }) {
           </div>
 
           <div>
-            <div style={ctrlLabelStyle}>
-              SIMULATE AT: {displayThreshold.toFixed(2)}
-            </div>
+            <label className="tw-label" htmlFor="sim-at" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              Simulate at <span className="tabular" style={{ color: 'var(--accent-ink)' }}>{displayThreshold.toFixed(2)}</span>
+            </label>
             <input
+              id="sim-at"
               type="range" min={0} max={1} step={0.01}
               value={displayThreshold}
               onChange={e => setSimThreshold(parseFloat(e.target.value))}
-              style={{ width: '100%', accentColor: 'var(--stage-4)', marginTop: '4px' }}
+              style={{ width: '100%' }}
             />
+            <div className="tw-small tw-muted">Current setting {currentThreshold.toFixed(2)}</div>
           </div>
 
           <div>
-            <div style={ctrlLabelStyle}>DATE RANGE</div>
-            <input
-              type="date" value={dateFrom}
-              onChange={e => setDateFrom(e.target.value)}
-              style={dateInputStyle}
-            />
-            <input
-              type="date" value={dateTo}
-              onChange={e => setDateTo(e.target.value)}
-              style={dateInputStyle}
-            />
+            <span className="tw-label">Date range</span>
+            <div style={{ display: 'grid', gap: '6px' }}>
+              <input type="date" className="tw-input" aria-label="From date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} style={{ fontSize: '12px' }} />
+              <input type="date" className="tw-input" aria-label="To date" value={dateTo} onChange={e => setDateTo(e.target.value)} style={{ fontSize: '12px' }} />
+            </div>
           </div>
 
-          <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ marginTop: 'auto', display: 'grid', gap: '8px' }}>
             <StatCard
-              label="EST. PRECISION"
+              label="Estimated precision"
+              hint="Share of alerts rated useful, among alerts with feedback"
               value={stats.precision !== null ? (stats.precision * 100).toFixed(1) + '%' : '—'}
             />
             <StatCard
-              label="EST. RECALL (REL.)"
+              label="Estimated recall (relative)"
+              hint="Alerts at the simulated threshold as a share of alerts at the current threshold"
               value={stats.recall !== null ? (stats.recall * 100).toFixed(1) + '%' : '—'}
               color={recallColor}
             />
             <StatCard
-              label="Δ ALERT VOLUME"
+              label="Change in alert volume"
               value={stats.deltaVolume !== null ? deltaSign + stats.deltaVolume : '—'}
               color={deltaColor}
             />
           </div>
         </div>
 
-        {/* ── Right: chart ── */}
-        <div style={{ flex: 1, padding: '16px 12px 12px 12px' }}>
+        <div style={{ padding: '18px 16px 14px', minWidth: 0 }}>
           {filteredRuns.length === 0 ? (
-            <div style={{
-              fontFamily: 'var(--font-mono)', fontSize: '11px',
-              color: 'var(--text-tertiary)', padding: '20px',
-            }}>
-              NO RUN DATA WITH SCORES FOR SELECTED PARAMETER
-            </div>
+            <EmptyState icon="activity" title="No scored runs for this threshold">
+              Runs need a recorded score for the selected threshold before they can be simulated.
+            </EmptyState>
           ) : (
-            <ResponsiveContainer width="100%" height={230}>
-              <BarChart data={chartData} barGap={1} barCategoryGap={2}>
-                <CartesianGrid
-                  vertical={false}
-                  stroke="var(--rule)"
-                  strokeDasharray="2 4"
-                />
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={chartData} barGap={1} barCategoryGap={3}>
+                <CartesianGrid vertical={false} stroke="var(--line)" strokeDasharray="3 4" />
                 <XAxis
                   dataKey="threshold"
-                  tick={{ fontFamily: 'var(--font-mono)', fontSize: 8, fill: 'var(--text-tertiary)' }}
+                  tick={chartAxisTick}
                   interval={3} tickLine={false}
-                  axisLine={{ stroke: 'var(--rule-accent)' }}
+                  axisLine={{ stroke: 'var(--line-strong)' }}
                 />
-                <YAxis
-                  tick={{ fontFamily: 'var(--font-mono)', fontSize: 8, fill: 'var(--text-tertiary)' }}
-                  tickLine={false} axisLine={false} width={28}
-                />
+                <YAxis tick={chartAxisTick} tickLine={false} axisLine={false} width={34} />
                 <RechartTooltip
-                  contentStyle={{
-                    background: 'var(--bg-secondary)', border: '1px solid var(--rule-accent)',
-                    fontFamily: 'var(--font-mono)', fontSize: '10px',
-                    color: 'var(--text-primary)', borderRadius: 0,
-                  }}
-                  labelStyle={{ color: 'var(--text-secondary)', marginBottom: '4px' }}
-                  cursor={{ fill: 'rgba(255,255,255,0.03)' }}
+                  contentStyle={chartTooltipStyle}
+                  labelStyle={{ color: 'var(--ink)', fontWeight: 650, marginBottom: '4px' }}
+                  labelFormatter={l => `Threshold ${l}`}
+                  cursor={{ fill: 'var(--surface-hover)' }}
                 />
                 <Legend
-                  iconType="square" iconSize={8}
-                  wrapperStyle={{
-                    fontFamily: 'var(--font-mono)', fontSize: '9px',
-                    color: 'var(--text-secondary)',
-                  }}
+                  iconType="circle" iconSize={8}
+                  wrapperStyle={{ fontFamily: 'var(--font-sans)', fontSize: '12px', color: 'var(--muted)' }}
                 />
-                <Bar dataKey="wouldAlert"    name="Would Alert"     fill="var(--state-alert)"  opacity={0.75} />
-                <Bar dataKey="wouldNotAlert" name="Would Not Alert" fill="var(--bg-accent)"    opacity={1} />
+                <Bar dataKey="wouldAlert"    name="Would alert"     fill="var(--alert)" opacity={0.8} radius={[3, 3, 0, 0]} />
+                <Bar dataKey="wouldNotAlert" name="Would not alert" fill="var(--line-strong)" radius={[3, 3, 0, 0]} />
                 <ReferenceLine
                   x={refX}
-                  stroke="var(--state-warn)"
-                  strokeDasharray="4 2"
+                  stroke="var(--ochre-ink)"
+                  strokeDasharray="4 3"
                   label={{
-                    value: 'CURRENT', position: 'top',
-                    fill: 'var(--state-warn)',
-                    fontFamily: 'var(--font-mono)', fontSize: 9,
+                    value: 'Current', position: 'top',
+                    fill: 'var(--ochre-ink)',
+                    fontFamily: 'var(--font-sans)', fontSize: 11, fontWeight: 600,
                   }}
                 />
               </BarChart>
@@ -267,11 +223,7 @@ export default function ThresholdSimulator({ config }) {
           )}
         </div>
       </div>
-    </div>
+      <style>{`@media (max-width: 900px) { .tw-sim { grid-template-columns: 1fr !important; } }`}</style>
+    </Card>
   );
 }
-
-const ctrlLabelStyle = {
-  fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)',
-  letterSpacing: '0.07em', textTransform: 'uppercase',
-};

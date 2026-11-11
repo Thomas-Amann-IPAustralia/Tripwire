@@ -19,8 +19,8 @@ export default function Tooltip({ content, children, learnMoreHref }) {
     showTimerRef.current = setTimeout(() => {
       const rect = triggerRef.current?.getBoundingClientRect();
       if (rect) {
-        // Clamp so the 240px panel never renders off the right edge.
-        const left = Math.min(rect.left, window.innerWidth - 252);
+        // Clamp so the 260px panel never renders off the right edge.
+        const left = Math.min(rect.left, window.innerWidth - 272);
         setCoords({ top: rect.bottom + 6, left: Math.max(8, left) });
       }
       setVisible(true);
@@ -65,31 +65,19 @@ export default function Tooltip({ content, children, learnMoreHref }) {
       </span>
       {visible && (
         <div
+          role="tooltip"
+          className="tw-tooltip"
           style={{
-            position: 'fixed',
             top: coords.top,
             left: coords.left,
-            width: '240px',
-            background: 'var(--bg-secondary)',
-            border: '1px solid var(--rule-accent)',
-            padding: '10px 12px',
-            zIndex: 1000,
             pointerEvents: learnMoreHref ? 'auto' : 'none',
-            animation: 'tooltipFade 150ms ease both',
           }}
           onMouseEnter={learnMoreHref ? keepOpen : undefined}
           onMouseLeave={learnMoreHref ? hide : undefined}
         >
-          <div style={{
-            fontFamily: 'var(--font-body)',
-            fontSize: '12px',
-            color: 'var(--text-secondary)',
-            lineHeight: 1.5,
-          }}>
-            {content}
-          </div>
+          <div>{content}</div>
           {learnMoreHref && (
-            <div style={{ marginTop: '8px', borderTop: '1px solid var(--rule)', paddingTop: '6px' }}>
+            <div style={{ marginTop: '8px', borderTop: '1px solid var(--line)', paddingTop: '8px' }}>
               <button
                 onClick={() => {
                   hideNow();
@@ -103,30 +91,15 @@ export default function Tooltip({ content, children, learnMoreHref }) {
                     }, 100);
                   }
                 }}
-                style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '10px',
-                  color: 'var(--text-tertiary)',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: 0,
-                }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--text-secondary)'}
-                onMouseLeave={e => e.currentTarget.style.color = 'var(--text-tertiary)'}
+                type="button"
+                className="tw-link"
               >
-                Learn more ↗
+                Learn more in the guide →
               </button>
             </div>
           )}
         </div>
       )}
-      <style>{`
-        @keyframes tooltipFade {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-      `}</style>
     </>
   );
 }

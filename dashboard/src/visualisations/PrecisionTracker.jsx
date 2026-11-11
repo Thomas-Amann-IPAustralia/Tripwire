@@ -4,19 +4,20 @@ import {
   Tooltip as RechartsTooltip, ResponsiveContainer, Legend,
 } from 'recharts';
 import { useFeedback } from '../hooks/useData.js';
+import { Card, EmptyState, chartAxisTick, chartTooltipStyle } from '../components/ui.jsx';
 
 const CATEGORIES = ['useful', 'not_significant', 'wrong_amendment', 'wrong_page'];
 const CAT_COLORS = {
-  useful:          '#3a6b3a',
-  not_significant: '#4a7ab5',
-  wrong_amendment: '#d4a820',
-  wrong_page:      '#c94020',
+  useful:          'var(--ok)',
+  not_significant: 'var(--info)',
+  wrong_amendment: 'var(--warn)',
+  wrong_page:      'var(--alert)',
 };
 const CAT_LABELS = {
   useful:          'Useful',
-  not_significant: 'Not Significant',
-  wrong_amendment: 'Wrong Amendment',
-  wrong_page:      'Wrong Page',
+  not_significant: 'Not significant',
+  wrong_amendment: 'Wrong amendment',
+  wrong_page:      'Wrong page',
 };
 
 function weekStart(isoStr) {
@@ -46,7 +47,7 @@ function computeWeeklyData(records) {
     .map(e => ({ ...e, precision: e.total > 0 ? e.useful / e.total : 0 }));
 }
 
-const TICK_STYLE = { fontFamily: 'DM Mono, monospace', fontSize: 9, fill: '#5c5a52' };
+const TICK_STYLE = chartAxisTick;
 
 export default function PrecisionTracker() {
   const { data: feedbackResponse } = useFeedback();
@@ -54,39 +55,24 @@ export default function PrecisionTracker() {
 
   const weeklyData = useMemo(() => computeWeeklyData(records), [records]);
 
+  const title = 'Alert precision';
+  const subtitle = 'Weekly breakdown of content-owner feedback on alerts, with the share rated useful.';
+
   if (records.length < 5) {
     return (
-      <div className="panel" style={{
-        background: 'var(--bg-secondary)', border: '1px solid var(--rule)',
-        padding: '16px', minHeight: '120px',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
-        <span style={{
-          fontFamily: 'var(--font-display)', fontSize: '14px',
-          color: 'var(--text-tertiary)', textAlign: 'center',
-          letterSpacing: '0.05em',
-        }}>
-          COLLECTING FEEDBACK — PRECISION TRACKING BEGINS WITH 5+ RATED ALERTS
-        </span>
-      </div>
+      <Card title={title} subtitle={subtitle}>
+        <EmptyState icon="mail" compact title="Collecting feedback">
+          Precision tracking begins once five or more alerts have been rated by content owners ({records.length} so far).
+        </EmptyState>
+      </Card>
     );
   }
 
   return (
-    <div className="panel" style={{
-      background: 'var(--bg-secondary)', border: '1px solid var(--rule)',
-      padding: '16px',
-    }}>
-      <div style={{
-        fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-tertiary)',
-        letterSpacing: '0.1em', marginBottom: '12px',
-      }}>
-        ALERT PRECISION — WEEKLY FEEDBACK BREAKDOWN
-      </div>
-
+    <Card title={title} subtitle={subtitle}>
       <ResponsiveContainer width="100%" height={180}>
         <ComposedChart data={weeklyData} margin={{ top: 4, right: 40, bottom: 4, left: 0 }}>
-          <CartesianGrid stroke="#2e2e28" strokeDasharray="2 4" vertical={false} />
+          <CartesianGrid stroke="var(--line)" strokeDasharray="3 4" vertical={false} />
           <XAxis
             dataKey="week"
             tick={TICK_STYLE}
@@ -112,11 +98,9 @@ export default function PrecisionTracker() {
             width={32}
           />
           <RechartsTooltip
-            contentStyle={{
-              background: '#1a1a18', border: '1px solid #4a4a40',
-              fontFamily: 'DM Mono, monospace', fontSize: 10, color: '#e8e2d4',
-            }}
-            labelStyle={{ color: '#5c5a52' }}
+            contentStyle={chartTooltipStyle}
+            labelStyle={{ color: 'var(--ink)', fontWeight: 650 }}
+            formatter={(v, name) => name === 'Precision' ? [`${Math.round(v * 100)}%`, name] : [v, name]}
           />
           {CATEGORIES.map(cat => (
             <Area
@@ -128,8 +112,8 @@ export default function PrecisionTracker() {
               stackId="cats"
               stroke={CAT_COLORS[cat]}
               fill={CAT_COLORS[cat]}
-              fillOpacity={0.3}
-              strokeWidth={1}
+              fillOpacity={0.22}
+              strokeWidth={1.5}
               isAnimationActive={false}
             />
           ))}
@@ -138,8 +122,8 @@ export default function PrecisionTracker() {
             type="monotone"
             dataKey="precision"
             name="Precision"
-            stroke="#e8e2d4"
-            strokeWidth={1.5}
+            stroke="var(--ink)"
+            strokeWidth={2}
             dot={false}
             isAnimationActive={false}
           />
@@ -147,22 +131,18 @@ export default function PrecisionTracker() {
       </ResponsiveContainer>
 
       {/* Legend */}
-      <div style={{ display: 'flex', gap: '12px', marginTop: '8px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '14px', marginTop: '10px', flexWrap: 'wrap' }}>
         {CATEGORIES.map(cat => (
-          <div key={cat} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <div style={{ width: 8, height: 8, background: CAT_COLORS[cat], opacity: 0.6, flexShrink: 0 }} />
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)' }}>
-              {CAT_LABELS[cat]}
-            </span>
+          <div key={cat} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ width: 9, height: 9, borderRadius: 2, background: CAT_COLORS[cat], opacity: 0.7, flexShrink: 0 }} />
+            <span style={{ fontSize: '11.5px', color: 'var(--muted)' }}>{CAT_LABELS[cat]}</span>
           </div>
         ))}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <div style={{ width: 12, height: 1.5, background: '#e8e2d4', flexShrink: 0 }} />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)' }}>
-            Precision
-          </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ width: 14, height: 2, background: 'var(--ink)', flexShrink: 0 }} />
+          <span style={{ fontSize: '11.5px', color: 'var(--muted)' }}>Precision</span>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }

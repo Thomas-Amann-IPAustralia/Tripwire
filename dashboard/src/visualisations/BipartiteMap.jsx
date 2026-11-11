@@ -1,12 +1,14 @@
 import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import * as d3 from 'd3';
 import { useSources, usePages, useBipartiteEdges } from '../hooks/useData.js';
+import { CANVAS_BG } from './KnowledgeGraph.jsx';
 
 const CLUSTER_STAGE = [1, 2, 3, 4, 5, 6, 1];
-const ROW_STEP = 16; // minimum vertical pixels per node row
+const ROW_STEP = 18; // minimum vertical pixels per node row
 
+// var() references keep the map in step with the light / dark theme.
 function getCSSColor(varName) {
-  return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#5c5a52';
+  return `var(${varName})`;
 }
 
 function clusterColor(cluster) {
@@ -14,8 +16,10 @@ function clusterColor(cluster) {
   return getCSSColor(`--stage-${stageIdx}`);
 }
 
-const SRC_FONT  = '9px "DM Mono", monospace';
-const PAGE_FONT = '9px "Lora", serif';
+// Canvas measurement needs concrete font names, so these mirror the theme's
+// --font-code (source IDs) and --font-sans (page titles).
+const SRC_FONT  = '10px "JetBrains Mono", ui-monospace, monospace';
+const PAGE_FONT = '500 11px Inter, "Segoe UI", sans-serif';
 
 let measureCtx = null;
 function textWidth(text, font) {
@@ -111,10 +115,10 @@ export default function BipartiteMap({ isActive }) {
       svg.append('text')
         .attr('x', width / 2).attr('y', viewH / 2)
         .attr('text-anchor', 'middle')
-        .attr('fill', 'var(--text-tertiary)')
-        .style('font-family', '"DM Mono", monospace')
-        .style('font-size', '11px')
-        .text('NO SOURCE-CORPUS CONNECTIONS IN RUN HISTORY');
+        .style('fill', 'var(--muted)')
+        .style('font-family', 'var(--font-sans)')
+        .style('font-size', '13px')
+        .text('No source-to-page connections in the run history yet');
       return;
     }
 
@@ -160,14 +164,14 @@ export default function BipartiteMap({ isActive }) {
     const g = svg.append('g');
 
     // Column headers
-    for (const [x, label] of [[leftX, 'SOURCES'], [rightX, 'IPFR PAGES']]) {
+    for (const [x, label, anchor] of [[leftX, 'Monitored sources', 'end'], [rightX, 'IPFR pages', 'start']]) {
       g.append('text')
         .attr('x', x).attr('y', 14)
-        .attr('text-anchor', 'middle')
-        .attr('fill', 'var(--text-tertiary)')
-        .style('font-family', '"DM Mono", monospace')
-        .style('font-size', '9px')
-        .style('letter-spacing', '0.06em')
+        .attr('text-anchor', anchor)
+        .style('fill', 'var(--muted)')
+        .style('font-family', 'var(--font-sans)')
+        .style('font-size', '11px')
+        .style('font-weight', '700')
         .text(label);
     }
 
@@ -186,7 +190,7 @@ export default function BipartiteMap({ isActive }) {
       })
       .attr('fill', 'none')
       .attr('stroke', d => (d.change_required_count ?? 0) > 0
-        ? getCSSColor('--state-alert')
+        ? getCSSColor('--alert')
         : getCSSColor('--stage-4'))
       .attr('stroke-width', d => 0.5 + ((d.trigger_count ?? 1) / maxTriggers) * 2.5)
       .attr('stroke-opacity', 0.3)
@@ -243,9 +247,9 @@ export default function BipartiteMap({ isActive }) {
 
     srcNodeSel.append('circle')
       .attr('r', 5)
-      .attr('fill', getCSSColor('--stage-2'))
-      .attr('stroke', 'var(--bg-primary)')
-      .attr('stroke-width', 1);
+      .attr('fill', getCSSColor('--accent'))
+      .attr('stroke', 'var(--surface)')
+      .attr('stroke-width', 1.5);
 
     srcNodeSel.append('title').text(d => d.source_id);
 
@@ -253,9 +257,9 @@ export default function BipartiteMap({ isActive }) {
       .attr('x', -LABEL_GAP)
       .attr('dy', '0.35em')
       .attr('text-anchor', 'end')
-      .attr('fill', 'var(--text-secondary)')
-      .style('font-family', '"DM Mono", monospace')
-      .style('font-size', '9px')
+      .style('fill', 'var(--body)')
+      .style('font-family', 'var(--font-code)')
+      .style('font-size', '10px')
       .text(d => fitText(midTruncate(d.source_id ?? ''), SRC_FONT, srcLabelW));
 
     // Page nodes — sized by total trigger count across all sources
@@ -277,17 +281,18 @@ export default function BipartiteMap({ isActive }) {
     pgNodeSel.append('circle')
       .attr('r', d => 4 + ((triggersByPage.get(d.page_id) ?? 0) / maxPageTriggers) * 6)
       .attr('fill', d => clusterColor(d.cluster))
-      .attr('stroke', 'var(--bg-primary)')
-      .attr('stroke-width', 1);
+      .attr('stroke', 'var(--surface)')
+      .attr('stroke-width', 1.5);
 
     pgNodeSel.append('title').text(d => d.title ? `${d.title} (${d.page_id})` : d.page_id);
 
     pgNodeSel.append('text')
       .attr('x', LABEL_GAP)
       .attr('dy', '0.35em')
-      .attr('fill', 'var(--text-secondary)')
-      .style('font-family', '"Lora", serif')
-      .style('font-size', '9px')
+      .style('fill', 'var(--ink)')
+      .style('font-family', 'var(--font-sans)')
+      .style('font-size', '11px')
+      .style('font-weight', '500')
       .text(d => fitText(midTruncate(d.title || d.page_id || ''), PAGE_FONT, pageLabelW));
   }, [shownSources, shownPages, edges]);
 
@@ -314,31 +319,34 @@ export default function BipartiteMap({ isActive }) {
   return (
     <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
       <div style={{
-        padding: '6px 12px',
-        borderBottom: '1px solid var(--rule)',
-        fontFamily: 'var(--font-mono)', fontSize: '10px',
-        color: 'var(--text-tertiary)', letterSpacing: '0.06em',
+        padding: '10px 16px',
+        borderBottom: '1px solid var(--line-soft)',
+        background: 'var(--surface)',
+        fontSize: '12px', color: 'var(--muted)',
         flexShrink: 0,
         display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap',
       }}>
         <span>
-          {shownSources.length} SOURCES → {shownPages.length} PAGES · {edges.length} CONNECTIONS · FULL RUN HISTORY
+          <strong style={{ color: 'var(--ink)' }}>{shownSources.length}</strong> sources connect to{' '}
+          <strong style={{ color: 'var(--ink)' }}>{shownPages.length}</strong> pages through{' '}
+          <strong style={{ color: 'var(--ink)' }}>{edges.length}</strong> connections, across the full run history
         </span>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-          <span style={{ width: 12, height: 2, background: 'var(--state-alert)', display: 'inline-block' }} />
-          change required
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <span style={{ width: 16, height: 3, borderRadius: 2, background: 'var(--alert)', display: 'inline-block' }} />
+          Produced a change-required verdict
         </span>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-          <span style={{ width: 12, height: 2, background: 'var(--stage-4)', display: 'inline-block' }} />
-          triggered only
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+          <span style={{ width: 16, height: 3, borderRadius: 2, background: 'var(--stage-4)', display: 'inline-block' }} />
+          Triggered only
         </span>
+        <span className="tw-faint" style={{ marginLeft: 'auto' }}>Hover a source or page to trace its connections</span>
       </div>
       <div
         ref={scrollRef}
-        style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}
+        style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', position: 'relative', ...CANVAS_BG }}
       >
         <div ref={containerRef} style={{ minHeight: '100%', width: '100%' }}>
-          <svg ref={svgRef} style={{ display: 'block', background: 'var(--bg-primary)' }} />
+          <svg ref={svgRef} style={{ display: 'block' }} />
         </div>
       </div>
     </div>

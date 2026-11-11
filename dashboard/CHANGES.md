@@ -1,5 +1,44 @@
 # Dashboard Changes
 
+## Warm workspace re-skin (November 2026)
+
+A complete visual re-skin, moving from the dark "terminal" look to a calm,
+contemporary SaaS workspace based on the "warm character" direction of
+`06-The-Enterprise-Workspace (1).html`. Functionality, routes, API calls and
+data handling are unchanged.
+
+- **Design system.** `src/styles/globals.css` now holds a token-based theme
+  (warm canvas, deep teal accent, ochre and clay character colours, softened
+  status colours) plus shared `tw-*` component classes for cards, metrics,
+  badges, buttons, segmented controls, tables, tabs, drawers, dialogs and
+  tooltips. The previous variable names (`--bg-*`, `--text-*`, `--stage-*`,
+  `--state-*`) remain as aliases of the new tokens.
+- **Light by default, optional dark mode.** The warm light theme is the
+  default. The top bar toggle switches to a warm dark theme, stored in
+  `localStorage['tripwire-theme']` and applied before first paint by
+  `index.html`. `src/hooks/useTheme.js` exposes the theme to components.
+- **Typography.** Inter for the interface, Source Serif 4 for page titles,
+  JetBrains Mono only for identifiers, code, YAML, SQL and diffs. All-caps
+  labels are replaced with sentence case throughout, including the system
+  plan headings.
+- **Shell.** The icon rail is now a labelled, collapsible sidebar grouped into
+  Review, Monitor and Administration, with plain-language page names
+  (Assessments, Pipeline activity, Monitored sources, IPFR corpus, System
+  health, Configuration, How Tripwire works). The top bar shows a breadcrumb,
+  last run, pipeline status, stage dots, theme toggle and refresh.
+- **Shared primitives.** `src/components/ui.jsx` provides `PageHeader`,
+  `Card`, `MetricCard`, `Badge`, `VerdictBadge`, `OutcomeBadge`, `Segmented`,
+  `SearchInput`, `Meter`, `Callout`, `EmptyState`, `Loading` and an icon set.
+- **Charts and visualisations** (Recharts, d3, Three.js) take their colours
+  from theme tokens, so they follow light and dark mode live.
+- **Configuration page** gains a sticky save bar with a discard option once
+  changes are staged.
+- **Fixes found during the re-skin:** the 3D embedding view now initialises
+  on a cold page load (previously it stayed blank until you navigated away and
+  back), and the page-enter animation no longer leaves a transform behind that
+  mis-positioned the run drawer on scrolled pages.
+- The Triggered events TSV export keeps its original column headers.
+
 ## 1. Light Mode
 
 - Added `[data-theme="light"]` CSS custom property block in `globals.css` overriding

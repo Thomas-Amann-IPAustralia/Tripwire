@@ -1,16 +1,22 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import * as d3 from 'd3';
-import { PageDetailPanel } from './KnowledgeGraph.jsx';
+import { PageDetailPanel, CANVAS_BG } from './KnowledgeGraph.jsx';
+import { Segmented } from '../components/ui.jsx';
 
 const CLUSTER_STAGE = [1, 2, 3, 4, 5, 6, 1];
 
-function getCSSColor(varName) {
-  return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#5c5a52';
-}
-
+// var() / color-mix() references keep the treemap in step with the theme.
 function clusterColor(cluster) {
   const stageIdx = CLUSTER_STAGE[(cluster ?? 0) % CLUSTER_STAGE.length];
-  return getCSSColor(`--stage-${stageIdx}`);
+  return `var(--stage-${stageIdx})`;
+}
+
+function cellFill(cluster, strong) {
+  return `color-mix(in srgb, ${clusterColor(cluster)} ${strong ? 38 : 18}%, var(--surface))`;
+}
+
+function escapeHtml(v) {
+  return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 
 // Corpus coverage treemap: cluster → page hierarchy.
@@ -40,10 +46,10 @@ export default function ContentMap({ pages = [], isActive }) {
       svg.append('text')
         .attr('x', width / 2).attr('y', height / 2)
         .attr('text-anchor', 'middle')
-        .attr('fill', 'var(--text-tertiary)')
-        .style('font-family', '"DM Mono", monospace')
-        .style('font-size', '11px')
-        .text('NO CORPUS DATA');
+        .style('fill', 'var(--muted)')
+        .style('font-family', 'var(--font-sans)')
+        .style('font-size', '13px')
+        .text('No corpus data yet');
       return;
     }
 
@@ -60,9 +66,9 @@ export default function ContentMap({ pages = [], isActive }) {
     const root = d3.hierarchy(rootData).sum(d => d.value ?? 0);
     d3.treemap()
       .size([width, height])
-      .paddingInner(2)
-      .paddingOuter(3)
-      .paddingTop(16) // room for the cluster label band
+      .paddingInner(3)
+      .paddingOuter(4)
+      .paddingTop(22) // room for the cluster label band
       (root);
 
     // Hatching pattern for never-alerted pages
@@ -76,8 +82,8 @@ export default function ContentMap({ pages = [], isActive }) {
       .append('line')
       .attr('x1', 0).attr('y1', 0)
       .attr('x2', 0).attr('y2', 6)
-      .attr('stroke', '#5c5a52')
-      .attr('stroke-width', 2);
+      .style('stroke', 'var(--muted)')
+      .attr('stroke-width', 1.5);
 
     // Cluster group frames + labels
     const clusterNodes = root.children ?? [];
@@ -90,19 +96,21 @@ export default function ContentMap({ pages = [], isActive }) {
       .attr('x', d => d.x0).attr('y', d => d.y0)
       .attr('width', d => Math.max(0, d.x1 - d.x0))
       .attr('height', d => Math.max(0, d.y1 - d.y0))
-      .attr('fill', 'none')
-      .attr('stroke', d => clusterColor(d.data.cluster))
-      .attr('stroke-opacity', 0.5)
+      .attr('rx', 8)
+      .style('fill', d => `color-mix(in srgb, ${clusterColor(d.data.cluster)} 6%, transparent)`)
+      .style('stroke', d => clusterColor(d.data.cluster))
+      .attr('stroke-opacity', 0.35)
       .attr('stroke-width', 1);
 
     clusterG.append('text')
       .attr('x', d => d.x0 + 5)
-      .attr('y', d => d.y0 + 11)
-      .attr('fill', d => clusterColor(d.data.cluster))
-      .style('font-family', '"DM Mono", monospace')
-      .style('font-size', '9px')
-      .style('letter-spacing', '0.06em')
-      .text(d => `CLUSTER ${d.data.cluster} · ${d.children?.length ?? 0} PAGES`);
+      .attr('x', d => d.x0 + 8)
+      .attr('y', d => d.y0 + 15)
+      .style('fill', d => clusterColor(d.data.cluster))
+      .style('font-family', 'var(--font-sans)')
+      .style('font-size', '11px')
+      .style('font-weight', '650')
+      .text(d => `Cluster ${d.data.cluster} · ${d.children?.length ?? 0} pages`);
 
     // Page cells
     const cell = svg.append('g')
@@ -127,9 +135,9 @@ export default function ContentMap({ pages = [], isActive }) {
     cell.append('rect')
       .attr('width', d => Math.max(0, cellW(d)))
       .attr('height', d => Math.max(0, cellH(d)))
-      .attr('fill', d => clusterColor(d.data.cluster))
-      .attr('opacity', d => (d.data.alert_count ?? 0) > 0 ? 0.95 : 0.55)
-      .attr('stroke', d => (d.data.alert_count ?? 0) > 0 ? getCSSColor('--state-alert') : 'var(--bg-primary)')
+      .attr('rx', 5)
+      .style('fill', d => cellFill(d.data.cluster, (d.data.alert_count ?? 0) > 0))
+      .style('stroke', d => (d.data.alert_count ?? 0) > 0 ? 'var(--alert)' : `color-mix(in srgb, ${clusterColor(d.data.cluster)} 35%, var(--surface))`)
       .attr('stroke-width', d => (d.data.alert_count ?? 0) > 0 ? 2 : 1);
 
     // Never-alerted overlay (toggle)
@@ -138,17 +146,18 @@ export default function ContentMap({ pages = [], isActive }) {
         .append('rect')
         .attr('width', d => Math.max(0, cellW(d)))
         .attr('height', d => Math.max(0, cellH(d)))
+        .attr('rx', 5)
         .attr('fill', 'url(#uncovered-hatch)')
-        .attr('opacity', 0.6)
+        .attr('opacity', 0.35)
         .attr('pointer-events', 'none');
     }
 
     // Labels: title (primary) + page_id (secondary)
     cell.filter(d => cellW(d) > 40 && cellH(d) > 18)
       .append('foreignObject')
-      .attr('x', 4).attr('y', 4)
-      .attr('width', d => Math.max(0, cellW(d) - 8))
-      .attr('height', d => Math.max(0, cellH(d) - 8))
+      .attr('x', 6).attr('y', 5)
+      .attr('width', d => Math.max(0, cellW(d) - 12))
+      .attr('height', d => Math.max(0, cellH(d) - 10))
       .style('pointer-events', 'none')
       .append('xhtml:div')
       .style('width', '100%')
@@ -156,11 +165,11 @@ export default function ContentMap({ pages = [], isActive }) {
       .style('overflow', 'hidden')
       .html(d => {
         const w = cellW(d);
-        const flag = (d.data.alert_count ?? 0) > 0 ? '⚑ ' : '';
-        const titleText = flag + (d.data.title || d.data.page_id);
-        const title = `<div style="font-family:'Lora',serif;font-size:10px;color:var(--text-primary);line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${titleText}</div>`;
+        const flag = (d.data.alert_count ?? 0) > 0 ? '<span style="color:var(--alert)">● </span>' : '';
+        const titleText = flag + escapeHtml(d.data.title || d.data.page_id);
+        const title = `<div style="font-family:var(--font-sans);font-size:11px;font-weight:600;color:var(--ink);line-height:1.25;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${titleText}</div>`;
         if (w < 80) return title;
-        const id = `<div style="font-family:'DM Mono',monospace;font-size:8px;color:var(--text-secondary);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-top:2px;">${d.data.page_id} · ${d.data.chunk_count ?? 0} chunks</div>`;
+        const id = `<div style="font-family:var(--font-sans);font-size:10px;color:var(--muted);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-top:2px;">${escapeHtml(d.data.page_id)} · ${d.data.chunk_count ?? 0} chunks</div>`;
         return title + id;
       });
   }, [pages, showGapOverlay]);
@@ -180,43 +189,42 @@ export default function ContentMap({ pages = [], isActive }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative' }}>
       {/* Toolbar + legend */}
       <div style={{
-        padding: '8px 12px',
-        borderBottom: '1px solid var(--rule)',
+        padding: '10px 16px',
+        borderBottom: '1px solid var(--line-soft)',
+        background: 'var(--surface)',
         display: 'flex', alignItems: 'center', gap: '14px',
         flexShrink: 0, flexWrap: 'wrap',
       }}>
         <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: '10px',
-          color: 'var(--text-tertiary)', letterSpacing: '0.05em',
-          display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap', flex: 1,
+          fontSize: '12px', color: 'var(--muted)',
+          display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap', flex: 1,
         }}>
-          <span>CELL = IPFR PAGE</span>
-          <span>SIZE = CHUNK COUNT</span>
-          <span>COLOUR = TOPIC CLUSTER</span>
-          <span style={{ color: 'var(--state-alert)' }}>⚑ BORDER = OUTSTANDING ALERTS</span>
-          {showGapOverlay && <span>HATCHED = NEVER ALERTED</span>}
+          <span>Each cell is an IPFR page</span>
+          <span>Size shows chunk count</span>
+          <span>Colour shows topic cluster</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--alert)' }}>
+            <span style={{ width: 12, height: 12, borderRadius: 3, border: '2px solid var(--alert)' }} /> Outstanding alerts
+          </span>
+          {showGapOverlay && (
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <span style={{ width: 12, height: 12, borderRadius: 3, background: 'repeating-linear-gradient(45deg, var(--muted) 0 1.5px, transparent 1.5px 4px)', opacity: 0.6 }} /> Never alerted
+            </span>
+          )}
         </div>
 
-        <button
-          onClick={() => setShowGapOverlay(s => !s)}
-          title="Hatch pages that no alert has ever flagged — potential monitoring blind spots"
-          style={{
-            background: showGapOverlay ? 'var(--state-warn)' : 'transparent',
-            color: showGapOverlay ? 'var(--bg-primary)' : 'var(--state-warn)',
-            border: '1px solid var(--state-warn)',
-            padding: '3px 10px',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '10px',
-            letterSpacing: '0.06em',
-            cursor: 'pointer',
-          }}
-        >
-          SHOW UNCOVERED PAGES
-        </button>
+        <Segmented
+          ariaLabel="Coverage overlay"
+          value={showGapOverlay ? 'gaps' : 'all'}
+          onChange={v => setShowGapOverlay(v === 'gaps')}
+          options={[
+            { value: 'all', label: 'All pages' },
+            { value: 'gaps', label: 'Highlight uncovered pages', title: 'Hatch pages that no alert has ever flagged: potential monitoring blind spots' },
+          ]}
+        />
       </div>
 
       {/* Treemap */}
-      <div ref={containerRef} style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+      <div ref={containerRef} style={{ flex: 1, overflow: 'hidden', position: 'relative', ...CANVAS_BG }}>
         <svg ref={svgRef} style={{ display: 'block' }} />
         {selectedPageId && (
           <PageDetailPanel pageId={selectedPageId} onClose={() => setSelectedPageId(null)} />
@@ -225,31 +233,25 @@ export default function ContentMap({ pages = [], isActive }) {
 
       {/* Hover tooltip */}
       {tooltip && (
-        <div style={{
+        <div className="tw-chart-tip" style={{
           position: 'fixed',
           top: tooltip.y,
           left: tooltip.x,
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--rule-accent)',
-          padding: '8px 10px',
           zIndex: 1000,
-          pointerEvents: 'none',
-          maxWidth: '220px',
+          maxWidth: '240px',
         }}>
-          <div style={{ fontFamily: 'var(--font-body)', fontSize: '12px', color: 'var(--text-primary)', marginBottom: '4px' }}>
+          <div style={{ fontWeight: 650, color: 'var(--ink)', marginBottom: '2px' }}>
             {tooltip.page.title || tooltip.page.page_id}
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            {tooltip.page.page_id} · cluster {tooltip.page.cluster ?? '—'}<br />
+          <div style={{ fontSize: '11.5px', lineHeight: 1.6 }}>
+            <span className="tw-code">{tooltip.page.page_id}</span> · cluster {tooltip.page.cluster ?? '—'}<br />
             {tooltip.page.chunk_count ?? 0} chunks · {tooltip.page.entity_count ?? 0} entities<br />
-            <span style={{ color: (tooltip.page.alert_count ?? 0) > 0 ? 'var(--state-alert)' : 'var(--text-tertiary)' }}>
+            <span style={{ color: (tooltip.page.alert_count ?? 0) > 0 ? 'var(--alert)' : 'var(--muted)', fontWeight: 600 }}>
               {tooltip.page.alert_count ?? 0} outstanding alert{(tooltip.page.alert_count ?? 0) !== 1 ? 's' : ''}
             </span>
-            {' '}({tooltip.page.alert_count_total ?? tooltip.page.alert_count ?? 0} all-time)
+            {' '}({tooltip.page.alert_count_total ?? tooltip.page.alert_count ?? 0} all time)
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: 'var(--text-tertiary)', marginTop: '4px' }}>
-            click for detail
-          </div>
+          <div className="tw-muted" style={{ fontSize: '11px', marginTop: '4px' }}>Select for details</div>
         </div>
       )}
     </div>

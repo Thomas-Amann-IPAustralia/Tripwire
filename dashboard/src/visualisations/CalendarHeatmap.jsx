@@ -1,22 +1,21 @@
 import React, { useMemo, useState } from 'react';
-import { scaleSequential } from 'd3-scale';
 import { timeDays, timeWeeks } from 'd3-time';
+import { Card } from '../components/ui.jsx';
 
-// Interpolate from --bg-tertiary (#242420) to --state-alert (#c94020)
-function heatInterpolator(t) {
-  if (t <= 0) return '#242420';
-  const r = Math.round(0x24 + (0xc9 - 0x24) * t);
-  const g = Math.round(0x24 + (0x40 - 0x24) * t);
-  const b = 0x20;
-  return `rgb(${r},${g},${b})`;
+// Five-step sequential scale from the theme tokens (--seq-0 … --seq-4), so the
+// grid reads correctly in both the warm light and dark themes.
+function levelFor(count, max) {
+  if (!count) return 0;
+  if (max <= 1) return 4;
+  return Math.min(4, 1 + Math.floor(((count - 1) / (max - 1)) * 3.999));
 }
 
 const CELL = 12;
-const GAP  = 2;
+const GAP  = 3;
 const STEP = CELL + GAP;
 const DOW_LABEL = { 1: 'M', 3: 'W', 5: 'F' };
 
-const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 export default function CalendarHeatmap({ runs = [], onDayClick }) {
   const [tooltip, setTooltip] = useState(null);
@@ -83,31 +82,17 @@ export default function CalendarHeatmap({ runs = [], onDayClick }) {
     return { weeks: weekArrays, monthLabels: labels };
   }, []);
 
-  const colorScale = useMemo(
-    () => scaleSequential(heatInterpolator).domain([0, Math.max(1, maxCount)]),
-    [maxCount]
-  );
+  const colorFor = count => `var(--seq-${levelFor(count, maxCount)})`;
 
   const today = new Date();
   today.setHours(23, 59, 59, 999);
 
   return (
-    <div className="panel" style={{
-      background: 'var(--bg-secondary)',
-      border: '1px solid var(--rule)',
-      padding: '16px',
-      overflowX: 'auto',
-    }}>
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '10px',
-        color: 'var(--text-tertiary)',
-        letterSpacing: '0.1em',
-        marginBottom: '12px',
-      }}>
-        ALERT DENSITY — CHANGE REQUIRED · 52-WEEK GRID (COLOURED WITHIN THE ACTIVE DATE FILTER)
-      </div>
-
+    <Card
+      title="Alert density"
+      subtitle="Days with change-required verdicts over the last 52 weeks, coloured within the active date filter. Select a day to filter to it."
+      bodyStyle={{ overflowX: 'auto' }}
+    >
       <div style={{ display: 'flex', gap: '8px' }}>
         {/* Day-of-week labels */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: `${GAP}px`, paddingTop: '18px' }}>
@@ -117,9 +102,8 @@ export default function CalendarHeatmap({ runs = [], onDayClick }) {
               width: '12px',
               display: 'flex',
               alignItems: 'center',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '9px',
-              color: 'var(--text-tertiary)',
+              fontSize: '10px',
+              color: 'var(--muted)',
             }}>
               {DOW_LABEL[dow] ?? ''}
             </div>
@@ -136,9 +120,8 @@ export default function CalendarHeatmap({ runs = [], onDayClick }) {
                 style={{
                   position: 'absolute',
                   left: `${weekIndex * STEP}px`,
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '9px',
-                  color: 'var(--text-tertiary)',
+                  fontSize: '10.5px',
+                  color: 'var(--muted)',
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -161,7 +144,7 @@ export default function CalendarHeatmap({ runs = [], onDayClick }) {
                   const count   = entry?.count ?? 0;
                   const srcs    = entry?.sources ?? [];
                   const future  = date > today;
-                  const color   = future ? '#1a1a18' : colorScale(count);
+                  const color   = future ? 'transparent' : colorFor(count);
 
                   return (
                     <div
@@ -171,8 +154,11 @@ export default function CalendarHeatmap({ runs = [], onDayClick }) {
                         width: `${CELL}px`,
                         height: `${CELL}px`,
                         background: color,
+                        borderRadius: '3px',
+                        border: future ? '1px dashed var(--line)' : '1px solid color-mix(in srgb, var(--ink) 6%, transparent)',
                         cursor: future ? 'default' : 'pointer',
-                        outline: tooltip?.dateStr === dateStr ? '1px solid var(--rule-accent)' : 'none',
+                        outline: tooltip?.dateStr === dateStr ? '2px solid var(--accent)' : 'none',
+                        outlineOffset: '1px',
                       }}
                       onMouseEnter={e => {
                         if (future) return;
@@ -190,37 +176,38 @@ export default function CalendarHeatmap({ runs = [], onDayClick }) {
         </div>
       </div>
 
+      {/* Legend */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginTop: '14px', fontSize: '11px', color: 'var(--muted)' }}>
+        Fewer
+        {[0, 1, 2, 3, 4].map(l => (
+          <span key={l} style={{ width: 11, height: 11, borderRadius: 3, background: `var(--seq-${l})`, border: '1px solid color-mix(in srgb, var(--ink) 6%, transparent)' }} />
+        ))}
+        More alerts
+      </div>
+
       {/* Tooltip */}
       {tooltip && (
-        <div style={{
+        <div className="tw-chart-tip" style={{
           position: 'fixed',
           top: tooltip.y,
           left: tooltip.x,
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--rule-accent)',
-          padding: '8px 10px',
           zIndex: 1000,
-          pointerEvents: 'none',
-          minWidth: '140px',
+          minWidth: '150px',
         }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-primary)', marginBottom: '4px' }}>
-            {tooltip.dateStr}
+          <div style={{ fontWeight: 650, color: 'var(--ink)' }}>
+            {new Date(tooltip.dateStr + 'T00:00:00').toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--text-secondary)', marginBottom: '4px' }}>
+          <div style={{ marginBottom: '2px' }}>
             {tooltip.count} alert{tooltip.count !== 1 ? 's' : ''}
           </div>
           {tooltip.sources.slice(0, 3).map(s => (
-            <div key={s} style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', marginTop: '2px' }}>
-              {s}
-            </div>
+            <div key={s} className="tw-code" style={{ fontSize: '11px', color: 'var(--muted)' }}>{s}</div>
           ))}
           {tooltip.sources.length > 3 && (
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--text-tertiary)', marginTop: '2px' }}>
-              +{tooltip.sources.length - 3} more
-            </div>
+            <div className="tw-muted" style={{ fontSize: '11px' }}>+{tooltip.sources.length - 3} more</div>
           )}
         </div>
       )}
-    </div>
+    </Card>
   );
 }
