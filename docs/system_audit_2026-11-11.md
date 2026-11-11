@@ -7,6 +7,8 @@
 
 Nothing in the pipeline, config or database was changed by this audit.
 
+> **Updated the same day:** §10 adds a dedicated false-negative hunt (1,146 further source/page reviews). It found more misses and **changes recommendations 8 and 9**: under a "misses are far worse than false alarms" priority, do not raise the bi-encoder floor and do not narrow to the top 3. Read §10 before acting on §5 or §9.
+
 ---
 
 ## 1. Verdict
@@ -294,8 +296,8 @@ Caveats: the negatives over-represent past false alarms, so 44/167 is not a prod
 
 | # | Setting | Now | Proposed | Evidence |
 |---|---------|-----|----------|----------|
-| 8 | Candidate selection | Stage 4 top 5 → Stage 5 | Top 5 by bi-encoder max-chunk over all pages | §5.2 — 9/9 vs 7/9 |
-| 9 | `biencoder.max_chunk_floor` | 0.63 | **0.68** | §5.3 |
+| 8 | Candidate selection | Stage 4 top 5 → Stage 5 | **Revised in §10:** top 10 by bi-encoder max-chunk over all pages, plus any page sharing a specific term with a changed line | §5.2, §10.3 |
+| 9 | `biencoder.max_chunk_floor` | 0.63 | **Revised in §10:** keep 0.63 for webpages; never apply it to legislation sources | §10.2, §10.3 |
 | 10 | `biencoder.high_threshold`, `low_medium_*` | 0.75 / 0.45 / 3 | Retire | §5.3 |
 | 11 | `crossencoder.threshold` | 0.60 on blended score | 0.75 on raw score, or remove Stage 6 | §5.4 |
 | 12 | `relevance_scoring.top_n_candidates` (only if #8 is not done) | 5 | 25 | §5.6 |
@@ -314,4 +316,87 @@ Caveats: the negatives over-represent past false alarms, so 44/167 is not a prod
 
 **D. Content fixes for the IPFR team now** — `XE324C` (IVDS), `X39AC5` (Part 62), `X0F896` (attorney fees), `X7E272` (tribunal name), and consider `XE69D4` (expedited UDRP).
 
-**Expected effect of A + B:** LLM calls fall by roughly 70% (graph bundles −49%; whitespace, empty and error diffs removed; floor 0.68 removes a further third of what remains), both known Stage 4 misses are recovered, and the alert classes that made up 31 of 39 false alarms are closed. Re-run this audit's labelled set after the changes, and keep `audit_labels_2026-11-11.csv` as the regression set for tasks 5.3 and 5.4.
+**Expected effect of A + B (as revised in §10):** LLM calls still fall by roughly 40–50% (graph bundles −49%; whitespace, empty and error diffs removed; the wider candidate net adds some back), every confirmed miss in §4 and §10 is recovered at the candidate stage, and the alert classes that made up 31 of 39 false alarms are closed. Re-run this audit's labelled set after the changes, and keep `audit_labels_2026-11-11.csv` as the regression set for tasks 5.3 and 5.4.
+
+---
+
+## 10. Addendum — dedicated false-negative hunt
+
+Brief: spend the remaining budget looking only for things that were filtered out and should not have been, on the basis that false alarms are acceptable and misses are not.
+
+### 10.1 Method
+
+The first pass sampled each stage. This pass tried to cover everything Tripwire saw:
+
+- Every changed line from every source over six months was de-duplicated (lines that only moved, whitespace changes and browser error text removed), leaving 2,801 units from 111 sources.
+- Each unit was scored locally against every chunk of every IPFR page, and separately probed for exact matches of specific terms (amounts, acronyms, part and section numbers, emails, durations) that occur on eight or fewer IPFR pages.
+- Any source/page pair with a line-level similarity ≥ 0.70 or a specific-term match was sent for review with the full page text: **1,146 pairs covering 50 sources and all 130 active pages**. The 480 strongest went to `gpt-5.4-mini`, the rest to `gemini-3.5-flash-lite` (both batch). The prompt told the reviewer that a miss is worse than a false alarm.
+- All seven earlier confirmed positives were in the pool; both models flagged the firm ones.
+- Stage 1 was tested separately: nine sources that are routinely skipped on HTTP headers alone were fetched live and compared with their stored baselines.
+- Every flag was then checked by hand against the page text. Flags and my ruling on each are in `data/logs/audit_fn_hunt_2026-11-11.csv`.
+
+Cost of this pass: OpenAI ≈ $0.77, Gemini ≈ $0.40. Running totals: **OpenAI ≈ $1.77, Gemini ≈ $1.85** of $2 each; I stopped there because the prices are estimates.
+
+### 10.2 What it found
+
+52 of 1,146 pairs were flagged. After checking: 5 confirmed, 8 worth a look, 39 rejected.
+
+**New confirmed misses**
+
+| # | What changed | IPFR page | Where it was lost |
+|---|--------------|-----------|-------------------|
+| 1 | Federal Circuit and Family Court fee for mediation by a court officer: $665 → **$690** on 1 July 2026 | *Resolve IP issues with the help of a third party* (`X5B5CC`) says "**$650** for each attendance" — already one increase behind | **Stage 4.** Bi-encoder rank 4 of 132 (0.754), Stage 4 semantic rank 70. Never a candidate on any of three fee-page changes, while four pages that quote no court fees were alerted from the same diff |
+| 2 | **Trade Marks Act 1995 (1 Oct) and Patents Act 1990 (15 Oct) amended** by the Regulatory Reform Omnibus Act 2026 | See below | **Stage 5.** The "change text" was a one-paragraph bill summary ("Amends 26 Acts to simplify and streamline…"). Best page score 0.623 and 0.615, under the 0.63 floor. All candidates rejected; nothing reached the LLM or the digest |
+| 3 | Eight legislation changes arrived with **no explainer at all** (API timeout or no bill summary), including the Trade Marks Regulations and Patents Regulations | — | **Stage 3.** The LLM was shown a ~110-character stub and returned `NO_CHANGE`. Six were explained on a later run; two never were: the ASIC Act amendment by the *Treasury Laws Amendment (Business Registries Stabilisation and Uplift) Act 2026* (IPFR has at least six pages on business names), and a Competition and Consumer Act change on 12 October |
+
+On item 2: IP Australia's own article says the Act brings a PBR renewal-fee grace period and surrender process (from 18 September 2027), Nice Classification references that update automatically (from 18 March 2027), more flexible costs awards in trade mark oppositions, and closes an attorney-discipline loophole (both subject to further regulations). No IPFR statement is wrong today, but *Challenge the registration of a new trade mark* (`XC6CD2`, "the hearing officer has the power to award costs") and the PBR pages will need to follow it. The point is the mechanism: **an amendment to the two most important Acts on the watch list was dropped without a trace**, and raising the floor to 0.68 as §5.3 proposed would have made that more likely, not less.
+
+**Earlier misses, now with the full timeline**
+
+- **Part 62** (`X39AC5`): the Trade Marks Manual dropped "Part 62 Revocation of Registration" from its chapter list on **23 July** — the page ranked 14th by bi-encoder that day and was not a candidate. It then reached the LLM five times (30 July to 29 October) and an official notice on 22 October said the guidance had been consolidated; all returned `NO_CHANGE`. First alert: 5 November, fifteen weeks after the first signal.
+- **IVDS** (`XE324C`): confirmed again from both the official notice and the PBR manual. Still not alerted.
+
+**Worth a look** (not proven; listed because false alarms are acceptable)
+
+- `XA1EBE` *What is it?* (patent re-examination, "costs $800") and `X611E8` (fees via "Schedule 8 of Patents Regulation 1991"): IP Australia updated its patent fee-payment instruments on 7 August 2026. The notice does not say an amount changed.
+- `X02CB3`, `X76958`: the Copyright (International Protection) Regulations were amended to update which countries are protected; the pages describe that protection in general terms.
+- `XD0E48`, `X2A3EB`: IP Australia added a note that Amazon Brand Registry is a private service it has no part in; Amazon removed its public infringement-report form (8 October).
+- `X2A3EB`: says to file an eBay VeRO counter notice "via email"; eBay's address changed. Already alerted in July.
+- `XBA31C`: WIPO now takes payment only through WIPO Pay; the page quotes WIPO arbitration costs.
+
+**Rejected after checking** — 7 flags that IPTA had withdrawn its free consultation (the "removal" was a browser error page; I fetched the live page and the service is unchanged), 2 where the model quoted text that is not on the page, and 30 that were topical overlap only.
+
+**Stage 1 is clean on the evidence available.** The nine header-skipped sources (four Shein pages share one ETag; two TTIPAB pages share one content length) all matched their baselines when fetched live. Two side findings: `ttiap_find_an_attorney` is the same URL as `how_to_engage_an_attorney` plus a `#fragment`, so it monitors nothing new; and `icann_whois_lookup`'s baseline is an error page.
+
+### 10.3 Where confirmed misses were lost, and what that changes
+
+| Stage | Confirmed misses (both passes) |
+|-------|-------------------------------|
+| Never fetched | Unknown — 38 sources (§6.1) |
+| Stage 3: no explainer text | 8 legislation changes, 2 never explained |
+| Stage 4: top-five shortlist | `XE324C` (PBR manual), `X5B5CC` (court fee, three times), `X39AC5` (23 July), `X6F04B` (minor) |
+| Stage 5: 0.63 floor | Trade Marks Act and Patents Act amendments |
+| Stage 6 | None |
+| Stage 8: LLM said `NO_CHANGE` | `XE324C` (official notice), `X39AC5` (six times) |
+
+Across both passes the confirmed positives rank 1, 1, 1, 1, 1, 2, 2, 2, 3, **4, 5 and 14** by bi-encoder score over all pages, with scores from 0.733 to 0.94. That is enough to revise three earlier recommendations:
+
+| Earlier recommendation | Revised |
+|------------------------|---------|
+| Top 5 (or top 3) by bi-encoder | **Top 10**, floor unchanged. Top 3 would have lost the court fee; top 5 keeps it by one place. Roughly 4–5 candidates per change instead of 3 |
+| Raise `max_chunk_floor` to 0.68 | **Leave it at 0.63.** Nothing confirmed sits below 0.73, but the saving is a few dollars a year and the downside is a miss |
+| (new) | **Add an exact-term path:** any page that shares a rare specific term with a changed line becomes a candidate regardless of score. This alone catches IVDS and the 23 July Part 62 signal (rank 14) |
+| (new) | **Legislation never passes through the semantic gates.** A detected change to an Act or Regulation at importance ≥ 0.7 goes into the digest as its own line — title, amending instrument, link — whether or not any page matches. This is what the disabled `fast_pass` setting was for |
+| (new) | **No explainer = escalate, not "no change".** Report "legislation changed, detail unavailable" and retry the explainer on later runs |
+| Stage 8 model and prompt (rec. 6) | Unchanged, and now the highest-value fix for misses: the two worst (IVDS, Part 62) reached the LLM as the top-ranked page and were waved through |
+
+The false-alarm fixes in §9 part A are unaffected: none of them removes a real signal.
+
+### 10.4 What this still cannot tell you
+
+- **Changes on the 38 sources that are not being fetched.** There is no history to review. The useful next step is a one-off check of the *current* text of every source against the IPFR pages that cite it; this environment could reach every site I tried, so it is feasible, but it needs a fresh budget.
+- **Detail behind headlines.** News and notice pages are captured as a list of titles. The omnibus reforms were visible only as "New reforms to streamline Australia's IP system"; the content was one click away. Following links from new items on the IP Australia news and official-notice pages would close this.
+- **Thin captures.** Twelve sources store under 1,000 characters, so most of each page is invisible.
+- The review was done by models and checked by me, not by a content owner; pairs below the 0.70 line-similarity cut with no exact-term match (about 7,700) were not reviewed.
+
+**IPFR pages to fix now, updated:** `XE324C` (IVDS), `X39AC5` (Part 62), `X5B5CC` (court mediation fee $650 → $690), `X0F896` (attorney hourly rate), `X7E272` (tribunal name).
