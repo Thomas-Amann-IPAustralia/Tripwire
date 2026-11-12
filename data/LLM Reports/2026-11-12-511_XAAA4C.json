@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a news update from IP Australia about various topics including annual reports, treaty ratifications, reforms, and IP-related news items. The IPFR page in question is about contributor guidelines for the IP First Response blog, focusing on how to write and submit posts. The news update does not affect the accuracy or currency of the contributor guidelines, which are procedural and editorial in nature rather than substantive IP law or policy content. There are no references to dates, dollar amounts, statutory provisions, or procedural steps in the guidelines that are contradicted or outdated by the news update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4473,
+  "completion_tokens": 149,
+  "total_tokens": 4622,
+  "processing_time_seconds": 1.6695626770001581,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.721145+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in procedural guidance, application forms, portal workflows, and administrative details about the PBR application process, including new guidance pages and updated chapter links. There is no indication that the substantive legal content or definitions related to PBR infringement, the scope of infringement, or exceptions have changed. The IPFR page focuses on explaining PBR infringement basics, rights, and examples, which remain accurate and unaffected by these procedural and administrative updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4221,
+  "completion_tokens": 125,
+  "total_tokens": 4346,
+  "processing_time_seconds": 1.554207045999874,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.719511+00:00"
+}

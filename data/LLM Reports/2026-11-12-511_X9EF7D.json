@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Plant Breeder's Rights Manual of Practice and Procedure, including procedural updates, new portal guidance, and clarifications about applicants and breeders. These are detailed procedural and administrative updates that do not affect the general overview or accuracy of the IPFR page content, which provides a broad introduction to Australian IP laws and their legislative framework. The IPFR page does not include specific procedural details or references to the updated sections or workflows in the Plant Breeder's Rights manual. The third change is a news update about IP Australia's Annual Report and other news items, which does not impact the foundational legal information presented in the IPFR page. Therefore, no amendments to the IPFR page are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6593,
+  "completion_tokens": 180,
+  "total_tokens": 6773,
+  "processing_time_seconds": 1.9245862789998682,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.719600+00:00"
+}

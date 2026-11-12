@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are primarily formatting updates and page reviews to the IP Australia's design manual sections related to application registration processes and minimum filing requirements. There are no substantive content changes or updates to legal thresholds, fees, timeframes, or procedural steps that would affect the accuracy or currency of the IPFR page content. The IPFR page's detailed descriptions of the registration process, fees, timeframes, and rights remain consistent with the information implied by the upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2588,
+  "completion_tokens": 124,
+  "total_tokens": 2712,
+  "processing_time_seconds": 1.316873452999971,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.720456+00:00"
+}

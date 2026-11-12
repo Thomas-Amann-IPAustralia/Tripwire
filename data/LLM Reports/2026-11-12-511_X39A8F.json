@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to formatting, procedural details, application processes, and new guidance materials in the design and plant breeders' rights manuals, as well as news updates about IP Australia activities and reports. None of these changes specify amendments to the fundamental requirements for registration, timing, or key legal thresholds described in the IPFR page. The IPFR page content remains accurate and current for its intended audience of small business owners seeking basic IP registration guidance. There are no specific changes to the 12-month grace period, ownership confirmation, or the basic registrability criteria that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12094,
+  "completion_tokens": 154,
+  "total_tokens": 12248,
+  "processing_time_seconds": 2.025058154000135,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.715713+00:00"
+}

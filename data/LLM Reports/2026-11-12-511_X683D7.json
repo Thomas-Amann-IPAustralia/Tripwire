@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a general update and formatting amendment to the Designs Examiners' Manual and related application registration pages, without any specific content changes that affect the third-party examination process, fees, timelines, or procedural details described in the IPFR page. The IPFR page's detailed information about requesting third-party examination, fees, timelines, and outcomes remains accurate and is not contradicted or updated by the upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2087,
+  "completion_tokens": 117,
+  "total_tokens": 2204,
+  "processing_time_seconds": 1.7377759830001196,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.721397+00:00"
+}

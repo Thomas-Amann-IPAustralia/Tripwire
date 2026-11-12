@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trade Marks Manual of Practice and Procedure consolidate existing content on revocation of acceptance, revocation of registration, and amendment or cessation of protection into a new Part 36. However, there is no indication that the substantive legal thresholds, timeframes, or procedural steps for removal of a trade mark for non-use have changed. The IPFR page content about removal for non-use remains accurate and current. The design manual changes are unrelated to trade mark removal procedures. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3958,
+  "completion_tokens": 140,
+  "total_tokens": 4098,
+  "processing_time_seconds": 1.6848670300000776,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.720009+00:00"
+}

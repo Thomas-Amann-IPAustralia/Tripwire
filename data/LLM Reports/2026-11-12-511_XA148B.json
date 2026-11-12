@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily concern updates to the Trade Marks Manual of Practice and Procedure, specifically the consolidation of revocation and amendment provisions into a new Part 36, along with minor formatting, typographical corrections, and updates related to amendments before and after publication. The IPFR page XA148B focuses on responding to an opposition filed against a trade mark application, detailing the opposition process, timelines, risks, benefits, and outcomes. None of the changes indicate modifications to the opposition process, deadlines, fees, or procedural steps described in the IPFR page. The changes are procedural and structural updates to the manual that do not directly affect the accuracy or currency of the guidance on responding to oppositions. Therefore, no update to the IPFR page content is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10041,
+  "completion_tokens": 189,
+  "total_tokens": 10230,
+  "processing_time_seconds": 1.8650663949999853,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.715324+00:00"
+}

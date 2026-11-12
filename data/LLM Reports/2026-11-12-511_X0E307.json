@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia design manual primarily involve formatting updates and page reviews without substantive changes to the content regarding design registration or international enforcement. The IPFR page on addressing overseas infringement discusses the territorial nature of IP rights and the need for registration in each country but does not include specific procedural details or requirements from the design manual that have been altered. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2813,
+  "completion_tokens": 117,
+  "total_tokens": 2930,
+  "processing_time_seconds": 1.4976156679999804,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.720628+00:00"
+}

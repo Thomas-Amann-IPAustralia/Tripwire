@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from IP Australia's news page primarily announce the tabling of the Annual Report 2025\u201326, recommendations for treaty ratification, and the passage of the Regulatory Reform Omnibus Act 2026. While these are significant developments in Australia's IP system, the provided IPFR page content does not contain specific legislative references, dates, or procedural details that are contradicted or rendered outdated by these announcements. The IPFR page offers a general, foundational explanation of IP infringement and trade mark registration without citing specific statutes or timelines that have changed. Therefore, no direct update to the IPFR page content is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7620,
+  "completion_tokens": 160,
+  "total_tokens": 7780,
+  "processing_time_seconds": 1.8018145690000438,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.719121+00:00"
+}

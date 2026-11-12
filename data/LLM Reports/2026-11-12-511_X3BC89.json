@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page primarily concern announcements about annual reports, treaty ratifications, new reforms, strategic plans, surveys, and case stories. None of these changes provide specific updates or corrections to the factual content on the IPFR page about checking existing IP ownership, such as changes to the names of registers, procedures, or availability of registers. The IPFR page content remains accurate and up to date regarding the types of IP and the relevant Australian registers to check. Therefore, no amendment to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8962,
+  "completion_tokens": 145,
+  "total_tokens": 9107,
+  "processing_time_seconds": 1.7598842770000829,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.715883+00:00"
+}

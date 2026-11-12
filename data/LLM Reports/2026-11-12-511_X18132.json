@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X18132",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the PBR manual concerning application processes, forms, portal guidance, and definitions related to breeders and applicants. There is no indication of changes affecting court proceedings, legal claims, enforcement, or dispute resolution processes for Plant Breeder's Rights (PBRs). The IPFR page focuses on seeking binding authoritative decisions through court proceedings, including litigation risks, outcomes, costs, and procedures, none of which are impacted by the procedural and administrative updates in the upstream changes. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4077,
+  "completion_tokens": 145,
+  "total_tokens": 4222,
+  "processing_time_seconds": 1.5386060289999932,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.719690+00:00"
+}

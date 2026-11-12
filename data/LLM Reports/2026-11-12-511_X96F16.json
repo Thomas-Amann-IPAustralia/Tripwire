@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X96F16",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to formatting and page review updates on the IP Australia design manual pages, specifically about application for registration and filing requirements. There is no indication of substantive changes to the legal content, definitions, infringement criteria, or procedural steps that would affect the accuracy or currency of the IPFR page on design infringement. The IPFR page focuses on infringement concepts, legal protections, and examples, none of which are contradicted or outdated by the formatting and minor updates in the upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2789,
+  "completion_tokens": 130,
+  "total_tokens": 2919,
+  "processing_time_seconds": 1.5463053930000115,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.720543+00:00"
+}

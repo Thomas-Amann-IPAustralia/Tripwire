@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates and reorganization within the IP Australia's Trade Marks Manual of Practice and Procedure, specifically the consolidation of revocation and amendment procedures into a new Part 36, and minor formatting and typographical corrections. The IPFR page on challenging the registration of a new trade mark focuses on the opposition process, its benefits, risks, timeframes, and procedural basics for small business owners. There is no indication in the changes that the fundamental opposition process, time limits (such as the 2-month opposition period), fees, or procedural steps described in the IPFR page have been altered or require updating. The changes do not provide new or amended statutory timeframes, fees, or procedural requirements that would directly affect the accuracy of the IPFR page content. Therefore, no update to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10386,
+  "completion_tokens": 203,
+  "total_tokens": 10589,
+  "processing_time_seconds": 2.6573703199999272,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.715421+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates in the Patent Manual concerning search and examination practices, and to the Trade Marks Manual concerning revocation and amendment procedures for trade marks. The IPFR page 'Challenge a new or amended patent' focuses specifically on the opposition process for patents, including timelines, costs, and procedural steps. None of the changes indicate modifications to the opposition process timelines, fees, grounds, or outcomes for patents. The changes to trade mark procedures are unrelated to patent oppositions. Therefore, the IPFR page content remains accurate and up to date with respect to the opposition process for patents.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7234,
+  "completion_tokens": 152,
+  "total_tokens": 7386,
+  "processing_time_seconds": 2.3299523379998845,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.715125+00:00"
+}

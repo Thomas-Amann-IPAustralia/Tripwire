@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the Trade Marks Manual of Practice and Procedure, specifically consolidating revocation and amendment procedures into a new Part 36, and minor updates to examination of trade marks relating to plants or plant materials. The IPFR page content is a general guide for small business owners on registering a trade mark, covering what it is, benefits, risks, costs, timeframes, and procedural basics. It does not include detailed procedural or legal references that are affected by these manual updates. There are no specific statutory references, fees, timeframes, or procedural steps in the IPFR page that are contradicted or outdated by these changes. Therefore, the IPFR page remains accurate and does not require amendment based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4633,
+  "completion_tokens": 183,
+  "total_tokens": 4816,
+  "processing_time_seconds": 1.6039146719999735,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.719422+00:00"
+}

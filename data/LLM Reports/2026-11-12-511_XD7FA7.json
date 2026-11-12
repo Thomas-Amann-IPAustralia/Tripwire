@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates in the Trade Marks Manual of Practice and Procedure, including the consolidation of revocation of acceptance and registration into a new Part 36, minor formatting, typographical corrections, and procedural clarifications. The IPFR page content focuses on the trade mark opposition process, including timelines, fees, risks, and outcomes, but does not detail the revocation or amendment processes that have been consolidated in the new Part 36. There are no specific changes to the opposition process timelines, fees, or procedural steps described in the IPFR page. Therefore, the IPFR page remains accurate and current with respect to the opposition process as described.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10014,
+  "completion_tokens": 165,
+  "total_tokens": 10179,
+  "processing_time_seconds": 3.22053181199999,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.715230+00:00"
+}

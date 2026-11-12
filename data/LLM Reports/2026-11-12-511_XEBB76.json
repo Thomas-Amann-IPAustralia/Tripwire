@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from IP Australia news primarily announce new reports, strategic plans, surveys, and reforms such as the Regulatory Reform Omnibus Act 2026. However, none of these changes provide specific updates or corrections to the fundamental definitions, types, or basic explanations of intellectual property rights as presented in the IPFR page. The IPFR page content remains accurate and current for small business owners seeking an introduction to IP, as it does not include detailed procedural or legislative specifics that have changed. The announcements do not contradict or update any specific facts or figures in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9092,
+  "completion_tokens": 147,
+  "total_tokens": 9239,
+  "processing_time_seconds": 1.779097935999971,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.719231+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update listing various IP Australia news items and announcements, including the tabling of the Annual Report 2025-26, a parliamentary committee recommendation on the GRATK Treaty, and the Regulatory Reform Omnibus Act 2026. However, none of these changes provide specific updates or corrections to the descriptions, names, or functionalities of the free IP tools listed on the IPFR page. The IPFR page content about free IP tools remains accurate and up-to-date based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3885,
+  "completion_tokens": 137,
+  "total_tokens": 4022,
+  "processing_time_seconds": 1.8991297790000772,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.721486+00:00"
+}

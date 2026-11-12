@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeders' Rights (PBR) manual, including procedural updates, new guidance pages, and clarifications about breeders and application processes. However, the IPFR page 'What is IP infringement?' provides a general overview of IP infringement concepts across all IP types, including plant breeders' rights, without specific procedural details or references to application forms or portal workflows. There is no indication that the changes affect the accuracy of the infringement definitions, examples, or defences described in the IPFR page. Therefore, no update to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3452,
+  "completion_tokens": 157,
+  "total_tokens": 3609,
+  "processing_time_seconds": 1.43136499000002,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.719918+00:00"
+}

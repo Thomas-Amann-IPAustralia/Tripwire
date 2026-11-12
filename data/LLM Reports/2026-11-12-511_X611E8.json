@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the patent manual concerning internal examination practices (e.g., three-person team practice), minor typographical and procedural clarifications, and updates to the Trade Marks Manual consolidating revocation and amendment procedures. None of the changes specifically address the patent opposition process, timelines, fees, or procedural steps described in the IPFR page. The IPFR page content about responding to a patent opposition remains accurate and unaffected by these upstream manual updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8195,
+  "completion_tokens": 125,
+  "total_tokens": 8320,
+  "processing_time_seconds": 3.207451869000124,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.714916+00:00"
+}

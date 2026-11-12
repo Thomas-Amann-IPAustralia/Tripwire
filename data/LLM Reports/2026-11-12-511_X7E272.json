@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-12-511",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the patent manual regarding examination practices and amendments, and to the trade marks manual concerning the consolidation of revocation and amendment procedures into a new Part 36. However, the IPFR page 'What happens in an IP Australia hearing?' provides a general overview of hearing processes, steps, and outcomes without specific procedural details, statutory references, or timelines that have been altered by these updates. There are no direct changes to the hearing process descriptions, fees, timeframes, or appeal routes mentioned in the IPFR page that would be affected by these upstream manual updates. Therefore, the page remains accurate and does not require amendment based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3696,
+  "completion_tokens": 168,
+  "total_tokens": 3864,
+  "processing_time_seconds": 2.430647051000051,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-12T09:40:59.715606+00:00"
+}
