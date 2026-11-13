@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream changes consist of news headlines and announcements from IP Australia about annual reports, treaty recommendations, reforms, and other general updates. None of these changes provide new or updated information about common scams, scam warning signs, or scam prevention measures. The IPFR page content about common scams, scam red flags, and reporting procedures remains accurate and unaffected by these news updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6533,
+  "completion_tokens": 106,
+  "total_tokens": 6639,
+  "processing_time_seconds": 1.824355847999982,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.273007+00:00"
+}

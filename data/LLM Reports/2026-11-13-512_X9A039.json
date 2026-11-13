@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a general update to the IP Australia news webpage, listing recent news items and announcements including the Annual Report 2025-26, treaty recommendations, and IP system reforms. However, none of these updates provide specific changes to trade mark registration fees, timeframes, procedures, or other concrete details that would affect the accuracy or currency of the IPFR page content. The IPFR page contains detailed fee tables, timeframes, and procedural guidance which remain unaffected by the general news updates. Therefore, no amendment to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4554,
+  "completion_tokens": 149,
+  "total_tokens": 4703,
+  "processing_time_seconds": 1.6499962119999054,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.273121+00:00"
+}

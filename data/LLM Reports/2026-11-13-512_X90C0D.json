@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update from IP Australia highlighting recent reports, treaty recommendations, and reforms such as the Regulatory Reform Omnibus Act 2026. However, the IPFR page content is a general overview of what IP protection means for a business, focusing on basic concepts, types of IP rights, and practical advice for small businesses. There are no specific statutory references, dates, procedural steps, or thresholds in the IPFR page that are contradicted or outdated by the news updates. The changes do not affect the accuracy or currency of the IPFR page's general guidance.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4192,
+  "completion_tokens": 149,
+  "total_tokens": 4341,
+  "processing_time_seconds": 1.6325028440001006,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.272868+00:00"
+}

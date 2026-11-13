@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page primarily consist of announcements about the Annual Report, treaty ratification recommendations, new reforms to streamline the IP system, and other general news items. None of these changes provide updated or corrected information specifically about checking products against existing designs, freedom to operate searches, or the procedural and substantive details related to registered designs in Australia. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6997,
+  "completion_tokens": 119,
+  "total_tokens": 7116,
+  "processing_time_seconds": 1.9523170229999778,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.272754+00:00"
+}

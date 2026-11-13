@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes are updates to the IP Australia news webpage, including announcements about the Annual Report 2025-26, recommendations to ratify the GRATK Treaty, new reforms to streamline Australia's IP system, and other news items. None of these changes provide specific amendments or updates to the content of the IPFR page about considerations when responding to international accusations. There are no changes to legal thresholds, procedures, or guidance that would affect the accuracy or currency of the IPFR page content. The IPFR page remains accurate and up to date based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9876,
+  "completion_tokens": 145,
+  "total_tokens": 10021,
+  "processing_time_seconds": 2.7113411390000692,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.272974+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a news update listing various recent IP Australia news items, including annual reports, treaty recommendations, and IP system reforms. None of these updates specifically address scams, fraud reporting, or public interest risks related to IP, nor do they amend any factual details or guidance currently presented on the IPFR page about reporting scams or fraud. The IPFR page content remains accurate and up to date with respect to reporting scams and fraud involving IP rights.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4786,
+  "completion_tokens": 123,
+  "total_tokens": 4909,
+  "processing_time_seconds": 1.723423591000028,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.273079+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a news feed update from IP Australia listing recent news items such as the Annual Report 2025-26, treaty recommendations, and reforms to streamline the IP system. None of these updates specifically address or alter the guidance or factual content related to preventing risks to public interest, reporting IP crime, counterfeit goods, or enforcement procedures described in the IPFR page. There are no changes to legal thresholds, reporting contacts, or procedural advice that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4210,
+  "completion_tokens": 132,
+  "total_tokens": 4342,
+  "processing_time_seconds": 1.883774227999993,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.272903+00:00"
+}

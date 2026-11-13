@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change consists of a news feed update from IP Australia highlighting recent reports, treaty recommendations, reforms, and various news items. The IPFR page in question provides a general overview comparing IP Australia to other government agencies and explains its role in protecting IP rights. There are no specific factual details, dates, or procedural steps in the IPFR page that are contradicted or rendered outdated by the news updates. The page's content remains accurate and relevant, as it does not reference any of the specific events or reforms mentioned in the change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3989,
+  "completion_tokens": 141,
+  "total_tokens": 4130,
+  "processing_time_seconds": 3.4184891390000303,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.272446+00:00"
+}

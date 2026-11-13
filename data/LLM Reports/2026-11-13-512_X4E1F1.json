@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change consists of a news feed summary from IP Australia highlighting recent reports, treaty recommendations, and reforms related to Australia's IP system. However, none of these updates specify changes to legal thresholds, definitions, procedures, or guidance directly related to the content of the IPFR page about using IP that is not yours. The IPFR page provides general advice on infringement, ownership checks, licensing, and seeking legal advice, which remains accurate and unaffected by the news items presented. There is no indication that any of the reforms or reports have altered the fundamental advice or legal principles described on the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3842,
+  "completion_tokens": 151,
+  "total_tokens": 3993,
+  "processing_time_seconds": 1.6488065999999435,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.273159+00:00"
+}

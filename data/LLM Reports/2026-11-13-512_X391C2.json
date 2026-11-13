@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news summary listing various recent updates and reports from IP Australia, including the tabling of the Annual Report 2025-26, a parliamentary committee recommendation on the GRATK Treaty, the Regulatory Reform Omnibus Act 2026 receiving Royal Assent, and other news items. However, none of these changes provide specific amendments to the factual content presented in the IPFR page about the value of registering IP, the nature of protections, or procedural details. The IPFR page content remains accurate and current as it does not cite any specific dates, legislative details, or procedural steps that have been altered by the changes. Therefore, no update to the IPFR page is required based on the provided upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3865,
+  "completion_tokens": 178,
+  "total_tokens": 4043,
+  "processing_time_seconds": 4.702973583000016,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.272832+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-13-512",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news update listing various recent announcements and reports from IP Australia, including the tabling of the Annual Report 2025-26, recommendations to ratify the GRATK Treaty, and new reforms to streamline Australia's IP system. However, none of these updates provide specific changes to the legal or procedural information about enforcing IP overseas that is currently presented on the IPFR page. The IPFR page content focuses on general considerations, practical steps, and advice for IP rights holders enforcing IP overseas, without referencing specific treaties, dates, or procedural details that have been altered or updated in the change document. Therefore, the page remains accurate and up to date based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4700,
+  "completion_tokens": 171,
+  "total_tokens": 4871,
+  "processing_time_seconds": 2.2896781360000205,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-13T09:20:20.273192+00:00"
+}
