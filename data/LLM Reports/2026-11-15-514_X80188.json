@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are updates to the IPAustralia webpage 'Someone is using my IP' that provide detailed guidance on what constitutes IP infringement, how to stop infringement, and procedural options including border force notices and online takedown mechanisms. However, the IPFR page 'Infringement 101' is a general educational article authored by Dr. Adams that explains the concept of IP infringement in broad terms for small businesses and creators. The changes do not contradict or update any specific factual claims, legal thresholds, or procedural steps stated in the IPFR page. The IPFR content remains accurate and current as a general introduction and overview. There is no specific outdated or incorrect information in the IPFR page that the upstream changes directly affect.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5695,
+  "completion_tokens": 180,
+  "total_tokens": 5875,
+  "processing_time_seconds": 2.1912490150000394,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.989255+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage 'Someone is using my IP' primarily add or update general information about IP infringement, enforcement options, and procedures within Australia, including details about Australian Border Force actions and online infringement. The IPFR page 'Considerations when responding to international accusations' focuses on considerations for responding to overseas IP infringement accusations and emphasizes jurisdictional differences and the need for local legal advice. The changes do not alter or contradict any specific guidance, legal references, or procedural steps in the IPFR page related to international accusations. Therefore, the IPFR page content remains accurate and current with respect to the updated source.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6168,
+  "completion_tokens": 157,
+  "total_tokens": 6325,
+  "processing_time_seconds": 2.0385065669998994,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.989952+00:00"
+}

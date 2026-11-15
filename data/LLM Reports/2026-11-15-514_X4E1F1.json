@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a detailed update to the IP Australia webpage about what to do if someone is using your IP, focusing on infringement detection, enforcement options, and procedures such as lodging Notices of Objection and dealing with online infringement. The IPFR page in question provides general guidance about the risks of using IP that is not yours and suggests checking ownership and obtaining permission. It does not contain specific procedural details or enforcement steps that are contradicted or outdated by the upstream change. The IPFR page remains accurate as a high-level overview and does not require amendment based on the new detailed enforcement information.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3313,
+  "completion_tokens": 151,
+  "total_tokens": 3464,
+  "processing_time_seconds": 1.743059494000022,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.990158+00:00"
+}

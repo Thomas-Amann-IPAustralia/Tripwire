@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage 'someone-is-using-my-ip' primarily add detailed procedural information about how to respond to IP infringement, including steps like lodging a Notice of Objection with Australian Border Force, providing information to ABF, lodging a Deed of Undertaking, and options for online infringement and international disputes. The IPFR page 'What does IP protection mean for my business?' provides a broad overview of IP protection concepts and enforcement options without specific procedural details. None of the specific procedural steps, legal thresholds, or statutory references in the IPFR page are contradicted or outdated by the changes. The IPFR page remains accurate as a high-level introduction for small businesses. Therefore, no update is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9963,
+  "completion_tokens": 181,
+  "total_tokens": 10144,
+  "processing_time_seconds": 2.0224630520000346,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.989754+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to amendments proposed in the Telecommunications Act 1997 concerning consumer safeguards, a carriage service provider registration scheme, enforceability of industry codes, and mobile coverage obligations. These changes are specific to telecommunications regulation and do not pertain to trade mark opposition procedures, timelines, fees, or legal grounds as described in the IPFR page. The IPFR page focuses exclusively on the process and considerations for opposing trade mark registrations under IP Australia, which is unrelated to telecommunications legislation. Therefore, the content of the IPFR page remains accurate and unaffected by the telecommunications legislative amendments.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3199,
+  "completion_tokens": 148,
+  "total_tokens": 3347,
+  "processing_time_seconds": 1.558410497000068,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.990639+00:00"
+}

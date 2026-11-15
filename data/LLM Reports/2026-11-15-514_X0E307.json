@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document from IP Australia provides detailed information about what constitutes IP infringement, steps to consider before taking legal action, and enforcement options including customs and online takedown procedures. However, the IPFR page already comprehensively covers these topics, including the territorial nature of IP rights, enforcement challenges overseas, customs enforcement, online infringement, and practical tips for addressing overseas infringement. The change document does not introduce new legal thresholds, statutory references, or procedural steps that contradict or update the existing IPFR content. The IPFR page remains accurate and current based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4067,
+  "completion_tokens": 148,
+  "total_tokens": 4215,
+  "processing_time_seconds": 1.5043331199999557,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.989849+00:00"
+}

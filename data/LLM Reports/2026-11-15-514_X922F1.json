@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to the Telecommunications Act 1997, specifically about consumer safeguards, carrier service provider registration, and mobile coverage obligations. The IPFR page is about challenging a new or amended patent under Australian patent law and details the opposition process, timelines, fees, and procedural steps. There is no overlap in subject matter or procedural content between telecommunications legislation amendments and patent oppositions. Therefore, the changes to the Telecommunications Act do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2854,
+  "completion_tokens": 132,
+  "total_tokens": 2986,
+  "processing_time_seconds": 1.412078461999954,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.990911+00:00"
+}

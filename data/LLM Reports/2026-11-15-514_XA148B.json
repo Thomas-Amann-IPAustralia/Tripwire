@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to the Telecommunications Act 1997, specifically regarding consumer safeguards, carrier service provider registration, and mobile coverage obligations. The IPFR page XA148B focuses exclusively on the process of responding to a trade mark opposition under the Trade Marks Act and IP Australia's procedures. There is no overlap in subject matter or procedural content between telecommunications legislation amendments and trade mark opposition processes. Therefore, the changes to telecommunications legislation do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2875,
+  "completion_tokens": 131,
+  "total_tokens": 3006,
+  "processing_time_seconds": 1.4894300120000707,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.991088+00:00"
+}

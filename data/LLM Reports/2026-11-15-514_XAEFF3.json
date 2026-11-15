@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "XAEFF3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia webpage about 'someone is using my IP', which provides general guidance on IP infringement and enforcement options. While it is related to the topic of patent infringement, it does not contain any specific changes to the legal definitions, statutory references, time periods, or procedural steps that would affect the accuracy or currency of the IPFR page content on patent infringement. The IPFR page already covers the key legal concepts, statutory references, and examples relevant to patent infringement in Australia. The upstream change does not introduce new or amended legal thresholds or procedural details that require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4236,
+  "completion_tokens": 157,
+  "total_tokens": 4393,
+  "processing_time_seconds": 1.9383911350000744,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.989462+00:00"
+}

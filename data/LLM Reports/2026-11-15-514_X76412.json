@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "X76412",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The updated IP Australia webpage 'someone is using my IP' provides general information about IP infringement, options to stop infringement, and related procedures such as lodging a Notice of Objection with Australian Border Force and online infringement takedown mechanisms. While the content is related to IP infringement and enforcement, it does not contain specific changes that directly affect the accuracy or currency of the IPFR page 'Ask your suppliers and sellers to help protect your IP'. The IPFR page focuses on informal, voluntary approaches to intermediaries in the supply chain and does not include specific statutory references, procedural steps, or thresholds that have been altered by the external change. Therefore, no update to the IPFR page content is required based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3794,
+  "completion_tokens": 178,
+  "total_tokens": 3972,
+  "processing_time_seconds": 2.0654689419999386,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.990359+00:00"
+}

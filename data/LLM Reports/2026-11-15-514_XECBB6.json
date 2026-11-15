@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage 'someone-is-using-my-ip' primarily add procedural details and guidance on how to respond to IP infringement, including steps like lodging a Notice of Objection with the Australian Border Force, providing information to ABF, lodging a Deed of Undertaking, and options for online and international infringement. The IPFR page 'Infringement 101' already provides a broad overview of infringement concepts, types of IP, and general enforcement considerations without specific procedural instructions. There are no specific factual inaccuracies or outdated information in the IPFR page content that are contradicted or superseded by the upstream changes. The IPFR page does not currently include the detailed procedural steps or specific enforcement mechanisms that the upstream page now elaborates on, so no direct update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8609,
+  "completion_tokens": 197,
+  "total_tokens": 8806,
+  "processing_time_seconds": 2.476924505999932,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.989660+00:00"
+}

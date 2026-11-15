@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change concerns amendments to the Telecommunications Act 1997, specifically about consumer safeguards, carriage service provider registration, and mobile coverage obligations. The IPFR page is about responding to a patent opposition process, which is unrelated to telecommunications legislation or consumer safeguards in that sector. There is no overlap in subject matter that would affect the accuracy or currency of the patent opposition guidance. The relevance scores are low or indirect, indicating only a tangential connection. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2655,
+  "completion_tokens": 134,
+  "total_tokens": 2789,
+  "processing_time_seconds": 1.3998575570000185,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.990999+00:00"
+}

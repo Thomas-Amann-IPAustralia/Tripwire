@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-15-514",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to the IP Australia webpage about 'someone is using my IP,' which discusses IP infringement and enforcement options. While the IPFR page 'Register your unregistered trade mark' is related to trade mark registration and enforcement, the change does not update or contradict any specific factual information, fees, procedures, or timeframes presented in the IPFR page. The IPFR page content remains accurate and current regarding trade mark registration benefits, costs, and processes. The upstream change adds general information about infringement and enforcement but does not require updating the registration-focused content of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4037,
+  "completion_tokens": 151,
+  "total_tokens": 4188,
+  "processing_time_seconds": 1.55596191799998,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-15T09:04:14.990448+00:00"
+}
