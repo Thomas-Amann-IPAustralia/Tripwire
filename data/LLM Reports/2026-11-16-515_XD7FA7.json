@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-16-515",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a revision of the IP Australia webpage 'Someone is using my IP' which provides general guidance on IP infringement and enforcement options. While the IPFR page 'Challenge the registration of a new trade mark to defend your right' is related to opposing trade mark registrations, the updated source content does not provide specific changes to the opposition process details, fees, timeframes, or procedural steps described in the IPFR page. The IPFR page content remains accurate and current based on the information provided in the change document. The change is more about general infringement and enforcement options rather than the specific opposition process covered in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4592,
+  "completion_tokens": 161,
+  "total_tokens": 4753,
+  "processing_time_seconds": 2.355526520000012,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-16T09:14:27.518906+00:00"
+}

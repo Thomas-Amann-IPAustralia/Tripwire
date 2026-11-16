@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-16-515",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Australian IP Australia webpage titled 'someone-is-using-my-ip' primarily provide general information about IP infringement, how to identify it, and options to stop infringement, including border measures. These changes do not specifically address or alter the legal framework, procedures, or definitions related to unjustified threats of IP infringement, which is the focus of the IPFR page. The IPFR page content about unjustified threats remains accurate and up to date, and there is no indication from the changes that any statutory references, procedural steps, or legal thresholds related to unjustified threats have been amended or require updating.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7477,
+  "completion_tokens": 155,
+  "total_tokens": 7632,
+  "processing_time_seconds": 3.0743834500000276,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-16T09:14:27.518499+00:00"
+}

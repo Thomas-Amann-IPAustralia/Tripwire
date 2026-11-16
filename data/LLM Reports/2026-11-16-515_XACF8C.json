@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-16-515",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage 'someone-is-using-my-ip' add detailed information about IP infringement, how to identify it, and possible enforcement options. However, the IPFR page 'Common scams' focuses specifically on warning about scam messages pretending to be from IP Australia or related entities. There is no overlap in specific factual content such as dates, procedures, or statutory references that would require updating the scam warnings. The new content does not contradict or update any specific claims or advice given in the 'Common scams' page. Therefore, no amendment is needed to maintain accuracy or currency of the scam-related content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6498,
+  "completion_tokens": 156,
+  "total_tokens": 6654,
+  "processing_time_seconds": 3.7023116289999507,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-16T09:14:27.517863+00:00"
+}

@@ -1,0 +1,23 @@
+This site can’t be reached
+www.asbfeo.gov.au took too long to respond.
+Try:
+- Checking the connection
+- Checking the proxy and the firewall
+ERR_TIMED_OUT
+Check your Internet connection
+Check any cables and reboot any routers, modems, or other network
+devices you may be using.
+Allow Chrome to access the network in your firewall or antivirus
+settings.
+If it is already listed as a program allowed to access the network, try
+removing it from the list and adding it again.
+If you use a proxy server…
+Go to
+the Chrome menu >
+Settings
+>
+System
+>
+Open your computer's proxy settings
+and make sure your configuration is set to "no proxy" or "direct."
+www.asbfeo.gov.au took too long to respond.

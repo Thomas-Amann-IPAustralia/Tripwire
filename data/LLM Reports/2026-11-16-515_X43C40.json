@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-16-515",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are to the IP Australia webpage 'Someone is using my IP', which provides general information about IP infringement and enforcement options within Australia, including how to stop infringing goods from entering Australia. The IPFR page in question discusses considerations when responding to international accusations of IP infringement, focusing on overseas jurisdictions and the variability of laws and enforcement in different countries. The changes do not update or contradict any specific factual information, legal references, or procedural guidance in the IPFR page about international infringement. Therefore, the IPFR page content remains accurate and current despite the changes upstream.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12555,
+  "completion_tokens": 148,
+  "total_tokens": 12703,
+  "processing_time_seconds": 2.686554274999935,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-16T09:14:27.518134+00:00"
+}

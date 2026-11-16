@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-16-515",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document updates the IP Australia webpage about managing IP infringement, including explanations of what constitutes infringement, how to stop it, and procedural options like lodging a Notice of Objection with the Australian Border Force. While the IPFR page 'Register your unregistered trade mark' mentions the ability to lodge an objection to imports of trade mark-infringing goods under the ABF Notice of Objection scheme, the change does not alter any specific fees, timeframes, or procedural details stated in the IPFR page. The IPFR page content remains accurate and consistent with the updated information. There are no changes to costs, statutory references, or procedural steps in the IPFR page that require updating based on the new upstream content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4520,
+  "completion_tokens": 178,
+  "total_tokens": 4698,
+  "processing_time_seconds": 2.7684517040000856,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-16T09:14:27.519000+00:00"
+}

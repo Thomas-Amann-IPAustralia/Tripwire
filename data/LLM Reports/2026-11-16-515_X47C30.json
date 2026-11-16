@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-16-515",
+  "ipfr_page_id": "X47C30",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates the content of an IP Australia webpage about what to do if someone is using your IP, including detailed guidance on infringement and enforcement options. However, the IPFR page in question is a general disclaimer about the nature of the IPFR website and its content, disclaiming legal advice and liability. There is no specific factual or procedural information in the disclaimer page that is contradicted or made outdated by the changes to the infringement guidance page. The disclaimer remains accurate and applicable regardless of the updated content on infringement procedures.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3877,
+  "completion_tokens": 138,
+  "total_tokens": 4015,
+  "processing_time_seconds": 3.378432762999978,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-16T09:14:27.518372+00:00"
+}

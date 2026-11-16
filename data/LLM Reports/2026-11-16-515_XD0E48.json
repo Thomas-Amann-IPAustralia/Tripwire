@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-16-515",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage 'someone-is-using-my-ip' provide general information about what constitutes IP infringement, considerations before taking legal action, and options such as lodging a Notice of Objection with Australian Border Force. These changes do not specifically update or contradict any detailed procedural, legal, or factual information currently presented in the IPFR page about notifying online marketplaces of infringement. The IPFR page focuses on the process and benefits/risks of notifying online platforms and marketplaces, while the updated source adds broader context about IP infringement and enforcement options. There is no direct impact on the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7563,
+  "completion_tokens": 160,
+  "total_tokens": 7723,
+  "processing_time_seconds": 2.46322700799999,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-16T09:14:27.518700+00:00"
+}

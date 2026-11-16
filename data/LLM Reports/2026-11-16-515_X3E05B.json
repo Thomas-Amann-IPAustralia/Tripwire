@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-16-515",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage focus on explaining what IP infringement is, how to identify it, and options for stopping infringement, including legal considerations and border force actions. The IPFR page 'Report a scam, fraud or risk to public interest' primarily addresses how to recognize and report scams and fraudulent claims related to IP, rather than providing detailed guidance on infringement enforcement or legal actions. There is no direct conflict or outdated information in the IPFR page content based on the updated IP Australia page. The IPFR page does not contain specific procedural steps, dates, fees, or legal thresholds that are contradicted or superseded by the changes. Therefore, no amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7401,
+  "completion_tokens": 173,
+  "total_tokens": 7574,
+  "processing_time_seconds": 2.5102785349999976,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-16T09:14:27.518606+00:00"
+}
