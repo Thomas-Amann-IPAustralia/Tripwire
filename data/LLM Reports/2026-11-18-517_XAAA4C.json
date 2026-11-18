@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-18-517",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document reflects a minor update to the number of news results displayed on the IP Australia news webpage, reducing from 43 to 42 results. This update does not affect any specific content, guidance, or factual information in the IP First Response blog contributor guidelines page. The IPFR page focuses on contributor instructions and editorial standards, which remain accurate and unaffected by this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2105,
+  "completion_tokens": 109,
+  "total_tokens": 2214,
+  "processing_time_seconds": 1.87578930199993,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-18T09:55:49.100397+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-18-517",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes are minor updates to the IP Australia news page, specifically adjusting the number of news results shown and adding recent news headlines about trade mark disputes and the Australian IP Report 2026. These changes do not affect any specific factual content, fees, procedures, or timelines described in the IPFR page about registering a trade mark. There is no update to legislation, fees, or procedural guidance that would require amending the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2678,
+  "completion_tokens": 121,
+  "total_tokens": 2799,
+  "processing_time_seconds": 2.188378178999983,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-18T09:55:49.100101+00:00"
+}

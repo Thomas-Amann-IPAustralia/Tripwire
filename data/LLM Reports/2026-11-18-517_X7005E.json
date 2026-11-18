@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-18-517",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is a minor update to the IP Australia news webpage, specifically a reduction in the number of news results shown from 43 to 42. There is no substantive change to the legal framework, definitions, or procedural content related to unregistered trade marks. The IPFR page content about unregistered trade marks remains accurate and unaffected by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1879,
+  "completion_tokens": 104,
+  "total_tokens": 1983,
+  "processing_time_seconds": 2.6025631929999236,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-18T09:55:49.099417+00:00"
+}
