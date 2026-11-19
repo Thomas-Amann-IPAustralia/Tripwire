@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X0F896",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, specifically about online services, fees, breeder definitions, grant or refusal processes, and submission procedures. The IPFR page in question focuses on obtaining legal advice on an accusation of infringement and discusses engaging IP lawyers or attorneys, costs, and practical advice for accused parties. There is no direct mention or detailed discussion of Plant Breeder's Rights or related procedural details in the IPFR page content. The changes do not affect the accuracy or currency of the advice given on this page, which is general and applies broadly to IP infringement legal advice. Therefore, no update to this IPFR page is required based on the provided upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2723,
+  "completion_tokens": 176,
+  "total_tokens": 2899,
+  "processing_time_seconds": 2.6566045629999735,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.607377+00:00"
+}

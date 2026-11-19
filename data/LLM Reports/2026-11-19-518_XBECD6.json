@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes identified in the upstream sources primarily relate to administrative notices about design rights surrender and minor editorial updates in the patent manual, such as fixing broken links, grammar, and typographical corrections. There are no substantive changes to the rules, timeframes, or procedures concerning section 27 notices or the process to prevent a patent under examination from being granted. The IPFR page content about lodging section 27 notices, their timing, and effects remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3906,
+  "completion_tokens": 129,
+  "total_tokens": 4035,
+  "processing_time_seconds": 2.0552356739999595,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.604840+00:00"
+}

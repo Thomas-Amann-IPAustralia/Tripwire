@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X4B5C8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the PBR manual relate to updates in online services guidance and internal chapter link updates, which do not affect the content of the IPFR page about obtaining advice to help manage IP. The changes to the WIPO IP checklist for businesses involve removal of detailed checklist content and do not impact the IPFR page's descriptions of IP professionals, their roles, or advice on engaging them. The IPFR page does not contain specific procedural details, fees, or statutory references that are contradicted or outdated by these upstream changes. Therefore, no amendment to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4511,
+  "completion_tokens": 150,
+  "total_tokens": 4661,
+  "processing_time_seconds": 2.0132733190000636,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.606329+00:00"
+}

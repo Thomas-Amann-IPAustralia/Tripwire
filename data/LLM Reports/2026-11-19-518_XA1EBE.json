@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XA1EBE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the IPAustralia patent manual, mainly fixing broken links, typos, and reordering or adding section references without substantive content changes. There is no indication of changes to the patent re-examination process, costs, timelines, or legal criteria that would affect the IPFR page content. The IPFR page's detailed explanation of patent re-examination remains accurate and consistent with the unchanged substantive content of the patent manual.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2575,
+  "completion_tokens": 124,
+  "total_tokens": 2699,
+  "processing_time_seconds": 1.5870796579999933,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.607741+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X9D569",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, specifically about online services, fees, discounts, and procedural details for PBR applications. The IPFR page 'Obtain legal advice on enforcement options' focuses on general guidance about engaging legal professionals for IP enforcement, including trade marks, patents, and copyright, without specific references to PBR procedural details or online service updates. There is no direct impact on the accuracy or currency of the IPFR page content based on the changes described.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3230,
+  "completion_tokens": 138,
+  "total_tokens": 3368,
+  "processing_time_seconds": 1.8771689669999887,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.607636+00:00"
+}

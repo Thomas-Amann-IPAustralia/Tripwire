@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes from the design_manual source relate to formatting and updates in design application registration processes, which do not pertain to trade mark removal or non-use procedures. The ACCC public registers update is a minor data update unrelated to trade marks or their removal. Neither change affects the accuracy or currency of the IPFR page content about requesting removal of unused trade marks.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3255,
+  "completion_tokens": 105,
+  "total_tokens": 3360,
+  "processing_time_seconds": 1.524675962999936,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.609092+00:00"
+}

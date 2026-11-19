@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the patent manual primarily involve fixing broken links, minor typographical corrections, and reorganization of content without substantive changes to the opposition process or its procedural details. The trademark manual updates relate to trademark examination and revocation procedures, which are not relevant to the patent opposition process described in the IPFR page. There are no updates to fees, timeframes, procedural steps, or outcomes related to patent oppositions that would require changes to the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7135,
+  "completion_tokens": 127,
+  "total_tokens": 7262,
+  "processing_time_seconds": 2.3342605819998425,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.604222+00:00"
+}

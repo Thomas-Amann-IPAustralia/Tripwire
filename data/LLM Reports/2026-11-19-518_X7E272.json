@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the patent and trade mark manuals primarily involve minor typographical corrections, broken link fixes, reorganization of manual parts, updates to citation references, and minor procedural clarifications. None of the changes specify amendments to the hearing process steps, timelines, fees, or decision outcomes described in the IPFR page. The IPFR page content about hearings at IP Australia remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7222,
+  "completion_tokens": 117,
+  "total_tokens": 7339,
+  "processing_time_seconds": 3.1574982859999636,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.604129+00:00"
+}

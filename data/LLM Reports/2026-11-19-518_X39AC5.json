@@ -1,0 +1,21 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "CHANGE_REQUIRED",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trade Marks Manual of Practice and Procedure (tm_manual) include a significant update consolidating the previously separate chapters on revocation of acceptance and revocation of registration into a new Part 36. This directly relates to the IPFR page content about removing a trade mark from the register via revocation of registration. The IPFR page currently describes the revocation process as separate from revocation of acceptance and mentions procedural details that may now be outdated or incomplete given the consolidation and updates in the manual. The changes also mention updated official notices on the IP Australia website, indicating that procedural or substantive details may have changed. Therefore, the IPFR page should be reviewed and updated to reflect the new consolidated Part 36, ensuring accuracy and currency in describing the revocation process, its procedural steps, and possible outcomes.",
+  "suggested_changes": [
+    "Update the IPFR page to reflect the consolidation of revocation of acceptance and revocation of registration into the new Part 36 of the Trade Marks Manual of Practice and Procedure.",
+    "Revise the description of the revocation process to align with the updated procedures and terminology as per the new Part 36.",
+    "Include references or links to the official notices on the IP Australia website regarding the changes to revocation procedures.",
+    "Review and update any procedural timelines, rights of parties, and possible outcomes to ensure they match the current practice described in the updated manual."
+  ],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5743,
+  "completion_tokens": 315,
+  "total_tokens": 6058,
+  "processing_time_seconds": 3.216793366000047,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.604512+00:00"
+}

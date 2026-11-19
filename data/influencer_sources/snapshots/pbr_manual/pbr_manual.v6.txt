@@ -3,14 +3,14 @@ Recent updates
 |---|---|---|
 | 4.7 Acceptance or Rejection of PBR Application | | Updated information relating to rejection of PBR applications | 
 | 10.2 QP Portal | | BVT | 
-| 10.2.3 Submitting PETAs and Detailed Descriptions | | New page created containing additional guidance content for QP Portal | 
-| 10. PBR System User Guides | | Updated with links to new pages containing QP Portal guidance material | 
 | 10.2.5 Application Data and Supporting Tools | | New page created containing additional guidance content for QP Portal | 
 | 10.2.2 Viewing and Managing Applications | | New page created containing additional guidance content for QP Portal | 
 | 5.1 DUS Test Growing in Australia | | Fixed dead link under 'Guidance on selection of comparator varieties' | 
 | 10.2.4 Portal Statuses | | New page created containing additional guidance content for QP Portal | 
 | 10.2.1 Accessing the QP Portal | | New page created containing additional guidance content for QP Portal | 
 | 10.2.6 Images, Datasheets and Part 2 Applications | | New page created containing additional guidance content for QP Portal | 
+| 10.2.3 Submitting PETAs and Detailed Descriptions | | New page created containing additional guidance content for QP Portal | 
+| 10. PBR System User Guides | | Updated with links to new pages containing QP Portal guidance material | 
 | 5.3.3 Part 2 Forms and ACRA, GRC Submission | | Updated chapter link to read '5.3.1 QP Portal Submissions' | 
 | 5.3.4 Ceasing of Provisional Protection | | Updated chapter link to read '5.3.1 QP Portal Submissions' | 
 | 5.3 Detailed Variety Description | | Updated sub chapter link to read 'QP Portal Submissions' | 

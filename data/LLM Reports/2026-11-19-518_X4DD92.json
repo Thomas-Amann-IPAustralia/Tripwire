@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X4DD92",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the WIPO IP checklist for businesses involve a minor textual update removing a detailed description of the checklist's parts and scope, simplifying the introductory paragraph. The IPFR page 'Assert your rights, as a response to an accusation' does not contain specific references to this checklist or detailed procedural steps that would be affected by this change. The IPFR content focuses on general guidance about responding to infringement accusations, enforcement options, risks, and benefits, without relying on or citing the detailed WIPO checklist content that was altered. Therefore, the changes do not impact the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3005,
+  "completion_tokens": 155,
+  "total_tokens": 3160,
+  "processing_time_seconds": 2.005037592000008,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.606589+00:00"
+}

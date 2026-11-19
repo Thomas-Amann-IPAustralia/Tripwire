@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X00159",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to updates in the IP Australia policy register and consultation hub webpages, including additions of policy items and expanded stakeholder engagement information. However, these changes do not alter any specific factual content, definitions, or procedural guidance regarding buying, selling, or licensing IP as presented in the IPFR page. The IPFR page content remains accurate and current for its intended audience of small business owners, and no specific dates, fees, or procedural steps mentioned in the page are contradicted or outdated by the upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6379,
+  "completion_tokens": 136,
+  "total_tokens": 6515,
+  "processing_time_seconds": 2.070358074000069,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.606941+00:00"
+}

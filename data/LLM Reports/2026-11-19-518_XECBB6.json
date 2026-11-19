@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia policy register webpage, showing an increase in the number of policy entries and minor textual edits. The change includes a correction in wording from 'two-step' to '2-step' examination process for designs and some policy status updates. However, there is no specific amendment to the substantive content or legal requirements related to trade mark infringement, registration, or enforcement that would affect the accuracy or currency of the IPFR page content. The IPFR page focuses on explaining infringement basics and trade mark registration concepts without referencing the specific policies or procedural details that have changed. Therefore, no update to the IPFR page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2843,
+  "completion_tokens": 168,
+  "total_tokens": 3011,
+  "processing_time_seconds": 1.8173601749999762,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.609442+00:00"
+}

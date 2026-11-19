@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to the IP Australia public consultations webpage, which primarily describes the consultation process, stakeholders, and how to participate. There is no indication that the change affects substantive legal information, procedures, or guidance related to responding to unjustified threats of IP infringement. The IPFR page content about unjustified threats remains accurate and unaffected by this update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4537,
+  "completion_tokens": 103,
+  "total_tokens": 4640,
+  "processing_time_seconds": 1.4929695559999345,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.608856+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the IP Australia policy register and consultation hub webpages, including an increase in the number of policy items and minor textual changes. These updates do not affect any specific legal definitions, procedural steps, or substantive content about IP infringement described in the IPFR page. The IPFR page provides general educational content on IP infringement principles and practical guidance, none of which is contradicted or outdated by the policy register or consultation hub changes. Therefore, no amendments to the IPFR page content are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4333,
+  "completion_tokens": 135,
+  "total_tokens": 4468,
+  "processing_time_seconds": 1.8989925010000661,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.608265+00:00"
+}

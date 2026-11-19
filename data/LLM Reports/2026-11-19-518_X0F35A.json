@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X0F35A",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change to the WIPO IP checklist webpage involved removing detailed sections describing the checklist's parts and a disclaimer about the checklist not replacing expert advice. The IPFR page already provides a general overview of developing an IP strategy, emphasizing that it does not provide legal advice and suggesting professional input. The removed content from WIPO does not contradict or update any specific factual information or procedural guidance in the IPFR page. Therefore, the IPFR page remains accurate and does not require amendment based on this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2102,
+  "completion_tokens": 133,
+  "total_tokens": 2235,
+  "processing_time_seconds": 1.8740557309999986,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.606502+00:00"
+}

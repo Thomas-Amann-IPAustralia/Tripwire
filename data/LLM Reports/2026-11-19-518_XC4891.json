@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XC4891",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the PBR manual concerning online services, fees and discounts, application processes, and submission procedures. These changes focus on administrative and procedural guidance for managing PBR portfolios and applications, including updated chapter links and additional guidance content. There is no indication that these changes affect the substantive legal content or definitions related to PBR infringement, the scope of infringement, or the rights and exceptions described in the IPFR page. Therefore, the IPFR page's content on PBR infringement remains accurate and does not require amendment based on these updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3507,
+  "completion_tokens": 146,
+  "total_tokens": 3653,
+  "processing_time_seconds": 1.6254412999999204,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.605560+00:00"
+}

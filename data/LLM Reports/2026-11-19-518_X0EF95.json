@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to specific design registrations being surrendered and corrections to entries in the Designs Register, as well as a notice about a global Microsoft outage affecting online services access. These updates do not affect the general procedural, legal, or fee-related information presented on the IPFR page about registering and enforcing design rights. The IPFR page content remains accurate and current for its intended audience of small business owners seeking basic guidance.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5363,
+  "completion_tokens": 115,
+  "total_tokens": 5478,
+  "processing_time_seconds": 1.5616933640001207,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.605207+00:00"
+}

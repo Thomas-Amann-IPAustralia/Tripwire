@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X25229",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia public consultations webpage, including expanded content about stakeholders and consultation processes, and a TLS certificate notice. There is no change to substantive IP law, policy details, or procedural rules related to joint ownership of IP or commercialisation rights. The IPFR page discusses the risks of joint IP ownership and commercialisation challenges in detail, but none of that content is contradicted or rendered outdated by the consultation hub webpage update. The change is informational about consultation engagement and does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5458,
+  "completion_tokens": 146,
+  "total_tokens": 5604,
+  "processing_time_seconds": 1.9775030799999058,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.608352+00:00"
+}

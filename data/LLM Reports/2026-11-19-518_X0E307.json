@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia policy register webpage, showing an increase in the number of policy entries and minor wording changes in policy descriptions. The IPFR page 'Addressing overseas infringement' discusses practical guidance for Australian businesses dealing with IP infringement overseas, focusing on territorial nature of IP rights, enforcement challenges, and options. The policy register update does not provide any new or amended legal provisions, procedural steps, or specific factual details that would affect the accuracy or currency of the IPFR page content. There is no indication that the policies mentioned in the change affect the guidance or factual statements in the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2501,
+  "completion_tokens": 170,
+  "total_tokens": 2671,
+  "processing_time_seconds": 1.9740023029999065,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.609532+00:00"
+}

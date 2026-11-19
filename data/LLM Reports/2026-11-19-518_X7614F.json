@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X7614F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia consultation hub page and the WIPO IP checklist page do not contain any updates to substantive IP strategy content, legal thresholds, procedural steps, or specific guidance that would render the IPFR page inaccurate or outdated. The IPFR page provides general guidance on why an IP strategy is important and outlines key steps for creative businesses, which remain valid despite the upstream changes. The upstream changes are mostly structural or minor textual updates without altering the core IP strategy concepts or recommendations presented in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4819,
+  "completion_tokens": 136,
+  "total_tokens": 4955,
+  "processing_time_seconds": 1.9677877369999806,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.606242+00:00"
+}

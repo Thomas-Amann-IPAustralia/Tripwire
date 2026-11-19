@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in official notices about design rights, amendments to the Trade Marks Manual of Practice and Procedure (including consolidation of revocation guidance), and updates to design manuals and ACCC consultations. None of these changes provide new or updated information that directly affects the specific content of the IPFR page on registering unregistered trade marks, such as fees, timeframes, procedural steps, or legal rights described there. The IPFR page content remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7050,
+  "completion_tokens": 132,
+  "total_tokens": 7182,
+  "processing_time_seconds": 1.855884407999838,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.604314+00:00"
+}

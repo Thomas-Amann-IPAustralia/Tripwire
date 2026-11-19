@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XD0E48",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.9,
+  "reasoning": "The changes relate to updates in consultation hubs for IP Australia and the ACCC, listing current and closed consultations on various topics unrelated to the specific content of the IPFR page about notifying online marketplaces of infringement. There are no changes to procedures, legal thresholds, timeframes, or specific guidance on IP infringement notification processes. The IPFR page content remains accurate and current based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7015,
+  "completion_tokens": 112,
+  "total_tokens": 7127,
+  "processing_time_seconds": 1.2977729059998637,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.608009+00:00"
+}

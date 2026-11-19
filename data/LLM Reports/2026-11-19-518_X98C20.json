@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document relates to the IP Australia public consultations webpage, including details about stakeholders and consultation processes, and a TLS certificate notice. The IPFR page content is a general overview comparing IP Australia to other government agencies and does not include specific procedural details, consultation processes, or security information that would be affected by this update. Therefore, the IPFR page remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3664,
+  "completion_tokens": 115,
+  "total_tokens": 3779,
+  "processing_time_seconds": 1.6607339779998256,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.607921+00:00"
+}

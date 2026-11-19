@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XE324C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the Plant Breeder's Rights (PBR) manual, specifically about online services, fees and discounts, legal persons, and submission processes for PBR applications. The IPFR page section on Qualified Persons (QP) for Plant Breeder's Rights already provides a general overview of their role, qualifications, and functions without specific procedural or legal detail that would be affected by these updates. There is no specific outdated or incorrect information in the IPFR page content that conflicts with or requires revision due to the updated PBR manual content. The changes are procedural and administrative updates that do not impact the accuracy of the IPFR page's guidance for small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5320,
+  "completion_tokens": 169,
+  "total_tokens": 5489,
+  "processing_time_seconds": 2.3115206049999415,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.607290+00:00"
+}

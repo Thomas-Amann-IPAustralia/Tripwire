@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XF33B8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change to the WIPO IP checklist webpage involves a significant reduction and simplification of the checklist content, removing detailed sections and leaving only a brief introductory statement. The IPFR page references the checklist as a resource but does not reproduce or rely on the detailed checklist content. Since the IPFR page's content about the IP journey stages remains accurate and unaffected by the upstream change, and the checklist is only linked as an additional resource, no update to the IPFR page is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2085,
+  "completion_tokens": 129,
+  "total_tokens": 2214,
+  "processing_time_seconds": 1.6579985770001713,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.607116+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes primarily consist of updates to official notices about design registration surrenders, amendments, and a Microsoft outage affecting IP Australia's online services, as well as updates to the policy register and consultation hub. None of these changes affect the fundamental explanations or factual content about what IP protection means for a business as presented in the IPFR page. There are no changes to legal thresholds, definitions, procedures, or substantive IP rights information that would require updating the IPFR content. The IPFR page provides general guidance and does not include specific references or details that are contradicted or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12710,
+  "completion_tokens": 151,
+  "total_tokens": 12861,
+  "processing_time_seconds": 1.8001244059998953,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.605296+00:00"
+}

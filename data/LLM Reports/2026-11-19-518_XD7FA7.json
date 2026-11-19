@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates and corrections in the Patent Manual, Design Manual, and Trade Marks Manual of Practice and Procedure, including formatting, citation updates, consolidation of chapters, and minor corrections. None of the changes specifically address or alter the opposition process timelines, fees, procedures, or outcomes as described in the IPFR page content. The IPFR page content about challenging the registration of a new trade mark, including the 2-month opposition window, fees, and procedural steps, remains accurate and unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11100,
+  "completion_tokens": 139,
+  "total_tokens": 11239,
+  "processing_time_seconds": 5.4699455229999785,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.603916+00:00"
+}

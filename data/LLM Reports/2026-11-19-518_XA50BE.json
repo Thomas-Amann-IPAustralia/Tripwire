@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XA50BE",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to specific notices about design registrations being surrendered or amended, including references to Section 49 of the Designs Act 2003 and corrections to design registrations. However, the IPFR page content is a general guide on seeking binding, authoritative decisions in design disputes and court proceedings. It does not mention specific design registrations, surrender procedures, or recent amendments. Therefore, these upstream changes do not affect the accuracy or currency of the guidance provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4386,
+  "completion_tokens": 127,
+  "total_tokens": 4513,
+  "processing_time_seconds": 5.4917664540000715,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.605028+00:00"
+}

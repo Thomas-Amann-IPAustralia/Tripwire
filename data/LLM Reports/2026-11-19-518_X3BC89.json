@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates in the Plant Breeder's Rights (PBR) manual, policy register entries, and consultation hub content. These updates include procedural clarifications, fee structures, and policy register counts, none of which directly affect the factual accuracy or currency of the IPFR page content. The IPFR page provides general guidance on checking existing IP rights using various registers and tools, including a brief mention of PBRs and Australian Plant Breeder's Rights registers. However, the changes do not alter the fundamental advice or the named registers and tools referenced on the page. There are no specific dates, fees, or procedural steps in the IPFR page that conflict with or require updating due to these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8557,
+  "completion_tokens": 177,
+  "total_tokens": 8734,
+  "processing_time_seconds": 2.12112315100012,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.605652+00:00"
+}

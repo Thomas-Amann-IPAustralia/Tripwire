@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XE918E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor edit to the WIPO IP checklist webpage, mostly removing introductory text and slightly rephrasing the description of the checklist. The IPFR page on 'De-escalate and resolve disputes via conversation' does not reference or rely on this checklist content specifically, nor does it contain any information that conflicts with or is outdated by the change. The change does not affect any specific procedural steps, legal thresholds, or guidance given in the IPFR page. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2484,
+  "completion_tokens": 140,
+  "total_tokens": 2624,
+  "processing_time_seconds": 1.851017408999951,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.606759+00:00"
+}

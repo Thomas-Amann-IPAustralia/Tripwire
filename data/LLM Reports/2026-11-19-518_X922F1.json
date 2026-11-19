@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia Patent Manual primarily involve fixing broken links, correcting typos, and minor rewording in sections related to acceptance, grant, refusal, and amendments of patent applications. There are no substantive changes to the opposition process timelines, fees, or procedural steps described in the IPFR page. The trademark manual updates are unrelated to patent oppositions. Therefore, the IPFR page content about challenging a new or amended patent remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8614,
+  "completion_tokens": 127,
+  "total_tokens": 8741,
+  "processing_time_seconds": 3.195745015000057,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.603499+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates on the ACCC consultation hub webpage, specifically about consultations on water market participants, pedal bicycles safety standards, and other unrelated regulatory matters. There is no mention or indication of changes related to intellectual property enforcement, counterfeit goods, the Australian Border Force Notice of Objection scheme, or Toyota's approach to counterfeit products. Therefore, the IPFR page content about Toyota's IP enforcement and counterfeit product strategies remains accurate and unaffected by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3254,
+  "completion_tokens": 125,
+  "total_tokens": 3379,
+  "processing_time_seconds": 1.7045717870000772,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.608096+00:00"
+}

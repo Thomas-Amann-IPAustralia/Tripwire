@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to the IP Australia public consultations webpage, including additional information about the site's security certificate and connection privacy warnings. This change does not affect any factual content, warnings, or guidance related to common scams on the IPFR page. The IPFR page content about scam warning signs, official email domains, and reporting procedures remains accurate and unaffected by this update.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3579,
+  "completion_tokens": 106,
+  "total_tokens": 3685,
+  "processing_time_seconds": 1.4518886060000114,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.609007+00:00"
+}

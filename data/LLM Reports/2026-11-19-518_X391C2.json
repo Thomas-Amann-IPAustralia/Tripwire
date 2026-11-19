@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a modification to the IP Australia's public consultations webpage, primarily updating stakeholder information and adding a TLS certificate warning message. There is no change to substantive IP policy, registration processes, legal thresholds, or any specific information that would affect the content of the IPFR page 'Is it worth registering my IP?'. The IPFR page discusses general concepts and benefits of IP registration without referencing specific procedural details or policy elements that have changed. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3462,
+  "completion_tokens": 134,
+  "total_tokens": 3596,
+  "processing_time_seconds": 2.1525520620000407,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.608485+00:00"
+}

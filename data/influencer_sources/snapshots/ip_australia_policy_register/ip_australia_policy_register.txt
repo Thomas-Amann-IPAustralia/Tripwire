@@ -4,7 +4,7 @@ Priority
 x
 Policy Topic
 x
- Showing 155 results
+ Showing 168 results
  
 - 
 Policy Id: 106 A fee incentive for narrowing the scope of registrations of trade marks Status: On hold Priority: LowThe Productivity Commission's Inquiry into Australia's Intellectual Property Arrangements (“PC Review”) discussed the potential use of higher fees per trade mark class of goods and/or services to discourage overclaiming of goods and/or services.
@@ -17,7 +17,7 @@ Policy Id: 116 ACIP Designs Review Recommendations 18(b), 18(d), 18(e) and 18(g)
 - 
 Policy Id: 101 Act change to improve refund power for Trade marks and PBR Status: Closed Priority: HighWhile the Patents Regulations 1991 and Designs Regulations 2004 permit the refund of the whole application fee or part of it on the basis of a wide range of circumstances, the Trade Marks Regulations 1995 and Plant Breeder Rights Regulations 1994 only allow a refund of fees in narrowly prescribed circumstances.
 - 
-Policy Id: 37 Address confusion around 'registered' and 'certified' designs and the two-step examination process Status: Closed Priority: HighCurrently, registration of a design occurs following a formalities check and substantive examination occurs only on request. If the design is found to have met the substantive requirements of the Act it will be certified and only then is it enforceable.
+Policy Id: 37 Address confusion around 'registered' and 'certified' designs and the 2-step examination process Status: Closed Priority: HighCurrently, registration of a design occurs following a formalities check and substantive examination occurs only on request. If the design is found to have met the substantive requirements of the Act it will be certified and only then is it enforceable.
 - 
 Policy Id: 151 Adjust Extensions of Time provisions of the Designs Act Status: Policy development Priority: LowDesign rights holders and applicants can apply to extend a number of time periods in the designs legislation under various circumstances.
 - 

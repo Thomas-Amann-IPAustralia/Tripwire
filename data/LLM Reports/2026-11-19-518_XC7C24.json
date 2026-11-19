@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of updates to official notices about specific design registrations being surrendered, amendments to design registrations, and general updates to policy registers and consultation hub pages. There are no changes to substantive legal requirements, procedural steps, or definitions related to checking products against existing designs or freedom to operate searches. The IPFR page content remains accurate and up to date for its intended audience, as it does not reference specific design registrations or detailed procedural changes that have been updated in the upstream sources.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11128,
+  "completion_tokens": 129,
+  "total_tokens": 11257,
+  "processing_time_seconds": 1.6454582989999835,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.605121+00:00"
+}

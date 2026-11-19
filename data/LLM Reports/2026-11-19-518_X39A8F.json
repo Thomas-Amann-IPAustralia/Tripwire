@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the design and PBR manuals primarily involve formatting updates, archiving of pages, updates to guidance content, and changes to chapter links or references. There are no specific amendments to the basic requirements for registration, timing, ownership, or clearance checks described in the IPFR page. The IPFR page content remains accurate and up-to-date regarding the basics of what to check before getting registered IP, including the 12-month grace period for patents and designs and the ownership considerations. The changes do not affect any specific factual statements or procedural details in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3937,
+  "completion_tokens": 148,
+  "total_tokens": 4085,
+  "processing_time_seconds": 1.8728297889999794,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.605472+00:00"
+}

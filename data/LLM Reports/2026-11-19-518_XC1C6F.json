@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XC1C6F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor textual update to the WIPO IP strategy checklist webpage, removing some introductory and structural content but not altering any substantive guidance or specific details relevant to rebranding or IP conflict avoidance. The IPFR page on rebranding to avoid potential IP conflicts does not contain any specific references or detailed procedural steps from the WIPO checklist that would be affected by this change. The change does not impact the accuracy or currency of the IPFR content, which focuses on practical considerations for rebranding and IP enforcement options rather than the detailed stages of an IP strategy checklist.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2519,
+  "completion_tokens": 147,
+  "total_tokens": 2666,
+  "processing_time_seconds": 2.017939103999879,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.609272+00:00"
+}

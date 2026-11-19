@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily relate to specific design registrations being surrendered and corrections to entries in the Designs Register, which do not affect the general procedural and informational content of the IPFR page about requesting certification of a registered design. The policy register update includes a minor wording change ('two-step' to '2-step') and status updates on policies, but does not alter the substantive explanation of the certification process or fees. There are no changes to fees, timeframes, or procedural steps that would require updating the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5919,
+  "completion_tokens": 143,
+  "total_tokens": 6062,
+  "processing_time_seconds": 2.017011238000123,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.604937+00:00"
+}

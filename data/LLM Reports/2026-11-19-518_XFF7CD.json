@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources primarily involve updates to the IP Australia policy register and consultation hub webpages, including minor textual edits, an increase in the number of policy items listed, and addition of TLS certificate details. None of these changes affect specific factual content, tool descriptions, or guidance on the IPFR page about free IP tools. There are no updates to tool names, functionalities, URLs, or procedural advice that would require amending the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9811,
+  "completion_tokens": 125,
+  "total_tokens": 9936,
+  "processing_time_seconds": 1.8650962409999465,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.606066+00:00"
+}

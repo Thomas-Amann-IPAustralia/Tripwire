@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XAAA4C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia public consultations webpage, including expanded stakeholder descriptions and technical certificate details. The IPFR page is about contributor guidelines for blog posts and does not reference or rely on the consultation hub content or processes. There is no specific information in the IPFR page that is factually contradicted or outdated by this change. Therefore, no amendments to the contributor guidelines page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4132,
+  "completion_tokens": 115,
+  "total_tokens": 4247,
+  "processing_time_seconds": 1.4890654169998925,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.607027+00:00"
+}

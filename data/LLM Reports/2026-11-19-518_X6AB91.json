@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes relate to the ACCC's open consultations on various topics such as water market decisions, safety standards for bicycles, and infrastructure charges. These updates do not affect the specific content of the IPFR page, which focuses on reporting IP infringement risks to public interest, including counterfeit goods, consumer harm, and scams. There is no direct impact on the guidance, legal references, or procedural advice given in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3973,
+  "completion_tokens": 118,
+  "total_tokens": 4091,
+  "processing_time_seconds": 1.7426907920000758,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.608182+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "XD2102",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in the Plant Breeder Rights manual and the IP Australia policy register, including updates to online services guidance, fee processes, and policy register entries. However, the IPFR page 'When do I need a lawyer or attorney to deal with IP issues?' provides general guidance on when to seek legal advice and the roles of IP lawyers and attorneys. There are no specific references to fees, procedural details, or policy changes that would affect the accuracy or currency of the advice given on this page. The changes do not impact the fundamental distinctions between IP lawyers and attorneys or the general advice about when to seek legal help.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2452,
+  "completion_tokens": 159,
+  "total_tokens": 2611,
+  "processing_time_seconds": 1.9714192239998738,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.607464+00:00"
+}

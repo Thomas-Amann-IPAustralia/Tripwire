@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-19-518",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document reflects updates to the IP Australia's policy register, including an increase in the number of policy topics and minor wording changes in policy descriptions. However, these updates do not affect the factual content or accuracy of the IPFR page 'Familiarise yourself with IP laws'. The IPFR page provides a general overview of IP legislation, agencies, and processes without referencing specific policy details or statuses that have changed. Therefore, no amendments are required to maintain the accuracy or currency of the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2662,
+  "completion_tokens": 133,
+  "total_tokens": 2795,
+  "processing_time_seconds": 1.6271107279999342,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-19T10:22:14.609357+00:00"
+}
