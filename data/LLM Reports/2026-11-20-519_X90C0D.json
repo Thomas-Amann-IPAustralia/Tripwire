@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to the IP Australia webpage on how to prevent infringement of IP, including practical tips such as creating an infringement strategy, labeling IP, monitoring the market, and protecting against counterfeit goods. The IPFR page already provides a broad overview of IP protection for small businesses, including enforcement options, the role of IP Australia, and the importance of monitoring and contracts. The changes do not introduce new legal thresholds, statutory references, or procedural steps that contradict or update specific factual content on the IPFR page. Instead, they provide more detailed practical guidance that complements but does not conflict with or invalidate the existing IPFR content. Therefore, no amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9059,
+  "completion_tokens": 170,
+  "total_tokens": 9229,
+  "processing_time_seconds": 2.5023793940001724,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.724461+00:00"
+}

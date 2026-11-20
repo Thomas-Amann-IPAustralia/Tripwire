@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X1BF2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change to the WIPO Arbitration and Mediation Center webpage involves the removal of a news item about 'WIPO Wallet Is Now Live! October 5, 2026'. This update does not affect any specific procedural information, guidelines, or substantive content about mediation or dispute resolution processes that are referenced or described in the IPFR page. The IPFR page focuses on explaining the benefits and nature of mediation in IP disputes, without citing or relying on the removed news item or any specific WIPO procedural detail that has changed. Therefore, the IPFR page content remains accurate and current despite this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2653,
+  "completion_tokens": 154,
+  "total_tokens": 2807,
+  "processing_time_seconds": 2.984620382000003,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.724830+00:00"
+}

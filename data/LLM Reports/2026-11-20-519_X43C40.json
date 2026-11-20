@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to the WIPO Arbitration and Mediation Center webpage and the IP Australia free consultation page being unreachable. The WIPO page update only removed a future event notice and did not change procedural or substantive information about mediation or arbitration services. The IP Australia consultation page is currently unreachable, but this does not affect the accuracy of the IPFR page content, which does not reference these pages directly or provide specific procedural details that have changed. Therefore, no update to the IPFR page content is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2516,
+  "completion_tokens": 137,
+  "total_tokens": 2653,
+  "processing_time_seconds": 1.7470535649999874,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.725407+00:00"
+}

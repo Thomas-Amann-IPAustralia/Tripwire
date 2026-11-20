@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are to an IP Australia webpage about how to prevent infringement of IP, focusing on enforcement strategies, labeling, market monitoring, anti-counterfeit measures, and related practical advice. The IPFR page 'What is IP infringement?' provides a foundational explanation of what infringement means, its elements, and examples. The changes do not alter any definitions, legal thresholds, durations, or core concepts of infringement as presented in the IPFR page. Instead, they add practical guidance on prevention and enforcement, which is complementary but does not conflict with or require updates to the IPFR page's content. Therefore, no amendment to the IPFR page is necessary based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8101,
+  "completion_tokens": 167,
+  "total_tokens": 8268,
+  "processing_time_seconds": 2.626038332999997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.723702+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "XFC0CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a webpage from IP Australia about how to prevent infringement of IP, which includes practical advice and strategies for IP owners. The IPFR page is a glossary of terms defining key IP concepts. The change document does not indicate any modification to definitions, legal thresholds, or statutory references that appear in the glossary. Instead, it focuses on enforcement strategies, market monitoring, and anti-counterfeit measures, which are not directly reflected in the glossary definitions. Therefore, the glossary content remains accurate and up-to-date, and no specific amendments are required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4470,
+  "completion_tokens": 147,
+  "total_tokens": 4617,
+  "processing_time_seconds": 2.4624463770001057,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.724920+00:00"
+}

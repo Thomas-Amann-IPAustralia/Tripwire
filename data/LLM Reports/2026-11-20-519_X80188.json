@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage on how to prevent infringement of IP provide detailed practical advice on creating infringement strategies, labeling IP, monitoring the market, and protecting against counterfeit goods. However, the IPFR page 'Infringement 101' is a high-level, introductory guide focused on explaining what infringement is, the emotional and practical context for small businesses, and general principles of IP infringement. It does not contain specific procedural steps, statutory references, or detailed advice that would be contradicted or outdated by the updated content. The changes are more about practical enforcement and prevention tips rather than fundamental definitions or legal principles. Therefore, the IPFR page remains accurate and does not require amendment based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5241,
+  "completion_tokens": 175,
+  "total_tokens": 5416,
+  "processing_time_seconds": 2.2798021759999756,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.723811+00:00"
+}

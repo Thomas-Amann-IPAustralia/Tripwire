@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage at ipta.org.au/community/get-free-consultation/ is currently unreachable due to a connection closure or timeout error. This is a technical availability issue with an external site and does not affect the factual content, legal information, or procedural guidance provided in the IPFR page about responding to a patent opposition. There is no indication that any substantive IP law, fees, timeframes, or procedural steps described in the IPFR page have changed. Therefore, no update to the IPFR page content is required based on this external change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2088,
+  "completion_tokens": 147,
+  "total_tokens": 2235,
+  "processing_time_seconds": 1.8792511889998877,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.726548+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to the IP Australia webpage on how to prevent infringement of IP, which includes general advice on infringement strategies, labeling, monitoring, and enforcement options. While the IPFR page on addressing overseas infringement covers related topics such as enforcement options, territorial nature of IP rights, and practical tips, the change document does not provide any updated or corrected specific information that conflicts with or updates the IPFR page content. The IPFR page does not contain any specific figures, dates, or procedural steps that are contradicted or superseded by the change. The change is more about general infringement prevention and does not affect the accuracy or currency of the overseas infringement guidance provided in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3840,
+  "completion_tokens": 171,
+  "total_tokens": 4011,
+  "processing_time_seconds": 2.23007484499999,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.724650+00:00"
+}

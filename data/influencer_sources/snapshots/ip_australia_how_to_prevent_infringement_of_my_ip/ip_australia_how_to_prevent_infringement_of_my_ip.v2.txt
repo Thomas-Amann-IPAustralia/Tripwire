@@ -43,6 +43,14 @@ Counterfeit goods can:
 You should be proactive by listing your IP rights with platforms before anyone tries to sell counterfeit goods. Some platforms invite you to add your trade marks and other kinds of IP rights to a brand registry. This is used in automated checks to detect infringing goods before they are even listed for sale.
 Amazon Brand Registry
 Amazon Brand Registry is a service provided by Amazon Marketplace to help sellers protect and promote their brands. To join, sellers need to have a pending or registered trademark in a relevant country. If you have a pending or registered trademark in Australia, you might be eligible to join. Since this is a private service, IP Australia does not participate in the enrolment process or in generating or providing verification codes. Any questions about enrolling or getting verification codes should be directed to Amazon Marketplace. IP Australia also does not offer any additional advisory services provided by Amazon, like IP Accelerator.
+You should be proactive by listing your IP rights with platforms before anyone tries to sell counterfeit goods. Some platforms invite you to add your trade marks and other kinds of IP rights to a brand registry. This is used in automated checks to detect infringing goods before they are even listed for sale.
+Amazon Brand Registry
+Amazon Brand Registry is a service provided by Amazon Marketplace to help sellers protect and promote their brands. To join, sellers need to have a pending or registered trademark in a relevant country. If you have a pending or registered trademark in Australia, you might be eligible to join. Since this is a private service, IP Australia does not participate in the enrolment process or in generating or providing verification codes. Any questions about enrolling or getting verification codes should be directed to Amazon Marketplace. IP Australia also does not offer any additional advisory services provided by Amazon, like IP Accelerator.
+The increasing incidence of counterfeit goods has prompted many businesses to build in some kind of anti-counterfeit measures that help to identify genuine products.
+You can consider:
+- Verification and traceability solutions such as QR codes, RFID, and smart finger prints
+- Overt features such as holograms, security threads and fibres, watermarks, taggants and microprinting
+- Covert features such as fluorescent print and other secret markings.
 The increasing incidence of counterfeit goods has prompted many businesses to build in some kind of anti-counterfeit measures that help to identify genuine products.
 You can consider:
 - Verification and traceability solutions such as QR codes, RFID, and smart finger prints

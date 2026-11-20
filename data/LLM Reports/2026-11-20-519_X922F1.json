@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the IPTA webpage for free consultations is currently unreachable due to a connection error. However, the IPFR page only references the availability of free 30-minute consultations by IPTA as a resource and does not provide a direct link or specific procedural details that would be affected by the webpage being down. There is no update to the legal process, fees, timeframes, or substantive content about patent oppositions. Therefore, the IPFR page content remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2287,
+  "completion_tokens": 138,
+  "total_tokens": 2425,
+  "processing_time_seconds": 1.7678508690000854,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.726452+00:00"
+}

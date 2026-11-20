@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the IPTA website page for free consultations is currently unreachable due to a connection issue (ERR_CONNECTION_CLOSED). This is a temporary technical issue rather than a substantive change to the content or availability of the free consultation service. The IPFR page references the IPTA free consultation service as a resource but does not provide detailed procedural or legal information that would be affected by this connectivity problem. Therefore, the IPFR page content remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2632,
+  "completion_tokens": 133,
+  "total_tokens": 2765,
+  "processing_time_seconds": 1.9263343130000976,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.726260+00:00"
+}

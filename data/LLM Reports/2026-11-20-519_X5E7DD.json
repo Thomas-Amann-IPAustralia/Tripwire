@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the external webpage at ipta.org.au/community/get-free-consultation/ is currently unreachable due to a connection closure error. There is no substantive change to the content or legal information relevant to the IPFR page on 'Respond to an unjustified threat'. The IPFR page does not reference this specific webpage or its content directly, and the change is about website availability rather than legal or procedural updates. Therefore, the accuracy and currency of the IPFR page content remain unaffected.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2505,
+  "completion_tokens": 133,
+  "total_tokens": 2638,
+  "processing_time_seconds": 1.7662025960000847,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.725943+00:00"
+}

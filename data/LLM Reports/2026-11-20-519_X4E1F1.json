@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage about preventing infringement primarily add detailed guidance on how IP owners can protect their IP, including strategies, labeling, monitoring, and anti-counterfeit measures. These changes do not affect the accuracy or currency of the IPFR page content, which focuses on the risks of using IP that is not yours and the need to obtain permission or seek legal advice. The IPFR page does not include specific procedural steps or legal thresholds that have changed. The third change relates to a technical connectivity issue with an external site and does not impact the IPFR content. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5231,
+  "completion_tokens": 159,
+  "total_tokens": 5390,
+  "processing_time_seconds": 2.319014778999872,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.725011+00:00"
+}

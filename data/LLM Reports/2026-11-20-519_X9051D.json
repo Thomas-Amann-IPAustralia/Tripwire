@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X9051D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document from IP Australia provides detailed guidance on preventing IP infringement, including strategies like labelling IP, monitoring the market, and protecting against counterfeit goods. While these topics are related to the IPFR page's focus on helping customers differentiate genuine products from lookalikes, the IPFR page content is general and does not include specific procedural details, legal thresholds, or statutory references that have changed. The IPFR page's advice on customer education, product validation tools, and marking IP rights remains accurate and consistent with the updated source. Therefore, no specific update to the IPFR page is required based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3497,
+  "completion_tokens": 158,
+  "total_tokens": 3655,
+  "processing_time_seconds": 4.3925231210000675,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.725582+00:00"
+}

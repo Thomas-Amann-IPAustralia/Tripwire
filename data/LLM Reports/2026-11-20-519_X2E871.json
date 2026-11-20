@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center webpage consist solely of the removal of a news item titled 'WIPO Wallet Is Now Live! October 5, 2026'. There are no changes to procedural information, fees, timelines, or any substantive content related to the ADR services offered by WIPO. The IPFR page content remains accurate and up to date regarding the WIPO Center's services, benefits, risks, and processes. Therefore, no amendments to the IPFR page are required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3446,
+  "completion_tokens": 140,
+  "total_tokens": 3586,
+  "processing_time_seconds": 3.0896516760001305,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.723001+00:00"
+}

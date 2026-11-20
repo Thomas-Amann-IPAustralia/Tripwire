@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates a minor update to the WIPO Arbitration and Mediation Center webpage, specifically the removal of a news item about the WIPO Wallet going live in 2026. The IPFR page content focuses on the auDA .au Dispute Resolution Policy and domain name disputes under the .au domain, with no direct reference to WIPO services or the WIPO Wallet. The change does not affect any specific information, procedures, fees, or timelines described in the IPFR page. Therefore, no update to the IPFR page is necessary.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2379,
+  "completion_tokens": 144,
+  "total_tokens": 2523,
+  "processing_time_seconds": 2.825744777999944,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.725494+00:00"
+}

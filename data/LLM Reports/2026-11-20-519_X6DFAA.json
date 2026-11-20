@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.9,
+  "reasoning": "The changes to the WIPO Arbitration and Mediation Center webpage consist solely of the removal of a news item about the 'WIPO Wallet' going live in 2026. This update does not affect any substantive information about mediation, arbitration, or expert determination processes relevant to the IPFR page content. The IPFR page provides general guidance on ADR options for IP disputes in Australia and does not mention WIPO Wallet or related services. Therefore, the accuracy and currency of the IPFR page content remain unaffected by these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2119,
+  "completion_tokens": 138,
+  "total_tokens": 2257,
+  "processing_time_seconds": 2.8043431529999907,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.723589+00:00"
+}

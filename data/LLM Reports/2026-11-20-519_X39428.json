@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a revision of an IP Australia webpage about preventing infringement of IP, which covers topics such as what infringement is, enforcement, labeling IP, monitoring the market, and protecting against counterfeit goods. While the subject matter overlaps with the IPFR page on how to avoid infringing others' IP, the IPFR page focuses on practical steps for small businesses to avoid infringement, such as conducting searches, creating original work, understanding fair use, obtaining permission, and being cautious with online content. The updated upstream content does not provide new or changed specific procedural steps, timeframes, or legal thresholds that contradict or update the IPFR page content. Therefore, the IPFR page remains accurate and current in its guidance and does not require amendment based on this upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3782,
+  "completion_tokens": 186,
+  "total_tokens": 3968,
+  "processing_time_seconds": 2.36836184699996,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.724098+00:00"
+}

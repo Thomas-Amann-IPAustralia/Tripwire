@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-20-519",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The change document indicates that the ipta.org.au website is currently unreachable due to connection issues (ERR_CONNECTION_CLOSED), but there is no change to the content or information about IP scams or official registers. The IPFR page references the Trans-Tasman IP Attorneys Board register as a source to verify 'IP attorney' or 'law firm' legitimacy, but the change is about website availability, not content or procedural updates. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1526,
+  "completion_tokens": 133,
+  "total_tokens": 1659,
+  "processing_time_seconds": 1.7325713140000971,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-20T09:56:25.725764+00:00"
+}
