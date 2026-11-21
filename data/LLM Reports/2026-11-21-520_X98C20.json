@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-21-520",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page primarily consist of announcements about annual reports, treaty recommendations, legislative reforms, strategic plans, and various news stories related to IP Australia. None of these changes provide specific updates or corrections to the comparative information about IP Australia and other government agencies as presented in the IPFR page. The IPFR page content is a general overview of IP Australia's role relative to other agencies, and no specific dates, figures, or procedural details in that content are contradicted or outdated by the news updates. Therefore, no amendment to the IPFR page is required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6589,
+  "completion_tokens": 152,
+  "total_tokens": 6741,
+  "processing_time_seconds": 1.6203401540000186,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-21T09:24:06.503604+00:00"
+}

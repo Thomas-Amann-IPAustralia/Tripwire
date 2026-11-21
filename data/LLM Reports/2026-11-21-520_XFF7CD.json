@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-21-520",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news feed update from IP Australia including announcements about annual reports, treaty recommendations, and reforms to the IP system. However, the IPFR page content about free IP tools does not contain any specific references to these reports, treaties, or reforms, nor does it include any factual details such as dates, fees, or procedural steps that have been changed. The page provides a general overview of free IP tools and lists common tools without detailed statutory or procedural information that would be affected by these news updates. Therefore, the change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3881,
+  "completion_tokens": 154,
+  "total_tokens": 4035,
+  "processing_time_seconds": 1.8368253599999207,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-21T09:24:06.503719+00:00"
+}

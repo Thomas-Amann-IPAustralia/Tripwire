@@ -1,0 +1,8 @@
+--- previous+++ current@@ -3,7 +3,7 @@ Subject: ipaustralia.gov.au
+ Issuer: DigiCert Global G2 TLS RSA SHA256 2020 CA1
+ Expires on: May 22, 2027
+-Current date: Nov 20, 2026
++Current date: Nov 21, 2026
+ PEM encoded chain: -----BEGIN CERTIFICATE-----
+ MIIHtTCCBp2gAwIBAgIQDLSuy+RSqGU5eURmyVWhqTANBgkqhkiG9w0BAQsFADBZ
+ MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMTMwMQYDVQQDEypE

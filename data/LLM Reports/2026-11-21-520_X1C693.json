@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-21-520",
+  "ipfr_page_id": "X1C693",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page primarily consist of announcements about annual reports, strategic plans, surveys, and general news items including recommendations for treaty ratification and system reforms. None of these changes provide specific updates or amendments to the scope of Australian IP protection overseas or the process for obtaining IP rights in other countries. The IPFR page content about Australian IP protection applying only within Australia and the option to apply overseas or via international systems remains accurate and unaffected by these news updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11475,
+  "completion_tokens": 128,
+  "total_tokens": 11603,
+  "processing_time_seconds": 2.60865864699997,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-21T09:24:06.503419+00:00"
+}

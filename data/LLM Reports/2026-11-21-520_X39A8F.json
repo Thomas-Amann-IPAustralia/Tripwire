@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-21-520",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes consist of news headlines and announcements from IP Australia about recent reports, treaty recommendations, and reforms to streamline the IP system. However, none of these changes provide specific updates or amendments to the basic requirements, timing, or procedural details described in the IPFR page content. The IPFR page discusses general guidance on what to check before getting registered IP, including basic requirements, timing risks, ownership, and availability checks, none of which are contradicted or updated by the news items. Therefore, the page remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9367,
+  "completion_tokens": 145,
+  "total_tokens": 9512,
+  "processing_time_seconds": 3.093239259000029,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-21T09:24:06.503189+00:00"
+}

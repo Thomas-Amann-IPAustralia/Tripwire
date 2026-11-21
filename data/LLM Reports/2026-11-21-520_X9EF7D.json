@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-21-520",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change is an IP Australia news update listing various announcements and reports, including the tabling of the Annual Report 2025-26 and recommendations for treaty ratification, as well as reforms to streamline the IP system. However, the IPFR page 'Familiarise yourself with IP laws' provides a general overview of Australian IP law, its legislative framework, and the roles of agencies. There are no specific legislative details, dates, fees, or procedural steps in the IPFR page that are contradicted or rendered outdated by the news update. The news update does not specify any changes to the Acts, Regulations, or fundamental IP principles described in the IPFR page. Therefore, no amendment to the IPFR page content is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4691,
+  "completion_tokens": 185,
+  "total_tokens": 4876,
+  "processing_time_seconds": 2.3275030389999074,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-21T09:24:06.503564+00:00"
+}

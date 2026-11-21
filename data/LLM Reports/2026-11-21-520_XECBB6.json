@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-21-520",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia news webpage, including announcements about annual reports, treaty ratifications, and reforms to the IP system. However, the change document does not specify any amendments to the substantive content or legal provisions related to infringement, trade mark registration criteria, or enforcement that would affect the accuracy or currency of the 'Infringement 101' page. The IPFR page content remains accurate and up to date regarding infringement basics, trade mark registration, and enforcement guidance for small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4975,
+  "completion_tokens": 137,
+  "total_tokens": 5112,
+  "processing_time_seconds": 1.335352882000052,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-21T09:24:06.503642+00:00"
+}
