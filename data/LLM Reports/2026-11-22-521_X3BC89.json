@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X3BC89",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page primarily consist of announcements about annual reports, treaty recommendations, new reforms, strategic plans, and general news stories related to intellectual property. None of these changes provide specific updates or corrections to the factual content on the IPFR page about checking existing IP rights, the registers to use, or the nature of IP searches. The IPFR page content remains accurate and current with respect to the guidance it provides to small business owners on how to check if someone else owns a word, logo, or idea. There are no changes to the names of registers, procedures, or legal definitions that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6367,
+  "completion_tokens": 163,
+  "total_tokens": 6530,
+  "processing_time_seconds": 1.6734944440000845,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.310044+00:00"
+}

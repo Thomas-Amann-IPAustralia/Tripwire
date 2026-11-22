@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X5E7DD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is an update to the IP Australia webpage about how to prevent infringement of IP, including general advice on infringement, monitoring, labeling, and enforcement strategies. The IPFR page on 'Respond to an unjustified threat' focuses specifically on the legal recourse and process related to unjustified threats of IP infringement. The updated content does not provide new or changed legal thresholds, procedures, or definitions that directly affect the accuracy or currency of the IPFR page's guidance on unjustified threats. Therefore, while the topics are related, the IPFR page remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4907,
+  "completion_tokens": 156,
+  "total_tokens": 5063,
+  "processing_time_seconds": 1.8040691300000162,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.309595+00:00"
+}

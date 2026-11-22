@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes are updates to IPAustralia webpages about managing IP infringement and preventing infringement, including general guidance on infringement, enforcement options, and strategies. The IPFR page 'Considerations before enforcing your IP overseas' provides an overview of considerations and options for enforcement overseas, focusing on strategic and procedural advice for rights holders. The changes do not introduce new legal thresholds, statutory references, or procedural steps that conflict with or update specific factual content on the IPFR page. They mainly expand or clarify general infringement concepts and domestic enforcement mechanisms, which do not directly affect the accuracy or currency of the IPFR page's overseas enforcement guidance. Therefore, no specific amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11636,
+  "completion_tokens": 171,
+  "total_tokens": 11807,
+  "processing_time_seconds": 1.7896266910000804,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.309689+00:00"
+}

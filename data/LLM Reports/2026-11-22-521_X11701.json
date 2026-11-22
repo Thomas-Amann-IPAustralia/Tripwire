@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external IP Australia webpage 'someone-is-using-my-ip' primarily add detailed procedural information about how to stop infringement, including lodging Notices of Objection with Australian Border Force, providing information to ABF, lodging a Deed of Undertaking, and steps to address online and international infringement. The IPFR page 'What to do if someone infringes your IP' already provides general guidance on assessing infringement, considering options, alternative dispute resolution, and seeking professional advice. The new details do not contradict or update any specific factual claims, statutory references, or procedural steps in the IPFR page. Instead, they provide more granular procedural guidance that is not currently included in the IPFR page. Since the IPFR page is designed as a high-level guide for small business owners and does not contain specific procedural instructions or statutory deadlines that have changed, no amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 10098,
+  "completion_tokens": 213,
+  "total_tokens": 10311,
+  "processing_time_seconds": 1.9539161520000334,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.308639+00:00"
+}

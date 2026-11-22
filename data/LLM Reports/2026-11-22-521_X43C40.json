@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X43C40",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of news updates, annual reports, and general informational content from IP Australia, including references to treaties, reforms, and strategic plans. The changes to the 'how to prevent infringement of my IP' and 'someone is using my IP' pages add or clarify general information about infringement, enforcement, and prevention strategies, but do not introduce specific procedural, legal, or jurisdictional changes that would directly affect the guidance on responding to international accusations of IP infringement. The IPFR page in question provides general considerations for responding to international IP infringement accusations, emphasizing variability by jurisdiction and recommending legal advice. None of the changes update or contradict this guidance, nor do they provide new specific rules or thresholds that would require updating the IPFR page content. Therefore, no change is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 27409,
+  "completion_tokens": 195,
+  "total_tokens": 27604,
+  "processing_time_seconds": 2.149073379000015,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.309204+00:00"
+}

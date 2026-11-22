@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page and the 'someone is using my IP' page primarily consist of updated announcements, reports, and expanded guidance on infringement and enforcement options. However, the IPFR page 'What does IP protection mean for my business?' provides a broad overview of IP protection concepts, rights, and general enforcement principles without specific dates, procedural details, or thresholds that have been altered by these updates. None of the new information contradicts or updates specific factual content on the IPFR page. Therefore, no direct amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 15225,
+  "completion_tokens": 147,
+  "total_tokens": 15372,
+  "processing_time_seconds": 3.0586438670000007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.308220+00:00"
+}

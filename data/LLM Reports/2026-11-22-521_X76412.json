@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X76412",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the external IP Australia webpages provide updated general information about IP infringement, prevention strategies, and enforcement options. However, the IPFR page 'Ask your suppliers and sellers to help protect your IP' focuses specifically on the informal approach of contacting intermediaries to stop infringement. The updated source content does not contradict or update any specific factual detail, procedural step, or legal threshold presented in the IPFR page. The IPFR page remains accurate and current in its guidance about this voluntary, informal enforcement option. The changes are related in subject matter but do not require amendments to the specific content of this IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9138,
+  "completion_tokens": 156,
+  "total_tokens": 9294,
+  "processing_time_seconds": 2.016359642999987,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.309868+00:00"
+}

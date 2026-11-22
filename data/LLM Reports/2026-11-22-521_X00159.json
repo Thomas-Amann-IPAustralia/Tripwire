@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X00159",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a news summary listing recent IP Australia news items, including the tabling of the Annual Report 2025-26, a parliamentary recommendation to ratify the GRATK Treaty, and the passage of the Regulatory Reform Omnibus Act 2026. However, the IPFR page content is a general overview explaining that IP can be bought, sold, or licensed, aimed at small business owners, without referencing any specific legislation, dates, or procedural details that have changed. None of the new information directly contradicts or updates any specific factual content on the IPFR page. Therefore, no amendment to the page is required based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3870,
+  "completion_tokens": 164,
+  "total_tokens": 4034,
+  "processing_time_seconds": 1.5964446949999456,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.310573+00:00"
+}

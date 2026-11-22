@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate to general information about IP infringement, enforcement options, and prevention strategies, including details about the Australian Border Force Notice of Objection scheme and market monitoring. The IPFR page 'Register your unregistered trade mark' focuses specifically on the process, benefits, risks, costs, and steps for registering a trade mark in Australia. None of the changes introduce new or updated statutory references, fees, timeframes, or procedural steps that directly affect the registration process or the specific content of the IPFR page. Therefore, the IPFR page remains accurate and current with respect to its content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6711,
+  "completion_tokens": 152,
+  "total_tokens": 6863,
+  "processing_time_seconds": 1.6187613129999363,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.310389+00:00"
+}

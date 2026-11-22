@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes to the IP Australia webpages provide updated general information about IP infringement, prevention strategies, and enforcement options. However, these changes do not affect the specific procedural details, timeframes, or legal requirements described in the IPFR page about lodging a Notice of Objection with the Australian Border Force. The IPFR page's content about the Notice of Objection scheme, including the 10 working day period to commence legal proceedings, the 4-year validity of the Notice, and the requirement to lodge a Deed of Undertaking, remains accurate and consistent with the information provided. Therefore, no amendments to the IPFR page are required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7066,
+  "completion_tokens": 166,
+  "total_tokens": 7232,
+  "processing_time_seconds": 2.4328323380000256,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.310278+00:00"
+}

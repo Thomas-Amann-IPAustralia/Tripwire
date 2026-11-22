@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news page and the 'how to prevent infringement' page provide updates on recent reports, treaty recommendations, reforms, and detailed guidance on infringement prevention. However, the IPFR page 'Free IP tools you can use' primarily lists and describes free IP search and monitoring tools without specific procedural, legal, or statutory details that have changed. There are no outdated dates, legal references, or procedural steps in the IPFR page that are contradicted or superseded by the updates. The IPFR page content remains accurate and current for its intended purpose of informing users about available free IP tools.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 9229,
+  "completion_tokens": 155,
+  "total_tokens": 9384,
+  "processing_time_seconds": 1.9614750450000429,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.309953+00:00"
+}

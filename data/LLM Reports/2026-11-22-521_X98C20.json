@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X98C20",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change consists of a news feed update from IP Australia highlighting recent reports, reforms, and activities such as the Annual Report 2025-26, treaty recommendations, and regulatory reforms. The IPFR page provides a general overview comparing IP Australia to other government agencies and explains its role in IP protection for small businesses. None of the specific content on the IPFR page, such as agency functions, roles, or descriptions, is contradicted or rendered outdated by the news updates. The page does not include detailed procedural or statutory information that would be impacted by these news items. Therefore, no amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3993,
+  "completion_tokens": 160,
+  "total_tokens": 4153,
+  "processing_time_seconds": 1.8034870210000236,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.310483+00:00"
+}

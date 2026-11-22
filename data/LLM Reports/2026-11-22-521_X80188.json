@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IPAustralia webpage 'someone-is-using-my-ip' primarily add security certificate information and warnings about connection privacy, which are unrelated to the substantive content about IP infringement. The core guidance on what constitutes infringement, steps to take, and enforcement options remains unchanged. The IPFR page content is a general overview and does not cite or rely on specific procedural details or thresholds that have been altered. Therefore, the IPFR page remains accurate and does not require updates based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7795,
+  "completion_tokens": 133,
+  "total_tokens": 7928,
+  "processing_time_seconds": 1.7259816850000789,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.308539+00:00"
+}

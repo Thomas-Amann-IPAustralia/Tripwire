@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of updated news items, general information about IP infringement, and guidance on preventing infringement from IP Australia's website. None of the changes provide new or revised legal thresholds, statutory references, procedural steps, or specific enforcement details that contradict or update the existing content of the IPFR page. The IPFR page focuses on reporting serious IP infringement risks to public interest and enforcement options, which remain accurate and consistent with the updated source content. Therefore, no specific amendments to the IPFR page content are required based on these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 11633,
+  "completion_tokens": 140,
+  "total_tokens": 11773,
+  "processing_time_seconds": 6.395013785999936,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.309781+00:00"
+}

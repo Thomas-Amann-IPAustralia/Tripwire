@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from IP Australia news and the 'how to prevent infringement of my IP' page primarily consist of updates to general information, announcements, and guidance on IP protection strategies. None of the changes specifically address or alter the content related to reporting scams, fraud, or risks to public interest as described in the IPFR page. There are no updates to procedures, contact details, or warnings about scams that would require amending the IPFR page content. The IPFR page remains accurate and current based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12779,
+  "completion_tokens": 137,
+  "total_tokens": 12916,
+  "processing_time_seconds": 2.2473022909999827,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.309508+00:00"
+}

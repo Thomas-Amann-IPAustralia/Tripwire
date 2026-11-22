@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the IP Australia webpage 'Someone is using my IP' provide additional practical guidance on steps to take when infringement is suspected, including enforcement options like lodging a Notice of Objection with Australian Border Force, online takedown mechanisms, and international enforcement considerations. However, the IPFR page 'What is IP infringement?' focuses on explaining the concept, key elements, and examples of infringement rather than procedural or enforcement details. There is no conflicting or outdated information in the IPFR page content that requires correction or update based on these changes. The IPFR page remains accurate and current in its explanation of infringement basics for small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8782,
+  "completion_tokens": 160,
+  "total_tokens": 8942,
+  "processing_time_seconds": 2.024691961999906,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.308423+00:00"
+}

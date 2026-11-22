@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change consists of a news feed summary from IP Australia highlighting recent events, reports, and reforms related to IP, such as the Regulatory Reform Omnibus Act 2026 and treaty ratifications. However, the IPFR page 'Is it worth registering my IP?' provides general guidance on the value and considerations of registering IP rights without referencing specific legislative details, dates, or procedural steps that have been amended. There is no specific information in the IPFR page that is contradicted or outdated by the news items. The page's content remains accurate and relevant for small business owners seeking basic understanding of IP registration benefits and alternatives.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3869,
+  "completion_tokens": 158,
+  "total_tokens": 4027,
+  "processing_time_seconds": 1.445973767000055,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.310657+00:00"
+}

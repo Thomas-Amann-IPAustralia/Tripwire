@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "XAEFF3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to an IP Australia webpage about 'someone is using my IP' which broadly discusses IP infringement and enforcement options. However, the IPFR page 'XAEFF3 \u2014 Patent infringement' is a detailed explanation specifically about patent infringement, its legal basis, examples, and exceptions under the Patents Act 1990. The change document does not provide any updated legal thresholds, time periods, statutory references, or procedural steps that conflict with or update the content of the IPFR page. The change is more about general infringement management and enforcement rather than substantive patent law content. Therefore, the IPFR page remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4236,
+  "completion_tokens": 168,
+  "total_tokens": 4404,
+  "processing_time_seconds": 1.9525548169999638,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.308740+00:00"
+}

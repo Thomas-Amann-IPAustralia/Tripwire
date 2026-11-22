@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily consist of news updates, annual reports, strategic plans, and general information about IP Australia and IP enforcement strategies. None of the changes provide specific amendments to legal definitions, procedures, penalties, or exceptions related to the use of IP that would directly affect the accuracy or currency of the IPFR page content. The IPFR page content is general and does not include specific statutory references, dates, or procedural details that have been updated in the changes. Therefore, no direct update to the IPFR page is required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 14485,
+  "completion_tokens": 143,
+  "total_tokens": 14628,
+  "processing_time_seconds": 2.1713661789999605,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.309112+00:00"
+}

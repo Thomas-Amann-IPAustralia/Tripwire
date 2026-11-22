@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-22-521",
+  "ipfr_page_id": "X9A039",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia news and the 'how to prevent infringement of my IP' pages primarily consist of updates about reports, treaties, reforms, and general guidance on IP infringement and enforcement. None of the changes provide new or updated specific details about trade mark registration fees, timeframes, procedures, or other concrete information that would affect the accuracy or currency of the 'Register your trade mark' IPFR page content. The IPFR page's detailed fee tables, timeframes, and procedural descriptions remain accurate and are not contradicted or amended by the upstream changes. Therefore, no update to the IPFR page is required based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 12527,
+  "completion_tokens": 163,
+  "total_tokens": 12690,
+  "processing_time_seconds": 1.760704359999977,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-22T09:37:37.310191+00:00"
+}
