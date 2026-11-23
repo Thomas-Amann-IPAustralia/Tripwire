@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the content of the IP Australia webpage 'Someone is using my IP' with more detailed explanations about what constitutes IP infringement, considerations before taking legal action, and specific procedural options such as lodging a Notice of Objection with the Australian Border Force. However, the IPFR page 'What to do if someone infringes your IP' already provides a broad and accurate overview of steps to take, considerations before action, and options including dispute resolution and seeking professional advice. There are no specific factual inaccuracies, outdated legal references, or procedural steps in the IPFR page that are contradicted or rendered obsolete by the updated source. The IPFR page remains accurate and appropriate for its small business audience without needing amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4359,
+  "completion_tokens": 176,
+  "total_tokens": 4535,
+  "processing_time_seconds": 2.528387729999963,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.388423+00:00"
+}

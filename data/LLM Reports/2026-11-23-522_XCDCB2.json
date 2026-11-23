@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document updates the IP Australia webpage about 'someone is using my IP' with general information on IP infringement, steps to consider before legal action, and enforcement options including the Australian Border Force Notice of Objection scheme. The IPFR page already accurately describes the benefits of trade mark registration, including enforcement options such as taking action under the Trade Marks Act 1995 and lodging objections with the ABF. There are no specific changes to fees, timeframes, or procedural steps for trade mark registration in the change document that would affect the IPFR page content. The IPFR page remains accurate and current based on the provided upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4516,
+  "completion_tokens": 161,
+  "total_tokens": 4677,
+  "processing_time_seconds": 2.3043409180000936,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.387998+00:00"
+}

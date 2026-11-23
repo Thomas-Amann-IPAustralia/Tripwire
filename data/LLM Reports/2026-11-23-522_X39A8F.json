@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to a webpage about what to do if someone is using your IP without permission, focusing on infringement and enforcement options. The IPFR page 'What to check before getting registered IP' is about preparatory steps before registration, including matching IP types, timing, ownership, and checks before applying. The change does not affect any specific factual content, dates, fees, or legal thresholds in the IPFR page. It is related to a different stage of the IP lifecycle (post-registration enforcement), so no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4114,
+  "completion_tokens": 146,
+  "total_tokens": 4260,
+  "processing_time_seconds": 2.564507703000004,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.388363+00:00"
+}

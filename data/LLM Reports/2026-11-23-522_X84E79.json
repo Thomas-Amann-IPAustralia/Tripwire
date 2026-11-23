@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X84E79",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document from IP Australia provides a general overview of IP infringement and mentions the Notice of Objection scheme with the Australian Border Force, consistent with the IPFR page content. There are no specific amendments to statutory references, timeframes, costs, or procedural steps that conflict with or update the detailed information already present in the IPFR page. The IPFR page remains accurate and current based on the provided change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4892,
+  "completion_tokens": 115,
+  "total_tokens": 5007,
+  "processing_time_seconds": 2.1218122620000486,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.387763+00:00"
+}

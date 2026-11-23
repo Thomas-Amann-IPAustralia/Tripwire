@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes update the content of the IP Australia webpage 'someone is using my IP' with practical guidance on identifying infringement, steps to stop infringement, and enforcement options including border force actions. However, the IPFR page 'Infringement 101' already provides a broad and general overview of infringement concepts, types of IP, and enforcement considerations without specific procedural details or statutory references that have changed. The changes do not contradict or render any specific factual statements in the IPFR page inaccurate or outdated. The IPFR page remains accurate as a foundational guide for small business owners. Therefore, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7652,
+  "completion_tokens": 161,
+  "total_tokens": 7813,
+  "processing_time_seconds": 2.3915077739999333,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.388191+00:00"
+}

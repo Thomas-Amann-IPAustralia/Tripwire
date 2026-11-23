@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X7F52E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates the IP Australia webpage content about what constitutes IP infringement and outlines general steps and considerations for IP owners, including the Notice of Objection scheme with the Australian Border Force. However, the IPFR page about Toyota's approach to counterfeit products already accurately describes Toyota's use of the ABF Notice of Objection scheme and the role of IP enforcement in protecting brand integrity and consumer safety. The change does not introduce new legal thresholds, procedural steps, or statutory references that contradict or update any specific factual claims in the IPFR page. The IPFR page remains current and consistent with the general guidance provided by IP Australia.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4658,
+  "completion_tokens": 158,
+  "total_tokens": 4816,
+  "processing_time_seconds": 2.3289898169999788,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.388072+00:00"
+}

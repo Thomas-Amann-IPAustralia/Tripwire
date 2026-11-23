@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X0E307",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes to the IP Australia webpage 'someone-is-using-my-ip' primarily update general guidance on identifying and responding to IP infringement, including procedural advice about lodging Notices of Objection with Australian Border Force and considerations before legal action. The IPFR page 'Addressing overseas infringement' focuses on international IP protection challenges, territoriality of rights, enforcement options overseas, and practical tips for Australian businesses dealing with overseas infringement. There is no specific factual or procedural information in the IPFR page contradicted or outdated by the changes. The changes do not affect the accuracy of the IPFR page's content about overseas IP enforcement or the territorial nature of IP rights. Therefore, no amendment to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7289,
+  "completion_tokens": 181,
+  "total_tokens": 7470,
+  "processing_time_seconds": 2.5094221040000093,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.388252+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X47C30",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document updates content on the 'someone is using my IP' page, providing detailed guidance on IP infringement and enforcement options. However, the IPFR page in question is a general disclaimer about the website's purpose, limitations, and liability disclaimers. There is no specific legal, procedural, or factual information in the disclaimer page that is contradicted or outdated by the changes to the infringement guidance page. The disclaimer remains accurate and relevant regardless of the updated infringement content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3877,
+  "completion_tokens": 127,
+  "total_tokens": 4004,
+  "processing_time_seconds": 2.1976848709999786,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.387641+00:00"
+}

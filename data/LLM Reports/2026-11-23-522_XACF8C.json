@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "XACF8C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document is a substantial rewrite of the 'someone is using my IP' page on IP Australia's website, focusing on defining IP infringement, steps to stop infringement, and enforcement options. However, the IPFR page in question is about common scams related to IP, warning business owners about fraudulent messages and how to identify them. The content and focus of the IPFR page do not overlap with the detailed procedural or definitional content in the upstream change. There is no specific information in the IPFR page that is contradicted or outdated by the changes in the upstream document. Therefore, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3833,
+  "completion_tokens": 160,
+  "total_tokens": 3993,
+  "processing_time_seconds": 3.667140141999994,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.387240+00:00"
+}

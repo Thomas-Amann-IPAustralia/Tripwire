@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X3E05B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document is a partial snapshot of the IP Australia webpage about 'someone is using my IP', focusing on defining IP infringement, options to stop infringement, and procedural steps like lodging a Notice of Objection with Australian Border Force. The IPFR page in question is about reporting scams, fraud, or risks to public interest related to IP. While both deal with IP-related issues, the IPFR page focuses on scams and fraudulent claims, not on direct infringement enforcement or procedural steps to stop infringement. The updated IP Australia content does not contradict or update any specific factual information in the IPFR page about scams or reporting scams. There is no indication of changed procedures, contact points, or advice relevant to scams or fraud reporting that would require updating the IPFR page. Therefore, no change is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4757,
+  "completion_tokens": 193,
+  "total_tokens": 4950,
+  "processing_time_seconds": 2.5412507830000095,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.387703+00:00"
+}

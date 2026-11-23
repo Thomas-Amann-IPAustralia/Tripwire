@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a revision of the IP Australia webpage 'someone is using my IP' which provides general guidance on IP infringement and enforcement options. While the IPFR page XD7FA7 discusses the specific process of opposing a trade mark application, the changes in the upstream source do not update or contradict any specific procedural details, timeframes, fees, or outcomes described in the IPFR page. The IPFR page content remains accurate and current with respect to the opposition process, its timing, costs, risks, and outcomes. The upstream change is more general and does not require amendments to the detailed opposition guidance in the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4588,
+  "completion_tokens": 160,
+  "total_tokens": 4748,
+  "processing_time_seconds": 2.501636500000018,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.387824+00:00"
+}

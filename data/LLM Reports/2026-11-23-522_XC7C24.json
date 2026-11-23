@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document pertains to a webpage about what to do if someone is using your IP without permission, focusing on infringement, enforcement options, and actions against infringers. The IPFR page 'Check your product against existing designs' is about conducting freedom to operate searches and clearance searches to avoid infringing on existing registered designs. While both deal with IP rights and infringement, the change does not affect the accuracy or currency of the IPFR page content, which is focused on pre-emptive searching rather than enforcement after infringement. There are no specific procedural, legal, or factual details in the IPFR page contradicted or outdated by the change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4297,
+  "completion_tokens": 162,
+  "total_tokens": 4459,
+  "processing_time_seconds": 2.81959029799998,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.388309+00:00"
+}

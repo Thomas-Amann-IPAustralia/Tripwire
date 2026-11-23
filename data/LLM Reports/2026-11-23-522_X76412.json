@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X76412",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The change document from the IP Australia webpage provides a general overview of IP infringement and enforcement options, including steps to consider before taking legal action and how to stop infringing goods from coming into Australia. However, it does not provide any specific updates or changes that directly affect the content of the IPFR page 'Ask your suppliers and sellers to help protect your IP'. The IPFR page focuses on informal, voluntary approaches to intermediaries in the supply chain, and the change document does not contradict or update any specific procedural details, timeframes, or legal thresholds mentioned in the IPFR page. Therefore, no amendment is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4273,
+  "completion_tokens": 162,
+  "total_tokens": 4435,
+  "processing_time_seconds": 2.5327326059999677,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.387896+00:00"
+}

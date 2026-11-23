@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-23-522",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is to a general IP infringement guidance page on the IP Australia website, describing what IP infringement is and how to respond to it. The IPFR page in question focuses specifically on registering design rights, the registration process, certification, renewal, and related costs and timelines. The change does not update or contradict any specific procedural, legal, or factual detail about design registration or certification described in the IPFR page. Therefore, the IPFR page content remains accurate and current with respect to the design registration process and rights enforcement.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4399,
+  "completion_tokens": 139,
+  "total_tokens": 4538,
+  "processing_time_seconds": 2.321872454999948,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-23T10:31:37.388480+00:00"
+}
