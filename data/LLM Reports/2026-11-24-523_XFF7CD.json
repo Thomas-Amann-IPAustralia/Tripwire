@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-24-523",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes to the IP Australia webpage 'someone-is-using-my-ip' consist primarily of minor textual edits such as capitalization and punctuation corrections, with no substantive changes to the content or procedural information. The IPFR page 'Free IP tools you can use' focuses on describing free IP tools and their uses, without detailing enforcement procedures or legal steps related to IP infringement. Since the changes do not affect any specific information, dates, procedures, or legal thresholds mentioned in the IPFR page, no update is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4247,
+  "completion_tokens": 141,
+  "total_tokens": 4388,
+  "processing_time_seconds": 1.9251459189999878,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-24T12:12:33.365355+00:00"
+}

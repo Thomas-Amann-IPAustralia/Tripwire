@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-24-523",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the IP Australia webpage 'someone-is-using-my-ip' are primarily minor stylistic edits (capitalization, punctuation) and rephrasing without altering substantive content or legal guidance. The IPFR page 'What does IP protection mean for my business?' provides a broad overview of IP protection and enforcement options for small businesses, without specific procedural details or legal thresholds that would be impacted by these minor textual changes. There is no indication that any factual or procedural information in the IPFR page is now inaccurate or outdated due to these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6386,
+  "completion_tokens": 143,
+  "total_tokens": 6529,
+  "processing_time_seconds": 3.140169275000062,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-24T12:12:33.365117+00:00"
+}

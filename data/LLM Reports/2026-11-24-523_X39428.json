@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-24-523",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream changes to the IP Australia webpage 'someone is using my IP' are primarily minor textual edits and formatting changes, such as punctuation and capitalization corrections, without any substantive changes to the information about IP infringement or enforcement options. The IPFR page content on 'How to avoid infringing others\u2019 intellectual property' does not contain specific factual details or procedural steps that conflict with or require updating due to these upstream changes. The changes do not affect the accuracy or currency of the IPFR page's guidance to small business owners.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4813,
+  "completion_tokens": 137,
+  "total_tokens": 4950,
+  "processing_time_seconds": 1.4934325320000426,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-24T12:12:33.365701+00:00"
+}

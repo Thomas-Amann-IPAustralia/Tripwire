@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-24-523",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes to the IP Australia webpage 'someone-is-using-my-ip' primarily involve minor textual edits such as capitalization and phrasing adjustments, and clarification of terms like 'factsheets' instead of 'fact sheets'. There are no changes to substantive content, legal thresholds, procedural steps, or definitions that would affect the accuracy or currency of the IPFR page 'Infringement 101'. The IPFR page already provides a broad and practical overview of infringement concepts and enforcement options without referencing specific procedural details or legal requirements that have changed. Therefore, no amendments to the IPFR page are required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5245,
+  "completion_tokens": 159,
+  "total_tokens": 5404,
+  "processing_time_seconds": 2.2195784130001357,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-24T12:12:33.365623+00:00"
+}

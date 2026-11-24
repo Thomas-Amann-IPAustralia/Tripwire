@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-24-523",
+  "ipfr_page_id": "X80188",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The changes to the IP Australia webpage 'someone-is-using-my-ip' are primarily minor formatting and wording adjustments (e.g., capitalization, punctuation, and phrasing such as changing 'fact sheets' to 'factsheets'). There are no substantive changes to the legal content, definitions, procedures, or guidance that would affect the accuracy or currency of the IPFR page 'X80188 \u2014 Infringement 101'. The IPFR page provides a general overview and educational content about IP infringement without referencing specific procedural details or exact wording that has changed upstream. Therefore, no update to the IPFR page is required based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4399,
+  "completion_tokens": 162,
+  "total_tokens": 4561,
+  "processing_time_seconds": 2.367119455999955,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-24T12:12:33.365784+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-24-523",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor textual update and formatting correction on the IP Australia webpage about what to do if someone is using your IP. It clarifies wording and punctuation but does not alter any substantive information about registered designs, freedom to operate searches, or the process of checking existing designs. The IPFR page on checking your product against existing designs remains accurate and does not contain any specific information contradicted or outdated by this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2690,
+  "completion_tokens": 118,
+  "total_tokens": 2808,
+  "processing_time_seconds": 2.0954144920001454,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-24T12:12:33.365864+00:00"
+}

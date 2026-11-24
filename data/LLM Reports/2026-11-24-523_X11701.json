@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-24-523",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream changes to the IP Australia webpage 'someone is using my IP' are primarily minor textual edits, such as capitalization and phrasing adjustments, and clarifications about the Deed of Undertaking and references to Australian Border Force guides. There are no changes to substantive content, legal thresholds, procedures, or timeframes that would affect the accuracy or currency of the IPFR page content. The IPFR page does not contain any specific details contradicted or outdated by these upstream changes. Therefore, no amendments to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5549,
+  "completion_tokens": 141,
+  "total_tokens": 5690,
+  "processing_time_seconds": 2.2578406200000245,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-24T12:12:33.365454+00:00"
+}
