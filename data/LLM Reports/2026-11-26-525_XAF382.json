@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XAF382",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates in official notices about trade marks, minor editorial and structural updates in the patent manual, and additional details about Australian business regulations and consumer law. None of these changes directly affect the definitions, explanations, or specific legal elements of IP infringement as described in the IPFR page. The IPFR page content remains accurate and current regarding the basics of IP infringement, its elements, and examples. There are no changes to statutory periods, infringement tests, or defences that would require updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3887,
+  "completion_tokens": 137,
+  "total_tokens": 4024,
+  "processing_time_seconds": 1.6791996750000635,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.571301+00:00"
+}

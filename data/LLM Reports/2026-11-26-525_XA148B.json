@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XA148B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to updates and minor corrections in the patent, trademark, and design manuals, including classification procedures, amendments, and formatting updates. None of the changes specifically address the opposition process for trade marks, the timelines, fees, procedural steps, or outcomes described in the IPFR page. The IPFR page content about responding to a trade mark opposition remains accurate and current based on the provided change documents. There is no indication of changes to the opposition deadlines, fees, or procedural requirements that would necessitate updating the IPFR page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 8572,
+  "completion_tokens": 142,
+  "total_tokens": 8714,
+  "processing_time_seconds": 1.9202024290000281,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.568781+00:00"
+}

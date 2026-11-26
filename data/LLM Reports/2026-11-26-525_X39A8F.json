@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X39A8F",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily involve updates and clarifications to IPAustralia manuals for designs and plant breeders' rights, including procedural details, online services, and applicant information. The IPFR page provides general guidance on what to check before getting registered IP, including basic requirements and considerations, but does not include detailed procedural or legal specifics that have been updated in the manuals. The news updates add new articles and announcements but do not affect the factual accuracy of the IPFR page content. Therefore, none of the specific statements or guidance in the IPFR page are rendered inaccurate or outdated by these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6647,
+  "completion_tokens": 149,
+  "total_tokens": 6796,
+  "processing_time_seconds": 1.856232016000149,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569396+00:00"
+}

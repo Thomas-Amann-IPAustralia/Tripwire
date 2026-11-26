@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X922F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily relate to minor typographical fixes, rewording, and updates to other parts of the patent and trademark manuals that do not specifically affect the procedural details, timeframes, fees, or substantive content of the patent opposition process described in the IPFR page. Notably, the changes explicitly state 'No changes' or 'Reword sentence' without altering the opposition process or its key parameters. The trademark manual updates are unrelated to patent oppositions. Therefore, the IPFR page content remains accurate and current with respect to the opposition process.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6909,
+  "completion_tokens": 144,
+  "total_tokens": 7053,
+  "processing_time_seconds": 1.6968755769999007,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.568911+00:00"
+}

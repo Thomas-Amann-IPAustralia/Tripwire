@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XD7FA7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate primarily to updates and minor formatting or typographical corrections in the IP Australia manuals for patents, trademarks, and designs. The trademark manual changes focus on classification, specification wording, and consolidation of revocation and amendment procedures into a new Part 36, but do not specify any changes to the opposition process timelines, fees, or procedural steps described in the IPFR page. There are no updates to the opposition period, fees, or procedural details that would affect the accuracy of the IPFR page content on challenging a trade mark registration. The IPFR page content remains current and accurate based on the provided upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 7908,
+  "completion_tokens": 157,
+  "total_tokens": 8065,
+  "processing_time_seconds": 1.9452412850000655,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569203+00:00"
+}

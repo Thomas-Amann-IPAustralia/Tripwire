@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X9EF7D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Plant Breeder's Rights (PBR) Manual primarily update procedural details, online services, and guidance content for managing PBR applications, including new portal workflows and clarifications about legal persons. These updates do not affect the general descriptive content about the PBR Act or the overview of IP laws presented on the IPFR page. Similarly, the news updates from IP Australia relate to announcements and reports about IP system reforms and events but do not alter the fundamental legislative framework or the basic descriptions of IP laws on the page. The IPFR page content is broad and introductory, without specific procedural details or references that are contradicted or outdated by these changes. Therefore, no amendment to the IPFR page is required to maintain accuracy or currency.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3582,
+  "completion_tokens": 183,
+  "total_tokens": 3765,
+  "processing_time_seconds": 2.0433986879997974,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.573065+00:00"
+}

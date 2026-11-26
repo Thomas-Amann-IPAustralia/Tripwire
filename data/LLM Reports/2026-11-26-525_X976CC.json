@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X976CC",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including amendments to application processes, fees, and online services. The IPFR page focuses on the WIPO Clause Generator for handling IP disputes via contracts, specifically alternative dispute resolution clauses for IP disputes. There is no direct mention or reliance on PBR-specific procedures, fees, or application details in the IPFR page content. Therefore, the changes to the PBR manual do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2928,
+  "completion_tokens": 139,
+  "total_tokens": 3067,
+  "processing_time_seconds": 1.3868270089999442,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572135+00:00"
+}

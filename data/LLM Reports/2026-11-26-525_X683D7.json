@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X683D7",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily concern notifications about trade marks under the Paris Convention and specific design registrations being surrendered or amended. These are specific administrative updates and do not affect the general procedural or substantive information about requesting third party examination of registered designs as presented in the IPFR page. The changes in the Plant Breeder's Rights manual relate to procedural updates for plant breeder rights applications and online services, which are unrelated to the design examination process described in the IPFR page. There is no indication that fees, timeframes, procedural steps, or legal thresholds for third party examination of registered designs have changed. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3545,
+  "completion_tokens": 168,
+  "total_tokens": 3713,
+  "processing_time_seconds": 1.84899742399989,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572714+00:00"
+}

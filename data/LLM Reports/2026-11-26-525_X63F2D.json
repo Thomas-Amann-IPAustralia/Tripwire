@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X63F2D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the IP Australia official notices page primarily relate to publication of newly notified trade mark signs under the Paris Convention and specific design registration surrenders, none of which affect the procedural or fee information about requesting design examination or certification described in the IPFR page. The Plant Breeder's Rights manual updates concern procedural and portal guidance for PBR applications, which are unrelated to registered design certification processes. There is no indication that the examination fee amount, timeframes, or procedural steps for design certification have changed. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3204,
+  "completion_tokens": 149,
+  "total_tokens": 3353,
+  "processing_time_seconds": 1.764445116999923,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572580+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XC6CD2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes relate primarily to updates in the patent manual and trademark manual regarding classification, specification interpretation, and procedural consolidations in revocation and amendment chapters. There are no direct changes to the opposition process timelines, fees, grounds for opposition, or procedural steps described in the IPFR page. The IPFR content about opposing trade mark registrations, including the 2-month opposition period, costs, and process details, remains accurate and unaffected by these upstream updates.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 6022,
+  "completion_tokens": 124,
+  "total_tokens": 6146,
+  "processing_time_seconds": 1.5537644329999694,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569108+00:00"
+}

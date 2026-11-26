@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X2E871",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including amendments to application processes, fees, and portal usage. The IPFR page concerns international arbitration and mediation services offered by WIPO for IP disputes, which is a distinct topic. There is no overlap or direct impact on the content about WIPO ADR services, fees, procedures, or guidance. Therefore, the IPFR page content remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3364,
+  "completion_tokens": 130,
+  "total_tokens": 3494,
+  "processing_time_seconds": 1.3105777399998715,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572396+00:00"
+}

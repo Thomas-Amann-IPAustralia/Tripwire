@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X391C2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including procedural details about applications, online services, and legal person status. The IPFR page 'Is it worth registering my IP?' provides general guidance on the value of registering IP rights and does not include specific procedural details or legal references about PBR applications. Therefore, the changes do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2157,
+  "completion_tokens": 121,
+  "total_tokens": 2278,
+  "processing_time_seconds": 1.3680642009999247,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572981+00:00"
+}

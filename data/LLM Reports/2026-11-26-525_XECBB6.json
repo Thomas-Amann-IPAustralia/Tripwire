@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XECBB6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in official notices about trade mark enforcement signs under the Paris Convention, minor editorial updates in the patent manual, and additions to general Australian business regulations regarding consumer law and fair trading. None of these changes provide new or corrected information that directly affects the specific content of the IPFR page 'Infringement 101', which focuses on explaining the basics of IP infringement, trade mark registration, and enforcement in accessible language. There are no updates to statutory references, procedural steps, or legal thresholds mentioned in the IPFR page that are contradicted or require updating based on these upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4358,
+  "completion_tokens": 155,
+  "total_tokens": 4513,
+  "processing_time_seconds": 1.5445138170000519,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.570461+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XBECD6",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a minor update to the IP Australia patent manual involving fixing broken links, typo corrections, and reordering or rewording of sections related to amendments, acceptance, grant, refusal, and opposition proceedings. There is no indication of changes to the substantive content or procedural details regarding section 27 notices or the process for third party notification of prior art during patent examination. The IPFR page content about lodging section 27 notices, time limits, benefits, risks, and outcomes remains accurate and unaffected by these editorial or formatting changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2355,
+  "completion_tokens": 141,
+  "total_tokens": 2496,
+  "processing_time_seconds": 1.5651118490000044,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.571475+00:00"
+}

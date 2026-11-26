@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X39428",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes relate to updates on the IP Australia official notices page and additional details about Australian business regulations, including consumer law and fair trading laws. These changes do not affect the specific guidance or factual content on the IPFR page about avoiding IP infringement. The IPFR page focuses on practical steps to avoid infringement and does not reference or rely on the specific notices or detailed business regulation frameworks updated in the changes. Therefore, no update to the IPFR page content is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2677,
+  "completion_tokens": 126,
+  "total_tokens": 2803,
+  "processing_time_seconds": 1.340722899999946,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.571029+00:00"
+}

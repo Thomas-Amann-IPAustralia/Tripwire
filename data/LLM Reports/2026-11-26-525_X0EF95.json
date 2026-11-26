@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X0EF95",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including procedural updates, fee changes, and portal guidance for PBR applications. The IPFR page concerns registered designs under the Designs Act 2003 and does not mention plant breeder's rights or related processes. There is no overlap in specific content such as fees, procedures, or legal requirements that would affect the accuracy or currency of the IPFR page. Therefore, no amendments are required to the IPFR page based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2720,
+  "completion_tokens": 138,
+  "total_tokens": 2858,
+  "processing_time_seconds": 1.7453931000000011,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572896+00:00"
+}

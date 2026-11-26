@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XC7C24",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the upstream sources primarily involve updates to official notices, minor wording clarifications in the design manual, archiving of certain pages, and updates to Plant Breeder's Rights (PBR) manuals including portal guidance and application processes. None of these changes directly affect the content or guidance provided in the IPFR page about checking products against existing designs, such as the process of conducting freedom to operate searches, interpreting results, or the practical advice given to small businesses. There are no changes to statutory references, procedural steps, or specific timeframes or costs mentioned in the IPFR page that are contradicted or outdated by the upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3796,
+  "completion_tokens": 161,
+  "total_tokens": 3957,
+  "processing_time_seconds": 1.863226480999856,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572810+00:00"
+}

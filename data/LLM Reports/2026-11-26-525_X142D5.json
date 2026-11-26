@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X142D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to Australian business regulations and consumer law, specifically mentioning the Australian Consumer Law and the ACCC's role in regulating product safety and consumer rights. The IPFR page focuses on the Australian Copyright Council's services for copyright law education and legal advice for creators and consumers in the creative industries. There is no direct reference to business regulations, consumer law, or the ACCC in the IPFR page content, nor does the change affect any specific factual information, procedures, or legal references in the IPFR page. Therefore, the IPFR page content remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1766,
+  "completion_tokens": 156,
+  "total_tokens": 1922,
+  "processing_time_seconds": 1.5326040970001031,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.573233+00:00"
+}

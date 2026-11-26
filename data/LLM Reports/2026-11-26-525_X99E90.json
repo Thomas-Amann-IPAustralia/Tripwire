@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X99E90",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a notice about the publication of newly notified signs under Article 6ter of the Paris Convention by WIPO, which is a routine update of official notices on the IP Australia website. The IPFR page content explains the role of WIPO and national IP offices in general terms and does not mention Article 6ter notifications or the publication schedule of such notices. Therefore, this change does not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1636,
+  "completion_tokens": 126,
+  "total_tokens": 1762,
+  "processing_time_seconds": 1.4120781469998747,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.573484+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X00159",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the Plant Breeders Rights manual and news items about recent IP Australia reports and reforms. The IPFR page 'Can I buy, sell or license IP?' provides general guidance on buying, selling, and licensing IP, focusing on basic concepts and advice for small business owners. None of the changes introduce or modify specific procedural details, legal thresholds, or statutory references directly impacting the accuracy or currency of the IPFR page content. The news updates and manual changes do not affect the general advice or examples given on the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3820,
+  "completion_tokens": 143,
+  "total_tokens": 3963,
+  "processing_time_seconds": 1.8158421410000756,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569492+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XD77D5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a broad update to the Trade Marks Manual of Practice and Procedure, including new parts, formatting changes, and minor corrections primarily related to classification, specification wording, and procedural details. The IPFR page in question focuses on practical advice for SMEs receiving AI-generated IP infringement allegations, with a checklist addressing how to respond and what to look for in such allegations. There is no specific mention in the upstream change of any amendments to the legal thresholds, procedural steps, or substantive requirements for responding to infringement allegations that would affect the accuracy or currency of the IPFR page's guidance. The changes do not address or alter the advice about verifying registration numbers, evidence requirements, or engaging attorneys, which are the core actionable points in the IPFR page. Therefore, the IPFR page remains accurate and does not require amendment based on the provided upstream change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4522,
+  "completion_tokens": 203,
+  "total_tokens": 4725,
+  "processing_time_seconds": 1.8557147030001033,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.571387+00:00"
+}

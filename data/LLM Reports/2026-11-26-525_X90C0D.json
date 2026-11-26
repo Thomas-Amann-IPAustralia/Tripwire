@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X90C0D",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of updates to official notices on the IP Australia website, including notifications about trade marks under the Paris Convention, design rights surrenders, and corporate support notices. These updates do not alter any fundamental definitions, procedures, or guidance related to IP protection that would affect the content of the IPFR page. The changes to the Austrade page add more detail about the Australian Consumer Law and related regulatory bodies, but this does not impact the IPFR page's explanation of IP protection for businesses. The IPFR page content remains accurate and current in light of these changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3544,
+  "completion_tokens": 149,
+  "total_tokens": 3693,
+  "processing_time_seconds": 1.6223097609999968,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.570941+00:00"
+}

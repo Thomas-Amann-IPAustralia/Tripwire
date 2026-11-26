@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X4E1F1",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to procedural manuals for patents and plant breeder's rights, including amendments to forms, workflows, and portal guidance, as well as news updates about IP Australia activities and reforms. None of these changes directly affect the core content of the IPFR page, which provides general guidance on the risks of using IP that is not yours, the importance of checking ownership, obtaining permission, and seeking legal advice. There are no specific legal thresholds, dates, or procedural steps in the IPFR content that are contradicted or outdated by the changes. The news items about AI considerations and reforms do not alter the fundamental advice given. Therefore, the IPFR page remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5329,
+  "completion_tokens": 171,
+  "total_tokens": 5500,
+  "processing_time_seconds": 2.436874929999931,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569301+00:00"
+}

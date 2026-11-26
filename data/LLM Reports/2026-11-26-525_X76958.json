@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X76958",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates information about Australian business regulations, specifically the Australian Consumer Law and related regulatory bodies like the ACCC. However, the IPFR page focuses on considerations before enforcing IP overseas, including international IP enforcement options, legal advice, and checking international IP registers. The change does not affect any specific statements, legal references, or procedural guidance in the IPFR page related to overseas IP enforcement. Therefore, the IPFR page content remains accurate and does not require amendment based on this change.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2402,
+  "completion_tokens": 131,
+  "total_tokens": 2533,
+  "processing_time_seconds": 1.2776224720000755,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.573149+00:00"
+}

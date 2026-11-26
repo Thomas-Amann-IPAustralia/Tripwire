@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X1908C",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to minor editorial updates, typo fixes, and clarifications in the IPAustralia patent manual, including sections on amendments, acceptance, grant, refusal, and opposition proceedings. There is no indication of substantive changes to patent law or enforcement procedures that would affect the general guidance on what to do if someone copies your stuff. The IPFR page provides high-level advice on suspected infringement and does not include specific procedural details or statutory references that have been altered. Therefore, the IPFR page remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1859,
+  "completion_tokens": 140,
+  "total_tokens": 1999,
+  "processing_time_seconds": 1.7956459900001391,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.571849+00:00"
+}

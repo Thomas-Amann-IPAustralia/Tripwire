@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X11701",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily consist of updates to official notices about trade marks, design rights, and general IP news, including new notifications under the Paris Convention and announcements about reforms and events. These updates do not alter any specific procedural steps, legal thresholds, or guidance related to what to do if someone infringes your IP as described in the IPFR page. The changes to Australian business regulations and consumer law are general and do not directly impact the infringement response guidance provided. Therefore, the IPFR page content remains accurate and current.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3440,
+  "completion_tokens": 136,
+  "total_tokens": 3576,
+  "processing_time_seconds": 1.2911884269999518,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.571205+00:00"
+}

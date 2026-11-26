@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X6AB91",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change adds detail about the Australian Consumer Law (ACL) and the role of the ACCC in regulating fair trading, product safety, and consumer rights guarantees. The IPFR page already references the ACL and the ACCC in the context of reporting consumer harm related to counterfeit goods and misleading claims. The additional details about unfair contract terms, unsolicited consumer agreements, and lay-by agreements do not affect the accuracy or currency of the IPFR page content, which focuses on enforcement and reporting options related to IP infringement and public interest risks. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1912,
+  "completion_tokens": 151,
+  "total_tokens": 2063,
+  "processing_time_seconds": 1.3975244040000234,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.573318+00:00"
+}

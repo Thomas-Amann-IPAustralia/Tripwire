@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XCDCB2",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes in the upstream sources primarily involve updates to the Trade Marks Manual of Practice and Procedure, including classification details, formatting, and procedural clarifications. However, these updates do not directly affect the specific content of the IPFR page about registering an unregistered trade mark, such as fees, timeframes, or procedural steps described. The IPFR page content remains accurate and current for its intended audience, and no specific statutory references, fees, or procedural steps mentioned in the page have been contradicted or updated by the upstream changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4199,
+  "completion_tokens": 139,
+  "total_tokens": 4338,
+  "processing_time_seconds": 1.7764887680000356,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.570286+00:00"
+}

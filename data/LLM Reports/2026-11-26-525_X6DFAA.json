@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X6DFAA",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including procedural and portal guidance updates, deletion of a statement about Essentially Derived Varieties, and other administrative details. The IPFR page focuses on general options for dealing with IP issues without going to court, including informal approaches and ADR, but does not contain specific procedural or legal details about PBR applications or the PBR system. Therefore, the changes to the PBR manual do not affect the accuracy or currency of the IPFR page content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2271,
+  "completion_tokens": 140,
+  "total_tokens": 2411,
+  "processing_time_seconds": 1.4515146369999457,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572222+00:00"
+}

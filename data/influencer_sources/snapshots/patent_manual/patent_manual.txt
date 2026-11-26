@@ -1,4 +1,9 @@
 | 5.6.7.2 Clear enough and complete enough disclosure s40(2)(a) | | Fixing broken link to Explanatory Memorandum | 
+ | 5.7.5.2 Definition of obvious mistake | | None | 
+ | 5.6.9 Acceptance, Grant, and Refusal of Applications | | None | 
+ | 5.7.2 Amendment of the patent request and other filed documents | | None | 
+ | 5.7 Amendments | | Typos | 
+ | 6.6.7 Annexes | | None | 
  | 5.6.9.6 Refusal of an Application | | None | 
  | 5.7.2.1 Form of the Request to Amend the Patent Request | | Grammar fixes | 
  | 5.7.2.5 Amendments to the notice of entitlement and other documents | | Typo | 
@@ -10,11 +15,6 @@
  | 5.7.5.1 Definition of a clerical error | | None | 
  | 6.1.18.1 Background to Nucleotide and/or Amino Acid Sequence Listings | | Typo | 
  | 6.4.8 Annexes | | None | 
- | 5.7.5.2 Definition of obvious mistake | | None | 
- | 5.6.9 Acceptance, Grant, and Refusal of Applications | | None | 
- | 5.7.2 Amendment of the patent request and other filed documents | | None | 
- | 5.7 Amendments | | Typos | 
- | 6.6.7 Annexes | | None | 
- | 5.6.11.5 Amendment of the Parent | | None | 
- | 5.6.3 The Specification and Claims to Examine | | None | 
- | 6.1.5 Abstract and Title | | No change |
+ | 5.7.7 Amendments during opposition proceedings | | NO changes | 
+ | 5.6.10.3 Time limits for filing | | No changes | 
+ | 5.6.15.6 Certification, Opposition, Ceasing/Expiring of Innovation Patents | | Reword sentence |

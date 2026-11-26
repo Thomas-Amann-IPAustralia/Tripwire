@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XE69D4",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.95,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including amendments to application processes, fees, and online services for PBR customers. The IPFR page concerns challenging the use of international domain names under domain name dispute resolution policies such as the UDRP and auDRP. There is no overlap in subject matter or specific procedural or legal details that would affect the accuracy or currency of the domain name dispute resolution content. Therefore, no changes to the IPFR page are required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3564,
+  "completion_tokens": 137,
+  "total_tokens": 3701,
+  "processing_time_seconds": 1.2941160559998934,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572045+00:00"
+}

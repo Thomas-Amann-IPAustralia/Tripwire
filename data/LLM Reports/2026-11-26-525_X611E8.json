@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X611E8",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes from the patent manual relate mainly to minor typographical fixes, clarifications, and rewording in sections about amendments and oppositions, with no substantive changes to the opposition process or fees. The trademark manual changes are unrelated to patents and concern trademark classification and procedural updates, which do not affect the patent opposition content. Therefore, the IPFR page content about responding to a patent opposition remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5457,
+  "completion_tokens": 118,
+  "total_tokens": 5575,
+  "processing_time_seconds": 1.999687412999947,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569013+00:00"
+}

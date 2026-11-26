@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X7005E",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change updates a general Australian business regulations webpage to include more detailed information about the Australian Consumer Law (ACL) provisions such as unfair contract terms, consumer rights guarantees, product safety laws, unsolicited consumer agreements, and lay-by agreements. However, the IPFR page on unregistered trade marks already correctly describes the ACL's role in protecting unregistered trade marks from misleading or deceptive conduct and false representations. The change does not alter any specific legal thresholds, definitions, or procedural steps related to unregistered trade marks or passing off actions. Therefore, the IPFR page content remains accurate and does not require amendment.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 1929,
+  "completion_tokens": 154,
+  "total_tokens": 2083,
+  "processing_time_seconds": 1.5017903190000652,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.570548+00:00"
+}

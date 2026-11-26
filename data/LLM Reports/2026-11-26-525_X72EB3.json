@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X72EB3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change document indicates updates to the PBR manual including new guidance on online services, QP Portal functionalities, and procedural updates related to forms and application management. However, there is no specific amendment to the core definitions, accreditation process, fees, or fundamental requirements for Qualified Persons (QPs) that would directly affect the accuracy or currency of the IPFR page content. The IPFR page focuses on explaining what a QP is, the benefits, risks, costs, and process of engaging or becoming a QP, none of which are contradicted or rendered outdated by the changes described. The changes appear to be procedural and system updates rather than substantive legal or fee changes impacting the IPFR content.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2744,
+  "completion_tokens": 174,
+  "total_tokens": 2918,
+  "processing_time_seconds": 1.7579451429999153,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.571563+00:00"
+}

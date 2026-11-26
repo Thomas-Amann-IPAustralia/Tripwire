@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X271EB",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is primarily about updates to the Trade Marks Manual of Practice and Procedure, including reorganization and minor formatting updates in classification and other procedural parts. The change mentions a new Part 36 consolidating revocation and cessation of protection content, but does not provide specific amendments to the grounds, timeframes, fees, or procedural steps for removal of trade marks for non-use. The IPFR page contains detailed, specific guidance on removal for non-use, including timeframes, fees, and procedural steps, none of which are contradicted or updated by the upstream change. Therefore, the IPFR page remains accurate and current based on the provided change document.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3766,
+  "completion_tokens": 164,
+  "total_tokens": 3930,
+  "processing_time_seconds": 1.9037989569999354,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569924+00:00"
+}

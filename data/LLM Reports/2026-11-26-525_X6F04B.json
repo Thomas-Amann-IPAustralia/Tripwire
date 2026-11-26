@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X6F04B",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to updates in the Plant Breeder's Rights (PBR) manual, including amendments to fees, application processes, and portal guidance. The IPFR page concerns disputing .au domain names infringing trade marks under the auDA Dispute Resolution Policy (auDRP). There is no overlap in subject matter or procedural content that would affect the accuracy or currency of the domain name dispute content. The changes do not mention domain name disputes, trade mark enforcement procedures, or auDA policies. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3041,
+  "completion_tokens": 147,
+  "total_tokens": 3188,
+  "processing_time_seconds": 1.4962093490000825,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.572494+00:00"
+}

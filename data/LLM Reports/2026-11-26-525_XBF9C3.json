@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XBF9C3",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change is a set of minor editorial updates, typo fixes, and reordering of sections in the IP Australia patent manual, with no substantive changes to the legal or procedural content regarding filed patents or enforcement rights. The IPFR page content about enforcing a 'filed' patent remains accurate and current, as the changes do not affect the core information about the enforceability of patents, timelines, or applicant rights described on the page.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 2020,
+  "completion_tokens": 120,
+  "total_tokens": 2140,
+  "processing_time_seconds": 1.4587480400000459,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.573402+00:00"
+}

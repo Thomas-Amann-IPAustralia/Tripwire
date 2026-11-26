@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X39AC5",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes to the Trade Marks Manual of Practice and Procedure primarily concern updates to classification procedures, formatting, and consolidation of parts related to revocation and acceptance, but do not specify any changes to the substantive content or procedural details about revocation of trade mark registration that would affect the IPFR page. The IPFR page's descriptions of the revocation process, timelines, risks, and outcomes remain accurate based on the provided change documents. The design manual changes are unrelated to trade mark revocation and do not impact the IPFR page content. Therefore, no update to the IPFR page is required.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4360,
+  "completion_tokens": 152,
+  "total_tokens": 4512,
+  "processing_time_seconds": 1.449984005000033,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.570187+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "X7E272",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream changes primarily involve updates to the patent and trade mark manuals, including minor typographical fixes, formatting updates, addition of new classification stems, and reorganization of manual parts. None of the changes specify amendments to procedural steps, timeframes, fees, or decision-making processes related to IP Australia hearings as described in the IPFR page. The IPFR page content about hearings focuses on the general process and outcomes, which remain accurate and unaffected by these upstream manual updates. Therefore, no specific corrections or updates to the IPFR page are warranted based on the provided changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 5520,
+  "completion_tokens": 147,
+  "total_tokens": 5667,
+  "processing_time_seconds": 2.7712318280000545,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.568497+00:00"
+}

@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XEBB76",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the Plant Breeder's Rights (PBR) manual, including procedural details, online services, and legal person definitions, as well as news updates about IP Australia activities and reports. None of these changes affect the fundamental definitions, explanations, or descriptions of IP types and their protections as presented in the IPFR page. The IPFR page content remains accurate and up-to-date for its intended audience of small business owners seeking basic IP information.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4372,
+  "completion_tokens": 127,
+  "total_tokens": 4499,
+  "processing_time_seconds": 1.314955320999843,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569723+00:00"
+}

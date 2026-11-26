@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XFC0CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The upstream change relates to internal sections and typographical fixes in the IP Australia patent manual, including amendments and definitions related to patent applications and procedures. There is no indication that any specific definitions, terms, or explanations in the IPFR Glossary of Terms page have been altered or require updating. The IPFR page provides general definitions and statuses that remain accurate and unaffected by these upstream editorial and structural changes.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 3213,
+  "completion_tokens": 113,
+  "total_tokens": 3326,
+  "processing_time_seconds": 1.531624569000087,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.571674+00:00"
+}

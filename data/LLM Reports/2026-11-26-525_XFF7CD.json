@@ -1,0 +1,16 @@
+{
+  "run_id": "2026-11-26-525",
+  "ipfr_page_id": "XFF7CD",
+  "verdict": "NO_CHANGE",
+  "confidence": 0.85,
+  "reasoning": "The changes primarily relate to updates in the Plant Breeder's Rights manual and news items about IP Australia activities and reforms, including new guidance on online services, legal persons, and procedural updates. The IPFR page 'Free IP tools you can use' provides a general overview of free IP tools and lists common tools for searching IP rights. None of the changes indicate modifications to the availability, functionality, or descriptions of the free IP tools listed on the page. The news updates mention reforms and reports but do not affect the accuracy of the tool descriptions or their usage guidance. Therefore, the IPFR page content remains accurate and up to date.",
+  "suggested_changes": [],
+  "model": "gpt-4.1-mini",
+  "prompt_tokens": 4455,
+  "completion_tokens": 160,
+  "total_tokens": 4615,
+  "processing_time_seconds": 1.9066812689998187,
+  "retries": 0,
+  "schema_valid": true,
+  "generated_at": "2026-11-26T10:49:18.569820+00:00"
+}
